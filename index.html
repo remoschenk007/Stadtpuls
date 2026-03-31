@@ -1,484 +1,556 @@
 <!DOCTYPE html>
 
-<html lang="de">
+<html lang="de" style="background:#080806;color:#f0ebe0;">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#080806">
 <title>STADTPULS — dä puls vo dä stadt</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,700;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Archivo+Black&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,700&family=Space+Mono:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
 <style>
-:root {
-  --ink: #080806;
-  --paper: #f0ebe0;
-  --orange: #ff4d00;
-  --yellow: #f5c800;
-  --green: #00c45a;
-  --blue: #0057ff;
-  --purple: #7c3aed;
-  --rust: #c84b00;
-  --grey: #1c1c18;
-  --midgrey: #2e2e28;
-  --softgrey: #666660;
+/* FORCE DARK - SAFARI FIX */
+html {
+  background-color: #080806 !important;
+  color: #f0ebe0 !important;
+  color-scheme: dark !important;
+  -webkit-text-size-adjust: 100%;
 }
 
-*{margin:0;padding:0;box-sizing:border-box;max-width:100%;}
-html,body{overflow-x:hidden;scroll-behavior:smooth;}
+:root {
+–ink: #080806;
+–paper: #f0ebe0;
+–orange: #ff4d00;
+–yellow: #f5c800;
+–green: #00c45a;
+–blue: #0057ff;
+–purple: #7c3aed;
+–rust: #c84b00;
+–grey: #1c1c18;
+–midgrey: #2e2e28;
+–softgrey: #666660;
+}
+
+*, *::before, *::after {
+margin: 0; padding: 0;
+box-sizing: border-box;
+}
+
+html, body {
+max-width: 100%;
+overflow-x: hidden;
+scroll-behavior: smooth;
+background-color: #080806 !important;
+color: #f0ebe0 !important;
+}
 
 body {
-background:var(–ink);
-color:var(–paper);
-font-family:‘Space Mono’,monospace;
-cursor:none;
+background-color: #080806 !important;
+color: #f0ebe0 !important;
+font-family: ‘Space Mono’, ‘Courier New’, monospace !important;
+cursor: none;
+-webkit-font-smoothing: antialiased;
+-moz-osx-font-smoothing: grayscale;
 }
 
-/* CURSOR */
-#cursor{
-width:18px;height:18px;
-border:2px solid var(–orange);
-border-radius:50%;
-position:fixed;pointer-events:none;
-z-index:9999;
-transition:transform .15s,background .15s;
-mix-blend-mode:difference;
+/* SAFARI: force all text color */
+body, body * {
+color: inherit;
 }
 
-/* GRAIN */
-body::before{
-content:’’;position:fixed;inset:0;
-background-image:url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 200 200’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.85’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23n)’ opacity=‘0.04’/%3E%3C/svg%3E”);
-pointer-events:none;z-index:8000;opacity:.5;
+/* CURSOR - hidden on touch */
+#cursor {
+width: 18px; height: 18px;
+border: 2px solid #ff4d00;
+border-radius: 50%;
+position: fixed; pointer-events: none;
+z-index: 9999;
+transition: transform .15s, background .15s;
+mix-blend-mode: difference;
 }
+
+@media (pointer: coarse) { #cursor { display: none; } body { cursor: auto !important; } * { cursor: auto !important; } }
 
 /* PAGE SYSTEM */
-.page{display:none;}
-.page.active{display:block;}
+.page { display: none; }
+.page.active { display: block; }
 
-/* NAV */
-nav{
-position:fixed;top:0;left:0;right:0;z-index:500;
-height:60px;padding:0 2rem;
-display:flex;justify-content:space-between;align-items:center;
-background:rgba(8,8,6,.95);backdrop-filter:blur(10px);
-border-bottom:2px solid rgba(255,255,255,.06);
-}
-.nav-logo{
-font-family:‘Archivo Black’,sans-serif;
-font-size:1.3rem;letter-spacing:.12em;
-text-decoration:none;color:var(–paper);
-display:flex;align-items:center;gap:.5rem;
-cursor:none;
-}
-.nav-dot{
-width:9px;height:9px;background:var(–orange);
-border-radius:50%;animation:beat 1.2s infinite;
-}
-@keyframes beat{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.7);opacity:.4;}}
-
-.nav-links{display:flex;gap:1.5rem;align-items:center;}
-.nav-links a{
-font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
-color:var(–softgrey);text-decoration:none;
-transition:color .2s;cursor:none;
-}
-.nav-links a:hover,.nav-links a.active{color:var(–orange);}
-.nav-links .nav-cta{
-background:var(–orange);color:var(–ink);
-font-family:‘Space Mono’,monospace;
-font-size:.6rem;font-weight:700;letter-spacing:.15em;
-padding:.4rem 1rem;text-transform:uppercase;
-transition:background .2s;
-}
-.nav-links .nav-cta:hover{background:var(–yellow);color:var(–ink);}
-
-/* TICKER */
-.ticker{
-background:var(–orange);padding:.6rem 0;
-overflow:hidden;white-space:nowrap;
-border-top:3px solid var(–rust);border-bottom:3px solid var(–rust);
-}
-.ticker-inner{
-display:inline-flex;
-animation:roll 22s linear infinite;
-}
-.t-item{
-display:inline-flex;align-items:center;gap:1rem;
-margin-right:2.5rem;font-size:.7rem;font-weight:700;
-letter-spacing:.2em;text-transform:uppercase;color:var(–ink);
-cursor:none;transition:opacity .2s;
-}
-.t-item:hover{opacity:.7;}
-.t-item::after{content:‘◆’;font-size:.4rem;}
-@keyframes roll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-
-/* DECO BAR */
-.deco-bar{height:3px;background:linear-gradient(90deg,var(–orange),var(–yellow),var(–green),var(–blue),var(–purple));}
-
-/* BUTTONS */
-.btn{
-font-family:‘Space Mono’,monospace;font-size:.7rem;
-font-weight:700;letter-spacing:.15em;text-transform:uppercase;
-padding:.9rem 2rem;border:none;cursor:none;
-text-decoration:none;display:inline-block;transition:all .2s;
-}
-.btn-o{
-background:var(–orange);color:var(–ink);
-clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
-}
-.btn-o:hover{background:var(–yellow);}
-.btn-g{background:transparent;color:var(–paper);border:1px solid rgba(255,255,255,.2);}
-.btn-g:hover{border-color:var(–orange);color:var(–orange);}
-.btn-dark{background:var(–ink);color:var(–paper);}
-.btn-dark:hover{background:var(–orange);color:var(–ink);}
-
-/* SECTION LABELS */
-.s-label{
-font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;
-color:var(–orange);margin-bottom:.8rem;
-display:flex;align-items:center;gap:.8rem;
-}
-.s-label::before{content:’’;display:block;width:18px;height:2px;background:var(–orange);}
-
-.s-title{
-font-family:‘Roboto Condensed’,sans-serif;
-font-style:italic;font-weight:700;
-font-size:clamp(2.2rem,6vw,5rem);
-text-transform:uppercase;line-height:.88;
-margin-bottom:2.5rem;
+/* ── NAV ── */
+nav {
+position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+height: 60px; padding: 0 2rem;
+display: -webkit-flex; display: flex;
+-webkit-justify-content: space-between; justify-content: space-between;
+-webkit-align-items: center; align-items: center;
+background-color: rgba(8,8,6,0.97) !important;
+-webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+border-bottom: 2px solid rgba(255,255,255,0.07);
 }
 
-/* CARDS SHARED */
-.card-grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
-.card-grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;}
-.card-grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+.nav-logo {
+font-family: ‘Archivo Black’, ‘Arial Black’, sans-serif !important;
+font-size: 1.3rem; letter-spacing: .12em;
+text-decoration: none;
+color: #f0ebe0 !important;
+display: -webkit-flex; display: flex;
+-webkit-align-items: center; align-items: center;
+gap: .5rem; cursor: pointer;
+}
 
-.event-card{
-background:var(–grey);padding:2rem;
-cursor:none;transition:background .2s;
-position:relative;overflow:hidden;
+.nav-dot {
+width: 9px; height: 9px;
+background-color: #ff4d00 !important;
+border-radius: 50%;
+-webkit-animation: beat 1.2s infinite; animation: beat 1.2s infinite;
+display: inline-block;
 }
-.event-card::before{
-content:’’;position:absolute;top:0;left:0;right:0;height:3px;
-background:var(–orange);transform:scaleX(0);transform-origin:left;
-transition:transform .3s;
-}
-.event-card:hover{background:var(–midgrey);}
-.event-card:hover::before{transform:scaleX(1);}
 
-.event-card .ec-tag{
-font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;
-background:var(–orange);color:var(–ink);
-padding:.25rem .7rem;display:inline-block;margin-bottom:1rem;font-weight:700;
-}
-.event-card .ec-tag.green{background:var(–green);color:var(–ink);}
-.event-card .ec-tag.blue{background:var(–blue);}
-.event-card .ec-tag.yellow{background:var(–yellow);color:var(–ink);}
-.event-card .ec-tag.purple{background:var(–purple);}
+@-webkit-keyframes beat { 0%,100%{-webkit-transform:scale(1);opacity:1;} 50%{-webkit-transform:scale(1.7);opacity:.4;} }
+@keyframes beat { 0%,100%{transform:scale(1);opacity:1;} 50%{transform:scale(1.7);opacity:.4;} }
 
-.event-card h3{
-font-family:‘Roboto Condensed’,sans-serif;
-font-style:italic;font-weight:700;
-font-size:1.4rem;text-transform:uppercase;
-line-height:1;margin-bottom:.8rem;
+.nav-links {
+display: -webkit-flex; display: flex;
+gap: 1.5rem;
+-webkit-align-items: center; align-items: center;
 }
-.event-card .ec-meta{font-size:.62rem;color:var(–softgrey);line-height:1.8;}
-.event-card .ec-meta strong{color:var(–orange);}
-.event-card .ec-arrow{
-position:absolute;bottom:1.5rem;right:1.5rem;
-font-size:1.2rem;color:var(–orange);
-opacity:0;transition:opacity .2s,transform .2s;
+
+.nav-links a {
+font-family: ‘Space Mono’, ‘Courier New’, monospace !important;
+font-size: .6rem; letter-spacing: .2em; text-transform: uppercase;
+color: #666660 !important; text-decoration: none;
+transition: color .2s; cursor: pointer;
 }
-.event-card:hover .ec-arrow{opacity:1;transform:translate(3px,-3px);}
+.nav-links a:hover, .nav-links a.active { color: #ff4d00 !important; }
+
+.nav-cta {
+background-color: #ff4d00 !important;
+color: #080806 !important;
+font-family: ‘Space Mono’, monospace !important;
+font-size: .6rem !important; font-weight: 700; letter-spacing: .15em;
+padding: .4rem 1rem; text-transform: uppercase;
+}
+.nav-cta:hover { background-color: #f5c800 !important; color: #080806 !important; }
+
+@media (max-width: 768px) {
+.nav-links a:not(.nav-cta) { display: none; }
+nav { padding: 0 1rem; }
+}
+
+/* ── TICKER ── */
+.ticker {
+background-color: #ff4d00 !important;
+padding: .65rem 0;
+overflow: hidden; white-space: nowrap;
+border-top: 3px solid #c84b00;
+border-bottom: 3px solid #c84b00;
+}
+.ticker-inner {
+display: -webkit-inline-flex; display: inline-flex;
+-webkit-animation: roll 22s linear infinite; animation: roll 22s linear infinite;
+}
+.t-item {
+display: -webkit-inline-flex; display: inline-flex;
+-webkit-align-items: center; align-items: center;
+gap: 1rem; margin-right: 2.5rem;
+font-family: ‘Space Mono’, monospace !important;
+font-size: .7rem; font-weight: 700; letter-spacing: .2em;
+text-transform: uppercase; color: #080806 !important; cursor: pointer;
+}
+.t-item::after { content: ‘◆’; font-size: .4rem; }
+@-webkit-keyframes roll { 0%{-webkit-transform:translateX(0);} 100%{-webkit-transform:translateX(-50%);} }
+@keyframes roll { 0%{transform:translateX(0);} 100%{transform:translateX(-50%);} }
+
+/* ── DECO BAR ── */
+.deco-bar { height: 3px; background: linear-gradient(90deg,#ff4d00,#f5c800,#00c45a,#0057ff,#7c3aed); }
+
+/* ── BUTTONS ── */
+.btn {
+font-family: ‘Space Mono’, monospace !important;
+font-size: .7rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+padding: .9rem 2rem; border: none; cursor: pointer;
+text-decoration: none; display: inline-block; transition: all .2s;
+-webkit-appearance: none; appearance: none;
+}
+.btn-o {
+background-color: #ff4d00 !important; color: #080806 !important;
+-webkit-clip-path: polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+clip-path: polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));
+}
+.btn-o:hover { background-color: #f5c800 !important; }
+.btn-g {
+background-color: transparent !important; color: #f0ebe0 !important;
+border: 1px solid rgba(255,255,255,.25) !important;
+}
+.btn-g:hover { border-color: #ff4d00 !important; color: #ff4d00 !important; }
+.btn-dark { background-color: #080806 !important; color: #f0ebe0 !important; }
+.btn-dark:hover { background-color: #ff4d00 !important; color: #080806 !important; }
+
+/* ── LABELS & TITLES ── */
+.s-label {
+font-family: ‘Space Mono’, monospace !important;
+font-size: .58rem; letter-spacing: .4em; text-transform: uppercase;
+color: #ff4d00 !important; margin-bottom: .8rem;
+display: -webkit-flex; display: flex;
+-webkit-align-items: center; align-items: center; gap: .8rem;
+}
+.s-label::before { content: ‘’; display: block; width: 18px; height: 2px; background-color: #ff4d00; }
+
+.s-title {
+font-family: ‘Roboto Condensed’, ‘Arial Narrow’, Arial, sans-serif !important;
+font-style: italic; font-weight: 700;
+font-size: clamp(2.2rem, 6vw, 5rem);
+text-transform: uppercase; line-height: .88;
+margin-bottom: 2.5rem;
+color: #f0ebe0 !important;
+}
+
+/* ── CARDS ── */
+.card-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 2px; }
+.card-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 2px; }
+.card-grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; }
+
+.event-card {
+background-color: #1c1c18 !important;
+padding: 2rem; cursor: pointer;
+transition: background .2s; position: relative; overflow: hidden;
+}
+.event-card::before {
+content: ‘’; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+background-color: #ff4d00;
+-webkit-transform: scaleX(0); transform: scaleX(0);
+-webkit-transform-origin: left; transform-origin: left;
+transition: -webkit-transform .3s; transition: transform .3s;
+}
+.event-card:hover { background-color: #2e2e28 !important; }
+.event-card:hover::before { -webkit-transform: scaleX(1); transform: scaleX(1); }
+
+.ec-tag {
+font-family: ‘Space Mono’, monospace !important;
+font-size: .55rem; letter-spacing: .2em; text-transform: uppercase;
+background-color: #ff4d00 !important; color: #080806 !important;
+padding: .25rem .7rem; display: inline-block; margin-bottom: 1rem; font-weight: 700;
+}
+.ec-tag.green { background-color: #00c45a !important; color: #080806 !important; }
+.ec-tag.blue { background-color: #0057ff !important; color: #f0ebe0 !important; }
+.ec-tag.yellow { background-color: #f5c800 !important; color: #080806 !important; }
+.ec-tag.purple { background-color: #7c3aed !important; color: #f0ebe0 !important; }
+
+.event-card h3 {
+font-family: ‘Roboto Condensed’, Arial, sans-serif !important;
+font-style: italic; font-weight: 700;
+font-size: 1.4rem; text-transform: uppercase;
+line-height: 1; margin-bottom: .8rem;
+color: #f0ebe0 !important;
+}
+.event-card .ec-meta { font-size: .62rem; color: #666660 !important; line-height: 1.8; }
+.event-card .ec-meta strong { color: #ff4d00 !important; }
+.ec-arrow {
+position: absolute; bottom: 1.5rem; right: 1.5rem;
+font-size: 1.2rem; color: #ff4d00 !important;
+opacity: 0; transition: opacity .2s, -webkit-transform .2s; transition: opacity .2s, transform .2s;
+}
+.event-card:hover .ec-arrow { opacity: 1; -webkit-transform: translate(3px,-3px); transform: translate(3px,-3px); }
 
 /* IMAGE CARDS */
-.img-card{
-position:relative;overflow:hidden;cursor:none;
-height:280px;background:var(–midgrey);
+.img-card {
+position: relative; overflow: hidden; cursor: pointer;
+height: 280px; background-color: #2e2e28 !important;
 }
-.img-card img{
-width:100%;height:100%;object-fit:cover;
-filter:grayscale(50%) contrast(1.1);
-transition:transform .4s,filter .4s;
+.img-card img {
+width: 100%; height: 100%; object-fit: cover;
+-webkit-filter: grayscale(50%) contrast(1.1); filter: grayscale(50%) contrast(1.1);
+transition: -webkit-transform .4s; transition: transform .4s;
 }
-.img-card:hover img{transform:scale(1.06);filter:grayscale(20%);}
-.img-card::after{
-content:’’;position:absolute;inset:0;
-background:linear-gradient(to top,rgba(8,8,6,.88) 0%,transparent 60%);
+.img-card:hover img { -webkit-transform: scale(1.06); transform: scale(1.06); -webkit-filter: grayscale(20%); filter: grayscale(20%); }
+.img-card::after {
+content: ‘’; position: absolute; inset: 0;
+background: linear-gradient(to top, rgba(8,8,6,.88) 0%, transparent 60%);
 }
-.img-card-content{
-position:absolute;bottom:1.5rem;left:1.5rem;right:1.5rem;z-index:2;
+.img-card-content { position: absolute; bottom: 1.5rem; left: 1.5rem; right: 1.5rem; z-index: 2; }
+.img-card-content h3 {
+font-family: ‘Roboto Condensed’, Arial, sans-serif !important;
+font-style: italic; font-weight: 700;
+font-size: 1.5rem; text-transform: uppercase; line-height: 1;
+color: #f0ebe0 !important;
 }
-.img-card-content h3{
-font-family:‘Roboto Condensed’,sans-serif;
-font-style:italic;font-weight:700;
-font-size:1.5rem;text-transform:uppercase;line-height:1;
-}
-.img-card-content .ic-sub{font-size:.6rem;color:var(–orange);letter-spacing:.15em;margin-top:.3rem;}
+.img-card-content .ic-sub { font-size: .6rem; color: #ff4d00 !important; letter-spacing: .15em; margin-top: .3rem; }
 
 /* REVEAL */
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .6s,transform .6s;}
-.reveal.in{opacity:1;transform:translateY(0);}
+.reveal { opacity: 0; -webkit-transform: translateY(30px); transform: translateY(30px); transition: opacity .6s, -webkit-transform .6s; transition: opacity .6s, transform .6s; }
+.reveal.in { opacity: 1; -webkit-transform: translateY(0); transform: translateY(0); }
 
 /* PAGE WRAPPER */
-.pw{max-width:1300px;margin:0 auto;padding:0 2rem;}
-.pt{padding-top:60px;}
+.pw { max-width: 1300px; margin: 0 auto; padding: 0 2rem; }
+.pt { padding-top: 60px; }
 
-/* ════════════════════════════════
-HOME PAGE
-════════════════════════════════ */
-.hero{
-min-height:100vh;padding-top:60px;
-display:grid;grid-template-columns:1fr 1fr;
-position:relative;overflow:hidden;
+/* ══════════════════
+HERO
+══════════════════ */
+.hero {
+min-height: 100vh; padding-top: 60px;
+display: -webkit-grid; display: grid;
+grid-template-columns: 1fr 1fr;
+position: relative; overflow: hidden;
+background-color: #080806 !important;
 }
-.hero-left{
-padding:5rem 2.5rem 4rem;
-display:flex;flex-direction:column;justify-content:flex-end;
-border-right:2px solid rgba(255,255,255,.08);position:relative;
+.hero-left {
+padding: 5rem 2.5rem 4rem;
+display: -webkit-flex; display: flex;
+-webkit-flex-direction: column; flex-direction: column;
+-webkit-justify-content: flex-end; justify-content: flex-end;
+border-right: 2px solid rgba(255,255,255,.08);
+position: relative; background-color: #080806 !important;
 }
-.hero-kicker{
-font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;
-color:var(–orange);margin-bottom:1.5rem;
-display:flex;align-items:center;gap:.8rem;
+.hero-kicker {
+font-family: ‘Space Mono’, monospace !important;
+font-size: .58rem; letter-spacing: .4em; text-transform: uppercase;
+color: #ff4d00 !important; margin-bottom: 1.5rem;
+display: -webkit-flex; display: flex;
+-webkit-align-items: center; align-items: center; gap: .8rem;
 }
-.hero-kicker::before{content:’’;display:inline-block;width:25px;height:2px;background:var(–orange);}
-.hero-title{
-font-family:‘Roboto Condensed’,sans-serif;
-font-style:italic;font-weight:700;
-font-size:clamp(5rem,12vw,11rem);
-line-height:.82;letter-spacing:-.02em;text-transform:uppercase;
+.hero-kicker::before { content: ‘’; display: inline-block; width: 25px; height: 2px; background-color: #ff4d00; }
+
+.hero-title {
+font-family: ‘Roboto Condensed’, ‘Arial Narrow’, Arial, sans-serif !important;
+font-style: italic !important; font-weight: 700 !important;
+font-size: clamp(5rem,12vw,11rem);
+line-height: .82; letter-spacing: -.02em; text-transform: uppercase;
+color: #f0ebe0 !important;
 }
-.hero-title .l1{color:var(–paper);}
-.hero-title .l2{color:var(–orange);}
-.hero-title .l3{color:transparent;-webkit-text-stroke:2px var(–paper);}
-.hero-sub{font-size:.72rem;letter-spacing:.15em;color:var(–softgrey);margin-top:2rem;text-transform:uppercase;}
-.hero-btns{display:flex;gap:1rem;margin-top:2rem;flex-wrap:wrap;}
-.hero-right{position:relative;overflow:hidden;}
-.hero-right img{width:100%;height:100%;object-fit:cover;filter:grayscale(55%) contrast(1.1);opacity:.7;}
-.hero-right::after{
-content:’’;position:absolute;inset:0;
-background:repeating-linear-gradient(-45deg,transparent,transparent 4px,rgba(255,77,0,.03) 4px,rgba(255,77,0,.03) 5px);
+.hero-title .l1 { color: #f0ebe0 !important; display: block; }
+.hero-title .l2 { color: #ff4d00 !important; display: block; }
+.hero-title .l3 {
+color: transparent !important;
+-webkit-text-stroke: 2px #f0ebe0;
+display: block;
 }
-.hero-coord{
-position:absolute;top:1.5rem;right:1.5rem;
-writing-mode:vertical-rl;font-size:.55rem;
-letter-spacing:.4em;color:rgba(255,255,255,.25);text-transform:uppercase;z-index:2;
+.hero-sub {
+font-family: ‘Space Mono’, monospace !important;
+font-size: .72rem; letter-spacing: .15em;
+color: #666660 !important; margin-top: 2rem; text-transform: uppercase;
 }
-.hero-zh{
-position:absolute;bottom:1.5rem;left:1.5rem;
-font-family:‘Roboto Condensed’,sans-serif;font-style:italic;
-font-size:7rem;line-height:1;color:rgba(255,255,255,.05);pointer-events:none;
+.hero-btns {
+display: -webkit-flex; display: flex;
+gap: 1rem; margin-top: 2rem; -webkit-flex-wrap: wrap; flex-wrap: wrap;
+}
+.hero-right { position: relative; overflow: hidden; background-color: #080806; }
+.hero-right img { width: 100%; height: 100%; object-fit: cover; -webkit-filter: grayscale(55%) contrast(1.1); filter: grayscale(55%) contrast(1.1); opacity: .75; }
+.hero-right::after {
+content: ‘’; position: absolute; inset: 0;
+background: repeating-linear-gradient(-45deg,transparent,transparent 4px,rgba(255,77,0,.03) 4px,rgba(255,77,0,.03) 5px);
+}
+.hero-coord {
+position: absolute; top: 1.5rem; right: 1.5rem;
+writing-mode: vertical-rl; font-size: .55rem; letter-spacing: .4em;
+color: rgba(255,255,255,.25) !important; text-transform: uppercase; z-index: 2;
+}
+.hero-zh {
+position: absolute; bottom: 1.5rem; left: 1.5rem;
+font-family: ‘Roboto Condensed’, Arial, sans-serif !important; font-style: italic;
+font-size: 7rem; line-height: 1; color: rgba(255,255,255,.05) !important; pointer-events: none;
 }
 
-/* HOME SEARCH */
-.home-search{background:var(–paper);color:var(–ink);padding:4rem 2rem;}
-.hs-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
-.hs-title{
-font-family:‘Roboto Condensed’,sans-serif;font-style:italic;font-weight:700;
-font-size:clamp(2.8rem,6vw,5rem);line-height:.88;text-transform:uppercase;color:var(–ink);
+/* SEARCH SECTION */
+.home-search { background-color: #f0ebe0 !important; color: #080806 !important; padding: 4rem 2rem; }
+.hs-inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; -webkit-align-items: center; align-items: center; }
+.hs-title {
+font-family: ‘Roboto Condensed’, Arial, sans-serif !important; font-style: italic; font-weight: 700;
+font-size: clamp(2.8rem,6vw,5rem); line-height: .88; text-transform: uppercase; color: #080806 !important;
 }
-.hs-title span{color:var(–orange);}
-.search-row{display:flex;border:3px solid var(–ink);}
-.search-row input{
-flex:1;border:none;outline:none;background:transparent;
-font-family:‘Space Mono’,monospace;font-size:.85rem;
-padding:.9rem 1.2rem;color:var(–ink);cursor:none;
+.hs-title span { color: #ff4d00 !important; }
+.search-row { display: -webkit-flex; display: flex; border: 3px solid #080806; }
+.search-row input {
+-webkit-flex: 1; flex: 1; border: none; outline: none;
+background-color: transparent !important; color: #080806 !important;
+font-family: ‘Space Mono’, monospace !important; font-size: .85rem; padding: .9rem 1.2rem;
+-webkit-appearance: none;
 }
-.search-row input::placeholder{color:#aaa;}
-.search-row button{
-background:var(–ink);color:var(–paper);border:none;
-padding:.9rem 1.5rem;font-family:‘Space Mono’,monospace;
-font-size:.65rem;font-weight:700;letter-spacing:.15em;
-text-transform:uppercase;cursor:none;transition:background .2s;
+.search-row input::-webkit-input-placeholder { color: #aaa; }
+.search-row button {
+background-color: #080806 !important; color: #f0ebe0 !important;
+border: none; padding: .9rem 1.5rem;
+font-family: ‘Space Mono’, monospace !important;
+font-size: .65rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase;
+cursor: pointer; transition: background .2s; -webkit-appearance: none;
 }
-.search-row button:hover{background:var(–orange);}
-.pills{display:flex;flex-wrap:wrap;gap:.4rem;margin-top:.8rem;}
-.pill{
-font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
-padding:.35rem .9rem;border:2px solid var(–ink);
-cursor:none;transition:all .15s;color:var(–ink);background:transparent;
+.search-row button:hover { background-color: #ff4d00 !important; }
+.pills { display: -webkit-flex; display: flex; -webkit-flex-wrap: wrap; flex-wrap: wrap; gap: .4rem; margin-top: .8rem; }
+.pill {
+font-family: ‘Space Mono’, monospace !important;
+font-size: .6rem; letter-spacing: .12em; text-transform: uppercase;
+padding: .35rem .9rem; border: 2px solid #080806;
+cursor: pointer; color: #080806 !important; background-color: transparent !important;
 }
-.pill:hover,.pill.on{background:var(–orange);border-color:var(–orange);color:var(–ink);}
+.pill:hover, .pill.on { background-color: #ff4d00 !important; border-color: #ff4d00 !important; color: #080806 !important; }
 
-/* HOME CATEGORY BENTO */
-.bento{
-display:grid;grid-template-columns:repeat(12,1fr);
-grid-template-rows:repeat(2,220px);gap:3px;
+/* BENTO */
+.bento {
+display: grid; grid-template-columns: repeat(12,1fr);
+grid-template-rows: repeat(2,220px); gap: 3px;
 }
-.bt{
-position:relative;overflow:hidden;cursor:none;
-display:flex;flex-direction:column;justify-content:flex-end;
-padding:1.2rem;background:var(–midgrey);
+.bt {
+position: relative; overflow: hidden; cursor: pointer;
+display: -webkit-flex; display: flex;
+-webkit-flex-direction: column; flex-direction: column;
+-webkit-justify-content: flex-end; justify-content: flex-end;
+padding: 1.2rem; background-color: #2e2e28 !important;
 }
-.bt:hover .bt-bg{transform:scale(1.07);filter:grayscale(10%);}
-.bt-bg{
-position:absolute;inset:0;background-size:cover;background-position:center;
-filter:grayscale(55%);transition:transform .4s,filter .4s;
+.bt:hover .bt-bg { -webkit-transform: scale(1.07); transform: scale(1.07); -webkit-filter: grayscale(10%); filter: grayscale(10%); }
+.bt-bg {
+position: absolute; inset: 0; background-size: cover; background-position: center;
+-webkit-filter: grayscale(55%); filter: grayscale(55%);
+transition: -webkit-transform .4s; transition: transform .4s;
 }
-.bt::after{
-content:’’;position:absolute;inset:0;
-background:linear-gradient(to top,rgba(8,8,6,.88) 0%,rgba(8,8,6,.25) 60%,transparent 100%);
+.bt::after {
+content: ‘’; position: absolute; inset: 0;
+background: linear-gradient(to top, rgba(8,8,6,.88) 0%, rgba(8,8,6,.25) 60%, transparent 100%);
 }
-.bt-c{position:relative;z-index:2;}
-.bt-icon{font-size:1.6rem;margin-bottom:.2rem;display:block;}
-.bt-name{
-font-family:‘Roboto Condensed’,sans-serif;font-style:italic;font-weight:700;
-font-size:1.5rem;text-transform:uppercase;line-height:1;
+.bt-c { position: relative; z-index: 2; }
+.bt-icon { font-size: 1.6rem; margin-bottom: .2rem; display: block; }
+.bt-name {
+font-family: ‘Roboto Condensed’, Arial, sans-serif !important; font-style: italic; font-weight: 700;
+font-size: 1.5rem; text-transform: uppercase; line-height: 1; color: #f0ebe0 !important;
 }
-.bt-count{font-size:.58rem;letter-spacing:.18em;color:var(–orange);margin-top:.2rem;}
+.bt-count { font-size: .58rem; letter-spacing: .18em; color: #ff4d00 !important; margin-top: .2rem; }
 .b1{grid-column:span 4;} .b2{grid-column:span 3;} .b3{grid-column:span 5;}
 .b4{grid-column:span 3;} .b5{grid-column:span 4;} .b6{grid-column:span 5;}
 
 /* TODAY STRIP */
-.today-strip{background:var(–yellow);padding:3.5rem 2rem;}
-.ts-inner{max-width:1300px;margin:0 auto;display:grid;grid-template-columns:200px 1fr;gap:3rem;align-items:center;}
-.ts-label h2{
-font-family:‘Roboto Condensed’,sans-serif;font-style:italic;font-weight:700;
-font-size:3rem;text-transform:uppercase;line-height:.9;color:var(–ink);
+.today-strip { background-color: #f5c800 !important; padding: 3.5rem 2rem; }
+.ts-inner { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: 200px 1fr; gap: 3rem; -webkit-align-items: center; align-items: center; }
+.ts-label h2 {
+font-family: ‘Roboto Condensed’, Arial, sans-serif !important; font-style: italic; font-weight: 700;
+font-size: 3rem; text-transform: uppercase; line-height: .9; color: #080806 !important;
 }
-.ts-label p{font-size:.72rem;color:rgba(0,0,0,.55);margin-top:.5rem;line-height:1.6;}
-.ts-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;}
-.ts-card{background:rgba(0,0,0,.1);padding:1.5rem;cursor:none;transition:background .2s;}
-.ts-card:hover{background:rgba(0,0,0,.2);}
-.ts-num{font-family:‘Roboto Condensed’,sans-serif;font-style:italic;font-weight:700;font-size:3.5rem;color:rgba(0,0,0,.1);line-height:1;}
-.ts-card h4{font-family:‘Roboto Condensed’,sans-serif;font-style:italic;font-weight:700;font-size:1.1rem;text-transform:uppercase;margin-bottom:.4rem;}
-.ts-card p{font-size:.65rem;color:rgba(0,0,0,.55);line-height:1.5;}
+.ts-label p { font-size: .72rem; color: rgba(0,0,0,.55); margin-top: .5rem; line-height: 1.6; }
+.ts-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
+.ts-card { background-color: rgba(0,0,0,.1) !important; padding: 1.5rem; cursor: pointer; transition: background .2s; }
+.ts-card:hover { background-color: rgba(0,0,0,.2) !important; }
+.ts-num { font-family: ‘Roboto Condensed’, Arial, sans-serif !important; font-style: italic; font-weight: 700; font-size: 3.5rem; color: rgba(0,0,0,.1) !important; line-height: 1; }
+.ts-card h4 { font-family: ‘Roboto Condensed’, Arial, sans-serif !important; font-style: italic; font-weight: 700; font-size: 1.1rem; text-transform: uppercase; margin-bottom: .4rem; color: #080806 !important; }
+.ts-card p { font-size: .65rem; color: rgba(0,0,0,.55) !important; line-height: 1.5; }
 
-/* HOME COMMUNITY */
-.hc-section{max-width:1300px;margin:0 auto;padding:5rem 2rem;display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:center;}
-.hc-left h2{
-font-family:‘Roboto Condensed’,sans-serif;font-style:italic;font-weight:700;
-font-size:clamp(2.5rem,5vw,4.5rem);text-transform:uppercase;line-height:.88;margin-bottom:1.2rem;
+/* COMMUNITY HOME */
+.hc-section { max-width: 1300px; margin: 0 auto; padding: 5rem 2rem; display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; -webkit-align-items: center; align-items: center; background-color: #080806 !important; }
+.hc-left h2 {
+font-family: ‘Roboto Condensed’, Arial, sans-serif !important; font-style: italic; font-weight: 700;
+font-size: clamp(2.5rem,5vw,4.5rem); text-transform: uppercase; line-height: .88; margin-bottom: 1.2rem; color: #f0ebe0 !important;
 }
-.hc-left h2 em{color:var(–orange);font-style:inherit;}
-.hc-left p{font-size:.8rem;color:var(–softgrey);line-height:1.8;margin-bottom:1.5rem;}
-.stat-band{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid rgba(255,255,255,.1);margin-top:2rem;}
-.stat-i{padding:1.5rem 1rem;border-right:1px solid rgba(255,255,255,.1);}
-.stat-i:last-child{border-right:none;}
-.stat-n{font-family:‘Roboto Condensed’,sans-serif;font-style:italic;font-weight:700;font-size:3rem;color:var(–orange);line-height:1;}
-.stat-l{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(–softgrey);margin-top:.3rem;}
-.ct-tiles{display:grid;grid-template-columns:1fr 1fr;gap:3px;}
-.ct{padding:2rem 1.5rem;cursor:none;transition:transform .2s;}
-.ct:hover{transform:translateY(-3px);}
-.ct.o{background:var(–orange);} .ct.m{background:var(–midgrey);} .ct.b{background:var(–blue);}
-.ct-ico{font-size:2rem;display:block;margin-bottom:.8rem;}
-.ct h4{font-family:‘Roboto Condensed’,sans-serif;font-style:italic;font-weight:700;font-size:1.3rem;text-transform:uppercase;}
-.ct small{font-size:.6rem;letter-spacing:.12em;opacity:.65;display:block;margin-top:.3rem;text-transform:uppercase;}
-.ct.o h4,.ct.o small{color:var(–ink);}
+.hc-left h2 em { color: #ff4d00 !important; font-style: inherit; }
+.hc-left p { font-size: .8rem; color: #666660 !important; line-height: 1.8; margin-bottom: 1.5rem; }
+.stat-band { display: grid; grid-template-columns: repeat(3,1fr); border: 1px solid rgba(255,255,255,.1); margin-top: 2rem; }
+.stat-i { padding: 1.5rem 1rem; border-right: 1px solid rgba(255,255,255,.1); }
+.stat-i:last-child { border-right: none; }
+.stat-n { font-family: ‘Roboto Condensed’, Arial, sans-serif !important; font-style: italic; font-weight: 700; font-size: 3rem; color: #ff4d00 !important; line-height: 1; }
+.stat-l { font-size: .55rem; letter-spacing: .2em; text-transform: uppercase; color: #666660 !important; margin-top: .3rem; }
+.ct-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.ct { padding: 2rem 1.5rem; cursor: pointer; transition: -webkit-transform .2s; transition: transform .2s; }
+.ct:hover { -webkit-transform: translateY(-3px); transform: translateY(-3px); }
+.ct.o { background-color: #ff4d00 !important; }
+.ct.m { background-color: #2e2e28 !important; }
+.ct.b { background-color: #0057ff !important; }
+.ct-ico { font-size: 2rem; display: block; margin-bottom: .8rem; }
+.ct h4 { font-family: ‘Roboto Condensed’, Arial, sans-serif !important; font-style: italic; font-weight: 700; font-size: 1.3rem; text-transform: uppercase; color: #f0ebe0 !important; }
+.ct small { font-size: .6rem; letter-spacing: .12em; opacity: .65; display: block; margin-top: .3rem; text-transform: uppercase; color: #f0ebe0 !important; }
+.ct.o h4, .ct.o small { color: #080806 !important; }
 
-/* ════════════════════════════════
-SUBPAGE SHARED HERO
-════════════════════════════════ */
-.sub-hero{
-padding:8rem 2rem 4rem;
-border-bottom:2px solid rgba(255,255,255,.07);
-position:relative;overflow:hidden;
+/* ══════════════════
+SUBPAGES
+══════════════════ */
+.sub-hero { padding: 8rem 2rem 4rem; border-bottom: 2px solid rgba(255,255,255,.07); position: relative; overflow: hidden; }
+.sub-hero-inner { max-width: 1300px; margin: 0 auto; position: relative; z-index: 1; }
+.sub-hero-kicker { font-family: ‘Space Mono’, monospace !important; font-size: .58rem; letter-spacing: .4em; text-transform: uppercase; color: #ff4d00 !important; margin-bottom: 1rem; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; gap: .8rem; }
+.sub-hero-kicker::before { content: ‘’; width: 18px; height: 2px; background-color: #ff4d00; }
+.sub-hero h1 {
+font-family: ‘Roboto Condensed’, ‘Arial Narrow’, Arial, sans-serif !important;
+font-style: italic !important; font-weight: 700 !important;
+font-size: clamp(4rem,10vw,9rem); text-transform: uppercase; line-height: .85;
+letter-spacing: -.01em;
 }
-.sub-hero::before{
-content:’’;position:absolute;inset:0;
-background:repeating-linear-gradient(-45deg,transparent,transparent 6px,rgba(255,255,255,.012) 6px,rgba(255,255,255,.012) 7px);
-pointer-events:none;
-}
-.sub-hero-inner{max-width:1300px;margin:0 auto;position:relative;z-index:1;}
-.sub-hero-kicker{font-size:.58rem;letter-spacing:.4em;text-transform:uppercase;color:var(–orange);margin-bottom:1rem;display:flex;align-items:center;gap:.8rem;}
-.sub-hero-kicker::before{content:’’;width:18px;height:2px;background:var(–orange);}
-.sub-hero h1{
-font-family:‘Roboto Condensed’,sans-serif;font-style:italic;font-weight:700;
-font-size:clamp(4rem,10vw,9rem);text-transform:uppercase;line-height:.85;
-letter-spacing:-.01em;
-}
-.sub-hero p{font-size:.82rem;color:var(–softgrey);line-height:1.8;max-width:520px;margin-top:1.5rem;}
-.sub-hero-meta{display:flex;gap:2rem;margin-top:2rem;flex-wrap:wrap;}
-.shmeta{font-family:‘Space Mono’,monospace;font-size:.62rem;color:var(–softgrey);letter-spacing:.1em;}
-.shmeta strong{color:var(–paper);}
+.sub-hero p { font-size: .82rem; color: #666660 !important; line-height: 1.8; max-width: 520px; margin-top: 1.5rem; }
+.sub-hero-meta { display: -webkit-flex; display: flex; gap: 2rem; margin-top: 2rem; -webkit-flex-wrap: wrap; flex-wrap: wrap; }
+.shmeta { font-family: ‘Space Mono’, monospace !important; font-size: .62rem; color: #666660 !important; letter-spacing: .1em; }
+.shmeta strong { color: #f0ebe0 !important; }
 
 /* FILTER BAR */
-.filter-bar{
-background:var(–grey);
-padding:1rem 2rem;
-border-bottom:1px solid rgba(255,255,255,.06);
-position:sticky;top:60px;z-index:400;
-}
-.filter-bar-inner{max-width:1300px;margin:0 auto;display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;}
-.f-label{font-size:.55rem;letter-spacing:.25em;text-transform:uppercase;color:var(–softgrey);margin-right:.5rem;}
-.ftag{
-font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;
-padding:.3rem .9rem;border:1px solid rgba(255,255,255,.15);
-cursor:none;transition:all .15s;color:var(–softgrey);background:transparent;
-}
-.ftag:hover,.ftag.on{background:var(–orange);border-color:var(–orange);color:var(–ink);}
+.filter-bar { background-color: #1c1c18 !important; padding: 1rem 2rem; border-bottom: 1px solid rgba(255,255,255,.06); position: -webkit-sticky; position: sticky; top: 60px; z-index: 400; }
+.filter-bar-inner { max-width: 1300px; margin: 0 auto; display: -webkit-flex; display: flex; gap: .6rem; -webkit-flex-wrap: wrap; flex-wrap: wrap; -webkit-align-items: center; align-items: center; }
+.f-label { font-family: ‘Space Mono’, monospace !important; font-size: .55rem; letter-spacing: .25em; text-transform: uppercase; color: #666660 !important; margin-right: .5rem; }
+.ftag { font-family: ‘Space Mono’, monospace !important; font-size: .6rem; letter-spacing: .12em; text-transform: uppercase; padding: .3rem .9rem; border: 1px solid rgba(255,255,255,.15); cursor: pointer; color: #666660 !important; background-color: transparent !important; }
+.ftag:hover, .ftag.on { background-color: #ff4d00 !important; border-color: #ff4d00 !important; color: #080806 !important; }
 
-/* CONTENT AREA */
-.content-area{max-width:1300px;margin:0 auto;padding:3rem 2rem 6rem;}
+/* CONTENT */
+.content-area { max-width: 1300px; margin: 0 auto; padding: 3rem 2rem 6rem; background-color: #080806 !important; }
 
-/* ════════════════════════════════
+/* ══════════════════
 FOOTER
-════════════════════════════════ */
-footer{background:var(–ink);border-top:3px solid var(–orange);}
-.footer-ticker{background:var(–orange);padding:.45rem 0;overflow:hidden;white-space:nowrap;font-family:‘Roboto Condensed’,sans-serif;font-style:italic;font-weight:700;font-size:.7rem;letter-spacing:.12em;color:var(–ink);text-transform:uppercase;}
-.ft-inner{display:inline-block;animation:roll 18s linear infinite;}
-.ft-inner span{margin:0 2rem;}
-.footer-grid{max-width:1300px;margin:0 auto;padding:4rem 2rem 3rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;border-bottom:1px solid rgba(255,255,255,.07);}
-.fb-logo{font-family:‘Archivo Black’,sans-serif;font-size:2rem;letter-spacing:.1em;display:flex;align-items:center;gap:.6rem;margin-bottom:.8rem;}
-.fb-dot{width:10px;height:10px;background:var(–orange);border-radius:50%;}
-.footer-brand p{font-size:.68rem;color:var(–softgrey);line-height:1.9;max-width:260px;}
-.fc h5{font-size:.55rem;letter-spacing:.3em;text-transform:uppercase;color:var(–orange);margin-bottom:1.2rem;}
-.fc ul{list-style:none;}
-.fc li{font-size:.78rem;color:var(–softgrey);margin-bottom:.6rem;cursor:none;transition:color .2s;}
-.fc li:hover{color:var(–paper);}
-.footer-bottom{max-width:1300px;margin:0 auto;padding:1.5rem 2rem;display:flex;justify-content:space-between;align-items:center;}
-.footer-bottom p{font-size:.55rem;letter-spacing:.18em;color:rgba(255,255,255,.12);text-transform:uppercase;}
+══════════════════ */
+footer { background-color: #080806 !important; border-top: 3px solid #ff4d00; }
+.footer-ticker { background-color: #ff4d00 !important; padding: .45rem 0; overflow: hidden; white-space: nowrap; font-family: ‘Roboto Condensed’, Arial, sans-serif !important; font-style: italic; font-weight: 700; font-size: .7rem; letter-spacing: .12em; color: #080806 !important; text-transform: uppercase; }
+.ft-inner { display: inline-block; -webkit-animation: roll 18s linear infinite; animation: roll 18s linear infinite; }
+.ft-inner span { margin: 0 2rem; color: #080806 !important; }
+.footer-grid { max-width: 1300px; margin: 0 auto; padding: 4rem 2rem 3rem; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; border-bottom: 1px solid rgba(255,255,255,.07); background-color: #080806 !important; }
+.fb-logo { font-family: ‘Archivo Black’, ‘Arial Black’, sans-serif !important; font-size: 2rem; letter-spacing: .1em; display: -webkit-flex; display: flex; -webkit-align-items: center; align-items: center; gap: .6rem; margin-bottom: .8rem; color: #f0ebe0 !important; }
+.fb-dot { width: 10px; height: 10px; background-color: #ff4d00 !important; border-radius: 50%; }
+.footer-brand p { font-size: .68rem; color: #666660 !important; line-height: 1.9; max-width: 260px; }
+.fc h5 { font-family: ‘Space Mono’, monospace !important; font-size: .55rem; letter-spacing: .3em; text-transform: uppercase; color: #ff4d00 !important; margin-bottom: 1.2rem; }
+.fc ul { list-style: none; }
+.fc li { font-size: .78rem; color: #666660 !important; margin-bottom: .6rem; cursor: pointer; transition: color .2s; }
+.fc li:hover { color: #f0ebe0 !important; }
+.footer-bottom { max-width: 1300px; margin: 0 auto; padding: 1.5rem 2rem; display: -webkit-flex; display: flex; -webkit-justify-content: space-between; justify-content: space-between; -webkit-align-items: center; align-items: center; background-color: #080806 !important; }
+.footer-bottom p { font-size: .55rem; letter-spacing: .18em; color: rgba(255,255,255,.12) !important; text-transform: uppercase; }
 
-/* ════════════════════════════════
+/* ══════════════════
 RESPONSIVE
-════════════════════════════════ */
-@media(max-width:1024px){
-.footer-grid{grid-template-columns:1fr 1fr;gap:2rem;}
-.bento{grid-template-columns:repeat(6,1fr);}
-.b1,.b2,.b3,.b4,.b5,.b6{grid-column:span 3;}
-.bento{grid-template-rows:repeat(3,180px);}
-.b3,.b6{grid-column:span 3;}
-.card-grid-4{grid-template-columns:1fr 1fr;}
-.ts-cards{grid-template-columns:1fr 1fr;}
+══════════════════ */
+@media (max-width: 1024px) {
+.footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+.bento { grid-template-columns: repeat(6,1fr); }
+.b1,.b2,.b3,.b4,.b5,.b6 { grid-column: span 3; }
+.bento { grid-template-rows: repeat(3,180px); }
+.card-grid-4 { grid-template-columns: 1fr 1fr; }
+.ts-cards { grid-template-columns: 1fr 1fr; }
+.hs-inner { gap: 2rem; }
 }
-@media(max-width:768px){
-nav{padding:0 1rem;}
-.nav-links a:not(.nav-cta){display:none;}
-.nav-links .nav-cta{display:block;}
-.hero{grid-template-columns:1fr;min-height:auto;}
-.hero-left{padding:5.5rem 1.5rem 3rem;border-right:none;border-bottom:2px solid rgba(255,255,255,.08);}
-.hero-right{height:240px;}
-.hs-inner{grid-template-columns:1fr;gap:2rem;}
-.home-search{padding:3rem 1.5rem;}
-.bento{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
-.b1,.b2,.b3,.b4,.b5,.b6{grid-column:span 1;height:160px;}
-.ts-inner{grid-template-columns:1fr;}
-.ts-cards{grid-template-columns:1fr;}
-.hc-section{grid-template-columns:1fr;gap:2.5rem;}
-.ct-tiles{grid-template-columns:1fr 1fr;}
-.card-grid-3{grid-template-columns:1fr;}
-.card-grid-2{grid-template-columns:1fr;}
-.card-grid-4{grid-template-columns:1fr;}
-.footer-grid{grid-template-columns:1fr 1fr;padding:2.5rem 1.5rem 2rem;}
-.footer-brand{grid-column:span 2;}
-.footer-bottom{flex-direction:column;gap:.4rem;text-align:center;padding:1.2rem 1.5rem;}
-.sub-hero{padding:6rem 1.5rem 3rem;}
-.content-area{padding:2rem 1.5rem 4rem;}
-.filter-bar{padding:.8rem 1.5rem;}
-.pw{padding:0 1.5rem;}
+@media (max-width: 768px) {
+.hero { grid-template-columns: 1fr; min-height: auto; }
+.hero-left { padding: 5.5rem 1.5rem 3rem; border-right: none; border-bottom: 2px solid rgba(255,255,255,.08); }
+.hero-right { height: 250px; }
+.hs-inner { grid-template-columns: 1fr; gap: 2rem; }
+.home-search { padding: 3rem 1.5rem; }
+.bento { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+.b1,.b2,.b3,.b4,.b5,.b6 { grid-column: span 1; height: 160px; }
+.ts-inner { grid-template-columns: 1fr; }
+.ts-cards { grid-template-columns: 1fr; }
+.hc-section { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
+.ct-tiles { grid-template-columns: 1fr 1fr; }
+.card-grid-3 { grid-template-columns: 1fr; }
+.card-grid-2 { grid-template-columns: 1fr; }
+.card-grid-4 { grid-template-columns: 1fr 1fr; }
+.footer-grid { grid-template-columns: 1fr 1fr; padding: 2.5rem 1.5rem 2rem; }
+.footer-brand { grid-column: span 2; }
+.footer-bottom { -webkit-flex-direction: column; flex-direction: column; gap: .4rem; text-align: center; padding: 1.2rem 1.5rem; }
+.sub-hero { padding: 6rem 1.5rem 3rem; }
+.content-area { padding: 2rem 1.5rem 4rem; }
+.filter-bar { padding: .8rem 1.5rem; }
+.pw { padding: 0 1.5rem; }
+.stat-band { grid-template-columns: repeat(3,1fr); }
 }
-@media(max-width:480px){
-.hero-title{font-size:clamp(3.5rem,19vw,5.5rem);}
-.bento{grid-template-columns:1fr;}
-.bt{height:140px;}
-.ct-tiles{grid-template-columns:1fr;}
-.stat-band{grid-template-columns:1fr 1fr;}
-.footer-grid{grid-template-columns:1fr;}
-.footer-brand{grid-column:span 1;}
+@media (max-width: 480px) {
+.hero-title { font-size: clamp(3.5rem,18vw,5.5rem); }
+.bento { grid-template-columns: 1fr; }
+.bt { height: 140px; }
+.ct-tiles { grid-template-columns: 1fr 1fr; }
+.footer-grid { grid-template-columns: 1fr; }
+.footer-brand { grid-column: span 1; }
+.card-grid-4 { grid-template-columns: 1fr; }
 }
 </style>
 
 </head>
-<body>
+<body style="background-color:#080806 !important;color:#f0ebe0 !important;">
 <div id="cursor"></div>
 
 <!-- NAV -->
@@ -498,20 +570,18 @@ nav{padding:0 1rem;}
   </div>
 </nav>
 
-<!-- ══════════════════════════════════════
-     HOME
-══════════════════════════════════════ -->
+<!-- ══════════ HOME ══════════ -->
 
-<div id="page-home" class="page active">
+<div id="page-home" class="page active" style="background-color:#080806;">
 
   <section class="hero">
     <div class="hero-left">
       <div class="hero-zh">ZH</div>
       <p class="hero-kicker">Zürich · Live · Jetzt</p>
       <h1 class="hero-title">
-        <div class="l1">STADT</div>
-        <div class="l2">PULS</div>
-        <div class="l3">ZÜRICH</div>
+        <span class="l1">STADT</span>
+        <span class="l2">PULS</span>
+        <span class="l3">ZÜRICH</span>
       </h1>
       <p class="hero-sub">din city guide für Züri</p>
       <div class="hero-btns">
@@ -546,14 +616,12 @@ nav{padding:0 1rem;}
     </div>
   </div>
 
-  <!-- SEARCH -->
-
   <div class="home-search">
     <div class="hs-inner">
       <div class="reveal">
         <h2 class="hs-title">WAS WOTTSCH<br>DU<br><span>ERLEBE?</span></h2>
       </div>
-      <div class="reveal" style="display:flex;flex-direction:column;gap:.8rem;">
+      <div class="reveal" style="display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:.8rem;">
         <div class="search-row">
           <input type="text" placeholder="Restaurant, Club, Event, Quartier…"/>
           <button>Suche</button>
@@ -573,46 +641,42 @@ nav{padding:0 1rem;}
 
   <div class="deco-bar"></div>
 
-  <!-- CATEGORIES -->
-
-  <div class="pw" style="padding-top:5rem;padding-bottom:5rem;">
+  <div class="pw" style="padding-top:5rem;padding-bottom:5rem;background-color:#080806;">
     <div class="s-label reveal">Entdecken</div>
     <div class="s-title reveal">DIS ZÜRI,<br>DIS TEMPO</div>
     <div class="bento reveal">
       <div class="bt b1" onclick="goTo('gastro')">
-        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80')"></div>
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=700&q=80');"></div>
         <div class="bt-c"><span class="bt-icon">🍽️</span><div class="bt-name">Gastro</div><div class="bt-count">348 Lokale</div></div>
       </div>
       <div class="bt b2" onclick="goTo('nachtleben')">
-        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1571266028243-e4733b0f0bb0?w=600&q=80')"></div>
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1571266028243-e4733b0f0bb0?w=600&q=80');"></div>
         <div class="bt-c"><span class="bt-icon">🎶</span><div class="bt-name">Nachtleben</div><div class="bt-count">89 Clubs</div></div>
       </div>
       <div class="bt b3" onclick="goTo('events')">
-        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=700&q=80')"></div>
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=700&q=80');"></div>
         <div class="bt-c"><span class="bt-icon">🎉</span><div class="bt-name">Events</div><div class="bt-count">67 diese Woche</div></div>
       </div>
       <div class="bt b4" onclick="goTo('immobilien')">
-        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80')"></div>
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80');"></div>
         <div class="bt-c"><span class="bt-icon">🏢</span><div class="bt-name">Immobilien</div><div class="bt-count">520 Objekte</div></div>
       </div>
       <div class="bt b5" onclick="goTo('shopping')">
-        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=600&q=80')"></div>
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=600&q=80');"></div>
         <div class="bt-c"><span class="bt-icon">🛍️</span><div class="bt-name">Shopping</div><div class="bt-count">214 Shops</div></div>
       </div>
       <div class="bt b6" onclick="goTo('community')">
-        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=700&q=80')"></div>
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=700&q=80');"></div>
         <div class="bt-c"><span class="bt-icon">👥</span><div class="bt-name">Community</div><div class="bt-count">12'450 Member</div></div>
       </div>
     </div>
   </div>
 
-  <!-- TODAY -->
-
   <div class="today-strip">
     <div class="ts-inner">
       <div class="ts-label reveal">
         <h2>HÜT<br>ABIG</h2>
-        <p>Was lauft gad in Züri. Direkt, kei Bullshit.</p>
+        <p>Was lauft gad in Züri.<br>Direkt, kei Bullshit.</p>
         <a class="btn btn-dark" onclick="goTo('events')" style="margin-top:1rem;font-size:.6rem;padding:.6rem 1.2rem;">Alles zeige →</a>
       </div>
       <div class="ts-cards reveal">
@@ -635,13 +699,11 @@ nav{padding:0 1rem;}
     </div>
   </div>
 
-  <!-- COMMUNITY TEASER -->
-
   <div class="hc-section reveal">
     <div class="hc-left">
       <div class="s-label">Community</div>
       <h2>DIS ZÜRI.<br><em>DINI</em><br>STIMM.</h2>
-      <p>Blogge, bewertet, teil — mit dim persönliche Profil bisch Teil vo Züris lebendigschter Community. Echter Insider-Content, direkt vom Züri-Volk. Kein Algorithm-Bullshit.</p>
+      <p>Blogge, bewertet, teil — mit dim persönliche Profil bisch Teil vo Züris lebendigschter Community. Echter Insider-Content vom Züri-Volk. Kein Algorithm-Bullshit.</p>
       <a class="btn btn-o" onclick="goTo('community')">Profil aalege →</a>
       <div class="stat-band">
         <div class="stat-i"><div class="stat-n">12K+</div><div class="stat-l">Member</div></div>
@@ -661,15 +723,13 @@ nav{padding:0 1rem;}
   <div id="footer-home"></div>
 </div>
 
-<!-- ══════════════════════════════════════
-     EVENTS PAGE
-══════════════════════════════════════ -->
+<!-- ══════════ EVENTS ══════════ -->
 
-<div id="page-events" class="page">
-  <div class="sub-hero" style="background:linear-gradient(135deg,var(--ink) 60%,#1a0a00);">
+<div id="page-events" class="page" style="background-color:#080806;">
+  <div class="sub-hero" style="background:linear-gradient(135deg,#080806 60%,#1a0a00);">
     <div class="sub-hero-inner">
       <div class="sub-hero-kicker">Stadtpuls · Zürich</div>
-      <h1 style="color:var(--orange);">EVENTS</h1>
+      <h1 style="color:#ff4d00 !important;">EVENTS</h1>
       <p>Was lauft in Züri — Konzerte, Pop-Ups, Eröffnige, Märt und alles wo di bewegt.</p>
       <div class="sub-hero-meta">
         <span class="shmeta"><strong>67</strong> Events diese Woche</span>
@@ -678,136 +738,68 @@ nav{padding:0 1rem;}
       </div>
     </div>
   </div>
-
   <div class="filter-bar">
     <div class="filter-bar-inner">
       <span class="f-label">Filter:</span>
-      <span class="ftag on">Alles</span>
-      <span class="ftag">Hüt</span>
-      <span class="ftag">Diese Wuche</span>
-      <span class="ftag">Konzert</span>
-      <span class="ftag">Pop-Up</span>
-      <span class="ftag">Eröffnig</span>
-      <span class="ftag">Märt</span>
-      <span class="ftag">Gratis</span>
-      <span class="ftag">Drauss</span>
+      <span class="ftag on">Alles</span><span class="ftag">Hüt</span><span class="ftag">Diese Wuche</span>
+      <span class="ftag">Konzert</span><span class="ftag">Pop-Up</span><span class="ftag">Eröffnig</span>
+      <span class="ftag">Märt</span><span class="ftag">Gratis</span><span class="ftag">Drauss</span>
     </div>
   </div>
-
   <div class="content-area">
-    <!-- FEATURED EVENT -->
     <div class="reveal" style="margin-bottom:3rem;">
-      <div style="background:var(--orange);padding:.3rem .8rem;display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);margin-bottom:1rem;">🔥 Heute Abend</div>
+      <div style="background-color:#ff4d00;padding:.3rem .8rem;display:inline-block;font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#080806;margin-bottom:1rem;">🔥 Heute Abend</div>
       <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:2px;">
-        <div class="img-card" style="height:380px;cursor:none;" onclick="">
+        <div class="img-card" style="height:380px;">
           <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80" alt="Event"/>
           <div class="img-card-content">
-            <span style="background:var(--orange);color:var(--ink);font-size:.55rem;font-weight:700;letter-spacing:.18em;padding:.25rem .7rem;text-transform:uppercase;display:inline-block;margin-bottom:.5rem;">Neue Eröffnig</span>
-            <h3 style="font-family:'Roboto Condensed',sans-serif;font-style:italic;font-weight:700;font-size:2rem;text-transform:uppercase;line-height:1;">Pop-Up Restaurant<br>«Langstrasse 77»</h3>
+            <span style="background-color:#ff4d00;color:#080806;font-family:'Space Mono',monospace;font-size:.55rem;font-weight:700;letter-spacing:.18em;padding:.25rem .7rem;text-transform:uppercase;display:inline-block;margin-bottom:.5rem;">Neue Eröffnig</span>
+            <h3>Pop-Up Restaurant<br>«Langstrasse 77»</h3>
             <div class="ic-sub">Hüt · 18:00 Uhr · Kreis 4 · Gratis Eintritt</div>
           </div>
         </div>
-        <div style="display:flex;flex-direction:column;gap:2px;">
-          <div class="event-card" style="flex:1;">
+        <div style="display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:2px;">
+          <div class="event-card" style="-webkit-flex:1;flex:1;">
             <span class="ec-tag blue">Konzert</span>
             <h3>Jazz im Schiffbau</h3>
-            <div class="ec-meta">
-              <strong>Hüt · 20:00</strong><br>
-              Schiffbaustrasse 4, Zürich<br>
-              CHF 35.–
-            </div>
+            <div class="ec-meta"><strong>Hüt · 20:00</strong><br>Schiffbaustrasse 4<br>CHF 35.–</div>
             <span class="ec-arrow">↗</span>
           </div>
-          <div class="event-card" style="flex:1;">
+          <div class="event-card" style="-webkit-flex:1;flex:1;">
             <span class="ec-tag green">Gratis</span>
             <h3>Streetfood Langstrasse</h3>
-            <div class="ec-meta">
-              <strong>Sa–So · 11:00–20:00</strong><br>
-              Langstrasse, Kreis 4<br>
-              Eintritt frei
-            </div>
+            <div class="ec-meta"><strong>Sa–So · 11:00–20:00</strong><br>Langstrasse, Kreis 4<br>Eintritt frei</div>
             <span class="ec-arrow">↗</span>
           </div>
         </div>
       </div>
     </div>
-
-```
-<!-- DIESE WOCHE -->
-<div class="s-label reveal">Diese Wuche</div>
-<div class="card-grid-3 reveal" style="margin-bottom:3rem;">
-  <div class="event-card">
-    <span class="ec-tag">Pop-Up</span>
-    <h3>Kreis 4 Vintage Market</h3>
-    <div class="ec-meta"><strong>Sa 10:00 – So 18:00</strong><br>Helvetiaplatz · Drauss<br>Eintritt frei</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag blue">Ausstellig</span>
-    <h3>Kunsthaus Zürich — Neue Säle</h3>
-    <div class="ec-meta"><strong>Di–So · 10:00–18:00</strong><br>Heimplatz 1<br>ab CHF 18.–</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag yellow">Märt</span>
-    <h3>Flohmarkt Kanzlei</h3>
-    <div class="ec-meta"><strong>Sa · 08:00–16:00</strong><br>Kanzleiplatz · Kreis 3<br>Eintritt frei</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag green">Gratis</span>
-    <h3>Open Air Kino Zürichsee</h3>
-    <div class="ec-meta"><strong>Fr–Sa · Ab Dunkle</strong><br>Zürichhorn<br>Eintritt frei</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag">Eröffnig</span>
-    <h3>Neues Café «Volta» im Kreis 5</h3>
-    <div class="ec-meta"><strong>Do · 10:00 Uhr</strong><br>Volta strasse 42<br>Gratis Kaffi zum Start</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag purple">Club</span>
-    <h3>Techno Nacht — Komplex 457</h3>
-    <div class="ec-meta"><strong>Sa · Ab 23:00</strong><br>Hohlstrasse 457<br>CHF 20.– AK</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-</div>
-
-<!-- POPUP SPECIALS -->
-<div class="s-label reveal">Pop-Up Specials</div>
-<div class="card-grid-2 reveal">
-  <div class="img-card">
-    <img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80" alt="popup"/>
-    <div class="img-card-content">
-      <h3>Pop-Up Sushi Bar — NUR 3 Tage</h3>
-      <div class="ic-sub">Do–Sa · Geroldstrasse · Kreis 5</div>
+    <div class="s-label reveal">Diese Wuche</div>
+    <div class="card-grid-3 reveal" style="margin-bottom:3rem;">
+      <div class="event-card"><span class="ec-tag">Pop-Up</span><h3>Kreis 4 Vintage Market</h3><div class="ec-meta"><strong>Sa–So · 10:00–18:00</strong><br>Helvetiaplatz · Drauss</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag blue">Ausstellig</span><h3>Kunsthaus — Neue Säle</h3><div class="ec-meta"><strong>Di–So · 10:00–18:00</strong><br>Heimplatz 1 · ab CHF 18.–</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag yellow">Märt</span><h3>Flohmarkt Kanzlei</h3><div class="ec-meta"><strong>Sa · 08:00–16:00</strong><br>Kanzleiplatz · Kreis 3</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag green">Gratis</span><h3>Open Air Kino Zürichsee</h3><div class="ec-meta"><strong>Fr–Sa · Ab Dunkle</strong><br>Zürichhorn · Eintritt frei</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag">Eröffnig</span><h3>Neues Café «Volta»</h3><div class="ec-meta"><strong>Do · 10:00 Uhr</strong><br>Voltastrasse 42 · Gratis Kaffi</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag purple">Club</span><h3>Techno Nacht — Komplex 457</h3><div class="ec-meta"><strong>Sa · Ab 23:00</strong><br>Hohlstrasse 457 · CHF 20.–</div><span class="ec-arrow">↗</span></div>
     </div>
-  </div>
-  <div class="img-card">
-    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=700&q=80" alt="popup shop"/>
-    <div class="img-card-content">
-      <h3>Designer Pop-Up — Lokale Labels</h3>
-      <div class="ic-sub">Wochenende · Viadukt · Kreis 5</div>
+    <div class="s-label reveal">Pop-Up Specials</div>
+    <div class="card-grid-2 reveal">
+      <div class="img-card"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80" alt="popup"/><div class="img-card-content"><h3>Pop-Up Sushi Bar — NUR 3 Tage</h3><div class="ic-sub">Do–Sa · Geroldstrasse · Kreis 5</div></div></div>
+      <div class="img-card"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=700&q=80" alt="popup shop"/><div class="img-card-content"><h3>Designer Pop-Up — Lokale Labels</h3><div class="ic-sub">Wochenende · Viadukt · Kreis 5</div></div></div>
     </div>
-  </div>
-</div>
-```
-
   </div>
   <div id="footer-events"></div>
 </div>
 
-<!-- ══════════════════════════════════════
-     GASTRO PAGE
-══════════════════════════════════════ -->
+<!-- ══════════ GASTRO ══════════ -->
 
-<div id="page-gastro" class="page">
-  <div class="sub-hero" style="background:linear-gradient(135deg,var(--ink) 55%,#0a1200);">
+<div id="page-gastro" class="page" style="background-color:#080806;">
+  <div class="sub-hero" style="background:linear-gradient(135deg,#080806 55%,#0a1200);">
     <div class="sub-hero-inner">
       <div class="sub-hero-kicker">Stadtpuls · Zürich</div>
-      <h1 style="color:var(--green);">GASTRO</h1>
-      <p>348 Restaurants, Cafés und Bars — vom Mittagsmenü bis zum Spitzen-Restaurant. Ehrliche Tipps vom Züri-Volk.</p>
+      <h1 style="color:#00c45a !important;">GASTRO</h1>
+      <p>348 Restaurants, Cafés und Bars — vom Mittagsmenü bis zum Spitzen-Restaurant.</p>
       <div class="sub-hero-meta">
         <span class="shmeta"><strong>348</strong> Lokale</span>
         <span class="shmeta"><strong>24</strong> Neue diese Wuche</span>
@@ -815,150 +807,58 @@ nav{padding:0 1rem;}
       </div>
     </div>
   </div>
-
   <div class="filter-bar">
     <div class="filter-bar-inner">
       <span class="f-label">Filter:</span>
-      <span class="ftag on">Alles</span>
-      <span class="ftag">Znacht</span>
-      <span class="ftag">Zmittag</span>
-      <span class="ftag">Brunch</span>
-      <span class="ftag">Vegisch</span>
-      <span class="ftag">Asiatisch</span>
-      <span class="ftag">Mediterran</span>
-      <span class="ftag">Schweizer Küche</span>
-      <span class="ftag">Jetzt offe</span>
+      <span class="ftag on">Alles</span><span class="ftag">Znacht</span><span class="ftag">Zmittag</span>
+      <span class="ftag">Brunch</span><span class="ftag">Vegisch</span><span class="ftag">Asiatisch</span>
+      <span class="ftag">Mediterran</span><span class="ftag">Jetzt offe</span>
     </div>
   </div>
-
   <div class="content-area">
     <div class="s-label reveal">Hüt Empfohle</div>
     <div class="card-grid-3 reveal" style="margin-bottom:3rem;">
-      <div class="event-card">
-        <span class="ec-tag green">Neue Eröffnig</span>
-        <h3>Langstrasse 77</h3>
-        <div class="ec-meta">
-          <strong>Pop-Up Restaurant · Kreis 4</strong><br>
-          Hüt offe ab 18:00<br>
-          ⭐⭐⭐⭐⭐ · 42 Reviews
+      <div class="event-card"><span class="ec-tag green">Neue Eröffnig</span><h3>Langstrasse 77</h3><div class="ec-meta"><strong>Pop-Up · Kreis 4</strong><br>Hüt ab 18:00 · ⭐⭐⭐⭐⭐</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag yellow">Zmittag Deal</span><h3>Café Volta</h3><div class="ec-meta"><strong>Kreis 5 · Voltastrasse</strong><br>Menü CHF 18.50 · ⭐⭐⭐⭐</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag">Geheimtipp</span><h3>Pho Saigon Express</h3><div class="ec-meta"><strong>Kreis 4 · Langstrasse</strong><br>Ab CHF 14.– · ⭐⭐⭐⭐⭐</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag blue">Brunch</span><h3>Rosso Zürich</h3><div class="ec-meta"><strong>Kreis 5 · Geroldstrasse</strong><br>Sa–So · 10:00–14:00</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag">Lunchgate</span><h3>Wirtschaft Neumarkt</h3><div class="ec-meta"><strong>Altstadt · Neumarkt</strong><br>Spontanreservation möglich</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag green">Vegisch</span><h3>Hiltl Stammhaus</h3><div class="ec-meta"><strong>Innenstadt · Sihlstrasse</strong><br>Täglich ab 06:00 · ⭐⭐⭐⭐⭐</div><span class="ec-arrow">↗</span></div>
+    </div>
+    <div class="s-label reveal">Spontan Reserviere</div>
+    <div style="background-color:#00c45a;padding:2.5rem;margin-bottom:3rem;" class="reveal">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;-webkit-align-items:center;align-items:center;">
+        <div>
+          <h3 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:2rem;text-transform:uppercase;color:#080806;line-height:1;margin-bottom:.8rem;">Hüt Noch<br>Ä Tisch Finde</h3>
+          <p style="font-size:.75rem;color:rgba(0,0,0,.65);line-height:1.7;">5 Restaurants händ no Platz hüt Abig.</p>
         </div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag yellow">Zmittag Deal</span>
-        <h3>Café Volta</h3>
-        <div class="ec-meta">
-          <strong>Kreis 5 · Voltastrasse</strong><br>
-          Menü CHF 18.50<br>
-          ⭐⭐⭐⭐ · 128 Reviews
+        <div style="display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:2px;">
+          <div style="background-color:rgba(0,0,0,.12);padding:1rem 1.2rem;display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;align-items:center;cursor:pointer;">
+            <span style="font-size:.78rem;color:#080806;font-weight:700;">Wirtschaft Neumarkt</span>
+            <span style="font-size:.62rem;color:rgba(0,0,0,.55);">2 Plätze · 19:00</span>
+          </div>
+          <div style="background-color:rgba(0,0,0,.12);padding:1rem 1.2rem;display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;align-items:center;cursor:pointer;">
+            <span style="font-size:.78rem;color:#080806;font-weight:700;">Rosso Zürich</span>
+            <span style="font-size:.62rem;color:rgba(0,0,0,.55);">4 Plätze · 20:30</span>
+          </div>
+          <div style="background-color:rgba(0,0,0,.12);padding:1rem 1.2rem;display:-webkit-flex;display:flex;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;align-items:center;cursor:pointer;">
+            <span style="font-size:.78rem;color:#080806;font-weight:700;">Taverna Romana</span>
+            <span style="font-size:.62rem;color:rgba(0,0,0,.55);">6 Plätze · 18:30</span>
+          </div>
         </div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag">Geheimtipp</span>
-        <h3>Pho Saigon Express</h3>
-        <div class="ec-meta">
-          <strong>Kreis 4 · Langstrasse</strong><br>
-          Ab CHF 14.–<br>
-          ⭐⭐⭐⭐⭐ · 312 Reviews
-        </div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag blue">Brunch</span>
-        <h3>Rosso Zürich</h3>
-        <div class="ec-meta">
-          <strong>Kreis 5 · Geroldstrasse</strong><br>
-          Sa–So · 10:00–14:00<br>
-          ⭐⭐⭐⭐ · 89 Reviews
-        </div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag">Lunchgate</span>
-        <h3>Wirtschaft Neumarkt</h3>
-        <div class="ec-meta">
-          <strong>Altstadt · Neumarkt</strong><br>
-          Spontanreservation möglich<br>
-          ⭐⭐⭐⭐ · 204 Reviews
-        </div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag green">Vegisch</span>
-        <h3>Hiltl Stammhaus</h3>
-        <div class="ec-meta">
-          <strong>Innenstadt · Sihlstrasse</strong><br>
-          Täglich ab 06:00<br>
-          ⭐⭐⭐⭐⭐ · 867 Reviews
-        </div>
-        <span class="ec-arrow">↗</span>
       </div>
     </div>
-
-```
-<div class="s-label reveal">Spontan Reserviere — Lunchgate</div>
-<div style="background:var(--green);padding:2.5rem;margin-bottom:3rem;" class="reveal">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
-    <div>
-      <h3 style="font-family:'Roboto Condensed',sans-serif;font-style:italic;font-weight:700;font-size:2rem;text-transform:uppercase;color:var(--ink);line-height:1;margin-bottom:.8rem;">Hüt Noch<br>Ä Tisch Finde</h3>
-      <p style="font-size:.75rem;color:rgba(0,0,0,.65);line-height:1.7;">Kurzfristige Reservationen à la Minute. 5 Restaurants händ no Platz hüt Abig.</p>
-    </div>
-    <div style="display:flex;flex-direction:column;gap:2px;">
-      <div style="background:rgba(0,0,0,.12);padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;cursor:none;">
-        <span style="font-size:.78rem;color:var(--ink);font-weight:700;">Wirtschaft Neumarkt</span>
-        <span style="font-size:.62rem;color:rgba(0,0,0,.55);">2 Plätze · 19:00</span>
-      </div>
-      <div style="background:rgba(0,0,0,.12);padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;cursor:none;">
-        <span style="font-size:.78rem;color:var(--ink);font-weight:700;">Rosso Zürich</span>
-        <span style="font-size:.62rem;color:rgba(0,0,0,.55);">4 Plätze · 20:30</span>
-      </div>
-      <div style="background:rgba(0,0,0,.12);padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;cursor:none;">
-        <span style="font-size:.78rem;color:var(--ink);font-weight:700;">Taverna Romana</span>
-        <span style="font-size:.62rem;color:rgba(0,0,0,.55);">6 Plätze · 18:30</span>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="s-label reveal">Alle Quartiere</div>
-<div class="card-grid-4 reveal">
-  <div class="event-card" style="text-align:center;padding:2rem 1rem;">
-    <div style="font-size:2.5rem;margin-bottom:.5rem;">🏘️</div>
-    <h3 style="font-size:1.1rem;">Kreis 1</h3>
-    <div class="ec-meta">Altstadt · 42 Lokale</div>
-  </div>
-  <div class="event-card" style="text-align:center;padding:2rem 1rem;">
-    <div style="font-size:2.5rem;margin-bottom:.5rem;">🎸</div>
-    <h3 style="font-size:1.1rem;">Kreis 4</h3>
-    <div class="ec-meta">Langstrasse · 87 Lokale</div>
-  </div>
-  <div class="event-card" style="text-align:center;padding:2rem 1rem;">
-    <div style="font-size:2.5rem;margin-bottom:.5rem;">🏭</div>
-    <h3 style="font-size:1.1rem;">Kreis 5</h3>
-    <div class="ec-meta">Industrie · 64 Lokale</div>
-  </div>
-  <div class="event-card" style="text-align:center;padding:2rem 1rem;">
-    <div style="font-size:2.5rem;margin-bottom:.5rem;">🌊</div>
-    <h3 style="font-size:1.1rem;">Seefeld</h3>
-    <div class="ec-meta">Kreis 8 · 55 Lokale</div>
-  </div>
-</div>
-```
-
   </div>
   <div id="footer-gastro"></div>
 </div>
 
-<!-- ══════════════════════════════════════
-     NACHTLEBEN PAGE
-══════════════════════════════════════ -->
+<!-- ══════════ NACHTLEBEN ══════════ -->
 
-<div id="page-nachtleben" class="page">
+<div id="page-nachtleben" class="page" style="background-color:#080806;">
   <div class="sub-hero" style="background:linear-gradient(135deg,#050510 50%,#0a0020);">
     <div class="sub-hero-inner">
       <div class="sub-hero-kicker">Stadtpuls · Zürich</div>
-      <h1 style="color:var(--blue);">NACHT<br>LEBE</h1>
+      <h1 style="color:#0057ff !important;">NACHT<br>LEBE</h1>
       <p>89 Clubs, Bars und Locations — Jazz, Techno, Hip-Hop, House. Züri schlaft nicht.</p>
       <div class="sub-hero-meta">
         <span class="shmeta"><strong>89</strong> Clubs & Bars</span>
@@ -967,96 +867,41 @@ nav{padding:0 1rem;}
       </div>
     </div>
   </div>
-
   <div class="filter-bar">
     <div class="filter-bar-inner">
       <span class="f-label">Genre:</span>
-      <span class="ftag on">Alles</span>
-      <span class="ftag">Techno</span>
-      <span class="ftag">Jazz</span>
-      <span class="ftag">Hip-Hop</span>
-      <span class="ftag">House</span>
-      <span class="ftag">Live Music</span>
-      <span class="ftag">Cocktailbar</span>
-      <span class="ftag">Hüt offe</span>
+      <span class="ftag on">Alles</span><span class="ftag">Techno</span><span class="ftag">Jazz</span>
+      <span class="ftag">Hip-Hop</span><span class="ftag">House</span><span class="ftag">Live Music</span>
+      <span class="ftag">Cocktailbar</span><span class="ftag">Hüt offe</span>
     </div>
   </div>
-
   <div class="content-area">
     <div class="s-label reveal">Hüt Nacht</div>
     <div class="card-grid-3 reveal" style="margin-bottom:3rem;">
-      <div class="event-card">
-        <span class="ec-tag purple">Techno</span>
-        <h3>Komplex 457</h3>
-        <div class="ec-meta"><strong>Ab 23:00 · Hohlstrasse</strong><br>Hüt: Resident Evil Night<br>CHF 20.– AK</div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag blue">Jazz</span>
-        <h3>Schiffbau Jazz Club</h3>
-        <div class="ec-meta"><strong>Ab 20:00 · Schiffbaustrasse</strong><br>Hüt: Züri Jazz Trio<br>CHF 35.–</div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag">Neue Location</span>
-        <h3>Club Dani Wilde</h3>
-        <div class="ec-meta"><strong>Eröffnig Hüt · Ab 22:00</strong><br>Industriequartier<br>Free Entry bis 23:00</div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag yellow">Hip-Hop</span>
-        <h3>Plaza Club</h3>
-        <div class="ec-meta"><strong>Ab 22:00 · Langstrasse</strong><br>Hüt: Old School Night<br>CHF 15.–</div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag green">Live Music</span>
-        <h3>Rote Fabrik</h3>
-        <div class="ec-meta"><strong>Ab 20:00 · Zürichsee</strong><br>Indie Rock · Local Bands<br>CHF 22.–</div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag">Bar</span>
-        <h3>Jules Verne Panoramabar</h3>
-        <div class="ec-meta"><strong>Ab 18:00 · Zürichberg</strong><br>Cocktails · Aussicht<br>Kein Eintritt</div>
-        <span class="ec-arrow">↗</span>
-      </div>
+      <div class="event-card"><span class="ec-tag purple">Techno</span><h3>Komplex 457</h3><div class="ec-meta"><strong>Ab 23:00 · Hohlstrasse</strong><br>Resident Evil Night · CHF 20.–</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag blue">Jazz</span><h3>Schiffbau Jazz Club</h3><div class="ec-meta"><strong>Ab 20:00 · Schiffbaustrasse</strong><br>Züri Jazz Trio · CHF 35.–</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag">Neue Location</span><h3>Club Dani Wilde</h3><div class="ec-meta"><strong>Eröffnig Hüt · Ab 22:00</strong><br>Industriequartier · Free Entry bis 23:00</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag yellow">Hip-Hop</span><h3>Plaza Club</h3><div class="ec-meta"><strong>Ab 22:00 · Langstrasse</strong><br>Old School Night · CHF 15.–</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag green">Live Music</span><h3>Rote Fabrik</h3><div class="ec-meta"><strong>Ab 20:00 · Zürichsee</strong><br>Indie Rock · CHF 22.–</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag">Bar</span><h3>Jules Verne Panoramabar</h3><div class="ec-meta"><strong>Ab 18:00 · Zürichberg</strong><br>Cocktails & Aussicht</div><span class="ec-arrow">↗</span></div>
     </div>
-
-```
-<div class="s-label reveal">Züri Klassiker</div>
-<div class="card-grid-2 reveal">
-  <div class="img-card">
-    <img src="https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=700&q=80" alt="club"/>
-    <div class="img-card-content">
-      <h3>Langstrasse — Die Meile</h3>
-      <div class="ic-sub">Bars · Clubs · Restis · Alles uf 500m</div>
+    <div class="s-label reveal">Züri Klassiker</div>
+    <div class="card-grid-2 reveal">
+      <div class="img-card"><img src="https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?w=700&q=80" alt="club"/><div class="img-card-content"><h3>Langstrasse — Die Meile</h3><div class="ic-sub">Bars · Clubs · Restis · Alles uf 500m</div></div></div>
+      <div class="img-card"><img src="https://images.unsplash.com/photo-1571266028243-e4733b0f0bb0?w=700&q=80" alt="jazz"/><div class="img-card-content"><h3>Industriequartier — Neue Szene</h3><div class="ic-sub">Kreis 5 · Die neue Partymeile</div></div></div>
     </div>
-  </div>
-  <div class="img-card">
-    <img src="https://images.unsplash.com/photo-1571266028243-e4733b0f0bb0?w=700&q=80" alt="jazz"/>
-    <div class="img-card-content">
-      <h3>Industriequartier — Neue Szene</h3>
-      <div class="ic-sub">Kreis 5 · Die neue Partymeile</div>
-    </div>
-  </div>
-</div>
-```
-
   </div>
   <div id="footer-nachtleben"></div>
 </div>
 
-<!-- ══════════════════════════════════════
-     SHOPPING PAGE
-══════════════════════════════════════ -->
+<!-- ══════════ SHOPPING ══════════ -->
 
-<div id="page-shopping" class="page">
-  <div class="sub-hero" style="background:linear-gradient(135deg,var(--ink) 55%,#150a00);">
+<div id="page-shopping" class="page" style="background-color:#080806;">
+  <div class="sub-hero" style="background:linear-gradient(135deg,#080806 55%,#150a00);">
     <div class="sub-hero-inner">
       <div class="sub-hero-kicker">Stadtpuls · Zürich</div>
-      <h1 style="color:var(--yellow);">SHOP<br>PING</h1>
-      <p>214 Shops — von lokal bis international, von Vintage bis Designer. Züri shopped besser.</p>
+      <h1 style="color:#f5c800 !important;">SHOP<br>PING</h1>
+      <p>214 Shops — von lokal bis international, von Vintage bis Designer.</p>
       <div class="sub-hero-meta">
         <span class="shmeta"><strong>214</strong> Shops</span>
         <span class="shmeta"><strong>8</strong> Neu diese Wuche</span>
@@ -1064,98 +909,39 @@ nav{padding:0 1rem;}
       </div>
     </div>
   </div>
-
   <div class="filter-bar">
     <div class="filter-bar-inner">
       <span class="f-label">Kategorie:</span>
-      <span class="ftag on">Alles</span>
-      <span class="ftag">Mode</span>
-      <span class="ftag">Vintage</span>
-      <span class="ftag">Design</span>
-      <span class="ftag">Bücher</span>
-      <span class="ftag">Sport</span>
-      <span class="ftag">Elektronik</span>
-      <span class="ftag">Sale</span>
-      <span class="ftag">Lokal</span>
+      <span class="ftag on">Alles</span><span class="ftag">Mode</span><span class="ftag">Vintage</span>
+      <span class="ftag">Design</span><span class="ftag">Bücher</span><span class="ftag">Sport</span>
+      <span class="ftag">Sale</span><span class="ftag">Lokal</span>
     </div>
   </div>
-
   <div class="content-area">
     <div class="s-label reveal">Sale & Specials</div>
-    <div style="background:var(--yellow);padding:2.5rem;margin-bottom:3rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;" class="reveal">
-      <div style="background:rgba(0,0,0,.1);padding:1.5rem;cursor:none;">
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,0,0,.5);margin-bottom:.5rem;">Sale Start</div>
-        <h4 style="font-family:'Roboto Condensed',sans-serif;font-style:italic;font-weight:700;font-size:1.3rem;text-transform:uppercase;color:var(--ink);">Jelmoli Summer Sale</h4>
-        <p style="font-size:.65rem;color:rgba(0,0,0,.55);">Bis 50% · Ab Morge</p>
-      </div>
-      <div style="background:rgba(0,0,0,.1);padding:1.5rem;cursor:none;">
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,0,0,.5);margin-bottom:.5rem;">Special</div>
-        <h4 style="font-family:'Roboto Condensed',sans-serif;font-style:italic;font-weight:700;font-size:1.3rem;text-transform:uppercase;color:var(--ink);">Werner Schreyer Brillen</h4>
-        <p style="font-size:.65rem;color:rgba(0,0,0,.55);">Neui Kollektion · Bahnhofstrasse</p>
-      </div>
-      <div style="background:rgba(0,0,0,.1);padding:1.5rem;cursor:none;">
-        <div style="font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,0,0,.5);margin-bottom:.5rem;">Neu</div>
-        <h4 style="font-family:'Roboto Condensed',sans-serif;font-style:italic;font-weight:700;font-size:1.3rem;text-transform:uppercase;color:var(--ink);">Pop-Up Fashion Lab</h4>
-        <p style="font-size:.65rem;color:rgba(0,0,0,.55);">Lokali Labels · Viadukt · 3 Tage</p>
-      </div>
+    <div style="background-color:#f5c800;padding:2.5rem;margin-bottom:3rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;" class="reveal">
+      <div style="background-color:rgba(0,0,0,.1);padding:1.5rem;cursor:pointer;"><div style="font-family:'Space Mono',monospace;font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,0,0,.5);margin-bottom:.5rem;">Sale Start</div><h4 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:1.3rem;text-transform:uppercase;color:#080806;">Jelmoli Summer Sale</h4><p style="font-size:.65rem;color:rgba(0,0,0,.55);">Bis 50% · Ab Morge</p></div>
+      <div style="background-color:rgba(0,0,0,.1);padding:1.5rem;cursor:pointer;"><div style="font-family:'Space Mono',monospace;font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,0,0,.5);margin-bottom:.5rem;">Special</div><h4 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:1.3rem;text-transform:uppercase;color:#080806;">Werner Schreyer Brillen</h4><p style="font-size:.65rem;color:rgba(0,0,0,.55);">Neui Kollektion · Bahnhofstrasse</p></div>
+      <div style="background-color:rgba(0,0,0,.1);padding:1.5rem;cursor:pointer;"><div style="font-family:'Space Mono',monospace;font-size:.55rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,0,0,.5);margin-bottom:.5rem;">Neu</div><h4 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:1.3rem;text-transform:uppercase;color:#080806;">Pop-Up Fashion Lab</h4><p style="font-size:.65rem;color:rgba(0,0,0,.55);">Lokali Labels · Viadukt · 3 Tage</p></div>
     </div>
-
-```
-<div class="s-label reveal">Emöfohlenä Shops</div>
-<div class="card-grid-3 reveal" style="margin-bottom:3rem;">
-  <div class="event-card">
-    <span class="ec-tag yellow">Vintage</span>
-    <h3>Flamingo Vintage</h3>
-    <div class="ec-meta"><strong>Kreis 4 · Langstrasse</strong><br>Mo–Sa · 11:00–19:00<br>⭐⭐⭐⭐⭐ · Züri Klassiker</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag">Design</span>
-    <h3>Viadukt Boutiquen</h3>
-    <div class="ec-meta"><strong>Kreis 5 · Unter dem Viadukt</strong><br>Lokali Designer · 30+ Shops<br>Di–So · 10:00–19:00</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag green">Lokal</span>
-    <h3>Freitag Store</h3>
-    <div class="ec-meta"><strong>Kreis 5 · Geroldstrasse</strong><br>Züri Original<br>⭐⭐⭐⭐⭐ · Weltbekannt</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-</div>
-
-<div class="s-label reveal">Shopping Quartiere</div>
-<div class="card-grid-2 reveal">
-  <div class="img-card">
-    <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=700&q=80" alt="shopping"/>
-    <div class="img-card-content">
-      <h3>Bahnhofstrasse</h3>
-      <div class="ic-sub">International · Luxury · Must-See</div>
+    <div class="s-label reveal">Emöfohlenä Shops</div>
+    <div class="card-grid-3 reveal">
+      <div class="event-card"><span class="ec-tag yellow">Vintage</span><h3>Flamingo Vintage</h3><div class="ec-meta"><strong>Kreis 4 · Langstrasse</strong><br>Mo–Sa · 11:00–19:00</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag">Design</span><h3>Viadukt Boutiquen</h3><div class="ec-meta"><strong>Kreis 5 · Unter dem Viadukt</strong><br>Lokali Designer · 30+ Shops</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag green">Lokal</span><h3>Freitag Store</h3><div class="ec-meta"><strong>Kreis 5 · Geroldstrasse</strong><br>Züri Original · ⭐⭐⭐⭐⭐</div><span class="ec-arrow">↗</span></div>
     </div>
-  </div>
-  <div class="img-card">
-    <img src="https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?w=700&q=80" alt="viadukt"/>
-    <div class="img-card-content">
-      <h3>Viadukt · Kreis 5</h3>
-      <div class="ic-sub">Lokal · Design · Gastro</div>
-    </div>
-  </div>
-</div>
-```
-
   </div>
   <div id="footer-shopping"></div>
 </div>
 
-<!-- ══════════════════════════════════════
-     IMMOBILIEN PAGE
-══════════════════════════════════════ -->
+<!-- ══════════ IMMOBILIEN ══════════ -->
 
-<div id="page-immobilien" class="page">
-  <div class="sub-hero" style="background:linear-gradient(135deg,var(--ink) 55%,#001015);">
+<div id="page-immobilien" class="page" style="background-color:#080806;">
+  <div class="sub-hero" style="background:linear-gradient(135deg,#080806 55%,#001015);">
     <div class="sub-hero-inner">
       <div class="sub-hero-kicker">Stadtpuls · Zürich</div>
-      <h1 style="color:var(--blue);">IMMO<br>BILIEN</h1>
-      <p>WG, Wohnung, Büro — 520 Objekte direkt im Quartier. Kein Makler, kein Bullshit. Von de Züri für Züri.</p>
+      <h1 style="color:#0057ff !important;">IMMO<br>BILIEN</h1>
+      <p>WG, Wohnung, Büro — 520 Objekte direkt im Quartier. Kein Makler, kein Bullshit.</p>
       <div class="sub-hero-meta">
         <span class="shmeta"><strong>520</strong> Objekte</span>
         <span class="shmeta"><strong>34</strong> Neu heute</span>
@@ -1163,166 +949,78 @@ nav{padding:0 1rem;}
       </div>
     </div>
   </div>
-
   <div class="filter-bar">
     <div class="filter-bar-inner">
       <span class="f-label">Typ:</span>
-      <span class="ftag on">Alles</span>
-      <span class="ftag">WG-Zimmer</span>
-      <span class="ftag">1-Zi Wohnung</span>
-      <span class="ftag">2-Zi Wohnung</span>
-      <span class="ftag">3+ Zi</span>
-      <span class="ftag">Büro</span>
-      <span class="ftag">Ateliers</span>
-      <span class="ftag">Kaufe</span>
+      <span class="ftag on">Alles</span><span class="ftag">WG-Zimmer</span><span class="ftag">1-Zi</span>
+      <span class="ftag">2-Zi</span><span class="ftag">3+ Zi</span><span class="ftag">Büro</span>
+      <span class="ftag">Ateliers</span><span class="ftag">Kaufe</span>
     </div>
   </div>
-
   <div class="content-area">
     <div class="s-label reveal">Neui Inserate</div>
     <div class="card-grid-3 reveal" style="margin-bottom:3rem;">
-      <div class="event-card">
-        <span class="ec-tag green">Neu</span>
-        <h3>WG-Zimmer Kreis 4</h3>
-        <div class="ec-meta"><strong>CHF 950.– / Mt</strong><br>18m² · möbliert<br>Ab sofort verfügbar</div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag blue">2.5 Zi</span>
-        <h3>Wohnung Kreis 5</h3>
-        <div class="ec-meta"><strong>CHF 2'100.– / Mt</strong><br>62m² · Industrieloft-Stil<br>Ab 1. nächste Monat</div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag yellow">Atelier</span>
-        <h3>Atelierraum Viadukt</h3>
-        <div class="ec-meta"><strong>CHF 1'400.– / Mt</strong><br>45m² · Unter dem Viadukt<br>Ideal für Kreative</div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag">3.5 Zi</span>
-        <h3>Familienwohnung Seefeld</h3>
-        <div class="ec-meta"><strong>CHF 3'400.– / Mt</strong><br>95m² · Seeblick<br>Ab August verfügbar</div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag green">WG</span>
-        <h3>3er-WG Kreis 3</h3>
-        <div class="ec-meta"><strong>CHF 850.– / Mt</strong><br>Zimmer in bestehender WG<br>Sofort</div>
-        <span class="ec-arrow">↗</span>
-      </div>
-      <div class="event-card">
-        <span class="ec-tag purple">Büro</span>
-        <h3>Bürofläche Hardbrücke</h3>
-        <div class="ec-meta"><strong>CHF 4'200.– / Mt</strong><br>120m² · Open Space<br>Flexibel teilbar</div>
-        <span class="ec-arrow">↗</span>
-      </div>
+      <div class="event-card"><span class="ec-tag green">Neu</span><h3>WG-Zimmer Kreis 4</h3><div class="ec-meta"><strong>CHF 950.– / Mt</strong><br>18m² · möbliert · Ab sofort</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag blue">2.5 Zi</span><h3>Wohnung Kreis 5</h3><div class="ec-meta"><strong>CHF 2'100.– / Mt</strong><br>62m² · Industrieloft-Stil</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag yellow">Atelier</span><h3>Atelierraum Viadukt</h3><div class="ec-meta"><strong>CHF 1'400.– / Mt</strong><br>45m² · Ideal für Kreative</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag">3.5 Zi</span><h3>Familienwohnung Seefeld</h3><div class="ec-meta"><strong>CHF 3'400.– / Mt</strong><br>95m² · Seeblick</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag green">WG</span><h3>3er-WG Kreis 3</h3><div class="ec-meta"><strong>CHF 850.– / Mt</strong><br>Zimmer in bestehender WG</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag purple">Büro</span><h3>Bürofläche Hardbrücke</h3><div class="ec-meta"><strong>CHF 4'200.– / Mt</strong><br>120m² · Open Space</div><span class="ec-arrow">↗</span></div>
     </div>
-
-```
-<div style="background:var(--blue);padding:2.5rem;margin-bottom:3rem;" class="reveal">
-  <h3 style="font-family:'Roboto Condensed',sans-serif;font-style:italic;font-weight:700;font-size:2rem;text-transform:uppercase;margin-bottom:.8rem;">Dini Wohnig Inseriere</h3>
-  <p style="font-size:.78rem;color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:1.5rem;">Direkt, ohne Makler, kei versteckti Koschte. Inserat ab CHF 0.90.–</p>
-  <a class="btn btn-o">Inserat erstelle →</a>
-</div>
-```
-
+    <div style="background-color:#0057ff;padding:2.5rem;margin-bottom:3rem;" class="reveal">
+      <h3 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:2rem;text-transform:uppercase;color:#f0ebe0;margin-bottom:.8rem;">Dini Wohnig Inseriere</h3>
+      <p style="font-size:.78rem;color:rgba(255,255,255,.75);line-height:1.7;margin-bottom:1.5rem;">Direkt, ohne Makler. Inserat ab CHF 0.90.–</p>
+      <a class="btn btn-o">Inserat erstelle →</a>
+    </div>
   </div>
   <div id="footer-immobilien"></div>
 </div>
 
-<!-- ══════════════════════════════════════
-     MARKTPLATZ PAGE
-══════════════════════════════════════ -->
+<!-- ══════════ MARKTPLATZ ══════════ -->
 
-<div id="page-marktplatz" class="page">
-  <div class="sub-hero" style="background:linear-gradient(135deg,var(--ink) 55%,#150800);">
+<div id="page-marktplatz" class="page" style="background-color:#080806;">
+  <div class="sub-hero" style="background:linear-gradient(135deg,#080806 55%,#150800);">
     <div class="sub-hero-inner">
       <div class="sub-hero-kicker">Stadtpuls · Zürich</div>
-      <h1 style="color:var(--orange);">MARKT<br>PLATZ</h1>
-      <p>"Mir sind Matchmaker" — Velos, Möbel, Tickets, Vintage-Kram. Alles uf einere Syte. Keis Rumsurfe.</p>
+      <h1 style="color:#ff4d00 !important;">MARKT<br>PLATZ</h1>
+      <p>"Mir sind Matchmaker" — Velos, Möbel, Tickets, Vintage-Kram. Alles uf einere Syte.</p>
       <div class="sub-hero-meta">
         <span class="shmeta"><strong>1'240</strong> Inserate</span>
         <span class="shmeta"><strong>Gebühr</strong> unter CHF 1.–</span>
-        <span class="shmeta"><strong>Direkt</strong> kein Zwischenhändler</span>
       </div>
     </div>
   </div>
-
   <div class="filter-bar">
     <div class="filter-bar-inner">
       <span class="f-label">Kategorie:</span>
-      <span class="ftag on">Alles</span>
-      <span class="ftag">Velos</span>
-      <span class="ftag">Möbel</span>
-      <span class="ftag">Kleider</span>
-      <span class="ftag">Elektronik</span>
-      <span class="ftag">Tickets</span>
-      <span class="ftag">Diverses</span>
+      <span class="ftag on">Alles</span><span class="ftag">Velos</span><span class="ftag">Möbel</span>
+      <span class="ftag">Kleider</span><span class="ftag">Elektronik</span><span class="ftag">Tickets</span>
     </div>
   </div>
-
   <div class="content-area">
     <div class="card-grid-4 reveal" style="margin-bottom:3rem;">
-      <div class="event-card" style="text-align:center;padding:2rem 1rem;">
-        <div style="font-size:3rem;margin-bottom:.8rem;">🚲</div>
-        <h3 style="font-size:1.2rem;">Velos</h3>
-        <div class="ec-meta">286 Inserate</div>
-      </div>
-      <div class="event-card" style="text-align:center;padding:2rem 1rem;">
-        <div style="font-size:3rem;margin-bottom:.8rem;">🪑</div>
-        <h3 style="font-size:1.2rem;">Möbel</h3>
-        <div class="ec-meta">432 Inserate</div>
-      </div>
-      <div class="event-card" style="text-align:center;padding:2rem 1rem;">
-        <div style="font-size:3rem;margin-bottom:.8rem;">🎟️</div>
-        <h3 style="font-size:1.2rem;">Tickets</h3>
-        <div class="ec-meta">124 Inserate</div>
-      </div>
-      <div class="event-card" style="text-align:center;padding:2rem 1rem;">
-        <div style="font-size:3rem;margin-bottom:.8rem;">👗</div>
-        <h3 style="font-size:1.2rem;">Kleider</h3>
-        <div class="ec-meta">398 Inserate</div>
-      </div>
+      <div class="event-card" style="text-align:center;padding:2rem 1rem;"><div style="font-size:3rem;margin-bottom:.8rem;">🚲</div><h3 style="font-size:1.2rem;">Velos</h3><div class="ec-meta">286 Inserate</div></div>
+      <div class="event-card" style="text-align:center;padding:2rem 1rem;"><div style="font-size:3rem;margin-bottom:.8rem;">🪑</div><h3 style="font-size:1.2rem;">Möbel</h3><div class="ec-meta">432 Inserate</div></div>
+      <div class="event-card" style="text-align:center;padding:2rem 1rem;"><div style="font-size:3rem;margin-bottom:.8rem;">🎟️</div><h3 style="font-size:1.2rem;">Tickets</h3><div class="ec-meta">124 Inserate</div></div>
+      <div class="event-card" style="text-align:center;padding:2rem 1rem;"><div style="font-size:3rem;margin-bottom:.8rem;">👗</div><h3 style="font-size:1.2rem;">Kleider</h3><div class="ec-meta">398 Inserate</div></div>
     </div>
-
-```
-<div class="s-label reveal">Neui Inserate</div>
-<div class="card-grid-3 reveal">
-  <div class="event-card">
-    <span class="ec-tag green">Velo</span>
-    <h3>Trek Crossover 28"</h3>
-    <div class="ec-meta"><strong>CHF 380.–</strong><br>Kreis 4 · Sehr guter Zustand<br>Heute inseriert</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag yellow">Ticket</span>
-    <h3>2x Openair Zürich</h3>
-    <div class="ec-meta"><strong>CHF 120.– / Stück</strong><br>Samstag · Stadtpark<br>Originalpreis CHF 145.–</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag">Möbel</span>
-    <h3>IKEA Kallax Regal weiss</h3>
-    <div class="ec-meta"><strong>CHF 45.–</strong><br>Kreis 6 · Selbstabholung<br>Wie neu</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-</div>
-```
-
+    <div class="s-label reveal">Neui Inserate</div>
+    <div class="card-grid-3 reveal">
+      <div class="event-card"><span class="ec-tag green">Velo</span><h3>Trek Crossover 28"</h3><div class="ec-meta"><strong>CHF 380.–</strong><br>Kreis 4 · Sehr guter Zustand</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag yellow">Ticket</span><h3>2x Openair Zürich</h3><div class="ec-meta"><strong>CHF 120.– / Stück</strong><br>Samstag · Originalpreis CHF 145.–</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag">Möbel</span><h3>IKEA Kallax Regal</h3><div class="ec-meta"><strong>CHF 45.–</strong><br>Kreis 6 · Selbstabholung · Wie neu</div><span class="ec-arrow">↗</span></div>
+    </div>
   </div>
   <div id="footer-marktplatz"></div>
 </div>
 
-<!-- ══════════════════════════════════════
-     COMMUNITY PAGE
-══════════════════════════════════════ -->
+<!-- ══════════ COMMUNITY ══════════ -->
 
-<div id="page-community" class="page">
-  <div class="sub-hero" style="background:linear-gradient(135deg,var(--ink) 45%,#0a0015);">
+<div id="page-community" class="page" style="background-color:#080806;">
+  <div class="sub-hero" style="background:linear-gradient(135deg,#080806 45%,#0a0015);">
     <div class="sub-hero-inner">
       <div class="sub-hero-kicker">Stadtpuls · Zürich</div>
-      <h1 style="color:var(--purple);">COMMU<br>NITY</h1>
+      <h1 style="color:#7c3aed !important;">COMMU<br>NITY</h1>
       <p>DIS ZÜRI. DINI STIMM. — Blogge, bewertet, teil. Züris lebendigschti Community.</p>
       <div class="sub-hero-meta">
         <span class="shmeta"><strong>12'450</strong> Member</span>
@@ -1331,79 +1029,38 @@ nav{padding:0 1rem;}
       </div>
     </div>
   </div>
-
   <div class="content-area">
-    <div style="background:var(--purple);padding:2.5rem;margin-bottom:3rem;" class="reveal">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
+    <div style="background-color:#7c3aed;padding:2.5rem;margin-bottom:3rem;" class="reveal">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;-webkit-align-items:center;align-items:center;">
         <div>
-          <h3 style="font-family:'Roboto Condensed',sans-serif;font-style:italic;font-weight:700;font-size:2.2rem;text-transform:uppercase;line-height:1;margin-bottom:.8rem;">PROFIL AALEGE<br>& LOSLEGGE</h3>
+          <h3 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:2.2rem;text-transform:uppercase;line-height:1;margin-bottom:.8rem;color:#f0ebe0;">PROFIL AALEGE<br>& LOSLEGGE</h3>
           <p style="font-size:.78rem;color:rgba(255,255,255,.7);line-height:1.7;">Gratis. In 2 Minute. Kei Bullshit.</p>
         </div>
-        <div style="display:flex;flex-direction:column;gap:.6rem;">
-          <div style="background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);padding:.9rem 1.2rem;font-family:'Space Mono',monospace;font-size:.8rem;color:rgba(255,255,255,.5);">Username</div>
-          <div style="background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);padding:.9rem 1.2rem;font-family:'Space Mono',monospace;font-size:.8rem;color:rgba(255,255,255,.5);">E-Mail</div>
+        <div style="display:-webkit-flex;display:flex;-webkit-flex-direction:column;flex-direction:column;gap:.6rem;">
+          <input style="-webkit-appearance:none;background-color:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);padding:.9rem 1.2rem;font-family:'Space Mono',monospace;font-size:.8rem;color:#f0ebe0;outline:none;" placeholder="Username"/>
+          <input style="-webkit-appearance:none;background-color:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);padding:.9rem 1.2rem;font-family:'Space Mono',monospace;font-size:.8rem;color:#f0ebe0;outline:none;" placeholder="E-Mail"/>
           <a class="btn btn-o" style="text-align:center;">Etz Mitmache →</a>
         </div>
       </div>
     </div>
-
-```
-<div class="s-label reveal">Aktivi Blogger</div>
-<div class="card-grid-3 reveal" style="margin-bottom:3rem;">
-  <div class="event-card">
-    <span class="ec-tag purple">Top Blogger</span>
-    <h3>@zuri_insider</h3>
-    <div class="ec-meta"><strong>284 Posts · 4'200 Follower</strong><br>Spezialisiert: Gastro & Nachtleben<br>Kreis 4 Experte</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag green">Foodie</span>
-    <h3>@langstrasse_mampf</h3>
-    <div class="ec-meta"><strong>156 Reviews · 1'800 Follower</strong><br>Spezialisiert: Restaurants<br>Günstig & Gut</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag blue">Events</span>
-    <h3>@zuri_events_daily</h3>
-    <div class="ec-meta"><strong>520 Posts · 6'100 Follower</strong><br>Spezialisiert: Hütige Events<br>Immer up to date</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-</div>
-
-<div class="s-label reveal">Neischti Posts</div>
-<div class="card-grid-2 reveal">
-  <div class="event-card">
-    <span class="ec-tag">Review</span>
-    <h3>«Pho Saigon — Beschtä Pho vo Züri»</h3>
-    <div class="ec-meta"><strong>von @langstrasse_mampf</strong><br>vor 2 Stunde · 42 Likes<br>⭐⭐⭐⭐⭐</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag green">Insider</span>
-    <h3>«Geheimi Bar im Kreis 5 — Keni kennt sie»</h3>
-    <div class="ec-meta"><strong>von @zuri_insider</strong><br>vor 4 Stunde · 89 Likes<br>📍 Kreis 5</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag yellow">Tipp</span>
-    <h3>«5 Pop-Ups wo du hüt no gseh mussch»</h3>
-    <div class="ec-meta"><strong>von @zuri_events_daily</strong><br>vor 1 Stunde · 134 Likes</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-  <div class="event-card">
-    <span class="ec-tag blue">Story</span>
-    <h3>«Wie Kreis 4 sich neu erfindet»</h3>
-    <div class="ec-meta"><strong>von @stadtpuls_redaktion</strong><br>vor 6 Stunde · 201 Likes<br>Langer Artikel</div>
-    <span class="ec-arrow">↗</span>
-  </div>
-</div>
-```
-
+    <div class="s-label reveal">Aktivi Blogger</div>
+    <div class="card-grid-3 reveal" style="margin-bottom:3rem;">
+      <div class="event-card"><span class="ec-tag purple">Top Blogger</span><h3>@zuri_insider</h3><div class="ec-meta"><strong>284 Posts · 4'200 Follower</strong><br>Gastro & Nachtleben · Kreis 4 Experte</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag green">Foodie</span><h3>@langstrasse_mampf</h3><div class="ec-meta"><strong>156 Reviews · 1'800 Follower</strong><br>Günstig & Gut</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag blue">Events</span><h3>@zuri_events_daily</h3><div class="ec-meta"><strong>520 Posts · 6'100 Follower</strong><br>Immer up to date</div><span class="ec-arrow">↗</span></div>
+    </div>
+    <div class="s-label reveal">Neischti Posts</div>
+    <div class="card-grid-2 reveal">
+      <div class="event-card"><span class="ec-tag">Review</span><h3>«Pho Saigon — Beschtä Pho vo Züri»</h3><div class="ec-meta"><strong>von @langstrasse_mampf</strong><br>vor 2 Stunde · 42 Likes · ⭐⭐⭐⭐⭐</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag green">Insider</span><h3>«Geheimi Bar im Kreis 5»</h3><div class="ec-meta"><strong>von @zuri_insider</strong><br>vor 4 Stunde · 89 Likes</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag yellow">Tipp</span><h3>«5 Pop-Ups wo du hüt no gseh mussch»</h3><div class="ec-meta"><strong>von @zuri_events_daily</strong><br>vor 1 Stunde · 134 Likes</div><span class="ec-arrow">↗</span></div>
+      <div class="event-card"><span class="ec-tag blue">Story</span><h3>«Wie Kreis 4 sich neu erfindet»</h3><div class="ec-meta"><strong>von @stadtpuls_redaktion</strong><br>vor 6 Stunde · 201 Likes</div><span class="ec-arrow">↗</span></div>
+    </div>
   </div>
   <div id="footer-community"></div>
 </div>
 
-<!-- FOOTER TEMPLATE (rendered via JS into each page) -->
+<!-- FOOTER TEMPLATE -->
 
 <template id="footer-tpl">
   <div class="footer-ticker">
@@ -1432,86 +1089,77 @@ nav{padding:0 1rem;}
 </template>
 
 <script>
-// ── CURSOR ──
-const cur = document.getElementById('cursor');
-document.addEventListener('mousemove', e => {
-  cur.style.left = (e.clientX - 9) + 'px';
-  cur.style.top  = (e.clientY - 9) + 'px';
-});
-document.addEventListener('click', () => {
-  cur.style.transform = 'scale(3)';
-  setTimeout(() => cur.style.transform = 'scale(1)', 200);
-});
-
-// Cursor grow on interactive elements
-function bindCursor() {
-  document.querySelectorAll('a,button,.pill,.ftag,.bt,.event-card,.img-card,.ct,.ts-card,.t-item').forEach(el => {
-    el.addEventListener('mouseenter', () => { cur.style.transform='scale(2.5)'; cur.style.background='rgba(255,77,0,.3)'; });
-    el.addEventListener('mouseleave', () => { cur.style.transform='scale(1)'; cur.style.background='transparent'; });
+// CURSOR
+var cur = document.getElementById('cursor');
+if (cur && window.matchMedia('(pointer:fine)').matches) {
+  document.addEventListener('mousemove', function(e) {
+    cur.style.left = (e.clientX-9)+'px';
+    cur.style.top  = (e.clientY-9)+'px';
+  });
+  document.addEventListener('click', function() {
+    cur.style.transform='scale(3)';
+    setTimeout(function(){cur.style.transform='scale(1)';},200);
   });
 }
 
-// ── NAVIGATION ──
-function goTo(pageId) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  const target = document.getElementById('page-' + pageId);
-  if (target) {
-    target.classList.add('active');
-    window.scrollTo({top:0, behavior:'smooth'});
-  }
-  // Update nav active state
-  document.querySelectorAll('.nav-links a[data-page]').forEach(a => {
-    a.classList.toggle('active', a.dataset.page === pageId);
+function bindCursor() {
+  if (!window.matchMedia('(pointer:fine)').matches) return;
+  document.querySelectorAll('a,button,.pill,.ftag,.bt,.event-card,.img-card,.ct,.ts-card,.t-item').forEach(function(el){
+    el.addEventListener('mouseenter',function(){cur.style.transform='scale(2.5)';cur.style.background='rgba(255,77,0,.3)';});
+    el.addEventListener('mouseleave',function(){cur.style.transform='scale(1)';cur.style.background='transparent';});
   });
-  // Inject footer if not already there
-  const fp = document.getElementById('footer-' + pageId);
-  if (fp && fp.innerHTML.trim() === '') {
-    const tpl = document.getElementById('footer-tpl');
-    fp.appendChild(document.importNode(tpl.content, true));
+}
+
+// NAVIGATION
+function goTo(id) {
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  var t = document.getElementById('page-'+id);
+  if (t) { t.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+  document.querySelectorAll('.nav-links a[data-page]').forEach(function(a){
+    a.classList.toggle('active', a.dataset.page===id);
+  });
+  var fp = document.getElementById('footer-'+id);
+  if (fp && fp.innerHTML.trim()==='') {
+    var tpl = document.getElementById('footer-tpl');
+    fp.appendChild(document.importNode(tpl.content,true));
   }
-  // Trigger reveals
-  setTimeout(triggerReveals, 100);
+  setTimeout(triggerReveals,100);
   bindCursor();
 }
 
-// ── REVEALS ──
+// REVEALS
 function triggerReveals() {
-  const reveals = document.querySelectorAll('.page.active .reveal');
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
-  }, {threshold: 0.08});
-  reveals.forEach(el => { el.classList.remove('in'); obs.observe(el); });
+  var els = document.querySelectorAll('.page.active .reveal');
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('in'); });
+    },{threshold:0.08});
+    els.forEach(function(el){ el.classList.remove('in'); obs.observe(el); });
+  } else {
+    els.forEach(function(el){ el.classList.add('in'); });
+  }
 }
 
-// ── PILLS ──
-document.querySelectorAll('.pill').forEach(p => {
-  p.addEventListener('click', () => {
-    p.closest('.pills').querySelectorAll('.pill').forEach(x => x.classList.remove('on'));
+// PILLS
+document.querySelectorAll('.pill').forEach(function(p){
+  p.addEventListener('click',function(){
+    p.closest('.pills').querySelectorAll('.pill').forEach(function(x){x.classList.remove('on');});
     p.classList.add('on');
   });
 });
 
-// ── FILTER TAGS ──
-document.addEventListener('click', e => {
+// FILTER TAGS
+document.addEventListener('click',function(e){
   if (e.target.classList.contains('ftag')) {
-    e.target.closest('.filter-bar-inner').querySelectorAll('.ftag').forEach(f => f.classList.remove('on'));
+    e.target.closest('.filter-bar-inner').querySelectorAll('.ftag').forEach(function(f){f.classList.remove('on');});
     e.target.classList.add('on');
   }
 });
 
-// ── TICKER CLICK (home) ──
-document.querySelector('.ticker-inner').addEventListener('click', e => {
-  if (e.target.classList.contains('t-item')) {
-    // handled via onclick
-  }
-});
-
-// ── INIT ──
-// Inject footer for home on load
-const fh = document.getElementById('footer-home');
-const tpl = document.getElementById('footer-tpl');
-fh.appendChild(document.importNode(tpl.content, true));
-
+// INIT
+var fh = document.getElementById('footer-home');
+var tpl = document.getElementById('footer-tpl');
+if (fh && tpl) fh.appendChild(document.importNode(tpl.content,true));
 triggerReveals();
 bindCursor();
 </script>
