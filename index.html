@@ -1,337 +1,503 @@
 <!DOCTYPE html>
 
-<html lang="de" style="background:#080806;color:#f0ebe0;">
+<html lang="de" style="background:#04040a;">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#080806">
-<title>STADTPULS — dä puls vo dä stadt</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@1,700&family=Space+Mono:wght@400;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#04040a">
+<title>STADTPULS 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,900;1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-html{background:#080806!important;color:#f0ebe0!important;color-scheme:dark!important;-webkit-text-size-adjust:100%;}
-:root{--ink:#080806;--paper:#f0ebe0;--o:#ff4d00;--y:#f5c800;--g:#00c45a;--b:#0057ff;--p:#7c3aed;--rust:#c84b00;--grey:#1c1c18;--mid:#2e2e28;--soft:#666660;}
+/* ═══════════════════════════════
+   RESET & ROOT
+═══════════════════════════════ */
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-html,body{max-width:100%;overflow-x:hidden;background:#080806!important;color:#f0ebe0!important;}
-body{background:#080806!important;color:#f0ebe0!important;font-family:'Space Mono','Courier New',monospace!important;cursor:none;-webkit-font-smoothing:antialiased;}
-@media(pointer:coarse){body{cursor:auto!important;}*{cursor:auto!important;}#cur{display:none!important;}}
+html{background:#04040a!important;overflow-x:hidden;scroll-behavior:smooth;}
+body{background:#04040a!important;color:#e8e4d9!important;font-family:'DM Mono','Courier New',monospace;overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased;}
+@media(pointer:coarse){body{cursor:auto!important;}*{cursor:auto!important;}#cur,#cur2{display:none!important;}}
 
-/* CURSOR */
-#cur{width:16px;height:16px;border:2px solid #ff4d00;border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transition:transform .12s,background .12s;mix-blend-mode:difference;}
+:root{
+–bg:#04040a;
+–paper:#e8e4d9;
+–hot:#ff2d00;
+–volt:#c8ff00;
+–cyan:#00f5ff;
+–ink:#08080f;
+–grey:#111118;
+–mid:#1e1e28;
+–mute:#44445a;
+–glow:rgba(255,45,0,.15);
+}
 
-/* PAGE ROUTER */
+/* ═══════════════════════════════
+CURSOR — DUAL RING
+═══════════════════════════════ */
+#cur{width:10px;height:10px;background:#ff2d00;border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transition:transform .08s;}
+#cur2{width:32px;height:32px;border:1px solid rgba(255,45,0,.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transition:transform .2s,width .2s,height .2s,border-color .2s;transform:translate(-11px,-11px);}
+body:hover #cur2{border-color:rgba(255,45,0,.6);}
+
+/* ═══════════════════════════════
+PAGE SYSTEM
+═══════════════════════════════ */
 .pg{display:none!important;}
 .pg.on{display:block!important;}
 
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:600;height:58px;padding:0 1.8rem;display:flex;justify-content:space-between;align-items:center;background:rgba(8,8,6,.97)!important;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,77,0,.2);}
-.nlogo{font-family:‘Archivo Black’,‘Arial Black’,sans-serif!important;font-size:1.25rem;letter-spacing:.12em;text-decoration:none;color:#f0ebe0!important;display:flex;align-items:center;gap:.5rem;cursor:pointer;}
-.ndot{width:8px;height:8px;background:#ff4d00!important;border-radius:50%;animation:beat 1.2s infinite;display:inline-block;}
-@keyframes beat{0%,100%{transform:scale(1);opacity:1;}50%{transform:scale(1.8);opacity:.3;}}
-.nlinks{display:flex;gap:1.2rem;align-items:center;}
-.nlinks a{font-family:‘Space Mono’,monospace!important;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:#666660!important;text-decoration:none;transition:color .2s;cursor:pointer;white-space:nowrap;}
-.nlinks a:hover,.nlinks a.on{color:#ff4d00!important;}
-.ncta{background:#ff4d00!important;color:#080806!important;font-weight:700!important;padding:.35rem .9rem!important;}
-.ncta:hover{background:#f5c800!important;color:#080806!important;}
-.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;}
-.hamburger span{width:22px;height:2px;background:#f0ebe0;display:block;transition:all .3s;}
-@media(max-width:900px){.nlinks a:not(.ncta){display:none!important;}.hamburger{display:flex!important;}}
+/* ═══════════════════════════════
+NAV — TRANSPARENT EDITORIAL
+═══════════════════════════════ */
+nav{
+position:fixed;top:0;left:0;right:0;z-index:700;
+height:56px;padding:0 2rem;
+display:flex;justify-content:space-between;align-items:center;
+background:rgba(4,4,10,.92);
+border-bottom:1px solid rgba(255,45,0,.18);
+backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+}
+.nlogo{
+font-family:‘Bebas Neue’,sans-serif;
+font-size:1.6rem;letter-spacing:.18em;
+text-decoration:none;color:#e8e4d9!important;
+display:flex;align-items:center;gap:.7rem;cursor:pointer;
+}
+.nlogo-dot{
+width:7px;height:7px;background:#ff2d00;border-radius:50%;
+box-shadow:0 0 8px #ff2d00, 0 0 20px rgba(255,45,0,.4);
+animation:livepulse 1.4s ease-in-out infinite;
+}
+@keyframes livepulse{0%,100%{box-shadow:0 0 6px #ff2d00,0 0 16px rgba(255,45,0,.3);}50%{box-shadow:0 0 12px #ff2d00,0 0 35px rgba(255,45,0,.6),0 0 60px rgba(255,45,0,.2);}}
+.nlinks{display:flex;gap:1.5rem;align-items:center;}
+.nlinks a{font-family:‘DM Mono’,monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:#44445a!important;text-decoration:none;transition:color .2s;cursor:pointer;}
+.nlinks a:hover,.nlinks a.on{color:#ff2d00!important;}
+.ncta{background:#ff2d00!important;color:#04040a!important;padding:.32rem 1rem!important;font-weight:500!important;letter-spacing:.15em;transition:background .2s,box-shadow .2s!important;}
+.ncta:hover{background:#c8ff00!important;color:#04040a!important;box-shadow:0 0 20px rgba(200,255,0,.3)!important;}
+.ham{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px;}
+.ham span{width:20px;height:1px;background:#e8e4d9;display:block;transition:all .3s;}
+@media(max-width:860px){.nlinks a:not(.ncta){display:none!important;}.ham{display:flex!important;}}
+.mobm{display:none;position:fixed;top:56px;left:0;right:0;background:#0a0a12;z-index:699;padding:1.5rem 2rem;flex-direction:column;gap:.8rem;border-bottom:1px solid rgba(255,45,0,.2);}
+.mobm.open{display:flex!important;}
+.mobm a{font-family:‘DM Mono’,monospace;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#e8e4d9!important;text-decoration:none;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.05);cursor:pointer;}
 
-/* MOBILE MENU */
-.mob-menu{display:none;position:fixed;top:58px;left:0;right:0;background:#1c1c18;z-index:599;padding:1.5rem;flex-direction:column;gap:1rem;border-bottom:2px solid #ff4d00;}
-.mob-menu.open{display:flex!important;}
-.mob-menu a{font-family:‘Space Mono’,monospace!important;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:#f0ebe0!important;text-decoration:none;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.06);cursor:pointer;}
+/* ═══════════════════════════════
+HERO — FULL CINEMATIC
+═══════════════════════════════ */
+.hero{
+position:relative;min-height:100vh;
+padding-top:56px;overflow:hidden;
+background:#04040a;
+display:flex;flex-direction:column;justify-content:flex-end;
+}
+.hero-bg{
+position:absolute;inset:0;
+background-image:url(‘https://images.unsplash.com/photo-1555993539-1732b0258235?w=1600&q=85’);
+background-size:cover;background-position:center 30%;
+filter:grayscale(70%) contrast(1.2) brightness(.55);
+}
+.hero-bg::after{
+content:’’;position:absolute;inset:0;
+background:linear-gradient(180deg,rgba(4,4,10,.2) 0%,rgba(4,4,10,.1) 30%,rgba(4,4,10,.85) 75%,rgba(4,4,10,1) 100%);
+}
+/* SCANLINES */
+.hero-bg::before{
+content:’’;position:absolute;inset:0;z-index:1;
+background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.08) 2px,rgba(0,0,0,.08) 4px);
+pointer-events:none;
+}
+/* GRID OVERLAY */
+.hero-grid{
+position:absolute;inset:0;z-index:1;pointer-events:none;
+background-image:
+linear-gradient(rgba(255,45,0,.04) 1px,transparent 1px),
+linear-gradient(90deg,rgba(255,45,0,.04) 1px,transparent 1px);
+background-size:80px 80px;
+}
+.hero-content{
+position:relative;z-index:10;
+padding:0 2.5rem 4rem;
+display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:flex-end;
+}
+/* BIG NUMBER TOP RIGHT */
+.hero-num{
+position:absolute;top:76px;right:2rem;
+font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;
+font-size:clamp(8rem,18vw,20rem);line-height:1;
+color:transparent;
+-webkit-text-stroke:1px rgba(255,255,255,.06);
+pointer-events:none;z-index:2;
+letter-spacing:-.02em;
+}
+.hero-left{}
+.hero-pretitle{
+font-family:‘DM Mono’,monospace;font-size:.6rem;letter-spacing:.5em;
+text-transform:uppercase;color:#ff2d00;margin-bottom:1rem;
+display:flex;align-items:center;gap:.8rem;
+}
+.hero-pretitle::before{content:’’;display:block;width:28px;height:1px;background:#ff2d00;}
+.hero-title{
+font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;
+font-size:clamp(5rem,14vw,13rem);line-height:.82;
+text-transform:uppercase;letter-spacing:-.01em;
+}
+.hero-title .t1{color:#e8e4d9;display:block;}
+.hero-title .t2{
+color:#ff2d00;display:block;
+text-shadow:0 0 60px rgba(255,45,0,.4);
+}
+.hero-title .t3{
+color:transparent;display:block;
+-webkit-text-stroke:1.5px #e8e4d9;
+opacity:.7;
+}
+.hero-sub{
+font-family:‘DM Mono’,monospace;font-size:.72rem;letter-spacing:.14em;
+color:#44445a;margin-top:1.5rem;text-transform:uppercase;
+}
+.hero-btns{display:flex;gap:.8rem;margin-top:1.8rem;flex-wrap:wrap;}
+.hero-right{text-align:right;}
+.hero-stat-block{display:flex;flex-direction:column;gap:.5rem;align-items:flex-end;}
+.hstat{text-align:right;}
+.hstat-n{
+font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;
+font-size:2.5rem;color:#e8e4d9;line-height:1;
+}
+.hstat-l{font-family:‘DM Mono’,monospace;font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:#44445a;}
 
-/* TICKER */
-.ticker{background:#ff4d00!important;padding:.6rem 0;overflow:hidden;white-space:nowrap;border-top:3px solid #c84b00;border-bottom:3px solid #c84b00;}
-.ti{display:inline-flex;animation:roll 20s linear infinite;}
-.ti2{display:inline-flex;animation:roll2 28s linear infinite;}
-.titem{display:inline-flex;align-items:center;gap:.8rem;margin-right:2rem;font-family:‘Space Mono’,monospace!important;font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#080806!important;cursor:pointer;}
-.titem::after{content:‘◆’;font-size:.35rem;}
-@keyframes roll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-@keyframes roll2{0%{transform:translateX(-50%);}100%{transform:translateX(0);}}
+/* BUTTONS */
+.btn{font-family:‘DM Mono’,monospace;font-size:.65rem;font-weight:500;letter-spacing:.14em;text-transform:uppercase;padding:.8rem 1.8rem;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s;-webkit-appearance:none;}
+.bo{background:#ff2d00!important;color:#04040a!important;}
+.bo:hover{background:#c8ff00!important;box-shadow:0 0 25px rgba(200,255,0,.3);}
+.bg{background:transparent!important;color:#e8e4d9!important;border:1px solid rgba(255,255,255,.2)!important;}
+.bg:hover{border-color:#ff2d00!important;color:#ff2d00!important;}
+.bv{background:#c8ff00!important;color:#04040a!important;}
+.bv:hover{background:#ff2d00!important;}
 
-/* DECO */
-.deco{height:3px;background:linear-gradient(90deg,#ff4d00,#f5c800,#00c45a,#0057ff,#7c3aed,#ff4d00);}
-.deco2{height:1px;background:linear-gradient(90deg,transparent,#ff4d00,transparent);}
+/* ═══════════════════════════════
+LIVE TICKER — DOUBLE DIRECTION
+═══════════════════════════════ */
+.ticker-wrap{overflow:hidden;background:#04040a;border-top:1px solid rgba(255,45,0,.2);border-bottom:1px solid rgba(255,45,0,.2);}
+.tk1{background:rgba(255,45,0,.06);padding:.55rem 0;white-space:nowrap;}
+.tk2{background:rgba(200,255,0,.04);padding:.45rem 0;white-space:nowrap;}
+.ti1{display:inline-flex;animation:tkr 18s linear infinite;}
+.ti2{display:inline-flex;animation:tkl 24s linear infinite;}
+.ti1 span,.ti2 span{
+font-family:‘DM Mono’,monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;
+margin-right:2.5rem;cursor:pointer;transition:color .2s;
+}
+.ti1 span{color:rgba(255,45,0,.7);}
+.ti1 span:hover{color:#ff2d00;}
+.ti2 span{color:rgba(200,255,0,.45);}
+.ti2 span:hover{color:#c8ff00;}
+.ti1 span::after,.ti2 span::after{content:’ ·’;opacity:.4;}
+@keyframes tkr{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+@keyframes tkl{0%{transform:translateX(-50%);}100%{transform:translateX(0);}}
 
-/* BTNS */
-.btn{font-family:‘Space Mono’,monospace!important;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:.85rem 1.8rem;border:none;cursor:pointer;text-decoration:none;display:inline-block;transition:all .2s;-webkit-appearance:none;}
-.bo{background:#ff4d00!important;color:#080806!important;clip-path:polygon(0 0,calc(100% - 8px) 0,100% 8px,100% 100%,8px 100%,0 calc(100% - 8px));}
-.bo:hover{background:#f5c800!important;}
-.bg{background:transparent!important;color:#f0ebe0!important;border:1px solid rgba(255,255,255,.2)!important;}
-.bg:hover{border-color:#ff4d00!important;color:#ff4d00!important;}
-.bk{background:#080806!important;color:#f0ebe0!important;border:1px solid rgba(255,255,255,.1)!important;}
-.bk:hover{background:#ff4d00!important;color:#080806!important;border-color:#ff4d00!important;}
+/* ═══════════════════════════════
+LIVE NOW STRIP
+═══════════════════════════════ */
+.live-now{
+background:linear-gradient(90deg,rgba(255,45,0,.12),rgba(255,45,0,.04),transparent);
+border-bottom:1px solid rgba(255,45,0,.12);
+padding:.75rem 2rem;
+display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;
+}
+.live-badge{
+font-family:‘DM Mono’,monospace;font-size:.52rem;font-weight:500;
+letter-spacing:.25em;text-transform:uppercase;
+background:#ff2d00;color:#04040a;padding:.2rem .6rem;
+animation:blink 2s step-end infinite;flex-shrink:0;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.4;}}
+.live-scroll{display:flex;gap:2rem;flex:1;overflow:hidden;flex-wrap:wrap;}
+.litem{font-family:‘DM Mono’,monospace;font-size:.6rem;color:#e8e4d9!important;letter-spacing:.08em;cursor:pointer;transition:color .2s;white-space:nowrap;}
+.litem:hover{color:#ff2d00!important;}
+.litem .ldot{display:inline-block;width:5px;height:5px;background:#ff2d00;border-radius:50%;margin-right:.4rem;vertical-align:middle;animation:livepulse 1.4s infinite;}
 
-/* LABELS */
-.lbl{font-family:‘Space Mono’,monospace!important;font-size:.56rem;letter-spacing:.38em;text-transform:uppercase;color:#ff4d00!important;margin-bottom:.7rem;display:flex;align-items:center;gap:.7rem;}
-.lbl::before{content:’’;display:block;min-width:16px;height:2px;background:#ff4d00;}
-.ttl{font-family:‘Roboto Condensed’,‘Arial Narrow’,Arial,sans-serif!important;font-style:italic!important;font-weight:700!important;font-size:clamp(2rem,5.5vw,4.5rem);text-transform:uppercase;line-height:.88;margin-bottom:2rem;color:#f0ebe0!important;}
+/* ═══════════════════════════════
+SECTION LAYOUT
+═══════════════════════════════ */
+.sec{padding:5rem 2rem;max-width:1320px;margin:0 auto;}
+.sec-full{padding:5rem 2rem;}
+.sec-full-inner{max-width:1320px;margin:0 auto;}
 
-/* GRID */
+.lbl{
+font-family:‘DM Mono’,monospace;font-size:.52rem;letter-spacing:.45em;text-transform:uppercase;
+color:#ff2d00;margin-bottom:.7rem;display:flex;align-items:center;gap:.7rem;
+}
+.lbl::before{content:’’;display:block;min-width:14px;height:1px;background:#ff2d00;}
+.ttl{
+font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;
+font-size:clamp(2.5rem,6vw,5rem);text-transform:uppercase;line-height:.88;
+margin-bottom:2rem;color:#e8e4d9;
+}
+
+/* ═══════════════════════════════
+SEARCH — OVERSIZED
+═══════════════════════════════ */
+.srch-sec{background:#0a0a12;padding:4.5rem 2rem;border-top:1px solid rgba(255,255,255,.04);}
+.srch-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:center;}
+.srch-q{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:clamp(3rem,6vw,5.5rem);line-height:.88;text-transform:uppercase;color:#e8e4d9;}
+.srch-q em{color:#ff2d00;font-style:inherit;}
+.sform{display:flex;flex-direction:column;gap:.8rem;}
+.srow{display:flex;background:#111118;border:1px solid rgba(255,255,255,.08);transition:border-color .2s;}
+.srow:focus-within{border-color:#ff2d00;box-shadow:0 0 20px rgba(255,45,0,.08);}
+.srow input{flex:1;border:none;outline:none;background:transparent;color:#e8e4d9;font-family:‘DM Mono’,monospace;font-size:.82rem;padding:.9rem 1.2rem;-webkit-appearance:none;}
+.srow input::placeholder{color:#2a2a3a;}
+.srow button{background:#ff2d00;color:#04040a;border:none;padding:.9rem 1.5rem;font-family:‘DM Mono’,monospace;font-size:.6rem;font-weight:500;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
+.srow button:hover{background:#c8ff00;}
+.pills{display:flex;flex-wrap:wrap;gap:.4rem;}
+.pill{font-family:‘DM Mono’,monospace;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .8rem;border:1px solid rgba(255,255,255,.1);cursor:pointer;color:#44445a;background:transparent;transition:all .15s;}
+.pill:hover,.pill.on{background:#ff2d00;border-color:#ff2d00;color:#04040a;}
+
+/* ═══════════════════════════════
+BENTO GRID — ASYMMETRIC
+═══════════════════════════════ */
+.bento{
+display:grid;
+grid-template-columns:repeat(12,1fr);
+grid-template-rows:240px 200px;
+gap:2px;
+}
+.bt{position:relative;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;padding:1.2rem;background:#111118;}
+.bt-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:grayscale(65%) contrast(1.15);transition:transform .5s cubic-bezier(.25,.46,.45,.94),filter .5s;}
+.bt::after{content:’’;position:absolute;inset:0;background:linear-gradient(to top,rgba(4,4,10,.92) 0%,rgba(4,4,10,.15) 55%,transparent 100%);}
+.bt:hover .bt-bg{transform:scale(1.06);filter:grayscale(20%) contrast(1.2);}
+.bt:hover .bt-over{opacity:1;}
+.bt-over{position:absolute;inset:0;background:rgba(255,45,0,.06);opacity:0;transition:opacity .3s;z-index:1;}
+.bt-c{position:relative;z-index:2;}
+.bt-ico{font-size:1.4rem;margin-bottom:.15rem;display:block;}
+.bt-name{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:1.6rem;text-transform:uppercase;line-height:1;color:#e8e4d9;}
+.bt-n{font-family:‘DM Mono’,monospace;font-size:.52rem;letter-spacing:.18em;color:#ff2d00;margin-top:.15rem;}
+.b1{grid-column:span 5;} .b2{grid-column:span 3;} .b3{grid-column:span 4;}
+.b4{grid-column:span 4;} .b5{grid-column:span 3;} .b6{grid-column:span 5;}
+
+/* ═══════════════════════════════
+TODAY — NEON YELLOW BLOCK
+═══════════════════════════════ */
+.today-sec{background:#c8ff00;padding:4rem 2rem;}
+.today-inner{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:160px 1fr;gap:3rem;align-items:start;}
+.today-lbl h2{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:3.2rem;text-transform:uppercase;line-height:.85;color:#04040a;}
+.today-lbl p{font-family:‘DM Mono’,monospace;font-size:.6rem;color:rgba(0,0,0,.5);margin-top:.5rem;line-height:1.6;}
+.today-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.tc{background:rgba(0,0,0,.08);padding:1.4rem;cursor:pointer;transition:background .2s;position:relative;}
+.tc:hover{background:rgba(0,0,0,.18);}
+.tcn{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:3.5rem;color:rgba(0,0,0,.08);line-height:1;}
+.tc h4{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:1.15rem;text-transform:uppercase;margin-bottom:.3rem;color:#04040a;line-height:1.1;}
+.tc p{font-family:‘DM Mono’,monospace;font-size:.58rem;color:rgba(0,0,0,.5);line-height:1.5;}
+.tc-arr{position:absolute;top:1rem;right:1rem;font-size:.9rem;color:rgba(0,0,0,.2);}
+
+/* ═══════════════════════════════
+QUARTIERE — MAP FEEL
+═══════════════════════════════ */
+.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+.qcard{background:#0a0a12;padding:2rem 1.4rem;cursor:pointer;transition:all .25s;border-bottom:2px solid transparent;position:relative;overflow:hidden;}
+.qcard::before{content:’’;position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#ff2d00,transparent);transform:scaleX(0);transition:transform .3s;}
+.qcard:hover{background:#111118;border-bottom-color:#ff2d00;}
+.qcard:hover::before{transform:scaleX(1);}
+.qnum{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:5rem;color:rgba(255,255,255,.03);line-height:1;position:absolute;top:0;right:.3rem;}
+.qtag{font-family:‘DM Mono’,monospace;font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;background:#ff2d00;color:#04040a;padding:.15rem .5rem;display:inline-block;margin-bottom:.6rem;font-weight:500;}
+.qcard h3{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:1.6rem;text-transform:uppercase;color:#e8e4d9;margin-bottom:.4rem;line-height:1;}
+.qcard p{font-family:‘DM Mono’,monospace;font-size:.58rem;color:#44445a;line-height:1.7;}
+
+/* ═══════════════════════════════
+COMMUNITY HOME
+═══════════════════════════════ */
+.com-wrap{display:grid;grid-template-columns:1.3fr 1fr;gap:4rem;align-items:center;}
+.com-left h2{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:clamp(2.5rem,5vw,4.5rem);text-transform:uppercase;line-height:.88;margin-bottom:1rem;color:#e8e4d9;}
+.com-left h2 em{color:#ff2d00;font-style:inherit;}
+.com-left p{font-family:‘DM Mono’,monospace;font-size:.72rem;color:#44445a;line-height:1.85;margin-bottom:1.4rem;}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid rgba(255,255,255,.06);margin-top:1.8rem;}
+.stat{padding:1.2rem .8rem;border-right:1px solid rgba(255,255,255,.06);}
+.stat:last-child{border-right:none;}
+.stn{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:2.8rem;color:#ff2d00;line-height:1;}
+.stl{font-family:‘DM Mono’,monospace;font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:#44445a;margin-top:.2rem;}
+.ctiles{display:grid;grid-template-columns:1fr 1fr;gap:2px;}
+.ct{padding:1.8rem 1.4rem;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;}
+.ct:hover{transform:translateY(-2px);}
+.ct.o{background:#ff2d00;}
+.ct.m{background:#111118;border:1px solid rgba(255,255,255,.05);}
+.ct.cy{background:#00f5ff;}
+.ct.vo{background:#c8ff00;}
+.ct-ico{font-size:1.8rem;display:block;margin-bottom:.7rem;}
+.ct h4{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:1.3rem;text-transform:uppercase;}
+.ct small{font-family:‘DM Mono’,monospace;font-size:.54rem;letter-spacing:.1em;opacity:.65;display:block;margin-top:.2rem;text-transform:uppercase;}
+.ct.o h4,.ct.o small{color:#04040a;}
+.ct.cy h4,.ct.cy small{color:#04040a;}
+.ct.vo h4,.ct.vo small{color:#04040a;}
+.ct.m h4,.ct.m small{color:#e8e4d9;}
+
+/* ═══════════════════════════════
+EVENT/ITEM CARDS
+═══════════════════════════════ */
+.ec{background:#0a0a12;padding:1.6rem;cursor:pointer;transition:background .2s;position:relative;overflow:hidden;border:1px solid transparent;transition:all .2s;}
+.ec::after{content:’’;position:absolute;bottom:0;left:0;right:0;height:1px;background:#ff2d00;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.ec:hover{background:#111118;border-color:rgba(255,45,0,.12);}
+.ec:hover::after{transform:scaleX(1);}
+.etag{font-family:‘DM Mono’,monospace;font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;background:#ff2d00;color:#04040a;padding:.18rem .6rem;display:inline-block;margin-bottom:.8rem;font-weight:500;}
+.etag.g{background:#c8ff00!important;}
+.etag.b{background:#00f5ff!important;color:#04040a!important;}
+.etag.p{background:#9333ea!important;color:#fff!important;}
+.etag.w{background:rgba(255,255,255,.08)!important;color:#e8e4d9!important;}
+.ec h3{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:1.35rem;text-transform:uppercase;line-height:1;margin-bottom:.6rem;color:#e8e4d9;}
+.ec .meta{font-family:‘DM Mono’,monospace;font-size:.58rem;color:#44445a;line-height:1.9;}
+.ec .meta strong{color:#ff2d00;}
+.earr{position:absolute;bottom:1.1rem;right:1.1rem;font-size:1rem;color:#ff2d00;opacity:0;transition:opacity .2s,transform .2s;}
+.ec:hover .earr{opacity:1;transform:translate(3px,-3px);}
+
+/* IMAGE CARDS */
+.ic{position:relative;overflow:hidden;cursor:pointer;height:260px;background:#111118;}
+.ic img{width:100%;height:100%;object-fit:cover;filter:grayscale(55%) contrast(1.2);transition:transform .5s cubic-bezier(.25,.46,.45,.94),filter .5s;}
+.ic:hover img{transform:scale(1.07);filter:grayscale(15%) contrast(1.15);}
+.ic::after{content:’’;position:absolute;inset:0;background:linear-gradient(to top,rgba(4,4,10,.92) 0%,transparent 50%);}
+.icc{position:absolute;bottom:1.1rem;left:1.1rem;right:1.1rem;z-index:2;}
+.icc h3{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:1.5rem;text-transform:uppercase;line-height:1;color:#e8e4d9;}
+.icc .sub{font-family:‘DM Mono’,monospace;font-size:.55rem;color:#ff2d00;letter-spacing:.12em;margin-top:.25rem;}
+
+/* GRIDS */
 .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
 .g2{display:grid;grid-template-columns:repeat(2,1fr);gap:2px;}
 .g4{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
 
-/* EVENT CARD */
-.ec{background:#1c1c18!important;padding:1.8rem;cursor:pointer;transition:background .2s;position:relative;overflow:hidden;}
-.ec::before{content:’’;position:absolute;top:0;left:0;right:0;height:3px;background:#ff4d00;transform:scaleX(0);transform-origin:left;transition:transform .3s;}
-.ec:hover{background:#2e2e28!important;}
-.ec:hover::before{transform:scaleX(1);}
-.ectag{font-family:‘Space Mono’,monospace!important;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;background:#ff4d00!important;color:#080806!important;padding:.2rem .65rem;display:inline-block;margin-bottom:.9rem;font-weight:700;}
-.ectag.g{background:#00c45a!important;color:#080806!important;}
-.ectag.b{background:#0057ff!important;color:#f0ebe0!important;}
-.ectag.y{background:#f5c800!important;color:#080806!important;}
-.ectag.p{background:#7c3aed!important;color:#f0ebe0!important;}
-.ectag.w{background:rgba(255,255,255,.1)!important;color:#f0ebe0!important;}
-.ec h3{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:1.3rem;text-transform:uppercase;line-height:1;margin-bottom:.7rem;color:#f0ebe0!important;}
-.ec .meta{font-family:‘Space Mono’,monospace!important;font-size:.6rem;color:#666660!important;line-height:1.9;}
-.ec .meta strong{color:#ff4d00!important;}
-.ec .arr{position:absolute;bottom:1.2rem;right:1.2rem;font-size:1.1rem;color:#ff4d00!important;opacity:0;transition:opacity .2s,transform .2s;}
-.ec:hover .arr{opacity:1;transform:translate(3px,-3px);}
-
-/* IMAGE CARD */
-.ic{position:relative;overflow:hidden;cursor:pointer;height:260px;background:#2e2e28!important;}
-.ic img{width:100%;height:100%;object-fit:cover;filter:grayscale(45%) contrast(1.15);transition:transform .4s,filter .4s;}
-.ic:hover img{transform:scale(1.06);filter:grayscale(10%) contrast(1.1);}
-.ic::after{content:’’;position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,6,.9) 0%,transparent 55%);}
-.icc{position:absolute;bottom:1.2rem;left:1.2rem;right:1.2rem;z-index:2;}
-.icc h3{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:1.4rem;text-transform:uppercase;line-height:1;color:#f0ebe0!important;}
-.icc .sub{font-size:.58rem;color:#ff4d00!important;letter-spacing:.14em;margin-top:.25rem;}
-
-/* REVEAL */
-.rv{opacity:0;transform:translateY(28px);transition:opacity .55s,transform .55s;}
-.rv.in{opacity:1;transform:translateY(0);}
-
-/* PW */
-.pw{max-width:1280px;margin:0 auto;padding:0 1.8rem;}
-
-/* ════════════════════════
-HOME
-════════════════════════ */
-.hero{min-height:100vh;padding-top:58px;display:grid;grid-template-columns:1fr 1fr;background:#080806!important;}
-.hl{padding:4.5rem 2.5rem 3.5rem;display:flex;flex-direction:column;justify-content:flex-end;border-right:2px solid rgba(255,255,255,.07);position:relative;background:#080806!important;background-image:repeating-linear-gradient(-55deg,transparent,transparent 38px,rgba(255,77,0,.02) 38px,rgba(255,77,0,.02) 39px),repeating-linear-gradient(35deg,transparent,transparent 75px,rgba(255,255,255,.01) 75px,rgba(255,255,255,.01) 76px);}
-.hkick{font-family:‘Space Mono’,monospace!important;font-size:.56rem;letter-spacing:.38em;text-transform:uppercase;color:#ff4d00!important;margin-bottom:1.5rem;display:flex;align-items:center;gap:.7rem;}
-.hkick::before{content:’’;display:inline-block;width:22px;height:2px;background:#ff4d00;}
-.htitle{font-family:‘Roboto Condensed’,‘Arial Narrow’,Arial,sans-serif!important;font-style:italic!important;font-weight:700!important;font-size:clamp(4.5rem,11vw,10.5rem);line-height:.82;letter-spacing:-.02em;text-transform:uppercase;}
-.htitle .l1{color:#f0ebe0!important;display:block;}
-.htitle .l2{color:#ff4d00!important;display:block;}
-.htitle .l3{color:transparent!important;-webkit-text-stroke:2px #f0ebe0;display:block;}
-.hsub{font-family:‘Space Mono’,monospace!important;font-size:.7rem;letter-spacing:.14em;color:#666660!important;margin-top:1.8rem;text-transform:uppercase;}
-.hbtns{display:flex;gap:.8rem;margin-top:1.8rem;flex-wrap:wrap;}
-.hr{position:relative;overflow:hidden;background:#080806;}
-.hr img{width:100%;height:100%;object-fit:cover;filter:grayscale(60%) contrast(1.15);opacity:.72;}
-.hr::after{content:’’;position:absolute;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 4px,rgba(255,77,0,.025) 4px,rgba(255,77,0,.025) 5px);}
-.hcoord{position:absolute;top:1.5rem;right:1.5rem;writing-mode:vertical-rl;font-family:‘Space Mono’,monospace!important;font-size:.52rem;letter-spacing:.38em;color:rgba(255,255,255,.22)!important;text-transform:uppercase;z-index:2;}
-.hzh{position:absolute;bottom:1.5rem;left:1.5rem;font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-size:6.5rem;line-height:1;color:rgba(255,255,255,.04)!important;pointer-events:none;}
-
-/* LIVE STRIP */
-.live-strip{background:#ff4d00!important;padding:1.2rem 1.8rem;display:flex;align-items:center;gap:2rem;flex-wrap:wrap;}
-.live-dot{width:8px;height:8px;background:#080806;border-radius:50%;animation:beat 1s infinite;flex-shrink:0;}
-.live-strip span{font-family:‘Space Mono’,monospace!important;font-size:.62rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#080806!important;}
-.live-strip .live-items{display:flex;gap:2rem;flex-wrap:wrap;flex:1;}
-.live-item{font-family:‘Space Mono’,monospace!important;font-size:.6rem;color:#080806!important;letter-spacing:.1em;cursor:pointer;border-bottom:1px dashed rgba(0,0,0,.3);padding-bottom:1px;}
-.live-item:hover{opacity:.65;}
-
-/* SEARCH */
-.srch{background:#f0ebe0!important;color:#080806!important;padding:4rem 1.8rem;}
-.srch-in{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;}
-.srch h2{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:clamp(2.5rem,5.5vw,4.8rem);line-height:.88;text-transform:uppercase;color:#080806!important;}
-.srch h2 span{color:#ff4d00!important;}
-.srow{display:flex;border:3px solid #080806;}
-.srow input{flex:1;border:none;outline:none;background:transparent!important;color:#080806!important;font-family:‘Space Mono’,monospace!important;font-size:.82rem;padding:.85rem 1.1rem;-webkit-appearance:none;}
-.srow input::-webkit-input-placeholder{color:#aaa;}
-.srow button{background:#080806!important;color:#f0ebe0!important;border:none;padding:.85rem 1.4rem;font-family:‘Space Mono’,monospace!important;font-size:.62rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .2s;}
-.srow button:hover{background:#ff4d00!important;}
-.pills{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.7rem;}
-.pill{font-family:‘Space Mono’,monospace!important;font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .85rem;border:2px solid #080806;cursor:pointer;color:#080806!important;background:transparent!important;transition:all .15s;}
-.pill:hover,.pill.on{background:#ff4d00!important;border-color:#ff4d00!important;color:#080806!important;}
-
-/* BENTO */
-.bento{display:grid;grid-template-columns:repeat(12,1fr);grid-template-rows:repeat(2,210px);gap:3px;}
-.bt{position:relative;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;padding:1.1rem;background:#2e2e28!important;}
-.bt:hover .btbg{transform:scale(1.07);filter:grayscale(8%) contrast(1.15);}
-.btbg{position:absolute;inset:0;background-size:cover;background-position:center;filter:grayscale(52%);transition:transform .4s,filter .4s;}
-.bt::after{content:’’;position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,6,.9) 0%,rgba(8,8,6,.2) 55%,transparent 100%);}
-.btc{position:relative;z-index:2;}
-.btico{font-size:1.5rem;margin-bottom:.15rem;display:block;}
-.btname{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:1.4rem;text-transform:uppercase;line-height:1;color:#f0ebe0!important;}
-.btcount{font-family:‘Space Mono’,monospace!important;font-size:.56rem;letter-spacing:.16em;color:#ff4d00!important;margin-top:.15rem;}
-.b1{grid-column:span 4;} .b2{grid-column:span 3;} .b3{grid-column:span 5;}
-.b4{grid-column:span 3;} .b5{grid-column:span 4;} .b6{grid-column:span 5;}
-
-/* TODAY */
-.today{background:#f5c800!important;padding:3.5rem 1.8rem;}
-.today-in{max-width:1280px;margin:0 auto;display:grid;grid-template-columns:180px 1fr;gap:3rem;align-items:start;}
-.today h2{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:2.8rem;text-transform:uppercase;line-height:.88;color:#080806!important;}
-.today p{font-family:‘Space Mono’,monospace!important;font-size:.62rem;color:rgba(0,0,0,.5)!important;margin-top:.5rem;line-height:1.7;}
-.tcards{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;}
-.tc{background:rgba(0,0,0,.1)!important;padding:1.4rem;cursor:pointer;transition:background .2s;position:relative;}
-.tc:hover{background:rgba(0,0,0,.2)!important;}
-.tcnum{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:3rem;color:rgba(0,0,0,.1)!important;line-height:1;}
-.tc h4{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:1rem;text-transform:uppercase;margin-bottom:.3rem;color:#080806!important;}
-.tc p{font-family:‘Space Mono’,monospace!important;font-size:.58rem;color:rgba(0,0,0,.5)!important;line-height:1.5;}
-.tc .tcarr{position:absolute;top:1rem;right:1rem;font-size:.9rem;color:rgba(0,0,0,.25);}
-
-/* QUARTIERE */
-.qmap{background:#080806!important;padding:5rem 1.8rem;}
-.qgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:2.5rem;}
-.qcard{background:#1c1c18!important;padding:2rem 1.5rem;cursor:pointer;transition:all .2s;border-bottom:3px solid transparent;position:relative;overflow:hidden;}
-.qcard:hover{background:#2e2e28!important;border-bottom-color:#ff4d00;}
-.qnum{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:4rem;color:rgba(255,255,255,.04)!important;line-height:1;position:absolute;top:0;right:.5rem;}
-.qcard h3{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:1.4rem;text-transform:uppercase;color:#f0ebe0!important;margin-bottom:.4rem;}
-.qcard p{font-family:‘Space Mono’,monospace!important;font-size:.58rem;color:#666660!important;line-height:1.7;}
-.qtag{font-family:‘Space Mono’,monospace!important;font-size:.5rem;letter-spacing:.15em;text-transform:uppercase;background:#ff4d00!important;color:#080806!important;padding:.15rem .5rem;display:inline-block;margin-bottom:.6rem;font-weight:700;}
-
-/* COMMUNITY HOME */
-.comh{max-width:1280px;margin:0 auto;padding:5rem 1.8rem;display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center;}
-.comh h2{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:clamp(2.2rem,4.5vw,4rem);text-transform:uppercase;line-height:.88;margin-bottom:1rem;color:#f0ebe0!important;}
-.comh h2 em{color:#ff4d00!important;font-style:inherit;}
-.comh p{font-family:‘Space Mono’,monospace!important;font-size:.75rem;color:#666660!important;line-height:1.8;margin-bottom:1.5rem;}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid rgba(255,255,255,.08);margin-top:2rem;}
-.stat{padding:1.4rem 1rem;border-right:1px solid rgba(255,255,255,.08);}
-.stat:last-child{border-right:none;}
-.stn{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:2.8rem;color:#ff4d00!important;line-height:1;}
-.stl{font-family:‘Space Mono’,monospace!important;font-size:.52rem;letter-spacing:.18em;text-transform:uppercase;color:#666660!important;margin-top:.2rem;}
-.ctiles{display:grid;grid-template-columns:1fr 1fr;gap:3px;}
-.ct{padding:1.8rem 1.4rem;cursor:pointer;transition:transform .2s;}
-.ct:hover{transform:translateY(-3px);}
-.ct.o{background:#ff4d00!important;} .ct.m{background:#2e2e28!important;} .ct.bb{background:#0057ff!important;}
-.cticon{font-size:1.8rem;display:block;margin-bottom:.7rem;}
-.ct h4{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:1.2rem;text-transform:uppercase;}
-.ct small{font-family:‘Space Mono’,monospace!important;font-size:.56rem;letter-spacing:.1em;opacity:.6;display:block;margin-top:.25rem;text-transform:uppercase;}
-.ct.o h4,.ct.o small{color:#080806!important;}
-.ct.m h4,.ct.m small,.ct.bb h4,.ct.bb small{color:#f0ebe0!important;}
-
-/* ════════════════════════
-SUBPAGE SHARED
-════════════════════════ */
-.sub-head{padding:7.5rem 1.8rem 3.5rem;border-bottom:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden;}
-.sub-head::before{content:’’;position:absolute;inset:0;background:repeating-linear-gradient(-55deg,transparent,transparent 35px,rgba(255,77,0,.018) 35px,rgba(255,77,0,.018) 36px);pointer-events:none;}
-.shi{max-width:1280px;margin:0 auto;position:relative;z-index:1;}
-.shick{font-family:‘Space Mono’,monospace!important;font-size:.56rem;letter-spacing:.38em;text-transform:uppercase;color:#ff4d00!important;margin-bottom:.8rem;display:flex;align-items:center;gap:.7rem;}
-.shick::before{content:’’;width:16px;height:2px;background:#ff4d00;}
-.sub-head h1{font-family:‘Roboto Condensed’,‘Arial Narrow’,Arial,sans-serif!important;font-style:italic!important;font-weight:700!important;font-size:clamp(3.5rem,9vw,8.5rem);text-transform:uppercase;line-height:.85;letter-spacing:-.01em;}
-.sub-head p{font-family:‘Space Mono’,monospace!important;font-size:.78rem;color:#666660!important;line-height:1.8;max-width:500px;margin-top:1.2rem;}
-.smeta{display:flex;gap:2rem;margin-top:1.5rem;flex-wrap:wrap;}
-.sm{font-family:‘Space Mono’,monospace!important;font-size:.58rem;color:#666660!important;letter-spacing:.09em;}
-.sm strong{color:#f0ebe0!important;}
+/* ═══════════════════════════════
+SUBPAGE HERO
+═══════════════════════════════ */
+.sub-head{padding:7rem 2rem 3rem;border-bottom:1px solid rgba(255,255,255,.05);position:relative;overflow:hidden;background:#04040a;}
+.sub-head::before{content:’’;position:absolute;inset:0;background-image:linear-gradient(rgba(255,45,0,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,45,0,.03) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;}
+.shi{max-width:1320px;margin:0 auto;position:relative;z-index:1;}
+.shick{font-family:‘DM Mono’,monospace;font-size:.54rem;letter-spacing:.4em;text-transform:uppercase;color:#ff2d00;margin-bottom:.8rem;display:flex;align-items:center;gap:.7rem;}
+.shick::before{content:’’;width:14px;height:1px;background:#ff2d00;}
+.sub-head h1{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:clamp(4rem,10vw,9rem);text-transform:uppercase;line-height:.82;letter-spacing:-.01em;}
+.sub-head p{font-family:‘DM Mono’,monospace;font-size:.75rem;color:#44445a;line-height:1.85;max-width:480px;margin-top:1.2rem;}
+.smeta{display:flex;gap:2rem;margin-top:1.4rem;flex-wrap:wrap;}
+.sm{font-family:‘DM Mono’,monospace;font-size:.56rem;color:#44445a;letter-spacing:.08em;}
+.sm strong{color:#e8e4d9;}
 
 /* FILTER */
-.fbar{background:#1c1c18!important;padding:.85rem 1.8rem;border-bottom:1px solid rgba(255,255,255,.05);position:sticky;top:58px;z-index:400;}
-.fbi{max-width:1280px;margin:0 auto;display:flex;gap:.5rem;flex-wrap:wrap;align-items:center;}
-.flbl{font-family:‘Space Mono’,monospace!important;font-size:.52rem;letter-spacing:.22em;text-transform:uppercase;color:#666660!important;margin-right:.4rem;}
-.ftag{font-family:‘Space Mono’,monospace!important;font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .8rem;border:1px solid rgba(255,255,255,.12);cursor:pointer;color:#666660!important;background:transparent!important;transition:all .15s;}
-.ftag:hover,.ftag.on{background:#ff4d00!important;border-color:#ff4d00!important;color:#080806!important;}
+.fbar{background:#04040a;padding:.75rem 2rem;border-bottom:1px solid rgba(255,255,255,.04);position:sticky;top:56px;z-index:400;backdrop-filter:blur(10px);}
+.fbi{max-width:1320px;margin:0 auto;display:flex;gap:.4rem;flex-wrap:wrap;align-items:center;}
+.flbl{font-family:‘DM Mono’,monospace;font-size:.5rem;letter-spacing:.22em;text-transform:uppercase;color:#44445a;margin-right:.3rem;}
+.ftag{font-family:‘DM Mono’,monospace;font-size:.54rem;letter-spacing:.1em;text-transform:uppercase;padding:.26rem .75rem;border:1px solid rgba(255,255,255,.08);cursor:pointer;color:#44445a;background:transparent;transition:all .15s;}
+.ftag:hover,.ftag.on{background:#ff2d00;border-color:#ff2d00;color:#04040a;}
 
 /* CONTENT */
-.ca{max-width:1280px;margin:0 auto;padding:3rem 1.8rem 6rem;background:#080806!important;}
+.ca{max-width:1320px;margin:0 auto;padding:3rem 2rem 6rem;}
 
-/* DETAIL PAGE */
-.detail-head{padding:7rem 1.8rem 0;background:#080806!important;}
-.detail-hero{max-width:1280px;margin:0 auto;}
-.detail-img{width:100%;height:380px;object-fit:cover;filter:grayscale(30%) contrast(1.1);display:block;margin-bottom:2rem;}
-.detail-meta-bar{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;padding-bottom:1.5rem;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:2rem;}
-.detail-badge{font-family:‘Space Mono’,monospace!important;font-size:.55rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;background:#ff4d00!important;color:#080806!important;padding:.25rem .7rem;}
-.detail-body{max-width:1280px;margin:0 auto;padding:0 1.8rem 5rem;display:grid;grid-template-columns:1.6fr 1fr;gap:3rem;}
-.detail-main h2{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:2.5rem;text-transform:uppercase;margin-bottom:1rem;color:#f0ebe0!important;}
-.detail-main p{font-family:‘Space Mono’,monospace!important;font-size:.74rem;color:#888882!important;line-height:1.9;margin-bottom:1.5rem;}
-.detail-main h3{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:1.4rem;text-transform:uppercase;color:#f0ebe0!important;margin-bottom:.7rem;margin-top:2rem;}
-.detail-side{background:#1c1c18!important;padding:2rem;height:fit-content;position:sticky;top:80px;}
-.detail-side h4{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:1.2rem;text-transform:uppercase;color:#f0ebe0!important;margin-bottom:1rem;}
-.drow{display:flex;justify-content:space-between;align-items:center;padding:.7rem 0;border-bottom:1px solid rgba(255,255,255,.06);}
+/* ═══════════════════════════════
+DETAIL PAGE
+═══════════════════════════════ */
+.dhead{padding:6.5rem 2rem 0;background:#04040a;}
+.dhero{max-width:1320px;margin:0 auto;}
+.dimg{width:100%;height:420px;object-fit:cover;filter:grayscale(25%) contrast(1.15);display:block;margin-bottom:1.8rem;}
+.dmb{display:flex;gap:1rem;align-items:center;flex-wrap:wrap;padding-bottom:1.4rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:1.8rem;}
+.dbadge{font-family:‘DM Mono’,monospace;font-size:.52rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;background:#ff2d00;color:#04040a;padding:.22rem .65rem;}
+.dbody{max-width:1320px;margin:0 auto;padding:0 2rem 5rem;display:grid;grid-template-columns:1.7fr 1fr;gap:3rem;}
+.dmain h2{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:2.5rem;text-transform:uppercase;margin-bottom:1rem;color:#e8e4d9;line-height:1;}
+.dmain p{font-family:‘DM Mono’,monospace;font-size:.7rem;color:#44445a;line-height:1.9;margin-bottom:1.4rem;}
+.dmain h3{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:1.4rem;text-transform:uppercase;color:#e8e4d9;margin-bottom:.6rem;margin-top:2rem;}
+.dside{background:#0a0a12;padding:2rem;border:1px solid rgba(255,255,255,.05);height:fit-content;position:sticky;top:70px;}
+.dside h4{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:1.3rem;text-transform:uppercase;color:#e8e4d9;margin-bottom:1rem;}
+.drow{display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:1px solid rgba(255,255,255,.04);}
 .drow:last-of-type{border-bottom:none;}
-.drow span{font-family:‘Space Mono’,monospace!important;font-size:.62rem;color:#666660!important;}
-.drow strong{font-family:‘Space Mono’,monospace!important;font-size:.62rem;color:#f0ebe0!important;}
-.review-card{background:#2e2e28!important;padding:1.5rem;margin-bottom:2px;}
-.rev-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.7rem;}
-.rev-name{font-family:‘Space Mono’,monospace!important;font-size:.62rem;font-weight:700;color:#ff4d00!important;}
-.rev-stars{font-size:.9rem;}
-.rev-text{font-family:‘Space Mono’,monospace!important;font-size:.68rem;color:#888882!important;line-height:1.7;}
-.related-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
+.drow span{font-family:‘DM Mono’,monospace;font-size:.6rem;color:#44445a;}
+.drow strong{font-family:‘DM Mono’,monospace;font-size:.6rem;color:#e8e4d9;}
+.rc{background:#111118;padding:1.4rem;margin-bottom:2px;}
+.rtop{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.6rem;}
+.rname{font-family:‘DM Mono’,monospace;font-size:.6rem;font-weight:500;color:#ff2d00;}
+.rtext{font-family:‘DM Mono’,monospace;font-size:.65rem;color:#44445a;line-height:1.7;}
+.rel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;}
 
-/* FOOTER */
-footer{background:#080806!important;border-top:3px solid #ff4d00;}
-.fticker{background:#ff4d00!important;padding:.42rem 0;overflow:hidden;white-space:nowrap;}
-.fti{display:inline-block;animation:roll 20s linear infinite;}
-.fti span{font-family:‘Roboto Condensed’,Arial,sans-serif!important;font-style:italic;font-weight:700;font-size:.68rem;letter-spacing:.12em;color:#080806!important;text-transform:uppercase;margin:0 1.8rem;}
-.fgrid{max-width:1280px;margin:0 auto;padding:4rem 1.8rem 3rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;border-bottom:1px solid rgba(255,255,255,.06);}
-.fblogo{font-family:‘Archivo Black’,‘Arial Black’,sans-serif!important;font-size:1.9rem;letter-spacing:.1em;display:flex;align-items:center;gap:.55rem;margin-bottom:.7rem;color:#f0ebe0!important;}
-.fbdot{width:9px;height:9px;background:#ff4d00!important;border-radius:50%;}
-.footer-brand p{font-family:‘Space Mono’,monospace!important;font-size:.65rem;color:#666660!important;line-height:1.9;max-width:250px;}
-.fc h5{font-family:‘Space Mono’,monospace!important;font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;color:#ff4d00!important;margin-bottom:1.1rem;}
+/* REVEAL */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .5s,transform .5s;}
+.rv.in{opacity:1;transform:translateY(0);}
+
+/* ═══════════════════════════════
+FOOTER
+═══════════════════════════════ */
+footer{background:#04040a;border-top:1px solid rgba(255,45,0,.2);}
+.ftk{background:rgba(255,45,0,.06);padding:.4rem 0;overflow:hidden;white-space:nowrap;border-bottom:1px solid rgba(255,45,0,.1);}
+.fti{display:inline-block;animation:tkr 22s linear infinite;}
+.fti span{font-family:‘DM Mono’,monospace;font-size:.58rem;letter-spacing:.14em;color:rgba(255,45,0,.45);text-transform:uppercase;margin:0 2rem;}
+.fg{max-width:1320px;margin:0 auto;padding:4rem 2rem 3rem;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:3rem;border-bottom:1px solid rgba(255,255,255,.04);}
+.fbl{font-family:‘Bebas Neue’,sans-serif;font-size:2rem;letter-spacing:.15em;display:flex;align-items:center;gap:.5rem;margin-bottom:.7rem;color:#e8e4d9;}
+.fbdot{width:8px;height:8px;background:#ff2d00;border-radius:50%;box-shadow:0 0 8px #ff2d00;}
+.footer-brand p{font-family:‘DM Mono’,monospace;font-size:.62rem;color:#44445a;line-height:1.9;max-width:240px;}
+.fc h5{font-family:‘DM Mono’,monospace;font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;color:#ff2d00;margin-bottom:1rem;}
 .fc ul{list-style:none;}
-.fc li{font-family:‘Space Mono’,monospace!important;font-size:.72rem;color:#666660!important;margin-bottom:.55rem;cursor:pointer;transition:color .2s;}
-.fc li:hover{color:#f0ebe0!important;}
-.fbot{max-width:1280px;margin:0 auto;padding:1.4rem 1.8rem;display:flex;justify-content:space-between;align-items:center;}
-.fbot p{font-family:‘Space Mono’,monospace!important;font-size:.52rem;letter-spacing:.16em;color:rgba(255,255,255,.1)!important;text-transform:uppercase;}
+.fc li{font-family:‘DM Mono’,monospace;font-size:.68rem;color:#44445a;margin-bottom:.5rem;cursor:pointer;transition:color .2s;}
+.fc li:hover{color:#e8e4d9;}
+.fbot{max-width:1320px;margin:0 auto;padding:1.2rem 2rem;display:flex;justify-content:space-between;align-items:center;}
+.fbot p{font-family:‘DM Mono’,monospace;font-size:.5rem;letter-spacing:.15em;color:rgba(255,255,255,.1);text-transform:uppercase;}
 
-/* ── RESPONSIVE ── */
+/* ═══════════════════════════════
+DECO
+═══════════════════════════════ */
+.deco{height:2px;background:linear-gradient(90deg,#ff2d00,#c8ff00,#00f5ff,#ff2d00);}
+.deco2{height:1px;background:linear-gradient(90deg,transparent,rgba(255,45,0,.3),transparent);}
+
+/* ═══════════════════════════════
+RESPONSIVE
+═══════════════════════════════ */
 @media(max-width:1024px){
-.fgrid{grid-template-columns:1fr 1fr;gap:2rem;}
+.fg{grid-template-columns:1fr 1fr;gap:2rem;}
 .bento{grid-template-columns:repeat(6,1fr);}
 .b1,.b2,.b3,.b4,.b5,.b6{grid-column:span 3;}
 .bento{grid-template-rows:repeat(3,170px);}
 .g4{grid-template-columns:1fr 1fr;}
-.qgrid{grid-template-columns:repeat(2,1fr);}
-.tcards{grid-template-columns:1fr 1fr;}
-.detail-body{grid-template-columns:1fr;}
-.detail-side{position:static;}
-.related-grid{grid-template-columns:1fr 1fr;}
+.qgrid{grid-template-columns:1fr 1fr;}
+.today-cards{grid-template-columns:1fr 1fr;}
+.dbody{grid-template-columns:1fr;}
+.dside{position:static;}
+.rel-grid{grid-template-columns:1fr 1fr;}
 }
 @media(max-width:768px){
-.hero{grid-template-columns:1fr;min-height:auto;}
-.hl{padding:5rem 1.5rem 3rem;border-right:none;border-bottom:2px solid rgba(255,255,255,.07);}
-.hr{height:230px;}
-.srch-in{grid-template-columns:1fr;gap:2rem;}
-.srch{padding:3rem 1.5rem;}
+.hero-content{grid-template-columns:1fr;padding:0 1.5rem 3.5rem;}
+.hero-right{display:none;}
+.hero-num{font-size:8rem;top:66px;}
+.srch-inner{grid-template-columns:1fr;gap:2rem;}
+.srch-sec{padding:3.5rem 1.5rem;}
 .bento{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
-.b1,.b2,.b3,.b4,.b5,.b6{grid-column:span 1;height:150px;}
-.today-in{grid-template-columns:1fr;}
-.tcards{grid-template-columns:1fr;}
-.comh{grid-template-columns:1fr;gap:2.5rem;padding:4rem 1.5rem;}
+.b1,.b2,.b3,.b4,.b5,.b6{grid-column:span 1;height:145px;}
+.today-inner{grid-template-columns:1fr;}
+.today-cards{grid-template-columns:1fr;}
+.com-wrap{grid-template-columns:1fr;gap:2.5rem;}
 .ctiles{grid-template-columns:1fr 1fr;}
 .g3{grid-template-columns:1fr;}
 .g2{grid-template-columns:1fr;}
 .g4{grid-template-columns:1fr 1fr;}
 .qgrid{grid-template-columns:1fr 1fr;}
-.fgrid{grid-template-columns:1fr 1fr;padding:2.5rem 1.5rem 2rem;}
+.fg{grid-template-columns:1fr 1fr;padding:2.5rem 1.5rem 2rem;}
 .footer-brand{grid-column:span 2;}
-.fbot{flex-direction:column;gap:.35rem;text-align:center;padding:1.2rem 1.5rem;}
-.sub-head{padding:5.5rem 1.5rem 3rem;}
+.fbot{flex-direction:column;gap:.3rem;text-align:center;padding:1.1rem 1.5rem;}
+.sub-head{padding:5.5rem 1.5rem 2.5rem;}
 .ca{padding:2rem 1.5rem 4rem;}
-.fbar{padding:.7rem 1.5rem;}
-.pw{padding:0 1.5rem;}
-.live-strip{gap:1rem;}
-.detail-img{height:220px;}
-.detail-head{padding:6rem 1.5rem 0;}
-.detail-body{padding:0 1.5rem 4rem;gap:2rem;}
-.related-grid{grid-template-columns:1fr;}
+.fbar{padding:.65rem 1.5rem;}
+.sec{padding:4rem 1.5rem;}
+.dhead{padding:5.5rem 1.5rem 0;}
+.dbody{padding:0 1.5rem 4rem;}
+.dimg{height:220px;}
+.live-scroll{gap:1rem;}
+.rel-grid{grid-template-columns:1fr;}
 }
 @media(max-width:480px){
-.htitle{font-size:clamp(3rem,17vw,5rem);}
+.hero-title{font-size:clamp(3.5rem,18vw,6rem);}
 .bento{grid-template-columns:1fr;}
-.bt{height:130px;}
-.ctiles{grid-template-columns:1fr 1fr;}
-.fgrid{grid-template-columns:1fr;}
-.footer-brand{grid-column:span 1;}
+.bt{height:135px;}
 .g4{grid-template-columns:1fr;}
 .qgrid{grid-template-columns:1fr;}
-.stats{grid-template-columns:1fr 1fr 1fr;}
+.ctiles{grid-template-columns:1fr 1fr;}
+.fg{grid-template-columns:1fr;}
+.footer-brand{grid-column:span 1;}
+.stats{grid-template-columns:repeat(3,1fr);}
 }
 </style>
 
 </head>
-<body style="background:#080806!important;color:#f0ebe0!important;">
+<body style="background:#04040a!important;color:#e8e4d9!important;">
 <div id="cur"></div>
+<div id="cur2"></div>
 
 <!-- NAV -->
 
 <nav>
-  <a class="nlogo" onclick="go('home')"><div class="ndot"></div>STADTPULS</a>
+  <a class="nlogo" onclick="go('home')"><div class="nlogo-dot"></div>STADTPULS</a>
   <div class="nlinks">
     <a onclick="go('events')" data-p="events">Events</a>
     <a onclick="go('gastro')" data-p="gastro">Gastro</a>
@@ -341,89 +507,99 @@ footer{background:#080806!important;border-top:3px solid #ff4d00;}
     <a onclick="go('marktplatz')" data-p="marktplatz">Marktplatz</a>
     <a onclick="go('community')" data-p="community" class="ncta">Mitmache</a>
   </div>
-  <div class="hamburger" onclick="toggleMenu()" id="ham"><span></span><span></span><span></span></div>
+  <div class="ham" onclick="toggleMenu()" id="ham"><span></span><span></span><span></span></div>
 </nav>
-<div class="mob-menu" id="mobmenu">
+<div class="mobm" id="mobm">
   <a onclick="go('events');closeMenu()">Events</a>
   <a onclick="go('gastro');closeMenu()">Gastro</a>
   <a onclick="go('nachtleben');closeMenu()">Nachtleben</a>
   <a onclick="go('shopping');closeMenu()">Shopping</a>
   <a onclick="go('immobilien');closeMenu()">Immobilien</a>
   <a onclick="go('marktplatz');closeMenu()">Marktplatz</a>
-  <a onclick="go('community');closeMenu()" style="color:#ff4d00!important;">Mitmache →</a>
+  <a onclick="go('community');closeMenu()" style="color:#ff2d00!important;">Mitmache →</a>
 </div>
 
-<!-- ══════════════════════════════
+<!-- ══════════════════════════════════
      HOME
-══════════════════════════════ -->
+══════════════════════════════════ -->
 
-<div id="pg-home" class="pg on" style="background:#080806;">
+<div id="pg-home" class="pg on" style="background:#04040a;">
+
+  <!-- HERO -->
 
   <section class="hero">
-    <div class="hl">
-      <div class="hzh">ZH</div>
-      <p class="hkick">Zürich · Live · Jetzt · 2006</p>
-      <h1 class="htitle">
-        <span class="l1">STADT</span>
-        <span class="l2">PULS</span>
-        <span class="l3">ZÜRICH</span>
-      </h1>
-      <p class="hsub">din city guide für Züri — dä puls vo dä stadt</p>
-      <div class="hbtns">
-        <a class="btn bo" onclick="go('events')">Los, mach!</a>
-        <a class="btn bg" onclick="go('community')">Mitmache</a>
+    <div class="hero-bg"></div>
+    <div class="hero-grid"></div>
+    <div class="hero-num">26</div>
+    <div class="hero-content">
+      <div class="hero-left">
+        <p class="hero-pretitle">Zürich · Live · 2026</p>
+        <h1 class="hero-title">
+          <span class="t1">STADT</span>
+          <span class="t2">PULS</span>
+          <span class="t3">ZÜRICH</span>
+        </h1>
+        <p class="hero-sub">dä puls vo dä stadt — din city guide</p>
+        <div class="hero-btns">
+          <a class="btn bo" onclick="go('events')">Los, mach!</a>
+          <a class="btn bg" onclick="go('quartiere')">Quartiere</a>
+          <a class="btn bv" onclick="go('community')">Mitmache</a>
+        </div>
       </div>
-    </div>
-    <div class="hr">
-      <img src="https://images.unsplash.com/photo-1555993539-1732b0258235?w=1200&q=80" alt="Zürich Urban"/>
-      <span class="hcoord">48°22′N · 8°32′E · ZÜRI</span>
+      <div class="hero-right">
+        <div class="hero-stat-block">
+          <div class="hstat"><div class="hstat-n">12K+</div><div class="hstat-l">Member</div></div>
+          <div class="hstat"><div class="hstat-n">348</div><div class="hstat-l">Restis</div></div>
+          <div class="hstat"><div class="hstat-n">67</div><div class="hstat-l">Events hüt</div></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- LIVE STRIP -->
+  <!-- LIVE NOW -->
 
-  <div class="live-strip">
-    <div class="live-dot"></div>
-    <span>LIVE JETZT:</span>
-    <div class="live-items">
-      <span class="live-item" onclick="go('gastro')">🔴 Langstrasse 77 — Hüt Eröffnig 18:00</span>
-      <span class="live-item" onclick="go('nachtleben')">🎵 Club Dani Wilde — Free Entry bis 23:00</span>
-      <span class="live-item" onclick="go('events')">🎪 Vintage Market — Sa–So Helvetiaplatz</span>
-      <span class="live-item" onclick="go('immobilien')">🏠 Neui WG Kreis 4 — CHF 950.–/Mt</span>
+  <div class="live-now">
+    <span class="live-badge">● Live</span>
+    <div class="live-scroll">
+      <span class="litem" onclick="go('gastro-detail')"><span class="ldot"></span>Langstrasse 77 — Eröffnig hüt 18:00</span>
+      <span class="litem" onclick="go('club-detail')"><span class="ldot"></span>Club Dani Wilde — Free Entry bis 23:00</span>
+      <span class="litem" onclick="go('events')"><span class="ldot"></span>Vintage Market — Sa–So Helvetiaplatz</span>
+      <span class="litem" onclick="go('immobilien')"><span class="ldot"></span>Neui WG Kreis 4 — CHF 950.–</span>
     </div>
   </div>
 
-  <div class="ticker">
-    <div class="ti">
-      <span class="titem" onclick="go('gastro')">Gastro</span>
-      <span class="titem" onclick="go('nachtleben')">Clubs & Bars</span>
-      <span class="titem" onclick="go('shopping')">Shopping</span>
-      <span class="titem" onclick="go('immobilien')">Immobilien</span>
-      <span class="titem" onclick="go('events')">Events</span>
-      <span class="titem" onclick="go('marktplatz')">Pop-Up Shops</span>
-      <span class="titem" onclick="go('events')">Heute Abend</span>
-      <span class="titem" onclick="go('community')">Community</span>
-      <span class="titem" onclick="go('quartiere')">Quartiere</span>
-      <span class="titem" onclick="go('gastro')">Gastro</span>
-      <span class="titem" onclick="go('nachtleben')">Clubs & Bars</span>
-      <span class="titem" onclick="go('shopping')">Shopping</span>
-      <span class="titem" onclick="go('immobilien')">Immobilien</span>
-      <span class="titem" onclick="go('events')">Events</span>
-      <span class="titem" onclick="go('marktplatz')">Pop-Up Shops</span>
-      <span class="titem" onclick="go('events')">Heute Abend</span>
-      <span class="titem" onclick="go('community')">Community</span>
-      <span class="titem" onclick="go('quartiere')">Quartiere</span>
-    </div>
+  <!-- DOUBLE TICKER -->
+
+  <div class="ticker-wrap">
+    <div class="tk1"><div class="ti1">
+      <span onclick="go('gastro')">Gastro</span><span onclick="go('nachtleben')">Clubs & Bars</span>
+      <span onclick="go('shopping')">Shopping</span><span onclick="go('immobilien')">Immobilien</span>
+      <span onclick="go('events')">Events</span><span onclick="go('marktplatz')">Pop-Up Shops</span>
+      <span onclick="go('events')">Heute Abend</span><span onclick="go('community')">Community</span>
+      <span onclick="go('quartiere')">Quartiere</span><span onclick="go('gastro')">Gastro</span>
+      <span onclick="go('nachtleben')">Clubs & Bars</span><span onclick="go('shopping')">Shopping</span>
+      <span onclick="go('immobilien')">Immobilien</span><span onclick="go('events')">Events</span>
+      <span onclick="go('marktplatz')">Pop-Up Shops</span><span onclick="go('events')">Heute Abend</span>
+      <span onclick="go('community')">Community</span><span onclick="go('quartiere')">Quartiere</span>
+    </div></div>
+    <div class="tk2"><div class="ti2">
+      <span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span>
+      <span>ZÜRI JETZT</span><span>KREIS 4</span><span>KREIS 5</span><span>LANGSTRASSE</span>
+      <span>VIADUKT</span><span>BY RAIMONDO*</span><span>STADTPULS 2026</span>
+      <span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRI JETZT</span>
+      <span>KREIS 4</span><span>KREIS 5</span><span>LANGSTRASSE</span>
+      <span>VIADUKT</span><span>BY RAIMONDO*</span>
+    </div></div>
   </div>
 
   <!-- SEARCH -->
 
-  <div class="srch">
-    <div class="srch-in">
+  <div class="srch-sec">
+    <div class="srch-inner">
       <div class="rv">
-        <h2>WAS WOTTSCH<br>DU<br><span>ERLEBE?</span></h2>
+        <h2 class="srch-q">WAS WOTTSCH<br>DU<br><em>ERLEBE?</em></h2>
       </div>
-      <div class="rv" style="display:flex;flex-direction:column;gap:.7rem;">
+      <div class="rv sform">
         <div class="srow">
           <input type="text" placeholder="Restaurant, Club, Event, Quartier…"/>
           <button>Suche</button>
@@ -445,70 +621,70 @@ footer{background:#080806!important;border-top:3px solid #ff4d00;}
 
   <!-- BENTO -->
 
-  <div class="pw" style="padding-top:4.5rem;padding-bottom:4.5rem;background:#080806!important;">
+  <div class="sec">
     <div class="lbl rv">Entdecken</div>
     <div class="ttl rv">DIS ZÜRI,<br>DIS TEMPO</div>
     <div class="bento rv">
-      <div class="bt b1" onclick="go('gastro')"><div class="btbg" style="background-image:url('https://images.unsplash.com/photo-1544148103-0773bf10d330?w=700&q=80');"></div><div class="btc"><span class="btico">🍽️</span><div class="btname">Gastro</div><div class="btcount">348 Lokale</div></div></div>
-      <div class="bt b2" onclick="go('nachtleben')"><div class="btbg" style="background-image:url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80');"></div><div class="btc"><span class="btico">🎶</span><div class="btname">Nachtleben</div><div class="btcount">89 Clubs</div></div></div>
-      <div class="bt b3" onclick="go('events')"><div class="btbg" style="background-image:url('https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=700&q=80');"></div><div class="btc"><span class="btico">🎉</span><div class="btname">Events</div><div class="btcount">67 diese Woche</div></div></div>
-      <div class="bt b4" onclick="go('immobilien')"><div class="btbg" style="background-image:url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80');"></div><div class="btc"><span class="btico">🏢</span><div class="btname">Immobilien</div><div class="btcount">520 Objekte</div></div></div>
-      <div class="bt b5" onclick="go('shopping')"><div class="btbg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80');"></div><div class="btc"><span class="btico">🛍️</span><div class="btname">Shopping</div><div class="btcount">214 Shops</div></div></div>
-      <div class="bt b6" onclick="go('community')"><div class="btbg" style="background-image:url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=700&q=80');"></div><div class="btc"><span class="btico">👥</span><div class="btname">Community</div><div class="btcount">12'450 Member</div></div></div>
+      <div class="bt b1" onclick="go('gastro')"><div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1544148103-0773bf10d330?w=700&q=80');"></div><div class="bt-over"></div><div class="bt-c"><span class="bt-ico">🍽️</span><div class="bt-name">Gastro</div><div class="bt-n">348 Lokale</div></div></div>
+      <div class="bt b2" onclick="go('nachtleben')"><div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80');"></div><div class="bt-over"></div><div class="bt-c"><span class="bt-ico">🎶</span><div class="bt-name">Nachtleben</div><div class="bt-n">89 Clubs</div></div></div>
+      <div class="bt b3" onclick="go('events')"><div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=700&q=80');"></div><div class="bt-over"></div><div class="bt-c"><span class="bt-ico">🎉</span><div class="bt-name">Events</div><div class="bt-n">67 diese Woche</div></div></div>
+      <div class="bt b4" onclick="go('immobilien')"><div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80');"></div><div class="bt-over"></div><div class="bt-c"><span class="bt-ico">🏢</span><div class="bt-name">Immobilien</div><div class="bt-n">520 Objekte</div></div></div>
+      <div class="bt b5" onclick="go('shopping')"><div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80');"></div><div class="bt-over"></div><div class="bt-c"><span class="bt-ico">🛍️</span><div class="bt-name">Shopping</div><div class="bt-n">214 Shops</div></div></div>
+      <div class="bt b6" onclick="go('community')"><div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=700&q=80');"></div><div class="bt-over"></div><div class="bt-c"><span class="bt-ico">👥</span><div class="bt-name">Community</div><div class="bt-n">12'450 Member</div></div></div>
     </div>
   </div>
 
   <!-- TODAY -->
 
-  <div class="today">
-    <div class="today-in">
-      <div class="rv">
+  <div class="today-sec">
+    <div class="today-inner">
+      <div class="rv today-lbl">
         <h2>HÜT<br>ABIG</h2>
-        <p>Was lauft gad. Direkt, kei Bullshit.</p>
-        <a class="btn bk" onclick="go('events')" style="margin-top:1rem;font-size:.58rem;padding:.55rem 1.1rem;">Alles zeige →</a>
+        <p>Was lauft gad.<br>Kei Bullshit.</p>
+        <a class="btn bv" onclick="go('events')" style="margin-top:1rem;font-size:.56rem;padding:.55rem 1rem;">Alles →</a>
       </div>
-      <div class="tcards rv">
-        <div class="tc" onclick="go('gastro-detail')"><div class="tcnum">01</div><h4>Pop-Up Restaurant «Langstrasse 77»</h4><p>Hüt Eröffnig · 18:00 · Kreis 4</p><span class="tcarr">→</span></div>
-        <div class="tc" onclick="go('club-detail')"><div class="tcnum">02</div><h4>Club Dani Wilde — Opening Night</h4><p>Ab 22:00 · Free Entry bis Mitternacht</p><span class="tcarr">→</span></div>
-        <div class="tc" onclick="go('events')"><div class="tcnum">03</div><h4>Kreis 4 Vintage Market</h4><p>Sa–So · 10:00–18:00 · Drauss</p><span class="tcarr">→</span></div>
+      <div class="today-cards rv">
+        <div class="tc" onclick="go('gastro-detail')"><div class="tcn">01</div><h4>Pop-Up Restaurant «Langstrasse 77»</h4><p>Hüt Eröffnig · 18:00 · Kreis 4</p><span class="tc-arr">→</span></div>
+        <div class="tc" onclick="go('club-detail')"><div class="tcn">02</div><h4>Club Dani Wilde — Opening Night</h4><p>Ab 22:00 · Free Entry bis Mitternacht</p><span class="tc-arr">→</span></div>
+        <div class="tc" onclick="go('events')"><div class="tcn">03</div><h4>Kreis 4 Vintage Market</h4><p>Sa–So · 10:00–18:00 · Drauss</p><span class="tc-arr">→</span></div>
       </div>
     </div>
   </div>
 
   <!-- QUARTIERE -->
 
-  <div class="qmap rv">
-    <div class="pw">
-      <div class="lbl">Züri Quartiere</div>
-      <div class="ttl">DIS VIERTEL.<br>DINI WÄLT.</div>
-    </div>
-    <div class="qgrid rv" style="max-width:1280px;margin:0 auto;padding:0 1.8rem;">
-      <div class="qcard" onclick="go('kreis1')"><div class="qnum">1</div><span class="qtag">Altstadt</span><h3>Kreis 1</h3><p>Altstadt, Lindenhügel, Hochschulen. Historisch, trotzdem lebendig.</p></div>
-      <div class="qcard" onclick="go('kreis4')"><div class="qnum">4</div><span class="qtag" style="background:#7c3aed!important;">Szene</span><h3>Kreis 4</h3><p>Langstrasse, Helvetiaplatz. Züris wildeschtes Viertel. 24/7.</p></div>
-      <div class="qcard" onclick="go('kreis5')"><div class="qnum">5</div><span class="qtag" style="background:#0057ff!important;color:#f0ebe0!important;">Industrie</span><h3>Kreis 5</h3><p>Viadukt, Geroldstrasse. Früecher Fabrikä, hüt Kreativhub.</p></div>
-      <div class="qcard" onclick="go('kreis8')"><div class="qnum">8</div><span class="qtag" style="background:#00c45a!important;">See</span><h3>Seefeld / Kreis 8</h3><p>Zürichsee, Züriberg. Bourgeoises Flair, tolli Beizä.</p></div>
+  <div class="sec">
+    <div class="lbl rv">Züri Quartiere</div>
+    <div class="ttl rv">DIS VIERTEL.<br>DINI WÄLT.</div>
+    <div class="qgrid rv">
+      <div class="qcard" onclick="go('kreis1')"><div class="qnum">1</div><span class="qtag">Altstadt</span><h3>Kreis 1</h3><p>Historisch, lebendig. Museen, Cafés, Galerien.</p></div>
+      <div class="qcard" onclick="go('kreis4')"><div class="qnum">4</div><span class="qtag" style="background:#9333ea!important;color:#fff!important;">Szene</span><h3>Kreis 4</h3><p>Langstrasse. Züris wildeschtes Viertel. 24/7.</p></div>
+      <div class="qcard" onclick="go('kreis5')"><div class="qnum">5</div><span class="qtag" style="background:#00f5ff!important;">Industrie</span><h3>Kreis 5</h3><p>Viadukt, Geroldstrasse. Früecher Fabrikä, hüt Kreativhub.</p></div>
+      <div class="qcard" onclick="go('kreis8')"><div class="qnum">8</div><span class="qtag" style="background:#c8ff00!important;">See</span><h3>Seefeld</h3><p>Zürichsee, Züriberg. Bourgeoises Flair, tolli Beizä.</p></div>
     </div>
   </div>
 
   <!-- COMMUNITY -->
 
-  <div class="comh rv">
-    <div>
-      <div class="lbl">Community</div>
-      <h2>DIS ZÜRI.<br><em>DINI</em><br>STIMM.</h2>
-      <p>Blogge, bewertet, teil — mit dim persönliche Profil bisch Teil vo Züris lebendigschter Community. Echter Insider-Content vom Züri-Volk. Kein Algorithm-Bullshit.</p>
-      <a class="btn bo" onclick="go('community')">Profil aalege →</a>
-      <div class="stats">
-        <div class="stat"><div class="stn">12K+</div><div class="stl">Member</div></div>
-        <div class="stat"><div class="stn">480</div><div class="stl">Blogger</div></div>
-        <div class="stat"><div class="stn">8K+</div><div class="stl">Reviews</div></div>
+  <div class="sec" style="border-top:1px solid rgba(255,255,255,.04);">
+    <div class="com-wrap rv">
+      <div class="com-left">
+        <div class="lbl">Community</div>
+        <h2>DIS ZÜRI.<br><em>DINI</em><br>STIMM.</h2>
+        <p>Blogge, bewertet, teil — mit dim persönliche Profil bisch Teil vo Züris lebendigschter Community. Echter Insider-Content vom Züri-Volk. Kein Algorithm-Bullshit.</p>
+        <a class="btn bo" onclick="go('community')">Profil aalege →</a>
+        <div class="stats">
+          <div class="stat"><div class="stn">12K+</div><div class="stl">Member</div></div>
+          <div class="stat"><div class="stn">480</div><div class="stl">Blogger</div></div>
+          <div class="stat"><div class="stn">8K+</div><div class="stl">Reviews</div></div>
+        </div>
       </div>
-    </div>
-    <div class="ctiles">
-      <div class="ct o" onclick="go('community')"><span class="cticon">✍️</span><h4>Blogge</h4><small>Dini Stadt, dini Stories</small></div>
-      <div class="ct m" onclick="go('community')"><span class="cticon">⭐</span><h4>Bewertet</h4><small>Ehrlich & direkt</small></div>
-      <div class="ct m" onclick="go('community')"><span class="cticon">📤</span><h4>Uploade</h4><small>Fotos & Momänt</small></div>
-      <div class="ct bb" onclick="go('community')"><span class="cticon">💬</span><h4>Kommentiere</h4><small>Überall, sofort</small></div>
+      <div class="ctiles">
+        <div class="ct o" onclick="go('community')"><span class="ct-ico">✍️</span><h4>Blogge</h4><small>Dini Stadt, dini Stories</small></div>
+        <div class="ct m" onclick="go('community')"><span class="ct-ico">⭐</span><h4>Bewertet</h4><small>Ehrlich & direkt</small></div>
+        <div class="ct cy" onclick="go('community')"><span class="ct-ico">📤</span><h4>Uploade</h4><small>Fotos & Momänt</small></div>
+        <div class="ct vo" onclick="go('community')"><span class="ct-ico">💬</span><h4>Kommentiere</h4><small>Überall, sofort</small></div>
+      </div>
     </div>
   </div>
 
@@ -516,323 +692,193 @@ footer{background:#080806!important;border-top:3px solid #ff4d00;}
   <div id="fhome"></div>
 </div>
 
-<!-- ══════════════════════════════
+<!-- ══════════════════════════════════
      EVENTS
-══════════════════════════════ -->
+══════════════════════════════════ -->
 
-<div id="pg-events" class="pg" style="background:#080806;">
-  <div class="sub-head" style="background:linear-gradient(135deg,#080806 60%,#1a0800);">
-    <div class="shi">
-      <div class="shick">Stadtpuls · Zürich · 2006</div>
-      <h1 style="color:#ff4d00!important;">EVENTS</h1>
-      <p>Was lauft in Züri — Konzerte, Pop-Ups, Eröffnige, Märt und alles wo di bewegt.</p>
-      <div class="smeta">
-        <span class="sm"><strong>67</strong> Events diese Woche</span>
-        <span class="sm"><strong>12</strong> Heute Abend</span>
-        <span class="sm"><strong>4</strong> Neue Eröffnige</span>
-        <span class="sm"><strong>8</strong> Gratis</span>
-      </div>
-    </div>
+<div id="pg-events" class="pg" style="background:#04040a;">
+  <div class="sub-head" style="background:linear-gradient(135deg,#04040a 60%,#1a0800);">
+    <div class="shi"><div class="shick">Stadtpuls · Zürich · 2026</div><h1 style="color:#ff2d00;">EVENTS</h1><p>Was lauft in Züri — Konzerte, Pop-Ups, Eröffnige, Märt und alles wo di bewegt.</p><div class="smeta"><span class="sm"><strong>67</strong> Events diese Woche</span><span class="sm"><strong>12</strong> Heute Abend</span><span class="sm"><strong>4</strong> Neue Eröffnige</span><span class="sm"><strong>8</strong> Gratis</span></div></div>
   </div>
-  <div class="fbar">
-    <div class="fbi">
-      <span class="flbl">Filter:</span>
-      <span class="ftag on">Alles</span><span class="ftag">Hüt</span><span class="ftag">Diese Wuche</span>
-      <span class="ftag">Konzert</span><span class="ftag">Pop-Up</span><span class="ftag">Eröffnig</span>
-      <span class="ftag">Märt</span><span class="ftag">Gratis</span><span class="ftag">Drauss</span><span class="ftag">Club</span>
-    </div>
-  </div>
+  <div class="fbar"><div class="fbi"><span class="flbl">Filter:</span><span class="ftag on">Alles</span><span class="ftag">Hüt</span><span class="ftag">Diese Wuche</span><span class="ftag">Konzert</span><span class="ftag">Pop-Up</span><span class="ftag">Eröffnig</span><span class="ftag">Märt</span><span class="ftag">Gratis</span><span class="ftag">Drauss</span></div></div>
   <div class="ca">
-    <div style="margin-bottom:2.5rem;" class="rv">
-      <div style="background:#ff4d00;padding:.28rem .8rem;display:inline-block;font-family:'Space Mono',monospace;font-size:.58rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#080806;margin-bottom:.8rem;">🔥 Featured Hüt</div>
+    <div class="rv" style="margin-bottom:2.5rem;">
+      <div style="background:#ff2d00;padding:.26rem .75rem;display:inline-block;font-family:'DM Mono',monospace;font-size:.56rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#04040a;margin-bottom:.8rem;">🔥 Featured Hüt</div>
       <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:2px;">
-        <div class="ic" style="height:360px;cursor:pointer;" onclick="go('event-detail')">
-          <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80" alt="Event"/>
-          <div class="icc">
-            <span style="background:#ff4d00;color:#080806;font-family:'Space Mono',monospace;font-size:.52rem;font-weight:700;letter-spacing:.16em;padding:.22rem .65rem;text-transform:uppercase;display:inline-block;margin-bottom:.4rem;">Neue Eröffnig</span>
-            <h3 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:1.9rem;text-transform:uppercase;line-height:1;color:#f0ebe0;">Pop-Up Restaurant<br>«Langstrasse 77»</h3>
-            <div style="font-family:'Space Mono',monospace;font-size:.58rem;color:#ff4d00;letter-spacing:.12em;margin-top:.3rem;">Hüt · 18:00 · Kreis 4 · Gratis Eintritt</div>
-          </div>
-        </div>
+        <div class="ic" style="height:360px;" onclick="go('event-detail')"><img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80" alt=""/><div class="icc"><span style="background:#ff2d00;color:#04040a;font-family:'DM Mono',monospace;font-size:.5rem;font-weight:500;letter-spacing:.15em;padding:.2rem .6rem;text-transform:uppercase;display:inline-block;margin-bottom:.4rem;">Neue Eröffnig</span><h3 style="font-size:1.9rem;">Pop-Up Restaurant «Langstrasse 77»</h3><div class="sub">Hüt · 18:00 · Kreis 4 · Gratis</div></div></div>
         <div style="display:flex;flex-direction:column;gap:2px;">
-          <div class="ec" style="flex:1;" onclick="go('event-detail')"><span class="ectag b">Konzert</span><h3>Jazz im Schiffbau</h3><div class="meta"><strong>Hüt · 20:00</strong><br>Schiffbaustrasse 4<br>CHF 35.–</div><span class="arr">↗</span></div>
-          <div class="ec" style="flex:1;" onclick="go('event-detail')"><span class="ectag g">Gratis</span><h3>Streetfood Langstrasse</h3><div class="meta"><strong>Sa–So · 11:00–20:00</strong><br>Langstrasse, Kreis 4</div><span class="arr">↗</span></div>
-          <div class="ec" style="flex:1;" onclick="go('club-detail')"><span class="ectag p">Club Opening</span><h3>Club Dani Wilde</h3><div class="meta"><strong>Hüt · Ab 22:00</strong><br>Industriequartier · Free</div><span class="arr">↗</span></div>
+          <div class="ec" style="flex:1;" onclick="go('event-detail')"><span class="etag b">Konzert</span><h3>Jazz im Schiffbau</h3><div class="meta"><strong>Hüt · 20:00</strong><br>CHF 35.–</div><span class="earr">↗</span></div>
+          <div class="ec" style="flex:1;" onclick="go('event-detail')"><span class="etag g">Gratis</span><h3>Streetfood Langstrasse</h3><div class="meta"><strong>Sa–So · 11:00–20:00</strong><br>Kreis 4</div><span class="earr">↗</span></div>
+          <div class="ec" style="flex:1;" onclick="go('club-detail')"><span class="etag p">Club Opening</span><h3>Club Dani Wilde</h3><div class="meta"><strong>Hüt · Ab 22:00</strong><br>Free Entry</div><span class="earr">↗</span></div>
         </div>
       </div>
     </div>
-
-```
-<div class="lbl rv">Diese Wuche</div>
-<div class="g3 rv" style="margin-bottom:2.5rem;">
-  <div class="ec" onclick="go('event-detail')"><span class="ectag">Pop-Up</span><h3>Kreis 4 Vintage Market</h3><div class="meta"><strong>Sa–So · 10:00–18:00</strong><br>Helvetiaplatz · Drauss<br>Eintritt frei</div><span class="arr">↗</span></div>
-  <div class="ec" onclick="go('event-detail')"><span class="ectag b">Ausstellig</span><h3>Kunsthaus — Neue Säle</h3><div class="meta"><strong>Di–So · 10:00–18:00</strong><br>Heimplatz 1 · ab CHF 18.–</div><span class="arr">↗</span></div>
-  <div class="ec" onclick="go('event-detail')"><span class="ectag y">Märt</span><h3>Flohmarkt Kanzlei</h3><div class="meta"><strong>Sa · 08:00–16:00</strong><br>Kanzleiplatz · Kreis 3 · Gratis</div><span class="arr">↗</span></div>
-  <div class="ec" onclick="go('event-detail')"><span class="ectag g">Open Air</span><h3>Kino Zürichsee</h3><div class="meta"><strong>Fr–Sa · Ab Dunkle</strong><br>Zürichhorn · Eintritt frei</div><span class="arr">↗</span></div>
-  <div class="ec" onclick="go('gastro-detail')"><span class="ectag">Eröffnig</span><h3>Café «Volta» Kreis 5</h3><div class="meta"><strong>Do · 10:00 Uhr</strong><br>Voltastrasse 42<br>Gratis Kaffi zum Start</div><span class="arr">↗</span></div>
-  <div class="ec" onclick="go('club-detail')"><span class="ectag p">Techno</span><h3>Komplex 457</h3><div class="meta"><strong>Sa · Ab 23:00</strong><br>Hohlstrasse 457 · CHF 20.–</div><span class="arr">↗</span></div>
-</div>
-
-<div class="lbl rv">Pop-Up Specials</div>
-<div class="g2 rv" style="margin-bottom:2.5rem;">
-  <div class="ic" onclick="go('event-detail')"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80" alt="popup"/><div class="icc"><h3>Pop-Up Sushi Bar — NUR 3 Tage</h3><div class="sub">Do–Sa · Geroldstrasse · Kreis 5</div></div></div>
-  <div class="ic" onclick="go('event-detail')"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="popup shop"/><div class="icc"><h3>Designer Pop-Up — Lokale Labels</h3><div class="sub">Wochenende · Viadukt · Kreis 5</div></div></div>
-</div>
-
-<div style="background:#1c1c18;padding:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;" class="rv">
-  <div>
-    <div class="lbl" style="margin-bottom:.4rem;">Newsletter</div>
-    <p style="font-family:'Space Mono',monospace;font-size:.68rem;color:#666660;">Jede Wuche neu Events direkt ins Postfach.</p>
-  </div>
-  <div style="display:flex;gap:0;">
-    <input type="email" placeholder="dini@email.ch" style="background:#2e2e28;border:none;outline:none;padding:.8rem 1.1rem;font-family:'Space Mono',monospace;font-size:.72rem;color:#f0ebe0;min-width:220px;-webkit-appearance:none;"/>
-    <button class="btn bo" style="clip-path:none;">Abonniere</button>
-  </div>
-</div>
-```
-
+    <div class="lbl rv">Diese Wuche</div>
+    <div class="g3 rv" style="margin-bottom:2.5rem;">
+      <div class="ec" onclick="go('event-detail')"><span class="etag">Pop-Up</span><h3>Kreis 4 Vintage Market</h3><div class="meta"><strong>Sa–So · Helvetiaplatz</strong><br>Eintritt frei</div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('event-detail')"><span class="etag b">Ausstellig</span><h3>Kunsthaus — Neue Säle</h3><div class="meta"><strong>Di–So · ab CHF 18.–</strong></div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('event-detail')"><span class="etag g">Märt</span><h3>Flohmarkt Kanzlei</h3><div class="meta"><strong>Sa · 08:00–16:00 · Gratis</strong></div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('event-detail')"><span class="etag g">Open Air</span><h3>Kino Zürichsee</h3><div class="meta"><strong>Fr–Sa · Ab Dunkle · Gratis</strong></div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('gastro-detail')"><span class="etag">Eröffnig</span><h3>Café «Volta» Kreis 5</h3><div class="meta"><strong>Do · 10:00 · Gratis Kaffi</strong></div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('club-detail')"><span class="etag p">Techno</span><h3>Komplex 457</h3><div class="meta"><strong>Sa · Ab 23:00 · CHF 20.–</strong></div><span class="earr">↗</span></div>
+    </div>
+    <div class="lbl rv">Pop-Up Specials</div>
+    <div class="g2 rv"><div class="ic" onclick="go('event-detail')"><img src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=700&q=80" alt=""/><div class="icc"><h3>Pop-Up Sushi Bar — NUR 3 Tage</h3><div class="sub">Do–Sa · Geroldstrasse · Kreis 5</div></div></div><div class="ic" onclick="go('event-detail')"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt=""/><div class="icc"><h3>Designer Pop-Up — Lokale Labels</h3><div class="sub">Wochenende · Viadukt · Kreis 5</div></div></div></div>
   </div>
   <div id="fevents"></div>
 </div>
 
 <!-- EVENT DETAIL -->
 
-<div id="pg-event-detail" class="pg" style="background:#080806;">
-  <div class="detail-head">
-    <div style="padding-top:0;" class="pw">
-      <div style="padding-top:1.5rem;padding-bottom:1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
-        <a onclick="go('events')" style="font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:#666660;cursor:pointer;text-decoration:none;">← Zurück zu Events</a>
-        <span style="color:#ff4d00;">·</span>
-        <span style="font-family:'Space Mono',monospace;font-size:.58rem;color:#ff4d00;letter-spacing:.14em;text-transform:uppercase;">Neue Eröffnig</span>
-      </div>
-    </div>
-    <div class="detail-hero pw">
-      <img class="detail-img" src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80" alt="Event"/>
-      <div class="detail-meta-bar">
-        <span class="detail-badge">🔥 Heute Abend</span>
-        <span class="detail-badge" style="background:#7c3aed;color:#f0ebe0;">Pop-Up Restaurant</span>
-        <span style="font-family:'Space Mono',monospace;font-size:.62rem;color:#666660;">Hüt · 18:00 Uhr · Kreis 4</span>
-      </div>
-      <h1 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:clamp(2.5rem,6vw,5rem);text-transform:uppercase;line-height:.88;color:#f0ebe0;margin-bottom:1.5rem;">Pop-Up Restaurant<br>«Langstrasse 77»</h1>
+<div id="pg-event-detail" class="pg" style="background:#04040a;">
+  <div class="dhead">
+    <div class="dhero pw" style="max-width:1320px;margin:0 auto;padding:0 2rem;">
+      <div style="padding-top:1.4rem;padding-bottom:1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;"><a onclick="go('events')" style="font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:#44445a;cursor:pointer;">← Events</a><span style="color:#ff2d00;">·</span><span style="font-family:'DM Mono',monospace;font-size:.56rem;color:#ff2d00;letter-spacing:.14em;text-transform:uppercase;">Neue Eröffnig</span></div>
+      <img class="dimg" src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1400&q=85" alt=""/>
+      <div class="dmb"><span class="dbadge">🔥 Heute Abend</span><span class="dbadge" style="background:#9333ea;color:#fff;">Pop-Up Restaurant</span><span style="font-family:'DM Mono',monospace;font-size:.6rem;color:#44445a;">Hüt · 18:00 · Kreis 4</span></div>
+      <h1 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(2.8rem,6vw,5.5rem);text-transform:uppercase;line-height:.85;color:#e8e4d9;margin-bottom:1.5rem;">Pop-Up Restaurant<br>«Langstrasse 77»</h1>
     </div>
   </div>
-  <div class="detail-body">
-    <div class="detail-main">
-      <p>Hüt Abig öffnet eis vo Züris spannendschti neue Gastro-Adrässä: s'Pop-Up Restaurant «Langstrasse 77» im Herz vom Kreis 4. Chef Mario Rossi — früecher Sous-Chef im «The Restaurant» — bringt authentischi Cucina Povera uf d'Langstrass.</p>
-      <p>Das isch kei normale Restauranteröffnig. Das isch es kurzfristigs, intensives Erläbnis — nur für drei Wochä. Danach isch s'vorbii. Also jetzt hingah.</p>
+  <div class="dbody">
+    <div class="dmain">
+      <p>Hüt Abig öffnet eis vo Züris spannendschti neue Gastro-Adrässä — s'Pop-Up Restaurant «Langstrasse 77» im Herz vom Kreis 4. Chef Mario Rossi bringt authentischi Cucina Povera uf d'Langstrass.</p>
+      <p>Nur drei Wochä. Danach isch s'vorbii. Also jetzt hingah.</p>
       <h3>Was erwartet di?</h3>
-      <p>3-Gang Menu für CHF 45.– , alles lokal sourced, kei Karte — was uf em Tisch chunnt, entscheided Chef Mario am Morge uf em Markt. Natüürwiis mit Züri-Gluschtigkeit und vill Charakter.</p>
+      <p>3-Gang Menu für CHF 45.–, alles lokal sourced, kei Karte. Was uf em Tisch chunnt entscheided Chef Mario am Morge uf em Markt.</p>
       <h3>Location</h3>
-      <p>Langstrasse 77, Kreis 4. Ehemaligi Metzgerei, umgebaut in es rawes Dining-Erläbnis. Kei Reservatione — first come, first served.</p>
-
-```
-  <div style="background:#f5c800;padding:1.5rem;margin-top:2rem;">
-    <div style="font-family:'Space Mono',monospace;font-size:.62rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#080806;margin-bottom:.5rem;">Jetzt Tisch Sicherne</div>
-    <p style="font-family:'Space Mono',monospace;font-size:.68rem;color:rgba(0,0,0,.6);margin-bottom:1rem;">Nur 28 Plätze. Walk-in möglich, aber Warteliischte likely.</p>
-    <a class="btn" style="background:#080806;color:#f0ebe0;clip-path:none;" onclick="go('gastro')">Lunchgate Reservation →</a>
+      <p>Langstrasse 77, Kreis 4. Ehemaligi Metzgerei, umgebaut in es rawes Dining-Erläbnis. First come, first served.</p>
+      <div style="background:#111118;border:1px solid rgba(200,255,0,.2);padding:1.5rem;margin-top:2rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:.6rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:#c8ff00;margin-bottom:.5rem;">Jetzt Tisch Sicherne</div>
+        <p style="font-family:'DM Mono',monospace;font-size:.66rem;color:#44445a;margin-bottom:1rem;">Nur 28 Plätze. Walk-in möglich.</p>
+        <a class="btn bv" onclick="go('gastro')">Lunchgate Reservation →</a>
+      </div>
+      <h3 style="margin-top:2.5rem;">Reviews (12)</h3>
+      <div class="rc"><div class="rtop"><span class="rname">@zuri_insider</span><span>⭐⭐⭐⭐⭐</span></div><p class="rtext">Absolut genial. Mario zaubert uf engstem Raum. Genau das was Züri bruucht.</p></div>
+      <div class="rc"><div class="rtop"><span class="rname">@langstrasse_mampf</span><span>⭐⭐⭐⭐⭐</span></div><p class="rtext">CHF 45 für das? Skandalös günstig. Bini morge wieder.</p></div>
+    </div>
+    <div class="dside">
+      <h4>Info</h4>
+      <div class="drow"><span>Datum</span><strong>Hüt, 31. März</strong></div>
+      <div class="drow"><span>Uhrzeit</span><strong>18:00–23:00</strong></div>
+      <div class="drow"><span>Ort</span><strong>Langstrasse 77</strong></div>
+      <div class="drow"><span>Quartier</span><strong>Kreis 4</strong></div>
+      <div class="drow"><span>Eintritt</span><strong>Gratis</strong></div>
+      <div class="drow"><span>Menu</span><strong>CHF 45.–</strong></div>
+      <div class="drow"><span>Plätze</span><strong>28 total</strong></div>
+      <br>
+      <a class="btn bo" style="width:100%;text-align:center;display:block;">Auf Karte →</a>
+      <br>
+      <a class="btn bg" style="width:100%;text-align:center;display:block;" onclick="go('gastro')">← Alle Restis</a>
+    </div>
   </div>
-
-  <h3 style="margin-top:2.5rem;">Reviews (12)</h3>
-  <div class="review-card"><div class="rev-top"><span class="rev-name">@zuri_insider</span><span class="rev-stars">⭐⭐⭐⭐⭐</span></div><p class="rev-text">Absolut genial. Mario zaubert uf engstem Raum. Di Pasta war der Hammer, s'Ambiänz roh und ehrlich. Genau das was Züri bruucht.</p></div>
-  <div class="review-card"><div class="rev-top"><span class="rev-name">@langstrasse_mampf</span><span class="rev-stars">⭐⭐⭐⭐⭐</span></div><p class="rev-text">Hüt Abig eso guet gässä, fast vergässä dass ich no Rezension schriibe mues. CHF 45 für das? Skandalös günstig.</p></div>
-  <div class="review-card"><div class="rev-top"><span class="rev-name">@stadtpuls_reader</span><span class="rev-stars">⭐⭐⭐⭐</span></div><p class="rev-text">No Warteziit vo 30 Minüt — aber s'hets sech absolut glohnt. Nur 28 Plätze isch halt eng.</p></div>
-</div>
-<div class="detail-side">
-  <h4>Info</h4>
-  <div class="drow"><span>Datum</span><strong>Hüt, 31. März</strong></div>
-  <div class="drow"><span>Uhrzeit</span><strong>18:00 – 23:00</strong></div>
-  <div class="drow"><span>Location</span><strong>Langstrasse 77</strong></div>
-  <div class="drow"><span>Quartier</span><strong>Kreis 4</strong></div>
-  <div class="drow"><span>Eintritt</span><strong>Gratis</strong></div>
-  <div class="drow"><span>Menu</span><strong>CHF 45.–</strong></div>
-  <div class="drow"><span>Plätze</span><strong>28 total</strong></div>
-  <br>
-  <a class="btn bo" style="width:100%;text-align:center;display:block;">Auf Karte zeige →</a>
-  <br>
-  <a class="btn bg" style="width:100%;text-align:center;display:block;" onclick="go('gastro')">Weitere Restis →</a>
-</div>
-```
-
-  </div>
-  <div class="pw" style="padding-bottom:4rem;">
+  <div class="ca" style="padding-top:0;">
     <div class="lbl">Ähnlichi Events</div>
-    <div class="related-grid">
-      <div class="ec" onclick="go('gastro-detail')"><span class="ectag">Neu</span><h3>Café Volta — Eröffnig</h3><div class="meta"><strong>Do · Voltastrasse 42</strong><br>Gratis Kaffi zum Start</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('event-detail')"><span class="ectag y">Märt</span><h3>Flohmarkt Kanzlei</h3><div class="meta"><strong>Sa · 08:00–16:00</strong><br>Gratis Eintritt</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('club-detail')"><span class="ectag p">Club</span><h3>Club Dani Wilde</h3><div class="meta"><strong>Hüt · Ab 22:00</strong><br>Free Entry</div><span class="arr">↗</span></div>
+    <div class="rel-grid">
+      <div class="ec" onclick="go('gastro-detail')"><span class="etag">Eröffnig</span><h3>Café Volta</h3><div class="meta"><strong>Do · Voltastrasse 42</strong></div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('event-detail')"><span class="etag g">Märt</span><h3>Flohmarkt Kanzlei</h3><div class="meta"><strong>Sa · Gratis</strong></div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('club-detail')"><span class="etag p">Club</span><h3>Dani Wilde</h3><div class="meta"><strong>Hüt · Free Entry</strong></div><span class="earr">↗</span></div>
     </div>
   </div>
   <div id="feventdetail"></div>
 </div>
 
-<!-- ══════════════════════════════
-     GASTRO
-══════════════════════════════ -->
+<!-- GASTRO -->
 
-<div id="pg-gastro" class="pg" style="background:#080806;">
-  <div class="sub-head" style="background:linear-gradient(135deg,#080806 55%,#0a1200);">
-    <div class="shi">
-      <div class="shick">Stadtpuls · Zürich</div>
-      <h1 style="color:#00c45a!important;">GASTRO</h1>
-      <p>348 Restaurants, Cafés und Bars — vo günstig bis Spitzen. Ehrliche Tipps vom Züri-Volk.</p>
-      <div class="smeta">
-        <span class="sm"><strong>348</strong> Lokale</span>
-        <span class="sm"><strong>24</strong> Neue diese Wuche</span>
-        <span class="sm"><strong>Lunchgate</strong> Sofort-Reservation</span>
-        <span class="sm"><strong>5</strong> Hüt neu offe</span>
-      </div>
-    </div>
+<div id="pg-gastro" class="pg" style="background:#04040a;">
+  <div class="sub-head" style="background:linear-gradient(135deg,#04040a 55%,#001a08);">
+    <div class="shi"><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#c8ff00;">GASTRO</h1><p>348 Restaurants, Cafés und Bars. Ehrliche Tipps vom Züri-Volk.</p><div class="smeta"><span class="sm"><strong>348</strong> Lokale</span><span class="sm"><strong>24</strong> Neue diese Wuche</span><span class="sm"><strong>Lunchgate</strong> Sofort</span></div></div>
   </div>
-  <div class="fbar">
-    <div class="fbi">
-      <span class="flbl">Filter:</span>
-      <span class="ftag on">Alles</span><span class="ftag">Znacht</span><span class="ftag">Zmittag</span>
-      <span class="ftag">Brunch</span><span class="ftag">Vegisch</span><span class="ftag">Asiatisch</span>
-      <span class="ftag">Mediterran</span><span class="ftag">Schweizer</span><span class="ftag">Jetzt offe</span>
-    </div>
-  </div>
+  <div class="fbar"><div class="fbi"><span class="flbl">Filter:</span><span class="ftag on">Alles</span><span class="ftag">Znacht</span><span class="ftag">Zmittag</span><span class="ftag">Brunch</span><span class="ftag">Vegisch</span><span class="ftag">Asiatisch</span><span class="ftag">Mediterran</span><span class="ftag">Jetzt offe</span></div></div>
   <div class="ca">
     <div class="lbl rv">Hüt Empfohle</div>
     <div class="g3 rv" style="margin-bottom:2.5rem;">
-      <div class="ec" onclick="go('gastro-detail')"><span class="ectag g">Neue Eröffnig</span><h3>Langstrasse 77</h3><div class="meta"><strong>Pop-Up · Kreis 4</strong><br>Hüt ab 18:00<br>⭐⭐⭐⭐⭐ · 42 Reviews</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('gastro-detail')"><span class="ectag y">Zmittag Deal</span><h3>Café Volta</h3><div class="meta"><strong>Kreis 5 · Voltastrasse</strong><br>Menü CHF 18.50<br>⭐⭐⭐⭐ · 128 Reviews</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('gastro-detail')"><span class="ectag">Geheimtipp</span><h3>Pho Saigon Express</h3><div class="meta"><strong>Kreis 4 · Langstrasse</strong><br>Ab CHF 14.–<br>⭐⭐⭐⭐⭐ · 312 Reviews</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('gastro-detail')"><span class="ectag b">Brunch</span><h3>Rosso Zürich</h3><div class="meta"><strong>Kreis 5 · Geroldstrasse</strong><br>Sa–So · 10:00–14:00</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('gastro-detail')"><span class="ectag">Lunchgate</span><h3>Wirtschaft Neumarkt</h3><div class="meta"><strong>Altstadt · Neumarkt</strong><br>Spontanreservation möglich</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('gastro-detail')"><span class="ectag g">Vegisch</span><h3>Hiltl Stammhaus</h3><div class="meta"><strong>Innenstadt · Sihlstrasse</strong><br>Täglich ab 06:00<br>⭐⭐⭐⭐⭐ · 867 Reviews</div><span class="arr">↗</span></div>
+      <div class="ec" onclick="go('gastro-detail')"><span class="etag g">Neue Eröffnig</span><h3>Langstrasse 77</h3><div class="meta"><strong>Pop-Up · Kreis 4</strong><br>Hüt ab 18:00 · ⭐⭐⭐⭐⭐</div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('gastro-detail')"><span class="etag g">Zmittag Deal</span><h3>Café Volta</h3><div class="meta"><strong>Kreis 5 · Voltastrasse</strong><br>Menü CHF 18.50 · ⭐⭐⭐⭐</div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('gastro-detail')"><span class="etag">Geheimtipp</span><h3>Pho Saigon Express</h3><div class="meta"><strong>Kreis 4 · Langstrasse</strong><br>Ab CHF 14.– · ⭐⭐⭐⭐⭐</div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('gastro-detail')"><span class="etag b">Brunch</span><h3>Rosso Zürich</h3><div class="meta"><strong>Kreis 5 · Geroldstrasse</strong><br>Sa–So · 10:00–14:00</div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('gastro-detail')"><span class="etag">Lunchgate</span><h3>Wirtschaft Neumarkt</h3><div class="meta"><strong>Altstadt · Spontanreservation</strong></div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('gastro-detail')"><span class="etag g">Vegisch</span><h3>Hiltl Stammhaus</h3><div class="meta"><strong>Innenstadt · Ab 06:00</strong><br>⭐⭐⭐⭐⭐ · 867 Reviews</div><span class="earr">↗</span></div>
     </div>
-
-```
-<div style="background:#00c45a;padding:2.5rem;margin-bottom:2.5rem;" class="rv">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
-    <div>
-      <h3 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:2rem;text-transform:uppercase;color:#080806;line-height:1;margin-bottom:.7rem;">Hüt Noch Ä Tisch Finde</h3>
-      <p style="font-family:'Space Mono',monospace;font-size:.7rem;color:rgba(0,0,0,.6);line-height:1.7;">5 Restaurants händ no Platz hüt Abig. Sofort reserviere.</p>
+    <div style="background:#c8ff00;padding:2rem;margin-bottom:2.5rem;" class="rv">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
+        <div><h3 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:2rem;text-transform:uppercase;color:#04040a;line-height:1;margin-bottom:.6rem;">Hüt Noch<br>Ä Tisch Finde</h3><p style="font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(0,0,0,.55);">5 Restaurants händ no Platz hüt Abig.</p></div>
+        <div style="display:flex;flex-direction:column;gap:2px;">
+          <div style="background:rgba(0,0,0,.1);padding:.85rem 1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="go('gastro-detail')"><span style="font-family:'DM Mono',monospace;font-size:.68rem;color:#04040a;font-weight:500;">Wirtschaft Neumarkt</span><span style="font-family:'DM Mono',monospace;font-size:.56rem;color:rgba(0,0,0,.5);">2 Pl. · 19:00 →</span></div>
+          <div style="background:rgba(0,0,0,.1);padding:.85rem 1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="go('gastro-detail')"><span style="font-family:'DM Mono',monospace;font-size:.68rem;color:#04040a;font-weight:500;">Rosso Zürich</span><span style="font-family:'DM Mono',monospace;font-size:.56rem;color:rgba(0,0,0,.5);">4 Pl. · 20:30 →</span></div>
+          <div style="background:rgba(0,0,0,.1);padding:.85rem 1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="go('gastro-detail')"><span style="font-family:'DM Mono',monospace;font-size:.68rem;color:#04040a;font-weight:500;">Taverna Romana</span><span style="font-family:'DM Mono',monospace;font-size:.56rem;color:rgba(0,0,0,.5);">6 Pl. · 18:30 →</span></div>
+        </div>
+      </div>
     </div>
-    <div style="display:flex;flex-direction:column;gap:2px;">
-      <div style="background:rgba(0,0,0,.12);padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="go('gastro-detail')"><span style="font-family:'Space Mono',monospace;font-size:.72rem;color:#080806;font-weight:700;">Wirtschaft Neumarkt</span><span style="font-family:'Space Mono',monospace;font-size:.58rem;color:rgba(0,0,0,.5);">2 Pl. · 19:00 →</span></div>
-      <div style="background:rgba(0,0,0,.12);padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="go('gastro-detail')"><span style="font-family:'Space Mono',monospace;font-size:.72rem;color:#080806;font-weight:700;">Rosso Zürich</span><span style="font-family:'Space Mono',monospace;font-size:.58rem;color:rgba(0,0,0,.5);">4 Pl. · 20:30 →</span></div>
-      <div style="background:rgba(0,0,0,.12);padding:.9rem 1.1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;" onclick="go('gastro-detail')"><span style="font-family:'Space Mono',monospace;font-size:.72rem;color:#080806;font-weight:700;">Taverna Romana</span><span style="font-family:'Space Mono',monospace;font-size:.58rem;color:rgba(0,0,0,.5);">6 Pl. · 18:30 →</span></div>
-    </div>
-  </div>
-</div>
-
-<div class="lbl rv">Nachi Quartier</div>
-<div class="g4 rv">
-  <div class="ec" style="text-align:center;padding:1.5rem 1rem;" onclick="go('kreis1')"><div style="font-size:2rem;margin-bottom:.4rem;">🏛️</div><h3 style="font-size:1.1rem;">Kreis 1</h3><div class="meta">Altstadt · 42 Lokale</div></div>
-  <div class="ec" style="text-align:center;padding:1.5rem 1rem;" onclick="go('kreis4')"><div style="font-size:2rem;margin-bottom:.4rem;">🎸</div><h3 style="font-size:1.1rem;">Kreis 4</h3><div class="meta">Langstrasse · 87 Lokale</div></div>
-  <div class="ec" style="text-align:center;padding:1.5rem 1rem;" onclick="go('kreis5')"><div style="font-size:2rem;margin-bottom:.4rem;">🏭</div><h3 style="font-size:1.1rem;">Kreis 5</h3><div class="meta">Industrie · 64 Lokale</div></div>
-  <div class="ec" style="text-align:center;padding:1.5rem 1rem;" onclick="go('kreis8')"><div style="font-size:2rem;margin-bottom:.4rem;">🌊</div><h3 style="font-size:1.1rem;">Seefeld</h3><div class="meta">Kreis 8 · 55 Lokale</div></div>
-</div>
-```
-
   </div>
   <div id="fgastro"></div>
 </div>
 
 <!-- GASTRO DETAIL -->
 
-<div id="pg-gastro-detail" class="pg" style="background:#080806;">
-  <div class="detail-head">
-    <div class="pw">
-      <div style="padding-top:1.5rem;padding-bottom:1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
-        <a onclick="go('gastro')" style="font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:#666660;cursor:pointer;">← Zurück zu Gastro</a>
-        <span style="color:#ff4d00;">·</span>
-        <span style="font-family:'Space Mono',monospace;font-size:.58rem;color:#00c45a;letter-spacing:.14em;text-transform:uppercase;">Neue Eröffnig</span>
-      </div>
-    </div>
-    <div class="detail-hero pw">
-      <img class="detail-img" src="https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1200&q=80" alt="Restaurant"/>
-      <div class="detail-meta-bar">
-        <span class="detail-badge" style="background:#00c45a;color:#080806;">⭐⭐⭐⭐⭐</span>
-        <span class="detail-badge">Pop-Up Restaurant</span>
-        <span style="font-family:'Space Mono',monospace;font-size:.62rem;color:#666660;">Kreis 4 · Langstrasse 77</span>
-      </div>
-      <h1 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:clamp(2.5rem,6vw,5rem);text-transform:uppercase;line-height:.88;color:#f0ebe0;margin-bottom:1.5rem;">Langstrasse 77<br><span style="font-size:.6em;color:#ff4d00;">Pop-Up Restaurant</span></h1>
+<div id="pg-gastro-detail" class="pg" style="background:#04040a;">
+  <div class="dhead">
+    <div class="dhero pw" style="max-width:1320px;margin:0 auto;padding:0 2rem;">
+      <div style="padding-top:1.4rem;padding-bottom:1rem;display:flex;align-items:center;gap:1rem;"><a onclick="go('gastro')" style="font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:#44445a;cursor:pointer;">← Gastro</a></div>
+      <img class="dimg" src="https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1400&q=85" alt=""/>
+      <div class="dmb"><span class="dbadge" style="background:#c8ff00;color:#04040a;">⭐⭐⭐⭐⭐</span><span class="dbadge">Pop-Up Restaurant</span><span style="font-family:'DM Mono',monospace;font-size:.6rem;color:#44445a;">Kreis 4 · Langstrasse 77</span></div>
+      <h1 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(2.8rem,6vw,5rem);text-transform:uppercase;line-height:.85;color:#e8e4d9;margin-bottom:1.5rem;">Langstrasse 77<br><span style="font-size:.6em;color:#ff2d00;">Pop-Up Restaurant</span></h1>
     </div>
   </div>
-  <div class="detail-body">
-    <div class="detail-main">
-      <p>Chef Mario Rossis neuschti Kreation isch mehr als es Restaurant — s'isch es Statement. Rohes Ambiänz, kompromisslosä Fokus uf di Zutat, kei Blödsinn. Cucina Povera trifft uf Züri Kreis 4.</p>
-      <p>Nur 3 Wochä offe. Danach isch Mario wieder weg. Das isch genau die Energie wo s'Stadtpuls Gastro-Konzept verkörpert — hyper-lokal, hyper-aktuell, hyper-gut.</p>
+  <div class="dbody">
+    <div class="dmain">
+      <p>Chef Mario Rossis neuschti Kreation isch mehr als es Restaurant — s'isch es Statement. Rohes Ambiänz, kompromisslosä Fokus uf di Zutat. Cucina Povera trifft uf Züri Kreis 4.</p>
+      <p>Nur 3 Wochä offe. Danach isch Mario wieder weg.</p>
       <h3>Das Menü</h3>
-      <p>Kei Karte. Chef entscheided morgens am Markt. 3 Gäng, CHF 45.–. Änderigs tägliche. Vegetarischi Option immer vorhande.</p>
+      <p>Kei Karte. Chef entscheided morgens am Markt. 3 Gäng, CHF 45.–. Vegetarischi Option immer vorhande.</p>
       <h3>Die Atmosphäre</h3>
-      <p>Ehemaligi Metzgerei, rohes Beton, Holztiisch, kein Chichi. Genau richtig für Kreis 4. Laut, lebendig, echt.</p>
-
-```
-  <div style="background:#f5c800;padding:1.5rem;margin-top:2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;">
-    <div>
-      <div style="font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#080806;margin-bottom:.3rem;">Spontan Reservation</div>
-      <p style="font-family:'Space Mono',monospace;font-size:.64rem;color:rgba(0,0,0,.55);">via Lunchgate · Noch 4 Plätze frei hüt Abig</p>
+      <p>Ehemaligi Metzgerei, rohes Beton, Holztiisch, kein Chichi. Genau richtig für Kreis 4.</p>
+      <div style="background:#111118;border-left:3px solid #c8ff00;padding:1.5rem;margin-top:2rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:.58rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#c8ff00;margin-bottom:.3rem;">Spontan Reservation — Lunchgate</div>
+        <p style="font-family:'DM Mono',monospace;font-size:.62rem;color:#44445a;margin-bottom:1rem;">Noch 4 Plätze frei hüt Abig</p>
+        <a class="btn bv">Jetzt reserviere →</a>
+      </div>
+      <h3 style="margin-top:2.5rem;">Reviews (42)</h3>
+      <div class="rc"><div class="rtop"><span class="rname">@zuri_insider</span><span>⭐⭐⭐⭐⭐</span></div><p class="rtext">Beschtä neue Adresse sit langem. Mario kocht mit Seele.</p></div>
+      <div class="rc"><div class="rtop"><span class="rname">@langstrasse_mampf</span><span>⭐⭐⭐⭐⭐</span></div><p class="rtext">CHF 45 für drei Gäng uf dem Niveau? Absolute Pflicht.</p></div>
     </div>
-    <a class="btn" style="background:#080806;color:#f0ebe0;clip-path:none;">Jetzt reserviere →</a>
-  </div>
-
-  <h3 style="margin-top:2.5rem;">Reviews (42)</h3>
-  <div class="review-card"><div class="rev-top"><span class="rev-name">@zuri_insider</span><span class="rev-stars">⭐⭐⭐⭐⭐</span></div><p class="rev-text">Beschtä neue Adresse sit langem. Mario kocht mit Seele. Di Pasta e Fagioli war zum Wiine.</p></div>
-  <div class="review-card"><div class="rev-top"><span class="rev-name">@langstrasse_mampf</span><span class="rev-stars">⭐⭐⭐⭐⭐</span></div><p class="rev-text">CHF 45 für drei Gäng uf dem Niveau? Mir händ Züri unterschätzt. Absolute Pflicht.</p></div>
-  <div class="review-card"><div class="rev-top"><span class="rev-name">@foodie_zh</span><span class="rev-stars">⭐⭐⭐⭐</span></div><p class="rev-text">Warteziit isch real — chunnt früeh oder reserviert via Lunchgate. Lohnt sich aber.</p></div>
-</div>
-<div class="detail-side">
-  <h4>Details</h4>
-  <div class="drow"><span>Adresse</span><strong>Langstrasse 77</strong></div>
-  <div class="drow"><span>Quartier</span><strong>Kreis 4</strong></div>
-  <div class="drow"><span>Typ</span><strong>Pop-Up · 3 Wochä</strong></div>
-  <div class="drow"><span>Küche</span><strong>Italienisch</strong></div>
-  <div class="drow"><span>Öffnig</span><strong>Di–So · 18–23</strong></div>
-  <div class="drow"><span>Menu</span><strong>CHF 45.– (3 Gäng)</strong></div>
-  <div class="drow"><span>Reservation</span><strong>via Lunchgate</strong></div>
-  <div class="drow"><span>Rating</span><strong>⭐⭐⭐⭐⭐ (42)</strong></div>
-  <br>
-  <a class="btn bo" style="width:100%;text-align:center;display:block;">Tisch reserviere →</a>
-  <br>
-  <a class="btn bg" style="width:100%;text-align:center;display:block;" onclick="go('gastro')">← Alle Restis</a>
-</div>
-```
-
+    <div class="dside">
+      <h4>Details</h4>
+      <div class="drow"><span>Adresse</span><strong>Langstrasse 77</strong></div>
+      <div class="drow"><span>Quartier</span><strong>Kreis 4</strong></div>
+      <div class="drow"><span>Typ</span><strong>Pop-Up · 3 Wochä</strong></div>
+      <div class="drow"><span>Küche</span><strong>Italienisch</strong></div>
+      <div class="drow"><span>Öffnig</span><strong>Di–So · 18–23</strong></div>
+      <div class="drow"><span>Menu</span><strong>CHF 45.– (3 Gäng)</strong></div>
+      <div class="drow"><span>Rating</span><strong>⭐⭐⭐⭐⭐ (42)</strong></div>
+      <br>
+      <a class="btn bo" style="width:100%;text-align:center;display:block;">Tisch reserviere →</a>
+      <br>
+      <a class="btn bg" style="width:100%;text-align:center;display:block;" onclick="go('gastro')">← Alle Restis</a>
+    </div>
   </div>
   <div id="fgastrodetail"></div>
 </div>
 
-<!-- ══════════════════════════════
-     NACHTLEBEN + CLUB DETAIL
-══════════════════════════════ -->
+<!-- NACHTLEBEN -->
 
-<div id="pg-nachtleben" class="pg" style="background:#080806;">
-  <div class="sub-head" style="background:linear-gradient(135deg,#050510 50%,#0a0020);">
-    <div class="shi">
-      <div class="shick">Stadtpuls · Zürich</div>
-      <h1 style="color:#0057ff!important;">NACHT<br>LEBE</h1>
-      <p>89 Clubs, Bars und Locations — Jazz, Techno, Hip-Hop, House. Züri schlaft nicht.</p>
-      <div class="smeta">
-        <span class="sm"><strong>89</strong> Clubs & Bars</span>
-        <span class="sm"><strong>14</strong> Hüt offe</span>
-        <span class="sm"><strong>3</strong> Neue Locations</span>
-      </div>
-    </div>
+<div id="pg-nachtleben" class="pg" style="background:#04040a;">
+  <div class="sub-head" style="background:linear-gradient(135deg,#02020f 50%,#04040a);">
+    <div class="shi"><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#00f5ff;">NACHT<br>LEBE</h1><p>89 Clubs, Bars und Locations — Jazz, Techno, Hip-Hop, House. Züri schlaft nicht.</p><div class="smeta"><span class="sm"><strong>89</strong> Clubs & Bars</span><span class="sm"><strong>14</strong> Hüt offe</span><span class="sm"><strong>3</strong> Neue Locations</span></div></div>
   </div>
-  <div class="fbar">
-    <div class="fbi">
-      <span class="flbl">Genre:</span>
-      <span class="ftag on">Alles</span><span class="ftag">Techno</span><span class="ftag">Jazz</span>
-      <span class="ftag">Hip-Hop</span><span class="ftag">House</span><span class="ftag">Live Music</span>
-      <span class="ftag">Cocktailbar</span><span class="ftag">Hüt offe</span>
-    </div>
-  </div>
+  <div class="fbar"><div class="fbi"><span class="flbl">Genre:</span><span class="ftag on">Alles</span><span class="ftag">Techno</span><span class="ftag">Jazz</span><span class="ftag">Hip-Hop</span><span class="ftag">House</span><span class="ftag">Live Music</span><span class="ftag">Cocktailbar</span></div></div>
   <div class="ca">
     <div class="lbl rv">Hüt Nacht</div>
     <div class="g3 rv" style="margin-bottom:2.5rem;">
-      <div class="ec" onclick="go('club-detail')"><span class="ectag p">Techno</span><h3>Komplex 457</h3><div class="meta"><strong>Ab 23:00 · Hohlstrasse</strong><br>Resident Evil Night · CHF 20.–</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('club-detail')"><span class="ectag b">Jazz</span><h3>Schiffbau Jazz Club</h3><div class="meta"><strong>Ab 20:00 · Schiffbaustrasse</strong><br>Züri Jazz Trio · CHF 35.–</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('club-detail')"><span class="ectag">Neue Location</span><h3>Club Dani Wilde</h3><div class="meta"><strong>Eröffnig Hüt · Ab 22:00</strong><br>Industriequartier · Free bis 23:00</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('club-detail')"><span class="ectag y">Hip-Hop</span><h3>Plaza Club</h3><div class="meta"><strong>Ab 22:00 · Langstrasse</strong><br>Old School Night · CHF 15.–</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('club-detail')"><span class="ectag g">Live Music</span><h3>Rote Fabrik</h3><div class="meta"><strong>Ab 20:00 · Zürichsee</strong><br>Indie Rock · CHF 22.–</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('club-detail')"><span class="ectag w">Bar</span><h3>Jules Verne Panoramabar</h3><div class="meta"><strong>Ab 18:00 · Zürichberg</strong><br>Cocktails & Aussicht · Frei</div><span class="arr">↗</span></div>
+      <div class="ec" onclick="go('club-detail')"><span class="etag p">Techno</span><h3>Komplex 457</h3><div class="meta"><strong>Ab 23:00 · Hohlstrasse</strong><br>Resident Evil Night · CHF 20.–</div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('club-detail')"><span class="etag b">Jazz</span><h3>Schiffbau Jazz Club</h3><div class="meta"><strong>Ab 20:00</strong><br>Züri Jazz Trio · CHF 35.–</div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('club-detail')"><span class="etag">Neu</span><h3>Club Dani Wilde</h3><div class="meta"><strong>Eröffnig Hüt · Ab 22:00</strong><br>Free bis 23:00</div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('club-detail')"><span class="etag g">Hip-Hop</span><h3>Plaza Club</h3><div class="meta"><strong>Ab 22:00 · Langstrasse</strong><br>Old School · CHF 15.–</div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('club-detail')"><span class="etag g">Live</span><h3>Rote Fabrik</h3><div class="meta"><strong>Ab 20:00 · Zürichsee</strong><br>Indie Rock · CHF 22.–</div><span class="earr">↗</span></div>
+      <div class="ec" onclick="go('club-detail')"><span class="etag w">Bar</span><h3>Jules Verne Panoramabar</h3><div class="meta"><strong>Ab 18:00 · Zürichberg</strong><br>Cocktails · Kein Eintritt</div><span class="earr">↗</span></div>
     </div>
     <div class="g2 rv">
-      <div class="ic" onclick="go('club-detail')"><img src="https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=700&q=80" alt="club"/><div class="icc"><h3>Langstrasse — Die Meile</h3><div class="sub">Bars · Clubs · Restis · 500m</div></div></div>
-      <div class="ic" onclick="go('club-detail')"><img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=700&q=80" alt="club2"/><div class="icc"><h3>Industriequartier — Neui Szene</h3><div class="sub">Kreis 5 · Die neue Partymeile</div></div></div>
+      <div class="ic" onclick="go('club-detail')"><img src="https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=700&q=80" alt=""/><div class="icc"><h3>Langstrasse — Die Meile</h3><div class="sub">Bars · Clubs · Restis · 500m</div></div></div>
+      <div class="ic" onclick="go('club-detail')"><img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=700&q=80" alt=""/><div class="icc"><h3>Industriequartier — Neui Szene</h3><div class="sub">Kreis 5 · Die neue Partymeile</div></div></div>
     </div>
   </div>
   <div id="fnacht"></div>
@@ -840,147 +886,122 @@ footer{background:#080806!important;border-top:3px solid #ff4d00;}
 
 <!-- CLUB DETAIL -->
 
-<div id="pg-club-detail" class="pg" style="background:#080806;">
-  <div class="detail-head">
-    <div class="pw">
-      <div style="padding-top:1.5rem;padding-bottom:1rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
-        <a onclick="go('nachtleben')" style="font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:#666660;cursor:pointer;">← Zurück zu Nachtleben</a>
-        <span style="color:#ff4d00;">·</span>
-        <span style="font-family:'Space Mono',monospace;font-size:.58rem;color:#7c3aed;letter-spacing:.14em;text-transform:uppercase;">Neue Location</span>
-      </div>
-    </div>
-    <div class="detail-hero pw">
-      <img class="detail-img" src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1200&q=80" alt="Club"/>
-      <div class="detail-meta-bar">
-        <span class="detail-badge" style="background:#7c3aed;color:#f0ebe0;">Opening Night</span>
-        <span class="detail-badge">Club</span>
-        <span style="font-family:'Space Mono',monospace;font-size:.62rem;color:#666660;">Industriequartier · Kreis 5</span>
-      </div>
-      <h1 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:clamp(2.5rem,6vw,5rem);text-transform:uppercase;line-height:.88;color:#f0ebe0;margin-bottom:1.5rem;">Club Dani Wilde<br><span style="font-size:.6em;color:#7c3aed;">Opening Night Hüt</span></h1>
+<div id="pg-club-detail" class="pg" style="background:#04040a;">
+  <div class="dhead">
+    <div class="dhero pw" style="max-width:1320px;margin:0 auto;padding:0 2rem;">
+      <div style="padding-top:1.4rem;padding-bottom:1rem;display:flex;align-items:center;gap:1rem;"><a onclick="go('nachtleben')" style="font-family:'DM Mono',monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:#44445a;cursor:pointer;">← Nachtleben</a></div>
+      <img class="dimg" src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1400&q=85" alt=""/>
+      <div class="dmb"><span class="dbadge" style="background:#9333ea;color:#fff;">Opening Night</span><span class="dbadge">Club</span><span style="font-family:'DM Mono',monospace;font-size:.6rem;color:#44445a;">Industriequartier · Kreis 5</span></div>
+      <h1 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(2.8rem,6vw,5rem);text-transform:uppercase;line-height:.85;color:#e8e4d9;margin-bottom:1.5rem;">Club Dani Wilde<br><span style="font-size:.6em;color:#9333ea;">Opening Night Hüt</span></h1>
     </div>
   </div>
-  <div class="detail-body">
-    <div class="detail-main">
-      <p>Züri het en neue Club — und der haut rii. Club Dani Wilde öffnet hüt Abig im Herz vom Industriequartier. Auf 800m² rohe Betonhalle trifft curated Sound-Experience uf echti Züri-Energie.</p>
-      <p>Resident DJs, monatlich wechselndä Acts, kei Dress Code, kei Bullshit. Das isch genau die Location wo Züris Nachtleben gefehlt hät.</p>
+  <div class="dbody">
+    <div class="dmain">
+      <p>Züri het en neue Club — und der haut rii. 800m² rohe Betonhalle, curated Sound, echti Züri-Energie. Kei Dress Code, kei Bullshit.</p>
       <h3>Hüt Nacht</h3>
-      <p>Opening Night mit DJ Set von Resident KLNX (Techno, Industrial), Support von Züri local act «Gisela». Free Entry bis 23:00, danach CHF 15.–. Keine Tischreservationen, kei VIP-Chichi.</p>
-      <h3>Location</h3>
-      <p>Ehemaligi Fabrikhalle, Züri West. 800m², 3 Bars, Rooftop-Terasse (Wetter erlaubt), Outdoor-Smoking Area. Kapazität 600 Persone.</p>
-
-```
-  <div style="background:#7c3aed;padding:1.5rem;margin-top:2rem;">
-    <div style="font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#f0ebe0;margin-bottom:.3rem;">Ticket kaufe</div>
-    <p style="font-family:'Space Mono',monospace;font-size:.64rem;color:rgba(255,255,255,.6);margin-bottom:1rem;">Free Entry bis 23:00 · Danach CHF 15.– AK</p>
-    <a class="btn bo" style="clip-path:none;">Ticket sicherne →</a>
-  </div>
-
-  <h3 style="margin-top:2.5rem;">Reviews</h3>
-  <div class="review-card"><div class="rev-top"><span class="rev-name">@zuri_nightlife</span><span class="rev-stars">⭐⭐⭐⭐⭐</span></div><p class="rev-text">Endlich! Genau die Energy wo mir en neue Club bruucht hät. Sound System isch brutal. Bin scho a dr Kass.</p></div>
-  <div class="review-card"><div class="rev-top"><span class="rev-name">@techno_zh</span><span class="rev-stars">⭐⭐⭐⭐⭐</span></div><p class="rev-text">Location isch sick. Roh, dunkel, perfekt für de Sound. KLNX haut sowieso immer rii.</p></div>
-</div>
-<div class="detail-side">
-  <h4>Info</h4>
-  <div class="drow"><span>Opening</span><strong>Hüt, 31. März</strong></div>
-  <div class="drow"><span>Ab</span><strong>22:00 Uhr</strong></div>
-  <div class="drow"><span>Eintritt</span><strong>Gratis bis 23:00</strong></div>
-  <div class="drow"><span>Danach</span><strong>CHF 15.– AK</strong></div>
-  <div class="drow"><span>Location</span><strong>Industriequartier</strong></div>
-  <div class="drow"><span>Kapazität</span><strong>600 Persone</strong></div>
-  <div class="drow"><span>Genre</span><strong>Techno / Industrial</strong></div>
-  <br>
-  <a class="btn bo" style="width:100%;text-align:center;display:block;">Ticket sicherne →</a>
-  <br>
-  <a class="btn bg" style="width:100%;text-align:center;display:block;" onclick="go('nachtleben')">← Alle Clubs</a>
-</div>
-```
-
+      <p>Opening Night mit DJ KLNX (Techno, Industrial). Free Entry bis 23:00, danach CHF 15.–.</p>
+      <div style="background:#111118;border-left:3px solid #9333ea;padding:1.5rem;margin-top:2rem;">
+        <div style="font-family:'DM Mono',monospace;font-size:.58rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:#9333ea;margin-bottom:.3rem;">Ticket kaufe</div>
+        <p style="font-family:'DM Mono',monospace;font-size:.62rem;color:#44445a;margin-bottom:1rem;">Free Entry bis 23:00 · Danach CHF 15.–</p>
+        <a class="btn bo">Ticket sicherne →</a>
+      </div>
+      <h3 style="margin-top:2.5rem;">Reviews</h3>
+      <div class="rc"><div class="rtop"><span class="rname">@zuri_nightlife</span><span>⭐⭐⭐⭐⭐</span></div><p class="rtext">Endlich! Genau die Energy wo Züri bruucht. Sound System isch brutal.</p></div>
+    </div>
+    <div class="dside">
+      <h4>Info</h4>
+      <div class="drow"><span>Opening</span><strong>Hüt, 31. März</strong></div>
+      <div class="drow"><span>Ab</span><strong>22:00 Uhr</strong></div>
+      <div class="drow"><span>Eintritt</span><strong>Gratis bis 23:00</strong></div>
+      <div class="drow"><span>Danach</span><strong>CHF 15.–</strong></div>
+      <div class="drow"><span>Kapazität</span><strong>600 Persone</strong></div>
+      <div class="drow"><span>Genre</span><strong>Techno / Industrial</strong></div>
+      <br>
+      <a class="btn bo" style="width:100%;text-align:center;display:block;">Ticket →</a>
+      <br>
+      <a class="btn bg" style="width:100%;text-align:center;display:block;" onclick="go('nachtleben')">← Alle Clubs</a>
+    </div>
   </div>
   <div id="fclubdetail"></div>
 </div>
 
-<!-- ══════════ SHOPPING ══════════ -->
+<!-- SHOPPING -->
 
-<div id="pg-shopping" class="pg" style="background:#080806;">
-  <div class="sub-head" style="background:linear-gradient(135deg,#080806 55%,#150a00);">
-    <div class="shi"><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#f5c800!important;">SHOPPING</h1><p>214 Shops — vo lokal bis international, vo Vintage bis Designer.</p><div class="smeta"><span class="sm"><strong>214</strong> Shops</span><span class="sm"><strong>Sale</strong> bei 23 Shops</span></div></div>
+<div id="pg-shopping" class="pg" style="background:#04040a;">
+  <div class="sub-head" style="background:linear-gradient(135deg,#04040a 55%,#150a00);">
+    <div class="shi"><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#c8ff00;">SHOPPING</h1><p>214 Shops — vo lokal bis international, vo Vintage bis Designer.</p><div class="smeta"><span class="sm"><strong>214</strong> Shops</span><span class="sm"><strong>Sale</strong> bei 23 Shops</span></div></div>
   </div>
-  <div class="fbar"><div class="fbi"><span class="flbl">Kategorie:</span><span class="ftag on">Alles</span><span class="ftag">Mode</span><span class="ftag">Vintage</span><span class="ftag">Design</span><span class="ftag">Bücher</span><span class="ftag">Sale</span><span class="ftag">Lokal</span></div></div>
+  <div class="fbar"><div class="fbi"><span class="flbl">Filter:</span><span class="ftag on">Alles</span><span class="ftag">Mode</span><span class="ftag">Vintage</span><span class="ftag">Design</span><span class="ftag">Sale</span><span class="ftag">Lokal</span></div></div>
   <div class="ca">
-    <div style="background:#f5c800;padding:2rem;margin-bottom:2.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;" class="rv">
-      <div style="background:rgba(0,0,0,.1);padding:1.4rem;cursor:pointer;"><div style="font-family:'Space Mono',monospace;font-size:.52rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(0,0,0,.45);margin-bottom:.4rem;">Sale Start</div><h4 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:1.2rem;text-transform:uppercase;color:#080806;">Jelmoli Summer Sale</h4><p style="font-family:'Space Mono',monospace;font-size:.6rem;color:rgba(0,0,0,.5);">Bis 50% · Ab Morge</p></div>
-      <div style="background:rgba(0,0,0,.1);padding:1.4rem;cursor:pointer;"><div style="font-family:'Space Mono',monospace;font-size:.52rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(0,0,0,.45);margin-bottom:.4rem;">Special</div><h4 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:1.2rem;text-transform:uppercase;color:#080806;">Werner Schreyer Brillen</h4><p style="font-family:'Space Mono',monospace;font-size:.6rem;color:rgba(0,0,0,.5);">Neui Kollektion · Bahnhofstrasse</p></div>
-      <div style="background:rgba(0,0,0,.1);padding:1.4rem;cursor:pointer;"><div style="font-family:'Space Mono',monospace;font-size:.52rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:rgba(0,0,0,.45);margin-bottom:.4rem;">Neu</div><h4 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:1.2rem;text-transform:uppercase;color:#080806;">Pop-Up Fashion Lab</h4><p style="font-family:'Space Mono',monospace;font-size:.6rem;color:rgba(0,0,0,.5);">Lokali Labels · Viadukt · 3 Tage</p></div>
+    <div style="background:#c8ff00;padding:2rem;margin-bottom:2.5rem;display:grid;grid-template-columns:repeat(3,1fr);gap:2px;" class="rv">
+      <div style="background:rgba(0,0,0,.1);padding:1.3rem;cursor:pointer;"><div style="font-family:'DM Mono',monospace;font-size:.5rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(0,0,0,.4);margin-bottom:.4rem;">Sale Start</div><h4 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:1.3rem;text-transform:uppercase;color:#04040a;">Jelmoli Summer Sale</h4><p style="font-family:'DM Mono',monospace;font-size:.58rem;color:rgba(0,0,0,.5);">Bis 50% · Ab Morge</p></div>
+      <div style="background:rgba(0,0,0,.1);padding:1.3rem;cursor:pointer;"><div style="font-family:'DM Mono',monospace;font-size:.5rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(0,0,0,.4);margin-bottom:.4rem;">Special</div><h4 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:1.3rem;text-transform:uppercase;color:#04040a;">Werner Schreyer Brillen</h4><p style="font-family:'DM Mono',monospace;font-size:.58rem;color:rgba(0,0,0,.5);">Neui Kollektion · Bahnhofstrasse</p></div>
+      <div style="background:rgba(0,0,0,.1);padding:1.3rem;cursor:pointer;"><div style="font-family:'DM Mono',monospace;font-size:.5rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(0,0,0,.4);margin-bottom:.4rem;">Pop-Up</div><h4 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:1.3rem;text-transform:uppercase;color:#04040a;">Fashion Lab Viadukt</h4><p style="font-family:'DM Mono',monospace;font-size:.58rem;color:rgba(0,0,0,.5);">Lokali Labels · 3 Tage</p></div>
     </div>
-    <div class="lbl rv">Empfohlenä Shops</div>
-    <div class="g3 rv"><div class="ec"><span class="ectag y">Vintage</span><h3>Flamingo Vintage</h3><div class="meta"><strong>Kreis 4 · Langstrasse</strong><br>Mo–Sa · 11:00–19:00</div><span class="arr">↗</span></div><div class="ec"><span class="ectag">Design</span><h3>Viadukt Boutiquen</h3><div class="meta"><strong>Kreis 5 · Unter dem Viadukt</strong><br>Lokali Designer · 30+ Shops</div><span class="arr">↗</span></div><div class="ec"><span class="ectag g">Lokal</span><h3>Freitag Store</h3><div class="meta"><strong>Kreis 5 · Geroldstrasse</strong><br>Züri Original · ⭐⭐⭐⭐⭐</div><span class="arr">↗</span></div></div>
+    <div class="g3 rv"><div class="ec"><span class="etag g">Vintage</span><h3>Flamingo Vintage</h3><div class="meta"><strong>Kreis 4 · Langstrasse</strong><br>Mo–Sa · 11:00–19:00</div><span class="earr">↗</span></div><div class="ec"><span class="etag">Design</span><h3>Viadukt Boutiquen</h3><div class="meta"><strong>Kreis 5 · 30+ Shops</strong></div><span class="earr">↗</span></div><div class="ec"><span class="etag g">Lokal</span><h3>Freitag Store</h3><div class="meta"><strong>Kreis 5 · Züri Original</strong><br>⭐⭐⭐⭐⭐</div><span class="earr">↗</span></div></div>
   </div>
   <div id="fshopping"></div>
 </div>
 
-<!-- ══════════ IMMOBILIEN ══════════ -->
+<!-- IMMOBILIEN -->
 
-<div id="pg-immobilien" class="pg" style="background:#080806;">
-  <div class="sub-head" style="background:linear-gradient(135deg,#080806 55%,#001015);">
-    <div class="shi"><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#0057ff!important;">IMMO<br>BILIEN</h1><p>520 Objekte direkt im Quartier. Kein Makler, kein Bullshit. Von de Züri für Züri.</p><div class="smeta"><span class="sm"><strong>520</strong> Objekte</span><span class="sm"><strong>34</strong> Neu heute</span><span class="sm"><strong>WG</strong> ab CHF 850.–</span></div></div>
+<div id="pg-immobilien" class="pg" style="background:#04040a;">
+  <div class="sub-head" style="background:linear-gradient(135deg,#04040a 55%,#000a18);">
+    <div class="shi"><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#00f5ff;">IMMO<br>BILIEN</h1><p>520 Objekte. Kein Makler, kein Bullshit. Von de Züri für Züri.</p><div class="smeta"><span class="sm"><strong>520</strong> Objekte</span><span class="sm"><strong>34</strong> Neu heute</span><span class="sm"><strong>WG</strong> ab CHF 850.–</span></div></div>
   </div>
-  <div class="fbar"><div class="fbi"><span class="flbl">Typ:</span><span class="ftag on">Alles</span><span class="ftag">WG-Zimmer</span><span class="ftag">1-Zi</span><span class="ftag">2-Zi</span><span class="ftag">3+ Zi</span><span class="ftag">Büro</span><span class="ftag">Ateliers</span><span class="ftag">Kaufe</span></div></div>
+  <div class="fbar"><div class="fbi"><span class="flbl">Typ:</span><span class="ftag on">Alles</span><span class="ftag">WG-Zimmer</span><span class="ftag">1-Zi</span><span class="ftag">2-Zi</span><span class="ftag">3+ Zi</span><span class="ftag">Büro</span><span class="ftag">Ateliers</span></div></div>
   <div class="ca">
-    <div class="lbl rv">Neui Inserate</div>
-    <div class="g3 rv" style="margin-bottom:2.5rem;"><div class="ec"><span class="ectag g">Neu</span><h3>WG-Zimmer Kreis 4</h3><div class="meta"><strong>CHF 950.– / Mt</strong><br>18m² · möbliert · Ab sofort</div><span class="arr">↗</span></div><div class="ec"><span class="ectag b">2.5 Zi</span><h3>Wohnung Kreis 5</h3><div class="meta"><strong>CHF 2'100.– / Mt</strong><br>62m² · Industrieloft-Stil</div><span class="arr">↗</span></div><div class="ec"><span class="ectag y">Atelier</span><h3>Atelierraum Viadukt</h3><div class="meta"><strong>CHF 1'400.– / Mt</strong><br>45m² · Ideal für Kreative</div><span class="arr">↗</span></div><div class="ec"><span class="ectag">3.5 Zi</span><h3>Familienwohnung Seefeld</h3><div class="meta"><strong>CHF 3'400.– / Mt</strong><br>95m² · Seeblick</div><span class="arr">↗</span></div><div class="ec"><span class="ectag g">WG</span><h3>3er-WG Kreis 3</h3><div class="meta"><strong>CHF 850.– / Mt</strong><br>Zimmer in bestehender WG</div><span class="arr">↗</span></div><div class="ec"><span class="ectag p">Büro</span><h3>Bürofläche Hardbrücke</h3><div class="meta"><strong>CHF 4'200.– / Mt</strong><br>120m² · Open Space</div><span class="arr">↗</span></div></div>
-    <div style="background:#0057ff;padding:2rem;margin-bottom:2.5rem;" class="rv"><h3 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:2rem;text-transform:uppercase;color:#f0ebe0;margin-bottom:.7rem;">Dini Wohnig Inseriere</h3><p style="font-family:'Space Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.65);line-height:1.7;margin-bottom:1.2rem;">Direkt, ohne Makler. Inserat ab CHF 0.90.–</p><a class="btn bo">Inserat erstelle →</a></div>
+    <div class="g3 rv" style="margin-bottom:2.5rem;"><div class="ec"><span class="etag g">Neu</span><h3>WG-Zimmer Kreis 4</h3><div class="meta"><strong>CHF 950.– / Mt</strong><br>18m² · möbliert · Ab sofort</div><span class="earr">↗</span></div><div class="ec"><span class="etag b">2.5 Zi</span><h3>Wohnung Kreis 5</h3><div class="meta"><strong>CHF 2'100.– / Mt</strong><br>62m² · Industrieloft</div><span class="earr">↗</span></div><div class="ec"><span class="etag g">Atelier</span><h3>Atelierraum Viadukt</h3><div class="meta"><strong>CHF 1'400.– / Mt</strong><br>45m² · Für Kreative</div><span class="earr">↗</span></div><div class="ec"><span class="etag">3.5 Zi</span><h3>Familienwohnung Seefeld</h3><div class="meta"><strong>CHF 3'400.– / Mt</strong><br>95m² · Seeblick</div><span class="earr">↗</span></div><div class="ec"><span class="etag g">WG</span><h3>3er-WG Kreis 3</h3><div class="meta"><strong>CHF 850.– / Mt</strong></div><span class="earr">↗</span></div><div class="ec"><span class="etag p">Büro</span><h3>Bürofläche Hardbrücke</h3><div class="meta"><strong>CHF 4'200.– / Mt</strong><br>120m²</div><span class="earr">↗</span></div></div>
+    <div style="background:#00f5ff;padding:2rem;margin-bottom:2.5rem;" class="rv"><h3 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:2rem;text-transform:uppercase;color:#04040a;margin-bottom:.6rem;">Dini Wohnig Inseriere</h3><p style="font-family:'DM Mono',monospace;font-size:.68rem;color:rgba(0,0,0,.55);line-height:1.7;margin-bottom:1.1rem;">Direkt, ohne Makler. Inserat ab CHF 0.90.–</p><a class="btn bo">Inserat erstelle →</a></div>
   </div>
   <div id="fimmo"></div>
 </div>
 
-<!-- ══════════ MARKTPLATZ ══════════ -->
+<!-- MARKTPLATZ -->
 
-<div id="pg-marktplatz" class="pg" style="background:#080806;">
-  <div class="sub-head" style="background:linear-gradient(135deg,#080806 55%,#150800);">
-    <div class="shi"><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#ff4d00!important;">MARKT<br>PLATZ</h1><p>"Mir sind Matchmaker" — Velos, Möbel, Tickets, Vintage-Kram.</p><div class="smeta"><span class="sm"><strong>1'240</strong> Inserate</span><span class="sm"><strong>Gebühr</strong> unter CHF 1.–</span></div></div>
+<div id="pg-marktplatz" class="pg" style="background:#04040a;">
+  <div class="sub-head" style="background:linear-gradient(135deg,#04040a 55%,#180800);">
+    <div class="shi"><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#ff2d00;">MARKT<br>PLATZ</h1><p>"Mir sind Matchmaker" — alles uf einere Syte. Keis Rumsurfe.</p><div class="smeta"><span class="sm"><strong>1'240</strong> Inserate</span><span class="sm"><strong>Gebühr</strong> unter CHF 1.–</span></div></div>
   </div>
-  <div class="fbar"><div class="fbi"><span class="flbl">Kategorie:</span><span class="ftag on">Alles</span><span class="ftag">Velos</span><span class="ftag">Möbel</span><span class="ftag">Kleider</span><span class="ftag">Elektronik</span><span class="ftag">Tickets</span></div></div>
+  <div class="fbar"><div class="fbi"><span class="flbl">Kategorie:</span><span class="ftag on">Alles</span><span class="ftag">Velos</span><span class="ftag">Möbel</span><span class="ftag">Kleider</span><span class="ftag">Tickets</span></div></div>
   <div class="ca">
-    <div class="g4 rv" style="margin-bottom:2.5rem;"><div class="ec" style="text-align:center;padding:1.5rem 1rem;"><div style="font-size:2.5rem;margin-bottom:.6rem;">🚲</div><h3 style="font-size:1.1rem;">Velos</h3><div class="meta">286 Inserate</div></div><div class="ec" style="text-align:center;padding:1.5rem 1rem;"><div style="font-size:2.5rem;margin-bottom:.6rem;">🪑</div><h3 style="font-size:1.1rem;">Möbel</h3><div class="meta">432 Inserate</div></div><div class="ec" style="text-align:center;padding:1.5rem 1rem;"><div style="font-size:2.5rem;margin-bottom:.6rem;">🎟️</div><h3 style="font-size:1.1rem;">Tickets</h3><div class="meta">124 Inserate</div></div><div class="ec" style="text-align:center;padding:1.5rem 1rem;"><div style="font-size:2.5rem;margin-bottom:.6rem;">👗</div><h3 style="font-size:1.1rem;">Kleider</h3><div class="meta">398 Inserate</div></div></div>
-    <div class="lbl rv">Neui Inserate</div>
-    <div class="g3 rv"><div class="ec"><span class="ectag g">Velo</span><h3>Trek Crossover 28"</h3><div class="meta"><strong>CHF 380.–</strong><br>Kreis 4 · Sehr guter Zustand</div><span class="arr">↗</span></div><div class="ec"><span class="ectag y">Ticket</span><h3>2x Openair Zürich</h3><div class="meta"><strong>CHF 120.– / Stück</strong><br>Samstag · Originalpreis CHF 145.–</div><span class="arr">↗</span></div><div class="ec"><span class="ectag">Möbel</span><h3>IKEA Kallax Regal</h3><div class="meta"><strong>CHF 45.–</strong><br>Kreis 6 · Selbstabholung</div><span class="arr">↗</span></div></div>
+    <div class="g4 rv" style="margin-bottom:2.5rem;"><div class="ec" style="text-align:center;padding:1.5rem 1rem;"><div style="font-size:2.5rem;margin-bottom:.5rem;">🚲</div><h3 style="font-size:1.1rem;">Velos</h3><div class="meta">286 Inserate</div></div><div class="ec" style="text-align:center;padding:1.5rem 1rem;"><div style="font-size:2.5rem;margin-bottom:.5rem;">🪑</div><h3 style="font-size:1.1rem;">Möbel</h3><div class="meta">432 Inserate</div></div><div class="ec" style="text-align:center;padding:1.5rem 1rem;"><div style="font-size:2.5rem;margin-bottom:.5rem;">🎟️</div><h3 style="font-size:1.1rem;">Tickets</h3><div class="meta">124 Inserate</div></div><div class="ec" style="text-align:center;padding:1.5rem 1rem;"><div style="font-size:2.5rem;margin-bottom:.5rem;">👗</div><h3 style="font-size:1.1rem;">Kleider</h3><div class="meta">398 Inserate</div></div></div>
+    <div class="g3 rv"><div class="ec"><span class="etag g">Velo</span><h3>Trek Crossover 28"</h3><div class="meta"><strong>CHF 380.–</strong><br>Kreis 4 · Top Zustand</div><span class="earr">↗</span></div><div class="ec"><span class="etag g">Ticket</span><h3>2x Openair Zürich</h3><div class="meta"><strong>CHF 120.– / Stück</strong></div><span class="earr">↗</span></div><div class="ec"><span class="etag">Möbel</span><h3>IKEA Kallax Regal</h3><div class="meta"><strong>CHF 45.– · Wie neu</strong></div><span class="earr">↗</span></div></div>
   </div>
   <div id="fmarkt"></div>
 </div>
 
-<!-- ══════════ COMMUNITY ══════════ -->
+<!-- COMMUNITY -->
 
-<div id="pg-community" class="pg" style="background:#080806;">
-  <div class="sub-head" style="background:linear-gradient(135deg,#080806 45%,#0a0015);">
-    <div class="shi"><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#7c3aed!important;">COMMU<br>NITY</h1><p>DIS ZÜRI. DINI STIMM. — Blogge, bewertet, teil. Züris lebendigschti Community.</p><div class="smeta"><span class="sm"><strong>12'450</strong> Member</span><span class="sm"><strong>480</strong> Blogger</span><span class="sm"><strong>8'200+</strong> Reviews</span></div></div>
+<div id="pg-community" class="pg" style="background:#04040a;">
+  <div class="sub-head" style="background:linear-gradient(135deg,#04040a 45%,#08001a);">
+    <div class="shi"><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#9333ea;">COMMU<br>NITY</h1><p>DIS ZÜRI. DINI STIMM. — Blogge, bewertet, teil.</p><div class="smeta"><span class="sm"><strong>12'450</strong> Member</span><span class="sm"><strong>480</strong> Blogger</span><span class="sm"><strong>8'200+</strong> Reviews</span></div></div>
   </div>
   <div class="ca">
-    <div style="background:#7c3aed;padding:2.5rem;margin-bottom:2.5rem;" class="rv">
+    <div style="background:#9333ea;padding:2.5rem;margin-bottom:2.5rem;" class="rv">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
-        <div><h3 style="font-family:'Roboto Condensed',Arial,sans-serif;font-style:italic;font-weight:700;font-size:2.2rem;text-transform:uppercase;line-height:1;margin-bottom:.7rem;color:#f0ebe0;">PROFIL AALEGE<br>& LOSLEGGE</h3><p style="font-family:'Space Mono',monospace;font-size:.72rem;color:rgba(255,255,255,.65);line-height:1.7;">Gratis. In 2 Minute. Kei Bullshit.</p></div>
-        <div style="display:flex;flex-direction:column;gap:.55rem;"><input style="-webkit-appearance:none;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);padding:.85rem 1.1rem;font-family:'Space Mono',monospace;font-size:.75rem;color:#f0ebe0;outline:none;" placeholder="Username"/><input style="-webkit-appearance:none;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.2);padding:.85rem 1.1rem;font-family:'Space Mono',monospace;font-size:.75rem;color:#f0ebe0;outline:none;" placeholder="E-Mail"/><a class="btn bo" style="text-align:center;">Etz Mitmache →</a></div>
+        <div><h3 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:2.2rem;text-transform:uppercase;line-height:1;margin-bottom:.7rem;color:#e8e4d9;">PROFIL AALEGE<br>& LOSLEGGE</h3><p style="font-family:'DM Mono',monospace;font-size:.68rem;color:rgba(255,255,255,.6);line-height:1.7;">Gratis. In 2 Minute. Kei Bullshit.</p></div>
+        <div style="display:flex;flex-direction:column;gap:.5rem;"><input style="-webkit-appearance:none;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:.82rem 1.1rem;font-family:'DM Mono',monospace;font-size:.72rem;color:#e8e4d9;outline:none;" placeholder="Username"/><input style="-webkit-appearance:none;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:.82rem 1.1rem;font-family:'DM Mono',monospace;font-size:.72rem;color:#e8e4d9;outline:none;" placeholder="E-Mail"/><a class="btn bo" style="text-align:center;">Etz Mitmache →</a></div>
       </div>
     </div>
     <div class="lbl rv">Aktivi Blogger</div>
-    <div class="g3 rv" style="margin-bottom:2.5rem;"><div class="ec"><span class="ectag p">Top Blogger</span><h3>@zuri_insider</h3><div class="meta"><strong>284 Posts · 4'200 Follower</strong><br>Gastro & Nachtleben · Kreis 4</div><span class="arr">↗</span></div><div class="ec"><span class="ectag g">Foodie</span><h3>@langstrasse_mampf</h3><div class="meta"><strong>156 Reviews · 1'800 Follower</strong><br>Günstig & Gut</div><span class="arr">↗</span></div><div class="ec"><span class="ectag b">Events</span><h3>@zuri_events_daily</h3><div class="meta"><strong>520 Posts · 6'100 Follower</strong><br>Immer up to date</div><span class="arr">↗</span></div></div>
+    <div class="g3 rv" style="margin-bottom:2.5rem;"><div class="ec"><span class="etag p">Top</span><h3>@zuri_insider</h3><div class="meta"><strong>284 Posts · 4'200 Follower</strong><br>Gastro & Nachtleben</div><span class="earr">↗</span></div><div class="ec"><span class="etag g">Foodie</span><h3>@langstrasse_mampf</h3><div class="meta"><strong>156 Reviews · 1'800 Follower</strong></div><span class="earr">↗</span></div><div class="ec"><span class="etag b">Events</span><h3>@zuri_events_daily</h3><div class="meta"><strong>520 Posts · 6'100 Follower</strong></div><span class="earr">↗</span></div></div>
     <div class="lbl rv">Neischti Posts</div>
-    <div class="g2 rv"><div class="ec"><span class="ectag">Review</span><h3>«Pho Saigon — Beschtä Pho vo Züri»</h3><div class="meta"><strong>von @langstrasse_mampf</strong><br>vor 2 Stunde · 42 Likes · ⭐⭐⭐⭐⭐</div><span class="arr">↗</span></div><div class="ec"><span class="ectag g">Insider</span><h3>«Geheimi Bar im Kreis 5»</h3><div class="meta"><strong>von @zuri_insider</strong><br>vor 4 Stunde · 89 Likes</div><span class="arr">↗</span></div><div class="ec"><span class="ectag y">Tipp</span><h3>«5 Pop-Ups wo du hüt no gseh mussch»</h3><div class="meta"><strong>von @zuri_events_daily</strong><br>vor 1 Stunde · 134 Likes</div><span class="arr">↗</span></div><div class="ec"><span class="ectag b">Story</span><h3>«Wie Kreis 4 sich neu erfindet»</h3><div class="meta"><strong>von @stadtpuls_redaktion</strong><br>vor 6 Stunde · 201 Likes</div><span class="arr">↗</span></div></div>
+    <div class="g2 rv"><div class="ec"><span class="etag">Review</span><h3>«Pho Saigon — Beschtä Pho vo Züri»</h3><div class="meta"><strong>von @langstrasse_mampf</strong><br>vor 2 Stunde · 42 Likes</div><span class="earr">↗</span></div><div class="ec"><span class="etag g">Insider</span><h3>«Geheimi Bar im Kreis 5»</h3><div class="meta"><strong>von @zuri_insider</strong><br>vor 4 Stunde · 89 Likes</div><span class="earr">↗</span></div><div class="ec"><span class="etag g">Tipp</span><h3>«5 Pop-Ups wo du hüt no gseh mussch»</h3><div class="meta"><strong>vor 1 Stunde · 134 Likes</strong></div><span class="earr">↗</span></div><div class="ec"><span class="etag b">Story</span><h3>«Wie Kreis 4 sich neu erfindet»</h3><div class="meta"><strong>vor 6 Stunde · 201 Likes</strong></div><span class="earr">↗</span></div></div>
   </div>
   <div id="fcomm"></div>
 </div>
 
-<!-- ══════════ QUARTIERE ══════════ -->
+<!-- QUARTIERE -->
 
-<div id="pg-quartiere" class="pg" style="background:#080806;">
-  <div class="sub-head" style="background:linear-gradient(135deg,#080806 55%,#0f0800);">
-    <div class="shi"><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#f5c800!important;">QUARTIERE</h1><p>12 Quartiere, 12 Welten. Finde wo du bisch und was gad passiert.</p></div>
-  </div>
+<div id="pg-quartiere" class="pg" style="background:#04040a;">
+  <div class="sub-head"><div class="shi"><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#c8ff00;">QUARTIERE</h1><p>12 Quartiere, 12 Welten. Finde wo du bisch.</p></div></div>
   <div class="ca">
     <div class="qgrid rv" style="max-width:100%;">
-      <div class="qcard" onclick="go('kreis1')"><div class="qnum">1</div><span class="qtag">Altstadt</span><h3>Kreis 1</h3><p>Altstadt, Lindenhügel, Hochschulen. Historisch, trotzdem lebendig. Museen, Cafés, Galeries.</p></div>
-      <div class="qcard" onclick="go('kreis4')"><div class="qnum">4</div><span class="qtag" style="background:#7c3aed!important;">Szene</span><h3>Kreis 4</h3><p>Langstrasse, Helvetiaplatz. Züris wildeschtes Viertel. Clubs, Restis, Pop-Ups — 24/7.</p></div>
-      <div class="qcard" onclick="go('kreis5')"><div class="qnum">5</div><span class="qtag" style="background:#0057ff!important;color:#f0ebe0!important;">Industrie</span><h3>Kreis 5</h3><p>Viadukt, Geroldstrasse, Hardbrücke. Früecher Fabrikä, hüt Kreativhub und Gastro-Hotspot.</p></div>
-      <div class="qcard" onclick="go('kreis8')"><div class="qnum">8</div><span class="qtag" style="background:#00c45a!important;">See</span><h3>Seefeld / Kreis 8</h3><p>Zürichsee, Züriberg, Fischerstube. Bourgeoises Flair mit tolli Beizä am See.</p></div>
+      <div class="qcard" onclick="go('kreis1')"><div class="qnum">1</div><span class="qtag">Altstadt</span><h3>Kreis 1</h3><p>Historisch, lebendig. Museen, Cafés, Galerien.</p></div>
+      <div class="qcard" onclick="go('kreis4')"><div class="qnum">4</div><span class="qtag" style="background:#9333ea!important;color:#fff!important;">Szene</span><h3>Kreis 4</h3><p>Langstrasse. 24/7 Action. Clubs, Pop-Ups, Energie.</p></div>
+      <div class="qcard" onclick="go('kreis5')"><div class="qnum">5</div><span class="qtag" style="background:#00f5ff!important;">Industrie</span><h3>Kreis 5</h3><p>Viadukt, Geroldstrasse. Kreativhub und Gastro-Hotspot.</p></div>
+      <div class="qcard" onclick="go('kreis8')"><div class="qnum">8</div><span class="qtag" style="background:#c8ff00!important;">See</span><h3>Seefeld</h3><p>Zürichsee, Züriberg. Bourgeoises Flair, tolli Beizä.</p></div>
     </div>
   </div>
   <div id="fquartiere"></div>
@@ -988,149 +1009,120 @@ footer{background:#080806!important;border-top:3px solid #ff4d00;}
 
 <!-- KREIS 4 -->
 
-<div id="pg-kreis4" class="pg" style="background:#080806;">
-  <div class="sub-head" style="background:linear-gradient(135deg,#0a0020 40%,#080806);">
-    <div class="shi">
-      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:.8rem;flex-wrap:wrap;">
-        <a onclick="go('quartiere')" style="font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:#666660;cursor:pointer;">← Alle Quartiere</a>
-      </div>
-      <div class="shick">Stadtpuls · Zürich</div>
-      <h1 style="color:#7c3aed!important;">KREIS 4<br><span style="font-size:.55em;color:#f0ebe0;">LANGSTRASSE</span></h1>
-      <p>Züris wildeschtes Viertel. 24/7 Action. Clubs, Pop-Ups, Street Food, Graffiti, Energie.</p>
-      <div class="smeta">
-        <span class="sm"><strong>87</strong> Restaurants & Bars</span>
-        <span class="sm"><strong>12</strong> Clubs</span>
-        <span class="sm"><strong>34</strong> Shops</span>
-        <span class="sm"><strong>Live</strong> jetzt aktiv</span>
-      </div>
-    </div>
+<div id="pg-kreis4" class="pg" style="background:#04040a;">
+  <div class="sub-head" style="background:linear-gradient(135deg,#080020 40%,#04040a);">
+    <div class="shi"><div style="margin-bottom:.8rem;"><a onclick="go('quartiere')" style="font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:#44445a;cursor:pointer;">← Quartiere</a></div><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#9333ea;">KREIS 4<br><span style="font-size:.5em;color:#e8e4d9;">LANGSTRASSE</span></h1><p>Züris wildeschtes Viertel. Clubs, Pop-Ups, Street Food, Energie — 24/7.</p><div class="smeta"><span class="sm"><strong>87</strong> Restaurants</span><span class="sm"><strong>12</strong> Clubs</span><span class="sm"><strong>Live</strong> jetzt aktiv</span></div></div>
   </div>
   <div class="ca">
-    <div class="lbl rv">Jetzt im Kreis 4</div>
-    <div class="g3 rv" style="margin-bottom:2.5rem;">
-      <div class="ec" onclick="go('gastro-detail')"><span class="ectag g">Neue Eröffnig</span><h3>Langstrasse 77</h3><div class="meta"><strong>Hüt ab 18:00</strong><br>Pop-Up Restaurant · CHF 45.–</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('events')"><span class="ectag">Pop-Up</span><h3>Kreis 4 Vintage Market</h3><div class="meta"><strong>Sa–So · Helvetiaplatz</strong><br>Gratis Eintritt</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('gastro')"><span class="ectag">Geheimtipp</span><h3>Pho Saigon Express</h3><div class="meta"><strong>Ab CHF 14.–</strong><br>⭐⭐⭐⭐⭐ · 312 Reviews</div><span class="arr">↗</span></div>
-    </div>
-    <div class="g2 rv">
-      <div class="ic" onclick="go('nachtleben')"><img src="https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=700&q=80" alt="langstrasse"/><div class="icc"><h3>Langstrasse Nacht</h3><div class="sub">Bars · Clubs · 24/7 Energie</div></div></div>
-      <div class="ic" onclick="go('events')"><img src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=700&q=80" alt="events"/><div class="icc"><h3>Events & Pop-Ups</h3><div class="sub">Immer was Neues · Immer jetzt</div></div></div>
-    </div>
+    <div class="g3 rv" style="margin-bottom:2.5rem;"><div class="ec" onclick="go('gastro-detail')"><span class="etag g">Eröffnig</span><h3>Langstrasse 77</h3><div class="meta"><strong>Hüt ab 18:00</strong><br>Pop-Up · CHF 45.–</div><span class="earr">↗</span></div><div class="ec" onclick="go('events')"><span class="etag">Pop-Up</span><h3>Vintage Market</h3><div class="meta"><strong>Sa–So · Helvetiaplatz</strong><br>Gratis</div><span class="earr">↗</span></div><div class="ec" onclick="go('gastro')"><span class="etag">Geheimtipp</span><h3>Pho Saigon Express</h3><div class="meta"><strong>Ab CHF 14.– · ⭐⭐⭐⭐⭐</strong></div><span class="earr">↗</span></div></div>
+    <div class="g2 rv"><div class="ic" onclick="go('nachtleben')"><img src="https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=700&q=80" alt=""/><div class="icc"><h3>Langstrasse Nacht</h3><div class="sub">Bars · Clubs · 24/7</div></div></div><div class="ic" onclick="go('events')"><img src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=700&q=80" alt=""/><div class="icc"><h3>Events & Pop-Ups</h3><div class="sub">Immer was Neues</div></div></div></div>
   </div>
   <div id="fkreis4"></div>
 </div>
 
 <!-- KREIS 5 -->
 
-<div id="pg-kreis5" class="pg" style="background:#080806;">
-  <div class="sub-head" style="background:linear-gradient(135deg,#000510 40%,#080806);">
-    <div class="shi">
-      <div style="margin-bottom:.8rem;"><a onclick="go('quartiere')" style="font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:#666660;cursor:pointer;">← Alle Quartiere</a></div>
-      <div class="shick">Stadtpuls · Zürich</div>
-      <h1 style="color:#0057ff!important;">KREIS 5<br><span style="font-size:.55em;color:#f0ebe0;">INDUSTRIE</span></h1>
-      <p>Früecher Fabrikä, hüt Kreativhub. Viadukt, Geroldstrasse, Hardbrücke.</p>
-      <div class="smeta"><span class="sm"><strong>64</strong> Restaurants</span><span class="sm"><strong>8</strong> Clubs</span><span class="sm"><strong>30+</strong> Designer-Shops</span></div>
-    </div>
+<div id="pg-kreis5" class="pg" style="background:#04040a;">
+  <div class="sub-head" style="background:linear-gradient(135deg,#00050f 40%,#04040a);">
+    <div class="shi"><div style="margin-bottom:.8rem;"><a onclick="go('quartiere')" style="font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:#44445a;cursor:pointer;">← Quartiere</a></div><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#00f5ff;">KREIS 5<br><span style="font-size:.5em;color:#e8e4d9;">INDUSTRIE</span></h1><p>Viadukt, Geroldstrasse, Hardbrücke. Früecher Fabrikä, hüt Kreativhub.</p></div>
   </div>
   <div class="ca">
-    <div class="g3 rv" style="margin-bottom:2.5rem;">
-      <div class="ec" onclick="go('club-detail')"><span class="ectag">Neue Location</span><h3>Club Dani Wilde</h3><div class="meta"><strong>Industriequartier · Hüt</strong><br>Opening Night · Free Entry</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('gastro')"><span class="ectag b">Brunch</span><h3>Rosso Zürich</h3><div class="meta"><strong>Sa–So · 10:00–14:00</strong><br>Geroldstrasse · ⭐⭐⭐⭐</div><span class="arr">↗</span></div>
-      <div class="ec" onclick="go('shopping')"><span class="ectag g">Lokal</span><h3>Freitag Store</h3><div class="meta"><strong>Geroldstrasse 17</strong><br>Züri Original · täglich offe</div><span class="arr">↗</span></div>
-    </div>
-    <div class="g2 rv">
-      <div class="ic" onclick="go('shopping')"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&q=80" alt="viadukt"/><div class="icc"><h3>Viadukt · Lokali Shops</h3><div class="sub">Design · Food · Art</div></div></div>
-      <div class="ic" onclick="go('club-detail')"><img src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=700&q=80" alt="club5"/><div class="icc"><h3>Club Scene Kreis 5</h3><div class="sub">Die neue Partymeile Züris</div></div></div>
-    </div>
+    <div class="g3 rv"><div class="ec" onclick="go('club-detail')"><span class="etag">Neu</span><h3>Club Dani Wilde</h3><div class="meta"><strong>Hüt · Free Entry bis 23:00</strong></div><span class="earr">↗</span></div><div class="ec" onclick="go('gastro')"><span class="etag b">Brunch</span><h3>Rosso Zürich</h3><div class="meta"><strong>Sa–So · 10:00–14:00</strong></div><span class="earr">↗</span></div><div class="ec" onclick="go('shopping')"><span class="etag g">Lokal</span><h3>Freitag Store</h3><div class="meta"><strong>Geroldstrasse 17</strong></div><span class="earr">↗</span></div></div>
   </div>
   <div id="fkreis5"></div>
 </div>
 
-<!-- KREIS 1 + KREIS 8 (simple) -->
+<!-- KREIS 1 + 8 -->
 
-<div id="pg-kreis1" class="pg" style="background:#080806;">
-  <div class="sub-head" style="background:linear-gradient(135deg,#080806 55%,#100800);">
-    <div class="shi"><div style="margin-bottom:.8rem;"><a onclick="go('quartiere')" style="font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:#666660;cursor:pointer;">← Alle Quartiere</a></div><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#ff4d00!important;">KREIS 1<br><span style="font-size:.55em;color:#f0ebe0;">ALTSTADT</span></h1><p>Historischi Altstadt, Hochschulen, Museen, Galerien und di beschtä Cafés.</p><div class="smeta"><span class="sm"><strong>42</strong> Restaurants</span><span class="sm"><strong>8</strong> Museen</span></div></div>
-  </div>
-  <div class="ca"><div class="g3 rv"><div class="ec" onclick="go('gastro')"><span class="ectag">Klassiker</span><h3>Wirtschaft Neumarkt</h3><div class="meta"><strong>Neumarkt · Altstadt</strong><br>⭐⭐⭐⭐ · Lunchgate</div><span class="arr">↗</span></div><div class="ec" onclick="go('events')"><span class="ectag b">Kultur</span><h3>Kunsthaus Zürich</h3><div class="meta"><strong>Heimplatz 1</strong><br>Di–So · 10:00–18:00</div><span class="arr">↗</span></div><div class="ec" onclick="go('gastro')"><span class="ectag g">Vegisch</span><h3>Hiltl Stammhaus</h3><div class="meta"><strong>Sihlstrasse · Tgl. ab 06:00</strong><br>⭐⭐⭐⭐⭐</div><span class="arr">↗</span></div></div></div>
+<div id="pg-kreis1" class="pg" style="background:#04040a;">
+  <div class="sub-head"><div class="shi"><div style="margin-bottom:.8rem;"><a onclick="go('quartiere')" style="font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:#44445a;cursor:pointer;">← Quartiere</a></div><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#ff2d00;">KREIS 1<br><span style="font-size:.5em;color:#e8e4d9;">ALTSTADT</span></h1><p>Historischi Altstadt, Hochschulen, Museen, Galerien.</p></div></div>
+  <div class="ca"><div class="g3 rv"><div class="ec" onclick="go('gastro')"><span class="etag">Klassiker</span><h3>Wirtschaft Neumarkt</h3><div class="meta"><strong>Neumarkt · Lunchgate</strong></div><span class="earr">↗</span></div><div class="ec" onclick="go('events')"><span class="etag b">Kultur</span><h3>Kunsthaus Zürich</h3><div class="meta"><strong>Heimplatz 1 · Di–So</strong></div><span class="earr">↗</span></div><div class="ec" onclick="go('gastro')"><span class="etag g">Vegisch</span><h3>Hiltl Stammhaus</h3><div class="meta"><strong>Sihlstrasse · Ab 06:00</strong></div><span class="earr">↗</span></div></div></div>
   <div id="fkreis1"></div>
 </div>
 
-<div id="pg-kreis8" class="pg" style="background:#080806;">
-  <div class="sub-head" style="background:linear-gradient(135deg,#001008 55%,#080806);">
-    <div class="shi"><div style="margin-bottom:.8rem;"><a onclick="go('quartiere')" style="font-family:'Space Mono',monospace;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:#666660;cursor:pointer;">← Alle Quartiere</a></div><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#00c45a!important;">SEEFELD<br><span style="font-size:.55em;color:#f0ebe0;">KREIS 8</span></h1><p>Zürichsee, Züriberg, Fischerstube. Bourgeoises Flair mit tolli Beizä am See.</p><div class="smeta"><span class="sm"><strong>55</strong> Restaurants</span><span class="sm"><strong>Zürichsee</strong> direkt</span></div></div>
+<div id="pg-kreis8" class="pg" style="background:#04040a;">
+  <div class="sub-head" style="background:linear-gradient(135deg,#001510 50%,#04040a);">
+    <div class="shi"><div style="margin-bottom:.8rem;"><a onclick="go('quartiere')" style="font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.14em;text-transform:uppercase;color:#44445a;cursor:pointer;">← Quartiere</a></div><div class="shick">Stadtpuls · Zürich</div><h1 style="color:#c8ff00;">SEEFELD<br><span style="font-size:.5em;color:#e8e4d9;">KREIS 8</span></h1><p>Zürichsee, Züriberg. Bourgeoises Flair, tolli Beizä.</p></div>
   </div>
-  <div class="ca"><div class="g3 rv"><div class="ec" onclick="go('gastro')"><span class="ectag g">Am See</span><h3>Seebad Utoquai</h3><div class="meta"><strong>Utoquai · Sommerbar</strong><br>Ab Sofort offe</div><span class="arr">↗</span></div><div class="ec" onclick="go('events')"><span class="ectag g">Open Air</span><h3>Kino Zürichsee</h3><div class="meta"><strong>Zürichhorn · Ab Dunkle</strong><br>Eintritt frei</div><span class="arr">↗</span></div><div class="ec" onclick="go('gastro')"><span class="ectag">Klassiker</span><h3>Fischerstube Zürichhorn</h3><div class="meta"><strong>Am See · Seefeld</strong><br>⭐⭐⭐⭐</div><span class="arr">↗</span></div></div></div>
+  <div class="ca"><div class="g3 rv"><div class="ec" onclick="go('gastro')"><span class="etag g">Am See</span><h3>Seebad Utoquai</h3><div class="meta"><strong>Utoquai · Sommerbar</strong></div><span class="earr">↗</span></div><div class="ec" onclick="go('events')"><span class="etag g">Open Air</span><h3>Kino Zürichsee</h3><div class="meta"><strong>Ab Dunkle · Gratis</strong></div><span class="earr">↗</span></div><div class="ec" onclick="go('gastro')"><span class="etag">Klassiker</span><h3>Fischerstube Zürichhorn</h3><div class="meta"><strong>Am See · ⭐⭐⭐⭐</strong></div><span class="earr">↗</span></div></div></div>
   <div id="fkreis8"></div>
 </div>
 
 <!-- FOOTER TEMPLATE -->
 
 <template id="ftpl">
-  <div class="fticker"><div class="fti"><span>STADTPULS.CH</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH 2006</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span><span>NEUE ÄRA</span><span>STADTPULS.CH</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH 2006</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span><span>NEUE ÄRA</span></div></div>
-  <div class="fgrid">
-    <div class="footer-brand"><div class="fblogo"><div class="fbdot"></div>STADTPULS</div><p>dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.<br><br>© 2006 by raimondo* — Zürich</p></div>
+  <div class="ftk"><div class="fti"><span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span><span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span></div></div>
+  <div class="fg">
+    <div class="footer-brand"><div class="fbl"><div class="fbdot"></div>STADTPULS</div><p>dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.<br><br>© 2026 by raimondo* — Zürich</p></div>
     <div class="fc"><h5>Entdecken</h5><ul><li onclick="go('gastro')">Gastro & Bars</li><li onclick="go('nachtleben')">Nachtleben</li><li onclick="go('shopping')">Shopping</li><li onclick="go('events')">Events</li><li onclick="go('quartiere')">Quartiere</li></ul></div>
     <div class="fc"><h5>Marktplatz</h5><ul><li onclick="go('immobilien')">Immobilien</li><li onclick="go('marktplatz')">Kaufen & Verkaufen</li><li onclick="go('marktplatz')">Tickets</li><li onclick="go('community')">Dating</li><li onclick="go('marktplatz')">Jobs</li></ul></div>
     <div class="fc"><h5>Mitmache</h5><ul><li onclick="go('community')">Profil aalege</li><li onclick="go('community')">Blogger werde</li><li onclick="go('immobilien')">Inserat schalte</li><li>Kooperatione</li><li>Kontakt</li></ul></div>
   </div>
-  <div class="fbot"><p>© 2006 Stadtpuls.ch — by raimondo* — Zürich</p><p>AGB · Datenschutz · Impressum</p></div>
+  <div class="fbot"><p>© 2026 Stadtpuls.ch — by raimondo* — Zürich</p><p>AGB · Datenschutz · Impressum</p></div>
 </template>
 
 <script>
-// CURSOR
-var c=document.getElementById('cur');
-if(c&&window.matchMedia('(pointer:fine)').matches){
-  document.addEventListener('mousemove',function(e){c.style.left=(e.clientX-8)+'px';c.style.top=(e.clientY-8)+'px';});
-  document.addEventListener('click',function(){c.style.transform='scale(3.5)';setTimeout(function(){c.style.transform='scale(1)';},180);});
+// DUAL CURSOR
+var c1=document.getElementById('cur'),c2=document.getElementById('cur2');
+var mx=0,my=0,cx=0,cy=0;
+if(window.matchMedia('(pointer:fine)').matches){
+  document.addEventListener('mousemove',function(e){
+    mx=e.clientX;my=e.clientY;
+    c1.style.left=(mx-5)+'px';c1.style.top=(my-5)+'px';
+  });
+  function animCur(){
+    cx+=(mx-cx-16)*.18;cy+=(my-cy-16)*.18;
+    c2.style.left=cx+'px';c2.style.top=cy+'px';
+    requestAnimationFrame(animCur);
+  }
+  animCur();
+  document.addEventListener('click',function(){
+    c1.style.transform='scale(4)';c1.style.background='transparent';c1.style.border='1px solid #ff2d00';
+    setTimeout(function(){c1.style.transform='scale(1)';c1.style.background='#ff2d00';c1.style.border='none';},200);
+  });
 }
 function bndCur(){
   if(!window.matchMedia('(pointer:fine)').matches)return;
-  document.querySelectorAll('a,button,.pill,.ftag,.bt,.ec,.ic,.ct,.tc,.qcard,.titem,.live-item').forEach(function(el){
-    el.addEventListener('mouseenter',function(){c.style.transform='scale(2.8)';c.style.background='rgba(255,77,0,.28)';});
-    el.addEventListener('mouseleave',function(){c.style.transform='scale(1)';c.style.background='transparent';});
+  document.querySelectorAll('a,button,.pill,.ftag,.bt,.ec,.ic,.ct,.tc,.qcard,.titem,.litem,.live-item').forEach(function(el){
+    el.addEventListener('mouseenter',function(){c1.style.transform='scale(0)';c2.style.width='50px';c2.style.height='50px';c2.style.borderColor='rgba(255,45,0,.8)';c2.style.transform='translate(-9px,-9px)';});
+    el.addEventListener('mouseleave',function(){c1.style.transform='scale(1)';c2.style.width='32px';c2.style.height='32px';c2.style.borderColor='rgba(255,45,0,.4)';c2.style.transform='translate(-11px,-11px)';});
   });
 }
 
-// NAVIGATION
-var history_stack=[];
+// NAV
 function go(id){
   document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
   var t=document.getElementById('pg-'+id);
-  if(t){t.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
-  // nav active
+  if(t)t.classList.add('on');
+  window.scrollTo({top:0,behavior:'smooth'});
   document.querySelectorAll('.nlinks a[data-p]').forEach(function(a){a.classList.toggle('on',a.dataset.p===id);});
-  // inject footer
-  var fpIds={'home':'fhome','events':'fevents','event-detail':'feventdetail','gastro':'fgastro','gastro-detail':'fgastrodetail','nachtleben':'fnacht','club-detail':'fclubdetail','shopping':'fshopping','immobilien':'fimmo','marktplatz':'fmarkt','community':'fcomm','quartiere':'fquartiere','kreis1':'fkreis1','kreis4':'fkreis4','kreis5':'fkreis5','kreis8':'fkreis8'};
-  var fpId=fpIds[id];
-  if(fpId){var fp=document.getElementById(fpId);if(fp&&fp.innerHTML.trim()===''){var tpl=document.getElementById('ftpl');fp.appendChild(document.importNode(tpl.content,true));}}
+  var map={'home':'fhome','events':'fevents','event-detail':'feventdetail','gastro':'fgastro','gastro-detail':'fgastrodetail','nachtleben':'fnacht','club-detail':'fclubdetail','shopping':'fshopping','immobilien':'fimmo','marktplatz':'fmarkt','community':'fcomm','quartiere':'fquartiere','kreis1':'fkreis1','kreis4':'fkreis4','kreis5':'fkreis5','kreis8':'fkreis8'};
+  var fid=map[id];
+  if(fid){var fp=document.getElementById(fid);if(fp&&fp.innerHTML.trim()===''){var tpl=document.getElementById('ftpl');fp.appendChild(document.importNode(tpl.content,true));}}
   setTimeout(triggerRv,80);
   bndCur();
   closeMenu();
 }
+function toggleMenu(){document.getElementById('mobm').classList.toggle('open');}
+function closeMenu(){document.getElementById('mobm').classList.remove('open');}
+
+// PILLS
+document.querySelectorAll('.pill').forEach(function(p){p.addEventListener('click',function(){p.closest('.pills').querySelectorAll('.pill').forEach(function(x){x.classList.remove('on');});p.classList.add('on');});});
+
+// FILTER
+document.addEventListener('click',function(e){if(e.target.classList.contains('ftag')){e.target.closest('.fbi').querySelectorAll('.ftag').forEach(function(f){f.classList.remove('on');});e.target.classList.add('on');}});
 
 // REVEALS
 function triggerRv(){
   var els=document.querySelectorAll('.pg.on .rv');
   if('IntersectionObserver' in window){
-    var o=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.07});
+    var o=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('in');});},{threshold:0.06});
     els.forEach(function(el){el.classList.remove('in');o.observe(el);});
   } else {els.forEach(function(el){el.classList.add('in');});}
 }
 
-// PILLS
-document.querySelectorAll('.pill').forEach(function(p){p.addEventListener('click',function(){p.closest('.pills').querySelectorAll('.pill').forEach(function(x){x.classList.remove('on');});p.classList.add('on');});});
-
-// FILTER TAGS
-document.addEventListener('click',function(e){if(e.target.classList.contains('ftag')){e.target.closest('.fbi').querySelectorAll('.ftag').forEach(function(f){f.classList.remove('on');});e.target.classList.add('on');}});
-
-// HAMBURGER
-function toggleMenu(){var m=document.getElementById('mobmenu');m.classList.toggle('open');}
-function closeMenu(){var m=document.getElementById('mobmenu');m.classList.remove('open');}
-
 // INIT
-var fh=document.getElementById('fhome');
-var tpl=document.getElementById('ftpl');
+var fh=document.getElementById('fhome'),tpl=document.getElementById('ftpl');
 if(fh&&tpl)fh.appendChild(document.importNode(tpl.content,true));
 triggerRv();
 bndCur();
