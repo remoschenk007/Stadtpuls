@@ -230,3 +230,127 @@ nie zu viel auf einmal, kein Timeout riskieren.
 
 *Dieses Dokument bei jeder neuen Session am Anfang einfügen.*  
 *Remo & Claude — Stadtpuls 2026* 🔴
+## 12. ROADMAP — PHASENPLAN
+
+Phase 1  → Frontend ✅ Fertig
+Phase 2  → Modularisierung
+           css/ js/ pages/
+Phase 3  → Zürich Tourismus API
+           Echte Live-Daten einbinden
+Phase 4  → Backend Supabase
+           User-Profile, Login, Auth
+Phase 5  → Partner-Logins
+           OpenTable, Ticketcorner direkt
+Phase 6  → Zürich komplett & perfekt
+Phase 7  → Hamburg, Berlin
+Phase 8  → Kaufangebot kommt von alleine
+## 13. GPS & STANDORT-FEATURE
+
+GPS-Seite bereits gebaut:
+- Browser fragt nach Standort
+- Erkennt automatisch Züri-Quartier
+- Kreis 1, 3, 4, 5, 6, 8, 9
+- Zeigt was 200m um User passiert
+- Restaurants, Events, Clubs in Nähe
+- GPS App geplant (Beta-Waitlist)
+- Hyper-lokal ist Kern-DNA von Stadtpuls
+
+## 14. SOCIAL MEDIA STATUS
+
+Instagram @stadtpuls_zh — LIVE
+Bio:
+🔴 dä puls vo dä stadt
+Was lauft i däre stadt?
+Events · Gastro · Stadtläbe · People
+Hyperlokal. Echts Züri. Kei Umwäg
+more to come..
+
+Auch gesichert:
+@stadtpuls_hamburg (Deutsch/Hamburger Slang)
+@stadtpuls_berlin (Deutsch/Berliner Slang)
+
+Logo: Schwarz, STADT weiss, PULS rot,
+kleiner roter Leuchtpunkt
+
+## 15. KONKURRENZ-ANALYSE
+
+Mapin.social (Schweiz, seit 2024)
+→ Nur Events & Nachtleben
+→ App-only, keine Web-Version
+→ Kein Gastro, Immo, Jobs, Dating
+→ Keine Community
+→ Stadtpuls ist deutlich breiter
+
+## 16. DATEN-STRATEGIE
+
+Philosophie: 100% gratis, 100% legal
+Kein Scraping, kein Backdoor
+Nur offene APIs anzapfen
+
+Zürich Tourismus API liefert:
+→ Café Plüsch Kreis 3 bereits drin
+→ Alle 2900 Züri-Restaurants
+→ Bilder, GPS, Öffnungszeiten
+→ Alles automatisch aktuell
+
+## 17. WICHTIGE ARBEITS-HINWEISE
+
+- Remo arbeitet auf iPad
+- Immer Datei für Datei
+- Nie zu viel auf einmal
+- Kein Timeout riskieren
+- Code in Chunks schreiben
+- Neue Konversation pro Thema
+- Claude Pro — Limit Di 08:00 reset
+- GitHub Copilot gratis freigeschaltet
+- vscode.dev für Editor im Browser
+
+## 18. OFFENE PUNKTE NÄCHSTE WOCHE
+
+Priorität 1: Modularisierung
+→ css/base.css
+→ css/components.css  
+→ css/pages.css
+→ js/router.js
+→ js/cursor.js
+→ js/gps.js
+→ pages/ (jede Seite separat)
+
+Priorität 2: Erste echte API
+→ Zürich Tourismus API einbinden
+→ Gastro-Seite mit Echtdaten
+
+Priorität 3: SEO Grundstruktur
+→ Meta Tags
+→ Open Graph
+→ Schema.org
+
+Priorität 4: Backend planen
+→ Supabase Setup
+→ User-Tabelle definieren
+→ Auth vorbereiten
+
+## 19. HERO-FOTO
+
+Remos eigenes Foto — hero.jpg
+Zürich Bar bei Nacht, Glühbirnen,
+Regen, Schwarz-Weiss
+Kein Stock-Photo — echte Züri-DNA
+Liegt im GitHub Repository
+
+## 20. FINANCIAL & KOSTEN
+
+Aktuell 100% gratis:
+→ GitHub Pages — gratis
+→ Zürich Tourismus API — gratis
+→ GitHub Copilot — gratis
+→ OpenStreetMap — gratis
+→ Supabase — gratis Tier
+
+Einzige Kosten:
+→ Claude Pro CHF 20.–/Mt via Apple
+→ Limit: 75% pro Woche
+→ Reset: Dienstag 08:00
+
+Strategie: Gratis für alle User
+Monetarisierung via Partner später
