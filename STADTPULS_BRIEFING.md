@@ -354,3 +354,46 @@ Einzige Kosten:
 
 Strategie: Gratis für alle User
 Monetarisierung via Partner später
+## 21. FINALE ARCHITEKTUR
+
+/stadtpuls
+├── index.html
+├── data.json          (Dummy-Daten vorerst)
+│
+├── /css
+│   ├── base.css
+│   ├── components.css
+│   └── layout.css
+│
+├── /js
+│   ├── app.js
+│   ├── router.js
+│   ├── cursor.js      (Dual-Cursor)
+│   ├── gps.js         (GPS Quartier-Erkennung)
+│   └── /api
+│       ├── zuerich-tourismus.js
+│       ├── guidle.js
+│       └── cache.js
+│
+└── /pages
+    ├── home.html
+    ├── gastro.html
+    ├── events.html
+    ├── nachtleben.html
+    ├── dating.html
+    ├── jobs.html
+    ├── news.html
+    ├── marktplatz.html
+    ├── immobilien.html
+    ├── musik.html
+    ├── gps.html
+    ├── mobilitaet.html
+    ├── community.html
+    ├── login.html
+    └── partners.html
+
+Skalierung:
+Phase 1 → Diese Struktur (jetzt)
+Phase 2 → Supabase Backend
+Phase 3 → CDN + Cache
+Phase 4 → 20'000+ User
