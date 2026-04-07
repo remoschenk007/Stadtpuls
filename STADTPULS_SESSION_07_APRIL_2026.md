@@ -1,7 +1,7 @@
 # STADTPULS — SESSION BERICHT
 
 > Datum: Dienstag, 07. April 2026
-> Letzte Aktualisierung: Ende Session
+> Letzte Aktualisierung: Ende Session — komplett
 
 -----
 
@@ -27,70 +27,6 @@ Stadtpuls/
 └── js/
     └── app.js          (Router, Cursor, Reveal, Menu)
 ```
-
------
-
-## WAS IN WELCHER DATEI IST
-
-### css/base.css
-
-- Reset (*, html, body)
-- CSS-Variablen (:root — alle Farben)
-- Dual-Cursor (#cur, #cur2)
-- Page-System (.pg, .pg.on)
-- Keyframe-Animationen (livepulse, blink, tkr, tkl)
-- Reveal (.rv, .rv.in)
-- Deco-Lines (.deco, .deco2)
-
-### css/components.css
-
-- Nav + Mobile Menu
-- Buttons (.bo, .bv, .bg)
-- Tags & Badges (.etag, .dbadge)
-- Section-Layout (.sec, .lbl, .ttl)
-- Grids (.g2, .g3, .g4)
-- Event-Cards (.ec)
-- Image-Cards (.ic)
-- Bento-Grid (.bento, .bt)
-- Live-Strip (.live-now)
-- Ticker (.ticker-wrap, .tk1, .tk2)
-- Search + Pills (.srch-sec, .pill)
-- Filter-Bar (.fbar, .ftag)
-- Stats, Reviews, Footer
-
-### css/layout.css
-
-- Hero — Full Cinematic
-- Today-Block (Volt-Grün)
-- Quartiere-Grid
-- Community-Section
-- Subpage-Hero
-- Detail-Pages
-- Responsive (1024px, 768px, 480px)
-
-### js/app.js
-
-- Router: go(page) Funktion
-- Footer Inject via Template
-- Dual-Cursor mit Lag-Animation
-- Reveal via IntersectionObserver
-- Mobile Menu (toggleMenu, closeMenu)
-- GPS Quartier-Erkennung
-- Filter-Tags & Pills
-
------
-
-## WAS FUNKTIONIERT
-
-- ✅ Live auf GitHub Pages
-- ✅ Alle Pages navigierbar
-- ✅ CSS sauber in 3 Dateien getrennt
-- ✅ JS Router funktioniert
-- ✅ Dual-Cursor aktiv
-- ✅ Reveal-Animationen aktiv
-- ✅ Mobile Menu funktioniert
-- ✅ GPS-Seite funktioniert
-- ✅ Footer wird dynamisch injiziert
 
 -----
 
@@ -122,12 +58,163 @@ Bilder: Ja, inklusive
 GPS:    Ja, Koordinaten inklusive
 ```
 
-**Plan:**
+**Plan Phase 3:**
 
 1. js/api/zuerich-tourismus.js erstellen
 1. Gastro-Seite mit Echtdaten befüllen
 1. Events-Seite mit Echtdaten befüllen
 1. Cache-Logik einbauen
+
+-----
+
+## BACKEND STRATEGIE — ERKENNTNISSE
+
+**3 Schichten:**
+
+```
+Schicht 1 — Externe APIs (gratis)
+→ Zürich Tourismus, Guidle, OpenStreetMap
+→ Liefern Gastro, Events, Karten-Daten
+→ Kein eigener Speicher nötig
+
+Schicht 2 — Supabase (gratis Tier)
+→ User-Profile, Reviews, Community-Posts
+→ PostgreSQL Datenbank
+→ Bis 500MB gratis — reicht für Start
+→ Skaliert automatisch bis Millionen User
+
+Schicht 3 — Cache
+→ Daten zwischenspeichern
+→ Nicht bei jedem Klick API neu abfragen
+→ Schnell, effizient, günstig
+```
+
+**Stresstest / 10’000 User gleichzeitig:**
+GitHub Pages + Supabase + externe APIs sind cloud-basiert
+— skalieren automatisch. Kein Problem! ✅
+
+**Alles gratis bis ca. 50’000 User!**
+
+-----
+
+## GEO-TARGETING — VISION
+
+```
+User öffnet Stadtpuls
+↓
+GPS erkennt: Kreis 4, Langstrasse
+↓
+Zeigt automatisch:
+→ Restaurant 200m entfernt — Tisch frei
+→ Event heute Abend — 350m
+→ Club der gerade offen ist — 180m
+→ WG-Zimmer im gleichen Quartier
+→ Jobs in der Nähe
+```
+
+**Technisch:**
+
+```
+GPS           → Browser API (bereits gebaut ✅)
+Koordinaten   → Zürich Tourismus API (Phase 3)
+Radius-Suche  → Supabase PostGIS (Phase 4)
+Push Alerts   → «Event in 200m startet in 30min»
+```
+
+**Das ist Hyper-Lokal — das kann keine Konkurrenz!**
+Niemand in der Schweiz macht das so konsequent.
+
+-----
+
+## MONETARISIERUNG — ERKENNTNISSE
+
+**Partner-APIs verdienen Geld für Stadtpuls:**
+
+```
+OpenTable:
+→ API vorhanden ✅
+→ Modell: Revenue Share
+→ CHF 1-5 pro Buchung über Stadtpuls
+→ Stadtpuls verdient beim Schlafen!
+
+Ticketcorner:
+→ API vorhanden ✅
+→ Modell: Affiliate
+→ 5-10% pro verkauftes Ticket
+→ Stadtpuls verdient beim Schlafen!
+
+Scout24/Homegate:
+→ API vorhanden ✅
+→ Modell: Pay per Lead
+→ Pro vermittelte Wohnung
+
+Zürich kauft ein:
+→ Lokale Händler
+→ Gespräch geplant
+
+Zürich geht aus:
+→ Nachtleben-Kooperation
+→ Gespräch geplant
+```
+
+**Fazit Monetarisierung:**
+Stadtpuls ist gratis für User — aber verdient passiv
+durch jeden Klick, jede Buchung, jedes Ticket. 🔴
+
+-----
+
+## USER ONBOARDING — VISION
+
+**Problem:** 70% der User springen ab wenn
+Registrierung zu kompliziert ist.
+
+**Lösung: Progressive Onboarding — 5 Schritte**
+
+```
+Schritt 1 — Basics
+«Wie heissisch du?»
+→ Nickname eingeben
+
+Schritt 2 — Wo bisch du?
+«Wo wohnsch in Züri?»
+→ Quartier wählen (Kreis 1, 4, 5, 8...)
+
+Schritt 3 — Was interessiert dich?
+«Was lauft bei dir?»
+→ Gastro / Nachtleben / Dating / Jobs
+→ Multi-Select, grosse Buttons
+
+Schritt 4 — Wer bisch du?
+«Wie alt bisch?»
+→ Relevant für Dating
+→ Diskret, optional
+
+Schritt 5 — Fertig!
+«Willkommen in Züri, @nickname!»
+→ Konfetti 🎉
+→ Roter Punkt pulsiert
+```
+
+**Das Geniale:**
+
+- User merkt nicht dass er Daten gibt
+- Jeder Schritt fühlt sich wie Stadtpuls an
+- Nach 5 Klicks weiss Stadtpuls alles Wichtige
+- Kein langer Formular — spielerisch, schnell
+
+**Daten die wir sammeln:**
+
+```
+Für alle:      Nickname, Quartier, Interessen
+Für Dating:    Alter, Präferenzen
+Für News:      Schreib-Interessen, Quartier
+Für GPS:       Standort-Erlaubnis
+Für Partner:   Business-Info (später)
+```
+
+**Das nennt man Progressive Onboarding**
+Beste Apps machen das so: Duolingo, Tinder, Instagram.
+→ Phase 4 Thema
 
 -----
 
@@ -147,12 +234,12 @@ Hosting:    GitHub Pages (gratis)
 Editor:     GitHub Web Editor (iPad)
 CSS:        3 Dateien, modular
 JS:         1 Datei (app.js), SPA-Router
-Backend:    Noch nicht (Supabase geplant)
+Backend:    Supabase (Phase 4)
 ```
 
 -----
 
-## DESIGN-DNA (zur Erinnerung)
+## DESIGN-DNA
 
 ```
 #04040a  — Midnight-Schwarz (Hintergrund)
@@ -166,9 +253,17 @@ Fonts:
 - Barlow Condensed Italic 900 (Headlines)
 - DM Mono (Body/Code)
 - Bebas Neue (Logo)
+
+Spezial-Features:
+- Dualer Cursor (roter Punkt + Ring mit Lag)
+- Doppel-Ticker (gegenläufig)
+- Scan-Lines im Hero
+- Grid-Overlay
+- Reveal-Animationen (IntersectionObserver)
 ```
 
 -----
 
 *© 2026 by raimondo* — Stadtpuls — Zürich*
 *«dä puls vo dä stadt»*
+*Zürich first. Dann die Welt.* 🔴
