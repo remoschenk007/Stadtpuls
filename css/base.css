@@ -1,0 +1,137 @@
+/* ═══════════════════════════════════════════════════════════
+   STADTPULS — base.css
+   Reset · Root-Variablen · Cursor · Page-System
+   © 2026 by raimondo*
+═══════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════
+   RESET & ROOT
+═══════════════════════════════ */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  background: #04040a !important;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #04040a !important;
+  color: #e8e4d9 !important;
+  font-family: 'DM Mono', 'Courier New', monospace;
+  overflow-x: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Touch-Geräte: normaler Cursor */
+@media (pointer: coarse) {
+  body { cursor: auto !important; }
+  * { cursor: auto !important; }
+  #cur, #cur2 { display: none !important; }
+}
+
+/* ═══════════════════════════════
+   CSS VARIABLEN
+═══════════════════════════════ */
+:root {
+  --bg:    #04040a;
+  --paper: #e8e4d9;
+  --hot:   #ff2d00;
+  --volt:  #c8ff00;
+  --cyan:  #00f5ff;
+  --ink:   #08080f;
+  --grey:  #111118;
+  --mid:   #1e1e28;
+  --mute:  #44445a;
+  --glow:  rgba(255, 45, 0, .15);
+}
+
+/* ═══════════════════════════════
+   CURSOR — DUAL RING
+═══════════════════════════════ */
+#cur {
+  width: 10px;
+  height: 10px;
+  background: #ff2d00;
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: transform .08s;
+}
+
+#cur2 {
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 45, 0, .4);
+  border-radius: 50%;
+  position: fixed;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform .2s, width .2s, height .2s, border-color .2s;
+  transform: translate(-11px, -11px);
+}
+
+body:hover #cur2 {
+  border-color: rgba(255, 45, 0, .6);
+}
+
+/* ═══════════════════════════════
+   PAGE SYSTEM (SPA Router)
+═══════════════════════════════ */
+.pg { display: none !important; }
+.pg.on { display: block !important; }
+
+/* ═══════════════════════════════
+   ANIMATIONEN (Global)
+═══════════════════════════════ */
+@keyframes livepulse {
+  0%, 100% { box-shadow: 0 0 6px #ff2d00, 0 0 16px rgba(255, 45, 0, .3); }
+  50%       { box-shadow: 0 0 12px #ff2d00, 0 0 35px rgba(255, 45, 0, .6), 0 0 60px rgba(255, 45, 0, .2); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .4; }
+}
+
+@keyframes tkr {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes tkl {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+/* ═══════════════════════════════
+   REVEAL ANIMATION
+═══════════════════════════════ */
+.rv {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity .5s, transform .5s;
+}
+.rv.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════
+   DECO LINES
+═══════════════════════════════ */
+.deco {
+  height: 2px;
+  background: linear-gradient(90deg, #ff2d00, #c8ff00, #00f5ff, #ff2d00);
+}
+
+.deco2 {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 45, 0, .3), transparent);
+}
