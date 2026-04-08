@@ -1,42 +1,36 @@
 # STADTPULS — KOMPLETT BRIEFING
+> Stand: 08. April 2026 — Nachmittag
 
-> Stand: 07. April 2026 — Für neue Chat-Sessions
-
------
+---
 
 ## 1. WER BIN ICH
+Name: Remo Schenk
+GitHub: remoschenk007
+E-Mail: remoschenk@me.com
+Hintergrund: Ehemaliger Gründer Homespeed.ch
+Arbeitsgerät: iPad
+Sprache: Hochdeutsch / Züri-Slang nur auf Portal
 
-**Name:** Remo Schenk
-**GitHub:** remoschenk007
-**E-Mail:** remoschenk@me.com
-**Hintergrund:** Ehemaliger Gründer Homespeed.ch
-**Arbeitsgerät:** iPad
-**Sprache:** Schweizerdeutsch / Deutsch
-
------
+---
 
 ## 2. WAS IST STADTPULS
+Tagline: «dä puls vo dä stadt»
+Konzept: Interaktiver Lifestyle & City Guide Zürich
+Prinzip: Shopping Center — alles auf einer Plattform
+Strategie: Zürich first, perfekt machen → Hamburg, Berlin
+Monetarisierung: Gratis für User. Revenue via Partner.
+Copyright: © 2026 by raimondo*
 
-**Tagline:** «dä puls vo dä stadt»
-**Konzept:** Interaktiver Lifestyle & City Guide Zürich
-**Prinzip:** Shopping Center — alles auf einer Plattform
-**Strategie:** Zürich first, perfekt machen → Hamburg, Berlin
-**Monetarisierung:** Gratis für User. Revenue via Partner.
-**Copyright:** © 2026 by raimondo*
+Live: https://remoschenk007.github.io/Stadtpuls
+GitHub: https://github.com/remoschenk007/Stadtpuls
 
-**Live:** https://remoschenk007.github.io/Stadtpuls
-**GitHub:** https://github.com/remoschenk007/Stadtpuls
-
-**Social Media:**
-
+Social Media:
 - Instagram: @stadtpuls_zh
 - Gesichert: @stadtpuls_hamburg, @stadtpuls_berlin
 
------
+---
 
 ## 3. DESIGN-DNA
-
-```
 #04040a  — Midnight-Schwarz (Hintergrund)
 #ff2d00  — Lava-Rot (Akzent 1)
 #c8ff00  — Volt-Grün (Akzent 2)
@@ -50,320 +44,153 @@ Fonts:
 - Bebas Neue (Logo)
 
 Spezial:
-- Dualer Cursor (roter Punkt + Ring mit Lag)
-- Doppel-Ticker (gegenläufig)
+- Dualer Cursor
+- Doppel-Ticker gegenläufig
 - Scan-Lines im Hero
 - Grid-Overlay
-- Reveal-Animationen (IntersectionObserver)
-```
+- Reveal-Animationen
 
------
+---
 
 ## 4. TECH-STACK
-
-```
 Frontend:   HTML / CSS / JS (Vanilla)
 Hosting:    GitHub Pages (gratis)
 Editor:     GitHub Web Editor (iPad)
-Backend:    Supabase (Phase 4, gratis Tier)
-DB:         PostgreSQL via Supabase
+Backend:    Supabase (Phase 4)
+DB:         PostgreSQL + PostGIS via Supabase
 Auth:       Supabase Auth
 KI:         Claude Pro (Anthropic)
-```
 
------
+---
 
-## 5. AKTUELLE DATEISTRUKTUR
-
-```
+## 5. DATEISTRUKTUR
 Stadtpuls/
-├── index.html              (1256 Zeilen — Shell)
-├── hero.jpg                (Remos Züri-Nacht-Foto)
-├── STADTPULS_BRIEFING.md
-├── STADTPULS_SESSION_07_APRIL_2026.md
+├── index.html
 ├── css/
-│   ├── base.css            (Reset, Variablen, Cursor)
-│   ├── components.css      (Nav, Buttons, Cards, Footer)
-│   └── layout.css          (Hero, Subpages, Responsive)
+│   ├── base.css
+│   ├── components.css
+│   └── layout.css
 └── js/
-    └── app.js              (Router, Cursor, Reveal, GPS)
-```
+    └── app.js
 
------
+---
 
-## 6. ROADMAP STATUS
+## 6. FILTER & TABS — FERTIG ✅
+Stand: 08. April 2026
 
-```
-Phase 1  → Frontend         ✅ FERTIG
-Phase 2  → Modularisierung  ✅ FERTIG (07.04.2026)
-Phase 3  → Zürich API       ⏳ NÄCHSTER SCHRITT
-Phase 4  → Supabase Backend ⏳ Geplant
-Phase 5  → Partner-Logins   ⏳ Geplant
-Phase 6  → KI Features      ⏳ Nach Launch
-Phase 7  → Hamburg, Berlin  ⏳ Geplant
-Phase 8  → Kaufangebot      ⏳ Kommt von alleine
-```
+Events     → Hüt · Wochenende · Konzert · Kultur
+             Open Air · Sport · Typisch Züri · Gratis
+Gastro     → Znacht · Zmittag · Brunch · Vegisch
+             Asiatisch · Mediterran · Jetzt offe · 📍
+Nachtleben → Techno · House · Jazz · Hip-Hop
+             Live Music · Afterhour · Cocktailbar · 📍
+Shopping   → Mode · Vintage · Design · Lokal
+             Sale · Pop-Up · 📍
+Immobilien → WG-Zimmer · 1-Zi · 2-Zi · 3+ Zi
+             Büro · Atelier · 📍
+Marktplatz → Velos · Möbel · Kleider · Tickets
+             Elektronik · 📍
 
------
+Globale Logik:
+→ 📍 = GPS triggert PostGIS Radius-Suche
+→ Kreis-Filter via GPS automatisch
+→ Kreis 1 abends → Oper/Theater prominent
+→ Kreis 4 abends → Clubs/Bars prominent
+→ Kreis 5 abends → Techno/Industrie prominent
 
-## 7. ZEITPLAN
+---
 
-```
-April    → Filter & Tabs Review (JETZT)
-April    → Phase 3: Zürich API einbinden
-Mai      → Phase 4: Supabase + Login
-4. Juni  → SOFT LAUNCH 🎂🔴
-Sommer   → User sammeln
-Herbst   → Partner klopfen an
-```
+## 7. DATENSTRUKTUR SUPABASE
 
------
+locations
+├── id
+├── name
+├── kategorie      (gastro/event/club/shopping...)
+├── subkategorie   (jazz/techno/oper/vietnamesisch...)
+├── kreis          (1-12)
+├── lat / lng
+├── adresse
+├── oeffnungszeiten
+├── tags           (array)
+├── preis_niveau   (1-4)
+├── quelle         (zuerich-tourismus/guidle/user)
+└── aktiv          (true/false)
 
-## 8. NÄCHSTER SCHRITT — VOR API!
+user_preferences
+├── user_id
+├── kreis_home
+├── interessen     (array)
+├── history        (array von location_ids)
+└── stimmung
 
-**Erst Filter & Tabs definieren — dann Daten einspielen!**
-Sonst landet alles am falschen Ort.
+Schlüssel: Filter = Tags → neue Filter ohne Umbau
+PostGIS: ST_DWithin() für 200m Radius-Suche
+Skaliert: Zürich → Hamburg ohne Umbau
 
-```
-Events:     Afternooner, Theater, Oper, Film?
-Nachtleben: House, Techno, Jazz, Afterhour?
-Gastro:     Preis-Filter, Quartier-Filter?
-Kultur:     Eigene Seite oder unter Events?
-Shopping:   Sale, Lokal, International?
-Community:  Spontan, Nachbarschaft?
-```
+---
 
------
+## 8. SEO STRATEGIE
 
-## 9. BEKANNTE BUGS — SOFORT FIXEN
+Problem jetzt: Single Page App = Google sieht 1 Seite
 
-```
-Nachtleben  → kein <div id="fnacht">   → kein Footer
-Immobilien  → kein <div id="fimmo">    → kein Footer
-Marktplatz  → kein <div id="fmarkt">   → kein Footer
-```
+Ziel:
+→ stadtpuls.ch/gastro
+→ stadtpuls.ch/events
+→ stadtpuls.ch/kreis/4
+→ stadtpuls.ch/restaurant/langstrasse-77
 
-Fix: Bei jeder Page vor `</div>` einfügen:
+Phase 3 → Meta Tags, Schema.org, Open Graph
+Phase 4 → URL Routing, Ladezeit unter 2 Sekunden
+Phase 5 → Community Content, täglich indexiert
 
-```html
-<div id="fnacht"></div>
-<div id="fimmo"></div>
-<div id="fmarkt"></div>
-```
+Ziel: Google AI antwortet «Laut Stadtpuls…» 🔴
 
------
+---
 
-## 10. PHASE 3 — ZÜRICH TOURISMUS API
+## 9. ROADMAP
 
-```
-URL:     https://www.zuerich.com/en/api/v2/data
-Lizenz:  CC BY-SA (gratis, frei nutzbar)
-Daten:   Restaurants, Bars, Events, Hotels,
-         Kultur, Theater, Oper, Shopping,
-         Festivals, Live Music, Museen
-Bilder:  Ja, inklusive
-GPS:     Ja, Koordinaten inklusive
-```
+✅ Phase 1 → Frontend
+✅ Phase 2 → Modularisierung
+✅ Filter & Tabs → 08.04.2026 FERTIG
+⏳ Phase 3 → Zürich API + Basis SEO
+⏳ Phase 4 → Supabase + URL Routing
+⏳ Phase 5 → Partner + KI Features
+⏳ 4. Juni → SOFT LAUNCH 🎂🔴
 
-**Weitere gratis APIs:**
+---
 
-```
-Guidle AG      → Lokale Events, Partys
-ZVV API        → Live-Abfahrtszeiten
-Meteo Schweiz  → Wetter live
-Stadt Zürich   → 900+ Datensätze, Geodaten
-OpenStreetMap  → Karten, GPS-Layer
-```
+## 10. KI FEATURES — PHASE 5-6
 
------
+1. Züri-Bot → «Was mach ich heute Abend?»
+2. Personalisierter Feed → lernt was du magst
+3. Video Import → KI erkennt Züri-Locations
+4. Predictive → «Freitag Kreis 4 — wie immer?»
+5. Stimmungs-Matching → müde/energetisch/romantisch
+6. Push Alerts → «Event 200m · startet in 30min»
 
-## 11. BACKEND STRATEGIE
+---
 
-```
-Schicht 1 — Externe APIs
-→ Zürich Tourismus, Guidle, OpenStreetMap
-→ Gastro, Events, Karten — gratis
-
-Schicht 2 — Supabase (gratis)
-→ User-Profile, Reviews, Posts
-→ PostgreSQL + PostGIS für Geo-Suche
-→ Bis 500MB gratis
-
-Schicht 3 — Cache
-→ Daten zwischenspeichern
-→ Schnell, effizient
-
-Skalierung: Gratis bis 50'000 User!
-```
-
------
-
-## 12. MONETARISIERUNG
-
-```
-Phase A → Zürich API, User sammeln
-Phase B → 1000+ User → Partner kontaktieren
-Phase C → Revenue Share automatisch
+## 11. MONETARISIERUNG
 
 OpenTable    → CHF 1-5 pro Buchung
 Ticketcorner → 5-10% pro Ticket
 Scout24      → Pay per Lead
-```
 
-**Stadtpuls verdient im Schlaf!** 🔴
+Phase A → API + User sammeln
+Phase B → 1000+ User → Partner
+Phase C → Revenue automatisch
 
------
+---
 
-## 13. USER GEWINNUNG
+## 12. ARBEITS-HINWEISE
 
-```
-→ Community Content
-   Echte Züri-Menschen, Geheimtipps
-
-→ Live-Daten
-   «Jetzt offen» «Noch 3 Plätze» «In 1h»
-
-→ Dating & People
-   Täglicher Magnet
-
-→ Jobs & Marktplatz
-   Täglich praktisch relevant
-
-→ GPS Hyper-Lokal
-   «Was ist 200m von mir?»
-
-→ News & Stories
-   Lokale Blogger, Quartier-News
-```
-
------
-
-## 14. USER ONBOARDING — VISION
-
-**5 Schritte, spielerisch, progressiv:**
-
-```
-Schritt 1 → Nickname
-Schritt 2 → Quartier wählen
-Schritt 3 → Interessen (Multi-Select)
-Schritt 4 → Alter (optional, für Dating)
-Schritt 5 → «Willkommen @nickname!» 🎉
-```
-
-User merkt nicht dass er Daten gibt.
-70% Absprung-Rate bei komplizierten Formularen!
-
------
-
-## 15. GEO-TARGETING — VISION
-
-```
-GPS erkennt: Kreis 4, Langstrasse
-↓
-Zeigt automatisch:
-→ Restaurant 200m — Tisch frei
-→ Event heute Abend — 350m
-→ Club offen — 180m
-→ WG im gleichen Quartier
-→ Jobs in der Nähe
-```
-
-PostGIS (Supabase) für Radius-Suche — gratis!
-
------
-
-## 16. SEO STRATEGIE
-
-```
-Phase 3 → Basis SEO
-          Meta Tags, Schema.org, Open Graph
-
-Phase 4 → Technisches SEO
-          URL Routing (/gastro /events)
-          Ladezeit unter 2 Sekunden
-
-Phase 5 → Content SEO
-          Community schreibt täglich
-          Google indexiert täglich
-
-Phase 6 → KI-Suche
-          Google AI Answers
-          Perplexity, ChatGPT Search
-```
-
-**Ziel:**
-Jemand fragt Google: «Was läuft heute in Zürich?»
-Google AI antwortet: «Laut Stadtpuls…» 🔴
-
------
-
-## 17. KI FEATURES — PHASE 5-6
-
-```
-1. Züri-Bot
-   «Was mach ich heute Abend?»
-   KI kennt Quartier, Wetter, Interessen
-
-2. Personalisierter Feed
-   KI lernt was du magst
-   Besser mit jeder Nutzung
-
-3. Video Import
-   Instagram/TikTok Video importieren
-   KI erkennt Züri-Locations automatisch
-
-4. Predictive Events
-   «Freitag Abend — Kreis 4 — wie immer?»
-
-5. Stimmungs-Matching
-   Müde / Energetisch / Romantisch
-   KI findet perfekten Match
-
-6. Push Alerts Hyper-Lokal
-   «Event 200m von dir — startet in 30min»
-```
-
------
-
-## 18. KOMMUNIKATION & TON
-
-```
-Sprache:   Schweizerdeutsch / Züri-Slang
-Ton:       Direkt, kein Bullshit, authentisch
-
-Phrasen:
-«dä puls vo dä stadt»
-«Was lauft i däre stadt?»
-«Kei Umwäg»
-«Echts Züri»
-«Kei Chichi»
-«Mir sind Matchmaker»
-«Keis Rumsurfe»
-```
-
------
-
-## 19. ARBEITS-HINWEISE
-
-```
 - Remo arbeitet auf iPad
 - Immer Datei für Datei
-- Nie zu viel auf einmal
-- Code als Text im Chat — zum Kopieren
+- Code als Text im Chat
 - Neue Konversation pro Thema
 - Claude Pro Limit Di 08:00 reset
-```
+- Hochdeutsch von Claude
+  Züri-Slang nur auf dem Portal
 
------
-
-## 20. VISION
-
-> «Was TAMEDIA, Axel Springer und Scout 2006
-> nicht geglaubt haben — bauen wir 2026 mit KI,
-> einem iPad, GitHub und null Budget.
-> Zürich first. Dann die Welt.» 🔴
-
------
-
-*© 2026 by raimondo* — Stadtpuls — Zürich*
-*«dä puls vo dä stadt»*
+© 2026 by raimondo* — Stadtpuls — Zürich
+«dä puls vo dä stadt»
