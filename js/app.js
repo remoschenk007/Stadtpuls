@@ -25,6 +25,7 @@ function go(page) {
 
   // Footer injizieren
   injectFooter(page);
+    if (page === 'gastro') loadLocations();
 
   // Reveal neu triggern
   setTimeout(initReveal, 100);
