@@ -214,6 +214,7 @@ SUPABASE_URL + '/rest/v1/locations?select=*',
   `).join('')
 }
 
-loadLocations()
+go('gastro')
+
 
 
