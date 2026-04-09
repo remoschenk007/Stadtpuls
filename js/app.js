@@ -189,7 +189,8 @@ async function loadLocations() {
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ'
 
   const res = await fetch(
-    SUPABASE_URL + '/rest/v1/locations?select=*&aktiv=eq.true',
+SUPABASE_URL + '/rest/v1/locations?select=*',
+
     {
       headers: {
         'apikey': SUPABASE_KEY,
