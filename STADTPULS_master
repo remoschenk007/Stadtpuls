@@ -264,6 +264,28 @@ Nächster Schritt:
 
 ⏳ Phase 4b → Erste Daten in Supabase + auf Seite anzeigen
 
+SUPABASE SETUP KOMPLETT:
+URL: https://pnynkzrqnfoshojqfqxn.supabase.co
+Anon Key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Tabellen: locations, location_images
+
+TEST-DATEN IN DB:
+- Hiltl / gastro / Kreis 1
+- Komplex 457 / nachtleben / Kreis 5
+- Freitag Store / shopping / Kreis 5
+
+NEUE DATEIEN:
+js/supabase.js     ✅ Supabase Client mit anon Key
+js/api/zuerich.js  ✅ Zürich Tourismus API
+
+index.html → <script type="module"> ✅
+index.html → <div id="supabase-locations"> ✅
+app.js → loadLocations() Funktion ✅
+
+NÄCHSTER SCHRITT:
+⏳ Prüfen ob Locations auf Gastro-Seite erscheinen
+⏳ Falls ja → Styling der sp-card Klassen
+⏳ Falls nein → Debug loadLocations()
 
 Öffne STADTPULS_master in GitHub und füge das ein. 💪​​​​​​​​​​​​​​​​
 
