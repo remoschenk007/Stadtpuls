@@ -196,8 +196,17 @@ async function loadLocations() {
     return;
   }
 
-  console.log('✅ Locations geladen:', data.length);
-  console.log(data);
+  const container = document.getElementById('supabase-locations');
+  if (!container) return;
+
+  container.innerHTML = data.map(loc => `
+    <div class="sp-card">
+      <div class="sp-card-kat">${loc.kategorie}</div>
+      <div class="sp-card-name">${loc.name}</div>
+      <div class="sp-card-adresse">${loc.adresse} · Kreis ${loc.kreis}</div>
+    </div>
+  `).join('');
 }
 
 loadLocations();
+
