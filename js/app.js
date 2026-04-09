@@ -180,3 +180,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { passive: true });
 });/
+// ============================================
+// SUPABASE — Locations laden
+// ============================================
+
+async function loadLocations() {
+  const { supabase } = await import('./supabase.js');
+  const { data, error } = await supabase
+    .from('locations')
+    .select('*')
+    .eq('aktiv', true);
+
+  if (error) {
+    console.error('❌ Supabase Fehler:', error);
+    return;
+  }
+
+  console.log('✅ Locations geladen:', data.length);
+  console.log(data);
+}
+
+loadLocations();
