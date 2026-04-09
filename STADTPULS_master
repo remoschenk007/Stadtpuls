@@ -309,8 +309,25 @@ Nächster Schritt
 	∙	Komplette app.js neu schreiben — sauber, ohne Flicken
 	∙	Oder: Console.log Debugging via Alert-Boxen (kein Mac nötig)
 
+Hier ist der Text für den STADTPULS_master — einfach unten anhängen:
+
+SESSION 09. APRIL 2026 — ABSCHLUSS
+Debugging-Lektion:
+Ohne Browser-Konsole arbeiten wir blind.
+Nächstes Mal sofort Alert-Debugging einsetzen — kein Raten mehr.
+Sobald loadLocations() funktioniert ist das Muster für alle Kategorien identisch.
+Gastro, Nachtleben, Shopping, Events — copy/paste, 5 Minuten pro Kategorie.
+GitHub Copilot:
+Account remoschenk007 hat Copilot Free aktiv.
+Limit erreicht — reset am 30. April 2026.
+Wurde nie manuell genutzt — GitHub hat es automatisch im Hintergrund verbraucht.
+Ab 30. April als zusätzliches Debug-Tool nutzen.
+Nächste Session — Priorität 1:
+Alert-Debugging in loadLocations() einbauen.
+Fehler sehen. Dann fixen. 10 Minuten.
+
+
 Kopiere das in den STADTPULS_master in GitHub. 💪🔴​​​​​​​​​​​​​​​​
-Öffne STADTPULS_master in GitHub und füge das ein. 💪​​​​​​​​​​​​​​​​
 
 © 2026 by raimondo* — Stadtpuls — Zürich
 «dä puls vo dä stadt»
