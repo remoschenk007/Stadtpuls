@@ -326,6 +326,24 @@ Nächste Session — Priorität 1:
 Alert-Debugging in loadLocations() einbauen.
 Fehler sehen. Dann fixen. 10 Minuten.
 
+16 Spalten — perfekt aufgebaut! 🔴
+Alle 4 neuen Spalten sind drin:
+	•	slug ✅
+	•	beschreibung ✅
+	•	bild_alt ✅
+	•	oeffnungszeiten ✅
+Jetzt Master updaten — füge das unten an:
+
+DB UPDATE 09. APRIL 2026
+Neue Spalten in locations Tabelle:
+	•	slug — für SEO URLs
+	•	beschreibung — für Meta Description
+	•	bild_alt — für Bild Alt-Tags
+	•	oeffnungszeiten — für Schema.org
+	•	Total: 16 Spalten
+
+Dann Gute Nacht Remo! Du hast heute viel geschafft. 💪🔴​​​​​​​​​​​​​​​​
+
 
 Kopiere das in den STADTPULS_master in GitHub. 💪🔴​​​​​​​​​​​​​​​​
 
