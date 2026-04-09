@@ -185,19 +185,22 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 
 async function loadLocations() {
-  const { supabase } = await import('./supabase.js');
-  const { data, error } = await supabase
-    .from('locations')
-    .select('*')
-    .eq('aktiv', true);
+  const SUPABASE_URL = 'https://pnynkzrqnfoshojqfqxn.supabase.co'
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ'
 
-  if (error) {
-    console.error('❌ Supabase Fehler:', error);
-    return;
-  }
+  const res = await fetch(
+    SUPABASE_URL + '/rest/v1/locations?select=*&aktiv=eq.true',
+    {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY
+      }
+    }
+  )
 
-  const container = document.getElementById('supabase-locations');
-  if (!container) return;
+  const data = await res.json()
+  const container = document.getElementById('supabase-locations')
+  if (!container) return
 
   container.innerHTML = data.map(loc => `
     <div class="sp-card">
@@ -205,8 +208,9 @@ async function loadLocations() {
       <div class="sp-card-name">${loc.name}</div>
       <div class="sp-card-adresse">${loc.adresse} · Kreis ${loc.kreis}</div>
     </div>
-  `).join('');
+  `).join('')
 }
 
-loadLocations();
+loadLocations()
+
 
