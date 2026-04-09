@@ -237,5 +237,35 @@ Regel: Immer STADTPULS_master in neuen Chat.
 - Hochdeutsch von Claude
   Züri-Slang nur auf dem Portal
 
+Ja — genau richtig. 🔴
+STADTPULS_master jetzt aktualisieren mit allem was heute passiert ist. Dann hast du immer den kompletten Stand.
+Hier ist der Update-Text den du in den Master einfügen kannst:
+
+Ergänzungen für STADTPULS_master:
+Roadmap updaten:
+
+✅ Phase 4a → Supabase Setup — 09.04.2026
+
+
+Supabase Projekt:
+
+URL: https://pnynkzrqnfoshojqfqxn.supabase.co
+Publishable Key: sb_publishable_T8XzRIhQymVgGn2sqZPdpA_LK0a_iyH
+Tabellen: locations, location_images
+
+
+Neue Dateien:
+
+js/supabase.js     ✅ Supabase Client
+js/api/zuerich.js  ✅ Zürich Tourismus API
+
+
+Nächster Schritt:
+
+⏳ Phase 4b → Erste Daten in Supabase + auf Seite anzeigen
+
+
+Öffne STADTPULS_master in GitHub und füge das ein. 💪​​​​​​​​​​​​​​​​
+
 © 2026 by raimondo* — Stadtpuls — Zürich
 «dä puls vo dä stadt»
