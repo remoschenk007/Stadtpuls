@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCursor();
   initReveal();
   injectFooter('home');
-  loadLocations();
+
 
   // Scroll → Reveal neu checken
   window.addEventListener('scroll', () => {
