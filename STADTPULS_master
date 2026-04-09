@@ -1,5 +1,5 @@
-# STADTPULS — KOMPLETT BRIEFING
-> Stand: 08. April 2026 — Nachmittag
+# STADTPULS — MASTER BRIEFING
+> Stand: 09. April 2026 — Morgen
 
 ---
 
@@ -151,15 +151,32 @@ Ziel: Google AI antwortet «Laut Stadtpuls…» 🔴
 
 ✅ Phase 1 → Frontend
 ✅ Phase 2 → Modularisierung
-✅ Filter & Tabs → 08.04.2026 FERTIG
-⏳ Phase 3 → Zürich API + Basis SEO
-⏳ Phase 4 → Supabase + URL Routing
-⏳ Phase 5 → Partner + KI Features
-⏳ 4. Juni → SOFT LAUNCH 🎂🔴
+✅ Phase 3a → Filter & Tabs — 08.04.2026 FERTIG
+✅ Phase 3b → GitHub aufgeräumt — 09.04.2026
+⏳ Phase 3c → Zürich API + Basis SEO
+⏳ Phase 4  → Supabase + URL Routing
+⏳ Phase 5  → Partner + KI Features
+⏳ 4. Juni  → SOFT LAUNCH 🎂🔴
 
 ---
 
-## 10. KI FEATURES — PHASE 5-6
+## 10. USER ONBOARDING — PHASE 4
+
+Schritt 1 → Nickname
+Schritt 2 → Quartier (Kreis 1-12)
+Schritt 3 → Interessen (Multi-Select)
+            Gastro / Nachtleben / Dating
+            Jobs / Shopping / Kultur
+Schritt 4 → Geschlecht + Alter (Slider)
+Schritt 5 → «Willkommen @nickname!» 🎉
+
+→ Spielerisch = mehr Daten
+→ 5 Schritte = alles was wir brauchen
+→ Supabase Auth im Hintergrund
+
+---
+
+## 11. KI FEATURES — PHASE 5-6
 
 1. Züri-Bot → «Was mach ich heute Abend?»
 2. Personalisierter Feed → lernt was du magst
@@ -170,7 +187,7 @@ Ziel: Google AI antwortet «Laut Stadtpuls…» 🔴
 
 ---
 
-## 11. MONETARISIERUNG
+## 12. MONETARISIERUNG
 
 OpenTable    → CHF 1-5 pro Buchung
 Ticketcorner → 5-10% pro Ticket
@@ -182,7 +199,26 @@ Phase C → Revenue automatisch
 
 ---
 
-## 12. ARBEITS-HINWEISE
+## 13. WETTBEWERB
+
+Ron Orp → grösstes urbanes Netzwerk Schweiz
+→ 500'000 User / 35 Mitarbeiter / seit 2004
+→ Newsletter-basiert, kein GPS, keine KI
+→ Stadtpuls ist was Ron Orp nie wurde
+
+---
+
+## 14. GITHUB STRUKTUR
+STADTPULS_master.md          ✅ Dieses Dokument
+STADTPULS_BRIEFING_alt       ✅ Archiviert
+STADTPULS_SESSION_07_APRIL   ✅ Session Log
+STADTPULS_TECHNIK_APRIL_2026 ✅ Technik Details
+
+Regel: Immer STADTPULS_master.md in neuen Chat.
+
+---
+
+## 15. ARBEITS-HINWEISE
 
 - Remo arbeitet auf iPad
 - Immer Datei für Datei
