@@ -4,14 +4,17 @@
 // © 2026 by raimondo*
 // ============================================
 
-const ZuerichAPI = {
-  BASE_URL: 'https://www.zuerich.com/de/api/v2/data',
+consBt ZuerichAPI = {
+  BASE_URL: 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.zuerich.com/de/api/v2/data'),
+
 
   async fetchAll() {
     try {
       const response = await fetch(ZuerichAPI.BASE_URL);
       if (!response.ok) throw new Error(`API Fehler: ${response.status}`);
-      const data = await response.json();
+      const wrapper = await response.json();
+      const data = JSON.parse(wrapper.contents);
+
       console.log(`✅ Zürich API: ${data.length} Einträge geladen`);
       return data;
     } catch (err) {
