@@ -179,18 +179,30 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, { passive: true });
-});
+});/
 // ============================================
-// ZÜRICH API — Test
+// ZÜRICH API — Debug Overlay
 // ============================================
 
 async function testZuerichAPI() {
-  const { default: ZuerichAPI } = await import('./api/zuerich.js');
-  const locations = await ZuerichAPI.getLocations();
-  console.log('📍 Stadtpuls Locations:', locations.length);
-  console.log('🗂 Kategorien:', ZuerichAPI.getKategorien(
-    await ZuerichAPI.fetchAll()
-  ));
+  const div = document.createElement('div');
+  div.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#ff2d00;color:#fff;padding:20px;z-index:9999;font-family:monospace;font-size:12px;max-width:300px;border-radius:8px;';
+  div.innerHTML = '⏳ Lade Zürich API...';
+  document.body.appendChild(div);
+
+  try {
+    const { default: ZuerichAPI } = await import('./api/zuerich.js');
+    const locations = await ZuerichAPI.getLocations();
+    const raw = await ZuerichAPI.fetchAll();
+    const kategorien = ZuerichAPI.getKategorien(raw);
+    div.innerHTML = `
+      ✅ API funktioniert!<br><br>
+      📍 ${locations.length} Locations<br><br>
+      🗂 Kategorien:<br>${kategorien.slice(0,10).join('<br>')}
+    `;
+  } catch(err) {
+    div.innerHTML = '❌ Fehler: ' + err.message;
+  }
 }
 
 testZuerichAPI();
