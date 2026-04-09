@@ -180,3 +180,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { passive: true });
 });
+// ============================================
+// ZÜRICH API — Test
+// ============================================
+
+async function testZuerichAPI() {
+  const { default: ZuerichAPI } = await import('./api/zuerich.js');
+  const locations = await ZuerichAPI.getLocations();
+  console.log('📍 Stadtpuls Locations:', locations.length);
+  console.log('🗂 Kategorien:', ZuerichAPI.getKategorien(
+    await ZuerichAPI.fetchAll()
+  ));
+}
+
+testZuerichAPI();
