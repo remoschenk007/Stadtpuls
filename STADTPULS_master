@@ -129,7 +129,16 @@ Skaliert: Zürich → Hamburg ohne Umbau
 
 ---
 
-## 8. SEO STRATEGIE
+## 8. GEO-TECHNOLOGIE
+Supabase + PostGIS
+→ Gratis bis 50'000 User
+→ ST_DWithin() → Radius in 1 SQL-Zeile
+→ Kreis via Polygon-Daten Stadt Zürich
+→ Echtzeit via Supabase Realtime
+
+---
+
+## 9. SEO STRATEGIE
 
 Problem jetzt: Single Page App = Google sieht 1 Seite
 
@@ -147,7 +156,7 @@ Ziel: Google AI antwortet «Laut Stadtpuls…» 🔴
 
 ---
 
-## 9. ROADMAP
+## 10. ROADMAP
 
 ✅ Phase 1 → Frontend
 ✅ Phase 2 → Modularisierung
@@ -160,7 +169,7 @@ Ziel: Google AI antwortet «Laut Stadtpuls…» 🔴
 
 ---
 
-## 10. USER ONBOARDING — PHASE 4
+## 11. USER ONBOARDING — PHASE 4
 
 Schritt 1 → Nickname
 Schritt 2 → Quartier (Kreis 1-12)
@@ -176,7 +185,7 @@ Schritt 5 → «Willkommen @nickname!» 🎉
 
 ---
 
-## 11. KI FEATURES — PHASE 5-6
+## 12. KI FEATURES — PHASE 5-6
 
 1. Züri-Bot → «Was mach ich heute Abend?»
 2. Personalisierter Feed → lernt was du magst
@@ -187,7 +196,7 @@ Schritt 5 → «Willkommen @nickname!» 🎉
 
 ---
 
-## 12. MONETARISIERUNG
+## 13. MONETARISIERUNG
 
 OpenTable    → CHF 1-5 pro Buchung
 Ticketcorner → 5-10% pro Ticket
@@ -199,7 +208,7 @@ Phase C → Revenue automatisch
 
 ---
 
-## 13. WETTBEWERB
+## 14. WETTBEWERB
 
 Ron Orp → grösstes urbanes Netzwerk Schweiz
 → 500'000 User / 35 Mitarbeiter / seit 2004
@@ -208,17 +217,17 @@ Ron Orp → grösstes urbanes Netzwerk Schweiz
 
 ---
 
-## 14. GITHUB STRUKTUR
-STADTPULS_master.md          ✅ Dieses Dokument
-STADTPULS_BRIEFING_alt       ✅ Archiviert
-STADTPULS_SESSION_07_APRIL   ✅ Session Log
-STADTPULS_TECHNIK_APRIL_2026 ✅ Technik Details
+## 15. GITHUB STRUKTUR
+STADTPULS_master           ✅ Dieses Dokument
+STADTPULS_BRIEFING_alt     ✅ Archiviert
+STADTPULS_SESSION_07_APRIL ✅ Session Log
+STADTPULS_TECHNIK_APRIL    ✅ Technik Archiv
 
-Regel: Immer STADTPULS_master.md in neuen Chat.
+Regel: Immer STADTPULS_master in neuen Chat.
 
 ---
 
-## 15. ARBEITS-HINWEISE
+## 16. ARBEITS-HINWEISE
 
 - Remo arbeitet auf iPad
 - Immer Datei für Datei
