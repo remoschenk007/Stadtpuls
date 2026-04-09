@@ -287,6 +287,29 @@ NÄCHSTER SCHRITT:
 ⏳ Falls ja → Styling der sp-card Klassen
 ⏳ Falls nein → Debug loadLocations()
 
+Genau richtig. Hier ist der Text für den STADTPULS_master:
+
+SESSION 09. APRIL 2026 — UPDATE
+Was funktioniert ✅
+	∙	Supabase Verbindung live
+	∙	3 Test-Locations in DB: Hiltl / Komplex 457 / Freitag Store
+	∙	Supabase API antwortet korrekt (getestet via Browser-URL)
+	∙	supabase.js — sauber, kein Syntaxfehler
+	∙	<div id="supabase-locations"> in index.html Zeile 356 (innerhalb pg-gastro)
+	∙	go('gastro') ruft loadLocations() auf (Zeile 28 in app.js)
+Was nicht funktioniert ❌
+	∙	loadLocations() füllt den div nicht — Grund unbekannt
+	∙	Kein Zugriff auf Browser-Konsole (iPad, kein Mac)
+Aktueller Stand der Dateien
+	∙	js/app.js Zeile 28: if (page === 'gastro') loadLocations();
+	∙	js/app.js Zeile 217: go('gastro')
+	∙	js/app.js Zeile 189-215: loadLocations() via fetch (kein Import)
+	∙	index.html Zeile 356: <div id="supabase-locations">
+Nächster Schritt
+	∙	Komplette app.js neu schreiben — sauber, ohne Flicken
+	∙	Oder: Console.log Debugging via Alert-Boxen (kein Mac nötig)
+
+Kopiere das in den STADTPULS_master in GitHub. 💪🔴​​​​​​​​​​​​​​​​
 Öffne STADTPULS_master in GitHub und füge das ein. 💪​​​​​​​​​​​​​​​​
 
 © 2026 by raimondo* — Stadtpuls — Zürich
