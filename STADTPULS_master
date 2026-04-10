@@ -356,6 +356,15 @@ Nächster Schritt:
 Dann je nach Ergebnis nächsten Alert einbauen.
 
 
+DATENBANK — FEHLENDE SPALTE:
+plz — Postleitzahl — noch nicht in DB vorhanden — muss noch hinzugefügt werden.
+Zürich Tourismus API liefert keine Kreis/PLZ Daten — nur Koordinaten (lat/lng).
+Lösung: PostGIS berechnet Kreis automatisch aus Koordinaten via Polygon-Daten Stadt Zürich.
+PLZ wird ebenfalls aus Koordinaten abgeleitet — kein manueller Input nötig.
+Spalte plz als text in locations Tabelle hinzufügen — noch offen.
+
+Dann ist wirklich alles drin. 💪🔴​​​​​​​​​​​​​​​​
+
 
 © 2026 by raimondo* — Stadtpuls — Zürich 💪🔴​​​​​​​​​​​​​​​​
 «dä puls vo dä stadt»
