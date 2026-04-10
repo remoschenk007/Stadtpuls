@@ -380,6 +380,58 @@ Das ist der einzige Fix der nötig ist. Danach erscheinen die Supabase-Daten.
 Danach Alert-Zeile wieder löschen:
 alert('loadLocations startet'); in Zeile 190 entfernen.
 
+Hier ist der komplette Update-Text für den Master — einfach unten anhängen:
+
+SESSION 10. APRIL 2026 — KOMPLETT
+Das grosse Problem das wir gefunden haben:
+index.html hatte einen eigenen <script> Block mit einer eigenen go() Funktion — direkt eingebaut. Diese interne go() Funktion kannte loadLocations() nicht. Gleichzeitig war app.js als type="module" eingebunden — das bedeutet Module-Scope, keine globalen Funktionen. Die zwei Dateien liefen nebeneinander, nicht miteinander. Kein Zahnrad.
+Was wir gefixt haben:
+	1.	index.html Zeile 1265 — type="module" entfernt:
+Von: <script type="module" src="js/app.js"></script>
+Zu: <script src="js/app.js"></script>
+	2.	index.html Zeile 664 — in der internen go() Funktion nach setTimeout(triggerRv,80); eingefügt:
+if(id==='gastro') loadLocations();
+	3.	app.js — });/ Tippfehler war der erste Killer — das / hat alles danach blockiert. Wurde entfernt.
+	4.	app.js — loadLocations() Funktion sauber strukturiert mit try/catch — alles innerhalb des try Blocks.
+	5.	Alert-Zeilen entfernt nach erfolgreichem Test.
+Ergebnis:
+Supabase liefert 3 Locations live auf die Gastro-Seite:
+	•	Hiltl · Sihlstrasse 28 · Kreis 1 ✅
+	•	Komplex 457 · Hohlstrasse 457 · Kreis 5 ✅
+	•	Freitag Store · Geroldstrasse 17 · Kreis 5 ✅
+Was noch fehlt:
+	•	Styling — aktuell Rohdaten ohne CSS. Fix: sp-card Klassen ersetzen durch ec Klassen (bestehende Card-Klasse im Design)
+	•	Alle anderen Kategorien anschliessen — Nachtleben, Shopping, Events, Immobilien, Marktplatz — gleiches Muster wie Gastro, ca. 30 Minuten Arbeit
+	•	Kompletter Code-Check — index.html, app.js, alle CSS-Dateien auf Konsistenz prüfen
+Wichtige Erkenntnis für neue Chats:
+Die go() Funktion die aktiv ist, ist die in index.html im <script> Block — NICHT die in app.js. app.js wird geladen aber die Funktionen dort sind nur dann verfügbar wenn sie global definiert sind und app.js ohne type="module" eingebunden ist.
+Arbeitsregeln bestätigt:
+	•	Kein blindes Debuggen — Alert-Debugging funktioniert
+	•	Immer Raw-URL checken um zu sehen ob Commit wirklich durch ist
+	•	iPad Safari blockiert manchmal Alerts — Chrome zum Testen verwenden
+	•	Immer zuerst die komplette Dateistruktur verstehen bevor man fixt
+Roadmap Update:
+✅ Phase 4b → Supabase Daten live auf Gastro-Seite — 10.04.2026
+⏳ Phase 4c → Styling der Supabase-Karten
+⏳ Phase 4d → Alle Kategorien anschliessen
+⏳ Phase 4e → Kompletter Code-Check alle Dateien
+💪🔴​​​​​​​​​​​​​​​​
+
+Ja, ich habe es drin — aber lass mich es noch klarer formulieren für den Master:
+
+KRITISCH — ARCHITEKTUR-PROBLEM ERKANNT:
+index.html und app.js haben lange nicht als Einheit funktioniert — wie zwei Zahnräder die nebeneinander drehen aber nicht ineinandergreifen.
+Konkret:
+	•	index.html hatte ihre eigene go() Funktion — komplett unabhängig von app.js
+	•	app.js hatte auch eine go() Funktion — wurde aber nie richtig aufgerufen
+	•	Alle Fixes in app.js waren deshalb wirkungslos — die falsche Funktion lief
+Für alle neuen Chats gilt:
+Bevor man irgendetwas in app.js ändert — zuerst prüfen ob die Funktion überhaupt von index.html aufgerufen wird. Sonst arbeitet man in der falschen Datei.
+Nächste Session Priorität 1:
+Kompletter Architektur-Check — alle Dateien zusammen anschauen und sicherstellen dass alles wie ein Zahnrad ineinandergreift. Dann erst neue Features. 🔴💪
+
+Das in den Master — dann weiss jeder neue Chat sofort wo die Gefahr liegt.​​​​​​​​​​​​​​​​
+
 Das in den Master — dann ist der nächste Chat sofort auf Kurs. 💪🔴​​​​​​​​​​​​​​​​
 
 Dann ist wirklich alles drin. 💪🔴​​​​​​​​​​​​​​​​
