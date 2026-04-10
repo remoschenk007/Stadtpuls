@@ -187,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 
 async function loadLocations() {
-   alert('loadLocations startet');
+
 
   const SUPABASE_URL = 'https://pnynkzrqnfoshojqfqxn.supabase.co'
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ'
@@ -216,7 +216,8 @@ SUPABASE_URL + '/rest/v1/locations?select=*',
   `).join('')
 }
 
-go('gastro')
+document.addEventListener('DOMContentLoaded', () => go('gastro'));
+
 
 
 
