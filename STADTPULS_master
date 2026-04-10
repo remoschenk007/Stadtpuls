@@ -453,10 +453,42 @@ Zu:
 <span class="earr">↗</span>
 </div>
 
+Hier ist der Text für den Master — unten anfügen:
 
-Danach sehen die Supabase-Karten identisch aus wie die Hardcode-Karten. Eine Änderung, fünf Minuten. 🔴💪​​​​​​​​​​​​​​​​
+SESSION 10. APRIL 2026 — NACHMITTAG
+Neues Problem erkannt:
+app.js Commits kommen nie an — die Raw-URL zeigt immer die alte Version. Alle Änderungen die wir heute in app.js gemacht haben waren wirkungslos. Die Datei die wirklich läuft ist die loadLocations() direkt in index.html.
+Was funktioniert:
+Die loadLocations() in index.html läuft korrekt — Supabase liefert 3 Locations. Aber Styling noch mit alten sp-card Klassen — muss auf ec Klassen geändert werden.
+Was noch fehlt — PRIORITÄT 1 nächste Session:
+In index.html — loadLocations() Funktion finden — sp-card ersetzen durch ec Klassen:
+Von:
 
-Das in den Master — dann ist der nächste Chat sofort auf Kurs. 💪🔴​​​​​​​​​​​​​​​​
+<div class="sp-card">
+<div class="sp-card-kat">${loc.kategorie}</div>
+<div class="sp-card-name">${loc.name}</div>
+<div class="sp-card-adresse">${loc.adresse} · Kreis ${loc.kreis}</div>
+</div>
+
+
+Zu:
+
+<div class="ec">
+<span class="etag">${loc.kategorie}</span>
+<h3>${loc.name}</h3>
+<div class="meta"><strong>${loc.adresse} · Kreis ${loc.kreis}</strong></div>
+<span class="earr">↗</span>
+</div>
+
+
+PRIORITÄT 2 nächste Session:
+Herausfinden warum app.js Commits nie ankommen — dann Architektur sauber aufbauen: index.html nur Struktur, app.js nur Logik.
+Wichtig für neuen Chat:
+Zuerst alle Raw-URLs checken bevor irgendetwas geändert wird. Nie blind arbeiten.
+💪🔴​​​​​​​​​​​​​​​​
+
+
+
 
 Dann ist wirklich alles drin. 💪🔴​​​​​​​​​​​​​​​​
 
