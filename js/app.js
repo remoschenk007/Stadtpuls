@@ -197,12 +197,13 @@ async function loadLocations() {
     if (!container) return
 
     container.innerHTML = data.map(loc => `
-      <div class="sp-card">
-        <div class="sp-card-kat">${loc.kategorie}</div>
-        <div class="sp-card-name">${loc.name}</div>
-        <div class="sp-card-adresse">${loc.adresse} · Kreis ${loc.kreis}</div>
-      </div>
-    `).join('')
+          <div class="ec">
+      <span class="etag">${loc.kategorie}</span>
+      <h3>${loc.name}</h3>
+      <div class="meta"><strong>${loc.adresse} · Kreis ${loc.kreis}</strong></div>
+      <span class="earr">↗</span>
+    </div>
+
 
   } catch(err) {
     alert('FEHLER: ' + err.message)
