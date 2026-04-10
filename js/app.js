@@ -204,6 +204,8 @@ SUPABASE_URL + '/rest/v1/locations?select=*',
   )
 
   const data = await res.json()
+alert('Daten: ' + data.length + ' Locations')
+
   const container = document.getElementById('supabase-locations')
   if (!container) return
 
