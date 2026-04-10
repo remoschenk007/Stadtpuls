@@ -342,10 +342,20 @@ Neue Spalten in locations Tabelle:
 	•	oeffnungszeiten — für Schema.org
 	•	Total: 16 Spalten
 
-Dann Gute Nacht Remo! Du hast heute viel geschafft. 💪🔴​​​​​​​​​​​​​​​​
+Hier ist der Text für den Master — unten anfügen:
+
+SESSION 10. APRIL 2026 — MORGEN
+Alert-Debugging eingebaut:
+alert('loadLocations startet') in Zeile 190 von app.js
+Nächster Schritt:
+	1.	30 Sekunden warten
+	2.	Live-Seite öffnen → Gastro drücken
+	3.	Erscheint ein Popup “loadLocations startet”?
+	4.	JA → Funktion läuft, Problem liegt beim Fetch oder Container
+	5.	NEIN → go(‘gastro’) ruft loadLocations() nicht auf
+Dann je nach Ergebnis nächsten Alert einbauen.
 
 
-Kopiere das in den STADTPULS_master in GitHub. 💪🔴​​​​​​​​​​​​​​​​
 
-© 2026 by raimondo* — Stadtpuls — Zürich
+© 2026 by raimondo* — Stadtpuls — Zürich 💪🔴​​​​​​​​​​​​​​​​
 «dä puls vo dä stadt»
