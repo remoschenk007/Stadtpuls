@@ -363,6 +363,25 @@ Lösung: PostGIS berechnet Kreis automatisch aus Koordinaten via Polygon-Daten S
 PLZ wird ebenfalls aus Koordinaten abgeleitet — kein manueller Input nötig.
 Spalte plz als text in locations Tabelle hinzufügen — noch offen.
 
+Ja — der neue Chat war nicht gut genug informiert. Das ist mein Fehler.
+Hier ist der finale Master-Zusatz — alles was der neue Chat wissen muss:
+
+KRITISCH — FÜR NEUEN CHAT:
+Karten auf Gastro-Seite (Langstrasse 77, Café Volta etc.) sind HARDCODE im HTML — NICHT aus Supabase. Das ist bekannt und gewollt als Platzhalter.
+Alert-Test ergab: loadLocations() läuft NICHT — kein Popup erschienen.
+Ursache gefunden:
+go('gastro') in Zeile 217 von app.js läuft bevor DOM bereit ist.
+Fix — Zeile 217 in app.js ändern:
+Von:
+go('gastro')
+Zu:
+document.addEventListener('DOMContentLoaded', () => go('gastro'));
+Das ist der einzige Fix der nötig ist. Danach erscheinen die Supabase-Daten.
+Danach Alert-Zeile wieder löschen:
+alert('loadLocations startet'); in Zeile 190 entfernen.
+
+Das in den Master — dann ist der nächste Chat sofort auf Kurs. 💪🔴​​​​​​​​​​​​​​​​
+
 Dann ist wirklich alles drin. 💪🔴​​​​​​​​​​​​​​​​
 
 
