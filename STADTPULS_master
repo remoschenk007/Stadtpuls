@@ -430,7 +430,31 @@ Bevor man irgendetwas in app.js ändert — zuerst prüfen ob die Funktion über
 Nächste Session Priorität 1:
 Kompletter Architektur-Check — alle Dateien zusammen anschauen und sicherstellen dass alles wie ein Zahnrad ineinandergreift. Dann erst neue Features. 🔴💪
 
-Das in den Master — dann weiss jeder neue Chat sofort wo die Gefahr liegt.​​​​​​​​​​​​​​​​
+Nein — es bereitet keine Probleme. Die Seite funktioniert, Supabase liefert Daten. Das Styling ist nur kosmetisch.
+Für den Master — füge das an:
+
+NÄCHSTE SESSION — PRIORITÄT 1:
+loadLocations() in app.js Zeile 199-205 — Styling fixen:
+Von:
+
+<div class="sp-card">
+<div class="sp-card-kat">${loc.kategorie}</div>
+<div class="sp-card-name">${loc.name}</div>
+<div class="sp-card-adresse">${loc.adresse} · Kreis ${loc.kreis}</div>
+</div>
+
+
+Zu:
+
+<div class="ec">
+<span class="etag">${loc.kategorie}</span>
+<h3>${loc.name}</h3>
+<div class="meta"><strong>${loc.adresse} · Kreis ${loc.kreis}</strong></div>
+<span class="earr">↗</span>
+</div>
+
+
+Danach sehen die Supabase-Karten identisch aus wie die Hardcode-Karten. Eine Änderung, fünf Minuten. 🔴💪​​​​​​​​​​​​​​​​
 
 Das in den Master — dann ist der nächste Chat sofort auf Kurs. 💪🔴​​​​​​​​​​​​​​​​
 
