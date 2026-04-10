@@ -485,12 +485,30 @@ PRIORITÄT 2 nächste Session:
 Herausfinden warum app.js Commits nie ankommen — dann Architektur sauber aufbauen: index.html nur Struktur, app.js nur Logik.
 Wichtig für neuen Chat:
 Zuerst alle Raw-URLs checken bevor irgendetwas geändert wird. Nie blind arbeiten.
-💪🔴​​​​​​​​​​​​​​​​
 
+Hier ist der Update-Text für den Master — unten anfügen:
 
+SESSION 10. APRIL 2026 — ABEND
+CSS Check komplett:
+	•	base.css / components.css / layout.css — alles sauber und professionell
+	•	Responsive korrekt auf 1024 / 768 / 480px
+	•	ec, g3, etag Klassen alle korrekt definiert
+	•	Supabase-Karten auf Mobile einspaltig — korrekt so, kein Bug
+PLZ Spalte hinzugefügt:
+	•	SQL: ALTER TABLE locations ADD COLUMN plz text;
+	•	Tabelle locations hat jetzt 17 Spalten — komplett
+	•	PLZ ist Anzeigefeld / SEO — Kreis-Logik läuft später via PostGIS
+Architektur-Entscheid PLZ vs PostGIS:
+	•	Keine separate PLZ→Kreis Mapping-Tabelle
+	•	PostGIS berechnet Kreis automatisch aus lat/lng
+	•	PLZ bleibt als Hilfsfeld für Anzeige und SEO URLs
+	•	Beispiel: 8001→Kreis 1, 8004→Kreis 4, 8008→Kreis 8 (Seefeld, Ausnahme)
+Roadmap Update:
+	•	✅ Phase 4c → Styling Supabase-Karten (ec Klassen) — 10.04.2026
+	•	✅ Phase 4d → PLZ Spalte — 10.04.2026
+	•	⏳ Phase 4e → Mehr Locations eintragen
+	•	⏳ Phase 4f → Alle Kategorien anschliessen
 
-
-Dann ist wirklich alles drin. 💪🔴​​​​​​​​​​​​​​​​
 
 
 © 2026 by raimondo* — Stadtpuls — Zürich 💪🔴​​​​​​​​​​​​​​​​
