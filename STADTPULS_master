@@ -509,6 +509,72 @@ Roadmap Update:
 	•	⏳ Phase 4e → Mehr Locations eintragen
 	•	⏳ Phase 4f → Alle Kategorien anschliessen
 
+Hier ist der komplette Update-Text für den Master — unten anfügen:
+
+SESSION 10. APRIL 2026 — KOMPLETT
+Das grosse Problem gelöst:
+app.js hatte });/ — das / blockierte alles danach. Zusätzlich war data im try Block deklariert aber ausserhalb verwendet — Scope-Fehler. Beide Probleme gefixt.
+Was funktioniert ✅
+	•	Supabase liefert 3 Locations live auf Gastro-Seite
+	•	Hiltl · Sihlstrasse 28 · Kreis 1
+	•	Komplex 457 · Hohlstrasse 457 · Kreis 5
+	•	Freitag Store · Geroldstrasse 17 · Kreis 5
+	•	Styling mit ec Klassen — passt ins Design
+	•	Mobile korrekt einspaltig — kein Bug
+app.js komplett neu geschrieben:
+	•	});/ Tippfehler entfernt
+	•	data Scope-Fehler gefixt
+	•	sp-card Klassen → ec Klassen
+	•	Alert-Zeilen entfernt
+	•	Supabase URL + Key global oben definiert
+	•	loadLocations() sauber mit try/catch
+	•	go() Funktion ruft loadLocations() bei Gastro auf
+index.html gefixt:
+	•	Zeile 356: <div id="supabase-locations" class="g3 rv"></div>
+	•	Altes inline Style entfernt
+	•	g3 Grid — 3 Spalten Desktop, 1 Spalte Mobile
+Supabase Update:
+	•	PLZ Spalte hinzugefügt via SQL: ALTER TABLE locations ADD COLUMN plz text;
+	•	Tabelle locations hat jetzt 17 Spalten — komplett
+	•	PLZ = Anzeigefeld / SEO — Kreis-Logik läuft via PostGIS
+Architektur-Entscheid:
+	•	Keine PLZ→Kreis Mapping-Tabelle
+	•	PostGIS berechnet Kreis aus lat/lng automatisch
+	•	PLZ bleibt Hilfsfeld: 8001→Kreis 1, 8004→Kreis 4, 8008→Kreis 8 (Seefeld, Ausnahme)
+CSS Check:
+	•	base.css / components.css / layout.css — alles sauber
+	•	Responsive: 1024 / 768 / 480px korrekt
+	•	ec, g3, etag Klassen alle korrekt definiert
+Zürich Tourismus API erforscht:
+	•	allorigins.win Proxy war down — entfernt
+	•	Direkt-URL funktioniert: https://www.zuerich.com/en/api/v2/data
+	•	Ohne Parameter → Taxonomie/Kategorien
+	•	Mit ?id=193 → Amerikanische Restaurants
+	•	Mit ?id=100 → Gastro + Nachtleben zusammen ✅
+	•	Datenformat: Schema.org, @type: LocalBusiness / BarOrPub
+	•	Felder: name, disambiguatingDescription, address, geo, category, identifier
+zuerich.js komplett neu geschrieben:
+	•	BASE_URL: https://www.zuerich.com/en/api/v2/data?id=100
+	•	Kein Proxy mehr
+	•	mapKategorie() erkennt automatisch: gastro / nachtleben / events / shopping
+	•	mapSubkategorie() erkennt: asiatisch / italienisch / schweizer / vegisch / bar / brunch etc.
+	•	mapToLocation() mapped alle Felder auf Supabase Schema
+	•	getGastro() und getNachtleben() als separate Methoden
+	•	export default ZuerichAPI
+Nächste Session — Priorität 1:
+Zürich Tourismus API Daten in Supabase importieren — CORS Problem lösen, Import-Funktion bauen. Dann haben wir hunderte echte Locations automatisch.
+Roadmap Update:
+	•	✅ Phase 4b → Supabase Daten live auf Gastro-Seite
+	•	✅ Phase 4c → Styling ec Klassen
+	•	✅ Phase 4d → PLZ Spalte
+	•	✅ Phase 4e → Zürich API erforscht + zuerich.js neu
+	•	⏳ Phase 4f → Zürich API Import in Supabase
+	•	⏳ Phase 4g → Alle Kategorien anschliessen
+	•	⏳ 4. Juni → SOFT LAUNCH 🎂🔴
+💪🔴
+«dä puls vo dä stadt»
+© 2026 by raimondo*
+
 
 
 © 2026 by raimondo* — Stadtpuls — Zürich 💪🔴​​​​​​​​​​​​​​​​
