@@ -4,7 +4,8 @@
 // © 2026 by raimondo*
 // ============================================
 
-consBt ZuerichAPI = {
+const ZuerichAPI = {
+
   BASE_URL: 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://www.zuerich.com/de/api/v2/data'),
 
 
