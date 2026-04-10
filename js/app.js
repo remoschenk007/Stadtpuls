@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }, { passive: true });
-});/
+});
 // ============================================
 // SUPABASE — Locations laden
 // ============================================
@@ -192,40 +192,30 @@ async function loadLocations() {
   const SUPABASE_URL = 'https://pnynkzrqnfoshojqfqxn.supabase.co'
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ'
 
-try {
-const res = await fetch(
-
-SUPABASE_URL + '/rest/v1/locations?select=*',
-
-    {
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/locations?select=*', {
       headers: {
         'apikey': SUPABASE_KEY,
         'Authorization': 'Bearer ' + SUPABASE_KEY
       }
-    }
-  )
+    })
+    const data = await res.json()
+    alert('Daten: ' + data.length + ' Locations')
 
-  const data = await res.json()
-alert('Daten: ' + data.length + ' Locations')
-} catch(err) {
-  alert('FEHLER: ' + err.message)
+    const container = document.getElementById('supabase-locations')
+    if (!container) return
+
+    container.innerHTML = data.map(loc => `
+      <div class="sp-card">
+        <div class="sp-card-kat">${loc.kategorie}</div>
+        <div class="sp-card-name">${loc.name}</div>
+        <div class="sp-card-adresse">${loc.adresse} · Kreis ${loc.kreis}</div>
+      </div>
+    `).join('')
+
+  } catch(err) {
+    alert('FEHLER: ' + err.message)
+  }
 }
-
-
-  const container = document.getElementById('supabase-locations')
-  if (!container) return
-
-  container.innerHTML = data.map(loc => `
-    <div class="sp-card">
-      <div class="sp-card-kat">${loc.kategorie}</div>
-      <div class="sp-card-name">${loc.name}</div>
-      <div class="sp-card-adresse">${loc.adresse} · Kreis ${loc.kreis}</div>
-    </div>
-  `).join('')
-}
-
-document.addEventListener('DOMContentLoaded', () => go('gastro'));
-
-
 
 
