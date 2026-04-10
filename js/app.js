@@ -8,26 +8,22 @@
    ROUTER — SPA Navigation
 ═══════════════════════════════ */
 function go(page) {
-  // Alle Pages ausblenden
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
 
-  // Gewünschte Page einblenden
   const target = document.getElementById('pg-' + page);
   if (target) {
     target.classList.add('on');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Nav-Links updaten
   document.querySelectorAll('.nlinks a[data-p]').forEach(a => {
     a.classList.toggle('on', a.dataset.p === page);
   });
 
-  // Footer injizieren
   injectFooter(page);
-    if (page === 'gastro') loadLocations();
 
-  // Reveal neu triggern
+  if (page === 'gastro') loadLocations();
+
   setTimeout(initReveal, 100);
 }
 
@@ -119,7 +115,6 @@ function initCursor() {
   }
   animateCur2();
 
-  // Hover-Effekt auf klickbaren Elementen
   document.addEventListener('mouseover', e => {
     if (e.target.matches('a, button, .btn, .ec, .ic, .bt, .qcard, .tc, .pill, .ftag, .ct')) {
       cur2.style.width  = '52px';
@@ -137,7 +132,7 @@ function initCursor() {
 }
 
 /* ═══════════════════════════════
-   REVEAL — IntersectionObserver
+   REVEAL
 ═══════════════════════════════ */
 function initReveal() {
   const observer = new IntersectionObserver(entries => {
@@ -171,8 +166,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   injectFooter('home');
 
-
-  // Scroll → Reveal neu checken
   window.addEventListener('scroll', () => {
     document.querySelectorAll('.rv:not(.in)').forEach(el => {
       const rect = el.getBoundingClientRect();
@@ -182,13 +175,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { passive: true });
 });
-// ============================================
-// SUPABASE — Locations laden
-// ============================================
 
+/* ═══════════════════════════════
+   SUPABASE — Locations laden
+═══════════════════════════════ */
 async function loadLocations() {
-
-
   const SUPABASE_URL = 'https://pnynkzrqnfoshojqfqxn.supabase.co'
   const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ'
 
@@ -217,5 +208,3 @@ async function loadLocations() {
     alert('FEHLER: ' + err.message)
   }
 }
-
-
