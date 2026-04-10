@@ -1,8 +1,48 @@
 /* ═══════════════════════════════════════════════════════════
    STADTPULS — app.js
-   Router · Cursor · Reveal · Menu · Scroll
+   Router · Cursor · Reveal · Menu · Supabase
    © 2026 by raimondo*
 ═══════════════════════════════════════════════════════════ */
+
+const SUPABASE_URL = 'https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+
+/* ═══════════════════════════════
+   SUPABASE — Locations laden
+═══════════════════════════════ */
+async function loadLocations() {
+  const container = document.getElementById('supabase-locations');
+  if (!container) return;
+
+  container.innerHTML = '<div style="font-family:\'DM Mono\',monospace;font-size:.62rem;color:#44445a;padding:1rem 0;">Lädt…</div>';
+
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/locations?select=*', {
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY
+      }
+    });
+    const data = await res.json();
+
+    if (!data || data.length === 0) {
+      container.innerHTML = '<div style="font-family:\'DM Mono\',monospace;font-size:.62rem;color:#44445a;padding:1rem 0;">Keine Locations gefunden.</div>';
+      return;
+    }
+
+    container.innerHTML = data.map(loc => `
+      <div class="ec">
+        <span class="etag g">${loc.kategorie}</span>
+        <h3>${loc.name}</h3>
+        <div class="meta"><strong>${loc.adresse} · Kreis ${loc.kreis}</strong></div>
+        <span class="earr">↗</span>
+      </div>
+    `).join('');
+
+  } catch(err) {
+    container.innerHTML = '<div style="font-family:\'DM Mono\',monospace;font-size:.62rem;color:#ff2d00;padding:1rem 0;">Fehler beim Laden.</div>';
+  }
+}
 
 /* ═══════════════════════════════
    ROUTER — SPA Navigation
@@ -132,7 +172,7 @@ function initCursor() {
 }
 
 /* ═══════════════════════════════
-   REVEAL
+   REVEAL — IntersectionObserver
 ═══════════════════════════════ */
 function initReveal() {
   const observer = new IntersectionObserver(entries => {
@@ -175,37 +215,3 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }, { passive: true });
 });
-
-/* ═══════════════════════════════
-   SUPABASE — Locations laden
-═══════════════════════════════ */
-async function loadLocations() {
-  const SUPABASE_URL = 'https://pnynkzrqnfoshojqfqxn.supabase.co'
-  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ'
-
-  try {
-    const res = await fetch(SUPABASE_URL + '/rest/v1/locations?select=*', {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY
-      }
-    })
-    const data = await res.json()
-   
-
-    const container = document.getElementById('supabase-locations')
-    if (!container) return
-
-    container.innerHTML = data.map(loc => `
-          <div class="ec">
-      <span class="etag">${loc.kategorie}</span>
-      <h3>${loc.name}</h3>
-      <div class="meta"><strong>${loc.adresse} · Kreis ${loc.kreis}</strong></div>
-      <span class="earr">↗</span>
-    </div>
-
-
-  } catch(err) {
-    alert('FEHLER: ' + err.message)
-  }
-}
