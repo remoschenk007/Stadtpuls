@@ -661,6 +661,8 @@ function go(id){
   var fid=map[id];
   if(fid){var fp=document.getElementById(fid);if(fp&&fp.innerHTML.trim()===''){var tpl=document.getElementById('ftpl');fp.appendChild(document.importNode(tpl.content,true));}}
   setTimeout(triggerRv,80);
+  if(id==='gastro') loadLocations();
+
   bndCur();
   closeMenu();
 }
@@ -1260,7 +1262,8 @@ initGPS();
 
 
 
-<script type="module" src="js/app.js"></script>
+<script src="js/app.js"></script>
+
 
 
 
