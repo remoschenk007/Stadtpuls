@@ -597,6 +597,41 @@ Nächste Session Priorität 1:
 	•	Zürich API Import direkt in app.js bauen
 	•	Dann alle Kategorien anschliessen
 
+Haha — ja, du hast recht. Langer Tag! 😄
+Hier der Master-Update Text — einfach unten im STADTPULS_master anfügen:
+
+SESSION 11. APRIL 2026 — KOMPLETT
+main.js erstellt — neu:
+	•	Alte app.js gelöscht und neu als main.js erstellt
+	•	main.js Commits funktionieren zuverlässig
+	•	index.html Zeile 1275: <script src="js/main.js"> ✅
+	•	SUPABASE_URL + SUPABASE_KEY global oben
+	•	loadLocations(kategorie) für alle Kategorien
+	•	go() in index.html Zeile 668-671 ruft loadLocations auf
+Zürich API Import:
+	•	Import-Button in index.html vor </body>
+	•	230 saubere Locations in Supabase
+	•	Gastro + Nachtleben live aus Supabase
+	•	Shopping/Events Container bereit — keine API-Daten vorhanden
+Supabase:
+	•	Duplikate via SQL gelöscht
+	•	230 Locations total
+Footer:
+	•	Globaler Footer direkt in index.html vor </body> — alle Seiten haben Footer
+	•	Problem: Startseite zeigt zwei Footer — alter injizierter + neuer globaler
+	•	Nächste Session: Doppel-Footer auf Startseite fixen
+Offene Bugs:
+	•	Register-Formular zeigt sich nicht
+	•	Startseite doppelter Footer
+	•	app.js kann gelöscht werden — wird nicht mehr verwendet
+Roadmap Update:
+	•	✅ Phase 4f → Zürich API Import — 230 Locations
+	•	✅ Phase 4g → Gastro + Nachtleben live
+	•	⏳ Phase 4h → Footer sauber — ein Footer überall
+	•	⏳ Phase 4i → Register-Formular fixen
+	•	⏳ Phase 4j → Filter aktivieren
+4. Juni Soft Launch — 54 Tage 🔴💪
+
 
 
 
