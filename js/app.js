@@ -90,12 +90,14 @@ async function importZuerichAPI() {
     const res = await fetch(ZUERICH_URL);
     const data = await res.json();
 
-    if (!data || !data['@graph']) {
+    if (!data || !Array.isArray(data)) {
+
       alert('Zürich API: Keine Daten gefunden.');
       return;
     }
+const items = data;
 
-    const items = data['@graph'];
+    
     let importiert = 0;
     let fehler = 0;
 
