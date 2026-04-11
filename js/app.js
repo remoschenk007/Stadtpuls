@@ -1,48 +1,14 @@
 /* ═══════════════════════════════════════════════════════════
    STADTPULS — app.js
-   Router · Cursor · Reveal · Menu · Supabase
+   Router · Cursor · Reveal · Menu · Scroll · Supabase · API
    © 2026 by raimondo*
 ═══════════════════════════════════════════════════════════ */
 
+/* ═══════════════════════════════
+   SUPABASE CONFIG
+═══════════════════════════════ */
 const SUPABASE_URL = 'https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
-
-/* ═══════════════════════════════
-   SUPABASE — Locations laden
-═══════════════════════════════ */
-async function loadLocations() {
-  const container = document.getElementById('supabase-locations');
-  if (!container) return;
-
-  container.innerHTML = '<div style="font-family:\'DM Mono\',monospace;font-size:.62rem;color:#44445a;padding:1rem 0;">Lädt…</div>';
-
-  try {
-    const res = await fetch(SUPABASE_URL + '/rest/v1/locations?select=*', {
-      headers: {
-        'apikey': SUPABASE_KEY,
-        'Authorization': 'Bearer ' + SUPABASE_KEY
-      }
-    });
-    const data = await res.json();
-
-    if (!data || data.length === 0) {
-      container.innerHTML = '<div style="font-family:\'DM Mono\',monospace;font-size:.62rem;color:#44445a;padding:1rem 0;">Keine Locations gefunden.</div>';
-      return;
-    }
-
-    container.innerHTML = data.map(loc => `
-      <div class="ec">
-        <span class="etag g">${loc.kategorie}</span>
-        <h3>${loc.name}</h3>
-        <div class="meta"><strong>${loc.adresse} · Kreis ${loc.kreis}</strong></div>
-        <span class="earr">↗</span>
-      </div>
-    `).join('');
-
-  } catch(err) {
-    container.innerHTML = '<div style="font-family:\'DM Mono\',monospace;font-size:.62rem;color:#ff2d00;padding:1rem 0;">Fehler beim Laden.</div>';
-  }
-}
 
 /* ═══════════════════════════════
    ROUTER — SPA Navigation
@@ -62,9 +28,161 @@ function go(page) {
 
   injectFooter(page);
 
-  if (page === 'gastro') loadLocations();
+  if (page === 'gastro') loadLocations('gastro');
+  if (page === 'nachtleben') loadLocations('nachtleben');
+  if (page === 'shopping') loadLocations('shopping');
+  if (page === 'events') loadLocations('events');
 
   setTimeout(initReveal, 100);
+}
+
+/* ═══════════════════════════════
+   SUPABASE — Locations laden
+═══════════════════════════════ */
+async function loadLocations(kategorie) {
+  const containerId = 'supabase-locations-' + kategorie;
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  container.innerHTML = '<p style="color:#e8e4d9;opacity:.5;padding:1rem;">Laden…</p>';
+
+  try {
+    const res = await fetch(
+      SUPABASE_URL + '/rest/v1/locations?select=*&kategorie=eq.' + kategorie,
+      {
+        headers: {
+          'apikey': SUPABASE_KEY,
+          'Authorization': 'Bearer ' + SUPABASE_KEY
+        }
+      }
+    );
+
+    const data = await res.json();
+
+    if (!data || data.length === 0) {
+      container.innerHTML = '<p style="color:#e8e4d9;opacity:.5;padding:1rem;">Noch keine Einträge.</p>';
+      return;
+    }
+
+    container.innerHTML = data.map(loc => `
+      <div class="ec rv">
+        <span class="etag">${loc.subkategorie || loc.kategorie}</span>
+        <h3>${loc.name}</h3>
+        <div class="meta"><strong>${loc.adresse} · Kreis ${loc.kreis}</strong></div>
+        <span class="earr">↗</span>
+      </div>
+    `).join('');
+
+    setTimeout(initReveal, 100);
+
+  } catch(err) {
+    container.innerHTML = '<p style="color:#ff2d00;padding:1rem;">Fehler: ' + err.message + '</p>';
+  }
+}
+
+/* ═══════════════════════════════
+   ZÜRICH API — Import in Supabase
+═══════════════════════════════ */
+async function importZuerichAPI() {
+  const ZUERICH_URL = 'https://www.zuerich.com/en/api/v2/data?id=100';
+
+  try {
+    const res = await fetch(ZUERICH_URL);
+    const data = await res.json();
+
+    if (!data || !data['@graph']) {
+      alert('Zürich API: Keine Daten gefunden.');
+      return;
+    }
+
+    const items = data['@graph'];
+    let importiert = 0;
+    let fehler = 0;
+
+    for (const item of items) {
+      const location = mapZuerichItem(item);
+      if (!location) continue;
+
+      const insertRes = await fetch(
+        SUPABASE_URL + '/rest/v1/locations',
+        {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': 'Bearer ' + SUPABASE_KEY,
+            'Content-Type': 'application/json',
+            'Prefer': 'resolution=ignore-duplicates'
+          },
+          body: JSON.stringify(location)
+        }
+      );
+
+      if (insertRes.ok || insertRes.status === 201 || insertRes.status === 409) {
+        importiert++;
+      } else {
+        fehler++;
+      }
+    }
+
+    alert('Import fertig: ' + importiert + ' Locations · ' + fehler + ' Fehler');
+
+  } catch(err) {
+    alert('Zürich API Fehler: ' + err.message);
+  }
+}
+
+function mapZuerichItem(item) {
+  if (!item.name || !item.address) return null;
+
+  const name = typeof item.name === 'object' ? item.name.de || item.name.en || '' : item.name;
+  const adresse = item.address?.streetAddress || '';
+  const plz = item.address?.postalCode || '';
+  const lat = item.geo?.latitude || null;
+  const lng = item.geo?.longitude || null;
+  const beschreibung = typeof item.disambiguatingDescription === 'object'
+    ? item.disambiguatingDescription.de || item.disambiguatingDescription.en || ''
+    : item.disambiguatingDescription || '';
+
+  const typ = item['@type'] || '';
+  let kategorie = 'gastro';
+  let subkategorie = 'restaurant';
+
+  if (typ.includes('BarOrPub') || typ.includes('NightClub')) {
+    kategorie = 'nachtleben';
+    subkategorie = 'bar';
+  } else if (typ.includes('CafeOrCoffeeShop')) {
+    kategorie = 'gastro';
+    subkategorie = 'cafe';
+  } else if (typ.includes('FastFood')) {
+    kategorie = 'gastro';
+    subkategorie = 'street food';
+  }
+
+  const cats = (item.category || []).map(c => (c.name?.de || c.name?.en || '').toLowerCase());
+  if (cats.some(c => c.includes('vegeta') || c.includes('vegan'))) subkategorie = 'vegisch';
+  if (cats.some(c => c.includes('asia') || c.includes('japan') || c.includes('chin') || c.includes('thai'))) subkategorie = 'asiatisch';
+  if (cats.some(c => c.includes('ital') || c.includes('medit'))) subkategorie = 'mediterran';
+  if (cats.some(c => c.includes('brunch') || c.includes('frühstück'))) subkategorie = 'brunch';
+  if (cats.some(c => c.includes('techno') || c.includes('club'))) { kategorie = 'nachtleben'; subkategorie = 'techno'; }
+  if (cats.some(c => c.includes('jazz'))) { kategorie = 'nachtleben'; subkategorie = 'jazz'; }
+
+  const slug = name.toLowerCase()
+    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+
+  return {
+    name,
+    kategorie,
+    subkategorie,
+    adresse,
+    plz,
+    lat,
+    lng,
+    beschreibung,
+    slug,
+    aktiv: true,
+    quelle: 'zuerich-tourismus'
+  };
 }
 
 /* ═══════════════════════════════
@@ -125,7 +243,8 @@ const footerHTML = `
 </footer>`;
 
 function injectFooter(page) {
-  const footerSlot = document.getElementById('f' + page.replace('-', ''));
+  const key = 'f' + page.replace('-', '');
+  const footerSlot = document.getElementById(key);
   if (footerSlot && footerSlot.innerHTML.trim() === '') {
     footerSlot.innerHTML = footerHTML;
   }
