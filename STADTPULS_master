@@ -571,9 +571,32 @@ Roadmap Update:
 	•	⏳ Phase 4f → Zürich API Import in Supabase
 	•	⏳ Phase 4g → Alle Kategorien anschliessen
 	•	⏳ 4. Juni → SOFT LAUNCH 🎂🔴
-💪🔴
-«dä puls vo dä stadt»
-© 2026 by raimondo*
+
+Hier ist alles in einem — direkt unten in den Master anfügen:
+
+SESSION 11. APRIL 2026 — MORGEN
+Problem erkannt:
+	•	zuerich.js Commits kommen nicht an — Raw-URL zeigt alte Version
+	•	consBt Tippfehler + alter Proxy noch drin
+Entscheid:
+	•	Import-Logik direkt in app.js bauen — dort funktionieren Commits zuverlässig
+	•	zuerich.js vorerst ignorieren
+Supabase Auth:
+	•	E-Mail von Supabase erhalten — Auth bereits im Projekt integriert
+	•	Kommt in Phase 5 — User Onboarding
+Kategorien Stand:
+	•	Gastro → Supabase live ✅
+	•	Nachtleben / Shopping / Events / Immobilien / Marktplatz → noch Hardcode ❌
+	•	Alle anschliessen nach Import — 30 Minuten Arbeit
+KRITISCH FÜR NEUEN CHAT:
+	•	zuerich.js IGNORIEREN — Commits kommen nie an
+	•	Import-Logik gehört in app.js — dort funktioniert alles
+	•	Vor jeder Änderung Raw-URL checken — nie blind arbeiten
+	•	Nie blind arbeiten
+Nächste Session Priorität 1:
+	•	Zürich API Import direkt in app.js bauen
+	•	Dann alle Kategorien anschliessen
+
 
 
 
