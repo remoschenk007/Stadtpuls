@@ -706,6 +706,50 @@ ROADMAP — AKTUELL
 ⏳ 4. Juni  → SOFT LAUNCH 🎂🔴
 
 
+Gut — ich habe jetzt alles gelesen. Der Master ist tatsächlich schon sehr vollständig — der Update-Text von heute Nachmittag ist bereits drin bis und mit Roadmap 4k.
+Was noch fehlt sind die Erkenntnisse von heute Abend — Konkurrenzanalyse, Instagram, und die neuen Seiten die auf den Screenshots sichtbar sind aber noch nicht im Master dokumentiert.
+Hier ist der finale Ergänzungstext für den Master:
+
+SESSION 11. APRIL 2026 — ABEND
+Wettbewerb — Komplette Analyse:
+	•	Ron Orp: 500k User, Newsletter, kein GPS, keine KI
+	•	Tsüri.ch: Lokaljournalismus, Membership-Model, kein Lifestyle
+	•	Tempo Zurich: Substack, Kultur-Nische, Englisch, ~2k Follower
+	•	Zuri.net: Adressverzeichnis, 709k Visits/Monat, Design veraltet
+	•	Zuerich24.ch: Lokalzeitung, News/Sport, kein Lifestyle
+	•	Fazit: Niemand hat GPS + KI + alle Kategorien. Stadtpuls ist einzigartig.
+Instagram @stadtpuls_zh:
+	•	Account live, 7 Follower, 1 Beitrag
+	•	Animiertes HTML-Poster erstellt (pulsende Ringe, Design-DNA)
+	•	Post-Text: «Zürich bekommt seinen City Guide. Events finde. Znacht buche. Nachtleben entdecke. Wir starten am 4. Juni.»
+	•	Hashtags: #stadtpuls #zürich #zürileben #cityguide #züristadt
+	•	Strategie: Jetzt klar kommunizieren, Mystery erst 2-3 Wochen vor Launch
+Seiten live — fehlten im Master:
+	•	Musik & Sound / Soundtrack Züri ✅
+	•	News & Stories ✅ (mit Artikel-Layout, Story of the Week)
+	•	People & Dates ✅ (Lila, Quartier-basiert, kein Tinder-Modell)
+	•	Jobs Züri ✅ (Volt-Grün, Gastro/Design/Tech/Event)
+	•	GPS — Wo bisch du? ✅ (Browser GPS, Kreis-Erkennung)
+	•	Partner & Kooperationen ✅ (OpenTable aktiv, Ticketcorner/Scout24 in Planung)
+	•	Mobilität ⏳ (Seite vorhanden, noch leer)
+	•	Login / Register ✅ (Bug: Backticks sichtbar, Register nicht angezeigt)
+Community-Features geplant (noch nicht im Master):
+	•	Bewertungen mit Sternchen + Kommentaren auf allen Kategorien
+	•	Artikel liken / nicht liken
+	•	«Züri stimmt ab» — Community Votes
+	•	Top-Listen aus Bewertungen generiert
+	•	«Neu in Zürich» Badge — Gamification
+	•	User-generated Content in News & Stories
+Nächste Session — Priorität:
+	1.	Doppel-Footer fixen
+	2.	Register-Formular fixen (Backticks entfernen)
+	3.	Nachtleben Kategorie-Filter fixen
+	4.	Alle Kategorien an Supabase anschliessen
+🔴💪
+
+Das kannst du direkt unten im Master einfügen — dann ist er komplett aktuell.​​​​​​​​​​​​​​​​
+
+
 Das ist der komplette Stand. Willst du das so in den Master einfügen? 🔴​​​​​​​​​​​​​​​​
 
 
