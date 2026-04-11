@@ -1,0 +1,244 @@
+Ja, perfekt! 🔴
+Die Datei STADTPULS_master_v2 ist bereit. Jetzt den kompletten Text reinkopieren.
+Hier ist er — alles in einem, direkt kopierbar:
+
+STADTPULS — MASTER BRIEFING
+Stand: 11. April 2026 — Abend — KOMPLETT
+1. WER BIN ICH
+Name: Remo Schenk
+GitHub: remoschenk007
+E-Mail: remoschenk@me.com
+Hintergrund: Ehemaliger Gründer Homespeed.ch
+Arbeitsgerät: iPad
+Sprache: Hochdeutsch von Claude / Züri-Slang nur auf dem Portal
+2. WAS IST STADTPULS
+Tagline: «dä puls vo dä stadt»
+Konzept: Interaktiver Lifestyle & City Guide Zürich
+Prinzip: Shopping Center — alles auf einer Plattform
+Vision: Was 2006 als Idee begann, wird 2026 mit KI gebaut.
+Strategie: Zürich first, perfekt machen → Hamburg, Berlin
+Monetarisierung: Gratis für User. Revenue via Partner.
+Copyright: © 2026 by raimondo*
+Live: https://remoschenk007.github.io/Stadtpuls
+GitHub: https://github.com/remoschenk007/Stadtpuls
+Social Media:
+	•	Instagram: @stadtpuls_zh (live, 7 Follower, 1 Beitrag)
+	•	Gesichert: @stadtpuls_hamburg, @stadtpuls_berlin
+3. DESIGN-DNA
+#04040a — Midnight-Schwarz (Hintergrund)
+#ff2d00 — Lava-Rot (Akzent 1)
+#c8ff00 — Volt-Grün (Akzent 2)
+#00f5ff — Cyber-Cyan (Akzent 3)
+#9333ea — Lila (Dating)
+#e8e4d9 — Warm-Weiss (Text)
+Fonts:
+	•	Barlow Condensed Italic 900 (Headlines)
+	•	DM Mono (Body/Code)
+	•	Bebas Neue (Logo)
+Spezial:
+	•	Dualer Cursor (roter Punkt + Ring mit Lag)
+	•	Doppel-Ticker gegenläufig
+	•	Scan-Lines im Hero
+	•	Grid-Overlay
+	•	Reveal-Animationen (IntersectionObserver)
+4. TECH-STACK
+Frontend: HTML / CSS / JS (Vanilla)
+Hosting: GitHub Pages (gratis)
+Editor: GitHub Web Editor (iPad)
+Backend: Supabase (live)
+DB: PostgreSQL + PostGIS via Supabase
+Auth: Supabase Auth (integriert, Phase 5)
+KI: Claude Pro (Anthropic) — Reset Di 08:00
+Kosten: Nur Claude Pro CHF 20.–/Mt — alles andere gratis
+5. DATEISTRUKTUR — AKTUELL
+Stadtpuls/
+├── index.html
+├── css/
+│   ├── base.css
+│   ├── components.css
+│   └── layout.css
+└── js/
+├── main.js       ✅ Ersetzt app.js — Commits zuverlässig
+├── supabase.js   ✅ Supabase Client
+└── api/
+└── zuerich.js ⚠️ Commits kommen nicht an — ignorieren
+WICHTIG: app.js existiert noch — kann gelöscht werden.
+WICHTIG: zuerich.js ignorieren — Import-Logik läuft in main.js.
+WICHTIG: go() Funktion die aktiv ist = in index.html Script-Block.
+6. ALLE SEITEN — KOMPLETT
+Hauptkategorien (Nav):
+✅ Home
+✅ Events
+✅ Gastro
+✅ Nachtleben
+✅ Shopping
+✅ Immobilien
+✅ Marktplatz
+Detail-Seiten:
+✅ Event Detail
+✅ Gastro Detail
+✅ Club Detail
+✅ Immo Detail
+✅ Markt Detail
+✅ Post Detail
+✅ Job Detail
+✅ News Detail
+✅ Dating Profil
+✅ User Profil
+Zusätzliche Seiten (Hamburger-Menu):
+✅ GPS — Wo bisch du?
+✅ Soundtrack Züri / Musik & Sound
+✅ People & Dates
+✅ Jobs Züri
+✅ News & Stories
+✅ Community
+✅ Quartiere (Kreis 1, 4, 5, 8)
+✅ Partner & Kooperationen
+✅ Login / Register
+⏳ Mobilität (Seite vorhanden, noch leer)
+7. FILTER & TABS — FERTIG ✅
+Events     → Hüt · Wochenende · Konzert · Kultur · Open Air · Sport · Gratis
+Gastro     → Znacht · Zmittag · Brunch · Vegisch · Asiatisch · Mediterran · 📍
+Nachtleben → Techno · House · Jazz · Hip-Hop · Live Music · Afterhour · 📍
+Shopping   → Mode · Vintage · Design · Lokal · Sale · Pop-Up · 📍
+Immobilien → WG-Zimmer · 1-Zi · 2-Zi · 3+ Zi · Büro · Atelier · 📍
+Marktplatz → Velos · Möbel · Kleider · Tickets · Elektronik · 📍
+GPS Logik:
+→ Kreis 1 abends → Oper/Theater prominent
+→ Kreis 4 abends → Clubs/Bars prominent
+→ Kreis 5 abends → Techno/Industrie prominent
+8. SUPABASE — AKTUELLER STAND
+URL: https://pnynkzrqnfoshojqfqxn.supabase.co
+Tabellen: locations, location_images
+230 Locations importiert via Zürich Tourismus API
+17 Spalten: id, name, kategorie, subkategorie, kreis, lat, lng, adresse, plz, oeffnungszeiten, tags, preis_niveau, slug, beschreibung, bild_alt, quelle, aktiv
+Kategorien:
+✅ Gastro → Supabase live
+✅ Nachtleben → Supabase live (Filter-Bug)
+❌ Shopping / Events / Immobilien / Marktplatz → noch Hardcode
+9. OFFENE BUGS — PRIORITÄT
+	1.	Doppel-Footer — zwei Footer übereinander auf allen Seiten
+	2.	Login-Seite — Backtick-Zeichen sichtbar oben
+	3.	Register-Formular — nicht sichtbar, nur Login sichtbar
+	4.	Nachtleben — zeigt Gastro-Daten (Kategorie-Filter falsch)
+10. ARCHITEKTUR — KRITISCH FÜR NEUE CHATS
+	•	go() Funktion aktiv = in index.html Script-Block (NICHT main.js)
+	•	Vor jeder Änderung Raw-URL checken — nie blind arbeiten
+	•	Alert-Debugging in Chrome (nicht Safari) auf iPad
+	•	Commits in main.js zuverlässig
+	•	zuerich.js IGNORIEREN
+11. SEO STRATEGIE
+Ziel: stadtpuls.ch/gastro · /events · /kreis/4 · /restaurant/langstrasse-77
+Phase 3 → Meta Tags, Schema.org, Open Graph
+Phase 4 → URL Routing, Ladezeit unter 2 Sekunden
+Phase 5 → Community Content täglich indexiert
+Ziel: Google AI antwortet «Laut Stadtpuls…» 🔴
+12. USER ONBOARDING — PHASE 5
+Progressive Onboarding — 5 Schritte (Duolingo-Prinzip):
+1 → Nickname
+2 → Quartier (Kreis 1-12)
+3 → Interessen: Gastro / Nachtleben / Dating / Jobs / Shopping / Kultur
+4 → Alter (Slider, optional, für Dating)
+5 → «Willkommen @nickname!» Konfetti 🎉
+→ Supabase Auth im Hintergrund
+13. NEWS & STORIES — MODERATION
+Status-Spalte: pending / approved / rejected
+User postet → Queue → Admin gibt frei → live
+Verhindert rechtliche Probleme
+14. COMMUNITY FEATURES — PHASE 5
+	•	Bewertungen Sternchen + Kommentare
+	•	Artikel liken / nicht liken
+	•	«Züri stimmt ab» — Community Votes
+	•	Top-Listen aus Bewertungen automatisch
+	•	«Neu in Zürich» Badge — Gamification
+	•	User-generated Content in News & Stories
+15. KI FEATURES — PHASE 5-6
+	1.	Züri-Bot → «Was mach ich heute Abend?»
+	2.	Personalisierter Feed → lernt was du magst
+	3.	Video Import → KI erkennt Züri-Locations
+	4.	Predictive → «Freitag Kreis 4 — wie immer?»
+	5.	Stimmungs-Matching → müde/energetisch/romantisch
+	6.	Push Alerts → «Event 200m · startet in 30min»
+16. MONETARISIERUNG
+OpenTable    → CHF 1-5 pro Buchung
+Ticketcorner → 5-10% pro Ticket
+Scout24      → Pay per Lead (Phase später)
+ZVV          → Integration geplant
+Prinzip: User verlässt Stadtpuls nie — alles unter einem Dach.
+17. PARTNER & KOOPERATIONEN
+OpenTable        → AKTIV geplant
+Ticketcorner     → IN PLANUNG
+Scout24/Homegate → SPÄTER
+ZVV / SBB        → GEPLANT
+Zürich kauft ein → GESPRÄCH
+Zürich geht aus  → GESPRÄCH
+18. OFFENE GRATIS APIs
+Zürich Tourismus → https://www.zuerich.com/en/api/v2/data · ?id=100
+Stadt Zürich Open Data → data.stadt-zuerich.ch · 900+ Datensätze
+ZVV Open Data → Echtzeit-Abfahrtszeiten · für Mobilität-Seite
+OpenStreetMap → Karten, Quartiere, GPS-Layer
+Guidle AG → Lokale Events, Partys
+19. WETTBEWERB
+Ron Orp      → 500k User · Newsletter · kein GPS · keine KI
+Tsüri.ch     → Journalismus · Membership · kein Lifestyle
+Tempo Zurich → Substack · Kultur · Englisch · ~2k Follower
+Zuri.net     → Adressverzeichnis · 709k Visits/Mt · veraltet
+Zuerich24    → Lokalzeitung · News/Sport · kein Lifestyle
+Mapin.social → App-only · nur Events · kein Gastro/Immo/Jobs
+Fazit: Niemand hat GPS + KI + alle Kategorien. Stadtpuls einzigartig.
+20. DIE VISION
+Handy · Stadtpuls offen · durch Zürich laufen
+GPS → 200m Radius → Restaurant → Menü → OpenTable → reserviert
+GPS → Event → Ticketcorner → Ticket gekauft
+GPS → Marktplatz → Velo gefunden
+Banner → «Velomarkt Helvetiaplatz heute»
+ZVV → Nächstes Tram 3 Minuten · Richtung Bellevue
+KI → lernt was du magst → zeigt es bevor du suchst
+21. ROADMAP
+✅ Phase 1  → Frontend
+✅ Phase 2  → Modularisierung
+✅ Phase 3a → Filter & Tabs — 08.04.2026
+✅ Phase 3b → GitHub aufgeräumt — 09.04.2026
+✅ Phase 4a → Supabase Setup — 09.04.2026
+✅ Phase 4b → Supabase Gastro live — 10.04.2026
+✅ Phase 4c → Styling ec Klassen — 10.04.2026
+✅ Phase 4d → PLZ Spalte — 10.04.2026
+✅ Phase 4e → Zürich API erforscht — 10.04.2026
+✅ Phase 4f → 230 Locations importiert — 11.04.2026
+✅ Phase 4g → Gastro + Nachtleben live — 11.04.2026
+⏳ Phase 4h → Doppel-Footer fixen
+⏳ Phase 4i → Register + Backticks fixen
+⏳ Phase 4j → Nachtleben Filter fixen
+⏳ Phase 4k → Shopping + Events an Supabase
+⏳ Phase 4l → Bilder-URLs + Featured-Layout
+⏳ Phase 4m → ZVV API Mobilität
+⏳ Phase 5  → Login · Onboarding · Community · Moderation
+⏳ Phase 5  → OpenTable · Ticketcorner APIs
+⏳ Phase 6  → KI Features
+⏳ Phase 7  → Hamburg, Berlin
+⏳ 4. Juni  → SOFT LAUNCH 🎂🔴
+22. INSTAGRAM
+@stadtpuls_zh — live · 7 Follower · 1 Beitrag
+Animiertes Poster erstellt (pulsende Ringe)
+Post: «Zürich bekommt seinen City Guide. Wir starten am 4. Juni.»
+Hashtags: #stadtpuls #zürich #zürileben #cityguide #züristadt
+Strategie: Klar kommunizieren · Mystery 2-3 Wochen vor Launch
+23. GITHUB DOKUMENTE
+STADTPULS_master_v2    ✅ Dieses Dokument — einzige Wahrheit
+STADTPULS_master       ✅ Alt — Backup
+STADTPULS_BRIEFING_alt ✅ Archiviert — nicht verwenden
+STADTPULS_SESSION_07_APRIL ✅ Archiv
+STADTPULS_TECHNIK_APRIL    ✅ Archiv
+Regel: Immer nur STADTPULS_master_v2 in neuen Chat laden.
+24. ARBEITS-HINWEISE
+	•	iPad · Datei für Datei · nie zu viel auf einmal
+	•	Code als Text im Chat
+	•	Neue Konversation pro Thema
+	•	Claude Pro Reset Di 08:00
+	•	Hochdeutsch · Züri-Slang nur auf Portal
+	•	Raw-URL checken vor jeder Änderung
+	•	Chrome für Alert-Debugging (nicht Safari)
+© 2026 by raimondo* — Stadtpuls — Zürich 💪🔴
+«dä puls vo dä stadt» — «Zürich first. Dann die Welt.»
+
+Alles reinkopieren, Commit — fertig. Jetzt Feierabend! 😄🔴​​​​​​​​​​​​​​​​
