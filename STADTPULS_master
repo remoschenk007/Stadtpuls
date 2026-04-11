@@ -768,6 +768,14 @@ Marktplatz → Velo gefunden → Kontakt → fertig
 Banner oben → «Velomarkt Helvetiaplatz heute» → hingehen
 KI lernt was du magst → zeigt es dir bevor du suchst
 
+Ja — das ist Gold. 🔴
+Du meinst die ZVV Open Data API. Die ist komplett gratis und öffentlich zugänglich. Echtzeit-Abfahrtszeiten, Linien, Haltestellen — alles drin.
+Das passt perfekt in die Mobilität-Seite die schon vorhanden aber noch leer ist.
+Und in die GPS-Vision: Du stehst vor einem Restaurant in Kreis 4, Stadtpuls zeigt dir nicht nur das Restaurant — sondern auch gleich welches Tram oder Bus dich wieder nach Hause bringt. Nächste Abfahrt: Tram 8 Richtung Bellevue — 3 Minuten.
+Das ist hyperlokal auf einem anderen Level. Kein anderer in Zürich macht das.
+Technisch: ZVV API anzapfen ist einfach — gleiche Logik wie Zürich Tourismus API. Fetch, Daten mappen, anzeigen. Für die Mobilität-Seite und später direkt in die Location-Detail-Seiten integrieren.
+Das gehört noch in den Master — kurz notieren und dann wirklich Feierabend. 😄🔴💪​​​​​​​​​​​​​​​​
+
 🔴💪
 
 Das kannst du direkt unten im Master einfügen — dann ist er komplett aktuell.​​​​​​​​​​​​​​​​
