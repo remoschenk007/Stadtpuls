@@ -745,6 +745,29 @@ Nächste Session — Priorität:
 	2.	Register-Formular fixen (Backticks entfernen)
 	3.	Nachtleben Kategorie-Filter fixen
 	4.	Alle Kategorien an Supabase anschliessen
+
+SESSION 11. APRIL 2026 — FINAL
+
+NEWS & STORIES — MODERATION:
+Status-Spalte in DB: pending / approved / rejected
+User postet → landet in Queue → Freigabe durch Admin
+→ Dann live. Rechtlich sauber. Kein Bullshit veröffentlicht.
+
+PARTNER-SCHNITTSTELLEN — KONKRET:
+OpenTable   → Restaurant · Menü sehen · Tisch reservieren · direkt bei uns
+Ticketcorner → Konzert/Festival/Event · Ticket kaufen · direkt bei uns
+Scout24     → Immobilien · Phase später
+User verlässt Stadtpuls nie — alles unter einem Dach.
+
+DIE VISION — USER EXPERIENCE:
+Handy · Stadtpuls offen · durch Zürich laufen
+GPS erkennt Standort · zeigt was 200m um dich ist
+Restaurant → Menü → OpenTable Reservation → fertig
+Event/Konzert → Ticketcorner → Ticket gekauft → fertig
+Marktplatz → Velo gefunden → Kontakt → fertig
+Banner oben → «Velomarkt Helvetiaplatz heute» → hingehen
+KI lernt was du magst → zeigt es dir bevor du suchst
+
 🔴💪
 
 Das kannst du direkt unten im Master einfügen — dann ist er komplett aktuell.​​​​​​​​​​​​​​​​
