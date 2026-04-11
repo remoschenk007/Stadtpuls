@@ -665,7 +665,11 @@ function go(id){
   var fid=map[id];
   if(fid){var fp=document.getElementById(fid);if(fp&&fp.innerHTML.trim()===''){var tpl=document.getElementById('ftpl');fp.appendChild(document.importNode(tpl.content,true));}}
   setTimeout(triggerRv,80);
-  if(id==='gastro') loadLocations();
+if(id==='gastro') loadLocations('gastro');
+if(id==='nachtleben') loadLocations('nachtleben');
+if(id==='shopping') loadLocations('shopping');
+if(id==='events') loadLocations('events');
+
 
   bndCur();
   closeMenu();
