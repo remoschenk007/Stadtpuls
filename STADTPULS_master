@@ -632,6 +632,82 @@ Roadmap Update:
 	•	⏳ Phase 4j → Filter aktivieren
 4. Juni Soft Launch — 54 Tage 🔴💪
 
+Gut. Ich habe jetzt alles gelesen — Master, Session 07. April, Technik April, und alle 20 Screenshots. Jetzt bin ich wirklich komplett im Bild.
+Hier ist der Update-Text für den Master — alles was fehlt oder veraltet ist:
+
+MASTER UPDATE — 11. APRIL 2026
+SEITEN KOMPLETT — WAS LIVE IST
+Folgende Seiten existieren bereits in index.html und sind live — fehlten im Master:
+Hauptkategorien (Nav):
+Events · Gastro · Nachtleben · Shopping · Immobilien · Marktplatz · Mitmache
+Zusätzliche Seiten (Hamburger-Menu):
+	•	Musik & Sound / Soundtrack Züri ✅
+	•	News & Stories ✅
+	•	People & Dates ✅
+	•	Jobs Züri ✅
+	•	GPS — Wo bisch du? ✅
+	•	Mobilität ⏳ (Seite vorhanden, noch leer)
+	•	Partner & Kooperationen ✅
+	•	Community ✅
+	•	Quartiere (Kreis 1, 4, 5, 8) ✅
+	•	Login / Register ✅
+Detail-Seiten:
+	•	Event Detail ✅
+	•	Gastro Detail ✅
+	•	Club Detail ✅
+
+DATEISTRUKTUR AKTUELL
+
+Stadtpuls/
+├── index.html
+├── css/
+│   ├── base.css
+│   ├── components.css
+│   └── layout.css
+├── js/
+│   ├── main.js          ✅ NEU — ersetzt app.js
+│   ├── supabase.js      ✅ Supabase Client
+│   └── api/
+│       └── zuerich.js   ✅ Zürich Tourismus API
+
+
+OFFENE BUGS — PRIORITÄT
+	1.	Doppel-Footer — Startseite und andere Seiten zeigen zwei Footer übereinander. Erster Footer aus Template, zweiter aus main.js injection.
+	2.	Login-Seite — Backtick-Zeichen ``` sichtbar oben auf der Seite — kleiner Darstellungsfehler.
+	3.	Nachtleben — zeigt Gastro-Daten (Kategorie-Filter greift nicht korrekt)
+	4.	Register-Formular — nicht sichtbar, nur Login sichtbar
+
+SUPABASE — AKTUELLER STAND
+	•	URL: https://pnynkzrqnfoshojqfqxn.supabase.co
+	•	Tabellen: locations, location_images
+	•	230 Locations importiert via Zürich Tourismus API
+	•	17 Spalten in locations (inkl. slug, beschreibung, bild_alt, oeffnungszeiten, plz)
+	•	Gastro + Nachtleben live aus Supabase
+	•	Shopping / Immobilien / Marktplatz noch Hardcode
+
+ROADMAP — AKTUELL
+
+✅ Phase 1  → Frontend
+✅ Phase 2  → Modularisierung
+✅ Phase 3a → Filter & Tabs — 08.04.2026
+✅ Phase 3b → GitHub aufgeräumt — 09.04.2026
+✅ Phase 4a → Supabase Setup — 09.04.2026
+✅ Phase 4b → Supabase Daten live Gastro — 10.04.2026
+✅ Phase 4c → Styling ec Klassen — 10.04.2026
+✅ Phase 4d → PLZ Spalte — 10.04.2026
+✅ Phase 4e → Zürich API erforscht — 10.04.2026
+✅ Phase 4f → Zürich API Import 230 Locations — 11.04.2026
+✅ Phase 4g → Gastro + Nachtleben live — 11.04.2026
+⏳ Phase 4h → Doppel-Footer fixen
+⏳ Phase 4i → Register-Formular fixen
+⏳ Phase 4j → Nachtleben Kategorie-Filter fixen
+⏳ Phase 4k → Alle Kategorien anschliessen
+⏳ Phase 5  → Partner + KI Features
+⏳ 4. Juni  → SOFT LAUNCH 🎂🔴
+
+
+Das ist der komplette Stand. Willst du das so in den Master einfügen? 🔴​​​​​​​​​​​​​​​​
+
 
 
 
