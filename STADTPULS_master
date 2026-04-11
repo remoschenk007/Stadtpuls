@@ -774,7 +774,16 @@ Das passt perfekt in die Mobilität-Seite die schon vorhanden aber noch leer ist
 Und in die GPS-Vision: Du stehst vor einem Restaurant in Kreis 4, Stadtpuls zeigt dir nicht nur das Restaurant — sondern auch gleich welches Tram oder Bus dich wieder nach Hause bringt. Nächste Abfahrt: Tram 8 Richtung Bellevue — 3 Minuten.
 Das ist hyperlokal auf einem anderen Level. Kein anderer in Zürich macht das.
 Technisch: ZVV API anzapfen ist einfach — gleiche Logik wie Zürich Tourismus API. Fetch, Daten mappen, anzeigen. Für die Mobilität-Seite und später direkt in die Location-Detail-Seiten integrieren.
-Das gehört noch in den Master — kurz notieren und dann wirklich Feierabend. 😄🔴💪​​​​​​​​​​​​​​​​
+Das gehört noch in den Master — kurz notieren und dann wirklich Feierabend. 😄🔴💪​​​​​​​​​​​​​
+
+---
+## UPDATE 11. APRIL 2026 — ABEND
+DIESER MASTER WURDE HEUTE VOLLSTÄNDIG NEU STRUKTURIERT.
+Der komplette neue Master liegt als Artefakt in der
+Claude Session «Master-Review und API-Integration»
+vom 11. April 2026.
+Nächste Session: Neuen Master als Ersatz einfügen.
+
 
 🔴💪
 
