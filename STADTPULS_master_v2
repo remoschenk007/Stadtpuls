@@ -342,6 +342,36 @@ Priorität nächste Session:
 2. index.html pg-home Ende anschauen
 3. Footer Problem ein für alle Mal lösen
 
+SESSION 12. APRIL 2026 — MORGEN
+
+FOOTER — GEFIXT ✅
+
+Was gemacht wurde:
+1. Globaler hardcodierter Footer in index.html gelöscht
+   (alter <footer id="global-footer"> Block — war Doppel-Footer Ursache)
+2. Import-Button Block in index.html gelöscht
+3. injectFooter() in main.js erweitert:
+   → Erstellt Footer-Slot automatisch via document.createElement
+   → Funktioniert auf allen Seiten auch ohne fXXX div
+4. footerHTML in main.js ersetzt:
+   → Neu: Entdecken / Community / Mitmache — vollständig
+   → Gleicher Footer überall auf allen Seiten
+
+Ergebnis:
+✅ Doppel-Footer weg
+✅ Alle Seiten haben Footer
+✅ Footer überall identisch und vollständig
+
+Hinweis GitHub Cache:
+Raw-URL zeigt manchmal alte Version — 1-2 Minuten warten.
+Live-Seite im Chrome testen — nicht Raw-URL.
+
+Nächste Priorität:
+⏳ Register-Formular fixen — Backticks weg, Tab sichtbar
+⏳ Nachtleben Kategorie-Filter fixen
+⏳ Filter-Buttons funktional verdrahten
+
+
 WICHTIG FÜR NEUEN CHAT:
 Nie blind arbeiten — immer zuerst Raw-URLs checken.
 
