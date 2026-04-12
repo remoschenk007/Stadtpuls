@@ -254,3 +254,7 @@ initCursor();
 injectFooter(‘home’);
 revealAll();
 });
+window.go = go;
+window.toggleMenu = toggleMenu;
+window.closeMenu = closeMenu;
+window.switchTab = switchTab;
