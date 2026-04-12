@@ -76,40 +76,47 @@ const footerHTML = `
     <div class="footer-brand">
       <div class="fbl"><div class="fbdot"></div>STADTPULS</div>
       <p>Dä Puls vo dä Stadt.<br>Zürich · 2026 · by raimondo*</p>
+      <p style="margin-top:.8rem;font-size:.56rem;opacity:.7;">Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.</p>
+      <p style="margin-top:.8rem;font-size:.56rem;opacity:.5;">© 2026 by raimondo* — Zürich</p>
     </div>
     <div class="fc">
-      <h5>Entdecke</h5>
+      <h5>Entdecken</h5>
       <ul>
-        <li onclick="go('events')">Events</li>
-        <li onclick="go('gastro')">Gastro</li>
+        <li onclick="go('gastro')">Gastro & Bars</li>
         <li onclick="go('nachtleben')">Nachtleben</li>
         <li onclick="go('shopping')">Shopping</li>
-        <li onclick="go('immobilien')">Immobilien</li>
+        <li onclick="go('events')">Events</li>
+        <li onclick="go('quartiere')">Quartiere</li>
+        <li onclick="go('musik')">Musik & Sound</li>
+        <li onclick="go('mobilitaet')">Mobilität</li>
       </ul>
     </div>
     <div class="fc">
       <h5>Community</h5>
       <ul>
-        <li onclick="go('community')">Mitmache</li>
+        <li onclick="go('news')">Feed & Posts</li>
         <li onclick="go('dating')">People & Dates</li>
         <li onclick="go('jobs')">Jobs Züri</li>
         <li onclick="go('news')">News & Stories</li>
-        <li onclick="go('musik')">Musik & Sound</li>
+        <li onclick="go('gps')">GPS — Wo bisch du?</li>
+        <li onclick="go('partners')">Kooperatione</li>
       </ul>
     </div>
     <div class="fc">
-      <h5>Stadtpuls</h5>
+      <h5>Mitmache</h5>
       <ul>
-        <li onclick="go('partners')">Partner</li>
-        <li onclick="go('quartiere')">Quartiere</li>
-        <li onclick="go('gps')">GPS</li>
-        <li onclick="go('login')">Login</li>
+        <li onclick="go('login')">Einlogge</li>
+        <li onclick="go('login')">Profil aalege</li>
+        <li onclick="go('community')">Blogger werde</li>
+        <li onclick="go('community')">Inserat schalte</li>
+        <li onclick="go('partners')">Partner werde</li>
+        <li onclick="go('community')">Kontakt</li>
       </ul>
     </div>
   </div>
   <div class="fbot">
-    <p>© 2026 by raimondo* · Stadtpuls · Zürich</p>
-    <p>Echts Züri. Kei Chichi. Kei Umwäg.</p>
+    <p>© 2026 Stadtpuls.ch — by raimondo* — Zürich</p>
+    <p>AGB · Datenschutz · Impressum</p>
   </div>
 </footer>`;
 
