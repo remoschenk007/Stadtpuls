@@ -582,6 +582,69 @@ ROADMAP STATUS:
 	•	⏳ Phase 4m → ZVV API
 SOFT LAUNCH: 4. Juni 2026 🔴
 
+Hier ist das Master Update:
+
+SESSION 12. APRIL 2026 — ABEND KOMPLETT — KRITISCH FÜR MORGEN
+AKTUELLER STAND index.html:
+Wir haben die Version von 306962d (8 hours ago / ca. 12:00 Uhr) wiederhergestellt. Das ist jetzt der aktuelle Stand auf main.
+WAS FUNKTIONIERT:
+	•	✅ Navigation — go() ist direkt in index.html als Script Block Zeile 19
+	•	✅ Startseite komplett
+	•	✅ Footer überall
+	•	✅ Gastro sichtbar — aber keine Livedaten
+	•	✅ Nachtleben sichtbar — aber keine Livedaten
+WAS NICHT FUNKTIONIERT:
+	•	❌ GPS, Login, Shopping, Immobilien, Marktplatz, Community, Jobs, News, Partner, Musik, Dating — alle schwarz/leer
+	•	❌ Livedaten Gastro + Nachtleben fehlen
+	•	❌ Supabase loadLocations() nicht aktiv
+URSACHE DER LEEREN SEITEN — ENDLICH GEFUNDEN:
+base.css hat .rv { opacity: 0 } — das macht alle Container unsichtbar. Der Fix auf opacity: 1 wurde heute mehrmals committed aber kommt nie an bei GitHub Pages. Unklar warum.
+WAS WIR HEUTE ALLES PROBIERT HABEN:
+	1.	base.css → opacity:1 — mehrmals committed, nie angekommen
+	2.	main.js komplett neu geschrieben — mehrmals
+	3.	window.go = go — hat nicht geholfen weil main.js gar nicht lädt
+	4.	Script Block in index.html gelöscht — das hat Navigation kaputt gemacht
+	5.	revealAll() in go() — hat nicht geholfen
+	6.	setTimeout 100ms — hat nicht geholfen
+	7.	Cache bust ?v=3 — hat nicht geholfen
+	8.	Chrome neu installiert — kein Cache-Problem
+	9.	Alert-Test bewiesen: go() war undefined — main.js lädt nicht
+	10.	go() direkt in index.html eingebaut — Navigation funktioniert wieder
+KRITISCHE ERKENNTNIS:
+main.js lädt nicht — oder wirft einen Fehler der alles stoppt. Deshalb funktioniert go() nur wenn es direkt in index.html ist.
+AKTUELLER Script Block in index.html Zeile 19:
+
+<script>
+const SUPABASE_URL='...';
+const SUPABASE_KEY='...';
+function go(page){ ... }
+function toggleMenu(){ ... }
+function closeMenu(){ ... }
+function switchTab(){ ... }
+function loadLocations(kategorie){ ... }
+function injectFooter(page){ ... }
+document.addEventListener('DOMContentLoaded', function(){ ... });
+</script>
+
+
+ERSTES ZIEL MORGEN:
+	1.	Herausfinden warum base.css Änderungen nie ankommen
+	2.	.rv { opacity: 0 } → opacity: 1 fix dauerhaft machen
+	3.	Dann alle Seiten sichtbar
+	4.	Dann Livedaten wieder anschliessen
+WICHTIG FÜR MORGEN:
+	•	Vor jeder Änderung Raw-URL checken
+	•	base.css Raw-URL checken ob Fix wirklich ankommt
+	•	main.js wird nicht geladen — nicht versuchen zu fixen, alles in index.html lassen
+ROADMAP:
+	•	✅ Phase 4h → Footer
+	•	✅ Phase 4i → Register
+	•	⏳ Phase 4j → Leere Seiten — MORGEN PRIORITÄT 1
+	•	⏳ Phase 4k → Livedaten wieder anschliessen
+	•	SOFT LAUNCH: 4. Juni 2026 🔴
+
+Kopiere das in Master v2. Morgen lösen wir das in 15 Minuten. Geh jetzt laden! 💪🔴​​​​​​​​​​​​​​​​
+
 Kopiere das in den Master v2. Morgen frischer Kopf — wir lösen das in 10 Minuten. Du hast heute viel geschafft. 💪🔴​​​​​​​​​​​​​​​​
 
 Rein in Master v2 → neuer Chat → frisch weitermachen! 💪🔴
