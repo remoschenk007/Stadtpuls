@@ -405,15 +405,58 @@ VORTEIL GEGENÜBER KONKURRENZ:
 Ron Orp → keine Altersverifikation, kein Targeting
 Stadtpuls → präzises Alter + Quartier + Interessen = Premium Targeting
 
-Rein in den Master v2 — dann weiter mit Nachtleben Filter? 🔴💪​​​​​​​​​​​​​​​​
+Hier ist das Update für den Master v2 — direkt kopierbar: 🔴
+
+SESSION 12. APRIL 2026 — NACHMITTAG
+BUGS GEFIXT ✅
+LOGIN / REGISTER:
+✅ Backticks Zeile 1213 + 1198 gelöscht
+✅ switchTab() Funktion eingebaut
+✅ Register-Tab sichtbar und funktional
+✅ «MITMACHE IN ZÜRI» Formular erscheint korrekt
+FOOTER:
+✅ Bereits aus Morgen-Session — überall identisch
+NACHTLEBEN:
+✅ Hardcode-Karten entfernt
+✅ Lädt nur noch Supabase-Daten
+✅ Featured Layout oben — grosses Bild + 3 kleine Cards
+✅ Grid Layout unten — alle Locations
+SUPABASE DATEN VERBESSERT:
+✅ Kreis aus PLZ automatisch berechnet — alle Kategorien
+✅ Subkategorie aus Name erkannt — bar/club/jazz/cafe/restaurant
+✅ Komplex 457 → nachtleben/club
+✅ Swiss Casinos → nachtleben/club
+✅ Grand Casino → nachtleben/club
+✅ Mehrspur Musikklub → nachtleben/club
+DESIGN:
+✅ Farbige Tags nach Subkategorie:
+→ Bar = Cyan #00f5ff
+→ Club = Lila #9333ea
+→ Jazz = Volt-Grün #c8ff00
+→ Restaurant = Rot #ff2d00
+→ Café = Warm-Weiss #e8e4d9
+KONZEPT BESCHLOSSEN:
+✅ Altersverifikation Phase 5
+→ Unter 18 = eingeschränkter Zugang
+→ Ab 18 = voller Zugang
+→ Alter beim Registrieren eingeben
+→ Kein User verloren — nur gefiltert
+→ Business Value: Alter + Quartier + Interessen = Premium Targeting
+OFFENE PUNKTE — NÄCHSTE SESSION:
+⏳ Filter-Buttons funktional verdrahten (Techno/Jazz/House etc.)
+⏳ Bilder-URLs aus Zürich Tourismus API → Supabase Phase 4l
+⏳ Mehr Supabase Daten verbessern — Öffnungszeiten
+⏳ Shopping + Events an Supabase anbinden
+⏳ Detail-Seiten mit echten Supabase-Daten befüllen
+ROADMAP UPDATE:
+✅ Phase 4h → Doppel-Footer gefixt
+✅ Phase 4i → Register + Backticks gefixt
+✅ Phase 4j → Nachtleben Filter gefixt
+⏳ Phase 4k → Shopping + Events an Supabase
+⏳ Phase 4l → Bilder-URLs + Featured Layout mit echten Fotos
 
 
-Das in den Master einfügen — dann neuer Chat mit frischem Kopf. 🔴💪🏼​​​​​​​​​​​​​​​​
 
-
-
-Rein in den Master — dann Bugs fixen. 🔴💪🏼​​​​​​​​​​​​​​​​
 © 2026 by raimondo* — Stadtpuls — Zürich 💪🔴
 «dä puls vo dä stadt» — «Zürich first. Dann die Welt.»
-
 Alles reinkopieren, Commit — fertig. Jetzt Feierabend! 😄🔴​​​​​​​​​​​​​​​​
