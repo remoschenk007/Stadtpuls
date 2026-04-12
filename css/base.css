@@ -114,8 +114,8 @@ body:hover #cur2 {
    REVEAL ANIMATION
 ═══════════════════════════════ */
 .rv {
-  opacity: 0;
-  transform: translateY(24px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity .5s, transform .5s;
 }
 .rv.in {
