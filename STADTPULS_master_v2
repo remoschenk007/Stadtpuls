@@ -238,6 +238,78 @@ Regel: Immer nur STADTPULS_master_v2 in neuen Chat laden.
 	•	Hochdeutsch · Züri-Slang nur auf Portal
 	•	Raw-URL checken vor jeder Änderung
 	•	Chrome für Alert-Debugging (nicht Safari)
+
+Hier ist der Update-Text — direkt kopierbar in den Master:
+
+BOOKMARK & FAVORITEN SYSTEM — PHASE 5
+
+USER SICHTBAR:
+❤️ / 🔖 Button auf jeder Location, Event, Artikel, Job, Inserat
+«Meine Favoriten» — eigene Liste, jederzeit abrufbar
+Kategorisiert: Gastro · Nachtleben · Shopping · Events · Immobilien
+
+KI IM HINTERGRUND:
+Bookmark = starkes Signal (aktive Absicht)
+Anklicken = schwaches Signal
+Ignorieren = negatives Signal
+KI baut Profil automatisch — ohne Fragebogen
+
+WAS DIE KI LERNT:
+❤️ Hiltl → vegetarisch/vegan
+❤️ Komplex 457 → Techno · Kreis 5 · Nachtmensch
+❤️ WG Kreis 4 → Budget · junges Quartier
+❤️ Vintage Store → nachhaltig · style-bewusst
+❤️ Friedas Büchse → Nachtleben · kein Mainstream
+→ 10 Bookmarks = mehr Info als jeder Fragebogen
+
+TECHNISCH:
+Supabase Tabelle user_preferences
+Feld: bookmarks → Array von Location-IDs
+Bereits in DB-Struktur vorgesehen ✅
+
+BUSINESS VALUE:
+500 User haben Restaurant gebookmarkt aber nie besucht
+→ Heisser Lead für Partner
+→ OpenTable / Restaurant zahlt dafür
+→ Neues Revenue-Modell via Bookmark-Insights
+
+USER PROFIL & SETTINGS — PHASE 5
+
+PROFIL-SEITE (sichtbar für andere):
+- Profilbild
+- Nickname / @handle
+- Quartier / Kreis
+- Interessen sichtbar oder versteckt
+- Bookmarks öffentlich oder privat
+- Aktivität: Reviews, Artikel, Likes
+
+EINSTELLUNGEN (nur für User selbst):
+- Profilbild ändern
+- Nickname ändern
+- E-Mail ändern
+- Passwort ändern / zurücksetzen
+- Quartier aktualisieren
+
+INTERESSEN ANPASSEN:
+- Genres hinzufügen / entfernen
+- Kategorien ein/ausschalten
+- «Ich mag nicht mehr so viel Techno → mehr Jazz»
+- KI passt Feed automatisch an
+
+PRIVACY EINSTELLUNGEN:
+- Profil sichtbar für andere: ja / nein
+- In Kontakt treten lassen: ja / nein
+- Bookmarks öffentlich: ja / nein
+- Push Notifications: ein / aus
+
+TECHNISCH:
+Supabase Tabelle user_preferences
+Supabase Auth für Passwort/E-Mail Reset
+Alles ohne App-Store — läuft im Browser
+
+
+
+Rein in den Master — dann Bugs fixen. 🔴💪🏼​​​​​​​​​​​​​​​​
 © 2026 by raimondo* — Stadtpuls — Zürich 💪🔴
 «dä puls vo dä stadt» — «Zürich first. Dann die Welt.»
 
