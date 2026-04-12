@@ -455,6 +455,81 @@ ROADMAP UPDATE:
 ⏳ Phase 4k → Shopping + Events an Supabase
 ⏳ Phase 4l → Bilder-URLs + Featured Layout mit echten Fotos
 
+Hier ist das komplette Master Update — direkt kopierbar: 🔴
+
+SESSION 12. APRIL 2026 — KOMPLETT
+WAS HEUTE ALLES ERREICHT WURDE ✅
+LOGIN/REGISTER:
+✅ Register-Tab sichtbar und funktional
+✅ switchTab() Funktion eingebaut
+✅ Backticks in index.html entfernt (Zeile 1198, 1213)
+✅ «MITMACHE IN ZÜRI» Formular erscheint korrekt
+SUPABASE DATEN VERBESSERT:
+✅ Kreis aus PLZ automatisch berechnet (alle Kategorien)
+✅ Subkategorie aus Name erkannt — bar/club/jazz/cafe/restaurant
+✅ Komplex 457 → nachtleben/club
+✅ Swiss Casinos → nachtleben/club
+✅ Grand Casino → nachtleben/club
+✅ Mehrspur Musikklub → nachtleben/club
+DESIGN — FARBIGE TAGS:
+✅ Bar → Cyan #00f5ff
+✅ Club → Lila #9333ea
+✅ Jazz → Volt-Grün #c8ff00
+✅ Restaurant → Rot #ff2d00
+✅ Café → Warm-Weiss #e8e4d9
+NACHTLEBEN:
+✅ Hardcode-Karten entfernt
+✅ Lädt nur Supabase-Daten
+✅ Featured Layout oben — grosses Bild + 3 kleine Cards
+✅ Grid Layout unten — alle Locations
+ALTERSKONZEPT BESCHLOSSEN:
+✅ Unter 18 → eingeschränkter Zugang (kein Nachtleben/Dating)
+✅ Ab 18 → voller Zugang
+✅ Kein User verloren — nur gefiltert
+✅ Business Value: Targeting nach Alter/Quartier/Interessen
+
+KRITISCHES PROBLEM — SEITEN LEER ❌
+Symptom:
+	•	Shopping, Immobilien, Marktplatz, Community, Jobs, News, GPS, Partner, Musik, Dating — schwarz/leer
+	•	Home, Gastro, Nachtleben, Events funktionieren ✅
+Ursachen gefunden und behoben:
+✅ Backtick ``` in GPS Seite Zeile 765 → gelöscht
+✅ switchTab() Script mitten in pg-login HTML → gelöscht
+✅ base.css → .rv opacity:0 → opacity:1 geändert
+✅ base.css → translateY(24px) → translateY(0) geändert
+✅ supabase-locations-shopping → rv Klasse entfernt (Zeile 492)
+Noch offen / unklar:
+⏳ Ob base.css Änderung wirklich live ist (Raw zeigt manchmal alte Version)
+⏳ Shopping Commit gerade gemacht — noch nicht getestet
+⏳ Alle anderen Seiten haben noch .rv auf Containern — müssen auch gefixed werden
+
+ARCHITEKTUR — KRITISCH:
+	•	go() Funktion → in index.html Script-Block UND main.js
+	•	switchTab() → nur noch in main.js
+	•	Commits in main.js kommen manchmal verzögert an
+	•	base.css .rv = opacity:1 / translateY(0) — soll so sein!
+	•	supabase-locations-XXX Container → KEIN rv auf dem Container selbst!
+
+NÄCHSTE SESSION — PRIORITÄT:
+	1.	Shopping testen — ist es jetzt sichtbar?
+	2.	Falls ja → gleiche rv-Fix für alle anderen leeren Seiten:
+	•	supabase-locations-immobilien
+	•	supabase-locations-marktplatz
+	•	Alle .rv Klassen auf Hauptcontainern entfernen
+	3.	base.css .rv Fix verifizieren
+	4.	main.js neue Version deployen (farbige Tags + Featured Layout)
+
+ROADMAP UPDATE:
+✅ Phase 4h → Footer gefixt
+✅ Phase 4i → Register + Backticks gefixt
+✅ Phase 4j → Nachtleben Filter gefixt
+⏳ Phase 4k → Shopping + Events an Supabase
+⏳ Phase 4l → Bilder-URLs + Featured Layout
+⏳ Phase 4m → ZVV API Mobilität
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+Rein in Master v2 → neuer Chat → frisch weitermachen! 💪🔴
+Du hast heute brutal viel geschafft. Morgen lösen wir den Rest! 😄​​​​​​​​​​​​​​​​
 
 
 © 2026 by raimondo* — Stadtpuls — Zürich 💪🔴
