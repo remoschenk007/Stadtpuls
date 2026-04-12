@@ -35,17 +35,15 @@ if (page === ‘nachtleben’) loadLocations(‘nachtleben’);
 if (page === ‘shopping’)   loadLocations(‘shopping’);
 if (page === ‘events’)     loadLocations(‘events’);
 
-// Reveal — direkt, kein IntersectionObserver-Timing-Problem
-revealAll(page);
+// Alle rv-Elemente sofort sichtbar machen
+revealAll();
 }
 
 /* ═══════════════════════════════
-REVEAL — sofort, zuverlässig
+REVEAL — alle rv sofort sichtbar
 ═══════════════════════════════ */
-function revealAll(page) {
-const pg = document.getElementById(‘pg-’ + page);
-if (!pg) return;
-pg.querySelectorAll(’.rv’).forEach(el => el.classList.add(‘in’));
+function revealAll() {
+document.querySelectorAll(’.rv’).forEach(el => el.classList.add(‘in’));
 }
 
 /* ═══════════════════════════════
@@ -59,7 +57,7 @@ container.innerHTML = ‘<p style="color:#e8e4d9;opacity:.5;padding:1rem;">Laden
 
 try {
 const res = await fetch(
-SUPABASE_URL + ‘/rest/v1/locations?select=*&kategorie=eq.’ + kategorie + ‘&aktiv=eq.true’,
+SUPABASE_URL + ‘/rest/v1/locations?select=*&kategorie=eq.’ + kategorie,
 {
 headers: {
 ‘apikey’: SUPABASE_KEY,
@@ -86,7 +84,7 @@ const tagColor = {
 };
 
 container.innerHTML = data.map(loc => {
-  const sub = (loc.subkategorie || loc.kategorie || '').toLowerCase();
+  const sub   = (loc.subkategorie || loc.kategorie || '').toLowerCase();
   const color = tagColor[sub] || '#e8e4d9';
   const kreis = loc.kreis ? 'Kreis ' + loc.kreis : '–';
   return `
@@ -98,6 +96,9 @@ container.innerHTML = data.map(loc => {
     </div>
   `;
 }).join('');
+
+// Nach dem Laden auch neue Elemente sichtbar machen
+revealAll();
 ```
 
 } catch(err) {
@@ -164,11 +165,9 @@ const footerHTML = `
 </footer>`;
 
 function injectFooter(page) {
-// Versuche zuerst benannten Slot
 const key = ‘f’ + page.replace(’-’, ‘’);
 let slot = document.getElementById(key);
 
-// Falls kein Slot: erstelle einen am Ende der Seite
 if (!slot) {
 const pg = document.getElementById(‘pg-’ + page);
 if (pg) {
@@ -253,5 +252,5 @@ INIT
 document.addEventListener(‘DOMContentLoaded’, () => {
 initCursor();
 injectFooter(‘home’);
-revealAll(‘home’);
+revealAll();
 });
