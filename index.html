@@ -17,15 +17,60 @@
 <div id="cur"></div>
 <div id="cur2"></div>
 <script>
-function go(page) {
-  document.querySelectorAll('.pg').forEach(function(p) { p.classList.remove('on'); });
-  var t = document.getElementById('pg-' + page);
-  if (t) { t.classList.add('on'); window.scrollTo({top:0,behavior:'smooth'}); }
-  document.querySelectorAll('.rv').forEach(function(el) { el.classList.add('in'); });
+const SUPABASE_URL='https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SUPABASE_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+function go(page){
+  document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});
+  var t=document.getElementById('pg-'+page);
+  if(t){t.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
+  document.querySelectorAll('.nlinks a[data-p]').forEach(function(a){a.classList.toggle('on',a.dataset.p===page);});
+  document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});
+  injectFooter(page);
+  if(page==='gastro')loadLocations('gastro');
+  if(page==='nachtleben')loadLocations('nachtleben');
+  if(page==='shopping')loadLocations('shopping');
+  if(page==='events')loadLocations('events');
 }
-function toggleMenu() { document.getElementById('mobm').classList.toggle('open'); }
-function closeMenu() { document.getElementById('mobm').classList.remove('open'); }
+function toggleMenu(){document.getElementById('mobm').classList.toggle('open');}
+function closeMenu(){document.getElementById('mobm').classList.remove('open');}
+function switchTab(tabId,el){
+  var parent=el.closest('.tab-container')||document.body;
+  parent.querySelectorAll('.tab-content').forEach(function(t){t.classList.remove('active');});
+  parent.querySelectorAll('.tab-btn').forEach(function(b){b.classList.remove('active');});
+  var target=document.getElementById(tabId);
+  if(target)target.classList.add('active');
+  el.classList.add('active');
+}
+function loadLocations(kategorie){
+  var container=document.getElementById('supabase-locations-'+kategorie);
+  if(!container)return;
+  container.innerHTML='<p style="color:#e8e4d9;opacity:.5;padding:1rem;">Laden...</p>';
+  fetch(SUPABASE_URL+'/rest/v1/locations?select=*&kategorie=eq.'+kategorie,{headers:{'apikey':SUPABASE_KEY,'Authorization':'Bearer '+SUPABASE_KEY}})
+  .then(function(r){return r.json();})
+  .then(function(data){
+    if(!data||data.length===0){container.innerHTML='<p style="color:#e8e4d9;opacity:.5;padding:1rem;">Noch keine Einträge.</p>';return;}
+    var colors={'bar':'#00f5ff','club':'#9333ea','jazz':'#c8ff00','restaurant':'#ff2d00','cafe':'#e8e4d9'};
+    container.innerHTML=data.map(function(loc){
+      var sub=(loc.subkategorie||loc.kategorie||'').toLowerCase();
+      var color=colors[sub]||'#e8e4d9';
+      var kreis=loc.kreis?'Kreis '+loc.kreis:'-';
+      return '<div class="ec"><span class="etag" style="background:'+color+';color:#04040a;">'+(loc.subkategorie||loc.kategorie)+'</span><h3>'+loc.name+'</h3><div class="meta"><strong>'+(loc.adresse||'')+' · '+kreis+'</strong></div><span class="earr">↗</span></div>';
+    }).join('');
+  })
+  .catch(function(err){container.innerHTML='<p style="color:#ff2d00;padding:1rem;">Fehler: '+err.message+'</p>';});
+}
+function injectFooter(page){
+  var key='f'+page.replace('-','');
+  var slot=document.getElementById(key);
+  if(!slot){var pg=document.getElementById('pg-'+page);if(pg){slot=document.createElement('div');slot.id=key;pg.appendChild(slot);}}
+  if(slot&&slot.innerHTML.trim()===''){slot.innerHTML='<footer><div class="fg"><div class="footer-brand"><div class="fbl"><div class="fbdot"></div>STADTPULS</div><p>Dä Puls vo dä Stadt · Zürich · 2026 · by raimondo*</p></div></div><div class="fbot"><p>© 2026 by raimondo* · Stadtpuls · Zürich</p></div></footer>';}
+}
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});
+  injectFooter('home');
+});
 </script>
+
 
 
 <!-- NAV -->
