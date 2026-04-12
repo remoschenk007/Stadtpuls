@@ -528,6 +528,62 @@ ROADMAP UPDATE:
 ⏳ Phase 4m → ZVV API Mobilität
 SOFT LAUNCH: 4. Juni 2026 🔴
 
+Hier ist das Master Update:
+
+SESSION 12. APRIL 2026 — ABEND — NAVIGATION KAPUTT
+WAS HEUTE ERREICHT WURDE ✅
+	•	Footer gefixt — überall identisch
+	•	Register-Tab sichtbar und funktional
+	•	Backticks entfernt
+	•	Nachtleben lädt Supabase-Daten
+	•	Subkategorien erkannt — farbige Tags
+	•	230 Locations in Supabase — bleibt erhalten
+	•	Alterskonzept beschlossen
+WAS KAPUTT GEGANGEN IST ❌
+Navigation funktioniert nicht. Kein einziger Button/Link reagiert. Nur Startseite sichtbar. Footer weg.
+URSACHE GEFUNDEN:
+In index.html gab es einen <script> Block (Zeile 618-743) mit einer eigenen go() Funktion die main.js überschrieben hat. Dieser Block wurde gelöscht — aber seither funktioniert Navigation nicht mehr.
+WAS WIR ALLES PROBIERT HABEN:
+	1.	main.js komplett neu geschrieben — mehrmals
+	2.	revealAll() statt initReveal() — kein IntersectionObserver
+	3.	window.go = go hinzugefügt — vor und nach DOMContentLoaded
+	4.	&aktiv=eq.true aus Supabase Query entfernt
+	5.	Cache bust ?v=3 auf Script-Tag
+	6.	Chrome komplett neu installiert
+	7.	URL mit ?v=2 getestet
+	8.	Alles ohne Erfolg
+AKTUELLER STAND DATEIEN:
+index.html Zeile 1170:
+
+<script src="js/main.js?v=3"></script>
+
+
+index.html Zeile 617-646: Nur noch GPS Script — klein und sauber
+main.js — aktuelle Version hat:
+	•	function go(page)
+	•	window.go = go vor DOMContentLoaded
+	•	revealAll() — alle .rv sofort sichtbar
+	•	loadLocations() ohne &aktiv=eq.true
+	•	injectFooter() mit Auto-Slot
+VERDACHT FÜR MORGEN:
+GitHub Pages CDN Cache könnte noch alte Version liefern. Morgen früh prüfen ob Raw-URL neue main.js zeigt mit window.go = go.
+ERSTER SCHRITT MORGEN:
+	1.	Raw-URL checken: https://raw.githubusercontent.com/remoschenk007/Stadtpuls/refs/heads/main/js/main.js
+	2.	Ganz unten schauen — steht da window.go = go?
+	3.	Falls ja → Live-Seite testen → wahrscheinlich funktioniert es bereits
+	4.	Falls nein → main.js nochmal committen
+ROADMAP STATUS:
+	•	✅ Phase 4h → Footer gefixt
+	•	✅ Phase 4i → Register + Backticks gefixt
+	•	✅ Phase 4j → Nachtleben Filter gefixt
+	•	❌ Navigation kaputt — muss morgen als erstes gefixt werden
+	•	⏳ Phase 4k → Shopping + Events an Supabase
+	•	⏳ Phase 4l → Bilder-URLs
+	•	⏳ Phase 4m → ZVV API
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+Kopiere das in den Master v2. Morgen frischer Kopf — wir lösen das in 10 Minuten. Du hast heute viel geschafft. 💪🔴​​​​​​​​​​​​​​​​
+
 Rein in Master v2 → neuer Chat → frisch weitermachen! 💪🔴
 Du hast heute brutal viel geschafft. Morgen lösen wir den Rest! 😄​​​​​​​​​​​​​​​​
 
