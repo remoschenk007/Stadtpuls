@@ -1,11 +1,27 @@
 /* ═══════════════════════════════════════════════════════════
-   STADTPULS — app.js
+   STADTPULS — main.js
    Router · Cursor · Reveal · Menu · Scroll · Supabase · API
    © 2026 by raimondo*
 ═══════════════════════════════════════════════════════════ */
 
 const SUPABASE_URL = 'https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+
+const tagColor = {
+  'bar': '#00f5ff', 'club': '#9333ea', 'jazz': '#c8ff00',
+  'restaurant': '#ff2d00', 'cafe': '#e8e4d9'
+};
+const tagText = {
+  'bar': '#04040a', 'club': '#fff', 'jazz': '#04040a',
+  'restaurant': '#fff', 'cafe': '#04040a'
+};
+
+const unsplash = [
+  'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80',
+  'https://images.unsplash.com/photo-1598387993441-a364f854c3e1?w=800&q=80',
+  'https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80',
+  'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=800&q=80'
+];
 
 function go(page) {
   document.querySelectorAll('.pg').forEach(p => p.classList.remove('on'));
@@ -45,14 +61,51 @@ async function loadLocations(kategorie) {
       container.innerHTML = '<p style="color:#e8e4d9;opacity:.5;padding:1rem;">Noch keine Einträge.</p>';
       return;
     }
-    container.innerHTML = data.map(loc => `
-      <div class="ec rv">
-        <span class="etag">${loc.subkategorie || loc.kategorie}</span>
-        <h3>${loc.name}</h3>
-        <div class="meta"><strong>${loc.adresse} · Kreis ${loc.kreis || '–'}</strong></div>
-        <span class="earr">↗</span>
+
+    const featured = data[0];
+    const sub0 = featured.subkategorie || featured.kategorie;
+    const bg0 = tagColor[sub0] || '#ff2d00';
+    const tc0 = tagText[sub0] || '#fff';
+
+    let html = `
+    <div style="display:grid;grid-template-columns:1.5fr 1fr;gap:2px;margin-bottom:2px;">
+      <div class="ic rv" style="height:360px;">
+        <img src="${unsplash[0]}" alt=""/>
+        <div class="icc">
+          <span style="background:${bg0};color:${tc0};font-family:'DM Mono',monospace;font-size:.5rem;font-weight:500;letter-spacing:.15em;padding:.2rem .6rem;text-transform:uppercase;display:inline-block;margin-bottom:.4rem;">${sub0}</span>
+          <h3 style="font-size:1.9rem;">${featured.name}</h3>
+          <div class="sub">${featured.adresse} · Kreis ${featured.kreis || '–'}</div>
+        </div>
       </div>
-    `).join('');
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        ${data.slice(1,4).map((loc, i) => {
+          const sub = loc.subkategorie || loc.kategorie;
+          const bg = tagColor[sub] || '#ff2d00';
+          const tc = tagText[sub] || '#fff';
+          return `<div class="ec rv" style="flex:1;">
+            <span class="etag" style="background:${bg};color:${tc};">${sub}</span>
+            <h3>${loc.name}</h3>
+            <div class="meta"><strong>${loc.adresse} · Kreis ${loc.kreis || '–'}</strong></div>
+            <span class="earr">↗</span>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>
+    <div class="g3 rv">
+      ${data.slice(4).map(loc => {
+        const sub = loc.subkategorie || loc.kategorie;
+        const bg = tagColor[sub] || '#ff2d00';
+        const tc = tagText[sub] || '#fff';
+        return `<div class="ec rv">
+          <span class="etag" style="background:${bg};color:${tc};">${sub}</span>
+          <h3>${loc.name}</h3>
+          <div class="meta"><strong>${loc.adresse} · Kreis ${loc.kreis || '–'}</strong></div>
+          <span class="earr">↗</span>
+        </div>`;
+      }).join('')}
+    </div>`;
+
+    container.innerHTML = html;
     setTimeout(initReveal, 100);
   } catch(err) {
     container.innerHTML = '<p style="color:#ff2d00;padding:1rem;">Fehler: ' + err.message + '</p>';
@@ -76,68 +129,50 @@ const footerHTML = `
     <div class="footer-brand">
       <div class="fbl"><div class="fbdot"></div>STADTPULS</div>
       <p>Dä Puls vo dä Stadt.<br>Zürich · 2026 · by raimondo*</p>
-      <p style="margin-top:.8rem;font-size:.56rem;opacity:.7;">Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.</p>
-      <p style="margin-top:.8rem;font-size:.56rem;opacity:.5;">© 2026 by raimondo* — Zürich</p>
     </div>
     <div class="fc">
-      <h5>Entdecken</h5>
+      <h5>Entdecke</h5>
       <ul>
-        <li onclick="go('gastro')">Gastro & Bars</li>
+        <li onclick="go('events')">Events</li>
+        <li onclick="go('gastro')">Gastro</li>
         <li onclick="go('nachtleben')">Nachtleben</li>
         <li onclick="go('shopping')">Shopping</li>
-        <li onclick="go('events')">Events</li>
-        <li onclick="go('quartiere')">Quartiere</li>
-        <li onclick="go('musik')">Musik & Sound</li>
-        <li onclick="go('mobilitaet')">Mobilität</li>
+        <li onclick="go('immobilien')">Immobilien</li>
       </ul>
     </div>
     <div class="fc">
       <h5>Community</h5>
       <ul>
-        <li onclick="go('news')">Feed & Posts</li>
+        <li onclick="go('community')">Mitmache</li>
         <li onclick="go('dating')">People & Dates</li>
         <li onclick="go('jobs')">Jobs Züri</li>
         <li onclick="go('news')">News & Stories</li>
-        <li onclick="go('gps')">GPS — Wo bisch du?</li>
-        <li onclick="go('partners')">Kooperatione</li>
+        <li onclick="go('musik')">Musik & Sound</li>
       </ul>
     </div>
     <div class="fc">
-      <h5>Mitmache</h5>
+      <h5>Stadtpuls</h5>
       <ul>
-        <li onclick="go('login')">Einlogge</li>
-        <li onclick="go('login')">Profil aalege</li>
-        <li onclick="go('community')">Blogger werde</li>
-        <li onclick="go('community')">Inserat schalte</li>
-        <li onclick="go('partners')">Partner werde</li>
-        <li onclick="go('community')">Kontakt</li>
+        <li onclick="go('partners')">Partner</li>
+        <li onclick="go('quartiere')">Quartiere</li>
+        <li onclick="go('gps')">GPS</li>
+        <li onclick="go('login')">Login</li>
       </ul>
     </div>
   </div>
   <div class="fbot">
-    <p>© 2026 Stadtpuls.ch — by raimondo* — Zürich</p>
-    <p>AGB · Datenschutz · Impressum</p>
+    <p>© 2026 by raimondo* · Stadtpuls · Zürich</p>
+    <p>Echts Züri. Kei Chichi. Kei Umwäg.</p>
   </div>
 </footer>`;
 
 function injectFooter(page) {
   const key = 'f' + page.replace('-', '');
-  let footerSlot = document.getElementById(key);
-
-  if (!footerSlot) {
-    const target = document.getElementById('pg-' + page);
-    if (target) {
-      footerSlot = document.createElement('div');
-      footerSlot.id = key;
-      target.appendChild(footerSlot);
-    }
-  }
-
+  const footerSlot = document.getElementById(key);
   if (footerSlot && footerSlot.innerHTML.trim() === '') {
     footerSlot.innerHTML = footerHTML;
   }
 }
-
 
 function initCursor() {
   const cur  = document.getElementById('cur');
