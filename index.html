@@ -1262,7 +1262,7 @@ initGPS();
   </div>
 
 </div>
-```
+    
 
   </div>
   <div id="flogin"></div>
@@ -1277,85 +1277,6 @@ initGPS();
 
 
 
-<button onclick="
-(async function(){
-  try {
-    const res = await fetch('https://www.zuerich.com/en/api/v2/data?id=100');
-    const data = await res.json();
-    if(!Array.isArray(data)){alert('Keine Daten');return;}
-    let ok=0,err=0;
-    const KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
-    for(const item of data){
-      if(!item.name||!item.address)continue;
-      const name=item.name.de||item.name.en||'';
-      const slug=name.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-      const typ=item['@type']||'';
-      const kategorie=typ.includes('BarOrPub')||typ.includes('NightClub')?'nachtleben':'gastro';
-      const loc={name,kategorie,subkategorie:'restaurant',adresse:item.address.streetAddress||'',plz:item.address.postalCode||'',lat:item.geo?.latitude||null,lng:item.geo?.longitude||null,slug,aktiv:true,quelle:'zuerich-tourismus'};
-      const r=await fetch('https://pnynkzrqnfoshojqfqxn.supabase.co/rest/v1/locations',{method:'POST',headers:{'apikey':KEY,'Authorization':'Bearer '+KEY,'Content-Type':'application/json','Prefer':'resolution=ignore-duplicates'},body:JSON.stringify(loc)});
-      r.ok||r.status===201||r.status===409?ok++:err++;
-    }
-    alert('Fertig: '+ok+' importiert · '+err+' Fehler');
-  } catch(e){alert('Fehler: '+e.message);}
-})()
-" style="position:fixed;bottom:20px;right:20px;z-index:9999;background:#ff2d00;color:#fff;padding:12px 24px;border:none;cursor:pointer;font-family:'DM Mono',monospace;font-size:.8rem;">IMPORT ZÜRICH API</button>
-<footer id="global-footer">
-  <div class="ftk">
-    <div class="fti">
-      <span>Stadtpuls 2026</span><span>Zürich</span>
-      <span>Dä Puls vo dä Stadt</span><span>Kreis 4</span>
-      <span>Kreis 5</span><span>Langstrasse</span>
-      <span>By Raimondo*</span><span>Stadtpuls 2026</span>
-      <span>Zürich</span><span>Dä Puls vo dä Stadt</span>
-    </div>
-  </div>
-  <div class="fg">
-    <div class="footer-brand">
-      <div class="fbl"><div class="fbdot"></div>STADTPULS</div>
-      <p>dä puls vo dä stadt</p>
-      <p style="margin-top:.8rem;font-size:.56rem;opacity:.7;">Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.</p>
-      <p style="margin-top:.8rem;font-size:.56rem;opacity:.5;">© 2026 by raimondo* — Zürich</p>
-    </div>
-    <div class="fc">
-      <h5>Entdecken</h5>
-      <ul>
-        <li onclick="go('gastro')">Gastro & Bars</li>
-        <li onclick="go('nachtleben')">Nachtleben</li>
-        <li onclick="go('shopping')">Shopping</li>
-        <li onclick="go('events')">Events</li>
-        <li onclick="go('quartiere')">Quartiere</li>
-        <li onclick="go('musik')">Musik & Sound</li>
-        <li onclick="go('mobilitaet')">Mobilität</li>
-      </ul>
-    </div>
-    <div class="fc">
-      <h5>Community</h5>
-      <ul>
-        <li onclick="go('news')">Feed & Posts</li>
-        <li onclick="go('dating')">People & Dates</li>
-        <li onclick="go('jobs')">Jobs Züri</li>
-        <li onclick="go('news')">News & Stories</li>
-        <li onclick="go('gps')">GPS — Wo bisch du?</li>
-        <li onclick="go('partners')">Kooperatione</li>
-      </ul>
-    </div>
-    <div class="fc">
-      <h5>Mitmache</h5>
-      <ul>
-        <li onclick="go('login')">Einlogge</li>
-        <li onclick="go('login')">Profil aalege</li>
-        <li onclick="go('community')">Blogger werde</li>
-        <li onclick="go('community')">Inserat schalte</li>
-        <li onclick="go('partners')">Partner werde</li>
-        <li onclick="go('community')">Kontakt</li>
-      </ul>
-    </div>
-  </div>
-  <div class="fbot">
-    <p>© 2026 Stadtpuls.ch — by raimondo* — Zürich</p>
-    <p>AGB · Datenschutz · Impressum</p>
-  </div>
-</footer>
 
 </body>
 </html>
