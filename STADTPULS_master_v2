@@ -307,6 +307,47 @@ Supabase Tabelle user_preferences
 Supabase Auth für Passwort/E-Mail Reset
 Alles ohne App-Store — läuft im Browser
 
+Verstanden — sauberer Übergabe-Text für den Master: 🔴
+
+SESSION 12. APRIL 2026 — MORGEN
+
+FOOTER PROBLEM — AKTUELLER STAND:
+
+Was wir gemacht haben:
+1. Globalen hardcodierten Footer in index.html gelöscht
+   (war Zeile 1302-1358 — <footer id="global-footer">)
+2. Import-Button Block gelöscht (Zeile 1280-1300)
+3. injectFooter() in main.js erweitert:
+   → Erstellt Footer-Slot automatisch wenn keiner existiert
+   → Funktioniert via document.createElement('div')
+
+Aktueller Stand Footer:
+✅ Doppel-Footer auf Startseite weg
+✅ Gastro hat Footer
+❌ Nachtleben hat keinen Footer
+❌ Viele andere Seiten haben keinen Footer
+❌ Startseite zeigt Original-Footer mit mehr Spalten
+   als injizierter Footer — zwei verschiedene Designs
+
+Ursache noch unklar:
+- Möglicherweise hat index.html noch einen eigenen
+  Footer-Block auf der Home-Seite (pg-home)
+- injectFooter() erstellt zwar div automatisch aber
+  möglicherweise zu spät nach DOM-Aufbau
+- Neuer Chat muss zuerst Raw-URLs checken:
+  main.js + index.html Ende von pg-home anschauen
+
+Priorität nächste Session:
+1. Raw-URL main.js checken
+2. index.html pg-home Ende anschauen
+3. Footer Problem ein für alle Mal lösen
+
+WICHTIG FÜR NEUEN CHAT:
+Nie blind arbeiten — immer zuerst Raw-URLs checken.
+
+
+Das in den Master einfügen — dann neuer Chat mit frischem Kopf. 🔴💪🏼​​​​​​​​​​​​​​​​
+
 
 
 Rein in den Master — dann Bugs fixen. 🔴💪🏼​​​​​​​​​​​​​​​​
