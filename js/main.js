@@ -115,11 +115,22 @@ const footerHTML = `
 
 function injectFooter(page) {
   const key = 'f' + page.replace('-', '');
-  const footerSlot = document.getElementById(key);
+  let footerSlot = document.getElementById(key);
+
+  if (!footerSlot) {
+    const target = document.getElementById('pg-' + page);
+    if (target) {
+      footerSlot = document.createElement('div');
+      footerSlot.id = key;
+      target.appendChild(footerSlot);
+    }
+  }
+
   if (footerSlot && footerSlot.innerHTML.trim() === '') {
     footerSlot.innerHTML = footerHTML;
   }
 }
+
 
 function initCursor() {
   const cur  = document.getElementById('cur');
