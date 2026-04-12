@@ -371,6 +371,42 @@ Nächste Priorität:
 WICHTIG FÜR NEUEN CHAT:
 Nie blind arbeiten — immer zuerst Raw-URLs checken.
 
+Hier ist der Update-Text für den Master v2 — direkt kopierbar: 🔴
+
+ALTERSVERIFIKATION — PHASE 5
+KONZEPT:
+Keine harte Sperre — sondern intelligentes Filtern.
+Alle können sich registrieren — Alter bestimmt den Zugang.
+UNTER 18 — EINGESCHRÄNKTER ZUGANG:
+✅ Gastro
+✅ Events (kulturell)
+✅ Shopping
+✅ News & Stories
+✅ Community (ohne Dating)
+✅ Quartiere / GPS
+AB 18 — VOLLER ZUGANG:
+✅ Alles oben plus:
+✅ Nachtleben
+✅ People & Dates
+✅ Marktplatz (Tickets etc.)
+✅ Alle Community Features
+TECHNISCH — PHASE 5:
+Geburtsjahr beim Registrieren eingeben
+System rechnet Alter automatisch
+Supabase Feld: geburtsjahr in user_preferences
+KI nutzt Alter für personalisierten Feed
+BUSINESS VALUE:
+Alter = wertvolle Daten für Partner-Targeting
+Ron Orp weiss nicht wie alt ihre User sind — Stadtpuls schon
+«Zielgruppe unter 18 / ab 18 — Alter, Quartier, Interessen frei definierbar»
+
+Rechtlich sauber für Nachtleben und Dating
+VORTEIL GEGENÜBER KONKURRENZ:
+Ron Orp → keine Altersverifikation, kein Targeting
+Stadtpuls → präzises Alter + Quartier + Interessen = Premium Targeting
+
+Rein in den Master v2 — dann weiter mit Nachtleben Filter? 🔴💪​​​​​​​​​​​​​​​​
+
 
 Das in den Master einfügen — dann neuer Chat mit frischem Kopf. 🔴💪🏼​​​​​​​​​​​​​​​​
 
