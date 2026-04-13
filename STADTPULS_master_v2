@@ -690,6 +690,39 @@ ROADMAP:
 ⏳ Phase 4j → Leere Seiten — NOCH OFFEN
 SOFT LAUNCH: 4. Juni 2026 🔴
 
+Hier ist der Update für den Master v2:
+
+SESSION 13. APRIL 2026 — KOMPLETT
+AKTUELLER STAND DATEIEN:
+	•	index.html → 6a18f76 (heute 11:27) — aktuell
+	•	main.js → letzter Commit b2fab1c (gestern) — aktuell
+	•	base.css → 8368def (gestern) — aktuell
+WAS FUNKTIONIERT:
+	•	✅ Startseite — Hero, Navigation, Ticker
+	•	✅ Gastro — Supabase live
+	•	✅ Nachtleben — Supabase live
+	•	✅ Footer überall
+	•	✅ Register-Tab sichtbar
+WAS NICHT FUNKTIONIERT:
+	•	❌ Shopping, Immobilien, Marktplatz, Community, Jobs, News, GPS, Dating, Musik, Partner — alle schwarz
+URSACHE:
+loadLocations() läuft für Shopping/Events aber Supabase hat keine Daten für diese Kategorien. Container bleibt leer → schwarz.
+LÖSUNG FÜR MORGEN — ERSTE PRIORITÄT:
+index.html Zeile 35-36 auskommentieren:
+
+// if(page==='shopping')loadLocations('shopping');
+// if(page==='events')loadLocations('events');
+
+
+→ Dann Shopping + Events sofort sichtbar mit Hardcode-Inhalt.
+WICHTIG:
+	•	main.js ist in index.html auskommentiert (Zeile 1175)
+	•	Alle Funktionen laufen im Script-Block index.html Zeile 22-44
+	•	Nie blind arbeiten — immer zuerst Code anschauen
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+Kopiere das in Master v2. Morgen frischer Kopf! 💪🔴​​​​​​​​​​​​​​​​
+
 
 Das in den Master v2 kopieren — dann neuer Chat. 💪🔴​​​​​​​​​​​​​​​​
 
