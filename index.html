@@ -27,7 +27,8 @@ function go(page){
   var t=document.getElementById('pg-'+page);
   if(t){t.classList.add('on');window.scrollTo({top:0,behavior:'smooth'});}
   document.querySelectorAll('.nlinks a[data-p]').forEach(function(a){a.classList.toggle('on',a.dataset.p===page);});
-  setTimeout(function(){document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});},50);
+  setTimeout(function(){document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in');});},200);
+
   injectFooter(page);
   if(page==='gastro')loadLocations('gastro');
   if(page==='nachtleben')loadLocations('nachtleben');
