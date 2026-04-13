@@ -643,6 +643,56 @@ ROADMAP:
 	•	⏳ Phase 4k → Livedaten wieder anschliessen
 	•	SOFT LAUNCH: 4. Juni 2026 🔴
 
+Absolut richtig. Hier ist der komplette Master-Update für heute — direkt kopierbar:
+
+SESSION 13. APRIL 2026 — KOMPLETT
+
+AUSGANGSLAGE:
+index.html wurde gestern Abend auf Commit 306962d 
+zurückgespult (8 Stunden alt).
+main.js und base.css wurden NICHT zurückgespult.
+→ Konflikt zwischen altem index.html und neuerem main.js
+
+WAS HEUTE GEMACHT WURDE:
+
+index.html Änderungen:
+✅ Zeile 13-15: .rv { opacity:1 !important } Fix eingefügt
+✅ Zeile 22-44: Neuer Script-Block eingefügt mit:
+   → go(), toggleMenu(), closeMenu(), switchTab()
+   → loadLocations(), injectFooter()
+   → DOMContentLoaded mit .rv → .in
+✅ Zeile 643-770: Alter grosser Script-Block GELÖSCHT
+✅ Zeile 1300: main.js AUSKOMMENTIERT
+   → <!-- <script src="js/main.js"></script> -->
+
+main.js: NICHT verändert heute
+base.css: NICHT verändert heute
+
+AKTUELLES PROBLEM:
+Alle Seiten ausser Startseite noch schwarz.
+Ursache: main.js go() überschreibt index.html go()
+UND triggerRv() verwendet IntersectionObserver
+der neu geladene Seiten nicht sieht.
+
+NÄCHSTER SCHRITT — NEUER CHAT:
+1. main.js Raw-URL checken
+2. main.js go() und triggerRv() fixen
+3. Oder: go() in main.js komplett entfernen
+   → nur index.html Script-Block läuft
+
+WICHTIG:
+main.js ist bei Zeile 1300 auskommentiert!
+Falls Startseite schwarz → main.js wieder einkommentieren
+
+ROADMAP:
+✅ Phase 4h → Footer
+✅ Phase 4i → Register
+⏳ Phase 4j → Leere Seiten — NOCH OFFEN
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+
+Das in den Master v2 kopieren — dann neuer Chat. 💪🔴​​​​​​​​​​​​​​​​
+
 Kopiere das in Master v2. Morgen lösen wir das in 15 Minuten. Geh jetzt laden! 💪🔴​​​​​​​​​​​​​​​​
 
 Kopiere das in den Master v2. Morgen frischer Kopf — wir lösen das in 10 Minuten. Du hast heute viel geschafft. 💪🔴​​​​​​​​​​​​​​​​
