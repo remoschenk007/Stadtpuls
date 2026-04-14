@@ -719,7 +719,37 @@ WICHTIG:
 	•	main.js ist in index.html auskommentiert (Zeile 1175)
 	•	Alle Funktionen laufen im Script-Block index.html Zeile 22-44
 	•	Nie blind arbeiten — immer zuerst Code anschauen
+
+
+Ja — hier ist der Update für den Master v2:
+
+SESSION 14. APRIL 2026 — MORGEN
+WORKING COPY EINGERICHTET ✅
+	•	App installiert und mit GitHub verbunden
+	•	Stadtpuls Repository geclont
+	•	index.html direkt editierbar — kein Cache Problem mehr
+RV BEREINIGUNG — IN ARBEIT:
+Suche nach rv ergab 33 Treffer in index.html.
+Bereits erledigt:
+✅ Zeile 161, 164, 187, 188, 189
+✅ Zeile 203, 208, 219, 220, 221
+✅ Zeile 232, 257, 258
+Noch offen — nächste Session ab hier weitermachen:
+⏳ Zeile 285, 296, 297, 305, 306
+⏳ Zeile 374, 375, 383, 388
+⏳ Dann Commit und testen
+WICHTIG:
+Änderungen noch NICHT committed — erst alle rv fertig, dann ein Commit.
+NÄCHSTE SESSION:
+	1.	Working Copy öffnen
+	2.	index.html öffnen
+	3.	Weiter ab Zeile 285
+	4.	Alle rv weg → Commit → testen
 SOFT LAUNCH: 4. Juni 2026 🔴
+
+Kopiere das in Master v2 — dann neuer Chat! 💪🔴​​​​​​​​​​​​​​​​
+
+
 
 Kopiere das in Master v2. Morgen frischer Kopf! 💪🔴​​​​​​​​​​​​​​​​
 
