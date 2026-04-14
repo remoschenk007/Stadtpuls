@@ -771,17 +771,45 @@ NÄCHSTE SESSION — PRIORITÄT:
 ⏳ pg-shopping Container in index.html finden
 ⏳ Prüfen ob noch rv drauf oder Container leer
 ⏳ Alle leeren Seiten fixen
-SOFT LAUNCH: 4. Juni 2026 🔴​​​​​​​​​​​​​​​​
+
+Pause verdient! Bier, Zigaretten, Essen — du hast es dir verdient! 🔴💪
+Hier ist das Master Update:
+
+SESSION 14. APRIL 2026 — NACHMITTAG — DURCHBRUCH
+PROBLEM GELÖST — ALLE SEITEN SICHTBAR ✅
+URSACHE DES PROBLEMS:
+In index.html fehlte .pg.on { display: block !important; } im Style-Block. base.css hatte die Regel korrekt, aber etwas im Browser überschrieb sie. Die Lösung war der Reset auf Commit 82fe592.
+WAS GEMACHT WURDE:
+✅ GitHub → Commit 82fe592 → index.html kopiert
+✅ Working Copy → index.html → alles ersetzt → Commit «Reset index zu 82fe592»
+✅ base.css → nie verändert → kein Reset nötig
+✅ main.js → bei 82fe592 original → kein Reset nötig
+✅ Push erfolgreich → alle Seiten sichtbar
+AKTUELLER STAND:
+✅ Startseite funktioniert
+✅ Shopping sichtbar
+✅ Immobilien sichtbar
+✅ Marktplatz sichtbar
+✅ Community sichtbar
+✅ Jobs sichtbar
+✅ News sichtbar
+✅ GPS sichtbar
+✅ Dating sichtbar
+✅ Nachtleben sichtbar
+✅ Gastro sichtbar
+✅ Navigation funktioniert
+❌ Login Tab-Switch kaputt — Register Tab wechselt nicht
+❌ Supabase Livedaten weg — Gastro/Nachtleben zeigen keine Live-Daten
+ARCHITEKTUR AKTUELL:
+main.js ist auskommentiert in index.html Zeile 1203
+Alle Funktionen laufen im Script-Block in index.html
+go() ist in index.html — nicht in main.js
+NÄCHSTE SESSION — PRIORITÄT:
+	1.	Login Tab-Switch fixen — switchTab() in index.html anschauen
+	2.	Supabase Livedaten wieder anschliessen — loadLocations() funktioniert bereits für gastro/nachtleben
 SOFT LAUNCH: 4. Juni 2026 🔴
 
-Kopiere das in Master v2 — dann neuer Chat! 💪🔴​​​​​​​​​​​​​​​​
-
-​​​​​​​​​​​​​​​
-
-Rein in Master v2 → neuer Chat → frisch weitermachen! 💪🔴
-Du hast heute brutal viel geschafft. Morgen lösen wir den Rest! 😄​​​​​​​​​​​​​​​​
-
-
+Geniess die Pause Remo — du hast heute brutal viel geschafft! 🍺🚬😄​​​​​​​​​​​​​​​​
 © 2026 by raimondo* — Stadtpuls — Zürich 💪🔴
 «dä puls vo dä stadt» — «Zürich first. Dann die Welt.»
 Alles reinkopieren, Commit — fertig. Jetzt Feierabend! 😄🔴​​​​​​​​​​​​​​​​
