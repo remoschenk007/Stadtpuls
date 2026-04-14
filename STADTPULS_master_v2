@@ -745,6 +745,33 @@ NÄCHSTE SESSION:
 	2.	index.html öffnen
 	3.	Weiter ab Zeile 285
 	4.	Alle rv weg → Commit → testen
+
+Hier ist das Master Update — direkt kopierbar:
+
+SESSION 14. APRIL 2026 — VORMITTAG
+WAS HEUTE GEMACHT WURDE ✅
+RV-BEREINIGUNG:
+✅ Alle rv Klassen in index.html entfernt
+✅ Zeile 161-388 — alle bereinigt
+✅ Commit «rv Klassen entfernt» — 10:01
+SHOPPING/EVENTS AUSKOMMENTIERT:
+✅ Zeile 35: //if(page===‘shopping’)loadLocations(‘shopping’);
+✅ Zeile 36: //if(page===‘events’)loadLocations(‘events’);
+✅ Commit «shopping events auskommentiert» — 10:19
+WORKING COPY PRO:
+✅ 10 Tage Trial freigeschaltet
+✅ Push funktioniert
+AKTUELLER STAND:
+✅ Startseite — alles sichtbar
+✅ Gastro — Supabase live
+✅ Nachtleben — Supabase live
+❌ Shopping — noch schwarz
+❌ GPS, Dating, Jobs, News etc. — noch schwarz
+NÄCHSTE SESSION — PRIORITÄT:
+⏳ pg-shopping Container in index.html finden
+⏳ Prüfen ob noch rv drauf oder Container leer
+⏳ Alle leeren Seiten fixen
+SOFT LAUNCH: 4. Juni 2026 🔴​​​​​​​​​​​​​​​​
 SOFT LAUNCH: 4. Juni 2026 🔴
 
 Kopiere das in Master v2 — dann neuer Chat! 💪🔴​​​​​​​​​​​​​​​​
