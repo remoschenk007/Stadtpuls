@@ -807,9 +807,35 @@ go() ist in index.html — nicht in main.js
 NÄCHSTE SESSION — PRIORITÄT:
 	1.	Login Tab-Switch fixen — switchTab() in index.html anschauen
 	2.	Supabase Livedaten wieder anschliessen — loadLocations() funktioniert bereits für gastro/nachtleben
+
+Hier ist das Update — direkt kopierbar in den Master: 🔴
+
+SESSION 14. APRIL 2026 — ABEND — NEUE ARBEITSREGELN
+AB SOFORT — SICHERHEIT VOR GESCHWINDIGKEIT
+REGEL 1 — DEV BRANCH:
+Nie mehr direkt auf main arbeiten.
+→ Alles neue auf Branch «dev» testen
+→ Funktioniert → merge zu main
+→ Kaputt → egal, main läuft weiter
+→ Erste Aktion nächste Session: dev Branch erstellen
+REGEL 2 — COMMIT NAMEN:
+Nie mehr «Update index.html»
+→ Immer klarer Name was gemacht wurde
+→ Beispiel: «✅ Supabase Gastro live»
+→ Beispiel: «❌ ACHTUNG Navigation kaputt»
+→ Dann findet man in 10 Sekunden den richtigen Stand
+REGEL 3 — SNAPSHOT VOR JEDER ÄNDERUNG:
+Commit-Hash notieren bevor wir anfangen
+→ Kaputt? Sofort zurück — kein Loop
+→ Nie blind arbeiten
+DOMAIN — IN ABKLÄRUNG:
+depuls.ch → verfügbar — sofort kaufen!
+Domain Squatting Gefahr — nicht warten
+Anbieter: Infomaniak, Namecheap oder GoDaddy
+DNS dann auf GitHub Pages zeigen — Claude zeigt wie
 SOFT LAUNCH: 4. Juni 2026 🔴
 
-Geniess die Pause Remo — du hast heute brutal viel geschafft! 🍺🚬😄​​​​​​​​​​​​​​​​
+Gute Nacht Remo — morgen frisch starten! 💪🔴​​​​​​​​​​​​​​​​
 © 2026 by raimondo* — Stadtpuls — Zürich 💪🔴
 «dä puls vo dä stadt» — «Zürich first. Dann die Welt.»
 Alles reinkopieren, Commit — fertig. Jetzt Feierabend! 😄🔴​​​​​​​​​​​​​​​​
