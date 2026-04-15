@@ -68,14 +68,23 @@ container.innerHTML = ’<p style="color:#ff2d00;padding:1rem;">Fehler: ’ + er
 
 function toggleMenu() { document.getElementById(‘mobm’).classList.toggle(‘open’); }
 function closeMenu()  { document.getElementById(‘mobm’).classList.remove(‘open’); }
-function switchTab(tabId, el) {
-var parent = el.closest(’.tab-container’) || document.body;
-parent.querySelectorAll(’.tab-content’).forEach(function(t) { t.classList.remove(‘active’); });
-parent.querySelectorAll(’.tab-btn’).forEach(function(b) { b.classList.remove(‘active’); });
-var target = document.getElementById(tabId);
-if (target) target.classList.add(‘active’);
-el.classList.add(‘active’);
+function switchTab(tab) {
+  var l = document.getElementById('form-login');
+  var r = document.getElementById('form-register');
+  var tl = document.getElementById('tab-login');
+  var tr = document.getElementById('tab-register');
+  if (!l || !r) return;
+  if (tab === 'login') {
+    l.style.display='block'; r.style.display='none';
+    tl.style.borderBottomColor='#ff2d00';
+    tr.style.borderBottomColor='rgba(255,255,255,0.08)';
+  } else {
+    l.style.display='none'; r.style.display='block';
+    tl.style.borderBottomColor='rgba(255,255,255,0.08)';
+    tr.style.borderBottomColor='#ff2d00';
+  }
 }
+
 
 function initCursor() {
 var cur = document.getElementById(‘cur’);
