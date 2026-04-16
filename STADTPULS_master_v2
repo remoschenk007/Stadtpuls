@@ -835,7 +835,51 @@ Anbieter: Infomaniak, Namecheap oder GoDaddy
 DNS dann auf GitHub Pages zeigen — Claude zeigt wie
 SOFT LAUNCH: 4. Juni 2026 🔴
 
-Gute Nacht Remo — morgen frisch starten! 💪🔴​​​​​​​​​​​​​​​​
-© 2026 by raimondo* — Stadtpuls — Zürich 💪🔴
+Hier der aktualisierte komplette Master-Update:
+
+SESSION 15. APRIL 2026 — KOMPLETT
+WAS HEUTE ERREICHT WURDE ✅
+	•	Dev Branch erstellt (aber Entscheid: ab jetzt direkt auf Main)
+	•	Backticks in index.html entfernt (Zeilen 779, 848, 963, 989, 1038, 1048, 1213)
+	•	Tab-Switch Login/Register gefixt → inline JavaScript statt switchTab()
+	•	Register-Formular funktioniert ✅
+	•	Roter Unterstrich wechselt noch nicht beim Tab-Switch ⏳
+ARCHITEKTUR ENTSCHEID:
+	•	Dev Branch macht ohne Preview-URL keinen Sinn → direkt auf Main arbeiten
+	•	Sicherheitsnetz: Commit-Hash notieren vor jeder Änderung, klare Commit-Namen
+	•	Alles in main.js — nie Funktionen in index.html
+LOGIN STRATEGIE BESCHLOSSEN:
+	•	Nur 1 echtes Login-System → rote/gelbe Einlogge/Registriere Seite
+	•	Community Schnell-Signup Block bleibt visuell — aber Felder weg
+	•	«ETZ MITMACHE» Button → onclick="go('login')" → leitet zur Login-Seite
+	•	Mehrere Einstiegspunkte über die ganze Seite verteilt:
+	•	Hamburger Menu → Login
+	•	Startseite «Mitmache» Button → Login
+	•	Community Block → Login
+	•	Footer → Login
+	•	Mehr Touchpoints = mehr Registrierungen
+	•	Status: ⏳ nächste Session umsetzen
+NEUE KATEGORIEN BESCHLOSSEN:
+	•	Kultur → Hamburger Menu → Zürich Tourismus API → Phase 4k
+	•	Wellness & Spa → Hamburger Menu → Zürich Tourismus API → Phase 4k
+DATEN-STRATEGIE BESCHLOSSEN:
+	•	1 Location = 1 Eintrag Supabase — kein Duplikat
+	•	Anreicherung via 3 APIs kombiniert:
+	•	Zürich Tourismus → Basis, Bilder ✅
+	•	Tripadvisor API → Ratings, Bewertungen
+	•	Google Places → Öffnungszeiten, Telefon
+	•	Wöchentlicher Sync → geschlossene Betriebe fallen automatisch raus
+	•	User «Geschlossen melden» Button → Admin-Queue → Phase 5
+ROADMAP UPDATE:
+	•	✅ Phase 4h → Footer gefixt
+	•	✅ Phase 4i → Register + Backticks gefixt
+	•	✅ Phase 4j → Tab-Switch gefixt
+	•	⏳ Phase 4k → Shopping + Events + Kultur + Wellness an Supabase
+	•	⏳ Phase 4l → Detail-Seiten dynamisch + Bilder + 3 APIs kombiniert
+	•	⏳ Phase 4m → ZVV API Mobilität
+	•	⏳ Phase 5 → Login Touchpoints umsetzen + Community + Onboarding
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+
 «dä puls vo dä stadt» — «Zürich first. Dann die Welt.»
 Alles reinkopieren, Commit — fertig. Jetzt Feierabend! 😄🔴​​​​​​​​​​​​​​​​
