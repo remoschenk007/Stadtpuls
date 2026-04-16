@@ -1213,8 +1213,9 @@ initGPS();
 
   <!-- TABS -->
   <div style="display:flex;margin-bottom:2.5rem;border-bottom:1px solid rgba(255,255,255,.08);">
-<button id="tab-login" onclick="document.getElementById('form-login').style.display='block';document.getElementById('form-register').style.display='none';" style="flex:1;background:transparent;border:none;border-bottom:2px solid #ff2d00;padding:.8rem;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#ff2d00;cursor:pointer;margin-bottom:-1px;">Einlogge</button>
-<button id="tab-register" onclick="document.getElementById('form-login').style.display='none';document.getElementById('form-register').style.display='block';" style="flex:1;background:transparent;border:none;border-bottom:2px solid transparent;padding:.8rem;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#44445a;cursor:pointer;margin-bottom:-1px;">Registriere</button>
+<button id="tab-login" onclick="document.getElementById('form-login').style.display='block';document.getElementById('form-register').style.display='none';document.getElementById('tab-login').style.borderBottomColor='#ff2d00';document.getElementById('tab-register').style.borderBottomColor='rgba(255,255,255,0.08)';" style="flex:1;background:transparent;border:none;border-bottom:2px solid #ff2d00;padding:.8rem;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#ff2d00;cursor:pointer;margin-bottom:-1px;">Einlogge</button>
+<button id="tab-register" onclick="document.getElementById('form-login').style.display='none';document.getElementById('form-register').style.display='block';document.getElementById('tab-login').style.borderBottomColor='rgba(255,255,255,0.08)';document.getElementById('tab-register').style.borderBottomColor='#c8ff00';" style="flex:1;background:transparent;border:none;border-bottom:2px solid transparent;padding:.8rem;font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:#44445a;cursor:pointer;margin-bottom:-1px;">Registriere</button>
+
 
   </div>
 
