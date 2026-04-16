@@ -880,6 +880,16 @@ ROADMAP UPDATE:
 	•	⏳ Phase 5 → Login Touchpoints umsetzen + Community + Onboarding
 SOFT LAUNCH: 4. Juni 2026 🔴
 
+Ja — kurzer Eintrag für den Master:
+
+SUPABASE SECURITY — 16. APRIL 2026 ✅
+	•	RLS aktiviert auf locations und location_images
+	•	Read policy für alle User → Daten lesbar, nicht editierbar/löschbar
+	•	Auto-enable RLS aktiv → alle zukünftigen Tabellen automatisch geschützt
+	•	Wichtig: Nach jeder neuen Tabelle → Read policy manuell erstellen!
+	•	Supabase GitHub Integration verfügbar → für spätere Phase relevant
+🔴​​​​​​​​​​​​​​​​
+
 
 «dä puls vo dä stadt» — «Zürich first. Dann die Welt.»
 Alles reinkopieren, Commit — fertig. Jetzt Feierabend! 😄🔴​​​​​​​​​​​​​​​​
