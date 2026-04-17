@@ -888,7 +888,56 @@ SUPABASE SECURITY — 16. APRIL 2026 ✅
 	•	Auto-enable RLS aktiv → alle zukünftigen Tabellen automatisch geschützt
 	•	Wichtig: Nach jeder neuen Tabelle → Read policy manuell erstellen!
 	•	Supabase GitHub Integration verfügbar → für spätere Phase relevant
-🔴​​​​​​​​​​​​​​​​
+
+😄 Ihr habt heute mehr gemacht als du denkst! Hier der Master-Update:
+
+SESSION 16. APRIL 2026 — KOMPLETT
+SUPABASE SECURITY ✅
+	•	RLS aktiviert auf locations und location_images
+	•	Read policy «Enable read access for all users» auf beiden Tabellen
+	•	Auto-enable RLS aktiv → alle zukünftigen Tabellen automatisch geschützt
+	•	Wichtig: Nach jeder neuen Tabelle → Read policy manuell erstellen!
+LOGIN TAB-SWITCH ✅
+	•	Roter Unterstrich bei EINLOGGE → #ff2d00
+	•	Gelber Unterstrich bei REGISTRIERE → #c8ff00
+	•	Inline JavaScript direkt im Button — kein switchTab() mehr
+	•	Zeilen 1216-1217 in index.html
+LOGIN TOUCHPOINTS VEREINHEITLICHT ✅
+	•	Zeile 77 → Startseite «MITMACHE» → go('login')
+	•	Zeile 210 → Community «Profil aalege» → go('login')
+	•	Zeile 552 → Community-Seite «Etz Mitmache» → go('login')
+	•	Input-Felder auf Community-Seite entfernt — nur noch Button
+	•	Logik: Überall auf der Seite führt Mitmachen/Login zur selben Login/Register Seite
+NOCH OFFEN:
+	•	«Inserat erstellen» Button auf Immobilien → Phase 4k
+	•	Supabase Livedaten für Gastro/Nachtleben wieder anschliessen
+ROADMAP:
+	•	✅ Phase 4h → Footer
+	•	✅ Phase 4i → Register + Backticks
+	•	✅ Phase 4j → Tab-Switch + Farben + Touchpoints
+	•	⏳ Phase 4k → Shopping + Events + Kultur + Wellness an Supabase
+	•	⏳ Phase 4l → Detail-Seiten dynamisch + Bilder + 3 APIs
+	•	⏳ Phase 4m → ZVV API Mobilität
+	•	⏳ Phase 5 → Community + Onboarding + Login Supabase Auth
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+​​​​​​​​​​​​Ja! Kurzer Eintrag für den Master:
+
+DOMAIN — 16. APRIL 2026 ✅
+	•	depuls.ch registriert bei hosttech — CHF 4.90/Jahr
+	•	Bezahlt via Apple Pay
+	•	Login: remoschenk@me.com (Passwort geändert)
+	•	Kundennummer: 110617
+	•	DNS-Einstellungen noch nicht gemacht
+	•	Nächster Schritt: depuls.ch auf GitHub Pages zeigen
+	•	DNS bei hosttech → Domains → depuls.ch → DNS/Nameserver
+	•	GitHub Pages Custom Domain Einstellung in Repository Settings
+Analytics geplant:
+	•	Plausible Analytics → DSGVO konform → gratis bis 10k Besucher
+	•	Ein Script-Tag in index.html → Phase nach Domain-Verbindung
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+
 
 
 «dä puls vo dä stadt» — «Zürich first. Dann die Welt.»
