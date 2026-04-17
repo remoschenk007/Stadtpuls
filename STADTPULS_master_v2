@@ -937,6 +937,36 @@ Analytics geplant:
 	•	Ein Script-Tag in index.html → Phase nach Domain-Verbindung
 SOFT LAUNCH: 4. Juni 2026 🔴
 
+Hier die Zusammenfassung — direkt kopierbar:
+
+SESSION 17. APRIL 2026 — KOMPLETT
+DOMAIN LIVE ✅
+	•	depuls.ch DNS bei hosttech konfiguriert
+	•	A-Records auf GitHub Pages IPs gesetzt (185.199.108.153)
+	•	DNSSEC deaktiviert
+	•	GitHub Pages Custom Domain depuls.ch eingetragen
+	•	depuls.ch ist live ✅
+SEO GRUNDLAGE ✅
+	•	index.html Head komplett erneuert
+	•	Title: «Stadtpuls Zürich — dä Puls vo dä Stadt | City Guide»
+	•	Meta Description, Keywords, Open Graph, Canonical gesetzt
+	•	Commit: «SEO Meta Tags hinzugefügt»
+WHOIS ANONYMISIERT ✅
+	•	Name: by Raimondo
+	•	E-Mail: byraimondo@gmail.com
+	•	Remo Schenk nicht mehr direkt sichtbar
+BYRAIMONDO@GMAIL.COM ✅
+	•	Neues Google Konto erstellt
+	•	Von Google temporär gesperrt (normaler Vorgang)
+	•	Einspruch eingereicht — Antwort an remoschenk@gmail.com
+	•	Reaktivierung erwartet 24-48h
+NÄCHSTE SESSION — PRIORITÄT:
+⏳ Google Search Console einrichten (mit byraimondo wenn reaktiviert)
+⏳ Sitemap erstellen
+⏳ Supabase Livedaten wieder anschliessen
+⏳ Phase 4k → Shopping + Events an Supabase
+SOFT LAUNCH: 4. Juni 2026 🔴​​​​​​​​​​​​​​​​
+
 
 
 
