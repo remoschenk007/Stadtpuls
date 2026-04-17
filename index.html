@@ -46,6 +46,8 @@
   <a onclick="go('immobilien');closeMenu()">Immobilien</a>
   <a onclick="go('marktplatz');closeMenu()">Marktplatz</a>
   <a onclick="go('musik');closeMenu()">Musik & Sound</a>
+  <a onclick="go('kultur');closeMenu()">Kultur</a>
+
   <a onclick="go('news');closeMenu()">News & Stories</a>
   <a onclick="go('dating');closeMenu()">People & Dates</a>
   <a onclick="go('jobs');closeMenu()">Jobs Züri</a>
@@ -672,7 +674,8 @@ function go(id){
   if(t)t.classList.add('on');
   window.scrollTo({top:0,behavior:'smooth'});
   document.querySelectorAll('.nlinks a[data-p], .mobm a[data-p]').forEach(function(a){a.classList.toggle('on',a.dataset.p===id);});
-  var map={'home':'fhome','events':'fevents','event-detail':'feventdetail','gastro':'fgastro','gastro-detail':'fgastrodetail','nachtleben':'fnacht','club-detail':'fclubdetail','shopping':'fshopping','immobilien':'fimmo','marktplatz':'fmarkt','community':'fcomm','quartiere':'fquartiere','kreis1':'fkreis1','kreis4':'fkreis4','kreis5':'fkreis5','kreis8':'fkreis8','dating':'fdating','jobs':'fjobs','news':'fnews','musik':'fmusik','gps':'fgps','login':'flogin','partners':'fpartners','mobilitaet':'fmob'};
+  var map={'home':'fhome','events':'fevents','event-detail':'feventdetail','gastro':'fgastro','gastro-detail':'fgastrodetail','nachtleben':'fnacht','club-detail':'fclubdetail','shopping':'fshopping','immobilien':'fimmo','marktplatz':'fmarkt','community':'fcomm','quartiere':'fquartiere','kreis1':'fkreis1','kreis4':'fkreis4','kreis5':'fkreis5','kreis8':'fkreis8','dating':'fdating','jobs':'fjobs','news':'fnews','musik':'fmusik','gps':'fgps','login':'flogin','partners':'fpartners','mobilitaet':'fmob','kultur':'fkultur'}
+
   var fid=map[id];
   if(fid){var fp=document.getElementById(fid);if(fp&&fp.innerHTML.trim()===''){var tpl=document.getElementById('ftpl');fp.appendChild(document.importNode(tpl.content,true));}}
   setTimeout(triggerRv,80);
