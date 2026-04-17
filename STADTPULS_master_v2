@@ -937,6 +937,80 @@ Analytics geplant:
 	•	Ein Script-Tag in index.html → Phase nach Domain-Verbindung
 SOFT LAUNCH: 4. Juni 2026 🔴
 
+Hier die Zusammenfassung — direkt kopierbar:
+
+SESSION 17. APRIL 2026 — KOMPLETT
+DOMAIN LIVE ✅
+	•	depuls.ch DNS bei hosttech konfiguriert
+	•	A-Records auf GitHub Pages IPs gesetzt (185.199.108.153)
+	•	DNSSEC deaktiviert
+	•	GitHub Pages Custom Domain depuls.ch eingetragen
+	•	depuls.ch ist live ✅
+SEO GRUNDLAGE ✅
+	•	index.html Head komplett erneuert
+	•	Title: «Stadtpuls Zürich — dä Puls vo dä Stadt | City Guide»
+	•	Meta Description, Keywords, Open Graph, Canonical gesetzt
+	•	Commit: «SEO Meta Tags hinzugefügt»
+WHOIS ANONYMISIERT ✅
+	•	Name: by Raimondo
+	•	E-Mail: byraimondo@gmail.com
+	•	Remo Schenk nicht mehr direkt sichtbar
+BYRAIMONDO@GMAIL.COM ✅
+	•	Neues Google Konto erstellt
+	•	Von Google temporär gesperrt (normaler Vorgang)
+	•	Einspruch eingereicht — Antwort an remoschenk@gmail.com
+	•	Reaktivierung erwartet 24-48h
+NÄCHSTE SESSION — PRIORITÄT:
+⏳ Google Search Console einrichten (mit byraimondo wenn reaktiviert)
+⏳ Sitemap erstellen
+⏳ Supabase Livedaten wieder anschliessen
+⏳ Phase 4k → Shopping + Events an Supabase
+SOFT LAUNCH: 4. Juni 2026 🔴​​​​​​​​​​​​​​​​
+
+Hier der Master Update — direkt kopierbar:
+
+SESSION 17. APRIL 2026 — NACHMITTAG
+SUPABASE STRUKTUR AUSGEBAUT ✅
+LOCATIONS TABELLE ERWEITERT:
+✅ api_id → Zürich Tourismus ID
+✅ bild_url → Hauptbild URL
+✅ bild_urls → Alle Bilder (jsonb)
+✅ telefon → Telefonnummer
+✅ website → Website URL
+✅ email → E-Mail
+✅ oeffnungszeiten_strukturiert → Öffnungszeiten (jsonb)
+✅ zt_kategorie → Zürich Tourismus Hauptkategorie
+✅ zt_subkategorie → Zürich Tourismus Subkategorie
+NEUE TABELLEN ERSTELLT:
+✅ events → Datum, Uhrzeit, Ort, Ticket-URL, Kategorie
+✅ kultur → Film, Musik, Oper, Theater, Galerien, Museen
+✅ sport → Alle Sportarten aus ZT API
+✅ wellness → Wellness & Day Spa
+✅ jobs → Titel, Firma, Pensum, Lohn, Kontakt
+SECURITY:
+✅ Alle 7 Tabellen RLS aktiviert → rowsecurity = true
+✅ Read Policy auf allen Tabellen
+✅ Schreiben nur via Admin-Key möglich
+✅ Rechtlich und technisch sauber
+API STRATEGIE BESCHLOSSEN:
+✅ Zürich Tourismus → Basis, Bilder, Beschreibung (CC BY-SA, gratis)
+✅ Google Places → Öffnungszeiten, Telefon (bis 10k Aufrufe gratis)
+✅ Tripadvisor → Ratings, Reviews (gratis, Link-Pflicht)
+✅ 1 Location = 1 Eintrag Supabase — angereichert aus allen 3 Quellen
+ZÜRICH TOURISMUS API KATEGORIEN — KOMPLETT:
+Gastro (id=101) → American · Gourmet · Grill · Fisch · Vegetarisch · Vegan · Schweizer · Italienisch · Spanisch · Asiatisch · Nahost · Französisch · Mexikanisch · Mediterran · Bistro · International
+Bars (id=103) → Restaurant-Bar · After Work · Cocktailbar · Outdoor · Hotelbar · Music Bar · Pub · Wine Bar · Culture Bar
+Nachtleben (id=162) → Afterhour · Hip-Hop · House/Techno · Jazz · Latin · Live Music · Party · Rock · Casinos
+Kultur (id=96) → Film · Musik · Oper · Theater · Galerien · Museen
+Shopping (id=95) → Fashion · Swiss Originals · Uhren · Food · Souvenirs · Markt · Mall
+Sport (id=97) → Walking · Hiking · Cycling · Swimming · Climbing · Golf · Sailing · SUP
+Wellness (id=98) → Eigene Kategorie
+NÄCHSTE SESSION — PRIORITÄT:
+⏳ Import-Script schreiben → ZT API → Supabase automatisch befüllen
+⏳ Filter in index.html verdrahten → Supabase Query mit Subkategorie
+⏳ Supabase Livedaten für Gastro/Nachtleben wieder anschliessen
+SOFT LAUNCH: 4. Juni 2026 🔴​​​​​​​​​​​​​​​​
+
 
 
 
