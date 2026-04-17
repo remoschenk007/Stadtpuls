@@ -1011,6 +1011,27 @@ NÄCHSTE SESSION — PRIORITÄT:
 ⏳ Supabase Livedaten für Gastro/Nachtleben wieder anschliessen
 SOFT LAUNCH: 4. Juni 2026 🔴​​​​​​​​​​​​​​​​
 
+Hier der Master Update — direkt kopierbar:
+
+SESSION 17. APRIL 2026 — ABEND KOMPLETT
+KULTUR KATEGORIE LIVE ✅
+	•	Hamburger Menu → Kultur hinzugefügt (Zeile 49)
+	•	go() Funktion → ‘kultur’:‘fkultur’ gemapped (Zeile 677)
+	•	pg-kultur Seite erstellt mit:
+→ Lila Header #9333ea
+→ Subtext: Kunsthaus · Opernhaus · Theater · Museen · Galerien
+→ Filter: Alles · Museen · Theater · Oper · Musik · Film · Galerien
+→ supabase-locations-kultur Container bereit
+→ fkultur div bereit
+	•	Commits: «Kultur Navigation + go() Mapping» + «pg-kultur Seite erstellt»
+	•	Getestet auf depuls.ch → funktioniert ✅
+NÄCHSTE SESSION — PRIORITÄT:
+⏳ Import-Script → ZT API Kultur (id=96) → Supabase kultur Tabelle
+⏳ loadLocations() für Kultur verdrahten
+⏳ Supabase Livedaten Gastro/Nachtleben wieder anschliessen
+⏳ Filter funktional verdrahten
+SOFT LAUNCH: 4. Juni 2026 🔴​​​​​​​​​​​​​​​​
+
 
 
 
