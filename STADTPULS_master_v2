@@ -1032,6 +1032,57 @@ NÄCHSTE SESSION — PRIORITÄT:
 ⏳ Filter funktional verdrahten
 SOFT LAUNCH: 4. Juni 2026 🔴​​​​​​​​​​​​​​​​
 
+Hier der Master Update — direkt kopierbar:
+
+SESSION 17. APRIL 2026 — ABEND BRAINSTORMING
+NEUE KONZEPTE BESCHLOSSEN:
+PEOPLE & DATES — VOTING KONZEPT ✅
+	•	Keine leere Seite — stattdessen 2 Buttons: «JA, LOS!» / «NEI DANKE»
+	•	Ziel: 100’000 Votes → dann bauen wir Dating
+	•	Um abzustimmen: Geschlecht + Geburtsdatum (nur 18+)
+	•	IP-Sperre → nur 1 Vote pro Person
+	•	Supabase Tabelle dating_votes: ip, vote, geschlecht, geburtsjahr
+	•	Business Value: Daten über Zielgruppe bereits vor Launch
+INSERATE FÜR GALERIEN & KULTUR ✅
+	•	Galerien, kleine Theater, Pop-Up Events können sich registrieren
+	•	Inserat erstellen → KI prüft → Admin gibt frei → live
+	•	Preis: CHF 20 pro Woche
+	•	Revenue ohne Investor, ohne Chef
+	•	Phase 5 — Login Voraussetzung
+ZÜRI JETZT — HEATMAP ✅
+	•	Echtzeit-Stimmung der Stadt
+	•	User tippen an was sie gerade machen
+	•	Live-Heatmap zeigt welcher Kreis gerade abgeht
+	•	Kategorien: 🔴 Feiern · 🍕 Essen · 🎨 Ausstellung · 🌊 See · 💼 Arbeit · 😴 Zuhause
+	•	10 Minuten Votes dann Reset
+	•	Kein Login nötig — anonym
+KREISRIVALITÄT ✅
+	•	Startseite zeigt live welcher Kreis am aktivsten ist
+	•	«Kreis 4 gewinnt grad — wie immer» 😄
+	•	Kreis des Monats Trophy 🏆
+	•	Gamification → User teilen es → viral
+	•	Business: Featured Spot in aktivem Kreis → CHF 50 für Partner
+	•	Niemand in der Schweiz hat das
+NEUE PARTNER IDENTIFIZIERT:
+✅ Rundfunk.fm → Musik & Sound Partner → Oliva Scotoni direkt ansprechen
+✅ ubwg.ch → Kooperation statt Konkurrenz → Cross-Promotion
+✅ muse-um-zürich → 123 Museen → Datenfeed anfragen → perfekt für Kultur-Sektion
+API ERKENNTNISSE:
+✅ Zürich Tourismus → CC BY-SA, gratis, komplett
+✅ Google Places → $200/Monat gratis, beste Öffnungszeiten-Daten
+✅ Tripadvisor → erst beantragen wenn mehr Traffic
+✅ Spotify → kein Streaming erlaubt, nur Metadaten + Links
+✅ SoundCloud → Embed gratis, lokale Artists
+✅ Rundfunk.fm → Livestream einbettbar, gratis
+NÄCHSTE SESSION — PRIORITÄT:
+⏳ Master Update komplett schreiben
+⏳ Import-Script ZT API → Supabase
+⏳ Livedaten Gastro/Nachtleben wieder anschliessen
+⏳ People & Dates Voting-Seite bauen
+⏳ Züri Jetzt Konzept ausarbeiten
+SOFT LAUNCH: 4. Juni 2026 🔴
+«dä puls vo dä stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
+
 
 
 
