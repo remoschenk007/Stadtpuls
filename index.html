@@ -876,6 +876,156 @@ initGPS();
         </div>
       </div>
     </div>
+<!-- VOTING BLOCK -->
+<div style="position:relative;padding:4rem 1rem;text-align:center;overflow:hidden;">
+
+  <!-- ANIMIERTE HINTERGRUND-RINGE -->
+  <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;">
+    <div style="width:600px;height:600px;border-radius:50%;border:1px solid rgba(147,51,234,.15);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:pulse-ring 3s ease-out infinite;"></div>
+    <div style="width:450px;height:450px;border-radius:50%;border:1px solid rgba(147,51,234,.2);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:pulse-ring 3s ease-out infinite .7s;"></div>
+    <div style="width:300px;height:300px;border-radius:50%;border:1px solid rgba(147,51,234,.3);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:pulse-ring 3s ease-out infinite 1.4s;"></div>
+  </div>
+
+  <style>
+    @keyframes pulse-ring {
+      0% { transform:translate(-50%,-50%) scale(.8); opacity:0; }
+      50% { opacity:1; }
+      100% { transform:translate(-50%,-50%) scale(1.2); opacity:0; }
+    }
+    @keyframes glow-text {
+      0%,100% { text-shadow:0 0 20px rgba(147,51,234,.5),0 0 60px rgba(147,51,234,.3); }
+      50% { text-shadow:0 0 40px rgba(147,51,234,.9),0 0 100px rgba(147,51,234,.5),0 0 150px rgba(200,255,0,.2); }
+    }
+    @keyframes counter-pop {
+      0% { transform:scale(1); }
+      50% { transform:scale(1.15); }
+      100% { transform:scale(1); }
+    }
+    @keyframes shimmer {
+      0% { background-position:200% center; }
+      100% { background-position:-200% center; }
+    }
+    @keyframes float {
+      0%,100% { transform:translateY(0); }
+      50% { transform:translateY(-8px); }
+    }
+    .vote-ja-btn {
+      background:linear-gradient(135deg,#9333ea,#c8ff00) !important;
+      position:relative;
+      overflow:hidden;
+      transition:all .3s !important;
+    }
+    .vote-ja-btn::after {
+      content:'';
+      position:absolute;
+      top:-50%;left:-50%;
+      width:200%;height:200%;
+      background:linear-gradient(90deg,transparent,rgba(255,255,255,.15),transparent);
+      animation:shimmer 2s infinite;
+    }
+    .vote-ja-btn:hover {
+      transform:scale(1.05) !important;
+      box-shadow:0 0 40px rgba(147,51,234,.6),0 0 80px rgba(200,255,0,.2) !important;
+    }
+    .vote-nei-btn:hover {
+      border-color:#ff2d00 !important;
+      color:#ff2d00 !important;
+      box-shadow:0 0 20px rgba(255,45,0,.3) !important;
+    }
+    .gender-btn:hover {
+      transform:scale(1.05);
+    }
+  </style>
+
+  <!-- CONTENT -->
+  <div style="position:relative;z-index:1;max-width:480px;margin:0 auto;">
+
+    <!-- LABEL -->
+    <div style="display:inline-block;font-family:'DM Mono',monospace;font-size:.6rem;color:#9333ea;letter-spacing:.2em;border:1px solid rgba(147,51,234,.4);padding:.4rem 1rem;border-radius:99px;margin-bottom:1.5rem;background:rgba(147,51,234,.08);">ZÜRI ENTSCHEIDET</div>
+
+    <!-- HEADLINE -->
+    <h2 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:4rem;color:#e8e4d9;line-height:.95;margin-bottom:1rem;animation:glow-text 3s ease-in-out infinite;">SÖTTMER<br><span style="color:#9333ea;">DATES</span><br>IN ZÜRI?</h2>
+
+    <p style="font-family:'DM Mono',monospace;font-size:.68rem;color:rgba(255,255,255,.4);margin-bottom:2.5rem;line-height:1.7;">100'000 JA -- und mir bauen's.<br>Versprochen. 🤝</p>
+
+    <!-- COUNTER -->
+    <div style="margin-bottom:2.5rem;animation:float 4s ease-in-out infinite;">
+      <div id="vote-count" style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:6rem;line-height:1;background:linear-gradient(135deg,#c8ff00,#9333ea);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.25);letter-spacing:.15em;margin-top:.25rem;">VON 100'000 VOTES</div>
+      <!-- PROGRESS -->
+      <div style="background:rgba(255,255,255,.06);border-radius:99px;height:4px;margin-top:1.25rem;overflow:hidden;">
+        <div id="vote-bar" style="background:linear-gradient(90deg,#9333ea,#c8ff00);height:4px;width:0%;border-radius:99px;transition:width 1s cubic-bezier(.4,0,.2,1);box-shadow:0 0 10px rgba(200,255,0,.5);"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-family:'DM Mono',monospace;font-size:.5rem;color:rgba(255,255,255,.2);margin-top:.4rem;">
+        <span>0</span><span>100'000</span>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div id="vote-form" style="background:rgba(147,51,234,.06);border:1px solid rgba(147,51,234,.2);border-radius:1.5rem;padding:2rem;backdrop-filter:blur(10px);">
+
+      <div style="font-family:'DM Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.25);letter-spacing:.12em;margin-bottom:1.75rem;">ANONYM · 1 VOTE PRO PERSON · NUR 18+</div>
+
+      <!-- GESCHLECHT -->
+      <div style="margin-bottom:1.25rem;text-align:left;">
+        <div style="font-family:'DM Mono',monospace;font-size:.58rem;color:rgba(255,255,255,.35);margin-bottom:.6rem;letter-spacing:.08em;">ICH BIN</div>
+        <div style="display:flex;gap:.5rem;">
+          <button onclick="selectGender('f')" id="gbtn-f" class="gender-btn" style="flex:1;padding:.8rem .25rem;background:rgba(147,51,234,.1);border:1px solid rgba(147,51,234,.3);border-radius:.75rem;color:#e8e4d9;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;cursor:pointer;transition:all .2s;">FRAU</button>
+          <button onclick="selectGender('m')" id="gbtn-m" class="gender-btn" style="flex:1;padding:.8rem .25rem;background:rgba(147,51,234,.1);border:1px solid rgba(147,51,234,.3);border-radius:.75rem;color:#e8e4d9;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;cursor:pointer;transition:all .2s;">MANN</button>
+          <button onclick="selectGender('x')" id="gbtn-x" class="gender-btn" style="flex:1;padding:.8rem .25rem;background:rgba(147,51,234,.1);border:1px solid rgba(147,51,234,.3);border-radius:.75rem;color:#e8e4d9;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;cursor:pointer;transition:all .2s;">X</button>
+        </div>
+      </div>
+
+      <!-- JAHRGANG -->
+      <div style="margin-bottom:1.75rem;text-align:left;">
+        <div style="font-family:'DM Mono',monospace;font-size:.58rem;color:rgba(255,255,255,.35);margin-bottom:.6rem;letter-spacing:.08em;">JAHRGANG</div>
+        <input id="birth-year" type="number" min="1900" max="2007" placeholder="z.B. 1990" style="width:100%;padding:.9rem 1rem;background:rgba(0,0,0,.5);border:1px solid rgba(147,51,234,.3);border-radius:.75rem;color:#e8e4d9;font-family:'DM Mono',monospace;font-size:.9rem;box-sizing:border-box;outline:none;">
+      </div>
+
+      <!-- VOTE BUTTONS -->
+      <div style="display:flex;gap:.75rem;">
+        <button onclick="castVote('nein')" class="vote-nei-btn" style="flex:1;padding:1.1rem;background:transparent;border:1px solid rgba(255,45,0,.3);border-radius:.75rem;color:rgba(255,45,0,.6);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.3rem;cursor:pointer;transition:all .3s;">NEI DANKE</button>
+        <button onclick="castVote('ja')" class="vote-ja-btn" style="flex:2;padding:1.1rem;border:none;border-radius:.75rem;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.3rem;cursor:pointer;">JA, LOS! 🔥</button>
+      </div>
+
+    </div>
+
+    <!-- DANKE STATE -->
+    <div id="vote-done" style="display:none;padding:3rem 2rem;background:rgba(200,255,0,.05);border:1px solid rgba(200,255,0,.25);border-radius:1.5rem;">
+      <div style="font-size:4rem;margin-bottom:1rem;animation:float 2s ease-in-out infinite;">🔥</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:3rem;color:#c8ff00;line-height:.95;margin-bottom:1rem;">DANKE FÜR<br>DIN VOTE!</div>
+      <div style="font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.35);line-height:1.7;">Mir informiere dich sobald<br>100'000 erreicht sind.</div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+var selectedGender = null;
+function selectGender(g) {
+  selectedGender = g;
+  ['f','m','x'].forEach(function(id) {
+    var b = document.getElementById('gbtn-'+id);
+    b.style.background = id===g ? 'rgba(147,51,234,.6)' : 'rgba(147,51,234,.1)';
+    b.style.borderColor = id===g ? '#9333ea' : 'rgba(147,51,234,.3)';
+    b.style.color = id===g ? '#fff' : '#e8e4d9';
+  });
+}
+function castVote(type) {
+  if (!selectedGender) { alert('Bitte wähle zuerst dein Geschlecht.'); return; }
+  var y = parseInt(document.getElementById('birth-year').value);
+  if (!y || y > 2007 || y < 1900) { alert('Bitte gib einen gültigen Jahrgang ein (18+).'); return; }
+  if (type === 'ja') {
+    document.getElementById('vote-form').style.display = 'none';
+    document.getElementById('vote-done').style.display = 'block';
+  } else {
+    document.getElementById('vote-form').style.display = 'none';
+    document.getElementById('vote-done').innerHTML = '<div style="font-size:3rem;margin-bottom:1rem;">👋</div><div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:2.5rem;color:#e8e4d9;line-height:.95;">SCHAD.<br>VILICHT<br>SPÄTER.</div>';
+    document.getElementById('vote-done').style.display = 'block';
+  }
+}
+</script>
+<!-- ENDE VOTING BLOCK -->
 
 
 <div class="lbl rv">Neui Profile in Züri</div>
