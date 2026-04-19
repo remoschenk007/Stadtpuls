@@ -863,23 +863,9 @@ initGPS();
     </div>
   </div>
   <div class="fbar"><div class="fbi"><span class="flbl">Suche:</span><span class="ftag on">Alles</span><span class="ftag">Friends</span><span class="ftag">Dates</span><span class="ftag">Networking</span><span class="ftag">Sport</span><span class="ftag">Musik</span><span class="ftag">Kreis 4</span><span class="ftag">Kreis 5</span></div></div>
-  <div class="ca">
-    <div style="background:linear-gradient(135deg,#9333ea,#6d28d9);padding:2.5rem;margin-bottom:2.5rem;" class="rv">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
-        <div>
-          <h3 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:2.2rem;text-transform:uppercase;color:#e8e4d9;line-height:1;margin-bottom:.7rem;">Dein Profil --<br>Dini Szene</h3>
-          <p style="font-family:'DM Mono',monospace;font-size:.68rem;color:rgba(255,255,255,.6);line-height:1.7;">Kein Tinder-Swipe-Bullshit. Echte Leute aus Züri, die dasselbe erleben wollen wie du.</p>
-        </div>
-        <div style="display:flex;flex-direction:column;gap:.5rem;">
-          <a class="btn bo" style="text-align:center;" onclick="go('login')">Profil erstelle →</a>
-          <a class="btn bg" style="text-align:center;border-color:rgba(255,255,255,.3)!important;">Stöbere</a>
-        </div>
-      </div>
-    </div>
-<!-- VOTING BLOCK -->
+  <!-- VOTING BLOCK -->
 <div style="position:relative;padding:4rem 1rem;text-align:center;overflow:hidden;">
 
-  <!-- ANIMIERTE HINTERGRUND-RINGE -->
   <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:0;">
     <div style="width:600px;height:600px;border-radius:50%;border:1px solid rgba(147,51,234,.15);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:pulse-ring 3s ease-out infinite;"></div>
     <div style="width:450px;height:450px;border-radius:50%;border:1px solid rgba(147,51,234,.2);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);animation:pulse-ring 3s ease-out infinite .7s;"></div>
@@ -895,11 +881,6 @@ initGPS();
     @keyframes glow-text {
       0%,100% { text-shadow:0 0 20px rgba(147,51,234,.5),0 0 60px rgba(147,51,234,.3); }
       50% { text-shadow:0 0 40px rgba(147,51,234,.9),0 0 100px rgba(147,51,234,.5),0 0 150px rgba(200,255,0,.2); }
-    }
-    @keyframes counter-pop {
-      0% { transform:scale(1); }
-      50% { transform:scale(1.15); }
-      100% { transform:scale(1); }
     }
     @keyframes shimmer {
       0% { background-position:200% center; }
@@ -932,27 +913,20 @@ initGPS();
       color:#ff2d00 !important;
       box-shadow:0 0 20px rgba(255,45,0,.3) !important;
     }
-    .gender-btn:hover {
-      transform:scale(1.05);
-    }
+    .gender-btn:hover { transform:scale(1.05); }
   </style>
 
-  <!-- CONTENT -->
   <div style="position:relative;z-index:1;max-width:480px;margin:0 auto;">
 
-    <!-- LABEL -->
     <div style="display:inline-block;font-family:'DM Mono',monospace;font-size:.6rem;color:#9333ea;letter-spacing:.2em;border:1px solid rgba(147,51,234,.4);padding:.4rem 1rem;border-radius:99px;margin-bottom:1.5rem;background:rgba(147,51,234,.08);">ZÜRI ENTSCHEIDET</div>
 
-    <!-- HEADLINE -->
     <h2 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:4rem;color:#e8e4d9;line-height:.95;margin-bottom:1rem;animation:glow-text 3s ease-in-out infinite;">SÖTTMER<br><span style="color:#9333ea;">DATES</span><br>IN ZÜRI?</h2>
 
     <p style="font-family:'DM Mono',monospace;font-size:.68rem;color:rgba(255,255,255,.4);margin-bottom:2.5rem;line-height:1.7;">100'000 JA -- und mir bauen's.<br>Versprochen. 🤝</p>
 
-    <!-- COUNTER -->
     <div style="margin-bottom:2.5rem;animation:float 4s ease-in-out infinite;">
       <div id="vote-count" style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:6rem;line-height:1;background:linear-gradient(135deg,#c8ff00,#9333ea);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div>
       <div style="font-family:'DM Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.25);letter-spacing:.15em;margin-top:.25rem;">VON 100'000 VOTES</div>
-      <!-- PROGRESS -->
       <div style="background:rgba(255,255,255,.06);border-radius:99px;height:4px;margin-top:1.25rem;overflow:hidden;">
         <div id="vote-bar" style="background:linear-gradient(90deg,#9333ea,#c8ff00);height:4px;width:0%;border-radius:99px;transition:width 1s cubic-bezier(.4,0,.2,1);box-shadow:0 0 10px rgba(200,255,0,.5);"></div>
       </div>
@@ -961,12 +935,8 @@ initGPS();
       </div>
     </div>
 
-    <!-- FORM -->
     <div id="vote-form" style="background:rgba(147,51,234,.06);border:1px solid rgba(147,51,234,.2);border-radius:1.5rem;padding:2rem;backdrop-filter:blur(10px);">
-
       <div style="font-family:'DM Mono',monospace;font-size:.55rem;color:rgba(255,255,255,.25);letter-spacing:.12em;margin-bottom:1.75rem;">ANONYM · 1 VOTE PRO PERSON · NUR 18+</div>
-
-      <!-- GESCHLECHT -->
       <div style="margin-bottom:1.25rem;text-align:left;">
         <div style="font-family:'DM Mono',monospace;font-size:.58rem;color:rgba(255,255,255,.35);margin-bottom:.6rem;letter-spacing:.08em;">ICH BIN</div>
         <div style="display:flex;gap:.5rem;">
@@ -975,22 +945,16 @@ initGPS();
           <button onclick="selectGender('x')" id="gbtn-x" class="gender-btn" style="flex:1;padding:.8rem .25rem;background:rgba(147,51,234,.1);border:1px solid rgba(147,51,234,.3);border-radius:.75rem;color:#e8e4d9;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.1rem;cursor:pointer;transition:all .2s;">X</button>
         </div>
       </div>
-
-      <!-- JAHRGANG -->
       <div style="margin-bottom:1.75rem;text-align:left;">
         <div style="font-family:'DM Mono',monospace;font-size:.58rem;color:rgba(255,255,255,.35);margin-bottom:.6rem;letter-spacing:.08em;">JAHRGANG</div>
         <input id="birth-year" type="number" min="1900" max="2007" placeholder="z.B. 1990" style="width:100%;padding:.9rem 1rem;background:rgba(0,0,0,.5);border:1px solid rgba(147,51,234,.3);border-radius:.75rem;color:#e8e4d9;font-family:'DM Mono',monospace;font-size:.9rem;box-sizing:border-box;outline:none;">
       </div>
-
-      <!-- VOTE BUTTONS -->
       <div style="display:flex;gap:.75rem;">
         <button onclick="castVote('nein')" class="vote-nei-btn" style="flex:1;padding:1.1rem;background:transparent;border:1px solid rgba(255,45,0,.3);border-radius:.75rem;color:rgba(255,45,0,.6);font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.3rem;cursor:pointer;transition:all .3s;">NEI DANKE</button>
         <button onclick="castVote('ja')" class="vote-ja-btn" style="flex:2;padding:1.1rem;border:none;border-radius:.75rem;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.3rem;cursor:pointer;">JA, LOS! 🔥</button>
       </div>
-
     </div>
 
-    <!-- DANKE STATE -->
     <div id="vote-done" style="display:none;padding:3rem 2rem;background:rgba(200,255,0,.05);border:1px solid rgba(200,255,0,.25);border-radius:1.5rem;">
       <div style="font-size:4rem;margin-bottom:1rem;animation:float 2s ease-in-out infinite;">🔥</div>
       <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:3rem;color:#c8ff00;line-height:.95;margin-bottom:1rem;">DANKE FÜR<br>DIN VOTE!</div>
@@ -1026,6 +990,23 @@ function castVote(type) {
 }
 </script>
 <!-- ENDE VOTING BLOCK -->
+
+<!-- PROFIL BLOCK -->
+<div class="ca">
+  <div style="background:linear-gradient(135deg,#9333ea,#6d28d9);padding:2.5rem;margin-bottom:2.5rem;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:center;">
+      <div>
+        <h3 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:2.2rem;text-transform:uppercase;color:#e8e4d9;line-height:1;margin-bottom:.7rem;">Dein Profil --<br>Dini Szene</h3>
+        <p style="font-family:'DM Mono',monospace;font-size:.68rem;color:rgba(255,255,255,.6);line-height:1.7;">Kein Tinder-Swipe-Bullshit. Echte Leute aus Züri, die dasselbe erleben wollen wie du.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.5rem;">
+        <a class="btn bo" style="text-align:center;" onclick="go('login')">Profil erstelle →</a>
+        <a class="btn bg" style="text-align:center;border-color:rgba(255,255,255,.3)!important;">Stöbere</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ENDE PROFIL BLOCK -->
 
 
 <div class="lbl rv">Neui Profile in Züri</div>
