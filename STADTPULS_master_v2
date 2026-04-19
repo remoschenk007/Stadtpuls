@@ -1080,8 +1080,134 @@ NÄCHSTE SESSION — PRIORITÄT:
 ⏳ Livedaten Gastro/Nachtleben wieder anschliessen
 ⏳ People & Dates Voting-Seite bauen
 ⏳ Züri Jetzt Konzept ausarbeiten
+
+Ja! Hier der komplette Master-Update — alles von heute zusammen:
+
+SESSION 19. APRIL 2026 — KOMPLETT
+AUSGANGSLAGE:
+Sonntag — leichter Tag geplant.
+Hund war auf der Hundewiese. 🐕
+DNS von gestern (depuls.ch) noch nicht überall propagiert.
+WAS HEUTE ERREICHT WURDE ✅
+HTTPS / SSL:
+✅ GitHub Pages Settings gecheckt
+✅ «DNS Check in Progress» — noch läuft
+✅ «Enforce HTTPS» noch nicht verfügbar — normal
+✅ Erkenntnis: SSL kommt automatisch — GitHub Pages via Let’s Encrypt gratis
+✅ Kein SSL-Zertifikat kaufen nötig
+GOOGLE SEARCH CONSOLE ✅
+✅ Mit remoschenk@gmail.com eingeloggt — kein Problem
+✅ Domain-Property «depuls.ch» erstellt
+✅ TXT Record bei hosttech eingetragen
+✅ «Inhaberschaft bestätigt» — grünes Banner
+✅ Dashboard live
+⏳ Sitemap bewusst nicht eingereicht — erst nach echtem URL-Routing
+PLAUSIBLE ANALYTICS ✅
+✅ plausible.io mit byraimondo@gmail.com registriert
+✅ depuls.ch hinzugefügt — Europe/Zurich
+✅ Script in index.html Zeilen 20-25 eingefügt
+✅ Commit: «✅ Plausible Analytics eingebaut» — 12:34
+⚠️ Verify schlägt fehl — weil HTTPS noch fehlt — kein Fehler im Code
+✅ Nach HTTPS → verifizieren
+KOSTEN: $9/Monat nach Trial — monatlich kündbar — jederzeit stop
+ANONYMITÄT BESTÄTIGT ✅
+✅ Domain → by Raimondo
+✅ GitHub → remoschenk007
+✅ Instagram → @stadtpuls_zh
+✅ Search Console → remoschenk@gmail.com (privat)
+✅ Plausible → byraimondo@gmail.com
+✅ Copyright → © 2026 by raimondo*
+✅ Remo Schenk nirgends öffentlich sichtbar
+DATING VOTING BLOCK ✅
+✅ Animierte Hintergrund-Ringe
+✅ Glowing Headline «SÖTTMER DATES IN ZÜRI?»
+✅ Counter 0 von 100’000
+✅ Progress Bar mit Glow
+✅ Geschlecht + Jahrgang Formular
+✅ JA LOS 🔥 + NEI DANKE Buttons
+✅ Danke-State + «SCHAD. VILICHT SPÄTER.»
+✅ Commit: «✅ Dating Voting Block eingebaut» — 13:02
+✅ Commit: «✅ Voting oben Profil unten getauscht» — 13:29
+✅ Hash: 230fb86
+KOMPLIKATIONEN HEUTE ⚠️
+⚠️ Working Copy landete kurz im «examples» Demo-Repo
+⚠️ Chat-Text wurde einmal mit Code zusammen eingefügt — zurückgesetzt
+⚠️ «Repository zurückgesetzt auf 9236e03» Warning — Änderungen waren noch da
+⚠️ Mehrmals zurückgesetzt — immer sauber gelöst
+⚠️ DNS noch nicht überall — Freundin Deutschland sieht leere Seite
+⚠️ Doppel-Footer auf manchen Seiten — separater Fix nächste Session
+DNS STATUS:
+✅ iPad zeigt depuls.ch — gecacht
+❌ Deutschland sieht leere Seite — DNS propagiert noch
+⏳ 24-48h bis weltweit sichtbar
+ℹ️ TXT Record für Google hat DNS-Propagierung neu gestartet — normal
+NOCH OFFEN:
+⏳ HTTPS aktivieren sobald DNS durch → Enforce HTTPS GitHub Settings
+⏳ Plausible verifizieren nach HTTPS
+⏳ Supabase dating_votes Tabelle erstellen
+⏳ Voting Counter live an Supabase
+⏳ IP-Sperre → 1 Vote pro Person
+⏳ Doppel-Footer fixen
+⏳ Phase 5 Idee: Vote-Daten beim Registrieren vorausfüllen
+KI FEATURES — BESCHLOSSEN PHASE 6 ✅
+✅ Züri-Bot — «Was mach ich heute Abend?»
+✅ Stimmungs-Matching — müde/energetisch/romantisch
+✅ Event-Beschreibungen automatisch — Partner gibt Infos, KI schreibt
+✅ Kreisrivalität Live-Kommentator in Züri-Slang — «das absolute Geniale»
+❌ Weekly Email — bewusst raus — «geht auf den Sack»
+❌ Google Reviews zusammenfassen — Community bewertet selbst
+✅ Prinzip: Community-Bewertungen authentischer als KI
+VISION ERWEITERT — HEUTE BESCHLOSSEN ✅
+✅ Stadtpuls = Betriebssystem einer Stadt
+✅ Franchise-Modell:
+→ depuls.hamburg / depuls.berlin / depuls.wien
+→ Lizenz kaufen → System kriegen → lokal betreiben
+→ Revenue-Share mit Stadtpuls
+✅ Super-App Vision — User verlässt Stadtpuls nie:
+→ Airbnb / Hotels / Mobility / ZVV
+→ Gastro / Delivery / Shopping
+→ Jobs / Immobilien / Dating
+→ Community / KI
+✅ Nicht WeChat kopieren — Stadtpuls erfinden
+✅ Europa hat keine Super-App — noch nicht
+INTERNATIONAL RECHERCHE — HEUTE ✅
+✅ Wingman, GuideX, SmartGuide → für Touristen — Walking Tours
+✅ GPSmyCity → Offline Stadtführer Reisende
+✅ GuideGeek → KI Reiseassistent WhatsApp
+FAZIT: Niemand weltweit kombiniert Locals + GPS + alle Kategorien + KI + Community
+✅ Alle KI City Guides sind für Touristen
+✅ Stadtpuls ist für Locals — das gibt es weltweit nicht
+COMEBACK STORY — MEDIA STRATEGIE ✅
+✅ Remo Schenk — 2018 verschwunden nach Scheidung
+✅ Alles verloren — nicht mehr in der Öffentlichkeit
+✅ Hatte grosse Immobilienplattform (Homespeed.ch)
+✅ 2026 zurück — mit KI — mit Stadtpuls
+✅ Geschichte schreibt sich selbst — Medien lieben Comebacks
+✅ Wenn Produkt steht → Medien kommen
+✅ «Eine Hand wäscht die andere»
+USER MILESTONES:
+100 MAU → erste Muster sichtbar
+1’000 MAU → Mundpropaganda läuft, Partner neugierig
+5’000 MAU → OpenTable + Ticketcorner nehmen uns ernst
+10’000 MAU → Medien merken es, Ron Orp wird nervös
+50’000 MAU → Stadtpuls ist Zürich
+ROADMAP UPDATE:
+✅ Phase 4h → Footer
+✅ Phase 4i → Register + Backticks
+✅ Phase 4j → Tab-Switch
+✅ Phase 4k → Search Console + Plausible
+✅ Phase 4l → Dating Voting Block live
+⏳ Phase 4m → ZVV API Mobilität
+⏳ Phase 5 → Supabase Voting + Login + Community
+⏳ Phase 6 → KI Features
+⏳ Phase 7 → Hamburg, Berlin
+⏳ Phase 8 → Wien, München
+⏳ Phase 9 → London, Amsterdam, Barcelona
+⏳ Phase 10 → Franchise weltweit
 SOFT LAUNCH: 4. Juni 2026 🔴
-«dä puls vo dä stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»
+
+Das ist alles drin. Guter Sonntag Remo! 💪🔴​​​​​​​​​​​​​​​​
 
 
 
