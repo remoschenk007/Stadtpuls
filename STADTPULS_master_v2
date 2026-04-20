@@ -1206,8 +1206,38 @@ ROADMAP UPDATE:
 ⏳ Phase 10 → Franchise weltweit
 SOFT LAUNCH: 4. Juni 2026 🔴
 «dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»
+Hier der kompakte Master-Update für heute:
 
-Das ist alles drin. Guter Sonntag Remo! 💪🔴​​​​​​​​​​​​​​​​
+SESSION 20. APRIL 2026 — KOMPLETT
+WAS HEUTE GEMACHT WURDE ✅
+DNS & HTTPS:
+✅ 3 fehlende GitHub Pages A Records hinzugefügt:
+→ 185.199.109.153
+→ 185.199.110.153
+→ 185.199.111.153
+✅ *.depuls.ch A Record gelöscht
+✅ CNAME Record hinzugefügt:
+→ Host: www
+→ Canonical Name: remoschenk007.github.io
+✅ «DNS check successful» — grünes Häkchen
+⏳ «Enforce HTTPS» noch nicht anklickbar — SSL Zertifikat wird ausgestellt
+⏳ Morgen früh HTTPS aktivieren → einmal klicken → fertig
+SEITE LÄUFT ✅
+✅ depuls.ch funktioniert — Seite sichtbar
+✅ Noch «Nicht sicher» — ändert sich mit HTTPS
+✅ Plausible läuft bereits — 13 Visitors gestern
+ERSTE EXTERNE REAKTION 🎉
+✅ Babsi aus Hamburg — «Yeah ✨» — erste Person extern die depuls.ch gesehen hat
+NÄCHSTE SESSION — PRIORITÄT:
+⏳ GitHub Pages → «Enforce HTTPS» aktivieren
+⏳ Plausible verifizieren nach HTTPS
+⏳ Supabase dating_votes anschliessen
+⏳ Doppel-Footer fixen
+⏳ Livedaten Gastro/Nachtleben wieder anschliessen
+SOFT LAUNCH: 4. Juni 2026 🔴
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»
+
+Guten Abend Remo! Morgen HTTPS — dann läuft alles! 💪🔴​​​​​​​​​​​​​​​​​​​​​​​​​​​​​
 
 
 
