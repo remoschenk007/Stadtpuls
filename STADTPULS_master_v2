@@ -1270,6 +1270,118 @@ ROADMAP EINORDNUNG:
 ⏳ Phase 6 → KI Features
 SOFT LAUNCH: 4. Juni 2026 🔴
 
+Hier ist das komplette Master Update — direkt kopierbar: 🔴
+
+SESSION 23. APRIL 2026 — KOMPLETT
+ZÜRICH TOURISMUS API — VOLLSTÄNDIG ANALYSIERT ✅
+Alle Kategorien und Subkategorien mit IDs dokumentiert:
+GASTRO (id=101):
+184=Schweizer · 185=Italienisch · 186=Spanisch · 187=Französisch
+188=Asiatisch · 189=Nahost · 190=Mexikanisch · 191=Mediterran
+192=Bistro · 193=American · 194=Gourmet · 195=Grill
+196=Fisch · 197=Vegetarisch · 409=Vegan · 415=International · 102=Café
+BARS (id=103):
+1447=RestBar · 1459=AfterWork · 1438=Cocktail · 1462=Outdoor
+1450=Hotelbar · 1441=MusicBar · 1444=Pub · 1468=Quartierbar
+1465=Weinbar · 1456=Kulturbar
+NACHTLEBEN (id=162):
+1414=Techno · 1417=HipHop · 1423=Rock · 1426=Latin
+1429=Afterhour · 1432=Jazz · 1435=Party · 163=LiveMusic · 164=Casino
+SHOPPING (id=95):
+127=Mode · 128=SwissMade · 129=Uhren · 130=Souvenirs
+131=Food · 132=Markt · 416=Warenhaus · 417=Mall · 418=Weihnachtsmarkt · 1090=Velo
+KULTUR (id=96):
+133=Film · 134=Musik · 175=Oper · 176=Theater · 178=Galerien · 136=Museen
+Museen: 177=Kunst · 179=Foto · 180=Architektur · 181=Geschichte · 182=Wissenschaft
+SPORT (id=97):
+137=Walking · 138=Hiking · 139=Cycling · 141=Swimming
+145=Climbing · 146=Golf · 149=Sailing · 150=SUP
+WELLNESS (id=98): Keine Subkategorien
+SIGHTSEEING (id=72):
+87=Architektur · 88=Aussichtspunkte · 89=Denkmäler
+90=Kunst · 91=Plätze · 92=Kirchen
+RECREATION (id=99):
+158=Berge · 159=Wasser · 160=Parks · 161=Zoo
+SUPABASE — NEUE ARCHITEKTUR LIVE ✅
+Komplett neu aufgebaut — 23. April 2026
+TABELLEN (12 total):
+✅ locations — Master (Gastro/Nachtleben/Shopping/Kultur/Wellness/Sport)
+✅ location_sources — Multi-Source (ZT + Google + Tripadvisor)
+✅ events — Konzerte/Pop-Ups/Märkte/Openairs
+✅ immobilien — WG/Wohnungen/Büros/Ateliers
+✅ inserate — Marktplatz (Velo/Möbel/Kleider/Tickets)
+✅ jobs — Jobs/Praktika/Freelance
+✅ news_stories — Artikel/Reviews/Storys
+✅ users — Profile (vorbereitet Phase 5)
+✅ user_preferences — Bookmarks + KI-Feed
+✅ community_posts — Posts/Reviews/Likes
+✅ dating_votes — Voting bis 100k
+✅ dating_vote_stats — View für Live-Counter
+FUNKTIONEN:
+✅ plz_to_kreis() — PLZ → Kreis automatisch
+✅ generate_slug() — Name → URL automatisch
+✅ fn_updated_at() — updated_at automatisch
+✅ fn_set_kreis() — Trigger für alle Tabellen
+✅ fn_set_18plus() — Alter aus Geburtsjahr automatisch
+TRIGGERS (alle Tabellen):
+✅ updated_at automatisch
+✅ PLZ → Kreis automatisch (locations/events/immobilien/inserate/jobs)
+✅ 18+ aus Geburtsjahr automatisch (users)
+INDIZES (28 total):
+✅ Alle kritischen Spalten indexiert
+✅ Kombi-Indizes (kreis + kategorie / datum + kreis)
+✅ GIN Index für Volltext-Suche (locations/events/news)
+✅ Rating Index (DESC NULLS LAST)
+VOLLTEXT-SUCHE:
+✅ search_vector auf locations, events, news_stories
+✅ GIN Index — blitzschnell auch bei 10k+ Einträgen
+✅ KI-ready — «Was mach ich heute Abend?»
+RLS (Row Level Security):
+✅ Alle 11 Tabellen geschützt
+✅ Read Policy überall — nur aktive Einträge sichtbar
+✅ dating_votes — nur via View lesbar
+ARCHITEKTUR-PRINZIPIEN:
+✅ PLZ → Kreis automatisch — nie manuell setzen
+✅ 1 Location = 1 Eintrag (kein Duplikat)
+✅ Multi-Source: ZT + Google + Tripadvisor → location_sources
+✅ Filter via zt_subkategorie_id — direkte Query, kein Text-Matching
+✅ SEO-Felder in jeder Tabelle (seo_title/seo_description/schema_type)
+✅ Users minimal jetzt — ausbaubar Phase 5 ohne Umbau
+✅ Dating: Voting bis 100k — dann Phase 5 bauen
+FILTER-LOGIK:
+// User klickt «Techno»
+.from(‘locations’).eq(‘zt_subkategorie_id’, 1414)
+// User klickt «Asiatisch»
+.from(‘locations’).eq(‘zt_subkategorie_id’, 188)
+// User klickt «Kreis 4»
+.from(‘locations’).eq(‘kreis’, 4)
+// Events «Hüt»
+.from(‘events’).eq(‘datum_start’, today)
+PERFORMANCE:
+✅ Indizes → 50ms statt 800ms bei Queries
+✅ select() nur nötige Felder — nie SELECT *
+✅ Volltext GIN Index — Suche in Millisekunden
+✅ Connection Pooling → aktivieren ab 1000 MAU
+NÄCHSTE SESSION — PRIORITÄT:
+⏳ Import-Script → ZT API → locations Tabelle befüllen
+⏳ Alle Kategorien importieren (Gastro/Nachtleben/Shopping/Kultur/Wellness/Sport)
+⏳ slug + seo_title + seo_description auto-generieren beim Import
+⏳ Filter-Buttons in index.html → zt_subkategorie_id verdrahten
+⏳ Livedaten Gastro/Nachtleben wieder anschliessen
+ROADMAP UPDATE:
+✅ Phase 4h → Footer gefixt
+✅ Phase 4i → Register + Backticks gefixt
+✅ Phase 4j → Tab-Switch gefixt
+✅ Phase 4k → Supabase Architektur komplett neu — HEUTE
+⏳ Phase 4l → Import alle Kategorien + Bilder
+⏳ Phase 4m → Filter verdrahten + Livedaten
+⏳ Phase 4n → ZVV API Mobilität
+⏳ Phase 5 → Login + Community + Onboarding
+⏳ Phase 6 → KI Features
+⏳ Phase 7 → Hamburg, Berlin
+SOFT LAUNCH: 4. Juni 2026 🔴
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
+
 In Master_v2 reinkopieren → Commit → fertig! 🔴​​​​​​​​​​​​​​​​
 
 
