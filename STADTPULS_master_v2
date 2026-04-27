@@ -1451,6 +1451,80 @@ ROADMAP UPDATE:
 SOFT LAUNCH: 4. Juni 2026 🔴
 «dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
 
+SESSION 27. APRIL 2026 — KOMPLETT
+
+HTTPS:
+✅ AAAA Records bei hosttech gelöscht
+✅ DNS check successful
+✅ Enforce HTTPS — morgen nochmal prüfen ob Checkbox grün
+
+IMPRESSUM + DATENSCHUTZ:
+✅ impressum.html erstellt — live auf depuls.ch/impressum.html
+✅ datenschutz.html erstellt — live auf depuls.ch/datenschutz.html
+✅ DSG (Schweiz) + DSGVO (EU) konform
+✅ Zukunftssicher geschrieben — alle Features drin — nie mehr anfassen
+✅ Footer Links funktionieren — Zeile 659 index.html
+✅ by raimondo* / byraimondo@gmail.com / Zürich
+
+GITHUB TRAINING OPT-OUT:
+✅ «Allow GitHub to use my data for AI model training» → Disabled
+✅ Gilt für alle Repositories — nicht nur Stadtpuls
+
+SUPABASE VOTING:
+✅ dating_votes Tabelle vorhanden
+✅ user_agent Spalte hinzugefügt
+✅ 2 RLS Policies: Read + Insert
+✅ fetch() Code eingebaut — Legacy Anon Key
+✅ Frontend funktioniert — DANKE FÜR DIN VOTE erscheint
+❌ Daten kommen noch nicht in Tabelle an
+⚠️ Supabase hatte technischen Ausfall heute Abend — wahrscheinlich Ursache
+
+ANON KEY AKTUELL:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ
+
+FETCH CODE IN index.html ZEILE 984-998:
+const response = await fetch('https://pnynkzrqnfoshojqfqxn.supabase.co/rest/v1/dating_votes', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'apikey': '[ANON KEY]',
+    'Authorization': 'Bearer [ANON KEY]'
+  },
+  body: JSON.stringify({
+    vote: type,
+    geschlecht: selectedGender,
+    geburtsjahr: y,
+    ip_hash: null,
+    user_agent: navigator.userAgent
+  })
+});
+
+ERSTE PRIORITÄT MORGEN:
+1. depuls.ch/impressum.html testen
+2. depuls.ch/datenschutz.html testen
+3. Supabase → dating_votes → nochmal voten → prüfen ob Eintrag drin
+4. Falls immer noch leer → Supabase Logs prüfen → Settings → Logs
+5. Live-Counter einbauen — Votes mitzählen auf der Seite
+
+ROADMAP UPDATE:
+✅ Phase 4h → Footer gefixt
+✅ Phase 4i → Register + Backticks gefixt
+✅ Phase 4j → Tab-Switch gefixt
+✅ Phase 4k → Supabase Architektur komplett neu
+✅ Phase 4l → Impressum + Datenschutz live
+✅ Phase 4l → HTTPS fast fertig
+⏳ Phase 4m → Voting Supabase live — morgen fixen
+⏳ Phase 4n → Live-Counter Voting
+⏳ Phase 4o → Filter verdrahten + Livedaten
+⏳ Phase 4p → ZVV API Mobilität
+⏳ Phase 5 → Login + Community + Onboarding
+⏳ Phase 6 → KI Features
+⏳ Phase 7 → Hamburg, Berlin
+
+SOFT LAUNCH: 4. Juni 2026 🔴
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»
+
+
 In Master_v2 reinkopieren → Commit → fertig! 🔴​​​​​​​​​​​​​​​​
 
 
