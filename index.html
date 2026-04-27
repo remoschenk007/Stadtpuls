@@ -981,7 +981,7 @@ async function castVote(type) {
   var y = parseInt(document.getElementById('birth-year').value);
   if (!y || y > 2007 || y < 1900) { alert('Bitte gib einen gültigen Jahrgang ein (18+).'); return; }
   
-  const { error } = await SUPABASE_CLIENT
+  const { error } = await supabase
     .from('dating_votes')
     .insert({
       vote: type,
