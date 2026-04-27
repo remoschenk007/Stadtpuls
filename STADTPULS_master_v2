@@ -1382,6 +1382,75 @@ ROADMAP UPDATE:
 SOFT LAUNCH: 4. Juni 2026 🔴
 «dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
 
+
+Ja — hier ist das komplette Master Update für heute: 🔴
+
+SESSION 27. APRIL 2026 — KOMPLETT
+HTTPS — ENDLICH GELÖST ✅
+Problem war: AAAA Records bei hosttech zeigten auf hosttech Server statt GitHub Pages
+Fix: Beide AAAA Records gelöscht → DNS check successful ✅
+Danach: Custom Domain Remove → neu eingeben → GitHub startet Zertifikat neu
+Status: DNS Check läuft — heute sollte HTTPS endlich aktiv sein
+Enforce HTTPS → sobald Checkbox anklickbar → einmal klicken → fertig
+NEUE IDEEN — FUTURE THINKING ✅
+NACHHALTIGKEIT FILTER:
+→ Kein extra Tab — Filter überall
+→ Gastro: Bio / Vegan / Lokal
+→ Shopping: Secondhand / Fair Trade / Zero Waste
+→ Marktplatz: already nachhaltig by nature
+→ DB: nachhaltig boolean + nachhaltig_tags text[]
+→ SEO: «Nachhaltig einkaufen Zürich» — niemand hat das
+ZÜRI MOOD:
+→ User tippen anonym wie sie sich fühlen
+→ 🔥 Energetisch · 😴 Ruhig · 🎉 Feierlaune · 💼 Busy
+→ KI schlägt passende Locations vor
+→ Gibt es in Europa nicht
+STADTPULS SCORE:
+→ Live-Score aus echtem Verhalten
+→ Bookmarks + GPS-User in der Nähe + Eincheck ins
+→ Score steigt → Location prominenter
+→ Automatisch — ohne Redaktion
+SPONTAN-MODUS:
+→ «Ich bin in Kreis 5, 2 Stunden, CHF 30, zu zweit»
+→ KI generiert Mini-Abend-Plan
+→ Gastro + Event + ZVV in einem Flow
+→ Gibt es in Europa nicht
+PULSE MOMENT:
+→ 500+ User gleichzeitig in einem Kreis
+→ Push Notification: «Kreis 4 explodiert gerade»
+→ FOMO by design — viral by nature
+→ Twitter hat Trending — Stadtpuls hat Pulse Moment
+LEGACY SPOTS:
+→ Locations seit 20+ Jahren → Badge 🏛️ «Züri Original seit 1987»
+→ User reichen Stories ein
+→ Emotionale Bindung zur Stadt
+CLAUDE CODE — ERKENNTNISS ✅
+→ Claude Code braucht Mac/PC — läuft nicht auf iPad
+→ Mit Mac: direkt committen, Scripts ausführen, kein copy/paste
+→ Empfehlung: gebrauchter Mac Mini CHF 300-400 auf Ricardo.ch
+→ Das löst den Loop ein für alle Mal
+→ Bis dahin: iPad + Claude Pro — funktioniert, nur langsamer
+NÄCHSTE SESSION — PRIORITÄT:
+⏳ HTTPS aktivieren sobald Checkbox grün
+⏳ Voting live schalten — Supabase dating_votes anschliessen
+⏳ Import-Script → ZT API → locations Tabelle befüllen
+⏳ Filter verdrahten → zt_subkategorie_id
+⏳ Nachhaltigkeit Filter einbauen
+ROADMAP UPDATE:
+✅ Phase 4h → Footer gefixt
+✅ Phase 4i → Register + Backticks gefixt
+✅ Phase 4j → Tab-Switch gefixt
+✅ Phase 4k → Supabase Architektur komplett neu
+✅ Phase 4l → HTTPS fast fertig — heute
+⏳ Phase 4m → Import alle Kategorien + Bilder
+⏳ Phase 4n → Filter verdrahten + Livedaten
+⏳ Phase 4o → ZVV API Mobilität
+⏳ Phase 5 → Login + Community + Onboarding
+⏳ Phase 6 → KI Features (Züri Mood / Pulse Moment / Spontan-Modus)
+⏳ Phase 7 → Hamburg, Berlin
+SOFT LAUNCH: 4. Juni 2026 🔴
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
+
 In Master_v2 reinkopieren → Commit → fertig! 🔴​​​​​​​​​​​​​​​​
 
 
