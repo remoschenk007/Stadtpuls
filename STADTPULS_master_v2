@@ -1522,6 +1522,15 @@ ROADMAP UPDATE:
 ⏳ Phase 7 → Hamburg, Berlin
 
 SOFT LAUNCH: 4. Juni 2026 🔴
+
+VOTING COUNTER — KONZEPT BESCHLOSSEN:
+✅ Nur JA-Votes öffentlich anzeigen
+✅ NEI-Votes intern speichern — nie öffentlich
+✅ Progressbar 0 → 100'000 füllt sich visuell
+✅ Zahl erscheint sobald erste Votes da sind
+✅ Psychologie: Sozialbeweis — «847 wollen das. Du auch?»
+⏳ Einbauen sobald Voting Supabase funktioniert
+
 «dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»
 
 
