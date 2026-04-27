@@ -981,16 +981,22 @@ async function castVote(type) {
   var y = parseInt(document.getElementById('birth-year').value);
   if (!y || y > 2007 || y < 1900) { alert('Bitte gib einen gültigen Jahrgang ein (18+).'); return; }
   
-  const { error } = await supabase
-    .from('dating_votes')
-    .insert({
-      vote: type,
-      geschlecht: selectedGender,
-      geburtsjahr: y,
-            ip_hash: null,
+  const response = await fetch('https://pnynkzrqnfoshojqfqxn.supabase.co/rest/v1/dating_votes', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'apikey': 'sb_publishable_T8XzRIhQymVgGn2sqZPdpA_LK0a_iyH',
+    'Authorization': 'Bearer sb_publishable_T8XzRIhQymVgGn2sqZPdpA_LK0a_iyH'
+  },
+  body: JSON.stringify({
+    vote: type,
+    geschlecht: selectedGender,
+    geburtsjahr: y,
+    ip_hash: null,
+    user_agent: navigator.userAgent
+  })
+});
 
-      user_agent: navigator.userAgent
-    });
 
   if (type === 'ja') {
     document.getElementById('vote-form').style.display = 'none';
