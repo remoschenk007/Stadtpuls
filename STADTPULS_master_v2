@@ -1533,6 +1533,15 @@ VOTING COUNTER — KONZEPT BESCHLOSSEN:
 
 «dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»
 
+Interessant! Ich sehe:
+«TLS certificate is being provisioned — 1 of 3»
+«Certificate Request Error — will retry automatically»
+Das HTTPS Zertifikat wird gerade ausgestellt aber hat einen Fehler. GitHub sagt es retried automatisch.
+Enforce HTTPS ist noch grau — nicht anklickbar.
+Das ist der Grund warum Plausible noch nicht verifiziert ist und die Seite noch «Nicht sicher» zeigt.
+Morgen früh nochmal hier reinschauen — sehr wahrscheinlich ist es dann grün und du kannst Enforce HTTPS aktivieren.
+Das auch in den Master! 🔴​​​​​​​​​​​​​​​​
+
 
 In Master_v2 reinkopieren → Commit → fertig! 🔴​​​​​​​​​​​​​​​​
 
