@@ -1640,6 +1640,58 @@ ROADMAP:
 ⏳ Phase 4n → HTTPS (GitHub Support)
 ⏳ Phase 4o → Livedaten Gastro/Nachtleben
 ⏳ Phase 5 → Login + Community
+
+Hier ist das Master Update — SESSION 28. APRIL 2026 — KOMPLETT:
+
+FEEDBACK.HTML — LIVE ✅
+NEUE SEITE: depuls.ch/feedback.html
+Konzept: Schwebende Seifenblasen — jede Blase ein Thema
+7 Blasen:
+✅ ZÜRI MOMENT ◉ — Gold — Spezialblase — Saturn-Orbit — NEU Badge
+✅ IDEE ✦ — Cyan
+✅ DESIGN ◈ — Volt-Grün
+✅ BUG ⚡ — Rot
+✅ DAMPF ABLASSE 💢 — Orange (ersetzt Partner)
+✅ LOB ▲ — Volt-Grün klein
+✅ ANDERES ○ — Purple
+DESIGN FEATURES:
+✅ Realistischer Soap-Bubble Effekt — Highlight, Rim, Shine
+✅ 3D rotateX/Y Drift-Animationen
+✅ Neon Glow pro Blase in Stadtpuls-Farben
+✅ Ghost-Text «SAG UNS WAS DU DENKSCH» — bleibt als Wasserzeichen
+✅ Dualer Cursor — roter Punkt + schneller Ring
+✅ Scan-Lines + Grid-Overlay
+✅ Rote Corner-Akzente
+ZÜRI MOMENT SPEZIAL:
+✅ Gold — einzige Nicht-Stadtpuls-Farbe → sofort auffällig
+✅ Orbiting dot — kreist um die Blase
+✅ «NEU» Badge in Rot
+✅ Pulsierender Glow — atmet
+✅ Grösste Blase — dominant oben links
+✅ Modal mit Beschreibung «landet vilicht uf dr Startsite»
+✅ Char-Counter 500 Zeichen
+SHAKE EASTER EGG 📱:
+✅ Handy 2x schütteln → 60 Feuerwerk-Partikel explodieren
+✅ Message: «HÄ? EIFACH SO SCHÜTLE? 😏»
+✅ «Du bisch definitiv ä Draufgänger»
+✅ Button → People & Dates
+✅ «NEI DANKE, ICH BIN BRAV» Button 😄
+✅ iOS Permission automatisch
+ERKENNTNIS:
+Wenn Konflikt in Working Copy → Datei löschen → neu erstellen → Code reinkopieren
+KONTAKT.HTML:
+⏳ Noch zu bauen — eigene Seite für Partner/Medien/Business
+ROADMAP:
+✅ Phase 4m → Voting + Counter live
+✅ Phase 4n → feedback.html live
+⏳ Phase 4o → kontakt.html
+⏳ Phase 4p → HTTPS (GitHub Support)
+⏳ Phase 4q → Livedaten Gastro/Nachtleben
+⏳ Phase 5 → Login + Community
+⏳ Phase 6 → KI Features
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.» 😄🔴​​​​​​​​​​​​​​​​
 SOFT LAUNCH: 4. Juni 2026 🔴
 
 Feierabend verdient — gutes Team! 💪😄🔴​​​​​​​​​​​​​​​​
