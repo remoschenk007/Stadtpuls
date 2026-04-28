@@ -1025,7 +1025,8 @@ async function loadVoteCount() {
     if (bar) bar.style.width = Math.min((count/100000)*100,100) + '%';
   } catch(e) { console.log('Counter Fehler:', e); }
 }
-loadVoteCount();
+document.addEventListener('DOMContentLoaded', loadVoteCount);
+
 
 
 
