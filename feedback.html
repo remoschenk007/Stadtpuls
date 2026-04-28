@@ -157,20 +157,34 @@ radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,.25) 100%);
 @keyframes drift4 { 0%{transform:translateY(0) translateX(0)} 35%{transform:translateY(-18px) translateX(-5px)} 65%{transform:translateY(12px) translateX(7px)} 100%{transform:translateY(0) translateX(0)} }
 @keyframes drift5 { 0%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(-20px)} 100%{transform:translateX(-50%) translateY(0)} }
 
+/* DRAUFGÄNGER BUBBLE - mobile only */
+.b-drauf {
+width:110px; height:110px;
+border:1.5px solid rgba(255,45,0,.7); color:#ff2d00;
+bottom:8%; left:50%; transform:translateX(-50%);
+box-shadow:0 0 40px rgba(255,45,0,.3),inset 0 0 40px rgba(255,45,0,.08),0 20px 40px rgba(0,0,0,.5);
+animation:drift3 9s ease-in-out infinite;
+display:none;
+}
+.b-drauf .bubble-color { background:radial-gradient(circle at 50% 50%, #ff2d00, transparent 70%); }
+.b-drauf:hover { box-shadow:0 0 60px rgba(255,45,0,.6) !important; transform:translateX(-50%) scale(1.1) !important; filter:brightness(1.2); }
+.b-drauf .bubble-label { font-size:.72rem; line-height:1.1; }
+
 /* HINT */
 .hint { position:fixed; bottom:1.2rem; left:50%; transform:translateX(-50%); font-size:.55rem; color:rgba(232,228,217,.15); letter-spacing:.25em; text-transform:uppercase; z-index:50; animation:hintPulse 3s ease-in-out infinite; white-space:nowrap; }
 @keyframes hintPulse { 0%,100%{opacity:.12} 50%{opacity:.45} }
 
 /* MOBILE */
 @media (max-width:600px) {
-.ghost-text h1 { font-size:clamp(2.8rem,15vw,5rem); }
+.ghost-text h1 { font-size:clamp(2.2rem,11vw,4rem); }
 .b-moment { width:148px; height:148px; top:20%; left:2%; }
 .b-idea   { width:125px; height:125px; top:18%; right:2%; }
 .b-design { width:110px; height:110px; top:46%; left:1%; }
 .b-dampf  { width:112px; height:112px; top:44%; right:1%; }
 .b-bug    { width:96px;  height:96px;  bottom:9%; left:4%; }
-.b-lob    { width:88px;  height:88px;  bottom:7%; left:50%; }
+.b-lob    { width:88px;  height:88px;  bottom:7%; left:28%; transform:none; }
 .b-other  { width:78px;  height:78px;  bottom:10%; right:4%; }
+.b-drauf  { display:flex; width:100px; height:100px; bottom:7%; left:50%; transform:translateX(-50%); }
 .moment-label { font-size:.88rem; }
 .bubble-label { font-size:.78rem; }
 .bubble-icon { font-size:1.4rem; }
@@ -267,6 +281,11 @@ textarea::placeholder { color:rgba(232,228,217,.16); }
   <div class="bubble b-dampf" onclick="openModal('dampf')">
     <div class="bubble-shell"></div><div class="bubble-rim"></div><div class="bubble-color"></div><div class="bubble-shine"></div><div class="bubble-shine2"></div>
     <div class="bubble-content"><span class="bubble-icon">&#128162;</span><span class="bubble-label">DAMPF<br>ABLASSE</span><span class="bubble-hint">eifach loslegge</span></div>
+  </div>
+
+  <div class="bubble b-drauf" onclick="requestShakePermission()">
+    <div class="bubble-shell"></div><div class="bubble-rim"></div><div class="bubble-color"></div><div class="bubble-shine"></div>
+    <div class="bubble-content"><span class="bubble-icon">&#128527;</span><span class="bubble-label">DRAUF-<br>GÄNGER?</span></div>
   </div>
 
   <div class="bubble b-lob" onclick="openModal('lob')">
@@ -403,14 +422,36 @@ function startListening(){
 }
 function requestShakePermission(){
   if(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'){
-    DeviceMotionEvent.requestPermission().then(function(s){if(s==='granted')startListening();}).catch(function(){});
-  } else {startListening();}
+    DeviceMotionEvent.requestPermission().then(function(s){
+      if(s==='granted'){
+        startListening();
+        // Show shake instruction
+        var drauf=document.querySelector('.b-drauf');
+        if(drauf){
+          drauf.querySelector('.bubble-label').innerHTML='JETZT<br>SCHÜTLE!';
+          drauf.querySelector('.bubble-icon').textContent='&#128256;';
+          drauf.style.animation='momentPulse 1s ease-in-out infinite';
+        }
+      }
+    }).catch(function(){});
+  } else {
+    startListening();
+    var drauf=document.querySelector('.b-drauf');
+    if(drauf){
+      drauf.querySelector('.bubble-label').innerHTML='JETZT<br>SCHÜTLE!';
+    }
+  }
 }
 window.addEventListener('DOMContentLoaded',function(){
   if(!/iPhone|iPad|iPod|Android/i.test(navigator.userAgent))return;
+  var drauf=document.querySelector('.b-drauf');
   if(typeof DeviceMotionEvent!=='undefined'&&typeof DeviceMotionEvent.requestPermission==='function'){
-    document.getElementById('shakeNudge').style.display='block';
-  } else if(typeof DeviceMotionEvent!=='undefined'){startListening();}
+    // iOS 13+ - show draufgänger bubble
+    if(drauf) drauf.style.display='flex';
+  } else if(typeof DeviceMotionEvent!=='undefined'){
+    // Android - auto start, no bubble needed
+    startListening();
+  }
 });
 </script>
 
