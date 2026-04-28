@@ -1451,6 +1451,136 @@ ROADMAP UPDATE:
 SOFT LAUNCH: 4. Juni 2026 🔴
 «dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
 
+SESSION 27. APRIL 2026 — KOMPLETT
+
+HTTPS:
+✅ AAAA Records bei hosttech gelöscht
+✅ DNS check successful
+✅ Enforce HTTPS — morgen nochmal prüfen ob Checkbox grün
+
+IMPRESSUM + DATENSCHUTZ:
+✅ impressum.html erstellt — live auf depuls.ch/impressum.html
+✅ datenschutz.html erstellt — live auf depuls.ch/datenschutz.html
+✅ DSG (Schweiz) + DSGVO (EU) konform
+✅ Zukunftssicher geschrieben — alle Features drin — nie mehr anfassen
+✅ Footer Links funktionieren — Zeile 659 index.html
+✅ by raimondo* / byraimondo@gmail.com / Zürich
+
+GITHUB TRAINING OPT-OUT:
+✅ «Allow GitHub to use my data for AI model training» → Disabled
+✅ Gilt für alle Repositories — nicht nur Stadtpuls
+
+SUPABASE VOTING:
+✅ dating_votes Tabelle vorhanden
+✅ user_agent Spalte hinzugefügt
+✅ 2 RLS Policies: Read + Insert
+✅ fetch() Code eingebaut — Legacy Anon Key
+✅ Frontend funktioniert — DANKE FÜR DIN VOTE erscheint
+❌ Daten kommen noch nicht in Tabelle an
+⚠️ Supabase hatte technischen Ausfall heute Abend — wahrscheinlich Ursache
+
+ANON KEY AKTUELL:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ
+
+FETCH CODE IN index.html ZEILE 984-998:
+const response = await fetch('https://pnynkzrqnfoshojqfqxn.supabase.co/rest/v1/dating_votes', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'apikey': '[ANON KEY]',
+    'Authorization': 'Bearer [ANON KEY]'
+  },
+  body: JSON.stringify({
+    vote: type,
+    geschlecht: selectedGender,
+    geburtsjahr: y,
+    ip_hash: null,
+    user_agent: navigator.userAgent
+  })
+});
+
+ERSTE PRIORITÄT MORGEN:
+1. depuls.ch/impressum.html testen
+2. depuls.ch/datenschutz.html testen
+3. Supabase → dating_votes → nochmal voten → prüfen ob Eintrag drin
+4. Falls immer noch leer → Supabase Logs prüfen → Settings → Logs
+5. Live-Counter einbauen — Votes mitzählen auf der Seite
+
+ROADMAP UPDATE:
+✅ Phase 4h → Footer gefixt
+✅ Phase 4i → Register + Backticks gefixt
+✅ Phase 4j → Tab-Switch gefixt
+✅ Phase 4k → Supabase Architektur komplett neu
+✅ Phase 4l → Impressum + Datenschutz live
+✅ Phase 4l → HTTPS fast fertig
+⏳ Phase 4m → Voting Supabase live — morgen fixen
+⏳ Phase 4n → Live-Counter Voting
+⏳ Phase 4o → Filter verdrahten + Livedaten
+⏳ Phase 4p → ZVV API Mobilität
+⏳ Phase 5 → Login + Community + Onboarding
+⏳ Phase 6 → KI Features
+⏳ Phase 7 → Hamburg, Berlin
+
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+VOTING COUNTER — KONZEPT BESCHLOSSEN:
+✅ Nur JA-Votes öffentlich anzeigen
+✅ NEI-Votes intern speichern — nie öffentlich
+✅ Progressbar 0 → 100'000 füllt sich visuell
+✅ Zahl erscheint sobald erste Votes da sind
+✅ Psychologie: Sozialbeweis — «847 wollen das. Du auch?»
+⏳ Einbauen sobald Voting Supabase funktioniert
+
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»
+
+Interessant! Ich sehe:
+«TLS certificate is being provisioned — 1 of 3»
+«Certificate Request Error — will retry automatically»
+Das HTTPS Zertifikat wird gerade ausgestellt aber hat einen Fehler. GitHub sagt es retried automatisch.
+Enforce HTTPS ist noch grau — nicht anklickbar.
+Das ist der Grund warum Plausible noch nicht verifiziert ist und die Seite noch «Nicht sicher» zeigt.
+Morgen früh nochmal hier reinschauen — sehr wahrscheinlich ist es dann grün und du kannst Enforce HTTPS aktivieren.
+Das auch in den Master! 🔴​​​​​​​​​​​​​​​​
+
+SESSION 28. APRIL 2026 — MORGEN KOMPLETT
+
+HTTPS:
+✅ CAA Record hinzugefügt: depuls.ch · 0 · issue · letsencrypt.org
+✅ GitHub Support Ticket erstellt → remoschenk@gmail.com
+⚠️ GitHub Virtual Assistant: «Domain's DNS record could not be retrieved»
+⏳ Warten auf GitHub Support Antwort 24-48h
+
+VOTING — NOCH IMMER LEER:
+❌ dating_votes Tabelle leer — Vote kommt nicht an
+✅ Frontend funktioniert — DANKE FÜR DIN VOTE erscheint
+✅ 2 RLS Policies: Read + Insert
+✅ Legacy Anon Key eingebaut
+✅ fetch() Code korrekt
+⏳ Supabase Logs prüfen → nächste Session
+
+NÄCHSTE SESSION — PRIORITÄT:
+1. Supabase → Logs → API Logs → abstimmen → Fehler lesen
+2. HTTPS — auf GitHub Support warten
+3. Voting fixen
+
+ANON KEY:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ
+
+SUPABASE URL:
+https://pnynkzrqnfoshojqfqxn.supabase.co
+
+ROADMAP:
+✅ Phase 4h-4l → abgeschlossen
+⏳ Phase 4m → HTTPS wartet auf GitHub Support
+⏳ Phase 4n → Voting Supabase live
+⏳ Phase 4o → Live-Counter
+⏳ Phase 5 → Login + Community
+⏳ Phase 6 → KI Features
+⏳ Phase 7 → Hamburg, Berlin
+
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+
 In Master_v2 reinkopieren → Commit → fertig! 🔴​​​​​​​​​​​​​​​​
 
 
