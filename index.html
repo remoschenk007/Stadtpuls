@@ -969,6 +969,9 @@ initGPS();
 
 <script>
 var selectedGender = null;
+const SUPA_URL = 'https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+
 function selectGender(g) {
   selectedGender = g;
   ['f','m','x'].forEach(function(id) {
@@ -978,46 +981,27 @@ function selectGender(g) {
     b.style.color = id===g ? '#fff' : '#e8e4d9';
   });
 }
+
 async function castVote(type) {
   if (!selectedGender) { alert('Bitte wähle zuerst dein Geschlecht.'); return; }
   var y = parseInt(document.getElementById('birth-year').value);
   if (!y || y > 2007 || y < 1900) { alert('Bitte gib einen gültigen Jahrgang ein (18+).'); return; }
-  
-  const SUPA_URL = 'https://pnynkzrqnfoshojqfqxn.supabase.co';
-const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
-
-// Supabase aufwecken
-await fetch(SUPA_URL + '/rest/v1/', { headers: { 'apikey': SUPA_KEY } }).catch(()=>{});
-await new Promise(r => setTimeout(r, 500));
-
-// Vote senden
-let success = false;
-for (let i = 0; i < 3; i++) {
-  const response = await fetch(SUPA_URL + '/rest/v1/dating_votes', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'apikey': SUPA_KEY,
-      'Authorization': 'Bearer ' + SUPA_KEY,
-      'Prefer': 'return=minimal'
-    },
-    body: JSON.stringify({
-      vote: type,
-      geschlecht: selectedGender,
-      geburtsjahr: y,
-      ip_hash: null,
-      user_agent: navigator.userAgent
-    })
-  });
-  if (response.ok) { success = true; break; }
-  await new Promise(r => setTimeout(r, 1000));
-
-
-
-
-
-
-
+  try {
+    await fetch(SUPA_URL + '/rest/v1/dating_votes', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'apikey': SUPA_KEY,
+        'Authorization': 'Bearer ' + SUPA_KEY,
+        'Prefer': 'return=minimal'
+      },
+      body: JSON.stringify({ vote: type, geschlecht: selectedGender, geburtsjahr: y, ip_hash: null, user_agent: navigator.userAgent })
+    });
+    if (type === 'ja') {
+      var el = document.getElementById('vote-count');
+      if (el) el.textContent = (parseInt(el.textContent.replace(/'/g,'')) + 1).toLocaleString('de-CH');
+    }
+  } catch(e) {}
   if (type === 'ja') {
     document.getElementById('vote-form').style.display = 'none';
     document.getElementById('vote-done').style.display = 'block';
@@ -1028,7 +1012,21 @@ for (let i = 0; i < 3; i++) {
   }
 }
 
+async function loadVoteCount() {
+  try {
+    var r = await fetch(SUPA_URL + '/rest/v1/dating_votes?vote=eq.ja&select=id', {
+      headers: { 'apikey': SUPA_KEY, 'Prefer': 'count=exact', 'Range': '0-0' }
+    });
+    var count = parseInt(r.headers.get('content-range')?.split('/')[1] || '0');
+    var el = document.getElementById('vote-count');
+    if (el) el.textContent = count.toLocaleString('de-CH');
+    var bar = document.getElementById('vote-bar');
+    if (bar) bar.style.width = Math.min((count/100000)*100,100) + '%';
+  } catch(e) {}
+}
+loadVoteCount();
 </script>
+
 <!-- ENDE VOTING BLOCK -->
 
 <!-- PROFIL BLOCK -->
