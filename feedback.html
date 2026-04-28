@@ -60,24 +60,21 @@ backdrop-filter:blur(10px);
 /* ── Ghost Text ── */
 .ghost-text {
 position:fixed;
-top:50%; left:50%;
+top:52%; left:50%;
 transform:translate(-50%,-50%);
 text-align:center;
 z-index:3;
 pointer-events:none;
-animation:ghostFade 2s ease 2s forwards;
 white-space:nowrap;
 }
-@keyframes ghostFade { to { opacity:.08; } }
 .ghost-text h1 {
 font-family:‘Barlow Condensed’,sans-serif;
 font-style:italic; font-weight:900;
-/* Desktop: moderat, Mobile: grösser relativ */
 font-size:clamp(3rem, 7vw, 6.5rem);
 line-height:.88;
 letter-spacing:-.02em;
 color:var(–white);
-opacity:.35;
+opacity:.9;
 }
 .ghost-text h1 .acc { color:var(–red); opacity:.6; }
 .ghost-text p {
@@ -142,7 +139,7 @@ pointer-events:none;
 width:180px; height:180px;
 border:2px solid rgba(255,217,61,.7);
 color:var(–gold);
-top:14%; left:8%;
+top:20%; left:8%;
 animation:drift-moment 6s ease-in-out infinite, momentPulse 3s ease-in-out infinite;
 box-shadow:0 0 30px rgba(255,217,61,.3),0 0 70px rgba(255,217,61,.12),inset 0 0 50px rgba(255,217,61,.08),0 30px 80px rgba(0,0,0,.6);
 z-index:15;
@@ -156,7 +153,7 @@ z-index:15;
 width:150px; height:150px;
 border:1.5px solid rgba(0,245,255,.6);
 color:var(–cyan);
-top:12%; right:10%;
+top:18%; right:10%;
 box-shadow:0 0 40px rgba(0,245,255,.18),inset 0 0 40px rgba(0,245,255,.05),0 30px 60px rgba(0,0,0,.5);
 animation:drift1 9s ease-in-out infinite;
 }
@@ -245,8 +242,8 @@ animation:drift1 15s ease-in-out infinite;
 @media (max-width:600px) {
 .ghost-text h1 { font-size:clamp(2.8rem,15vw,5rem); }
 /* Positions optimised for portrait phone */
-.b-moment { width:155px; height:155px; top:16%; left:2%; }
-.b-idea   { width:130px; height:130px; top:14%; right:2%; }
+.b-moment { width:155px; height:155px; top:20%; left:2%; }
+.b-idea   { width:130px; height:130px; top:18%; right:2%; }
 .b-design { width:115px; height:115px; top:46%; left:1%; }
 .b-dampf  { width:118px; height:118px; top:44%; right:1%; }
 .b-bug    { width:100px; height:100px; bottom:9%; left:4%; }
