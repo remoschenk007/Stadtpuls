@@ -1009,7 +1009,24 @@ for (let i = 0; i < 3; i++) {
   });
   if (response.ok) { success = true; break; }
   await new Promise(r => setTimeout(r, 1000));
+}async function loadVoteCount() {
+  try {
+    const r = await fetch('https://pnynkzrqnfoshojqfqxn.supabase.co/rest/v1/dating_votes?vote=eq.ja&select=id', {
+      headers: {
+        'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ',
+        'Prefer': 'count=exact',
+        'Range': '0-0'
+      }
+    });
+    const count = parseInt(r.headers.get('content-range')?.split('/')[1] || '0');
+    document.getElementById('vote-count').textContent = count.toLocaleString('de-CH');
+    document.querySelector('span[style*="0"]').textContent = count.toLocaleString('de-CH');
+    const pct = Math.min((count / 100000) * 100, 100);
+    document.getElementById('vote-bar').style.width = pct + '%';
+  } catch(e) {}
 }
+loadVoteCount();
+
 
 
 
