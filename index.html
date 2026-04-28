@@ -1009,7 +1009,7 @@ for (let i = 0; i < 3; i++) {
   });
   if (response.ok) { success = true; break; }
   await new Promise(r => setTimeout(r, 1000));
-}async function loadVoteCount() {
+async function loadVoteCount() {
   try {
     const r = await fetch('https://pnynkzrqnfoshojqfqxn.supabase.co/rest/v1/dating_votes?vote=eq.ja&select=id', {
       headers: {
@@ -1019,11 +1019,11 @@ for (let i = 0; i < 3; i++) {
       }
     });
     const count = parseInt(r.headers.get('content-range')?.split('/')[1] || '0');
-    document.getElementById('vote-count').textContent = count.toLocaleString('de-CH');
-    document.querySelector('span[style*="0"]').textContent = count.toLocaleString('de-CH');
-    const pct = Math.min((count / 100000) * 100, 100);
-    document.getElementById('vote-bar').style.width = pct + '%';
-  } catch(e) {}
+    const el = document.getElementById('vote-count');
+    if (el) el.textContent = count.toLocaleString('de-CH');
+    const bar = document.getElementById('vote-bar');
+    if (bar) bar.style.width = Math.min((count/100000)*100,100) + '%';
+  } catch(e) { console.log('Counter Fehler:', e); }
 }
 loadVoteCount();
 
