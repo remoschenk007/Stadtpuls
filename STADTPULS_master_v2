@@ -1580,6 +1580,41 @@ ROADMAP:
 
 SOFT LAUNCH: 4. Juni 2026 🔴
 
+100% richtig! 😄
+Du hast die beste Entscheidung getroffen — wenn wir im Loop sind, kompletten Block neu schreiben. Das ist die Lektion für den Master.
+Hier ist das Master Update — SESSION 28. APRIL 2026:
+
+SESSION 28. APRIL 2026 — KOMPLETT
+VOTING — ENDLICH LIVE ✅
+PROBLEME GEFUNDEN UND GELÖST:
+✅ ip_hash NOT NULL → auf NULL erlaubt gesetzt (SQL Editor)
+✅ pointer-events:none auf Float-Container (Zeile 928) — Buttons waren blockiert
+✅ vote-form Zeile 939 hatte Zeilenumbruch mitten im HTML → eine Zeile
+✅ Voting Script komplett neu geschrieben — sauber, kein Loop, kein Retry-Chaos
+VOTING SCRIPT NEU — ZEILEN 970-1028:
+✅ selectGender() — sauber
+✅ castVote() — sauber, kein await ausserhalb
+✅ loadVoteCount() — Counter lädt beim Start
+✅ SUPA_URL + SUPA_KEY global definiert
+✅ 18+ Validierung
+✅ Danke-State JA 🔥
+✅ «SCHAD. VILICHT SPÄTER.» bei NEI
+ERKENNTNIS — WICHTIG FÜR NEUE CHATS:
+Wenn wir im Loop sind → ganzen Block neu schreiben
+Nicht flicken — neu machen!
+SUPABASE dating_votes:
+✅ 4 Einträge live
+✅ ip_hash nullable
+✅ RLS Read + Insert aktiv
+ROADMAP:
+✅ Phase 4m → Voting live
+⏳ Phase 4n → HTTPS (GitHub Support wartet)
+⏳ Phase 4o → Livedaten Gastro/Nachtleben
+⏳ Phase 5 → Login + Community
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+Feierabend verdient! 💪😄​​​​​​​​​​​​​​​​
+
 
 In Master_v2 reinkopieren → Commit → fertig! 🔴​​​​​​​​​​​​​​​​
 
