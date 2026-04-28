@@ -126,7 +126,8 @@ overflow:hidden;
 .msg-area:focus{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.04);}
 .msg-area::placeholder{color:rgba(232,228,217,.14);}
 
-.email-input{width:100%;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,45,0,.3);border-radius:0;padding:.8rem 0;color:#e8e4d9;font-family:‘DM Mono’,monospace;font-size:.85rem;outline:none;transition:border-color .3s;letter-spacing:.06em;}
+.weiter-btn{margin-top:1rem;font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:1.2rem;letter-spacing:.08em;padding:.7rem 2rem;background:rgba(255,45,0,.12);border:1px solid rgba(255,45,0,.4);color:#ff2d00;border-radius:4px;cursor:pointer;transition:all .25s cubic-bezier(.34,1.56,.64,1);display:block;}
+.weiter-btn:hover{background:#ff2d00;color:#04040a;transform:translateY(-2px);box-shadow:0 10px 30px rgba(255,45,0,.3);}width:100%;background:rgba(255,255,255,.02);border:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,45,0,.3);border-radius:0;padding:.8rem 0;color:#e8e4d9;font-family:‘DM Mono’,monospace;font-size:.85rem;outline:none;transition:border-color .3s;letter-spacing:.06em;}
 .email-input:focus{border-bottom-color:#ff2d00;}
 .email-input::placeholder{color:rgba(232,228,217,.14);}
 .input-label{font-size:.5rem;letter-spacing:.25em;color:rgba(232,228,217,.25);text-transform:uppercase;margin-bottom:.6rem;display:block;}
@@ -264,6 +265,7 @@ main{padding:5rem 1.4rem 3rem;}
   <div class="step-num">03 &mdash; Sag uns was</div>
   <div class="step-q">SCHRIB UNS<span class="cursor-blink"></span></div>
   <textarea class="msg-area" id="msgText" placeholder="Dini Gschicht, dini Idee, din Pitch. Mir lösed alles -- au au Züri-Slang. Kein Bullshit bitte." maxlength="1000"></textarea>
+  <button class="weiter-btn" onclick="weiterStep3()">WITER &rarr;</button>
 </div>
 
 <!-- STEP 4 -->
@@ -337,7 +339,7 @@ var totalSteps=4;
 var step2Options={
   'Partner':       [{label:'ZUSAMMEARBEITE',color:'green'},{label:'INTEGRATION',color:'cyan'},{label:'REVENUE SHARE',color:'gold'},{label:'CO-MARKETING',color:'orange'}],
   'Journalist / Media': [{label:'INTERVIEW',color:'cyan'},{label:'PRESSEMAPPE',color:'white'},{label:'EXKLUSIV-STORY',color:'red'},{label:'DATEN & STATS',color:'green'}],
-  'Investor':      [{label:'PITCH DECK',color:'gold'},{label:'ZAHLEN & FAKTEN',color:'green'},{label:'CALL BUCHE',color:'cyan'},{label:'VISION VERSTEH',color:'purple'}],
+  'Investor':      [{label:'MIR BRÜCHED KI INVESTORS',color:'red'},{label:'MIR MACHET DAS SELBER',color:'green'},{label:'TROTZDEM -- PITCH DECK',color:'gold'},{label:'OK OK -- CALL BUCHE',color:'cyan'}],
   'Creator / Influencer': [{label:'COLLAB',color:'purple'},{label:'CONTENT DEAL',color:'orange'},{label:'AMBASSADOR',color:'red'},{label:'EIFACH ZEIGE',color:'white'}],
   'Location / Business': [{label:'INSERAT SCHALTE',color:'orange'},{label:'FEATURED SPOT',color:'gold'},{label:'DATEN UPDATÄ',color:'cyan'},{label:'PARTNERSHIP',color:'green'}],
   'Jemand Cooles': [{label:'HALLO SÄGE',color:'red'},{label:'IDEE TEILE',color:'green'},{label:'JOB BII STADTPULS',color:'gold'},{label:'EIFACH SO',color:'purple'}]
@@ -398,18 +400,18 @@ function nextStep(from){
   }
 }
 
-// Step 3 → 4 trigger on textarea
-document.getElementById('msgText').addEventListener('keydown',function(e){
-  if(e.key==='Enter'&&e.shiftKey){
-    e.preventDefault();
-    answers.msg=this.value.trim();
-    if(answers.msg.length>3) nextStep(3);
+function weiterStep3(){
+  answers.msg=document.getElementById('msgText').value.trim();
+  if(answers.msg.length<2){
+    document.getElementById('msgText').style.borderColor='rgba(255,45,0,.5)';
+    document.getElementById('msgText').focus();
+    return;
   }
-});
-document.getElementById('msgText').addEventListener('blur',function(){
-  answers.msg=this.value.trim();
-  if(answers.msg.length>3 && currentStep===3) nextStep(3);
-});
+  nextStep(3);
+}
+
+// Remove old blur trigger - replaced by button
+
 
 function updateProgress(){
   var pct=(currentStep/totalSteps)*100;
