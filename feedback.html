@@ -42,11 +42,11 @@ background:rgba(4,4,10,.95);
 backdrop-filter:blur(12px);
 -webkit-backdrop-filter:blur(12px);
 }
+a { color:inherit !important; text-decoration:none !important; }
 .logo {
 font-family:‘Barlow Condensed’,sans-serif;
 font-style:italic; font-weight:900; font-size:1.4rem;
 display:flex; align-items:center; gap:.5rem;
-text-decoration:none !important;
 color:#e8e4d9 !important;
 -webkit-tap-highlight-color:transparent;
 }
@@ -72,7 +72,7 @@ line-height:.88;
 letter-spacing:-.02em;
 color:#e8e4d9;
 }
-.ghost-text h1 .acc { color:#ff2d00; }
+.ghost-text h1 .acc { color:#ff2d00 !important; text-shadow:0 0 40px rgba(255,45,0,.4); }
 .ghost-text p {
 font-size:.65rem;
 color:rgba(232,228,217,.4);
@@ -231,7 +231,7 @@ textarea::placeholder { color:rgba(232,228,217,.16); }
 </header>
 
 <div class="ghost-text">
-  <h1>SAG UNS<br><span class="acc">WAS</span><br>DU DENKSCH.</h1>
+  <h1>SAG UNS<br><span class="acc" style="color:#ff2d00!important">WAS</span><br>DU DENKSCH.</h1>
   <p>&#8595; TIPF AUF DINI BLASE &#8595;</p>
 </div>
 
