@@ -1016,11 +1016,12 @@ async function loadVoteCount() {
   try {
     await fetch(SUPA_URL + '/rest/v1/', { headers: { 'apikey': SUPA_KEY } }).catch(()=>{});
     await new Promise(r => setTimeout(r, 800));
-   var r = await fetch(SUPA_URL + '/rest/v1/dating_votes?vote=eq.ja&select=id', {
-  headers: { 'apikey': SUPA_KEY, 'Prefer': 'count=exact' }
+var r = await fetch(SUPA_URL + '/rest/v1/dating_votes?vote=eq.ja&select=id', {
+  headers: { 'apikey': SUPA_KEY }
 });
+var data = await r.json();
+var count = data.length;
 
-    var count = parseInt(r.headers.get('content-range')?.split('/')[1] || '0');
     var el = document.getElementById('vote-count');
     if (el) el.textContent = count.toLocaleString('de-CH');
     var bar = document.getElementById('vote-bar');
