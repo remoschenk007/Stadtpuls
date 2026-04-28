@@ -1613,6 +1613,37 @@ ROADMAP:
 ⏳ Phase 5 → Login + Community
 SOFT LAUNCH: 4. Juni 2026 🔴
 
+Hier ist das Master Update — SESSION 28. APRIL 2026 — KOMPLETT:
+
+VOTING SYSTEM — VOLLSTÄNDIG LIVE ✅
+PROBLEME GEFUNDEN UND GELÖST:
+✅ ip_hash NOT NULL → auf NULL erlaubt (SQL Editor)
+✅ pointer-events:none auf Float-Container Zeile 928
+✅ vote-form Zeile 939 hatte Zeilenumbruch → eine Zeile
+✅ await ausserhalb castVote() → ganzen Script blockiert
+✅ RLS public_read Policy war false → auf true gesetzt
+✅ Voting Script komplett neu geschrieben — sauber
+ERKENNTNIS — WICHTIG:
+Wenn im Loop → ganzen Block neu schreiben!
+Nicht flicken — neu machen!
+SUPABASE dating_votes:
+✅ 7 Einträge live
+✅ ip_hash nullable
+✅ RLS Insert true + Read true
+COUNTER:
+✅ Wake-up Ping beim Laden
+✅ Zählt via r.json().length
+✅ Zeigt echte Zahl beim Start
+✅ +1 nach JA-Vote lokal
+ROADMAP:
+✅ Phase 4m → Voting + Counter live
+⏳ Phase 4n → HTTPS (GitHub Support)
+⏳ Phase 4o → Livedaten Gastro/Nachtleben
+⏳ Phase 5 → Login + Community
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+Feierabend verdient — gutes Team! 💪😄🔴​​​​​​​​​​​​​​​​
+
 Feierabend verdient! 💪😄​​​​​​​​​​​​​​​​
 
 
