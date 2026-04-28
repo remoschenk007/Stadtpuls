@@ -1542,6 +1542,44 @@ Das ist der Grund warum Plausible noch nicht verifiziert ist und die Seite noch 
 Morgen früh nochmal hier reinschauen — sehr wahrscheinlich ist es dann grün und du kannst Enforce HTTPS aktivieren.
 Das auch in den Master! 🔴​​​​​​​​​​​​​​​​
 
+SESSION 28. APRIL 2026 — MORGEN KOMPLETT
+
+HTTPS:
+✅ CAA Record hinzugefügt: depuls.ch · 0 · issue · letsencrypt.org
+✅ GitHub Support Ticket erstellt → remoschenk@gmail.com
+⚠️ GitHub Virtual Assistant: «Domain's DNS record could not be retrieved»
+⏳ Warten auf GitHub Support Antwort 24-48h
+
+VOTING — NOCH IMMER LEER:
+❌ dating_votes Tabelle leer — Vote kommt nicht an
+✅ Frontend funktioniert — DANKE FÜR DIN VOTE erscheint
+✅ 2 RLS Policies: Read + Insert
+✅ Legacy Anon Key eingebaut
+✅ fetch() Code korrekt
+⏳ Supabase Logs prüfen → nächste Session
+
+NÄCHSTE SESSION — PRIORITÄT:
+1. Supabase → Logs → API Logs → abstimmen → Fehler lesen
+2. HTTPS — auf GitHub Support warten
+3. Voting fixen
+
+ANON KEY:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ
+
+SUPABASE URL:
+https://pnynkzrqnfoshojqfqxn.supabase.co
+
+ROADMAP:
+✅ Phase 4h-4l → abgeschlossen
+⏳ Phase 4m → HTTPS wartet auf GitHub Support
+⏳ Phase 4n → Voting Supabase live
+⏳ Phase 4o → Live-Counter
+⏳ Phase 5 → Login + Community
+⏳ Phase 6 → KI Features
+⏳ Phase 7 → Hamburg, Berlin
+
+SOFT LAUNCH: 4. Juni 2026 🔴
+
 
 In Master_v2 reinkopieren → Commit → fertig! 🔴​​​​​​​​​​​​​​​​
 
