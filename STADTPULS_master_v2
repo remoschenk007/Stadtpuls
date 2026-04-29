@@ -1702,14 +1702,86 @@ FEEDBACK.HTML KONFLIKT GELÖST ✅
 Datei gelöscht → neu erstellt → Konflikt bereinigt
 Methode: Bei Git Konflikt → Datei löschen → neu erstellen → funktioniert immer
 
-Jetzt testen auf depuls.ch/feedback.html — funktioniert es? 🔴​​​​​​​​​​​​​​​​
+Hier ist das Master Update — direkt kopierbar: 🔴
+SESSION 28. APRIL 2026 — ABEND KOMPLETT
+FEEDBACK.HTML — FINAL ✅
+✅ Kompletter Neuschrieb — keine CSS-Variablen mehr, alle Farben hardcoded (#ff2d00 etc.)
+✅ Header weiss mit rotem Punkt — iOS Safari Fix via color:inherit !important
+✅ WAS rot — inline style color:#ff2d00!important
+✅ Blasen Mobile — animation:none auf unteren Blasen — Overlap-Problem gelöst
+✅ DRAUFGÄNGER Blase — echter button Tag — iOS Permission Dialog funktioniert
+✅ Shake Easter Egg — touchend → DeviceMotionEvent.requestPermission
+✅ Text Mobile — opacity:.55 — leicht transparent, nicht störend
+✅ Desktop — Schrift moderat, Blasen zentriert, kein Rand-Overflow
+KONTAKT.HTML — LIVE ✅
+✅ Conversational Flow — 4 Schritte wie ein Gespräch
+✅ Schritt 1: WER BISCH DU — 6 Optionen
+✅ Schritt 2: WAS WILLSCH — dynamisch je nach Auswahl
+✅ Schritt 3: SCHRIB UNS — Textfeld + WITER → Button
+✅ Schritt 4: DI E-MAIL — Abschicken
+✅ Investor Optionen frech: «MIR BRÜCHED KI INVESTORS» / «MIR MACHET DAS SELBER» / «TROTZDEM — PITCH DECK» / «OK OK — CALL BUCHE»
+✅ Alle CSS-Variablen ersetzt — Farben hardcoded
+✅ Ticker unten: Zürich → Hamburg → Berlin → Wien → Amsterdam → London → Barcelona → Paris
+✅ World Line: ZÜRICH NOW · HAMBURG SOON · BERLIN SOON · WIEN SOON · LONDON SOON
+✅ depuls.ch/kontakt.html live
+BUBBLE MENU WIDGET — BEREIT ✅
+✅ Floating roter Puls-Punkt unten rechts — kaum sichtbar, atmet
+✅ Draufdrücken → 4 Blasen explodieren in alle 4 Ecken des Bildschirms
+✅ FEEDBACK oben links — Cyan
+✅ KONTAKT oben rechts — Volt-Grün (grösste Blase 140px)
+✅ IMPRESSUM unten links — Orange
+✅ DATENSCHUTZ neben Trigger — Lila
+✅ Jede Blase schwebt permanent mit eigener Drift-Animation
+✅ Ecken leuchten in Blasenfarbe auf
+✅ Backdrop blurt Hintergrund
+✅ Staggered Ein/Ausblenden
+✅ bubble-widget-inject.html bereit — vor </body> in index.html einfügen
+⏳ Noch nicht in index.html eingefügt — morgen als erstes
+HTTPS — NOCH OFFEN ⏳
+⏳ GitHub Support Ticket läuft — remoschenk@gmail.com
+⏳ CAA Record bei hosttech gesetzt
+⏳ Morgen früh GitHub Pages Settings checken — Enforce HTTPS
+⏳ Sobald aktiv → Plausible verifizieren → alle Links funktionieren extern
+ROADMAP UPDATE:
+✅ Phase 4h → Footer
+✅ Phase 4i → Register + Backticks
+✅ Phase 4j → Tab-Switch
+✅ Phase 4k → Supabase Architektur
+✅ Phase 4l → Impressum + Datenschutz + Domain
+✅ Phase 4m → Voting live
+✅ Phase 4n → feedback.html final
+✅ Phase 4o → kontakt.html live
+✅ Phase 4p → Bubble Menu designed
+⏳ Phase 4q → Bubble Menu in index.html einbauen
+⏳ Phase 4r → HTTPS aktivieren
+⏳ Phase 4s → Livedaten Gastro/Nachtleben wieder anschliessen
+⏳ Phase 5 → Login + Community + Onboarding
+⏳ Phase 6 → KI Features
+⏳ Phase 7 → Hamburg, Berlin
+SOFT LAUNCH: 4. Juni 2026 🔴
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
 
-Feierabend verdient — gutes Team! 💪😄🔴​​​​​​​​​​​​​​​​
-
-Feierabend verdient! 💪😄​​​​​​​​​​​​​​​​
-
-
-In Master_v2 reinkopieren → Commit → fertig! 🔴​​​​​​​​​​​​​​​​
+Ja — kurz und knapp:
+SESSION 28. APRIL 2026 — NACHT ERGÄNZUNG
+BUBBLE MENU — SEO BESTÄTIGT ✅
+Echte href Tags — Google crawlt sie wie normalen Footer
+Link-Juice von Startseite auf alle 4 Seiten
+Impressum + Datenschutz + Kontakt = Vertrauenssignal für Google + KI
+AEO/GEO kompatibel ✅
+HTTPS — NEUER VERSUCH ✅
+www.depuls.ch gelöscht → depuls.ch ohne www neu eingetragen
+Let’s Encrypt Zertifikat-Prozess neu gestartet
+Morgen früh checken → Enforce HTTPS aktivieren
+GOOGLE SEARCH CONSOLE ✅
+1 Seite indexiert seit 20. April
+depuls.ch bei Google bekannt
+MORGEN PRIORITÄTEN:
+	1.	HTTPS aktivieren — GitHub Pages Settings
+	2.	Bubble Menu in index.html vor </body> einfügen
+	3.	Plausible verifizieren nach HTTPS
+	4.	Import-Script ZT API → Supabase Livedaten
+SOFT LAUNCH: 4. Juni 2026 🔴
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
 
 
 
