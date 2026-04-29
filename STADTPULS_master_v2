@@ -1780,6 +1780,112 @@ MORGEN PRIORITÄTEN:
 	2.	Bubble Menu in index.html vor </body> einfügen
 	3.	Plausible verifizieren nach HTTPS
 	4.	Import-Script ZT API → Supabase Livedaten
+
+
+Hier ist das komplette Master Update — direkt kopierbar: 🔴
+
+SESSION 28-29. APRIL 2026 — KOMPLETT
+BUBBLE MENU — LIVE ✅
+	•	Floating roter Puls-Punkt unten rechts auf depuls.ch
+	•	Draufdrücken → 4 Blasen explodieren in alle 4 Ecken
+	•	FEEDBACK oben links — Cyan (120px)
+	•	KONTAKT oben rechts — Volt-Grün (140px, grösste)
+	•	IMPRESSUM unten links — Orange (100px)
+	•	DATENSCHUTZ neben Trigger — Lila (96px)
+	•	Backdrop blurt Hintergrund, Ecken leuchten auf
+	•	Staggered Animation, permanent schwebend
+	•	Code eingefügt vor </body> in index.html — Zeile 1488
+	•	Alle Links funktionieren ✅
+	•	Kein Konflikt mit bestehendem Code (bm- Prefix) ✅
+ENTSCHEID — IMPRESSUM/DATENSCHUTZ IM FOOTER ✅
+	•	Bubble Menu = zusätzlicher Einstiegspunkt
+	•	Footer-Links bleiben — doppelt verlinkt = besser für Google
+	•	AEO/GEO: echte href Tags = crawlbar ohne JavaScript ✅
+	•	Vertrauenssignal für KI-Suchmaschinen ✅
+KONTAKT.HTML — FINAL ✅
+	•	«lewed» → «brenned für das» gefixt
+	•	Backticks (```) entfernt — Zeilen 240-241
+	•	Einzelner Punkt vor </p> entfernt
+	•	depuls.ch/kontakt.html live und sauber
+FEEDBACK.HTML — FINAL ✅
+	•	Alle CSS-Variablen hardcoded (#ff2d00 etc.)
+	•	Header weiss, roter Punkt, kein Blau auf iOS
+	•	WAS rot mit !important inline
+	•	DRAUFGÄNGER Blase für iOS Shake Permission
+	•	Mobile Blasen ohne Overlap (animation:none)
+HTTPS — WARTET AUF GITHUB SUPPORT ⏳
+	•	Ticket #4334095 offen
+	•	Antwort an Support geschickt mit Details
+	•	depuls.ch ohne www neu eingetragen → DNS check successful ✅
+	•	TLS Certificate stuck at 1 of 3 — Certificate Request Error
+	•	Enforce HTTPS noch nicht anklickbar
+	•	GitHub Support antwortet 1-3 Werktage
+SUPABASE — AKTUELLER STAND ⚠️
+KRITISCH: locations Tabelle ist LEER
+Ursache: Session 23. April — kompletter Reset + Neuaufbau
+«Schema Teardown: Drop Tables» hat alle 230 Locations gelöscht
+NEUE ARCHITEKTUR (23. April) — STRUKTUR VORHANDEN ✅
+Tabellen: locations, location_sources, events, immobilien,
+inserate, jobs, news_stories, users, user_preferences,
+community_posts, dating_votes, dating_vote_stats
+LOCATIONS TABELLE — ALLE SPALTEN:
+id, name, slug, kategorie, subkategorie
+zt_kategorie_id, zt_subkategorie_id, zt_api_id
+adresse, plz, kreis, stadt, land, lat, lng
+beschreibung, beschreibung_kurz
+bild_url, bild_urls (jsonb)
+telefon, website, email
+oeffnungszeiten (array), oeffnungszeiten_json (jsonb)
+preis_niveau, hat_reservation, reservation_url
+zurichcard, place_indoor, place_outdoor
+rating, rating_count
+seo_title, seo_description, schema_type
+search_vector (tsvector), quelle, aktiv, featured, verified
+created_at, updated_at
+FILTER-SYSTEM — ARCHITEKTUR ✅
+zt_subkategorie_id direkt → Filter-Button → Supabase Query
+Gastro Techno/Jazz/House etc. → zt_subkategorie_id
+Keine Text-Matching — direkte ID-Abfrage
+Filter auf Webseite vorhanden aber NOCH NICHT verdrahtet ⚠️
+ZÜRICH TOURISMUS API — BESTÄTIGT LIVE ✅
+URL: https://www.zuerich.com/en/api/v2/data?id=101&limit=5
+Liefert: Name (4 Sprachen), Beschreibung, Kategorie, Schema-Type
+Bilder-URLs: noch nicht gefunden in API-Response
+Nächster Schritt: Vollständige API-Response analysieren
+WAS ALS NÄCHSTES FEHLT — PRIORITÄT:
+	1.	ZT API vollständig analysieren → Bilder-URLs finden
+	2.	Import-Script schreiben → locations Tabelle befüllen
+	3.	Filter verdrahten → zt_subkategorie_id
+	4.	Livedaten Gastro/Nachtleben anschliessen
+	5.	HTTPS aktivieren sobald GitHub antwortet
+GOOGLE SEARCH CONSOLE ✅
+1 Seite indexiert seit 20. April
+depuls.ch bei Google bekannt
+INSTAGRAM @stadtpuls_zh ✅
+Post vorbereitet: «Zürich, mir gönd los.»
+«Bald chasch säge, was du wirklich denksch. Ungefiltert. Echt. Züri-style.»
+Animiertes Poster erstellt (Züri Moment Blase)
+ROADMAP:
+✅ Phase 4h → Footer
+✅ Phase 4i → Register + Backticks
+✅ Phase 4j → Tab-Switch
+✅ Phase 4k → Supabase Architektur neu
+✅ Phase 4l → Impressum + Datenschutz + Domain
+✅ Phase 4m → Voting live
+✅ Phase 4n → feedback.html final
+✅ Phase 4o → kontakt.html live
+✅ Phase 4p → Bubble Menu live in index.html
+⏳ Phase 4q → HTTPS aktivieren
+⏳ Phase 4r → ZT API Import-Script
+⏳ Phase 4s → Locations befüllen + Bilder
+⏳ Phase 4t → Filter verdrahten
+⏳ Phase 4u → Livedaten Gastro/Nachtleben
+⏳ Phase 4v → ZVV API Mobilität
+⏳ Phase 5 → Login + Community + Onboarding
+⏳ Phase 6 → KI Features
+⏳ Phase 7 → Hamburg, Berlin
+SOFT LAUNCH: 4. Juni 2026 🔴
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
 SOFT LAUNCH: 4. Juni 2026 🔴
 «dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
 
