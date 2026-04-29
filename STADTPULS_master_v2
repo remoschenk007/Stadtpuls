@@ -1884,12 +1884,89 @@ ROADMAP:
 ⏳ Phase 5 → Login + Community + Onboarding
 ⏳ Phase 6 → KI Features
 ⏳ Phase 7 → Hamburg, Berlin
-SOFT LAUNCH: 4. Juni 2026 🔴
-«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
-SOFT LAUNCH: 4. Juni 2026 🔴
-«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»​​​​​​​​​​​​​​​​
 
+😄 Ich schreibe jetzt das komplette Master Update — alles von heute in einem Block, direkt kopierbar.
 
+SESSION 29. APRIL 2026 — KOMPLETT
+ADMIN DASHBOARD — LIVE ✅
+	•	import.html → komplett neu gebaut → Stadtpuls Admin Dashboard v2
+	•	Läuft auf depuls.ch/import.html
+	•	4 Tabs: Import · Dashboard · Qualität · Sync
+IMPORT TAB ✅
+	•	4 Datenquellen sichtbar: ZT (aktiv) · Google (bald) · Tripadvisor (später) · Guidle/ZVV (später)
+	•	Alle Kategorien auswählbar mit IDs
+	•	Filter «Nur fehlende» — importiert nur was noch nicht drin ist
+	•	Locations ausserhalb Stadt Zürich automatisch gefiltert (nur PLZ mit Kreis 1-12)
+	•	Duplikat-Schutz via zt_api_id — kann beliebig oft gestartet werden
+DASHBOARD TAB ✅
+	•	Live-Zahlen aus Supabase
+	•	Locations pro Kategorie — Balkendiagramm farbig
+	•	Locations pro Kreis 1-12 — Balkendiagramm
+QUALITÄT TAB ✅
+	•	Ohne Bild · Ohne Kreis · Ohne Website · Ohne Öffnungszeiten
+	•	Live aus Supabase
+SYNC TAB ✅
+	•	Roadmap sichtbar
+	•	Vorbereitet für Google Places Phase 4o
+SUPABASE — AKTUELLER STAND ✅
+	•	252 Locations importiert
+	•	251 haben Bild ✅
+	•	183 mit Kreis 1-12 erkannt ✅
+	•	69 ohne Kreis → ausserhalb Stadt → bereinigen Phase 4n
+	•	Insert Policy auf locations gesetzt ✅
+LOCATIONS PRO KATEGORIE:
+	•	Gastro 89 · Nachtleben 30 · Sport 27
+	•	Wellness 27 · Kultur 26 · Shopping 25
+	•	Recreation 15 · Sightseeing 13
+LOCATIONS PRO KREIS:
+	•	Kreis 1 → 67 · Kreis 5 → 26 · Kreis 4 → 22
+	•	Kreis 8 → 15 · Kreis 2 → 12 · Kreis 3 → 11
+	•	Kreis 9 → 10 · Kreis 7 → 6 · Kreis 6 → 4
+	•	Kreis 10 → 4 · Kreis 11 → 3 · Kreis 12 → 3
+ERKENNTNISS — DATEN STRATEGIE BESCHLOSSEN ✅
+Kreis 1, 2, 7, 8 → Zürich Tourismus → Touristen-Content → bereits drin
+Kreis 3, 4, 5 → Google Places + Tripadvisor → wo Zürich wirklich lebt → Phase 4o
+Alle Kreise → Stadtpuls Community → authentischer Local-Content → Phase 5
+WARUM:
+ZT API ist touristisch aufgebaut → Altstadt, Opernhaus, Bahnhofstrasse
+Langstrasse, Hardbrücke, Zürich West → kaum erfasst bei ZT
+Google + Tripadvisor haben Kreis 3/4/5 viel besser
+PLZ → KREIS MAPPING — KOMPLETT UND KORREKT:
+8001→1 · 8002/8038→2 · 8003/8036/8055→3
+8004→4 · 8005/8064→5 · 8006/8057→6
+8032/8044/8053→7 · 8008/8034→8
+8047/8048→9 · 8037/8049→10
+8046/8050/8051→11 · 8052→12
+ZT API STRUKTUR — BESTÄTIGT:
+	•	image.url → Hauptbild ✅
+	•	photo[] → Array alle Bilder ✅
+	•	address.postalCode → PLZ ✅
+	•	geoCoordinates → lat/lng ✅
+	•	openingHours[] → Öffnungszeiten ✅
+	•	identifier → zt_api_id ✅
+SUPABASE INSERT POLICY ✅
+SQL: create policy “Allow anon insert” on “public”.“locations” as PERMISSIVE for INSERT to public with check (true);
+CORS PROXY PROBLEM ⚠️
+api.allorigins.win → Timeout bei manchen Kategorien
+Ursache: depuls.ch noch ohne HTTPS → manche Proxies blockieren
+Fix: HTTPS aktivieren sobald GitHub Support antwortet
+ROADMAP UPDATE:
+✅ Phase 4h → Footer
+✅ Phase 4i → Register + Backticks
+✅ Phase 4j → Tab-Switch
+✅ Phase 4k → Supabase Architektur neu
+✅ Phase 4l → Impressum + Datenschutz + Domain
+✅ Phase 4m → Import Tool + 252 Locations live
+✅ Phase 4n → Admin Dashboard v2 live
+⏳ Phase 4o → HTTPS aktivieren
+⏳ Phase 4p → Google Places API → Kreis 3/4/5 befüllen
+⏳ Phase 4q → 69 Locations ohne Kreis bereinigen
+⏳ Phase 4r → Filter in index.html verdrahten → Livedaten anzeigen
+⏳ Phase 4s → Tripadvisor → Kreis 3/4/5
+⏳ Phase 5 → Login + Community + Onboarding
+⏳ Phase 6 → KI Features — Züri-Bot
+⏳ Phase 7 → Hamburg, Berlin
+🔴 Soft Launch: 4. Juni 2026
 
 
 
