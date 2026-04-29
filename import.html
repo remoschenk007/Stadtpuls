@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STADTPULS -- Import Tool</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap');
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+background: #04040a;
+color: #e8e4d9;
+font-family: ‘DM Mono’, monospace;
+min-height: 100vh;
+padding: 40px 20px;
+}
+
+h1 {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-style: italic;
+font-weight: 900;
+font-size: 48px;
+color: #ff2d00;
+letter-spacing: 2px;
+margin-bottom: 4px;
+}
+
+.sub {
+color: #c8ff00;
+font-size: 12px;
+letter-spacing: 3px;
+text-transform: uppercase;
+margin-bottom: 40px;
+}
+
+.warning {
+background: #ff2d00;
+color: #04040a;
+padding: 12px 20px;
+font-size: 11px;
+font-weight: 500;
+letter-spacing: 1px;
+margin-bottom: 30px;
+border-radius: 2px;
+}
+
+.categories {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 12px;
+margin-bottom: 30px;
+}
+
+.cat-card {
+border: 1px solid #1a1a2e;
+padding: 16px;
+border-radius: 4px;
+background: #0a0a14;
+}
+
+.cat-card h3 {
+font-size: 11px;
+letter-spacing: 2px;
+text-transform: uppercase;
+margin-bottom: 8px;
+color: #c8ff00;
+}
+
+.cat-card label {
+display: flex;
+align-items: center;
+gap: 8px;
+font-size: 11px;
+color: #e8e4d9;
+cursor: pointer;
+padding: 3px 0;
+}
+
+.cat-card label:hover { color: #00f5ff; }
+
+input[type="checkbox"] {
+accent-color: #ff2d00;
+width: 14px;
+height: 14px;
+}
+
+.btn-row {
+display: flex;
+gap: 12px;
+margin-bottom: 30px;
+flex-wrap: wrap;
+}
+
+button {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+letter-spacing: 2px;
+text-transform: uppercase;
+padding: 14px 28px;
+border: none;
+cursor: pointer;
+border-radius: 2px;
+transition: all 0.2s;
+}
+
+#btn-start {
+background: #ff2d00;
+color: #04040a;
+font-weight: 500;
+}
+#btn-start:hover { background: #ff5533; }
+#btn-start:disabled { background: #333; color: #666; cursor: not-allowed; }
+
+#btn-select-all {
+background: transparent;
+color: #c8ff00;
+border: 1px solid #c8ff00;
+}
+#btn-select-all:hover { background: #c8ff0022; }
+
+#btn-clear {
+background: transparent;
+color: #666;
+border: 1px solid #333;
+}
+#btn-clear:hover { color: #e8e4d9; border-color: #666; }
+
+.progress-box {
+background: #0a0a14;
+border: 1px solid #1a1a2e;
+border-radius: 4px;
+padding: 20px;
+margin-bottom: 20px;
+display: none;
+}
+
+.progress-bar-wrap {
+background: #1a1a2e;
+height: 4px;
+border-radius: 2px;
+margin: 16px 0 8px;
+overflow: hidden;
+}
+
+#progress-bar {
+height: 100%;
+background: #ff2d00;
+width: 0%;
+transition: width 0.3s;
+border-radius: 2px;
+}
+
+#progress-text {
+font-size: 11px;
+color: #c8ff00;
+letter-spacing: 1px;
+}
+
+#status-label {
+font-size: 13px;
+color: #e8e4d9;
+margin-bottom: 4px;
+}
+
+.log-box {
+background: #04040a;
+border: 1px solid #1a1a2e;
+border-radius: 4px;
+padding: 16px;
+height: 300px;
+overflow-y: auto;
+font-size: 10px;
+line-height: 1.8;
+display: none;
+}
+
+.log-ok { color: #c8ff00; }
+.log-err { color: #ff2d00; }
+.log-info { color: #00f5ff; }
+.log-warn { color: #ffaa00; }
+
+.result-box {
+background: #0a1a0a;
+border: 1px solid #c8ff00;
+border-radius: 4px;
+padding: 20px;
+margin-top: 20px;
+display: none;
+}
+
+.result-box h2 {
+font-family: ‘Barlow Condensed’, sans-serif;
+font-style: italic;
+font-weight: 900;
+font-size: 32px;
+color: #c8ff00;
+margin-bottom: 8px;
+}
+
+.stats {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+gap: 12px;
+margin-top: 16px;
+}
+
+.stat {
+text-align: center;
+background: #04040a;
+padding: 12px;
+border-radius: 4px;
+border: 1px solid #1a1a2e;
+}
+
+.stat .num {
+font-size: 28px;
+font-family: ‘Barlow Condensed’, sans-serif;
+font-style: italic;
+font-weight: 900;
+color: #ff2d00;
+}
+
+.stat .label {
+font-size: 9px;
+letter-spacing: 2px;
+text-transform: uppercase;
+color: #666;
+margin-top: 4px;
+}
+
+.dot {
+display: inline-block;
+width: 8px;
+height: 8px;
+background: #ff2d00;
+border-radius: 50%;
+margin-right: 8px;
+animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+0%, 100% { opacity: 1; }
+50% { opacity: 0.3; }
+}
+</style>
+
+</head>
+<body>
+
+<h1>STADTPULS</h1>
+<div class="sub">⚡ Import Tool -- Zürich Tourismus API → Supabase</div>
+
+<div class="warning">
+  ⚠️ NUR EINMAL AUSFÜHREN -- Doppelter Import wird via zt_api_id verhindert. Seite nicht schliessen während Import läuft.
+</div>
+
+<div class="categories">
+
+  <div class="cat-card">
+    <h3>🍽 Gastro</h3>
+    <label><input type="checkbox" class="cat-check" value="101|gastro|alle"> Alle Restaurants (id=101)</label>
+    <label><input type="checkbox" class="cat-check" value="193|gastro|american"> American (id=193)</label>
+    <label><input type="checkbox" class="cat-check" value="184|gastro|schweizer"> Schweizer (id=184)</label>
+    <label><input type="checkbox" class="cat-check" value="188|gastro|asiatisch"> Asiatisch (id=188)</label>
+    <label><input type="checkbox" class="cat-check" value="185|gastro|italienisch"> Italienisch (id=185)</label>
+    <label><input type="checkbox" class="cat-check" value="191|gastro|mediterran"> Mediterran (id=191)</label>
+    <label><input type="checkbox" class="cat-check" value="197|gastro|vegetarisch"> Vegetarisch (id=197)</label>
+    <label><input type="checkbox" class="cat-check" value="409|gastro|vegan"> Vegan (id=409)</label>
+    <label><input type="checkbox" class="cat-check" value="194|gastro|gourmet"> Gourmet (id=194)</label>
+    <label><input type="checkbox" class="cat-check" value="102|gastro|cafe"> Café (id=102)</label>
+  </div>
+
+  <div class="cat-card">
+    <h3>🌙 Nachtleben & Bars</h3>
+    <label><input type="checkbox" class="cat-check" value="162|nachtleben|alle"> Alle Clubs (id=162)</label>
+    <label><input type="checkbox" class="cat-check" value="1414|nachtleben|techno"> House/Techno (id=1414)</label>
+    <label><input type="checkbox" class="cat-check" value="1417|nachtleben|hiphop"> Hip-Hop/Rap (id=1417)</label>
+    <label><input type="checkbox" class="cat-check" value="1432|nachtleben|jazz"> Jazz/World (id=1432)</label>
+    <label><input type="checkbox" class="cat-check" value="1429|nachtleben|afterhour"> Afterhour (id=1429)</label>
+    <label><input type="checkbox" class="cat-check" value="163|nachtleben|livemusic"> Live Music (id=163)</label>
+    <label><input type="checkbox" class="cat-check" value="164|nachtleben|casino"> Casinos (id=164)</label>
+    <label><input type="checkbox" class="cat-check" value="103|nachtleben|bars"> Alle Bars (id=103)</label>
+    <label><input type="checkbox" class="cat-check" value="1438|nachtleben|cocktail"> Cocktailbar (id=1438)</label>
+    <label><input type="checkbox" class="cat-check" value="1441|nachtleben|musicbar"> Music Bar (id=1441)</label>
+  </div>
+
+  <div class="cat-card">
+    <h3>🎨 Kultur</h3>
+    <label><input type="checkbox" class="cat-check" value="96|kultur|alle"> Alle Kultur (id=96)</label>
+    <label><input type="checkbox" class="cat-check" value="136|kultur|museen"> Museen (id=136)</label>
+    <label><input type="checkbox" class="cat-check" value="178|kultur|galerien"> Galerien (id=178)</label>
+    <label><input type="checkbox" class="cat-check" value="175|kultur|oper"> Oper (id=175)</label>
+    <label><input type="checkbox" class="cat-check" value="176|kultur|theater"> Theater (id=176)</label>
+    <label><input type="checkbox" class="cat-check" value="133|kultur|film"> Film (id=133)</label>
+    <label><input type="checkbox" class="cat-check" value="134|kultur|musik"> Musik (id=134)</label>
+  </div>
+
+  <div class="cat-card">
+    <h3>🛍 Shopping</h3>
+    <label><input type="checkbox" class="cat-check" value="95|shopping|alle"> Alle Shopping (id=95)</label>
+    <label><input type="checkbox" class="cat-check" value="127|shopping|mode"> Mode (id=127)</label>
+    <label><input type="checkbox" class="cat-check" value="128|shopping|swissmade"> Swiss Originals (id=128)</label>
+    <label><input type="checkbox" class="cat-check" value="131|shopping|food"> Food & Deli (id=131)</label>
+    <label><input type="checkbox" class="cat-check" value="132|shopping|markt"> Märkte (id=132)</label>
+    <label><input type="checkbox" class="cat-check" value="417|shopping|mall"> Shopping Malls (id=417)</label>
+  </div>
+
+  <div class="cat-card">
+    <h3>💆 Wellness & Sport</h3>
+    <label><input type="checkbox" class="cat-check" value="98|wellness|alle"> Wellness & Spa (id=98)</label>
+    <label><input type="checkbox" class="cat-check" value="141|sport|swimming"> Swimming (id=141)</label>
+    <label><input type="checkbox" class="cat-check" value="139|sport|cycling"> Cycling (id=139)</label>
+    <label><input type="checkbox" class="cat-check" value="138|sport|hiking"> Hiking (id=138)</label>
+    <label><input type="checkbox" class="cat-check" value="146|sport|golf"> Golf (id=146)</label>
+    <label><input type="checkbox" class="cat-check" value="149|sport|sailing"> Sailing (id=149)</label>
+  </div>
+
+  <div class="cat-card">
+    <h3>🏛 Sightseeing</h3>
+    <label><input type="checkbox" class="cat-check" value="72|sightseeing|alle"> Alle Sights (id=72)</label>
+    <label><input type="checkbox" class="cat-check" value="87|sightseeing|architektur"> Architektur (id=87)</label>
+    <label><input type="checkbox" class="cat-check" value="92|sightseeing|kirchen"> Kirchen (id=92)</label>
+    <label><input type="checkbox" class="cat-check" value="88|sightseeing|aussicht"> Aussichtspunkte (id=88)</label>
+    <label><input type="checkbox" class="cat-check" value="99|recreation|alle"> Recreation (id=99)</label>
+    <label><input type="checkbox" class="cat-check" value="160|recreation|parks"> Parks (id=160)</label>
+  </div>
+
+</div>
+
+<div class="btn-row">
+  <button id="btn-select-all" onclick="selectAll()">✓ Alle auswählen</button>
+  <button id="btn-clear" onclick="clearAll()">✗ Alle abwählen</button>
+  <button id="btn-start" onclick="startImport()">▶ IMPORT STARTEN</button>
+</div>
+
+<div class="progress-box" id="progress-box">
+  <div id="status-label"><span class="dot"></span> Importiere...</div>
+  <div class="progress-bar-wrap">
+    <div id="progress-bar"></div>
+  </div>
+  <div id="progress-text">0 / 0 Kategorien</div>
+</div>
+
+<div class="log-box" id="log-box"></div>
+
+<div class="result-box" id="result-box">
+  <h2>✅ IMPORT ABGESCHLOSSEN</h2>
+  <div class="stats">
+    <div class="stat">
+      <div class="num" id="stat-total">0</div>
+      <div class="label">Importiert</div>
+    </div>
+    <div class="stat">
+      <div class="num" id="stat-skip">0</div>
+      <div class="label">Übersprungen</div>
+    </div>
+    <div class="stat">
+      <div class="num" id="stat-err">0</div>
+      <div class="label">Fehler</div>
+    </div>
+    <div class="stat">
+      <div class="num" id="stat-cats">0</div>
+      <div class="label">Kategorien</div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// STADTPULS IMPORT TOOL v1.0
+// ZT API → Supabase locations Tabelle
+// ============================================================
+
+const SUPA_URL = 'https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+const ZT_BASE = 'https://www.zuerich.com/en/api/v2/data';
+const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
+
+let totalImported = 0;
+let totalSkipped = 0;
+let totalErrors = 0;
+
+// PLZ → Kreis Mapping
+function plzToKreis(plz) {
+  const map = {
+    '8001': 1,
+    '8002': 2, '8038': 2,
+    '8003': 3, '8036': 3, '8055': 3,
+    '8004': 4,
+    '8005': 5, '8064': 5,
+    '8006': 6, '8057': 6,
+    '8032': 7, '8044': 7, '8053': 7,
+    '8008': 8, '8034': 8,
+    '8047': 9, '8048': 9,
+    '8037': 10, '8049': 10,
+    '8046': 11, '8050': 11, '8051': 11,
+    '8052': 12
+  };
+  return map[plz] || null;
+}
+
+// Slug generieren
+function makeSlug(name) {
+  return name
+    .toLowerCase()
+    .replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+    .substring(0, 80);
+}
+
+// Log ausgeben
+function log(msg, type = 'info') {
+  const box = document.getElementById('log-box');
+  box.style.display = 'block';
+  const line = document.createElement('div');
+  line.className = `log-${type}`;
+  line.textContent = `${new Date().toLocaleTimeString()} -- ${msg}`;
+  box.appendChild(line);
+  box.scrollTop = box.scrollHeight;
+}
+
+// Alle auswählen
+function selectAll() {
+  document.querySelectorAll('.cat-check').forEach(c => c.checked = true);
+}
+
+// Alle abwählen
+function clearAll() {
+  document.querySelectorAll('.cat-check').forEach(c => c.checked = false);
+}
+
+// ZT API abrufen
+async function fetchZTCategory(categoryId) {
+  const url = `${CORS_PROXY}${encodeURIComponent(`${ZT_BASE}?id=${categoryId}`)}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  const data = await res.json();
+  return Array.isArray(data) ? data : [];
+}
+
+// ZT Objekt → Supabase Row mappen
+function mapToRow(item, kategorie, subkategorie, ztKategorieId, ztSubkategorieId) {
+  const addr = item.address || {};
+  const geo  = item.geoCoordinates || {};
+  const plz  = addr.postalCode || null;
+  const name = (item.name?.de || item.name?.en || '').trim();
+  if (!name) return null;
+
+  // Bild URLs
+  const bildUrl  = item.image?.url || null;
+  const bildUrls = (item.photo || []).map(p => p.url).filter(Boolean);
+
+  // Öffnungszeiten
+  const oeffnungszeiten = item.openingHours || [];
+
+  return {
+    name:                   name,
+    slug:                   makeSlug(name),
+    kategorie:              kategorie,
+    subkategorie:           subkategorie,
+    zt_kategorie_id:        ztKategorieId,
+    zt_subkategorie_id:     ztSubkategorieId,
+    zt_api_id:              item.identifier || null,
+    adresse:                addr.streetAddress || null,
+    plz:                    plz,
+    kreis:                  plzToKreis(plz),
+    stadt:                  addr.addressLocality || 'Zürich',
+    land:                   'CH',
+    lat:                    geo.latitude  || null,
+    lng:                    geo.longitude || null,
+    beschreibung:           item.description?.de || item.description?.en || null,
+    beschreibung_kurz:      item.disambiguatingDescription?.de || item.textTeaser?.de || null,
+    bild_url:               bildUrl,
+    bild_urls:              bildUrls.length > 0 ? bildUrls : null,
+    telefon:                addr.telephone || null,
+    website:                addr.url || null,
+    email:                  addr.email || null,
+    oeffnungszeiten:        oeffnungszeiten.length > 0 ? oeffnungszeiten : null,
+    zurichcard:             item.zurichcard || false,
+    place_indoor:           (item.place || []).includes('Indoors'),
+    place_outdoor:          (item.place || []).includes('Outdoors'),
+    schema_type:            item['@type'] || 'LocalBusiness',
+    quelle:                 'zuerich.com',
+    aktiv:                  true,
+    featured:               false,
+    verified:               false
+  };
+}
+
+// Row in Supabase einfügen (upsert via zt_api_id)
+async function upsertRow(row) {
+  const res = await fetch(`${SUPA_URL}/rest/v1/locations`, {
+    method: 'POST',
+    headers: {
+      'Content-Type':  'application/json',
+      'apikey':        SUPA_KEY,
+      'Authorization': `Bearer ${SUPA_KEY}`,
+      'Prefer':        'resolution=ignore-duplicates'
+    },
+    body: JSON.stringify(row)
+  });
+  return res.status;
+}
+
+// Hauptfunktion
+async function startImport() {
+  const checked = [...document.querySelectorAll('.cat-check:checked')];
+  if (checked.length === 0) {
+    alert('Bitte mindestens eine Kategorie auswählen!');
+    return;
+  }
+
+  // UI vorbereiten
+  document.getElementById('btn-start').disabled = true;
+  document.getElementById('progress-box').style.display = 'block';
+  document.getElementById('result-box').style.display = 'none';
+  document.getElementById('log-box').innerHTML = '';
+  totalImported = 0; totalSkipped = 0; totalErrors = 0;
+
+  const cats = checked.map(c => c.value.split('|'));
+  // Deduplizieren nach ID
+  const seen = new Set();
+  const unique = cats.filter(([id]) => { if (seen.has(id)) return false; seen.add(id); return true; });
+
+  log(`Starte Import -- ${unique.length} Kategorien ausgewählt`, 'info');
+
+  for (let i = 0; i < unique.length; i++) {
+    const [ztId, kategorie, subkategorie] = unique[i];
+    const ztKategorieId = parseInt(ztId);
+
+    // Progress Update
+    const pct = Math.round((i / unique.length) * 100);
+    document.getElementById('progress-bar').style.width = `${pct}%`;
+    document.getElementById('progress-text').textContent = `${i + 1} / ${unique.length} Kategorien`;
+    document.getElementById('status-label').innerHTML = `<span class="dot"></span> Lade: ${kategorie} / ${subkategorie} (id=${ztId})`;
+
+    try {
+      log(`→ Lade Kategorie id=${ztId} (${kategorie}/${subkategorie})`, 'info');
+      const items = await fetchZTCategory(ztKategorieId);
+      log(`  ${items.length} Einträge gefunden`, 'info');
+
+      for (const item of items) {
+        const row = mapToRow(item, kategorie, subkategorie, ztKategorieId, null);
+        if (!row) { totalSkipped++; continue; }
+
+        // Doppelimport verhindern: prüfe ob zt_api_id schon existiert
+        if (row.zt_api_id) {
+          const check = await fetch(
+            `${SUPA_URL}/rest/v1/locations?zt_api_id=eq.${row.zt_api_id}&select=id`,
+            { headers: { 'apikey': SUPA_KEY, 'Authorization': `Bearer ${SUPA_KEY}` }}
+          );
+          const existing = await check.json();
+          if (existing.length > 0) {
+            log(`  SKIP: ${row.name} (bereits vorhanden)`, 'warn');
+            totalSkipped++;
+            continue;
+          }
+        }
+
+        const status = await upsertRow(row);
+        if (status === 201 || status === 200) {
+          log(`  ✓ ${row.name} (Kreis ${row.kreis || '?'}, PLZ ${row.plz || '?'})`, 'ok');
+          totalImported++;
+        } else {
+          log(`  ✗ ${row.name} -- HTTP ${status}`, 'err');
+          totalErrors++;
+        }
+
+        // Kurze Pause -- API nicht überlasten
+        await new Promise(r => setTimeout(r, 80));
+      }
+
+    } catch (err) {
+      log(`✗ Fehler bei Kategorie ${ztId}: ${err.message}`, 'err');
+      totalErrors++;
+    }
+
+    // Pause zwischen Kategorien
+    await new Promise(r => setTimeout(r, 300));
+  }
+
+  // Fertig
+  document.getElementById('progress-bar').style.width = '100%';
+  document.getElementById('progress-text').textContent = 'Abgeschlossen';
+  document.getElementById('status-label').innerHTML = '✅ Import fertig';
+
+  document.getElementById('stat-total').textContent = totalImported;
+  document.getElementById('stat-skip').textContent  = totalSkipped;
+  document.getElementById('stat-err').textContent   = totalErrors;
+  document.getElementById('stat-cats').textContent  = unique.length;
+  document.getElementById('result-box').style.display = 'block';
+  document.getElementById('btn-start').disabled = false;
+
+  log(`=== FERTIG === Importiert: ${totalImported} | Übersprungen: ${totalSkipped} | Fehler: ${totalErrors}`, 'ok');
+}
+</script>
+
+</body>
+</html>
