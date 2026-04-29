@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STADTPULS -- Master Control</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --black:#04040a;--red:#ff2d00;--green:#c8ff00;--cyan:#00f5ff;
+  --purple:#9333ea;--white:#e8e4d9;--dark:#0a0a14;--border:#1a1a2e;
+  --orange:#ff6600;--gold:#ffcc00;--pink:#ff2d88
+}
+body{background:var(--black);color:var(--white);font-family:'DM Mono',monospace;min-height:100vh;display:flex;flex-direction:column}
+
+/* ── LOGIN ── */
+#login-screen{position:fixed;inset:0;background:var(–black);z-index:1000;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:32px}
+.login-logo{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:64px;color:var(–red);letter-spacing:4px;text-align:center}
+.login-logo span{display:block;font-size:12px;letter-spacing:6px;color:#333;font-style:normal;margin-top:-8px}
+.login-box{background:var(–dark);border:1px solid var(–border);border-radius:8px;padding:32px;width:340px;display:flex;flex-direction:column;gap:16px}
+.login-box h2{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#555;text-align:center}
+.login-input{background:var(–black);border:1px solid var(–border);color:var(–white);padding:12px 16px;font-family:‘DM Mono’,monospace;font-size:13px;border-radius:3px;width:100%;outline:none;transition:border-color .2s}
+.login-input:focus{border-color:var(–red)}
+.login-btn{background:var(–red);color:var(–black);border:none;padding:14px;font-family:‘DM Mono’,monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:3px;font-weight:500;transition:all .2s}
+.login-btn:hover{background:#ff4422}
+.login-error{color:var(–red);font-size:10px;text-align:center;display:none}
+.login-hint{color:#333;font-size:9px;text-align:center;letter-spacing:1px}
+
+/* ── HEADER ── */
+header{display:flex;align-items:center;justify-content:space-between;padding:16px 28px;border-bottom:1px solid var(–border);background:var(–black);position:sticky;top:0;z-index:100}
+.logo{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:26px;color:var(–red);letter-spacing:2px}
+.logo span{color:#333;font-size:9px;font-family:‘DM Mono’,monospace;display:block;font-style:normal;letter-spacing:3px;margin-top:-2px}
+.hdr-right{display:flex;align-items:center;gap:12px}
+.hdr-pill{background:var(–dark);border:1px solid var(–border);padding:5px 12px;border-radius:20px;font-size:10px;letter-spacing:1px}
+.hdr-pill .n{color:var(–green)}
+.live-dot{display:flex;align-items:center;gap:6px;font-size:10px;color:var(–green)}
+.live-dot::before{content:’’;width:7px;height:7px;background:var(–green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.logout-btn{background:transparent;border:1px solid #333;color:#555;padding:6px 14px;font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:1px;cursor:pointer;border-radius:3px;transition:all .2s}
+.logout-btn:hover{border-color:var(–red);color:var(–red)}
+
+/* ── LAYOUT ── */
+.app{display:flex;flex:1;height:calc(100vh - 57px)}
+
+/* ── SIDEBAR ── */
+nav{width:200px;border-right:1px solid var(–border);padding:20px 0;flex-shrink:0;overflow-y:auto}
+.nav-section{margin-bottom:24px}
+.nav-label{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#333;padding:0 20px;margin-bottom:8px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;font-size:11px;cursor:pointer;color:#555;transition:all .15s;border-left:2px solid transparent}
+.nav-item:hover{color:var(–white);background:#0a0a14}
+.nav-item.active{color:var(–white);border-left-color:var(–red);background:#0a0a14}
+.nav-item .icon{font-size:14px;width:18px;text-align:center;flex-shrink:0}
+.nav-badge{margin-left:auto;background:var(–red);color:var(–black);font-size:9px;padding:2px 6px;border-radius:10px;font-weight:500}
+.nav-badge.green{background:var(–green)}
+.nav-badge.orange{background:var(–orange)}
+
+/* ── MAIN ── */
+main{flex:1;overflow-y:auto;padding:28px}
+.panel{display:none}
+.panel.active{display:block}
+
+/* ── OVERVIEW ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:28px}
+.kpi{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:18px;position:relative;overflow:hidden}
+.kpi::after{content:’’;position:absolute;bottom:0;left:0;right:0;height:2px}
+.kpi.red::after{background:var(–red)}
+.kpi.green::after{background:var(–green)}
+.kpi.cyan::after{background:var(–cyan)}
+.kpi.purple::after{background:var(–purple)}
+.kpi.orange::after{background:var(–orange)}
+.kpi.gold::after{background:var(–gold)}
+.kpi .label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-bottom:8px}
+.kpi .value{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:36px;line-height:1}
+.kpi.red .value{color:var(–red)}
+.kpi.green .value{color:var(–green)}
+.kpi.cyan .value{color:var(–cyan)}
+.kpi.purple .value{color:var(–purple)}
+.kpi.orange .value{color:var(–orange)}
+.kpi.gold .value{color:var(–gold)}
+.kpi .sub{font-size:9px;color:#333;margin-top:4px}
+
+/* ── HEATMAP ── */
+.heatmap-section{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:20px;margin-bottom:20px}
+.section-title{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(–green);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.section-title::after{content:’’;flex:1;height:1px;background:var(–border)}
+.heatmap-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}
+.hm-cell{background:var(–black);border:1px solid var(–border);border-radius:4px;padding:12px 8px;text-align:center;cursor:pointer;transition:all .2s;position:relative}
+.hm-cell:hover{border-color:#333}
+.hm-cell .kreis-num{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:22px;line-height:1}
+.hm-cell .kreis-name{font-size:8px;color:#333;margin-top:2px;letter-spacing:1px}
+.hm-cell .kreis-count{font-size:10px;margin-top:6px}
+.hm-cell.hot{border-color:var(–red);background:#140505}
+.hm-cell.hot .kreis-num{color:var(–red)}
+.hm-cell.warm{border-color:var(–orange);background:#140a05}
+.hm-cell.warm .kreis-num{color:var(–orange)}
+.hm-cell.cool{border-color:#333}
+.hm-cell.cool .kreis-num{color:#555}
+.hm-cell .pulse-ring{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(–red);animation:pulse 1s infinite}
+
+/* ── ACTIVITY FEED ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+.card{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:20px}
+.card h3{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(–green);margin-bottom:14px}
+.feed-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(–border)}
+.feed-item:last-child{border-bottom:none}
+.feed-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;background:var(–black)}
+.feed-content{flex:1}
+.feed-title{font-size:11px;color:var(–white);margin-bottom:2px}
+.feed-meta{font-size:9px;color:#444}
+.feed-time{font-size:9px;color:#333;margin-left:auto;flex-shrink:0}
+
+/* ── MODERATION ── */
+.mod-item{background:var(–black);border:1px solid var(–border);border-radius:4px;padding:16px;margin-bottom:10px}
+.mod-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.mod-type{font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;border-radius:3px}
+.mod-type.story{background:#0a1a0a;color:var(–green);border:1px solid var(–green)}
+.mod-type.inserat{background:#0a0a1a;color:var(–cyan);border:1px solid var(–cyan)}
+.mod-type.review{background:#1a0a0a;color:var(–red);border:1px solid var(–red)}
+.mod-type.partner{background:#1a0a1a;color:var(–purple);border:1px solid var(–purple)}
+.mod-user{font-size:10px;color:#555}
+.mod-text{font-size:11px;color:var(–white);line-height:1.5;margin-bottom:10px}
+.mod-ai{font-size:9px;padding:4px 10px;border-radius:3px;margin-bottom:10px;display:inline-block}
+.mod-ai.safe{background:#0a1a0a;color:var(–green)}
+.mod-ai.warn{background:#1a1a0a;color:#ffaa00}
+.mod-ai.block{background:#1a0a0a;color:var(–red)}
+.mod-actions{display:flex;gap:8px}
+.mod-btn{font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:1px;padding:8px 16px;border:none;cursor:pointer;border-radius:3px;transition:all .2s}
+.mod-approve{background:var(–green);color:var(–black)}
+.mod-approve:hover{background:#aadd00}
+.mod-reject{background:transparent;border:1px solid var(–red);color:var(–red)}
+.mod-reject:hover{background:#1a0505}
+.mod-edit{background:transparent;border:1px solid #333;color:#555}
+.mod-edit:hover{color:var(–white);border-color:#555}
+
+/* ── FEATURED / REVENUE ── */
+.featured-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(–border)}
+.featured-item:last-child{border-bottom:none}
+.feat-color{width:4px;height:40px;border-radius:2px;flex-shrink:0}
+.feat-info{flex:1}
+.feat-name{font-size:12px;color:var(–white);margin-bottom:2px}
+.feat-meta{font-size:9px;color:#444}
+.feat-amount{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:20px;color:var(–green)}
+.feat-expires{font-size:9px;color:#333;text-align:right}
+.revenue-total{background:var(–black);border:1px solid var(–green);border-radius:4px;padding:16px;text-align:center;margin-bottom:16px}
+.revenue-total .amount{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:48px;color:var(–green)}
+.revenue-total .label{font-size:9px;letter-spacing:2px;color:#555}
+
+/* ── LOCATIONS ── */
+.loc-table{width:100%;border-collapse:collapse}
+.loc-table th{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#333;padding:8px 12px;text-align:left;border-bottom:1px solid var(–border)}
+.loc-table td{padding:10px 12px;border-bottom:1px solid #0a0a14;font-size:11px}
+.loc-table tr:hover td{background:#0a0a14}
+.loc-table .loc-name{color:var(–white)}
+.loc-table .loc-cat{color:#555}
+.loc-status{font-size:9px;padding:2px 8px;border-radius:10px}
+.loc-status.active{background:#0a1a0a;color:var(–green)}
+.loc-status.inactive{background:#1a0a0a;color:var(–red)}
+.loc-action{font-size:9px;color:var(–cyan);cursor:pointer;background:none;border:none;font-family:‘DM Mono’,monospace}
+.loc-action:hover{text-decoration:underline}
+
+/* ── VOTING ── */
+.vote-display{text-align:center;padding:32px 0}
+.vote-number{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:96px;color:var(–red);line-height:1}
+.vote-label{font-size:10px;letter-spacing:3px;color:#444;margin-bottom:24px}
+.vote-track{background:var(–border);height:6px;border-radius:3px;overflow:hidden;margin:0 auto 24px;max-width:400px}
+.vote-fill{height:100%;background:linear-gradient(90deg,var(–red),var(–orange));border-radius:3px;transition:width 1s ease}
+.vote-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;max-width:400px;margin:0 auto}
+.vote-stat{background:var(–dark);border:1px solid var(–border);border-radius:4px;padding:12px;text-align:center}
+.vote-stat .n{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(–white)}
+.vote-stat .l{font-size:8px;letter-spacing:2px;color:#444;text-transform:uppercase}
+
+/* ── ERRORS ── */
+.error-item{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(–black);border:1px solid var(–border);border-radius:4px;margin-bottom:8px}
+.error-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.error-dot.crit{background:var(–red);animation:pulse 1s infinite}
+.error-dot.warn{background:#ffaa00}
+.error-dot.ok{background:var(–green)}
+.error-info{flex:1}
+.error-title{font-size:11px;color:var(–white);margin-bottom:2px}
+.error-meta{font-size:9px;color:#444}
+.error-time{font-size:9px;color:#333}
+
+/* ── USERS ── */
+.user-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(–border)}
+.user-item:last-child{border-bottom:none}
+.user-avatar{width:32px;height:32px;border-radius:50%;background:var(–border);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
+.user-info{flex:1}
+.user-name{font-size:11px;color:var(–white)}
+.user-meta{font-size:9px;color:#444}
+.user-kreis{font-size:9px;color:var(–cyan);margin-left:auto}
+
+/* ── BUTTONS ── */
+.btn{font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;border:none;cursor:pointer;border-radius:3px;transition:all .2s}
+.btn-red{background:var(–red);color:var(–black);font-weight:500}
+.btn-red:hover{background:#ff4422}
+.btn-outline{background:transparent;color:var(–cyan);border:1px solid var(–cyan)}
+.btn-outline:hover{background:#00f5ff11}
+.btn-ghost{background:transparent;color:#555;border:1px solid #333}
+.btn-ghost:hover{color:var(–white);border-color:#555}
+
+/* ── PARTNER REQUESTS ── */
+.partner-item{background:var(–black);border:1px solid var(–border);border-radius:4px;padding:16px;margin-bottom:10px}
+.partner-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.partner-name{font-size:13px;color:var(–white)}
+.partner-type{font-size:9px;color:var(–purple);letter-spacing:1px}
+.partner-msg{font-size:11px;color:#555;line-height:1.5;margin-bottom:10px}
+.partner-actions{display:flex;gap:8px}
+
+/* ── RESPONSIVE ── */
+@media(max-width:768px){
+nav{display:none}
+.two-col{grid-template-columns:1fr}
+.heatmap-grid{grid-template-columns:repeat(4,1fr)}
+.kpi-grid{grid-template-columns:repeat(2,1fr)}
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(–black)}
+::-webkit-scrollbar-thumb{background:var(–border)}
+</style>
+
+</head>
+<body>
+
+<!-- ════════ LOGIN ════════ -->
+
+<div id="login-screen">
+  <div class="login-logo">
+    STADTPULS
+    <span>MASTER CONTROL CENTER</span>
+  </div>
+  <div class="login-box">
+    <h2>Admin Login</h2>
+    <input class="login-input" type="password" id="pw-input" placeholder="Passwort" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">▶ EINLOGGEN</button>
+    <div class="login-error" id="login-error">Falsches Passwort</div>
+    <div class="login-hint">Erstes Login? Einfach dein Passwort eingeben -- wird gespeichert.</div>
+  </div>
+</div>
+
+<!-- ════════ HEADER ════════ -->
+
+<header>
+  <div class="logo">STADTPULS <span>⚡ MASTER CONTROL v1</span></div>
+  <div class="hdr-right">
+    <div class="hdr-pill">Locations <span class="n" id="hdr-loc">--</span></div>
+    <div class="hdr-pill">Votes <span class="n" id="hdr-votes">--</span></div>
+    <div class="live-dot">LIVE</div>
+    <button class="logout-btn" onclick="doLogout()">Logout</button>
+  </div>
+</header>
+
+<!-- ════════ APP ════════ -->
+
+<div class="app">
+
+<!-- SIDEBAR -->
+
+<nav>
+  <div class="nav-section">
+    <div class="nav-label">Übersicht</div>
+    <div class="nav-item active" onclick="showPanel('overview',this)"><span class="icon">◈</span> Overview</div>
+    <div class="nav-item" onclick="showPanel('heatmap',this)"><span class="icon">🔥</span> Heatmap</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Content</div>
+    <div class="nav-item" onclick="showPanel('moderation',this)"><span class="icon">◉</span> Moderation <span class="nav-badge" id="badge-mod">3</span></div>
+    <div class="nav-item" onclick="showPanel('partner',this)"><span class="icon">🤝</span> Partner <span class="nav-badge orange" id="badge-partner">2</span></div>
+    <div class="nav-item" onclick="showPanel('news',this)"><span class="icon">📰</span> News Queue</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Daten</div>
+    <div class="nav-item" onclick="showPanel('locations',this)"><span class="icon">📍</span> Locations</div>
+    <div class="nav-item" onclick="showPanel('users',this)"><span class="icon">👥</span> Users</div>
+    <div class="nav-item" onclick="showPanel('voting',this)"><span class="icon">🗳</span> Voting</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Revenue</div>
+    <div class="nav-item" onclick="showPanel('featured',this)"><span class="icon">⭐</span> Featured</div>
+    <div class="nav-item" onclick="showPanel('revenue',this)"><span class="icon">💰</span> Revenue</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">System</div>
+    <div class="nav-item" onclick="showPanel('errors',this)"><span class="icon">⚡</span> Errors <span class="nav-badge" id="badge-err">1</span></div>
+    <div class="nav-item" onclick="window.open('import.html','_blank')"><span class="icon">↑</span> Import Tool</div>
+    <div class="nav-item" onclick="window.open('/','_blank')"><span class="icon">↗</span> depuls.ch</div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+
+<main>
+
+<!-- ── OVERVIEW ── -->
+
+<div class="panel active" id="panel-overview">
+  <div class="kpi-grid">
+    <div class="kpi red"><div class="label">Locations</div><div class="value" id="kpi-loc">252</div><div class="sub">In Supabase</div></div>
+    <div class="kpi green"><div class="label">Voting JA</div><div class="value" id="kpi-votes">--</div><div class="sub">von 100'000</div></div>
+    <div class="kpi cyan"><div class="label">Kategorien</div><div class="value">8</div><div class="sub">Aktive</div></div>
+    <div class="kpi purple"><div class="label">Moderation</div><div class="value" id="kpi-mod">3</div><div class="sub">Offen</div></div>
+    <div class="kpi orange"><div class="label">Partner Anf.</div><div class="value">2</div><div class="sub">Neu</div></div>
+    <div class="kpi gold"><div class="label">Revenue</div><div class="value">CHF 0</div><div class="sub">Total</div></div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>🔥 Heatmap Zürich</h3>
+      <div class="heatmap-grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="hm-cell hot"><div class="pulse-ring"></div><div class="kreis-num">4</div><div class="kreis-name">LANG</div><div class="kreis-count" style="color:var(--red)">22 loc</div></div>
+        <div class="hm-cell hot"><div class="kreis-num">5</div><div class="kreis-name">INDUS</div><div class="kreis-count" style="color:var(--red)">26 loc</div></div>
+        <div class="hm-cell hot"><div class="kreis-num">1</div><div class="kreis-name">ALT</div><div class="kreis-count" style="color:var(--red)">67 loc</div></div>
+        <div class="hm-cell warm"><div class="kreis-num">8</div><div class="kreis-name">SEE</div><div class="kreis-count" style="color:var(--orange)">15 loc</div></div>
+        <div class="hm-cell warm"><div class="kreis-num">2</div><div class="kreis-name">WOLL</div><div class="kreis-count" style="color:var(--orange)">12 loc</div></div>
+        <div class="hm-cell warm"><div class="kreis-num">3</div><div class="kreis-name">WIED</div><div class="kreis-count" style="color:var(--orange)">11 loc</div></div>
+        <div class="hm-cell cool"><div class="kreis-num">9</div><div class="kreis-name">ALTS</div><div class="kreis-count">10 loc</div></div>
+        <div class="hm-cell cool"><div class="kreis-num">7</div><div class="kreis-name">FLUN</div><div class="kreis-count">6 loc</div></div>
+      </div>
+      <div style="margin-top:10px;font-size:9px;color:#333">🔴 heiss · 🟠 warm · grau ruhig</div>
+    </div>
+
+```
+<div class="card">
+  <h3>⚡ Live Activity</h3>
+  <div class="feed-item">
+    <div class="feed-icon">📍</div>
+    <div class="feed-content"><div class="feed-title">252 Locations in DB</div><div class="feed-meta">Supabase · alle Kategorien</div></div>
+    <div class="feed-time">jetzt</div>
+  </div>
+  <div class="feed-item">
+    <div class="feed-icon">🗳</div>
+    <div class="feed-content"><div class="feed-title">Voting läuft</div><div class="feed-meta">People & Dates · Supabase live</div></div>
+    <div class="feed-time">live</div>
+  </div>
+  <div class="feed-item">
+    <div class="feed-icon">⚠️</div>
+    <div class="feed-content"><div class="feed-title">HTTPS pending</div><div class="feed-meta">GitHub Support Ticket offen</div></div>
+    <div class="feed-time">28. Apr</div>
+  </div>
+  <div class="feed-item">
+    <div class="feed-icon">✅</div>
+    <div class="feed-content"><div class="feed-title">Import Tool v2 live</div><div class="feed-meta">depuls.ch/import.html</div></div>
+    <div class="feed-time">heute</div>
+  </div>
+  <div class="feed-item">
+    <div class="feed-icon">🔴</div>
+    <div class="feed-content"><div class="feed-title">Soft Launch</div><div class="feed-meta">4. Juni 2026 -- 36 Tage</div></div>
+    <div class="feed-time">⏳</div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <h3>📋 Roadmap -- Nächste Schritte</h3>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-top:4px">
+      <div style="font-size:11px;line-height:2.2;color:#555">
+        ✅ Phase 4m → ZT API Import -- HEUTE<br>
+        ✅ Phase 4n → Admin Dashboard -- HEUTE<br>
+        ⏳ Phase 4o → HTTPS aktivieren<br>
+        ⏳ Phase 4p → Google Places API
+      </div>
+      <div style="font-size:11px;line-height:2.2;color:#555">
+        ⏳ Phase 4q → Kreis 3/4/5 befüllen<br>
+        ⏳ Phase 4r → Livedaten index.html<br>
+        ⏳ Phase 5 → Login + Community<br>
+        ⏳ Phase 6 → KI Züri-Bot
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── HEATMAP ── -->
+
+<div class="panel" id="panel-heatmap">
+  <div class="heatmap-section">
+    <div class="section-title">🔥 Zürich Live Heatmap -- Locations pro Kreis</div>
+    <div class="heatmap-grid">
+      <div class="hm-cell hot"><div class="pulse-ring"></div><div class="kreis-num">1</div><div class="kreis-name">ALTSTADT</div><div class="kreis-count" style="color:var(--red)">67</div></div>
+      <div class="hm-cell warm"><div class="kreis-num">2</div><div class="kreis-name">WOLLISHOFEN</div><div class="kreis-count" style="color:var(--orange)">12</div></div>
+      <div class="hm-cell warm"><div class="kreis-num">3</div><div class="kreis-name">WIEDIKON</div><div class="kreis-count" style="color:var(--orange)">11</div></div>
+      <div class="hm-cell hot"><div class="pulse-ring"></div><div class="kreis-num">4</div><div class="kreis-name">LANGSTRASSE</div><div class="kreis-count" style="color:var(--red)">22</div></div>
+      <div class="hm-cell hot"><div class="pulse-ring"></div><div class="kreis-num">5</div><div class="kreis-name">INDUSTRIE</div><div class="kreis-count" style="color:var(--red)">26</div></div>
+      <div class="hm-cell cool"><div class="kreis-num">6</div><div class="kreis-name">UNTERSTRASS</div><div class="kreis-count">4</div></div>
+      <div class="hm-cell cool"><div class="kreis-num">7</div><div class="kreis-name">FLUNTERN</div><div class="kreis-count">6</div></div>
+      <div class="hm-cell warm"><div class="kreis-num">8</div><div class="kreis-name">SEEFELD</div><div class="kreis-count" style="color:var(--orange)">15</div></div>
+      <div class="hm-cell warm"><div class="kreis-num">9</div><div class="kreis-name">ALTSTETTEN</div><div class="kreis-count" style="color:var(--orange)">10</div></div>
+      <div class="hm-cell cool"><div class="kreis-num">10</div><div class="kreis-name">HÖNGG</div><div class="kreis-count">4</div></div>
+      <div class="hm-cell cool"><div class="kreis-num">11</div><div class="kreis-name">OERLIKON</div><div class="kreis-count">3</div></div>
+      <div class="hm-cell cool"><div class="kreis-num">12</div><div class="kreis-name">SCHWAMEND.</div><div class="kreis-count">3</div></div>
+    </div>
+  </div>
+  <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:20px">
+    <div class="section-title">💡 Daten-Strategie Kreis 3/4/5</div>
+    <div style="font-size:11px;color:#555;line-height:2">
+      Kreis 3/4/5 haben zu wenig Locations -- weil ZT API touristisch aufgebaut ist.<br>
+      <span style="color:var(--cyan)">→ Phase 4p: Google Places API für Kreis 3, 4, 5 gezielt befüllen</span><br>
+      <span style="color:var(--purple)">→ Phase 4q: Tripadvisor für Langstrasse, Hardbrücke, Zürich West</span><br>
+      <span style="color:var(--green)">→ Phase 5: Community postet eigene Locations -- authentisch</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── MODERATION ── -->
+
+<div class="panel" id="panel-moderation">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white)">MODERATION QUEUE</div>
+    <div style="font-size:10px;color:#555">KI prüft automatisch -- du entscheidest bei Unsicherheit</div>
+  </div>
+
+  <div class="mod-item">
+    <div class="mod-header">
+      <span class="mod-type story">NEWS & STORY</span>
+      <span class="mod-user">@zuri_local · vor 12 Min</span>
+    </div>
+    <div class="mod-text">«Die neue Bar im Viadukt ist absolut geil. Endlich mal was Authentisches in Kreis 5. Kein Tourist, nur echte Zürcherinnen und Zürcher.»</div>
+    <div class="mod-ai safe">✓ KI: 98% sauber -- empfehle Freischaltung</div>
+    <div class="mod-actions">
+      <button class="mod-btn mod-approve" onclick="approve(this)">✓ FREISCHALTEN</button>
+      <button class="mod-btn mod-reject" onclick="reject(this)">✗ ABLEHNEN</button>
+      <button class="mod-btn mod-edit">✎ BEARBEITEN</button>
+    </div>
+  </div>
+
+  <div class="mod-item">
+    <div class="mod-header">
+      <span class="mod-type review">REVIEW</span>
+      <span class="mod-user">@anonym · vor 34 Min</span>
+    </div>
+    <div class="mod-text">«Restaurant X ist der totale Abzocke. Wirt ist ein Idiot und das Essen schmeckt wie...»</div>
+    <div class="mod-ai warn">⚠ KI: 61% -- Beleidigung möglich -- bitte prüfen</div>
+    <div class="mod-actions">
+      <button class="mod-btn mod-approve" onclick="approve(this)">✓ FREISCHALTEN</button>
+      <button class="mod-btn mod-reject" onclick="reject(this)">✗ ABLEHNEN</button>
+      <button class="mod-btn mod-edit">✎ BEARBEITEN</button>
+    </div>
+  </div>
+
+  <div class="mod-item">
+    <div class="mod-header">
+      <span class="mod-type inserat">INSERAT</span>
+      <span class="mod-user">Galerie am See · vor 1h</span>
+    </div>
+    <div class="mod-text">Vernissage «Urban Zürich» -- 6. + 7. Juni 2026 -- Kreis 8 -- Featured Placement gebucht CHF 20.–</div>
+    <div class="mod-ai safe">✓ KI: 99% sauber -- Partner-Inserat mit Zahlung</div>
+    <div class="mod-actions">
+      <button class="mod-btn mod-approve" onclick="approve(this)">✓ FREISCHALTEN + FEATURED</button>
+      <button class="mod-btn mod-reject" onclick="reject(this)">✗ ABLEHNEN</button>
+    </div>
+  </div>
+
+  <div style="text-align:center;padding:20px;color:#333;font-size:11px">
+    Phase 5 → KI-Moderation via Claude API automatisch -- du siehst nur die 5% Unsicherheit
+  </div>
+</div>
+
+<!-- ── PARTNER ── -->
+
+<div class="panel" id="panel-partner">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">PARTNER ANFRAGEN</div>
+
+  <div class="partner-item">
+    <div class="partner-header">
+      <div class="partner-name">Galerie Kreis 5 -- «Raum für Kunst»</div>
+      <div class="partner-type">FEATURED PLACEMENT · CHF 20.–/WOCHE</div>
+    </div>
+    <div class="partner-msg">Wir möchten unsere Vernissage am 6. Juni prominent auf Stadtpuls platzieren. Können wir eine Featured-Position in Kultur & Kreis 5 buchen?</div>
+    <div class="partner-actions">
+      <button class="btn btn-red" onclick="approvePartner(this)">✓ GENEHMIGEN</button>
+      <button class="btn btn-ghost" onclick="rejectPartner(this)">✗ ABLEHNEN</button>
+      <button class="btn btn-outline">✉ ANTWORTEN</button>
+    </div>
+  </div>
+
+  <div class="partner-item">
+    <div class="partner-header">
+      <div class="partner-name">Restaurant Rosso -- Kreis 5</div>
+      <div class="partner-type">KOOPERATION · LUNCHGATE INTEGRATION</div>
+    </div>
+    <div class="partner-msg">Interesse an Stadtpuls Kooperation -- Lunchgate Reservationen über eure Plattform. Können wir Details besprechen?</div>
+    <div class="partner-actions">
+      <button class="btn btn-red" onclick="approvePartner(this)">✓ GENEHMIGEN</button>
+      <button class="btn btn-ghost" onclick="rejectPartner(this)">✗ ABLEHNEN</button>
+      <button class="btn btn-outline">✉ ANTWORTEN</button>
+    </div>
+  </div>
+
+  <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:20px;margin-top:20px">
+    <div class="section-title">💰 Featured Pricing</div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:4px">
+      <div style="background:var(--black);border:1px solid var(--border);border-radius:4px;padding:14px;text-align:center">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--green)">CHF 20</div>
+        <div style="font-size:9px;color:#444;letter-spacing:1px">PRO WOCHE · STANDARD</div>
+      </div>
+      <div style="background:var(--black);border:1px solid var(--border);border-radius:4px;padding:14px;text-align:center">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--gold)">CHF 50</div>
+        <div style="font-size:9px;color:#444;letter-spacing:1px">PRO WOCHE · PREMIUM</div>
+      </div>
+      <div style="background:var(--black);border:1px solid var(--border);border-radius:4px;padding:14px;text-align:center">
+        <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--red)">CHF 150</div>
+        <div style="font-size:9px;color:#444;letter-spacing:1px">PRO MONAT · PARTNER</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── NEWS QUEUE ── -->
+
+<div class="panel" id="panel-news">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">NEWS & STORIES QUEUE</div>
+  <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:24px;text-align:center;color:#333">
+    <div style="font-size:32px;margin-bottom:12px">📰</div>
+    <div style="font-size:12px;margin-bottom:8px;color:#555">Keine offenen Artikel</div>
+    <div style="font-size:10px">Phase 5 → User posten → KI prüft → Queue erscheint hier</div>
+  </div>
+</div>
+
+<!-- ── LOCATIONS ── -->
+
+<div class="panel" id="panel-locations">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white)">LOCATIONS <span style="color:var(--green)" id="loc-count">252</span></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-outline" onclick="window.open('import.html','_blank')">↑ Import Tool</button>
+      <button class="btn btn-red" onclick="loadLocations()">↻ Laden</button>
+    </div>
+  </div>
+  <div style="overflow-x:auto">
+    <table class="loc-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Kategorie</th>
+          <th>Kreis</th>
+          <th>PLZ</th>
+          <th>Status</th>
+          <th>Bild</th>
+          <th>Aktion</th>
+        </tr>
+      </thead>
+      <tbody id="loc-tbody">
+        <tr><td colspan="7" style="text-align:center;color:#333;padding:24px">← Klick «Laden» um Locations zu sehen</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ── USERS ── -->
+
+<div class="panel" id="panel-users">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">USERS</div>
+  <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:24px;text-align:center;color:#333">
+    <div style="font-size:32px;margin-bottom:12px">👥</div>
+    <div style="font-size:12px;margin-bottom:8px;color:#555">Noch keine User registriert</div>
+    <div style="font-size:10px">Phase 5 → Login live → User erscheinen hier mit Kreis, Interessen, Aktivität</div>
+  </div>
+</div>
+
+<!-- ── VOTING ── -->
+
+<div class="panel" id="panel-voting">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">VOTING -- PEOPLE & DATES</div>
+  <div class="vote-display">
+    <div class="vote-number" id="vote-count">--</div>
+    <div class="vote-label">JA-VOTES VON 100'000</div>
+    <div class="vote-track">
+      <div class="vote-fill" id="vote-bar" style="width:0%"></div>
+    </div>
+    <div class="vote-stats">
+      <div class="vote-stat"><div class="n" id="vote-f">--</div><div class="l">Frauen</div></div>
+      <div class="vote-stat"><div class="n" id="vote-m">--</div><div class="l">Männer</div></div>
+      <div class="vote-stat"><div class="n" id="vote-x">--</div><div class="l">X / Divers</div></div>
+    </div>
+  </div>
+  <button class="btn btn-outline" onclick="loadVoting()" style="display:block;margin:0 auto">↻ Aktualisieren</button>
+</div>
+
+<!-- ── FEATURED ── -->
+
+<div class="panel" id="panel-featured">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">FEATURED PLACEMENTS</div>
+  <div class="revenue-total">
+    <div class="amount">CHF 0.–</div>
+    <div class="label">TOTAL REVENUE · PHASE 5 STARTET</div>
+  </div>
+  <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:24px;text-align:center;color:#333">
+    <div style="font-size:32px;margin-bottom:12px">⭐</div>
+    <div style="font-size:12px;margin-bottom:8px;color:#555">Noch keine gebuchten Featured Placements</div>
+    <div style="font-size:10px">Phase 5 → Stripe Integration → Partner zahlen CHF 20–150 → erscheinen hier</div>
+  </div>
+</div>
+
+<!-- ── REVENUE ── -->
+
+<div class="panel" id="panel-revenue">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">REVENUE</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-bottom:24px">
+    <div class="kpi gold"><div class="label">Heute</div><div class="value">CHF 0</div><div class="sub">Phase 5 startet</div></div>
+    <div class="kpi gold"><div class="label">Monat</div><div class="value">CHF 0</div><div class="sub">--</div></div>
+    <div class="kpi gold"><div class="label">Total</div><div class="value">CHF 0</div><div class="sub">--</div></div>
+    <div class="kpi green"><div class="label">Ziel/Mt</div><div class="value">5k</div><div class="sub">Phase 5</div></div>
+  </div>
+  <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:20px">
+    <div class="section-title">💰 Revenue Modell</div>
+    <div style="font-size:11px;line-height:2.4;color:#555">
+      Featured Placement → CHF 20–150/Woche → Partner bucht direkt<br>
+      OpenTable Buchungen → CHF 1–5 pro Reservation → Phase 5<br>
+      Ticketcorner → 5–10% pro Ticket → Phase 5<br>
+      Inserate Marktplatz → CHF 0.90 pro Tag → Phase 5<br>
+      Job Inserate → CHF 49 / 30 Tage → Phase 5<br>
+      <span style="color:var(--green)">Ziel: CHF 5'000/Mt bei 5'000 MAU</span>
+    </div>
+  </div>
+</div>
+
+<!-- ── ERRORS ── -->
+
+<div class="panel" id="panel-errors">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">SYSTEM STATUS</div>
+
+  <div class="error-item">
+    <div class="error-dot warn"></div>
+    <div class="error-info">
+      <div class="error-title">HTTPS -- Certificate pending</div>
+      <div class="error-meta">GitHub Pages · Let's Encrypt · Support Ticket #4334095 offen</div>
+    </div>
+    <div class="error-time">28. Apr</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-dot warn"></div>
+    <div class="error-info">
+      <div class="error-title">CORS Proxy Timeout</div>
+      <div class="error-meta">api.allorigins.win · Import schlägt bei manchen Kategorien fehl · Fix nach HTTPS</div>
+    </div>
+    <div class="error-time">heute</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-dot warn"></div>
+    <div class="error-info">
+      <div class="error-title">69 Locations ohne Kreis</div>
+      <div class="error-meta">PLZ ausserhalb Stadt Zürich · bereinigen mit «Ausserhalb Stadt» Filter im Import Tool</div>
+    </div>
+    <div class="error-time">heute</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-dot ok"></div>
+    <div class="error-info">
+      <div class="error-title">Supabase -- OK</div>
+      <div class="error-meta">252 Locations · RLS aktiv · Insert Policy gesetzt · Alle Tabellen live</div>
+    </div>
+    <div class="error-time">live</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-dot ok"></div>
+    <div class="error-info">
+      <div class="error-title">depuls.ch -- Online</div>
+      <div class="error-meta">GitHub Pages · Plausible Analytics aktiv · Google Search Console indexiert</div>
+    </div>
+    <div class="error-time">live</div>
+  </div>
+
+  <div class="error-item">
+    <div class="error-dot ok"></div>
+    <div class="error-info">
+      <div class="error-title">Voting System -- Live</div>
+      <div class="error-meta">dating_votes Tabelle · RLS Read+Insert · Frontend funktioniert</div>
+    </div>
+    <div class="error-time">live</div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+
+// ── LOGIN ──
+// Erstes Login = Passwort wird gesetzt und gespeichert
+// Danach = Passwort vergleichen
+
+function doLogin(){
+  const pw=document.getElementById('pw-input').value.trim();
+  if(!pw){return}
+  const saved=localStorage.getItem('sp_pw');
+  if(!saved){
+    // Erstes Login -- Passwort setzen
+    localStorage.setItem('sp_pw',btoa(pw));
+    document.getElementById('login-screen').style.display='none';
+    sessionStorage.setItem('sp_admin','1');
+    init();
+    return;
+  }
+  if(btoa(pw)===saved){
+    document.getElementById('login-screen').style.display='none';
+    sessionStorage.setItem('sp_admin','1');
+    init();
+  } else {
+    document.getElementById('login-error').style.display='block';
+    document.getElementById('login-error').textContent='Falsches Passwort';
+    document.getElementById('pw-input').value='';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+function doLogout(){
+  sessionStorage.removeItem('sp_admin');
+  document.getElementById('login-screen').style.display='flex';
+}
+
+// Check session
+if(sessionStorage.getItem('sp_admin')==='1'){
+  document.getElementById('login-screen').style.display='none';
+  setTimeout(init,100);
+}
+
+// ── NAV ──
+function showPanel(id,el){
+  document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('panel-'+id).classList.add('active');
+  if(id==='voting') loadVoting();
+  if(id==='locations') loadLocations();
+}
+
+// ── SUPABASE ──
+async function sq(path){
+  const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+  return r.json();
+}
+
+// ── INIT ──
+async function init(){
+  try{
+    const locs=await sq('locations?select=id&limit=1000');
+    const n=locs.length;
+    document.getElementById('hdr-loc').textContent=n;
+    document.getElementById('kpi-loc').textContent=n;
+    document.getElementById('loc-count').textContent=n;
+  }catch(e){}
+  loadVotingHeader();
+}
+
+async function loadVotingHeader(){
+  try{
+    const v=await sq('dating_votes?select=id,vote&limit=1000');
+    const ja=v.filter(x=>x.vote==='ja').length;
+    document.getElementById('hdr-votes').textContent=ja;
+    document.getElementById('kpi-votes').textContent=ja;
+  }catch(e){}
+}
+
+// ── VOTING ──
+async function loadVoting(){
+  try{
+    const v=await sq('dating_votes?select=id,vote,geschlecht&limit=1000');
+    const ja=v.filter(x=>x.vote==='ja');
+    const n=ja.length;
+    document.getElementById('vote-count').textContent=n;
+    document.getElementById('vote-bar').style.width=Math.min(n/1000*100,100)+'%';
+    document.getElementById('vote-f').textContent=ja.filter(x=>x.geschlecht==='f').length;
+    document.getElementById('vote-m').textContent=ja.filter(x=>x.geschlecht==='m').length;
+    document.getElementById('vote-x').textContent=ja.filter(x=>x.geschlecht==='x').length;
+  }catch(e){console.error(e)}
+}
+
+// ── LOCATIONS ──
+async function loadLocations(){
+  try{
+    const locs=await sq('locations?select=id,name,kategorie,kreis,plz,aktiv,bild_url&limit=200&order=kategorie');
+    const tbody=document.getElementById('loc-tbody');
+    tbody.innerHTML=locs.map(l=>`
+      <tr>
+        <td class="loc-name">${l.name||'--'}</td>
+        <td class="loc-cat">${l.kategorie||'--'}</td>
+        <td>${l.kreis||'<span style="color:var(--red)">?</span>'}</td>
+        <td style="color:#555">${l.plz||'--'}</td>
+        <td><span class="loc-status ${l.aktiv?'active':'inactive'}">${l.aktiv?'aktiv':'inaktiv'}</span></td>
+        <td>${l.bild_url?'<span style="color:var(--green)">✓</span>':'<span style="color:var(--red)">✗</span>'}</td>
+        <td><button class="loc-action">bearbeiten</button></td>
+      </tr>`).join('');
+  }catch(e){console.error(e)}
+}
+
+// ── MODERATION ──
+function approve(btn){
+  const item=btn.closest('.mod-item');
+  item.style.opacity='0.3';
+  item.style.transition='opacity .3s';
+  setTimeout(()=>item.remove(),300);
+  updateModBadge(-1);
+}
+
+function reject(btn){
+  const item=btn.closest('.mod-item');
+  item.style.borderColor='var(--red)';
+  setTimeout(()=>{item.style.opacity='0.3';setTimeout(()=>item.remove(),300)},200);
+  updateModBadge(-1);
+}
+
+function updateModBadge(delta){
+  const b=document.getElementById('badge-mod');
+  const n=Math.max(0,parseInt(b.textContent)+delta);
+  b.textContent=n;
+  document.getElementById('kpi-mod').textContent=n;
+  if(n===0){b.style.display='none'}
+}
+
+function approvePartner(btn){
+  const item=btn.closest('.partner-item');
+  item.style.borderColor='var(--green)';
+  setTimeout(()=>{item.style.opacity='0.3';setTimeout(()=>item.remove(),300)},200);
+  const b=document.getElementById('badge-partner');
+  b.textContent=Math.max(0,parseInt(b.textContent)-1);
+}
+
+function rejectPartner(btn){
+  const item=btn.closest('.partner-item');
+  item.style.opacity='0.3';
+  setTimeout(()=>item.remove(),300);
+  const b=document.getElementById('badge-partner');
+  b.textContent=Math.max(0,parseInt(b.textContent)-1);
+}
+
+// Auto-refresh every 60s
+setInterval(()=>{
+  if(sessionStorage.getItem('sp_admin')==='1'){
+    loadVotingHeader();
+  }
+},60000);
+</script>
+
+</body>
+</html>
