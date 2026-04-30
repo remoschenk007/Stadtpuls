@@ -1968,6 +1968,28 @@ ROADMAP UPDATE:
 ⏳ Phase 7 → Hamburg, Berlin
 🔴 Soft Launch: 4. Juni 2026
 
+Haha stimmt! 😄 Hab ich tatsächlich vergessen. Hier die Ergänzung:
+
+IMPORT.HTML — STADTPULS IMPORT TOOL v1 + v2 ✅
+import.html v1 — erstes Tool:
+	•	Einfache Checkbox-Auswahl aller Kategorien
+	•	ZT API → Supabase direkt
+	•	Duplikat-Schutz via zt_api_id
+	•	Progressbar + Live-Log
+import.html v2 — Admin Dashboard:
+	•	4 Tabs: Import · Dashboard · Qualität · Sync
+	•	Datenquellen-Übersicht: ZT (aktiv) · Google (bald) · Tripadvisor (später) · Guidle/ZVV (später)
+	•	Filter «Nur fehlende»
+	•	Locations ausserhalb Stadt automatisch gefiltert
+	•	Dashboard mit Balkendiagrammen pro Kategorie + Kreis
+	•	Qualitäts-Check: ohne Bild · ohne Kreis · ohne Website
+	•	Live-Zahlen oben rechts
+Beide laufen auf depuls.ch/import.html ✅
+
+Jetzt ist alles drin. Gute Nacht Remo — heute war ein richtig guter Tag. 🔴​​​​​​​​​​​​​​​​
+
+
+
 
 
 «dä puls vo dä stadt» — «Zürich first. Dann die Welt.»
