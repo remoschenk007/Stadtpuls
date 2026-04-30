@@ -1986,6 +1986,23 @@ import.html v2 — Admin Dashboard:
 	•	Live-Zahlen oben rechts
 Beide laufen auf depuls.ch/import.html ✅
 
+✅ Admin Dashboard — kompletter Neuschrieb, professionell, kein CSS Bug mehr
+✅ Supabase — 2 neue Tabellen: feedback_submissions + kontakt_submissions
+✅ feedback.html → Supabase live — Blasen schreiben in DB
+✅ kontakt.html → Supabase live — 4-Step Flow schreibt in DB + mailto Backup
+✅ Admin — Feedback Panel live aus Supabase
+✅ Admin — Kontakt Panel live aus Supabase — mit direktem ANTWORTEN Button
+✅ Admin — Züri Momente Panel live
+✅ Admin — KI Features Panel, SEO/AEO Panel, Qualität Panel, Roadmap
+✅ Drei Kanäle funktionieren: E-Mail + Supabase + Dashboard
+✅ Getestet und bestätigt — Screenshots beweisen es
+Nächste Schritte laut Masterplan:
+	•	Phase 4q → Google Places API Kreis 3/4/5
+	•	Phase 4r → Locations ohne Kreis bereinigen
+	•	Phase 4s → Filter verdrahten + Livedaten index.html
+	•	Plausible verifizieren
+Soll ich den kompletten Masterplan neu schreiben — als sauberes Dokument? 🔴​​​​​​​​​​​​​​​​
+
 Jetzt ist alles drin. Gute Nacht Remo — heute war ein richtig guter Tag. 🔴​​​​​​​​​​​​​​​​
 
 
