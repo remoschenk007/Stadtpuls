@@ -2000,10 +2000,35 @@ Nächste Schritte laut Masterplan:
 	•	Phase 4q → Google Places API Kreis 3/4/5
 	•	Phase 4r → Locations ohne Kreis bereinigen
 	•	Phase 4s → Filter verdrahten + Livedaten index.html
-	•	Plausible verifizieren
-Soll ich den kompletten Masterplan neu schreiben — als sauberes Dokument? 🔴​​​​​​​​​​​​​​​​
+	•	Plausible verifiziere
 
-Jetzt ist alles drin. Gute Nacht Remo — heute war ein richtig guter Tag. 🔴​​​​​​​​​​​​​​​​
+😄 Natürlich — hier der Text zum Anhängen:
+
+MINDMAP — ARCHITEKTUR VISUALISIERUNG
+
+depuls.ch/mindmap.html — live · 30. April 2026
+
+Die Mindmap ist das lebende Architekturdokument von Stadtpuls. Sie zeigt alle Verbindungen zwischen Dateien, Supabase-Tabellen und externen APIs in Echtzeit.
+
+Aktueller Stand:
+
+	•	Zentrum: depuls.ch · STADTPULS
+	•	Frontend: index.html · admin.html · feedback.html · kontakt.html · import.html · impressum · datenschutz
+	•	Supabase: locations (365) · dating_votes (10) · feedback_submissions · kontakt_submissions · location_images · events · jobs · news · users · community_posts
+	•	APIs live: ZT API · Plausible · GitHub Pages · HTTPS/SSL
+	•	APIs Phase 4q: Google Places API
+	•	APIs Phase 5: OpenTable · Ticketcorner
+	•	KI Phase 6: Züri-Bot · Mood · Spontan-Modus
+
+Regel: Nach jeder abgeschlossenen Phase wird die Mindmap aktualisiert — Nodes werden grün, neue Verbindungen kommen dazu.
+
+Farb-Legende:
+
+	•	🟢 Grün = LIVE
+	•	🟠 Orange = Bald / In Arbeit
+	•	⚫ Grau = Phase 5+
+
+Einfach unten im Masterplan anhängen. 🔴
 
 
 
