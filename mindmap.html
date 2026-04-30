@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STADTPULS -- Architektur Mindmap</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  background:#04040a;
+  color:#e8e4d9;
+  font-family:'DM Mono',monospace;
+  min-height:100vh;
+  overflow:hidden;
+}
+
+/* HEADER */
+header{
+position:fixed;top:0;left:0;right:0;
+padding:14px 24px;
+display:flex;align-items:center;justify-content:space-between;
+background:rgba(4,4,10,.95);
+border-bottom:1px solid #1a1a2e;
+z-index:100;
+}
+.logo{
+font-family:‘Barlow Condensed’,sans-serif;
+font-style:italic;font-weight:900;
+font-size:22px;color:#ff2d00;letter-spacing:2px;
+}
+.logo span{color:#333;font-size:8px;font-family:‘DM Mono’,monospace;display:block;font-style:normal;letter-spacing:3px;}
+.hdr-right{display:flex;align-items:center;gap:16px;}
+.legend{display:flex;align-items:center;gap:12px;}
+.leg-item{display:flex;align-items:center;gap:5px;font-size:8px;letter-spacing:1px;color:#555;}
+.leg-dot{width:8px;height:8px;border-radius:50%;}
+.leg-dot.live{background:#c8ff00;}
+.leg-dot.soon{background:#ff6600;}
+.leg-dot.future{background:#333;}
+.phase-tag{font-size:8px;letter-spacing:2px;color:#ff2d00;border:1px solid #ff2d0033;padding:3px 8px;border-radius:3px;}
+
+/* CANVAS */
+#canvas{
+position:fixed;
+inset:57px 0 0 0;
+cursor:grab;
+overflow:hidden;
+}
+#canvas:active{cursor:grabbing;}
+#map{
+position:absolute;
+width:3000px;height:2200px;
+transform-origin:0 0;
+}
+
+/* SVG LINES */
+#lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+
+/* NODES */
+.node{
+position:absolute;
+border-radius:8px;
+cursor:pointer;
+transition:transform .2s cubic-bezier(.34,1.56,.64,1), box-shadow .2s;
+user-select:none;
+}
+.node:hover{transform:scale(1.05)!important;z-index:50;}
+
+/* CENTER NODE */
+.node-center{
+width:200px;
+background:linear-gradient(135deg,#1a0505,#0a0005);
+border:2px solid #ff2d00;
+padding:24px 20px;
+text-align:center;
+box-shadow:0 0 60px rgba(255,45,0,.3),0 0 120px rgba(255,45,0,.1);
+}
+.node-center .node-title{
+font-family:‘Barlow Condensed’,sans-serif;
+font-style:italic;font-weight:900;
+font-size:28px;color:#ff2d00;
+text-shadow:0 0 20px rgba(255,45,0,.5);
+line-height:1;
+}
+.node-center .node-sub{font-size:8px;color:#555;letter-spacing:2px;margin-top:4px;}
+.node-center .node-pulse{
+width:8px;height:8px;background:#c8ff00;border-radius:50%;
+margin:10px auto 0;
+animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(200,255,0,.4)}50%{box-shadow:0 0 0 8px rgba(200,255,0,0)}}
+
+/* FILE NODES */
+.node-file{
+width:160px;
+background:#0a0a14;
+border:1px solid #1a1a2e;
+padding:14px 16px;
+}
+.node-file.live{border-color:#c8ff00;box-shadow:0 0 20px rgba(200,255,0,.1);}
+.node-file.soon{border-color:#ff6600;box-shadow:0 0 20px rgba(255,102,0,.08);}
+.node-file.future{border-color:#333;}
+.node-file .node-icon{font-size:16px;margin-bottom:6px;}
+.node-file .node-name{
+font-family:‘Barlow Condensed’,sans-serif;
+font-style:italic;font-weight:900;
+font-size:15px;line-height:1;
+}
+.node-file.live .node-name{color:#e8e4d9;}
+.node-file.soon .node-name{color:#ff6600;}
+.node-file.future .node-name{color:#444;}
+.node-file .node-desc{font-size:8px;color:#444;margin-top:4px;line-height:1.5;letter-spacing:.3px;}
+.node-file .node-status{
+font-size:7px;letter-spacing:2px;text-transform:uppercase;
+margin-top:8px;padding:2px 6px;border-radius:2px;display:inline-block;
+}
+.node-file.live .node-status{background:#0a1a0a;color:#c8ff00;border:1px solid #c8ff0033;}
+.node-file.soon .node-status{background:#1a0a00;color:#ff6600;border:1px solid #ff660033;}
+.node-file.future .node-status{background:#111;color:#333;border:1px solid #1a1a2e;}
+
+/* DB NODES */
+.node-db{
+width:180px;
+background:#0a0a14;
+border:1px solid #00f5ff44;
+padding:14px 16px;
+box-shadow:0 0 20px rgba(0,245,255,.05);
+}
+.node-db .node-icon{font-size:14px;margin-bottom:6px;color:#00f5ff;}
+.node-db .node-name{
+font-family:‘Barlow Condensed’,sans-serif;
+font-style:italic;font-weight:900;
+font-size:13px;color:#00f5ff;line-height:1;
+}
+.node-db .node-desc{font-size:8px;color:#444;margin-top:4px;line-height:1.5;}
+.node-db .node-count{
+font-family:‘Barlow Condensed’,sans-serif;
+font-style:italic;font-weight:900;
+font-size:22px;color:#00f5ff;margin-top:6px;
+}
+.node-db .node-count span{font-size:8px;color:#444;font-family:‘DM Mono’,monospace;font-style:normal;font-weight:400;}
+
+/* API NODES */
+.node-api{
+width:150px;
+background:#0a0a14;
+border:1px solid #9333ea44;
+padding:12px 14px;
+}
+.node-api .node-name{
+font-family:‘Barlow Condensed’,sans-serif;
+font-style:italic;font-weight:900;
+font-size:13px;line-height:1;
+}
+.node-api.live .node-name{color:#9333ea;}
+.node-api.soon .node-name{color:#555;}
+.node-api .node-desc{font-size:8px;color:#444;margin-top:4px;line-height:1.5;}
+.node-api .node-status{font-size:7px;letter-spacing:2px;margin-top:6px;padding:2px 6px;border-radius:2px;display:inline-block;}
+.node-api.live .node-status{background:#1a0a1a;color:#9333ea;border:1px solid #9333ea33;}
+.node-api.soon .node-status{background:#111;color:#333;border:1px solid #1a1a2e;}
+
+/* SUPABASE NODE */
+.node-supa{
+width:190px;
+background:linear-gradient(135deg,#050a0a,#020808);
+border:1px solid #00f5ff66;
+padding:18px 16px;
+box-shadow:0 0 40px rgba(0,245,255,.08);
+}
+.node-supa .node-title{
+font-family:‘Barlow Condensed’,sans-serif;
+font-style:italic;font-weight:900;
+font-size:20px;color:#00f5ff;
+text-shadow:0 0 15px rgba(0,245,255,.3);
+}
+.node-supa .node-sub{font-size:8px;color:#1a6666;letter-spacing:2px;margin-top:2px;}
+.node-supa .supa-tables{margin-top:10px;display:flex;flex-direction:column;gap:4px;}
+.supa-table{
+font-size:8px;padding:3px 8px;border-radius:2px;
+background:#0a1a1a;color:#00f5ff;
+border-left:2px solid #00f5ff44;
+letter-spacing:.5px;
+}
+.supa-table.active{border-left-color:#c8ff00;color:#c8ff00;background:#0a1a0a;}
+
+/* TOOLTIP */
+.tooltip{
+position:fixed;
+background:#0a0a14;
+border:1px solid #1a1a2e;
+border-radius:6px;
+padding:10px 14px;
+font-size:9px;
+color:#e8e4d9;
+pointer-events:none;
+z-index:200;
+display:none;
+max-width:220px;
+line-height:1.6;
+box-shadow:0 10px 40px rgba(0,0,0,.8);
+}
+.tooltip .tt-title{font-size:11px;color:#c8ff00;margin-bottom:4px;font-weight:500;}
+
+/* ZOOM CONTROLS */
+.zoom-controls{
+position:fixed;bottom:24px;right:24px;
+display:flex;flex-direction:column;gap:6px;
+z-index:100;
+}
+.zoom-btn{
+width:36px;height:36px;
+background:#0a0a14;
+border:1px solid #1a1a2e;
+color:#e8e4d9;
+font-size:16px;
+cursor:pointer;
+border-radius:4px;
+display:flex;align-items:center;justify-content:center;
+transition:all .2s;
+font-family:‘DM Mono’,monospace;
+}
+.zoom-btn:hover{border-color:#ff2d00;color:#ff2d00;}
+
+/* DATE */
+.map-date{
+position:fixed;bottom:24px;left:24px;
+font-size:8px;color:#222;letter-spacing:2px;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="logo">STADTPULS <span>⚡ ARCHITEKTUR MINDMAP · v1</span></div>
+  <div class="hdr-right">
+    <div class="legend">
+      <div class="leg-item"><div class="leg-dot live"></div>LIVE</div>
+      <div class="leg-item"><div class="leg-dot soon"></div>BALD</div>
+      <div class="leg-item"><div class="leg-dot future"></div>PHASE 5+</div>
+    </div>
+    <div class="phase-tag">30. APR 2026</div>
+  </div>
+</header>
+
+<div id="canvas">
+  <div id="map">
+
+```
+<!-- SVG VERBINDUNGSLINIEN -->
+<svg id="lines" xmlns="http://www.w3.org/2000/svg"></svg>
+
+<!-- ══ ZENTRUM: DEPULS.CH ══ -->
+<div class="node node-center" id="n-center" style="left:1350px;top:950px"
+     data-tip="depuls.ch -- Die Plattform. GitHub Pages hosted. Domain via hosttech CHF 4.90/J. HTTPS via Let's Encrypt. ✅ Live seit April 2026.">
+  <div class="node-title">STADTPULS</div>
+  <div class="node-sub">depuls.ch · LIVE</div>
+  <div class="node-pulse"></div>
+</div>
+
+<!-- ══ FRONTEND DATEIEN ══ -->
+<div class="node node-file live" id="n-index" style="left:980px;top:680px"
+     data-tip="index.html -- Hauptseite. 132KB. Gastro, Nachtleben, People & Dates, Voting. Filter noch nicht mit Supabase verbunden → Phase 4s.">
+  <div class="node-icon">🏠</div>
+  <div class="node-name">index.html</div>
+  <div class="node-desc">Hauptseite · Gastro · Nachtleben · Voting · Filter</div>
+  <div class="node-status">LIVE · Filter Phase 4s</div>
+</div>
+
+<div class="node node-file live" id="n-admin" style="left:1580px;top:660px"
+     data-tip="admin.html -- Master Control Center. 61KB. Login via localStorage. Supabase Live-Daten: Locations, Votes, Heatmap, Feedback, Kontakt, Züri Momente. ✅ Heute fertig.">
+  <div class="node-icon">⚡</div>
+  <div class="node-name">admin.html</div>
+  <div class="node-desc">Master Control · Login · Alle Panels · Live Daten</div>
+  <div class="node-status">LIVE ✅ heute</div>
+</div>
+
+<div class="node node-file live" id="n-feedback" style="left:900px;top:980px"
+     data-tip="feedback.html -- Blasen-Interface. 7 Typen: Moment, Idee, Design, Bug, Dampf, Lob, Anderes. Shake Easter Egg auf Mobile. → Supabase feedback_submissions. ✅ Live heute.">
+  <div class="node-icon">💬</div>
+  <div class="node-name">feedback.html</div>
+  <div class="node-desc">Blasen · 7 Typen · Shake Easter Egg</div>
+  <div class="node-status">LIVE → Supabase ✅</div>
+</div>
+
+<div class="node node-file live" id="n-kontakt" style="left:900px;top:1180px"
+     data-tip="kontakt.html -- 4-Step Conversational Flow. Wer/Was/Nachricht/Email. → Supabase kontakt_submissions + mailto Backup. ✅ Live heute.">
+  <div class="node-icon">✉</div>
+  <div class="node-name">kontakt.html</div>
+  <div class="node-desc">4-Step Flow · Wer · Was · Nachricht · Email</div>
+  <div class="node-status">LIVE → Supabase ✅</div>
+</div>
+
+<div class="node node-file live" id="n-import" style="left:1580px;top:1200px"
+     data-tip="import.html -- Import Tool v2. ZT API → Supabase. Duplikat-Schutz via zt_api_id. PLZ→Kreis Mapping automatisch. Rate-Limiting 60ms. 333+ Locations importiert.">
+  <div class="node-icon">↑</div>
+  <div class="node-name">import.html</div>
+  <div class="node-desc">ZT API → Supabase · Duplikat-Schutz · PLZ→Kreis</div>
+  <div class="node-status">LIVE · 365 Locations</div>
+</div>
+
+<div class="node node-file live" id="n-impressum" style="left:1350px;top:1280px"
+     data-tip="impressum.html + datenschutz.html -- DSG/DSGVO konform. Pflichtseiten für CH-Launch.">
+  <div class="node-icon">📄</div>
+  <div class="node-name">Impressum / Datenschutz</div>
+  <div class="node-desc">DSG · DSGVO · CH-konform</div>
+  <div class="node-status">LIVE</div>
+</div>
+
+<div class="node node-file future" id="n-login" style="left:1100px;top:1350px"
+     data-tip="login.html -- Phase 5. User-Registrierung, Profil, Kreis, Interessen. Supabase Auth.">
+  <div class="node-icon">👤</div>
+  <div class="node-name">login.html</div>
+  <div class="node-desc">User Auth · Profil · Kreis · Interessen</div>
+  <div class="node-status">PHASE 5</div>
+</div>
+
+<!-- ══ SUPABASE ══ -->
+<div class="node node-supa" id="n-supa" style="left:1340px;top:720px"
+     data-tip="Supabase -- Backend as a Service. PostgreSQL. RLS auf allen Tabellen. Anon Key öffentlich. 12 Tabellen. Hosted in EU.">
+  <div class="node-title">SUPABASE</div>
+  <div class="node-sub">BACKEND · DATABASE · RLS</div>
+  <div class="supa-tables">
+    <div class="supa-table active">locations · 365 ✅</div>
+    <div class="supa-table active">dating_votes · 10 ✅</div>
+    <div class="supa-table active">feedback_submissions ✅</div>
+    <div class="supa-table active">kontakt_submissions ✅</div>
+    <div class="supa-table">location_images</div>
+    <div class="supa-table">events · jobs · news</div>
+    <div class="supa-table">users · community_posts</div>
+  </div>
+</div>
+
+<!-- ══ DATENBANKEN / TABELLEN ══ -->
+<div class="node node-db" id="n-locations" style="left:1080px;top:500px"
+     data-tip="locations -- 365 Einträge. PLZ→Kreis auto. RLS aktiv. Felder: name, kategorie, kreis, plz, bild_url, website, oeffnungszeiten, zt_api_id, aktiv.">
+  <div class="node-icon">📍</div>
+  <div class="node-name">locations</div>
+  <div class="node-desc">Gastro · Nachtleben · Kultur · Shopping · Sport</div>
+  <div class="node-count">365 <span>einträge</span></div>
+</div>
+
+<div class="node node-db" id="n-votes" style="left:1560px;top:480px"
+     data-tip="dating_votes -- People & Dates Voting. Felder: id, vote (ja/nein), geschlecht, created_at. RLS Read+Insert. 10 JA-Votes.">
+  <div class="node-icon">🗳</div>
+  <div class="node-name">dating_votes</div>
+  <div class="node-desc">People & Dates · JA/NEIN · Geschlecht</div>
+  <div class="node-count">10 <span>ja-votes</span></div>
+</div>
+
+<div class="node node-db" id="n-fb-table" style="left:700px;top:860px"
+     data-tip="feedback_submissions -- NEU heute. Felder: id, typ, text, created_at. RLS Public Insert + Read. Typen: moment, idee, design, bug, dampf, lob, other.">
+  <div class="node-icon">💬</div>
+  <div class="node-name">feedback_submissions</div>
+  <div class="node-desc">typ · text · created_at</div>
+  <div class="node-count">2 <span>einträge · heute</span></div>
+</div>
+
+<div class="node node-db" id="n-kt-table" style="left:700px;top:1080px"
+     data-tip="kontakt_submissions -- NEU heute. Felder: id, wer, was, nachricht, email, created_at. RLS Public Insert + Read.">
+  <div class="node-icon">✉</div>
+  <div class="node-name">kontakt_submissions</div>
+  <div class="node-desc">wer · was · nachricht · email · created_at</div>
+  <div class="node-count">1 <span>eintrag · heute</span></div>
+</div>
+
+<!-- ══ EXTERNE APIs ══ -->
+<div class="node node-api live" id="n-zt" style="left:1760px;top:1100px"
+     data-tip="ZT API -- Zürich Tourismus API. Kategorien: Gastro, Nachtleben, Bars, Kultur etc. Rate-Limiting 60ms. Duplikat-Schutz via zt_api_id. 365 Locations importiert.">
+  <div class="node-name">ZT API</div>
+  <div class="node-desc">Zürich Tourismus · 365 Locations importiert</div>
+  <div class="node-status live">LIVE → import.html</div>
+</div>
+
+<div class="node node-api soon" id="n-google" style="left:1760px;top:1260px"
+     data-tip="Google Places API -- Phase 4q. Ziel: Kreis 3, 4, 5 befüllen. Langstrasse, Hardbrücke, Zürich West. Tripadvisor als Alternative.">
+  <div class="node-name">Google Places API</div>
+  <div class="node-desc">Kreis 3/4/5 befüllen · Langstrasse · Hardbrücke</div>
+  <div class="node-status soon">PHASE 4q</div>
+</div>
+
+<div class="node node-api soon" id="n-opentable" style="left:1760px;top:1400px"
+     data-tip="OpenTable API -- Phase 5. Tischreservationen direkt in Stadtpuls. CHF 1–5 pro Reservation Revenue.">
+  <div class="node-name">OpenTable API</div>
+  <div class="node-desc">Tisch-Reservationen · CHF 1–5/Reservation</div>
+  <div class="node-status soon">PHASE 5</div>
+</div>
+
+<div class="node node-api soon" id="n-ticket" style="left:1760px;top:1530px"
+     data-tip="Ticketcorner -- Phase 5. Event-Tickets direkt in Stadtpuls. 5–10% pro Ticket Revenue.">
+  <div class="node-name">Ticketcorner</div>
+  <div class="node-desc">Event-Tickets · 5–10% Revenue</div>
+  <div class="node-status soon">PHASE 5</div>
+</div>
+
+<!-- ══ TOOLS / SERVICES ══ -->
+<div class="node node-api live" id="n-plausible" style="left:980px;top:500px"
+     data-tip="Plausible Analytics -- Privacy-first. Eingebaut in index.html. HTTPS jetzt aktiv → verifizieren auf plausible.io.">
+  <div class="node-name">Plausible Analytics</div>
+  <div class="node-desc">Privacy-first · Kein Cookie Banner</div>
+  <div class="node-status live">AKTIV · verifizieren</div>
+</div>
+
+<div class="node node-api live" id="n-github" style="left:1350px;top:500px"
+     data-tip="GitHub Pages -- Hosting. Repo: remoschenk007/Stadtpuls. Branch: main. AI Training Opt-out aktiv. Google Search Console bestätigt.">
+  <div class="node-name">GitHub Pages</div>
+  <div class="node-desc">Hosting · main branch · AI Opt-out</div>
+  <div class="node-status live">LIVE</div>
+</div>
+
+<div class="node node-api live" id="n-https" style="left:1560px;top:860px"
+     data-tip="HTTPS -- Let's Encrypt SSL. Hosttech Server. depuls.ch sicher. Aktiviert gestern Abend. ✅">
+  <div class="node-name">HTTPS · SSL</div>
+  <div class="node-desc">Let's Encrypt · Hosttech · depuls.ch</div>
+  <div class="node-status live">LIVE ✅</div>
+</div>
+
+<!-- ══ KI FEATURES ══ -->
+<div class="node node-api soon" id="n-zuribot" style="left:980px;top:1380px"
+     data-tip="Züri-Bot -- Phase 6. Claude API. «Was mach ich heute Abend?» Personalisiert nach Kreis, Bookmarks, Stimmung.">
+  <div class="node-name">ZÜRI-BOT</div>
+  <div class="node-desc">Claude API · Personalisierte Empfehlungen</div>
+  <div class="node-status soon">PHASE 6</div>
+</div>
+
+<div class="node node-api soon" id="n-mood" style="left:1150px;top:1480px"
+     data-tip="Züri Mood + Spontan-Modus -- Phase 6. Stimmung → Location-Empfehlung. «Kreis 5, 2h, CHF 30» → Mini-Abend-Plan.">
+  <div class="node-name">MOOD · SPONTAN</div>
+  <div class="node-desc">Stimmung → Location · Mini-Abend-Plan</div>
+  <div class="node-status soon">PHASE 6</div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- TOOLTIP -->
+
+<div class="tooltip" id="tooltip">
+  <div class="tt-title" id="tt-title"></div>
+  <div id="tt-body"></div>
+</div>
+
+<!-- ZOOM -->
+
+<div class="zoom-controls">
+  <button class="zoom-btn" onclick="zoomIn()">+</button>
+  <button class="zoom-btn" onclick="zoomOut()">−</button>
+  <button class="zoom-btn" onclick="resetView()" style="font-size:10px;letter-spacing:1px">↺</button>
+</div>
+
+<div class="map-date">STADTPULS ARCHITEKTUR · 30. APRIL 2026 · v1</div>
+
+<script>
+/* ══ VERBINDUNGEN ══ */
+const connections = [
+  /* Center → Files */
+  {from:'n-center', to:'n-index',    color:'#c8ff00', width:1.5, dash:''},
+  {from:'n-center', to:'n-admin',    color:'#ff2d00', width:2,   dash:''},
+  {from:'n-center', to:'n-feedback', color:'#00f5ff', width:1.5, dash:''},
+  {from:'n-center', to:'n-kontakt',  color:'#00f5ff', width:1.5, dash:''},
+  {from:'n-center', to:'n-import',   color:'#9333ea', width:1.5, dash:''},
+  {from:'n-center', to:'n-impressum',color:'#333',    width:1,   dash:'4,4'},
+  {from:'n-center', to:'n-login',    color:'#333',    width:1,   dash:'4,4'},
+
+  /* Center → Supabase */
+  {from:'n-center', to:'n-supa',     color:'#00f5ff', width:2.5, dash:''},
+
+  /* Supabase → Tables */
+  {from:'n-supa', to:'n-locations',  color:'#00f5ff', width:1.5, dash:''},
+  {from:'n-supa', to:'n-votes',      color:'#00f5ff', width:1.5, dash:''},
+  {from:'n-supa', to:'n-fb-table',   color:'#c8ff00', width:1.5, dash:''},
+  {from:'n-supa', to:'n-kt-table',   color:'#c8ff00', width:1.5, dash:''},
+
+  /* Files → Tables */
+  {from:'n-feedback', to:'n-fb-table', color:'#c8ff00', width:1.5, dash:''},
+  {from:'n-kontakt',  to:'n-kt-table', color:'#c8ff00', width:1.5, dash:''},
+  {from:'n-import',   to:'n-locations',color:'#9333ea', width:1.5, dash:''},
+  {from:'n-index',    to:'n-votes',    color:'#ff6600', width:1,   dash:''},
+  {from:'n-index',    to:'n-locations',color:'#c8ff00', width:1,   dash:'4,4'},
+
+  /* Admin → Everything */
+  {from:'n-admin', to:'n-locations',  color:'#ff2d00', width:1,   dash:'4,4'},
+  {from:'n-admin', to:'n-votes',      color:'#ff2d00', width:1,   dash:'4,4'},
+  {from:'n-admin', to:'n-fb-table',   color:'#ff2d00', width:1,   dash:'4,4'},
+  {from:'n-admin', to:'n-kt-table',   color:'#ff2d00', width:1,   dash:'4,4'},
+  {from:'n-admin', to:'n-import',     color:'#9333ea', width:1,   dash:'4,4'},
+
+  /* APIs */
+  {from:'n-import',  to:'n-zt',       color:'#9333ea', width:1.5, dash:''},
+  {from:'n-import',  to:'n-google',   color:'#ff6600', width:1,   dash:'4,4'},
+  {from:'n-center',  to:'n-github',   color:'#555',    width:1,   dash:''},
+  {from:'n-center',  to:'n-plausible',color:'#555',    width:1,   dash:''},
+  {from:'n-center',  to:'n-https',    color:'#c8ff00', width:1.5, dash:''},
+
+  /* Future */
+  {from:'n-center', to:'n-opentable',color:'#333', width:1, dash:'4,4'},
+  {from:'n-center', to:'n-ticket',   color:'#333', width:1, dash:'4,4'},
+  {from:'n-center', to:'n-zuribot',  color:'#9333ea', width:1, dash:'4,4'},
+  {from:'n-center', to:'n-mood',     color:'#9333ea', width:1, dash:'4,4'},
+];
+
+function getCenter(el){
+  const r=el.getBoundingClientRect();
+  const mr=document.getElementById('map').getBoundingClientRect();
+  const s=scale;
+  const ox=parseFloat(el.style.left);
+  const oy=parseFloat(el.style.top);
+  const w=el.offsetWidth;
+  const h=el.offsetHeight;
+  return{x:ox+w/2, y:oy+h/2};
+}
+
+function drawLines(){
+  const svg=document.getElementById('lines');
+  svg.innerHTML='';
+  connections.forEach(c=>{
+    const a=document.getElementById(c.from);
+    const b=document.getElementById(c.to);
+    if(!a||!b)return;
+    const ax=parseFloat(a.style.left)+a.offsetWidth/2;
+    const ay=parseFloat(a.style.top)+a.offsetHeight/2;
+    const bx=parseFloat(b.style.left)+b.offsetWidth/2;
+    const by=parseFloat(b.style.top)+b.offsetHeight/2;
+    const mx=(ax+bx)/2;
+    const my=(ay+by)/2;
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
+    const d=`M ${ax} ${ay} C ${mx} ${ay}, ${mx} ${by}, ${bx} ${by}`;
+    path.setAttribute('d',d);
+    path.setAttribute('stroke',c.color);
+    path.setAttribute('stroke-width',c.width);
+    path.setAttribute('fill','none');
+    path.setAttribute('opacity','0.4');
+    if(c.dash)path.setAttribute('stroke-dasharray',c.dash);
+    svg.appendChild(path);
+  });
+}
+
+/* ══ PAN & ZOOM ══ */
+let scale=0.55, panX=0, panY=0;
+let dragging=false, lastX=0, lastY=0;
+const canvas=document.getElementById('canvas');
+const map=document.getElementById('map');
+
+function applyTransform(){
+  map.style.transform=`translate(${panX}px,${panY}px) scale(${scale})`;
+}
+
+function resetView(){
+  scale=0.55;
+  const cw=canvas.offsetWidth;
+  const ch=canvas.offsetHeight;
+  panX=cw/2-1450*scale;
+  panY=ch/2-1000*scale;
+  applyTransform();
+}
+
+function zoomIn(){scale=Math.min(scale+0.1,2);applyTransform();}
+function zoomOut(){scale=Math.max(scale-0.1,0.2);applyTransform();}
+
+canvas.addEventListener('mousedown',e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;});
+canvas.addEventListener('mousemove',e=>{
+  if(!dragging)return;
+  panX+=e.clientX-lastX;panY+=e.clientY-lastY;
+  lastX=e.clientX;lastY=e.clientY;
+  applyTransform();
+});
+canvas.addEventListener('mouseup',()=>dragging=false);
+canvas.addEventListener('mouseleave',()=>dragging=false);
+
+canvas.addEventListener('wheel',e=>{
+  e.preventDefault();
+  const delta=e.deltaY>0?-0.08:0.08;
+  scale=Math.max(0.2,Math.min(2,scale+delta));
+  applyTransform();
+},{passive:false});
+
+/* Touch pan */
+let lastTouchX=0,lastTouchY=0,lastDist=0;
+canvas.addEventListener('touchstart',e=>{
+  if(e.touches.length===1){lastTouchX=e.touches[0].clientX;lastTouchY=e.touches[0].clientY;}
+  if(e.touches.length===2){lastDist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);}
+},{passive:true});
+canvas.addEventListener('touchmove',e=>{
+  if(e.touches.length===1){
+    panX+=e.touches[0].clientX-lastTouchX;panY+=e.touches[0].clientY-lastTouchY;
+    lastTouchX=e.touches[0].clientX;lastTouchY=e.touches[0].clientY;
+    applyTransform();
+  }
+  if(e.touches.length===2){
+    const dist=Math.hypot(e.touches[0].clientX-e.touches[1].clientX,e.touches[0].clientY-e.touches[1].clientY);
+    scale=Math.max(0.2,Math.min(2,scale*(dist/lastDist)));
+    lastDist=dist;applyTransform();
+  }
+},{passive:true});
+
+/* ══ TOOLTIP ══ */
+const tooltip=document.getElementById('tooltip');
+document.querySelectorAll('.node').forEach(node=>{
+  node.addEventListener('mouseenter',e=>{
+    const tip=node.getAttribute('data-tip');
+    const name=node.querySelector('.node-name,.node-title')?.textContent||'';
+    if(!tip)return;
+    document.getElementById('tt-title').textContent=name;
+    document.getElementById('tt-body').textContent=tip;
+    tooltip.style.display='block';
+  });
+  node.addEventListener('mousemove',e=>{
+    tooltip.style.left=(e.clientX+16)+'px';
+    tooltip.style.top=(e.clientY-10)+'px';
+  });
+  node.addEventListener('mouseleave',()=>{tooltip.style.display='none';});
+});
+
+/* ══ INIT ══ */
+window.addEventListener('load',()=>{
+  drawLines();
+  resetView();
+});
+window.addEventListener('resize',()=>{resetView();drawLines();});
+</script>
+
+</body>
+</html>
