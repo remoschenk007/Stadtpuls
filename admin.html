@@ -53,7 +53,7 @@ nav{width:200px;border-right:1px solid var(–border);padding:20px 0;flex-shrink
 .nav-item.active{color:var(–white);border-left-color:var(–red);background:#0a0a14}
 .nav-item .icon{font-size:14px;width:18px;text-align:center;flex-shrink:0}
 .nav-badge{margin-left:auto;background:var(–red);color:var(–black);font-size:9px;padding:2px 6px;border-radius:10px;font-weight:500}
-.nav-badge.green{background:var(–green)}
+.nav-badge.green{background:var(–green);color:var(–black)}
 .nav-badge.orange{background:var(–orange)}
 
 /* ── MAIN ── */
@@ -61,7 +61,7 @@ main{flex:1;overflow-y:auto;padding:28px}
 .panel{display:none}
 .panel.active{display:block}
 
-/* ── OVERVIEW ── */
+/* ── KPI ── */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:28px}
 .kpi{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:18px;position:relative;overflow:hidden}
 .kpi::after{content:’’;position:absolute;bottom:0;left:0;right:0;height:2px}
@@ -99,7 +99,7 @@ main{flex:1;overflow-y:auto;padding:28px}
 .hm-cell.cool .kreis-num{color:#555}
 .hm-cell .pulse-ring{position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(–red);animation:pulse 1s infinite}
 
-/* ── ACTIVITY FEED ── */
+/* ── TWO COL / CARDS ── */
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
 .card{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:20px}
 .card h3{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(–green);margin-bottom:14px}
@@ -134,20 +134,20 @@ main{flex:1;overflow-y:auto;padding:28px}
 .mod-edit{background:transparent;border:1px solid #333;color:#555}
 .mod-edit:hover{color:var(–white);border-color:#555}
 
-/* ── FEATURED / REVENUE ── */
-.featured-item{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(–border)}
-.featured-item:last-child{border-bottom:none}
-.feat-color{width:4px;height:40px;border-radius:2px;flex-shrink:0}
-.feat-info{flex:1}
-.feat-name{font-size:12px;color:var(–white);margin-bottom:2px}
-.feat-meta{font-size:9px;color:#444}
-.feat-amount{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:20px;color:var(–green)}
-.feat-expires{font-size:9px;color:#333;text-align:right}
+/* ── PARTNER ── */
+.partner-item{background:var(–black);border:1px solid var(–border);border-radius:4px;padding:16px;margin-bottom:10px}
+.partner-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.partner-name{font-size:13px;color:var(–white)}
+.partner-type{font-size:9px;color:var(–purple);letter-spacing:1px}
+.partner-msg{font-size:11px;color:#555;line-height:1.5;margin-bottom:10px}
+.partner-actions{display:flex;gap:8px}
+
+/* ── REVENUE ── */
 .revenue-total{background:var(–black);border:1px solid var(–green);border-radius:4px;padding:16px;text-align:center;margin-bottom:16px}
 .revenue-total .amount{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:48px;color:var(–green)}
 .revenue-total .label{font-size:9px;letter-spacing:2px;color:#555}
 
-/* ── LOCATIONS ── */
+/* ── LOCATIONS TABLE ── */
 .loc-table{width:100%;border-collapse:collapse}
 .loc-table th{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#333;padding:8px 12px;text-align:left;border-bottom:1px solid var(–border)}
 .loc-table td{padding:10px 12px;border-bottom:1px solid #0a0a14;font-size:11px}
@@ -171,7 +171,7 @@ main{flex:1;overflow-y:auto;padding:28px}
 .vote-stat .n{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(–white)}
 .vote-stat .l{font-size:8px;letter-spacing:2px;color:#444;text-transform:uppercase}
 
-/* ── ERRORS ── */
+/* ── SYSTEM STATUS ── */
 .error-item{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(–black);border:1px solid var(–border);border-radius:4px;margin-bottom:8px}
 .error-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .error-dot.crit{background:var(–red);animation:pulse 1s infinite}
@@ -182,15 +182,6 @@ main{flex:1;overflow-y:auto;padding:28px}
 .error-meta{font-size:9px;color:#444}
 .error-time{font-size:9px;color:#333}
 
-/* ── USERS ── */
-.user-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(–border)}
-.user-item:last-child{border-bottom:none}
-.user-avatar{width:32px;height:32px;border-radius:50%;background:var(–border);display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0}
-.user-info{flex:1}
-.user-name{font-size:11px;color:var(–white)}
-.user-meta{font-size:9px;color:#444}
-.user-kreis{font-size:9px;color:var(–cyan);margin-left:auto}
-
 /* ── BUTTONS ── */
 .btn{font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;border:none;cursor:pointer;border-radius:3px;transition:all .2s}
 .btn-red{background:var(–red);color:var(–black);font-weight:500}
@@ -200,14 +191,6 @@ main{flex:1;overflow-y:auto;padding:28px}
 .btn-ghost{background:transparent;color:#555;border:1px solid #333}
 .btn-ghost:hover{color:var(–white);border-color:#555}
 
-/* ── PARTNER REQUESTS ── */
-.partner-item{background:var(–black);border:1px solid var(–border);border-radius:4px;padding:16px;margin-bottom:10px}
-.partner-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
-.partner-name{font-size:13px;color:var(–white)}
-.partner-type{font-size:9px;color:var(–purple);letter-spacing:1px}
-.partner-msg{font-size:11px;color:#555;line-height:1.5;margin-bottom:10px}
-.partner-actions{display:flex;gap:8px}
-
 /* ── RESPONSIVE ── */
 @media(max-width:768px){
 nav{display:none}
@@ -215,8 +198,6 @@ nav{display:none}
 .heatmap-grid{grid-template-columns:repeat(4,1fr)}
 .kpi-grid{grid-template-columns:repeat(2,1fr)}
 }
-
-/* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-track{background:var(–black)}
 ::-webkit-scrollbar-thumb{background:var(–border)}
@@ -225,13 +206,10 @@ nav{display:none}
 </head>
 <body>
 
-<!-- ════════ LOGIN ════════ -->
+<!-- LOGIN -->
 
 <div id="login-screen">
-  <div class="login-logo">
-    STADTPULS
-    <span>MASTER CONTROL CENTER</span>
-  </div>
+  <div class="login-logo">STADTPULS<span>MASTER CONTROL CENTER</span></div>
   <div class="login-box">
     <h2>Admin Login</h2>
     <input class="login-input" type="password" id="pw-input" placeholder="Passwort" onkeydown="if(event.key==='Enter')doLogin()">
@@ -241,7 +219,7 @@ nav{display:none}
   </div>
 </div>
 
-<!-- ════════ HEADER ════════ -->
+<!-- HEADER -->
 
 <header>
   <div class="logo">STADTPULS <span>⚡ MASTER CONTROL v1</span></div>
@@ -253,7 +231,7 @@ nav{display:none}
   </div>
 </header>
 
-<!-- ════════ APP ════════ -->
+<!-- APP -->
 
 <div class="app">
 
@@ -284,7 +262,7 @@ nav{display:none}
   </div>
   <div class="nav-section">
     <div class="nav-label">System</div>
-    <div class="nav-item" onclick="showPanel('errors',this)"><span class="icon">⚡</span> Errors <span class="nav-badge" id="badge-err">1</span></div>
+    <div class="nav-item" onclick="showPanel('status',this)"><span class="icon">⚡</span> Status <span class="nav-badge green" id="badge-err">✓</span></div>
     <div class="nav-item" onclick="window.open('import.html','_blank')"><span class="icon">↑</span> Import Tool</div>
     <div class="nav-item" onclick="window.open('/','_blank')"><span class="icon">↗</span> depuls.ch</div>
   </div>
@@ -294,13 +272,13 @@ nav{display:none}
 
 <main>
 
-<!-- ── OVERVIEW ── -->
+<!-- OVERVIEW -->
 
 <div class="panel active" id="panel-overview">
   <div class="kpi-grid">
-    <div class="kpi red"><div class="label">Locations</div><div class="value" id="kpi-loc">252</div><div class="sub">In Supabase</div></div>
+    <div class="kpi red"><div class="label">Locations</div><div class="value" id="kpi-loc">--</div><div class="sub">In Supabase</div></div>
     <div class="kpi green"><div class="label">Voting JA</div><div class="value" id="kpi-votes">--</div><div class="sub">von 100'000</div></div>
-    <div class="kpi cyan"><div class="label">Kategorien</div><div class="value">8</div><div class="sub">Aktive</div></div>
+    <div class="kpi cyan"><div class="label">Tage bis Launch</div><div class="value" id="kpi-days">--</div><div class="sub">4. Juni 2026</div></div>
     <div class="kpi purple"><div class="label">Moderation</div><div class="value" id="kpi-mod">3</div><div class="sub">Offen</div></div>
     <div class="kpi orange"><div class="label">Partner Anf.</div><div class="value">2</div><div class="sub">Neu</div></div>
     <div class="kpi gold"><div class="label">Revenue</div><div class="value">CHF 0</div><div class="sub">Total</div></div>
@@ -309,115 +287,89 @@ nav{display:none}
   <div class="two-col">
     <div class="card">
       <h3>🔥 Heatmap Zürich</h3>
-      <div class="heatmap-grid" style="grid-template-columns:repeat(4,1fr)">
-        <div class="hm-cell hot"><div class="pulse-ring"></div><div class="kreis-num">4</div><div class="kreis-name">LANG</div><div class="kreis-count" style="color:var(--red)">22 loc</div></div>
-        <div class="hm-cell hot"><div class="kreis-num">5</div><div class="kreis-name">INDUS</div><div class="kreis-count" style="color:var(--red)">26 loc</div></div>
-        <div class="hm-cell hot"><div class="kreis-num">1</div><div class="kreis-name">ALT</div><div class="kreis-count" style="color:var(--red)">67 loc</div></div>
-        <div class="hm-cell warm"><div class="kreis-num">8</div><div class="kreis-name">SEE</div><div class="kreis-count" style="color:var(--orange)">15 loc</div></div>
-        <div class="hm-cell warm"><div class="kreis-num">2</div><div class="kreis-name">WOLL</div><div class="kreis-count" style="color:var(--orange)">12 loc</div></div>
-        <div class="hm-cell warm"><div class="kreis-num">3</div><div class="kreis-name">WIED</div><div class="kreis-count" style="color:var(--orange)">11 loc</div></div>
-        <div class="hm-cell cool"><div class="kreis-num">9</div><div class="kreis-name">ALTS</div><div class="kreis-count">10 loc</div></div>
-        <div class="hm-cell cool"><div class="kreis-num">7</div><div class="kreis-name">FLUN</div><div class="kreis-count">6 loc</div></div>
+      <div id="overview-heatmap" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px">
+        <div style="color:#333;font-size:10px;grid-column:1/-1;text-align:center;padding:12px">Lädt...</div>
       </div>
       <div style="margin-top:10px;font-size:9px;color:#333">🔴 heiss · 🟠 warm · grau ruhig</div>
     </div>
-
-```
-<div class="card">
-  <h3>⚡ Live Activity</h3>
-  <div class="feed-item">
-    <div class="feed-icon">📍</div>
-    <div class="feed-content"><div class="feed-title">252 Locations in DB</div><div class="feed-meta">Supabase · alle Kategorien</div></div>
-    <div class="feed-time">jetzt</div>
-  </div>
-  <div class="feed-item">
-    <div class="feed-icon">🗳</div>
-    <div class="feed-content"><div class="feed-title">Voting läuft</div><div class="feed-meta">People & Dates · Supabase live</div></div>
-    <div class="feed-time">live</div>
-  </div>
-  <div class="feed-item">
-    <div class="feed-icon">⚠️</div>
-    <div class="feed-content"><div class="feed-title">HTTPS pending</div><div class="feed-meta">GitHub Support Ticket offen</div></div>
-    <div class="feed-time">28. Apr</div>
-  </div>
-  <div class="feed-item">
-    <div class="feed-icon">✅</div>
-    <div class="feed-content"><div class="feed-title">Import Tool v2 live</div><div class="feed-meta">depuls.ch/import.html</div></div>
-    <div class="feed-time">heute</div>
-  </div>
-  <div class="feed-item">
-    <div class="feed-icon">🔴</div>
-    <div class="feed-content"><div class="feed-title">Soft Launch</div><div class="feed-meta">4. Juni 2026 -- 36 Tage</div></div>
-    <div class="feed-time">⏳</div>
-  </div>
-</div>
-```
-
+    <div class="card">
+      <h3>⚡ Live Activity</h3>
+      <div class="feed-item">
+        <div class="feed-icon">✅</div>
+        <div class="feed-content"><div class="feed-title">HTTPS live</div><div class="feed-meta">SSL aktiv · depuls.ch ist sicher</div></div>
+        <div class="feed-time">gestern</div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-icon">📍</div>
+        <div class="feed-content"><div class="feed-title"><span id="feed-loc">--</span> Locations in DB</div><div class="feed-meta">Supabase · alle Kategorien</div></div>
+        <div class="feed-time">jetzt</div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-icon">🗳</div>
+        <div class="feed-content"><div class="feed-title">Voting läuft</div><div class="feed-meta">People & Dates · Supabase live</div></div>
+        <div class="feed-time">live</div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-icon">✅</div>
+        <div class="feed-content"><div class="feed-title">Import Tool v2 live</div><div class="feed-meta">depuls.ch/import.html</div></div>
+        <div class="feed-time">29. Apr</div>
+      </div>
+      <div class="feed-item">
+        <div class="feed-icon">🔴</div>
+        <div class="feed-content"><div class="feed-title">Soft Launch</div><div class="feed-meta">4. Juni 2026 -- <span id="feed-days">--</span> Tage</div></div>
+        <div class="feed-time">⏳</div>
+      </div>
+    </div>
   </div>
 
   <div class="card" style="margin-bottom:16px">
     <h3>📋 Roadmap -- Nächste Schritte</h3>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-top:4px">
       <div style="font-size:11px;line-height:2.2;color:#555">
-        ✅ Phase 4m → ZT API Import -- HEUTE<br>
-        ✅ Phase 4n → Admin Dashboard -- HEUTE<br>
-        ⏳ Phase 4o → HTTPS aktivieren<br>
+        ✅ Phase 4m → ZT API Import -- DONE<br>
+        ✅ Phase 4n → Admin Dashboard -- DONE<br>
+        ✅ Phase 4o → HTTPS live -- DONE<br>
         ⏳ Phase 4p → Google Places API
       </div>
       <div style="font-size:11px;line-height:2.2;color:#555">
-        ⏳ Phase 4q → Kreis 3/4/5 befüllen<br>
-        ⏳ Phase 4r → Livedaten index.html<br>
-        ⏳ Phase 5 → Login + Community<br>
+        ⏳ Phase 4q → 69 Locations ohne Kreis bereinigen<br>
+        ⏳ Phase 4r → Filter verdrahten · Livedaten index.html<br>
+        ⏳ Phase 5 → Login + Community + Onboarding<br>
         ⏳ Phase 6 → KI Züri-Bot
       </div>
     </div>
   </div>
 </div>
 
-<!-- ── HEATMAP ── -->
+<!-- HEATMAP -->
 
 <div class="panel" id="panel-heatmap">
   <div class="heatmap-section">
     <div class="section-title">🔥 Zürich Live Heatmap -- Locations pro Kreis</div>
-    <div class="heatmap-grid">
-      <div class="hm-cell hot"><div class="pulse-ring"></div><div class="kreis-num">1</div><div class="kreis-name">ALTSTADT</div><div class="kreis-count" style="color:var(--red)">67</div></div>
-      <div class="hm-cell warm"><div class="kreis-num">2</div><div class="kreis-name">WOLLISHOFEN</div><div class="kreis-count" style="color:var(--orange)">12</div></div>
-      <div class="hm-cell warm"><div class="kreis-num">3</div><div class="kreis-name">WIEDIKON</div><div class="kreis-count" style="color:var(--orange)">11</div></div>
-      <div class="hm-cell hot"><div class="pulse-ring"></div><div class="kreis-num">4</div><div class="kreis-name">LANGSTRASSE</div><div class="kreis-count" style="color:var(--red)">22</div></div>
-      <div class="hm-cell hot"><div class="pulse-ring"></div><div class="kreis-num">5</div><div class="kreis-name">INDUSTRIE</div><div class="kreis-count" style="color:var(--red)">26</div></div>
-      <div class="hm-cell cool"><div class="kreis-num">6</div><div class="kreis-name">UNTERSTRASS</div><div class="kreis-count">4</div></div>
-      <div class="hm-cell cool"><div class="kreis-num">7</div><div class="kreis-name">FLUNTERN</div><div class="kreis-count">6</div></div>
-      <div class="hm-cell warm"><div class="kreis-num">8</div><div class="kreis-name">SEEFELD</div><div class="kreis-count" style="color:var(--orange)">15</div></div>
-      <div class="hm-cell warm"><div class="kreis-num">9</div><div class="kreis-name">ALTSTETTEN</div><div class="kreis-count" style="color:var(--orange)">10</div></div>
-      <div class="hm-cell cool"><div class="kreis-num">10</div><div class="kreis-name">HÖNGG</div><div class="kreis-count">4</div></div>
-      <div class="hm-cell cool"><div class="kreis-num">11</div><div class="kreis-name">OERLIKON</div><div class="kreis-count">3</div></div>
-      <div class="hm-cell cool"><div class="kreis-num">12</div><div class="kreis-name">SCHWAMEND.</div><div class="kreis-count">3</div></div>
+    <div class="heatmap-grid" id="full-heatmap">
+      <div style="color:#333;font-size:10px;grid-column:1/-1;text-align:center;padding:20px">Lädt aus Supabase...</div>
     </div>
   </div>
   <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:20px">
     <div class="section-title">💡 Daten-Strategie Kreis 3/4/5</div>
     <div style="font-size:11px;color:#555;line-height:2">
-      Kreis 3/4/5 haben zu wenig Locations -- weil ZT API touristisch aufgebaut ist.<br>
+      Kreis 3/4/5 haben zu wenig Locations -- ZT API ist touristisch aufgebaut.<br>
       <span style="color:var(--cyan)">→ Phase 4p: Google Places API für Kreis 3, 4, 5 gezielt befüllen</span><br>
-      <span style="color:var(--purple)">→ Phase 4q: Tripadvisor für Langstrasse, Hardbrücke, Zürich West</span><br>
+      <span style="color:var(--purple)">→ Tripadvisor für Langstrasse, Hardbrücke, Zürich West</span><br>
       <span style="color:var(--green)">→ Phase 5: Community postet eigene Locations -- authentisch</span>
     </div>
   </div>
 </div>
 
-<!-- ── MODERATION ── -->
+<!-- MODERATION -->
 
 <div class="panel" id="panel-moderation">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
     <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white)">MODERATION QUEUE</div>
     <div style="font-size:10px;color:#555">KI prüft automatisch -- du entscheidest bei Unsicherheit</div>
   </div>
-
   <div class="mod-item">
-    <div class="mod-header">
-      <span class="mod-type story">NEWS & STORY</span>
-      <span class="mod-user">@zuri_local · vor 12 Min</span>
-    </div>
+    <div class="mod-header"><span class="mod-type story">NEWS & STORY</span><span class="mod-user">@zuri_local · vor 12 Min</span></div>
     <div class="mod-text">«Die neue Bar im Viadukt ist absolut geil. Endlich mal was Authentisches in Kreis 5. Kein Tourist, nur echte Zürcherinnen und Zürcher.»</div>
     <div class="mod-ai safe">✓ KI: 98% sauber -- empfehle Freischaltung</div>
     <div class="mod-actions">
@@ -426,12 +378,8 @@ nav{display:none}
       <button class="mod-btn mod-edit">✎ BEARBEITEN</button>
     </div>
   </div>
-
   <div class="mod-item">
-    <div class="mod-header">
-      <span class="mod-type review">REVIEW</span>
-      <span class="mod-user">@anonym · vor 34 Min</span>
-    </div>
+    <div class="mod-header"><span class="mod-type review">REVIEW</span><span class="mod-user">@anonym · vor 34 Min</span></div>
     <div class="mod-text">«Restaurant X ist der totale Abzocke. Wirt ist ein Idiot und das Essen schmeckt wie...»</div>
     <div class="mod-ai warn">⚠ KI: 61% -- Beleidigung möglich -- bitte prüfen</div>
     <div class="mod-actions">
@@ -440,12 +388,8 @@ nav{display:none}
       <button class="mod-btn mod-edit">✎ BEARBEITEN</button>
     </div>
   </div>
-
   <div class="mod-item">
-    <div class="mod-header">
-      <span class="mod-type inserat">INSERAT</span>
-      <span class="mod-user">Galerie am See · vor 1h</span>
-    </div>
+    <div class="mod-header"><span class="mod-type inserat">INSERAT</span><span class="mod-user">Galerie am See · vor 1h</span></div>
     <div class="mod-text">Vernissage «Urban Zürich» -- 6. + 7. Juni 2026 -- Kreis 8 -- Featured Placement gebucht CHF 20.–</div>
     <div class="mod-ai safe">✓ KI: 99% sauber -- Partner-Inserat mit Zahlung</div>
     <div class="mod-actions">
@@ -453,22 +397,17 @@ nav{display:none}
       <button class="mod-btn mod-reject" onclick="reject(this)">✗ ABLEHNEN</button>
     </div>
   </div>
-
   <div style="text-align:center;padding:20px;color:#333;font-size:11px">
     Phase 5 → KI-Moderation via Claude API automatisch -- du siehst nur die 5% Unsicherheit
   </div>
 </div>
 
-<!-- ── PARTNER ── -->
+<!-- PARTNER -->
 
 <div class="panel" id="panel-partner">
   <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">PARTNER ANFRAGEN</div>
-
   <div class="partner-item">
-    <div class="partner-header">
-      <div class="partner-name">Galerie Kreis 5 -- «Raum für Kunst»</div>
-      <div class="partner-type">FEATURED PLACEMENT · CHF 20.–/WOCHE</div>
-    </div>
+    <div class="partner-header"><div class="partner-name">Galerie Kreis 5 -- «Raum für Kunst»</div><div class="partner-type">FEATURED PLACEMENT · CHF 20.–/WOCHE</div></div>
     <div class="partner-msg">Wir möchten unsere Vernissage am 6. Juni prominent auf Stadtpuls platzieren. Können wir eine Featured-Position in Kultur & Kreis 5 buchen?</div>
     <div class="partner-actions">
       <button class="btn btn-red" onclick="approvePartner(this)">✓ GENEHMIGEN</button>
@@ -476,12 +415,8 @@ nav{display:none}
       <button class="btn btn-outline">✉ ANTWORTEN</button>
     </div>
   </div>
-
   <div class="partner-item">
-    <div class="partner-header">
-      <div class="partner-name">Restaurant Rosso -- Kreis 5</div>
-      <div class="partner-type">KOOPERATION · LUNCHGATE INTEGRATION</div>
-    </div>
+    <div class="partner-header"><div class="partner-name">Restaurant Rosso -- Kreis 5</div><div class="partner-type">KOOPERATION · LUNCHGATE INTEGRATION</div></div>
     <div class="partner-msg">Interesse an Stadtpuls Kooperation -- Lunchgate Reservationen über eure Plattform. Können wir Details besprechen?</div>
     <div class="partner-actions">
       <button class="btn btn-red" onclick="approvePartner(this)">✓ GENEHMIGEN</button>
@@ -489,7 +424,6 @@ nav{display:none}
       <button class="btn btn-outline">✉ ANTWORTEN</button>
     </div>
   </div>
-
   <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:20px;margin-top:20px">
     <div class="section-title">💰 Featured Pricing</div>
     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin-top:4px">
@@ -509,7 +443,7 @@ nav{display:none}
   </div>
 </div>
 
-<!-- ── NEWS QUEUE ── -->
+<!-- NEWS -->
 
 <div class="panel" id="panel-news">
   <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">NEWS & STORIES QUEUE</div>
@@ -520,11 +454,11 @@ nav{display:none}
   </div>
 </div>
 
-<!-- ── LOCATIONS ── -->
+<!-- LOCATIONS -->
 
 <div class="panel" id="panel-locations">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white)">LOCATIONS <span style="color:var(--green)" id="loc-count">252</span></div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white)">LOCATIONS <span style="color:var(--green)" id="loc-count">--</span></div>
     <div style="display:flex;gap:8px">
       <button class="btn btn-outline" onclick="window.open('import.html','_blank')">↑ Import Tool</button>
       <button class="btn btn-red" onclick="loadLocations()">↻ Laden</button>
@@ -532,25 +466,13 @@ nav{display:none}
   </div>
   <div style="overflow-x:auto">
     <table class="loc-table">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Kategorie</th>
-          <th>Kreis</th>
-          <th>PLZ</th>
-          <th>Status</th>
-          <th>Bild</th>
-          <th>Aktion</th>
-        </tr>
-      </thead>
-      <tbody id="loc-tbody">
-        <tr><td colspan="7" style="text-align:center;color:#333;padding:24px">← Klick «Laden» um Locations zu sehen</td></tr>
-      </tbody>
+      <thead><tr><th>Name</th><th>Kategorie</th><th>Kreis</th><th>PLZ</th><th>Status</th><th>Bild</th><th>Aktion</th></tr></thead>
+      <tbody id="loc-tbody"><tr><td colspan="7" style="text-align:center;color:#333;padding:24px">← Klick «Laden» um Locations zu sehen</td></tr></tbody>
     </table>
   </div>
 </div>
 
-<!-- ── USERS ── -->
+<!-- USERS -->
 
 <div class="panel" id="panel-users">
   <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">USERS</div>
@@ -561,16 +483,14 @@ nav{display:none}
   </div>
 </div>
 
-<!-- ── VOTING ── -->
+<!-- VOTING -->
 
 <div class="panel" id="panel-voting">
   <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">VOTING -- PEOPLE & DATES</div>
   <div class="vote-display">
     <div class="vote-number" id="vote-count">--</div>
     <div class="vote-label">JA-VOTES VON 100'000</div>
-    <div class="vote-track">
-      <div class="vote-fill" id="vote-bar" style="width:0%"></div>
-    </div>
+    <div class="vote-track"><div class="vote-fill" id="vote-bar" style="width:0%"></div></div>
     <div class="vote-stats">
       <div class="vote-stat"><div class="n" id="vote-f">--</div><div class="l">Frauen</div></div>
       <div class="vote-stat"><div class="n" id="vote-m">--</div><div class="l">Männer</div></div>
@@ -580,22 +500,19 @@ nav{display:none}
   <button class="btn btn-outline" onclick="loadVoting()" style="display:block;margin:0 auto">↻ Aktualisieren</button>
 </div>
 
-<!-- ── FEATURED ── -->
+<!-- FEATURED -->
 
 <div class="panel" id="panel-featured">
   <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">FEATURED PLACEMENTS</div>
-  <div class="revenue-total">
-    <div class="amount">CHF 0.–</div>
-    <div class="label">TOTAL REVENUE · PHASE 5 STARTET</div>
-  </div>
+  <div class="revenue-total"><div class="amount">CHF 0.–</div><div class="label">TOTAL REVENUE · PHASE 5 STARTET</div></div>
   <div style="background:var(--dark);border:1px solid var(--border);border-radius:6px;padding:24px;text-align:center;color:#333">
     <div style="font-size:32px;margin-bottom:12px">⭐</div>
     <div style="font-size:12px;margin-bottom:8px;color:#555">Noch keine gebuchten Featured Placements</div>
-    <div style="font-size:10px">Phase 5 → Stripe Integration → Partner zahlen CHF 20–150 → erscheinen hier</div>
+    <div style="font-size:10px">Phase 5 → Partner zahlen CHF 20–150 → erscheinen hier</div>
   </div>
 </div>
 
-<!-- ── REVENUE ── -->
+<!-- REVENUE -->
 
 <div class="panel" id="panel-revenue">
   <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">REVENUE</div>
@@ -618,63 +535,45 @@ nav{display:none}
   </div>
 </div>
 
-<!-- ── ERRORS ── -->
+<!-- SYSTEM STATUS -->
 
-<div class="panel" id="panel-errors">
+<div class="panel" id="panel-status">
   <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--white);margin-bottom:20px">SYSTEM STATUS</div>
 
   <div class="error-item">
-    <div class="error-dot warn"></div>
-    <div class="error-info">
-      <div class="error-title">HTTPS -- Certificate pending</div>
-      <div class="error-meta">GitHub Pages · Let's Encrypt · Support Ticket #4334095 offen</div>
-    </div>
-    <div class="error-time">28. Apr</div>
+    <div class="error-dot ok"></div>
+    <div class="error-info"><div class="error-title">HTTPS -- Live ✅</div><div class="error-meta">SSL-Zertifikat aktiv · Let's Encrypt · depuls.ch sicher</div></div>
+    <div class="error-time">30. Apr</div>
   </div>
-
-  <div class="error-item">
-    <div class="error-dot warn"></div>
-    <div class="error-info">
-      <div class="error-title">CORS Proxy Timeout</div>
-      <div class="error-meta">api.allorigins.win · Import schlägt bei manchen Kategorien fehl · Fix nach HTTPS</div>
-    </div>
-    <div class="error-time">heute</div>
-  </div>
-
-  <div class="error-item">
-    <div class="error-dot warn"></div>
-    <div class="error-info">
-      <div class="error-title">69 Locations ohne Kreis</div>
-      <div class="error-meta">PLZ ausserhalb Stadt Zürich · bereinigen mit «Ausserhalb Stadt» Filter im Import Tool</div>
-    </div>
-    <div class="error-time">heute</div>
-  </div>
-
   <div class="error-item">
     <div class="error-dot ok"></div>
-    <div class="error-info">
-      <div class="error-title">Supabase -- OK</div>
-      <div class="error-meta">252 Locations · RLS aktiv · Insert Policy gesetzt · Alle Tabellen live</div>
-    </div>
+    <div class="error-info"><div class="error-title">Supabase -- OK</div><div class="error-meta">252 Locations · RLS aktiv · Insert Policy · Alle Tabellen live</div></div>
     <div class="error-time">live</div>
   </div>
-
   <div class="error-item">
     <div class="error-dot ok"></div>
-    <div class="error-info">
-      <div class="error-title">depuls.ch -- Online</div>
-      <div class="error-meta">GitHub Pages · Plausible Analytics aktiv · Google Search Console indexiert</div>
-    </div>
+    <div class="error-info"><div class="error-title">depuls.ch -- Online</div><div class="error-meta">GitHub Pages · Google Search Console · 1 Seite indexiert</div></div>
     <div class="error-time">live</div>
   </div>
-
   <div class="error-item">
     <div class="error-dot ok"></div>
-    <div class="error-info">
-      <div class="error-title">Voting System -- Live</div>
-      <div class="error-meta">dating_votes Tabelle · RLS Read+Insert · Frontend funktioniert</div>
-    </div>
+    <div class="error-info"><div class="error-title">Voting System -- Live</div><div class="error-meta">dating_votes Tabelle · RLS Read+Insert · Frontend funktioniert</div></div>
     <div class="error-time">live</div>
+  </div>
+  <div class="error-item">
+    <div class="error-dot warn"></div>
+    <div class="error-info"><div class="error-title">Plausible verifizieren</div><div class="error-meta">HTTPS jetzt aktiv → plausible.io öffnen → Domain verifizieren → fertig</div></div>
+    <div class="error-time">todo</div>
+  </div>
+  <div class="error-item">
+    <div class="error-dot warn"></div>
+    <div class="error-info"><div class="error-title">69 Locations ohne Kreis</div><div class="error-meta">PLZ ausserhalb Zürich · bereinigen via Import Tool → «Ausserhalb Stadt»</div></div>
+    <div class="error-time">Phase 4q</div>
+  </div>
+  <div class="error-item">
+    <div class="error-dot warn"></div>
+    <div class="error-info"><div class="error-title">Livedaten index.html fehlen</div><div class="error-meta">Gastro + Nachtleben zeigen noch keine Supabase-Daten auf depuls.ch</div></div>
+    <div class="error-time">Phase 4r</div>
   </div>
 </div>
 
@@ -684,103 +583,145 @@ nav{display:none}
 <script>
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+const KNAMES={1:'ALTSTADT',2:'WOLLISHOFEN',3:'WIEDIKON',4:'LANGSTRASSE',5:'INDUSTRIE',6:'UNTERSTRASS',7:'FLUNTERN',8:'SEEFELD',9:'ALTSTETTEN',10:'HÖNGG',11:'OERLIKON',12:'SCHWAMEND.'};
 
-// ── LOGIN ──
-// Erstes Login = Passwort wird gesetzt und gespeichert
-// Danach = Passwort vergleichen
-
+// LOGIN
 function doLogin(){
   const pw=document.getElementById('pw-input').value.trim();
-  if(!pw){return}
+  if(!pw)return;
   const saved=localStorage.getItem('sp_pw');
   if(!saved){
-    // Erstes Login -- Passwort setzen
     localStorage.setItem('sp_pw',btoa(pw));
     document.getElementById('login-screen').style.display='none';
     sessionStorage.setItem('sp_admin','1');
-    init();
-    return;
+    init();return;
   }
   if(btoa(pw)===saved){
     document.getElementById('login-screen').style.display='none';
     sessionStorage.setItem('sp_admin','1');
     init();
   } else {
-    document.getElementById('login-error').style.display='block';
-    document.getElementById('login-error').textContent='Falsches Passwort';
+    const e=document.getElementById('login-error');
+    e.style.display='block';e.textContent='Falsches Passwort';
     document.getElementById('pw-input').value='';
     document.getElementById('pw-input').focus();
   }
 }
-
 function doLogout(){
   sessionStorage.removeItem('sp_admin');
   document.getElementById('login-screen').style.display='flex';
 }
-
-// Check session
 if(sessionStorage.getItem('sp_admin')==='1'){
   document.getElementById('login-screen').style.display='none';
   setTimeout(init,100);
 }
 
-// ── NAV ──
+// NAV
 function showPanel(id,el){
   document.querySelectorAll('.nav-item').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('panel-'+id).classList.add('active');
-  if(id==='voting') loadVoting();
-  if(id==='locations') loadLocations();
+  if(id==='voting')loadVoting();
+  if(id==='locations')loadLocations();
+  if(id==='heatmap')loadFullHeatmap();
 }
 
-// ── SUPABASE ──
+// SUPABASE
 async function sq(path){
-  const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
-  return r.json();
+  try{
+    const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+    return await r.json();
+  }catch(e){return[];}
 }
 
-// ── INIT ──
+// COUNTDOWN
+function daysToLaunch(){
+  return Math.ceil((new Date('2026-06-04')-new Date())/(864e5));
+}
+
+// INIT
 async function init(){
+  const d=daysToLaunch();
+  const kd=document.getElementById('kpi-days');if(kd)kd.textContent=d;
+  const fd=document.getElementById('feed-days');if(fd)fd.textContent=d;
+
   try{
     const locs=await sq('locations?select=id&limit=1000');
-    const n=locs.length;
-    document.getElementById('hdr-loc').textContent=n;
-    document.getElementById('kpi-loc').textContent=n;
-    document.getElementById('loc-count').textContent=n;
+    const n=Array.isArray(locs)?locs.length:0;
+    ['hdr-loc','kpi-loc','loc-count','feed-loc'].forEach(id=>{
+      const el=document.getElementById(id);if(el)el.textContent=n;
+    });
   }catch(e){}
+
   loadVotingHeader();
+  loadOverviewHeatmap();
 }
 
+// VOTING HEADER
 async function loadVotingHeader(){
   try{
     const v=await sq('dating_votes?select=id,vote&limit=1000');
+    if(!Array.isArray(v))return;
     const ja=v.filter(x=>x.vote==='ja').length;
-    document.getElementById('hdr-votes').textContent=ja;
-    document.getElementById('kpi-votes').textContent=ja;
+    ['hdr-votes','kpi-votes'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=ja;});
   }catch(e){}
 }
 
-// ── VOTING ──
+// VOTING PANEL -- FIX: gegen 100'000 rechnen
 async function loadVoting(){
   try{
     const v=await sq('dating_votes?select=id,vote,geschlecht&limit=1000');
+    if(!Array.isArray(v))return;
     const ja=v.filter(x=>x.vote==='ja');
     const n=ja.length;
     document.getElementById('vote-count').textContent=n;
-    document.getElementById('vote-bar').style.width=Math.min(n/1000*100,100)+'%';
+    document.getElementById('vote-bar').style.width=Math.min(n/100000*100,100)+'%';
     document.getElementById('vote-f').textContent=ja.filter(x=>x.geschlecht==='f').length;
     document.getElementById('vote-m').textContent=ja.filter(x=>x.geschlecht==='m').length;
-    document.getElementById('vote-x').textContent=ja.filter(x=>x.geschlecht==='x').length;
-  }catch(e){console.error(e)}
+    document.getElementById('vote-x').textContent=ja.filter(x=>x.geschlecht==='x'||x.geschlecht==='d').length;
+  }catch(e){console.error(e);}
 }
 
-// ── LOCATIONS ──
+// HEATMAP -- live aus Supabase
+function buildHeatmap(locs,short){
+  const counts={};
+  locs.forEach(l=>{if(l.kreis)counts[l.kreis]=(counts[l.kreis]||0)+1;});
+  const max=Math.max(...Object.values(counts),1);
+  return Array.from({length:12},(_,i)=>i+1).map(k=>{
+    const c=counts[k]||0;
+    const ratio=c/max;
+    const cls=ratio>0.5?'hot':ratio>0.2?'warm':'cool';
+    const cc=ratio>0.5?'color:var(--red)':ratio>0.2?'color:var(--orange)':'';
+    const ring=ratio>0.5?'<div class="pulse-ring"></div>':'';
+    const name=short?(KNAMES[k]||'').substring(0,4):(KNAMES[k]||'');
+    return `<div class="hm-cell ${cls}">${ring}<div class="kreis-num">${k}</div><div class="kreis-name">${name}</div><div class="kreis-count" style="${cc}">${c} loc</div></div>`;
+  }).join('');
+}
+
+async function loadOverviewHeatmap(){
+  try{
+    const locs=await sq('locations?select=kreis&kreis=not.is.null&limit=1000');
+    if(!Array.isArray(locs))return;
+    document.getElementById('overview-heatmap').innerHTML=buildHeatmap(locs,true);
+  }catch(e){}
+}
+
+async function loadFullHeatmap(){
+  try{
+    const locs=await sq('locations?select=kreis&kreis=not.is.null&limit=1000');
+    if(!Array.isArray(locs))return;
+    document.getElementById('full-heatmap').innerHTML=buildHeatmap(locs,false);
+  }catch(e){}
+}
+
+// LOCATIONS
 async function loadLocations(){
   try{
     const locs=await sq('locations?select=id,name,kategorie,kreis,plz,aktiv,bild_url&limit=200&order=kategorie');
-    const tbody=document.getElementById('loc-tbody');
-    tbody.innerHTML=locs.map(l=>`
+    if(!Array.isArray(locs))return;
+    document.getElementById('loc-count').textContent=locs.length;
+    document.getElementById('loc-tbody').innerHTML=locs.map(l=>`
       <tr>
         <td class="loc-name">${l.name||'--'}</td>
         <td class="loc-cat">${l.kategorie||'--'}</td>
@@ -790,55 +731,43 @@ async function loadLocations(){
         <td>${l.bild_url?'<span style="color:var(--green)">✓</span>':'<span style="color:var(--red)">✗</span>'}</td>
         <td><button class="loc-action">bearbeiten</button></td>
       </tr>`).join('');
-  }catch(e){console.error(e)}
+  }catch(e){console.error(e);}
 }
 
-// ── MODERATION ──
+// MODERATION
 function approve(btn){
   const item=btn.closest('.mod-item');
-  item.style.opacity='0.3';
-  item.style.transition='opacity .3s';
-  setTimeout(()=>item.remove(),300);
-  updateModBadge(-1);
+  item.style.opacity='0.3';item.style.transition='opacity .3s';
+  setTimeout(()=>item.remove(),300);updateModBadge(-1);
 }
-
 function reject(btn){
   const item=btn.closest('.mod-item');
   item.style.borderColor='var(--red)';
-  setTimeout(()=>{item.style.opacity='0.3';setTimeout(()=>item.remove(),300)},200);
+  setTimeout(()=>{item.style.opacity='0.3';setTimeout(()=>item.remove(),300);},200);
   updateModBadge(-1);
 }
-
-function updateModBadge(delta){
+function updateModBadge(d){
   const b=document.getElementById('badge-mod');
-  const n=Math.max(0,parseInt(b.textContent)+delta);
-  b.textContent=n;
-  document.getElementById('kpi-mod').textContent=n;
-  if(n===0){b.style.display='none'}
+  const n=Math.max(0,parseInt(b.textContent)+d);
+  b.textContent=n;document.getElementById('kpi-mod').textContent=n;
+  if(n===0)b.style.display='none';
 }
-
 function approvePartner(btn){
   const item=btn.closest('.partner-item');
   item.style.borderColor='var(--green)';
-  setTimeout(()=>{item.style.opacity='0.3';setTimeout(()=>item.remove(),300)},200);
+  setTimeout(()=>{item.style.opacity='0.3';setTimeout(()=>item.remove(),300);},200);
   const b=document.getElementById('badge-partner');
   b.textContent=Math.max(0,parseInt(b.textContent)-1);
 }
-
 function rejectPartner(btn){
   const item=btn.closest('.partner-item');
-  item.style.opacity='0.3';
-  setTimeout(()=>item.remove(),300);
+  item.style.opacity='0.3';setTimeout(()=>item.remove(),300);
   const b=document.getElementById('badge-partner');
   b.textContent=Math.max(0,parseInt(b.textContent)-1);
 }
 
-// Auto-refresh every 60s
-setInterval(()=>{
-  if(sessionStorage.getItem('sp_admin')==='1'){
-    loadVotingHeader();
-  }
-},60000);
+// Auto-refresh alle 60s
+setInterval(()=>{if(sessionStorage.getItem('sp_admin')==='1')loadVotingHeader();},60000);
 </script>
 
 </body>
