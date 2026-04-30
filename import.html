@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STADTPULS -- Admin Dashboard</title>
+<title>STADTPULS -- Import Tool</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -95,7 +95,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .rc.er .big{color:var(–red)}
 .rc.ca .big{color:var(–cyan)}
 
-/* DASHBOARD */
+/* DASHBOARD TAB */
 .dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
 .dc{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:18px}
 .dc .t{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-bottom:6px}
@@ -144,7 +144,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 <body>
 
 <header>
-  <div class="logo">STADTPULS <span>⚡ ADMIN DASHBOARD v2</span></div>
+  <div class="logo">STADTPULS <span>⚡ IMPORT TOOL v2</span></div>
   <div class="hdr-stats">
     <div class="hdr-pill">Locations <span class="n" id="hdr-total">--</span></div>
     <div class="hdr-pill">Update <span class="n" id="hdr-last">--</span></div>
@@ -154,12 +154,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 
 <div class="tabs">
   <button class="tab active" onclick="switchTab('import',this)">▶ Import</button>
-  <button class="tab" onclick="switchTab('dashboard',this)">◈ Dashboard</button>
+  <button class="tab" onclick="switchTab('dashboard',this)">◈ Daten</button>
   <button class="tab" onclick="switchTab('qualitaet',this)">◉ Qualität</button>
   <button class="tab" onclick="switchTab('sync',this)">↻ Sync</button>
 </div>
 
-<!-- ═══════════ IMPORT ═══════════ -->
+<!-- IMPORT -->
 
 <div class="panel active" id="panel-import"><div class="content">
 
@@ -278,7 +278,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 
 </div></div>
 
-<!-- ═══════════ DASHBOARD ═══════════ -->
+<!-- DATEN (ehemals Dashboard) -->
 
 <div class="panel" id="panel-dashboard"><div class="content">
   <div class="dash-grid">
@@ -292,7 +292,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
   <button class="btn bc" onclick="loadDash()" style="margin-top:8px">↻ Aktualisieren</button>
 </div></div>
 
-<!-- ═══════════ QUALITÄT ═══════════ -->
+<!-- QUALITÄT -->
 
 <div class="panel" id="panel-qualitaet"><div class="content">
   <div class="q-grid">
@@ -304,7 +304,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
   <button class="btn bc" onclick="loadQuality()" style="margin-top:20px">↻ Qualität prüfen</button>
 </div></div>
 
-<!-- ═══════════ SYNC ═══════════ -->
+<!-- SYNC -->
 
 <div class="panel" id="panel-sync"><div class="content">
   <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:var(--cyan);margin-bottom:6px">SYNC & WARTUNG</div>
@@ -313,29 +313,30 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
     <div class="sopt sel"><h3>↻ Vollständiger Sync</h3><p>Alle Kategorien neu laden. Bereits vorhandene werden übersprungen. Neue kommen dazu.</p></div>
     <div class="sopt"><h3>◎ Nur fehlende Daten</h3><p>Locations ohne Bild, Kreis oder Öffnungszeiten werden ergänzt.</p></div>
     <div class="sopt"><h3>✗ Ausserhalb Stadt</h3><p>Alle Locations ohne gültigen Kreis 1-12 aus der Datenbank entfernen.</p></div>
-    <div class="sopt"><h3>⭐ Google Anreicherung</h3><p>Rating + Preis von Google -- nur wo Felder leer. API Key nötig (Phase 4o).</p></div>
+    <div class="sopt"><h3>⭐ Google Anreicherung</h3><p>Rating + Preis von Google -- nur wo Felder leer. API Key nötig (Phase 4p).</p></div>
   </div>
   <div class="roadmap-box">
     <div class="rt">ROADMAP -- NÄCHSTE SCHRITTE</div>
     <div class="rl">
-      ✅ Phase 4m → ZT API Import live -- HEUTE<br>
-      ⏳ Phase 4n → Filter in index.html verdrahten → Livedaten anzeigen<br>
-      ⏳ Phase 4o → Google Places API Key → Rating + Preis<br>
-      ⏳ Phase 4p → HTTPS aktivieren → sauberere Imports<br>
+      ✅ Phase 4m → ZT API Import live -- DONE<br>
+      ✅ Phase 4n → Admin Dashboard -- DONE<br>
+      ✅ Phase 4o → HTTPS live -- DONE<br>
+      ⏳ Phase 4p → Google Places API → Rating + Preis<br>
+      ⏳ Phase 4q → 69 Locations ohne Kreis bereinigen<br>
+      ⏳ Phase 4r → Livedaten index.html verdrahten<br>
       ⏳ Phase 5 → Login + Community + Onboarding<br>
       ⏳ Phase 6 → KI Features -- Züri-Bot<br>
-      ⏳ Phase 7 → Hamburg, Berlin<br>
       🔴 Soft Launch: 4. Juni 2026
     </div>
   </div>
-  <button class="btn bp" onclick="alert('Phase 4o -- Google API Key nötig!')">▶ SYNC STARTEN</button>
+  <button class="btn bp" onclick="alert('Phase 4p -- Google API Key nötig!')">▶ SYNC STARTEN</button>
 </div></div>
 
 <script>
-const SU = 'https://pnynkzrqnfoshojqfqxn.supabase.co';
-const SK = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
-const ZT = 'https://www.zuerich.com/en/api/v2/data';
-const PX = 'https://api.allorigins.win/raw?url=';
+const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+const ZT='https://www.zuerich.com/en/api/v2/data';
+const PX='https://api.allorigins.win/raw?url=';
 
 let imp=0,skp=0,err=0;
 
@@ -350,8 +351,8 @@ function switchTab(t,el){
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('panel-'+t).classList.add('active');
-  if(t==='dashboard') loadDash();
-  if(t==='qualitaet') loadQuality();
+  if(t==='dashboard')loadDash();
+  if(t==='qualitaet')loadQuality();
 }
 
 function tc(el){const cb=el.querySelector('input');cb.checked=!cb.checked;el.classList.toggle('sel',cb.checked);upd()}
@@ -371,7 +372,7 @@ function lg(m,t='in'){
 
 async function fetchZT(id){
   const r=await fetch(PX+encodeURIComponent(ZT+'?id='+id));
-  if(!r.ok) throw new Error('HTTP '+r.status);
+  if(!r.ok)throw new Error('HTTP '+r.status);
   const d=await r.json();
   return Array.isArray(d)?d:[];
 }
@@ -381,8 +382,8 @@ function mapRow(item,kat,sub,katId){
   const plz=a.postalCode||null;
   const kreis=plz2k(plz);
   const name=(item.name?.de||item.name?.en||'').trim();
-  if(!name) return null;
-  if(plz && !kreis) return null; // Ausserhalb Stadt Zürich
+  if(!name)return null;
+  if(plz&&!kreis)return null;
   const bi=item.image?.url||null;
   const bp=(item.photo||[]).map(p=>p.url).filter(Boolean);
   return{
@@ -405,7 +406,7 @@ function mapRow(item,kat,sub,katId){
 }
 
 async function exists(id){
-  if(!id) return false;
+  if(!id)return false;
   const r=await fetch(SU+'/rest/v1/locations?zt_api_id=eq.'+id+'&select=id',{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
   const d=await r.json();
   return Array.isArray(d)&&d.length>0;
