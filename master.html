@@ -8,11 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --black:#04040a;--dark:#0a0a14;--border:#1a1a2e;
-  --red:#ff2d00;--green:#c8ff00;--cyan:#00f5ff;
-  --purple:#9333ea;--orange:#ff6600;--gold:#ffcc00;--white:#e8e4d9;
-}
+:root{--black:#04040a;--dark:#0a0a14;--border:#1a1a2e;--red:#ff2d00;--green:#c8ff00;--cyan:#00f5ff;--purple:#9333ea;--orange:#ff6600;--gold:#ffcc00;--white:#e8e4d9;}
 body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100vh;}
 
 /* LOGIN */
@@ -55,19 +51,13 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
 .section-head{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:36px;color:#e8e4d9;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
 .section-head .badge{font-size:9px;font-family:‘DM Mono’,monospace;font-style:normal;padding:3px 10px;border-radius:3px;background:#0a1a0a;color:#c8ff00;border:1px solid #c8ff00;letter-spacing:2px;}
 
-/* GRID */
 .g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
-.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;}
-
-/* CARDS */
 .card{background:#0a0a14;border:1px solid #1a1a2e;border-radius:6px;padding:20px;margin-bottom:16px;}
 .card h3{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:14px;}
 .card.red{border-left:3px solid #ff2d00;}
 .card.green{border-left:3px solid #c8ff00;}
 .card.cyan{border-left:3px solid #00f5ff;}
-.card.purple{border-left:3px solid #9333ea;}
 
-/* KPI */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:20px;}
 .kpi{background:#0a0a14;border:1px solid #1a1a2e;border-radius:6px;padding:16px;position:relative;overflow:hidden;}
 .kpi::after{content:’’;position:absolute;bottom:0;left:0;right:0;height:2px;}
@@ -81,7 +71,6 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
 .kpi.gold .value{color:#ffcc00;}.kpi.orange .value{color:#ff6600;}
 .kpi .sub{font-size:8px;color:#333;margin-top:4px;}
 
-/* ROADMAP */
 .rm-list{display:flex;flex-direction:column;gap:0;}
 .rm-item{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #1a1a2e;}
 .rm-item:last-child{border-bottom:none;}
@@ -90,22 +79,17 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
 .rm-dot.todo{background:transparent;border:1px solid #1a1a2e;color:#333;}
 .rm-phase{font-size:8px;letter-spacing:2px;color:#333;width:50px;flex-shrink:0;text-transform:uppercase;}
 .rm-titel{font-size:11px;flex:1;}
-.rm-titel.done{color:#444;}
-.rm-titel.todo{color:#e8e4d9;}
+.rm-titel.done{color:#444;}.rm-titel.todo{color:#e8e4d9;}
 .rm-date{font-size:8px;color:#333;flex-shrink:0;}
 
-/* TIMELINE */
-.timeline{margin-bottom:20px;}
 .tl-bar{background:#1a1a2e;height:4px;border-radius:2px;overflow:hidden;margin-bottom:6px;}
 .tl-fill{height:100%;background:linear-gradient(90deg,#ff2d00,#c8ff00);border-radius:2px;transition:width 1s ease;}
 .tl-label{font-size:8px;color:#555;letter-spacing:1px;display:flex;justify-content:space-between;}
 
-/* DNA */
 .dna-colors{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;}
 .dna-color{display:flex;align-items:center;gap:8px;background:#04040a;border:1px solid #1a1a2e;padding:8px 12px;border-radius:4px;font-size:9px;}
 .dna-swatch{width:16px;height:16px;border-radius:50%;}
 
-/* ARCH */
 .arch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:16px;}
 .arch-node{background:#04040a;border:1px solid #1a1a2e;border-radius:4px;padding:14px;display:flex;flex-direction:column;gap:6px;}
 .arch-node.live{border-left:2px solid #c8ff00;}
@@ -121,40 +105,40 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
 .arch-node.soon .arch-status{background:#1a0a00;color:#ff6600;border:1px solid #ff660033;}
 .arch-node.future .arch-status{background:#111;color:#333;border:1px solid #1a1a2e;}
 
-/* SUPA */
 .supa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;margin-bottom:16px;}
 .supa-node{background:#04040a;border:1px solid #00f5ff22;border-radius:4px;padding:12px;}
 .supa-node.active{border-color:#c8ff0044;}
-.supa-name{font-size:10px;color:#00f5ff;margin-bottom:4px;font-weight:500;}
+.supa-name{font-size:10px;color:#00f5ff;margin-bottom:4px;}
 .supa-node.active .supa-name{color:#c8ff00;}
 .supa-count{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:20px;color:#00f5ff;}
 .supa-node.active .supa-count{color:#c8ff00;}
 .supa-desc{font-size:8px;color:#333;margin-top:2px;}
 
-/* SESSION */
-.session-item{background:#04040a;border:1px solid #1a1a2e;border-radius:4px;padding:14px;margin-bottom:8px;}
+/* SESSIONS */
+.session-item{background:#04040a;border:1px solid #1a1a2e;border-radius:4px;padding:16px;margin-bottom:10px;}
 .session-date{font-size:8px;letter-spacing:2px;color:#ff2d00;margin-bottom:6px;text-transform:uppercase;}
-.session-title{font-size:12px;color:#e8e4d9;margin-bottom:6px;font-weight:500;}
-.session-items{font-size:9px;color:#555;line-height:2;}
+.session-title{font-size:13px;color:#e8e4d9;margin-bottom:8px;font-weight:500;}
+.session-inhalt{font-size:9px;color:#555;line-height:2;white-space:pre-line;}
 
-/* VISION */
-.vision-block{background:linear-gradient(135deg,#0a0005,#05000a);border:1px solid #ff2d0033;border-radius:6px;padding:24px;margin-bottom:16px;text-align:center;}
-.vision-title{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:48px;color:#ff2d00;text-shadow:0 0 40px rgba(255,45,0,.3);line-height:1;margin-bottom:8px;}
-.vision-sub{font-size:10px;color:#555;letter-spacing:3px;}
+/* SQL HINT */
+.sql-hint{background:#04040a;border:1px solid #c8ff0022;border-radius:6px;padding:16px;margin-bottom:16px;}
+.sql-hint .sh-title{font-size:8px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase;margin-bottom:10px;}
+.sql-hint code{font-size:9px;color:#00f5ff;line-height:2;display:block;}
 
-/* KI */
 .ki-block{background:#0a0a14;border:1px solid #00f5ff22;border-radius:6px;padding:20px;margin-bottom:16px;font-size:10px;line-height:2;color:#555;}
 .ki-block .ki-title{color:#00f5ff;font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
 .ki-block strong{color:#e8e4d9;}
 .ki-block .hi{color:#c8ff00;}
 
-/* LAUNCH */
 .launch-block{background:#04040a;border:2px solid #ff2d00;border-radius:6px;padding:20px;text-align:center;margin-bottom:16px;box-shadow:0 0 40px rgba(255,45,0,.1);}
 .launch-days{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:80px;color:#ff2d00;line-height:1;text-shadow:0 0 20px rgba(255,45,0,.4);}
 .launch-label{font-size:9px;letter-spacing:3px;color:#555;margin-top:4px;}
 .launch-date{font-size:11px;color:#ff2d00;margin-top:8px;letter-spacing:2px;}
 
-/* BAR */
+.vision-block{background:linear-gradient(135deg,#0a0005,#05000a);border:1px solid #ff2d0033;border-radius:6px;padding:24px;margin-bottom:16px;text-align:center;}
+.vision-title{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:48px;color:#ff2d00;text-shadow:0 0 40px rgba(255,45,0,.3);line-height:1;margin-bottom:8px;}
+.vision-sub{font-size:10px;color:#555;letter-spacing:3px;}
+
 .bar-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #1a1a2e;}
 .bar-row:last-child{border-bottom:none;}
 .bar-nm{width:120px;font-size:9px;color:#e8e4d9;flex-shrink:0;}
@@ -162,7 +146,7 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
 .bar-fill{height:100%;border-radius:2px;transition:width 1s ease;}
 .bar-ct{width:30px;text-align:right;font-size:9px;color:#c8ff00;}
 
-@media(max-width:768px){.g2,.g3{grid-template-columns:1fr;}.kpi-grid{grid-template-columns:repeat(2,1fr);}header{flex-direction:column;gap:10px;align-items:flex-start;}}
+@media(max-width:768px){.g2{grid-template-columns:1fr;}.kpi-grid{grid-template-columns:repeat(2,1fr);}header{flex-direction:column;gap:10px;align-items:flex-start;}}
 ::-webkit-scrollbar{width:4px;}::-webkit-scrollbar-track{background:#04040a;}::-webkit-scrollbar-thumb{background:#1a1a2e;}
 </style>
 
@@ -190,7 +174,6 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
     <div class="pill">Locations <span class="n" id="h-loc">--</span></div>
     <div class="pill">Votes <span class="n" id="h-votes">--</span></div>
     <div class="pill">Feedback <span class="n" id="h-fb">--</span></div>
-    <div class="pill">Kontakt <span class="n" id="h-kt">--</span></div>
     <div class="pill">Launch <span class="n" id="h-days">--</span>T</div>
     <div class="live-dot">LIVE</div>
     <button class="logout-btn" onclick="doLogout()">Logout</button>
@@ -203,10 +186,10 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
   <div class="tab active" onclick="showTab('overview',this)">Overview</div>
   <div class="tab" onclick="showTab('ki',this)">KI-Hirn</div>
   <div class="tab" onclick="showTab('roadmap',this)">Roadmap</div>
+  <div class="tab" onclick="showTab('sessions',this)">Sessions</div>
   <div class="tab" onclick="showTab('architektur',this)">Architektur</div>
   <div class="tab" onclick="showTab('supabase',this)">Supabase</div>
   <div class="tab" onclick="showTab('dna',this)">Design DNA</div>
-  <div class="tab" onclick="showTab('sessions',this)">Sessions</div>
   <div class="tab" onclick="showTab('vision',this)">Vision</div>
 </div>
 
@@ -230,29 +213,18 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
   </div>
   <div class="g2">
     <div class="card green">
-      <h3>✅ Heute erledigt -- 1. Mai 2026</h3>
-      <div style="font-size:10px;line-height:2.2;color:#555">
-        ✅ Login auf master.html · mindmap.html · import.html<br>
-        ✅ robots.txt → interne Seiten geschützt
-      </div>
+      <h3>✅ Letzte Session</h3>
+      <div id="last-session"><div style="color:#333;font-size:10px">Lädt...</div></div>
     </div>
     <div class="card cyan">
-      <h3>⏳ Nächste Schritte</h3>
-      <div style="font-size:10px;line-height:2.2;color:#555">
-        ⏳ Phase 4q → Google Places API Kreis 3/4/5<br>
-        ⏳ Phase 4r → 69 Locations ohne Kreis bereinigen<br>
-        ⏳ Phase 4s → Filter verdrahten + Livedaten index.html<br>
-        ⏳ Plausible verifizieren nach HTTPS<br>
-        ⏳ Phase 5 → Login + Onboarding + Community
-      </div>
+      <h3>⏳ Nächste Schritte -- Roadmap</h3>
+      <div id="next-steps"><div style="color:#333;font-size:10px">Lädt...</div></div>
     </div>
   </div>
   <div class="card">
     <h3>📋 Roadmap Progress</h3>
-    <div class="timeline">
-      <div class="tl-bar"><div class="tl-fill" id="rm-bar" style="width:0%"></div></div>
-      <div class="tl-label"><span id="rm-done-count">--</span> erledigt <span id="rm-todo-count">--</span> offen</div>
-    </div>
+    <div class="tl-bar"><div class="tl-fill" id="rm-bar" style="width:0%"></div></div>
+    <div class="tl-label" style="margin-bottom:14px"><span id="rm-done-count">--</span> erledigt · <span id="rm-todo-count">--</span> offen</div>
     <div class="rm-list" id="overview-roadmap"><div style="color:#333;font-size:10px;text-align:center;padding:12px">Lädt...</div></div>
   </div>
   <div class="card">
@@ -281,7 +253,7 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
     <br>
     <strong>Dateien live:</strong> <span class="hi">index.html · admin.html · feedback.html · kontakt.html · import.html · impressum.html · datenschutz.html · mindmap.html · master.html</span><br>
     <br>
-    <strong>Supabase Tabellen:</strong> locations · dating_votes · feedback_submissions · kontakt_submissions · location_images · events · immobilien · inserate · jobs · news_stories · users · user_preferences · community_posts · roadmap<br>
+    <strong>Supabase Tabellen:</strong> locations · dating_votes · feedback_submissions · kontakt_submissions · location_images · events · immobilien · inserate · jobs · news_stories · users · user_preferences · community_posts · roadmap · sessions<br>
     <br>
     <strong>Wichtige Regeln:</strong><br>
     → Vor jeder Änderung Raw-URL checken<br>
@@ -289,6 +261,7 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
     → iPad = kein Terminal · kein Mac<br>
     → Commits direkt auf main branch<br>
     → Klare Commit-Namen: ✅ Was gemacht / ❌ Was kaputt<br>
+    → Am Anfang neuer Chat: «Lies depuls.ch/master.html»<br>
     <br>
     <strong>PLZ → Kreis:</strong> 8001→1 · 8002/8038→2 · 8003/8036/8055→3 · 8004→4 · 8005/8064→5 · 8006/8057→6 · 8032/8044/8053→7 · 8008/8034→8 · 8047/8048→9 · 8037/8049→10 · 8046/8050/8051→11 · 8052→12<br>
     <br>
@@ -297,18 +270,17 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
     <strong>Soft Launch:</strong> <span class="hi">4. Juni 2026 🔴</span>
   </div>
   <div class="card cyan">
-    <h3>⚡ Anon Key -- Supabase</h3>
+    <h3>⚡ Anon Key</h3>
     <div style="font-size:9px;color:#00f5ff;word-break:break-all;line-height:1.8">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ</div>
   </div>
   <div class="card red">
-    <h3>🔴 Kritische Erkenntnisse -- nie vergessen</h3>
+    <h3>🔴 Kritische Erkenntnisse</h3>
     <div style="font-size:10px;line-height:2.2;color:#555">
-      → Wenn im Loop → <strong style="color:#e8e4d9">ganzen Block neu schreiben</strong> -- nie flicken<br>
+      → Wenn im Loop → <strong style="color:#e8e4d9">ganzen Block neu schreiben</strong><br>
       → CSS Em-Dash Bug: <strong style="color:#ff2d00">–black</strong> statt <strong style="color:#c8ff00">--black</strong> → alles transparent<br>
-      → Login-Screen: background immer als Hex #04040a hardcoden -- nie CSS Variable<br>
+      → Login-Screen background immer Hex #04040a -- nie CSS Variable<br>
       → base.css .rv opacity:0 war Ursache für leere Seiten April<br>
       → Git Konflikt → Datei löschen → neu erstellen → reinkopieren<br>
-      → CORS Proxy api.allorigins.win → manchmal Timeout → HTTPS hilft<br>
       → Supabase RLS: nach jeder neuen Tabelle → Read Policy erstellen!
     </div>
   </div>
@@ -320,20 +292,38 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
   <div class="section-head">ROADMAP <span class="badge">LIVE AUS SUPABASE</span></div>
   <div class="card">
     <h3>Progress</h3>
-    <div class="timeline">
-      <div class="tl-bar"><div class="tl-fill" id="rm-bar2" style="width:0%"></div></div>
-      <div class="tl-label"><span id="rm-done2">--</span> erledigt · <span id="rm-todo2">--</span> offen · Soft Launch 4. Juni 2026</div>
-    </div>
+    <div class="tl-bar"><div class="tl-fill" id="rm-bar2" style="width:0%"></div></div>
+    <div class="tl-label"><span id="rm-done2">--</span> erledigt · <span id="rm-todo2">--</span> offen · Soft Launch 4. Juni 2026</div>
   </div>
   <div class="card">
-    <h3>Alle Phasen -- Live</h3>
-    <div class="rm-list" id="full-roadmap"><div style="color:#333;font-size:10px;text-align:center;padding:20px">Lädt aus Supabase...</div></div>
+    <h3>Alle Phasen</h3>
+    <div class="rm-list" id="full-roadmap"><div style="color:#333;font-size:10px;text-align:center;padding:20px">Lädt...</div></div>
   </div>
   <div style="background:#04040a;border:1px solid #ff2d00;border-radius:6px;padding:20px;text-align:center;margin-top:16px">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:#ff2d00;text-shadow:0 0 20px rgba(255,45,0,.4)">4. JUNI 2026</div>
+    <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:#ff2d00">4. JUNI 2026</div>
     <div style="font-size:9px;letter-spacing:3px;color:#555;margin-top:4px">SOFT LAUNCH 🔴</div>
     <div style="font-size:11px;color:#444;margin-top:8px" id="rm-countdown">-- Tage</div>
   </div>
+</div>
+
+<!-- SESSIONS -- LIVE AUS SUPABASE -->
+
+<div class="section" id="tab-sessions">
+  <div class="section-head">SESSIONS <span class="badge">LIVE AUS SUPABASE</span></div>
+
+  <div class="sql-hint">
+    <div class="sh-title">💡 Neue Session eintragen -- Supabase SQL Editor</div>
+    <code>INSERT INTO sessions (datum, titel, inhalt, sort_order) VALUES<br>
+('2026-05-01', 'Titel der Session',<br>
+'✅ Was gemacht wurde<br>✅ Was funktioniert<br>⏳ Was noch offen ist', 1);</code>
+  </div>
+
+  <div id="sessions-list">
+    <div style="color:#333;font-size:10px;text-align:center;padding:40px">Lädt aus Supabase...</div>
+  </div>
+
+<button onclick="loadSessions()" style="background:transparent;border:1px solid #00f5ff;color:#00f5ff;padding:10px 20px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;cursor:pointer;border-radius:3px;margin-top:8px">↻ Aktualisieren</button>
+
 </div>
 
 <!-- ARCHITEKTUR -->
@@ -343,28 +333,28 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
   <div class="card">
     <h3>Frontend Dateien</h3>
     <div class="arch-grid">
-      <div class="arch-node live"><div class="arch-name">index.html</div><div class="arch-desc">Hauptseite · 132KB · Gastro · Nachtleben · Voting · Filter Phase 4s</div><div class="arch-status">LIVE</div></div>
-      <div class="arch-node live"><div class="arch-name">admin.html</div><div class="arch-desc">Master Control · Login · Alle Panels · Live Supabase</div><div class="arch-status">LIVE ✅</div></div>
-      <div class="arch-node live"><div class="arch-name">feedback.html</div><div class="arch-desc">Blasen · 7 Typen · Shake Easter Egg · → Supabase</div><div class="arch-status">LIVE → Supabase ✅</div></div>
-      <div class="arch-node live"><div class="arch-name">kontakt.html</div><div class="arch-desc">4-Step Flow · → Supabase + mailto</div><div class="arch-status">LIVE → Supabase ✅</div></div>
-      <div class="arch-node live"><div class="arch-name">import.html</div><div class="arch-desc">Import Tool v2 · ZT API → Supabase · Login geschützt</div><div class="arch-status">LIVE · LOGIN</div></div>
-      <div class="arch-node live"><div class="arch-name">mindmap.html</div><div class="arch-desc">Architektur Mindmap · Interaktiv · Login geschützt</div><div class="arch-status">LIVE · LOGIN</div></div>
-      <div class="arch-node live"><div class="arch-name">master.html</div><div class="arch-desc">Dieses Dokument · KI-Hirn · Login geschützt</div><div class="arch-status">LIVE · LOGIN</div></div>
+      <div class="arch-node live"><div class="arch-name">index.html</div><div class="arch-desc">Hauptseite · 132KB · Filter Phase 4s</div><div class="arch-status">LIVE</div></div>
+      <div class="arch-node live"><div class="arch-name">admin.html</div><div class="arch-desc">Master Control · Login · Supabase live</div><div class="arch-status">LIVE ✅</div></div>
+      <div class="arch-node live"><div class="arch-name">feedback.html</div><div class="arch-desc">Blasen · 7 Typen · → Supabase</div><div class="arch-status">LIVE ✅</div></div>
+      <div class="arch-node live"><div class="arch-name">kontakt.html</div><div class="arch-desc">4-Step Flow · → Supabase + mailto</div><div class="arch-status">LIVE ✅</div></div>
+      <div class="arch-node live"><div class="arch-name">import.html</div><div class="arch-desc">ZT API → Supabase · Login</div><div class="arch-status">LIVE · LOGIN</div></div>
+      <div class="arch-node live"><div class="arch-name">mindmap.html</div><div class="arch-desc">Architektur · Roadmap live · Login</div><div class="arch-status">LIVE · LOGIN</div></div>
+      <div class="arch-node live"><div class="arch-name">master.html</div><div class="arch-desc">KI-Hirn · Sessions live · Login</div><div class="arch-status">LIVE · LOGIN</div></div>
       <div class="arch-node live"><div class="arch-name">impressum.html</div><div class="arch-desc">DSG + DSGVO · by raimondo*</div><div class="arch-status">LIVE</div></div>
       <div class="arch-node future"><div class="arch-name">login.html</div><div class="arch-desc">Supabase Auth · Phase 5</div><div class="arch-status">PHASE 5</div></div>
     </div>
   </div>
   <div class="card">
-    <h3>Externe APIs</h3>
+    <h3>APIs</h3>
     <div class="arch-grid">
-      <div class="arch-node live"><div class="arch-name">ZT API</div><div class="arch-desc">Zürich Tourismus · 365 Locations importiert</div><div class="arch-status">LIVE</div></div>
-      <div class="arch-node live"><div class="arch-name">GitHub Pages</div><div class="arch-desc">Hosting · main branch · AI Training Opt-out</div><div class="arch-status">LIVE</div></div>
-      <div class="arch-node live"><div class="arch-name">HTTPS / SSL</div><div class="arch-desc">Let's Encrypt · depuls.ch sicher</div><div class="arch-status">LIVE ✅</div></div>
-      <div class="arch-node live"><div class="arch-name">Plausible</div><div class="arch-desc">Privacy-first Analytics · verifizieren</div><div class="arch-status">AKTIV</div></div>
-      <div class="arch-node soon"><div class="arch-name">Google Places</div><div class="arch-desc">Kreis 3/4/5 befüllen · Phase 4q</div><div class="arch-status">PHASE 4q</div></div>
-      <div class="arch-node soon"><div class="arch-name">OpenTable</div><div class="arch-desc">Reservationen · CHF 1–5 pro Buchung</div><div class="arch-status">PHASE 5</div></div>
-      <div class="arch-node soon"><div class="arch-name">Ticketcorner</div><div class="arch-desc">Event-Tickets · 5–10% Revenue</div><div class="arch-status">PHASE 5</div></div>
-      <div class="arch-node soon"><div class="arch-name">Züri-Bot</div><div class="arch-desc">Claude API · Personalisierte Empfehlungen</div><div class="arch-status">PHASE 6</div></div>
+      <div class="arch-node live"><div class="arch-name">ZT API</div><div class="arch-desc">Zürich Tourismus · 365 Locations</div><div class="arch-status">LIVE</div></div>
+      <div class="arch-node live"><div class="arch-name">GitHub Pages</div><div class="arch-desc">Hosting · main · AI Opt-out</div><div class="arch-status">LIVE</div></div>
+      <div class="arch-node live"><div class="arch-name">HTTPS / SSL</div><div class="arch-desc">Let's Encrypt · depuls.ch</div><div class="arch-status">LIVE ✅</div></div>
+      <div class="arch-node live"><div class="arch-name">Plausible</div><div class="arch-desc">Privacy-first Analytics</div><div class="arch-status">AKTIV</div></div>
+      <div class="arch-node soon"><div class="arch-name">Google Places</div><div class="arch-desc">Kreis 3/4/5 · Phase 4q</div><div class="arch-status">PHASE 4q</div></div>
+      <div class="arch-node soon"><div class="arch-name">OpenTable</div><div class="arch-desc">Reservationen · Phase 5</div><div class="arch-status">PHASE 5</div></div>
+      <div class="arch-node soon"><div class="arch-name">Ticketcorner</div><div class="arch-desc">Tickets · Phase 5</div><div class="arch-status">PHASE 5</div></div>
+      <div class="arch-node soon"><div class="arch-name">Züri-Bot</div><div class="arch-desc">Claude API · Phase 6</div><div class="arch-status">PHASE 6</div></div>
     </div>
   </div>
 </div>
@@ -389,7 +379,7 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
       <div class="dna-color"><div class="dna-swatch" style="background:#ff2d00"></div>#ff2d00 Lava-Rot</div>
       <div class="dna-color"><div class="dna-swatch" style="background:#c8ff00"></div>#c8ff00 Volt-Grün</div>
       <div class="dna-color"><div class="dna-swatch" style="background:#00f5ff"></div>#00f5ff Cyber-Cyan</div>
-      <div class="dna-color"><div class="dna-swatch" style="background:#9333ea"></div>#9333ea Lila (Dating)</div>
+      <div class="dna-color"><div class="dna-swatch" style="background:#9333ea"></div>#9333ea Lila</div>
       <div class="dna-color"><div class="dna-swatch" style="background:#ff6600"></div>#ff6600 Orange</div>
       <div class="dna-color"><div class="dna-swatch" style="background:#ffcc00"></div>#ffcc00 Gold</div>
       <div class="dna-color"><div class="dna-swatch" style="background:#e8e4d9;border:1px solid #333"></div>#e8e4d9 Warm-Weiss</div>
@@ -400,65 +390,21 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
       <h3>Typografie</h3>
       <div style="font-size:10px;line-height:2.2;color:#555">
         <span style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;color:#e8e4d9">Barlow Condensed Italic 900</span><br>
-        Headlines · Logo · KPIs · Titel<br><br>
-        <span style="font-family:'DM Mono',monospace;font-size:12px;color:#e8e4d9">DM Mono Regular/Medium</span><br>
-        Body · Code · Labels · Meta
+        Headlines · Logo · KPIs<br><br>
+        <span style="font-family:'DM Mono',monospace;font-size:12px;color:#e8e4d9">DM Mono</span><br>
+        Body · Code · Labels
       </div>
     </div>
     <div class="card">
       <h3>Monetarisierung</h3>
       <div style="font-size:10px;line-height:2.4;color:#555">
         Featured Placement → CHF 20–150/Woche<br>
-        OpenTable → CHF 1–5 pro Reservation → Phase 5<br>
-        Ticketcorner → 5–10% pro Ticket → Phase 5<br>
-        Job Inserate → CHF 49 / 30 Tage → Phase 5<br>
+        OpenTable → CHF 1–5/Reservation · Phase 5<br>
+        Ticketcorner → 5–10% · Phase 5<br>
+        Job Inserate → CHF 49/30 Tage · Phase 5<br>
         <span style="color:#c8ff00">Ziel: CHF 5'000/Mt bei 5'000 MAU</span>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- SESSIONS -->
-
-<div class="section" id="tab-sessions">
-  <div class="section-head">SESSION LOG</div>
-  <div class="session-item">
-    <div class="session-date">1. Mai 2026 -- Heute</div>
-    <div class="session-title">Login · robots.txt · Sicherheit</div>
-    <div class="session-items">✅ Login auf master.html · mindmap.html · import.html<br>✅ robots.txt → interne Seiten vor Google geschützt</div>
-  </div>
-  <div class="session-item">
-    <div class="session-date">30. April 2026</div>
-    <div class="session-title">Admin · Feedback · Kontakt · Mindmap · Master</div>
-    <div class="session-items">
-      ✅ Admin Dashboard kompletter Neuschrieb · CSS Bug gefixt<br>
-      ✅ feedback_submissions + kontakt_submissions Tabellen<br>
-      ✅ feedback.html + kontakt.html → Supabase live<br>
-      ✅ Admin Feedback + Kontakt + Züri Momente Panels<br>
-      ✅ mindmap.html → Architektur Mindmap interaktiv<br>
-      ✅ roadmap Tabelle in Supabase<br>
-      ✅ master.html → Living Masterplan
-    </div>
-  </div>
-  <div class="session-item">
-    <div class="session-date">29. April 2026</div>
-    <div class="session-title">Import Tool v2 · 365 Locations · Admin Dashboard v1 · HTTPS</div>
-    <div class="session-items">✅ import.html v2 · 365 Locations · PLZ→Kreis auto · HTTPS live</div>
-  </div>
-  <div class="session-item">
-    <div class="session-date">28. April 2026</div>
-    <div class="session-title">Voting · feedback.html · kontakt.html · Bubble Menu</div>
-    <div class="session-items">✅ Voting Supabase live · feedback.html Blasen · kontakt.html 4-Step · Bubble Menu</div>
-  </div>
-  <div class="session-item">
-    <div class="session-date">27. April 2026</div>
-    <div class="session-title">Impressum · Datenschutz · HTTPS Vorbereitung</div>
-    <div class="session-items">✅ impressum.html + datenschutz.html · DSG/DSGVO · GitHub AI Opt-out</div>
-  </div>
-  <div class="session-item">
-    <div class="session-date">11–23. April 2026</div>
-    <div class="session-title">Foundation -- Navigation · Supabase · Domain · Analytics</div>
-    <div class="session-items">✅ Footer · Register · Tab-Switch · Supabase Architektur · depuls.ch · Search Console · Plausible</div>
   </div>
 </div>
 
@@ -481,11 +427,11 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
         <span style="color:#c8ff00">Niemand weltweit kombiniert das für Locals</span>
       </div>
     </div>
-    <div class="card purple">
+    <div class="card purple" style="border-left:3px solid #9333ea">
       <h3>User Milestones</h3>
       <div style="font-size:10px;line-height:2.2;color:#555">
         100 MAU → erste Muster sichtbar<br>
-        1'000 MAU → Mundpropaganda · Partner neugierig<br>
+        1'000 MAU → Mundpropaganda<br>
         5'000 MAU → OpenTable + Ticketcorner<br>
         10'000 MAU → Medien merken es<br>
         50'000 MAU → Stadtpuls ist Zürich<br>
@@ -524,6 +470,7 @@ function showTab(id,el){
   el.classList.add('active');document.getElementById('tab-'+id).classList.add('active');
   if(id==='supabase')loadSupabase();
   if(id==='roadmap')loadRoadmap();
+  if(id==='sessions')loadSessions();
 }
 
 /* SUPABASE */
@@ -534,11 +481,13 @@ async function sq(path){
 
 function daysToLaunch(){return Math.ceil((new Date('2026-06-04')-new Date())/864e5);}
 
+/* INIT */
 async function init(){
   const d=daysToLaunch();
   document.getElementById('launch-days').textContent=d;
   document.getElementById('h-days').textContent=d;
   document.getElementById('rm-countdown').textContent=d+' Tage bis Soft Launch';
+
   try{
     const locs=await sq('locations?select=id,kategorie,kreis,bild_url&limit=2000');
     const n=Array.isArray(locs)?locs.length:0;
@@ -557,17 +506,20 @@ async function init(){
     }
     const votes=await sq('dating_votes?select=id,vote&limit=2000');
     const ja=Array.isArray(votes)?votes.filter(v=>v.vote==='ja').length:0;
-    document.getElementById('h-votes').textContent=ja;document.getElementById('kpi-votes').textContent=ja;
+    document.getElementById('h-votes').textContent=ja;
+    document.getElementById('kpi-votes').textContent=ja;
     const fb=await sq('feedback_submissions?select=id&limit=500');
-    const fbn=Array.isArray(fb)?fb.length:0;
-    document.getElementById('h-fb').textContent=fbn;document.getElementById('kpi-fb').textContent=fbn;
+    document.getElementById('h-fb').textContent=Array.isArray(fb)?fb.length:0;
+    document.getElementById('kpi-fb').textContent=Array.isArray(fb)?fb.length:0;
     const kt=await sq('kontakt_submissions?select=id&limit=500');
-    const ktn=Array.isArray(kt)?kt.length:0;
-    document.getElementById('h-kt').textContent=ktn;document.getElementById('kpi-kt').textContent=ktn;
+    document.getElementById('kpi-kt').textContent=Array.isArray(kt)?kt.length:0;
   }catch(e){}
+
   loadRoadmapOverview();
+  loadLastSession();
 }
 
+/* ROADMAP */
 async function loadRoadmapOverview(){
   try{
     const rm=await sq('roadmap?select=phase,titel,status,datum&order=sort_order');
@@ -578,9 +530,12 @@ async function loadRoadmapOverview(){
     ['rm-bar','rm-bar2'].forEach(id=>{const el=document.getElementById(id);if(el)el.style.width=pct+'%';});
     ['rm-done-count','rm-done2'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=done;});
     ['rm-todo-count','rm-todo2'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=total-done;});
-    const recent=rm.filter(r=>r.status==='done').slice(-5);
+    const recent=rm.filter(r=>r.status==='done').slice(-3);
     const next=rm.filter(r=>r.status==='todo').slice(0,3);
     document.getElementById('overview-roadmap').innerHTML=[...recent,...next].map(r=>rmItem(r)).join('');
+    /* Next steps */
+    const todos=rm.filter(r=>r.status==='todo').slice(0,5);
+    document.getElementById('next-steps').innerHTML=todos.map(r=>`<div style="font-size:10px;color:#555;padding:3px 0;border-bottom:1px solid #1a1a2e">⏳ Phase ${r.phase} → ${r.titel}</div>`).join('');
   }catch(e){}
 }
 
@@ -604,6 +559,48 @@ function rmItem(r){
   return`<div class="rm-item"><div class="rm-dot ${cls}">${icon}</div><div class="rm-phase">${r.phase||''}</div><div class="rm-titel ${cls}">${r.titel||''}</div><div class="rm-date">${date}</div></div>`;
 }
 
+/* SESSIONS -- LIVE AUS SUPABASE */
+async function loadSessions(){
+  const el=document.getElementById('sessions-list');
+  el.innerHTML='<div style="color:#333;font-size:10px;text-align:center;padding:20px">Lädt...</div>';
+  try{
+    const sessions=await sq('sessions?select=datum,titel,inhalt,sort_order&order=datum.desc&limit=50');
+    if(!Array.isArray(sessions)||sessions.length===0){
+      el.innerHTML=`
+        <div style="text-align:center;padding:40px;color:#333">
+          <div style="font-size:32px;margin-bottom:12px">📋</div>
+          <div style="font-size:12px;color:#555;margin-bottom:8px">Noch keine Sessions eingetragen</div>
+          <div style="font-size:10px">SQL Editor → INSERT INTO sessions → erste Session eintragen</div>
+        </div>`;
+      return;
+    }
+    el.innerHTML=sessions.map(s=>`
+      <div class="session-item">
+        <div class="session-date">${s.datum ? new Date(s.datum).toLocaleDateString('de-CH',{weekday:'long',day:'2-digit',month:'long',year:'numeric'}) : '--'}</div>
+        <div class="session-title">${s.titel||'--'}</div>
+        <div class="session-inhalt">${s.inhalt||'--'}</div>
+      </div>`).join('');
+  }catch(e){
+    el.innerHTML='<div style="color:#ff2d00;font-size:10px;padding:20px">Fehler beim Laden</div>';
+  }
+}
+
+async function loadLastSession(){
+  try{
+    const sessions=await sq('sessions?select=datum,titel,inhalt&order=datum.desc&limit=1');
+    if(!Array.isArray(sessions)||sessions.length===0){
+      document.getElementById('last-session').innerHTML='<div style="color:#333;font-size:10px">Noch keine Sessions</div>';
+      return;
+    }
+    const s=sessions[0];
+    document.getElementById('last-session').innerHTML=`
+      <div style="font-size:8px;color:#ff2d00;letter-spacing:2px;margin-bottom:4px">${s.datum?new Date(s.datum).toLocaleDateString('de-CH'):'--'}</div>
+      <div style="font-size:11px;color:#e8e4d9;margin-bottom:6px">${s.titel||'--'}</div>
+      <div style="font-size:9px;color:#555;line-height:1.8;white-space:pre-line">${s.inhalt||'--'}</div>`;
+  }catch(e){}
+}
+
+/* SUPABASE TAB */
 async function loadSupabase(){
   try{
     const locs=await sq('locations?select=id,kategorie,kreis,bild_url&limit=2000');
@@ -613,14 +610,18 @@ async function loadSupabase(){
     const fb=await sq('feedback_submissions?select=id&limit=500');
     const kt=await sq('kontakt_submissions?select=id&limit=500');
     const vt=await sq('dating_votes?select=id&limit=500');
+    const ss=await sq('sessions?select=id&limit=500');
+    const rm=await sq('roadmap?select=id&limit=500');
     document.getElementById('supa-tables').innerHTML=`
-      <div class="supa-node active"><div class="supa-name">locations</div><div class="supa-count">${n}</div><div class="supa-desc">Gastro · Nachtleben · Kultur · Sport</div></div>
-      <div class="supa-node active"><div class="supa-name">mit Bild</div><div class="supa-count">${mb}</div><div class="supa-desc">${Math.round(mb/n*100)}% haben Bild-URL</div></div>
-      <div class="supa-node active"><div class="supa-name">mit Kreis</div><div class="supa-count">${mk}</div><div class="supa-desc">${Math.round(mk/n*100)}% haben Kreis 1-12</div></div>
-      <div class="supa-node active"><div class="supa-name">dating_votes</div><div class="supa-count">${Array.isArray(vt)?vt.length:0}</div><div class="supa-desc">People & Dates Voting</div></div>
+      <div class="supa-node active"><div class="supa-name">locations</div><div class="supa-count">${n}</div><div class="supa-desc">Gastro · Nachtleben · Kultur</div></div>
+      <div class="supa-node active"><div class="supa-name">mit Bild</div><div class="supa-count">${mb}</div><div class="supa-desc">${Math.round(mb/n*100)}% komplett</div></div>
+      <div class="supa-node active"><div class="supa-name">mit Kreis</div><div class="supa-count">${mk}</div><div class="supa-desc">${Math.round(mk/n*100)}% Kreis 1-12</div></div>
+      <div class="supa-node active"><div class="supa-name">dating_votes</div><div class="supa-count">${Array.isArray(vt)?vt.length:0}</div><div class="supa-desc">People & Dates</div></div>
       <div class="supa-node active"><div class="supa-name">feedback</div><div class="supa-count">${Array.isArray(fb)?fb.length:0}</div><div class="supa-desc">feedback_submissions</div></div>
       <div class="supa-node active"><div class="supa-name">kontakt</div><div class="supa-count">${Array.isArray(kt)?kt.length:0}</div><div class="supa-desc">kontakt_submissions</div></div>
-      <div class="supa-node"><div class="supa-name">users</div><div class="supa-count">0</div><div class="supa-desc">Phase 5 → Login</div></div>
+      <div class="supa-node active"><div class="supa-name">roadmap</div><div class="supa-count">${Array.isArray(rm)?rm.length:0}</div><div class="supa-desc">Alle Phasen</div></div>
+      <div class="supa-node active"><div class="supa-name">sessions</div><div class="supa-count">${Array.isArray(ss)?ss.length:0}</div><div class="supa-desc">Session Log</div></div>
+      <div class="supa-node"><div class="supa-name">users</div><div class="supa-count">0</div><div class="supa-desc">Phase 5</div></div>
       <div class="supa-node"><div class="supa-name">events</div><div class="supa-count">0</div><div class="supa-desc">Phase 4s</div></div>`;
     const cats={};locs.forEach(l=>{if(l.kategorie)cats[l.kategorie]=(cats[l.kategorie]||0)+1;});
     const mc=Math.max(...Object.values(cats),1);
