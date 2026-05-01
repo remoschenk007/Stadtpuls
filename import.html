@@ -9,22 +9,37 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--black:#04040a;--red:#ff2d00;--green:#c8ff00;--cyan:#00f5ff;--purple:#9333ea;--white:#e8e4d9;--dark:#0a0a14;--border:#1a1a2e}
-body{background:var(--black);color:var(--white);font-family:'DM Mono',monospace;min-height:100vh}
-header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--black);z-index:100}
-.logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--red);letter-spacing:2px}
-.logo span{color:#555;font-size:10px;font-family:'DM Mono',monospace;display:block;font-style:normal;letter-spacing:3px;margin-top:-2px}
-.hdr-stats{display:flex;gap:16px}
-.hdr-pill{background:var(--dark);border:1px solid var(--border);padding:5px 12px;border-radius:20px;font-size:10px;letter-spacing:1px}
-.hdr-pill .n{color:var(--green)}
-.tabs{display:flex;border-bottom:1px solid var(--border);padding:0 28px;gap:4px}
-.tab{padding:14px 20px;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:#444;border:none;border-bottom:2px solid transparent;background:none;font-family:'DM Mono',monospace;transition:all .2s}
-.tab:hover{color:var(--white)}
-.tab.active{color:var(--red);border-bottom-color:var(--red)}
+body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100vh}
+
+/* LOGIN */
+#login-screen{position:fixed;inset:0;z-index:9999;background:#04040a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;}
+.login-logo{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:64px;color:#ff2d00;letter-spacing:4px;text-align:center;line-height:1;}
+.login-logo span{display:block;font-size:12px;letter-spacing:6px;color:#333;font-style:normal;margin-top:6px;}
+.login-box{background:#0a0a14;border:1px solid #1a1a2e;border-radius:8px;padding:32px;width:340px;display:flex;flex-direction:column;gap:16px;}
+.login-box h2{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#555;text-align:center;}
+.login-input{background:#04040a;border:1px solid #1a1a2e;color:#e8e4d9;padding:12px 16px;font-family:‘DM Mono’,monospace;font-size:13px;border-radius:3px;width:100%;outline:none;transition:border-color .2s;}
+.login-input:focus{border-color:#ff2d00;}
+.login-btn{background:#ff2d00;color:#04040a;border:none;padding:14px;font-family:‘DM Mono’,monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:3px;font-weight:500;transition:background .2s;}
+.login-btn:hover{background:#ff4422;}
+.login-error{color:#ff2d00;font-size:10px;text-align:center;display:none;}
+.login-hint{color:#333;font-size:9px;text-align:center;letter-spacing:1px;}
+
+header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid var(–border);position:sticky;top:0;background:var(–black);z-index:100}
+.logo{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(–red);letter-spacing:2px}
+.logo span{color:#555;font-size:10px;font-family:‘DM Mono’,monospace;display:block;font-style:normal;letter-spacing:3px;margin-top:-2px}
+.hdr-stats{display:flex;gap:16px;align-items:center;}
+.hdr-pill{background:var(–dark);border:1px solid var(–border);padding:5px 12px;border-radius:20px;font-size:10px;letter-spacing:1px}
+.hdr-pill .n{color:var(–green)}
+.logout-btn{background:transparent;border:1px solid #333;color:#555;padding:5px 12px;font-family:‘DM Mono’,monospace;font-size:9px;letter-spacing:1px;cursor:pointer;border-radius:3px;transition:all .2s;}
+.logout-btn:hover{border-color:#ff2d00;color:#ff2d00;}
+.tabs{display:flex;border-bottom:1px solid var(–border);padding:0 28px;gap:4px}
+.tab{padding:14px 20px;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:#444;border:none;border-bottom:2px solid transparent;background:none;font-family:‘DM Mono’,monospace;transition:all .2s}
+.tab:hover{color:var(–white)}
+.tab.active{color:var(–red);border-bottom-color:var(–red)}
 .content{padding:28px}
 .panel{display:none}
 .panel.active{display:block}
 
-/* SOURCE CARDS */
 .source-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:28px}
 .sc{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:20px;transition:border-color .2s}
 .sc.on{border-color:var(–red)}
@@ -40,7 +55,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .tag.g{color:#ffaa00}
 .tag.p{color:var(–purple)}
 
-/* CATEGORIES */
 .cs{margin-bottom:20px}
 .cs-title{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(–green);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(–border)}
 .cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
@@ -51,7 +65,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .ci label{font-size:11px;cursor:pointer;flex:1}
 .ci .id{font-size:9px;color:#333}
 
-/* ACTION */
 .action-bar{display:flex;gap:10px;align-items:center;padding:18px 0;border-top:1px solid var(–border);flex-wrap:wrap}
 .btn{font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:11px 22px;border:none;cursor:pointer;border-radius:3px;transition:all .2s}
 .bp{background:var(–red);color:var(–black);font-weight:500}
@@ -65,7 +78,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .bc:hover{background:#00f5ff10}
 #sel-count{font-size:10px;color:#444;margin-left:4px}
 
-/* PROGRESS */
 .prog-box{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:20px;margin-bottom:16px;display:none}
 .prog-top{display:flex;justify-content:space-between;margin-bottom:10px}
 .prog-status{display:flex;align-items:center;gap:8px;font-size:12px}
@@ -75,27 +87,17 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .prog-fill{height:100%;background:linear-gradient(90deg,var(–red),#ff8800);width:0%;transition:width .3s;border-radius:2px}
 .prog-sub{font-size:10px;color:#444;letter-spacing:1px}
 
-/* LOG */
 .log-box{background:#020208;border:1px solid var(–border);border-radius:4px;padding:14px;height:220px;overflow-y:auto;font-size:10px;line-height:1.9;display:none}
 .log-box::-webkit-scrollbar{width:3px}
 .log-box::-webkit-scrollbar-thumb{background:var(–border)}
-.lok{color:var(–green)}
-.ler{color:var(–red)}
-.lin{color:var(–cyan)}
-.lwa{color:#ffaa00}
-.lsk{color:#333}
+.lok{color:var(–green)}.ler{color:var(–red)}.lin{color:var(–cyan)}.lwa{color:#ffaa00}.lsk{color:#333}
 
-/* RESULT */
 .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px;display:none}
 .rc{background:var(–dark);border:1px solid var(–border);border-radius:4px;padding:18px;text-align:center}
 .rc .big{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:44px;line-height:1}
 .rc .lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-top:4px}
-.rc.ok .big{color:var(–green)}
-.rc.sk .big{color:#ffaa00}
-.rc.er .big{color:var(–red)}
-.rc.ca .big{color:var(–cyan)}
+.rc.ok .big{color:var(–green)}.rc.sk .big{color:#ffaa00}.rc.er .big{color:var(–red)}.rc.ca .big{color:var(–cyan)}
 
-/* DASHBOARD TAB */
 .dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
 .dc{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:18px}
 .dc .t{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-bottom:6px}
@@ -110,7 +112,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .bar-row .bf{height:100%;border-radius:2px;transition:width 1s ease}
 .bar-row .ct{width:36px;text-align:right;font-size:11px;color:var(–green)}
 
-/* QUALITY */
 .q-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .qc{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:18px}
 .qc h3{font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:6px}
@@ -118,10 +119,8 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 .q-list{max-height:180px;overflow-y:auto}
 .qi{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(–border);font-size:10px}
 .qi:last-child{border-bottom:none}
-.qi .qn{color:var(–white)}
-.qi .qm{color:#333}
+.qi .qn{color:var(–white)}.qi .qm{color:#333}
 
-/* SYNC */
 .sync-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:20px}
 .sopt{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:18px;cursor:pointer;transition:border-color .2s}
 .sopt:hover{border-color:#2a2a3e}
@@ -143,12 +142,26 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 </head>
 <body>
 
+<!-- LOGIN -->
+
+<div id="login-screen">
+  <div class="login-logo">STADTPULS<span>IMPORT TOOL v2</span></div>
+  <div class="login-box">
+    <h2>Admin Login</h2>
+    <input class="login-input" type="password" id="pw-input" placeholder="Passwort" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">▶ EINLOGGEN</button>
+    <div class="login-error" id="login-error">Falsches Passwort</div>
+    <div class="login-hint">Erstes Login? Einfach dein Passwort eingeben -- wird gespeichert.</div>
+  </div>
+</div>
+
 <header>
   <div class="logo">STADTPULS <span>⚡ IMPORT TOOL v2</span></div>
   <div class="hdr-stats">
     <div class="hdr-pill">Locations <span class="n" id="hdr-total">--</span></div>
     <div class="hdr-pill">Update <span class="n" id="hdr-last">--</span></div>
     <div class="hdr-pill" style="color:var(--green)">● LIVE</div>
+    <button class="logout-btn" onclick="doLogout()">Logout</button>
   </div>
 </header>
 
@@ -278,7 +291,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 
 </div></div>
 
-<!-- DATEN (ehemals Dashboard) -->
+<!-- DATEN -->
 
 <div class="panel" id="panel-dashboard"><div class="content">
   <div class="dash-grid">
@@ -310,10 +323,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
   <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:var(--cyan);margin-bottom:6px">SYNC & WARTUNG</div>
   <div style="font-size:10px;color:#444;margin-bottom:20px">Datenbank aktuell halten -- automatisch oder manuell.</div>
   <div class="sync-grid">
-    <div class="sopt sel"><h3>↻ Vollständiger Sync</h3><p>Alle Kategorien neu laden. Bereits vorhandene werden übersprungen. Neue kommen dazu.</p></div>
+    <div class="sopt sel"><h3>↻ Vollständiger Sync</h3><p>Alle Kategorien neu laden. Bereits vorhandene werden übersprungen.</p></div>
     <div class="sopt"><h3>◎ Nur fehlende Daten</h3><p>Locations ohne Bild, Kreis oder Öffnungszeiten werden ergänzt.</p></div>
-    <div class="sopt"><h3>✗ Ausserhalb Stadt</h3><p>Alle Locations ohne gültigen Kreis 1-12 aus der Datenbank entfernen.</p></div>
-    <div class="sopt"><h3>⭐ Google Anreicherung</h3><p>Rating + Preis von Google -- nur wo Felder leer. API Key nötig (Phase 4p).</p></div>
+    <div class="sopt"><h3>✗ Ausserhalb Stadt</h3><p>Alle Locations ohne gültigen Kreis 1-12 entfernen.</p></div>
+    <div class="sopt"><h3>⭐ Google Anreicherung</h3><p>Rating + Preis von Google -- Phase 4q.</p></div>
   </div>
   <div class="roadmap-box">
     <div class="rt">ROADMAP -- NÄCHSTE SCHRITTE</div>
@@ -321,15 +334,15 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
       ✅ Phase 4m → ZT API Import live -- DONE<br>
       ✅ Phase 4n → Admin Dashboard -- DONE<br>
       ✅ Phase 4o → HTTPS live -- DONE<br>
-      ⏳ Phase 4p → Google Places API → Rating + Preis<br>
-      ⏳ Phase 4q → 69 Locations ohne Kreis bereinigen<br>
-      ⏳ Phase 4r → Livedaten index.html verdrahten<br>
+      ✅ Phase 4p → Feedback + Kontakt Supabase -- DONE<br>
+      ⏳ Phase 4q → Google Places API → Kreis 3/4/5<br>
+      ⏳ Phase 4r → Locations ohne Kreis bereinigen<br>
+      ⏳ Phase 4s → Filter verdrahten + Livedaten<br>
       ⏳ Phase 5 → Login + Community + Onboarding<br>
-      ⏳ Phase 6 → KI Features -- Züri-Bot<br>
       🔴 Soft Launch: 4. Juni 2026
     </div>
   </div>
-  <button class="btn bp" onclick="alert('Phase 4p -- Google API Key nötig!')">▶ SYNC STARTEN</button>
+  <button class="btn bp" onclick="alert('Phase 4q -- Google API Key nötig!')">▶ SYNC STARTEN</button>
 </div></div>
 
 <script>
@@ -338,8 +351,22 @@ const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6I
 const ZT='https://www.zuerich.com/en/api/v2/data';
 const PX='https://api.allorigins.win/raw?url=';
 
-let imp=0,skp=0,err=0;
+/* LOGIN */
+function doLogin(){
+  const pw=document.getElementById('pw-input').value.trim();
+  if(!pw)return;
+  const saved=localStorage.getItem('sp_pw');
+  if(!saved){localStorage.setItem('sp_pw',btoa(pw));localStorage.setItem('sp_import_auth','1');hideLogin();}
+  else{if(btoa(pw)===saved){localStorage.setItem('sp_import_auth','1');hideLogin();}
+  else{document.getElementById('login-error').style.display='block';document.getElementById('pw-input').value='';document.getElementById('pw-input').focus();}}
+}
+function hideLogin(){document.getElementById('login-screen').style.display='none';updHdr();upd();}
+function doLogout(){localStorage.removeItem('sp_import_auth');document.getElementById('login-screen').style.display='flex';}
+window.addEventListener('DOMContentLoaded',function(){
+  if(localStorage.getItem('sp_import_auth')==='1'){document.getElementById('login-screen').style.display='none';updHdr();upd();}
+});
 
+let imp=0,skp=0,err=0;
 const PKM={'8001':1,'8002':2,'8038':2,'8003':3,'8036':3,'8055':3,'8004':4,'8005':5,'8064':5,'8006':6,'8057':6,'8032':7,'8044':7,'8053':7,'8008':8,'8034':8,'8047':9,'8048':9,'8037':10,'8049':10,'8046':11,'8050':11,'8051':11,'8052':12};
 const CCOLORS={gastro:'#ff2d00',nachtleben:'#9333ea',kultur:'#00f5ff',shopping:'#ffaa00',wellness:'#c8ff00',sport:'#ff6600',sightseeing:'#ff2d88',recreation:'#00dd66'};
 
@@ -507,8 +534,6 @@ async function updHdr(){
   }catch(e){}
   document.getElementById('hdr-last').textContent=new Date().toLocaleTimeString('de-CH',{hour:'2-digit',minute:'2-digit'});
 }
-
-updHdr();upd();
 </script>
 
 </body>
