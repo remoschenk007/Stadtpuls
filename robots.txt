@@ -1,0 +1,14 @@
+User-agent: *
+Disallow: /master.html
+Disallow: /mindmap.html
+Disallow: /import.html
+Disallow: /admin.html
+
+Allow: /
+Allow: /index.html
+Allow: /feedback.html
+Allow: /kontakt.html
+Allow: /impressum.html
+Allow: /datenschutz.html
+
+Sitemap: https://depuls.ch/sitemap.xml
