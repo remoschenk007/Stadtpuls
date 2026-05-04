@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stadtpuls -- Feedback</title>
+<title>Stadtpuls — Feedback</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -130,7 +130,7 @@ textarea::placeholder{color:rgba(232,228,217,.18);}
 
 <header>
   <a class="logo" href="index.html"><div class="logo-dot"></div>STADTPULS</a>
-  <div class="page-label">Feedback -- Sag uns was</div>
+  <div class="page-label">Feedback — Sag uns was</div>
 </header>
 
 <div class="intro-text">
@@ -188,7 +188,7 @@ textarea::placeholder{color:rgba(232,228,217,.18);}
   <div class="shake-message">
     <span class="shake-emoji">😏</span>
     <div class="shake-title">HÄ? EIFACH SO SCHÜTLE?</div>
-    <div class="shake-text">Du bisch definitiv ä Draufgänger.<br>Genau solchi Lüt suche mir bi<br><strong style="color:#9333ea">People & Dates</strong> -- züri style. 😄</div>
+    <div class="shake-text">Du bisch definitiv ä Draufgänger.<br>Genau solchi Lüt suche mir bi<br><strong style="color:#9333ea">People & Dates</strong> — züri style. 😄</div>
     <a class="shake-cta" href="index.html?page=dating">💜 ZU PEOPLE & DATES</a>
     <button class="shake-close" onclick="closeShake()">NEI DANKE, ICH BIN BRAV</button>
   </div>
@@ -234,11 +234,11 @@ document.getElementById('modalText').addEventListener('input',function(){
 
 /* MODAL */
 const cfg={
-  moment:{icon:'◉',title:'ZÜRI MOMENT',color:'#ffd93d',acc:'linear-gradient(90deg,#ffd93d,rgba(255,140,0,.5),transparent)',ph:'Was hesch hüt in Zürich erlebt? Dini gschicht -- echt, ungefiltert.',desc:'Dini Gschicht landet vilicht uf dr Startsite. Echti Züri Momente -- vo Locals, für Locals. 🔴'},
+  moment:{icon:'◉',title:'ZÜRI MOMENT',color:'#ffd93d',acc:'linear-gradient(90deg,#ffd93d,rgba(255,140,0,.5),transparent)',ph:'Was hesch hüt in Zürich erlebt? Dini gschicht — echt, ungefiltert.',desc:'Dini Gschicht landet vilicht uf dr Startsite. Echti Züri Momente — vo Locals, für Locals. 🔴'},
   idea:  {icon:'✦',title:'DINI IDEE',      color:'#00f5ff',acc:'linear-gradient(90deg,#00f5ff,transparent)',ph:'Was würsch du anders mache? Was fehlt?',desc:''},
   design:{icon:'◈',title:'DESIGN',          color:'#c8ff00',acc:'linear-gradient(90deg,#c8ff00,transparent)',ph:'Was gefällt dir nöd? Was isch komisch?',desc:''},
   bug:   {icon:'⚡',title:'BUG MELDE',      color:'#ff2d00',acc:'linear-gradient(90deg,#ff2d00,transparent)',ph:'Was isch kaputt? Wo isch es passiert? Welches Gerät?',desc:''},
-  dampf: {icon:'💢',title:'DAMPF ABLASSE',  color:'#ff6600',acc:'linear-gradient(90deg,#ff6600,transparent)',ph:'Leg los. Alles raus. Kein Filter. Mir höred zu.',desc:'Echt jetzt -- alles darfst du säge. Mir nehmed das ernst.'},
+  dampf: {icon:'💢',title:'DAMPF ABLASSE',  color:'#ff6600',acc:'linear-gradient(90deg,#ff6600,transparent)',ph:'Leg los. Alles raus. Kein Filter. Mir höred zu.',desc:'Echt jetzt — alles darfst du säge. Mir nehmed das ernst.'},
   lob:   {icon:'▲',title:'DANKE FÜR DE LOB!',color:'#c8ff00',acc:'linear-gradient(90deg,#c8ff00,transparent)',ph:'Was isch geil? Was hebsch du am meischte?',desc:''},
   other: {icon:'○',title:'ANDERES',         color:'#9333ea',acc:'linear-gradient(90deg,#9333ea,transparent)',ph:'Schrib eifach was de im Chopf hesch...',desc:''}
 };
@@ -277,7 +277,7 @@ async function sendFeedback(){
       body:JSON.stringify({typ:currentType,nachricht:text})
     });
   }catch(e){}
-  btn.textContent='✅ GSCHICKT -- MERCI!';
+  btn.textContent='✅ GSCHICKT — MERCI!';
   setTimeout(closeModal,1800);
 }
 
@@ -288,7 +288,7 @@ document.getElementById('modalOverlay').addEventListener('click',e=>{
 /* ═══════════════════════════════════════════
    SHAKE EASTER EGG
    NUR auf Touch-Geräten (iPhone/iPad/Android)
-   Desktop bekommt NICHTS -- kein Dialog, nie!
+   Desktop bekommt NICHTS — kein Dialog, nie!
 ═══════════════════════════════════════════ */
 function closeShake(){
   document.getElementById('shakeOverlay').classList.remove('active');
@@ -333,7 +333,7 @@ if(isTouchDevice && window.DeviceMotionEvent){
     });
   }
 
-  /* iOS 13+: Permission erst beim ersten Bubble-Tippen -- nicht beim Laden */
+  /* iOS 13+: Permission erst beim ersten Bubble-Tippen — nicht beim Laden */
   const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
   if(isIOS && typeof DeviceMotionEvent.requestPermission==='function'){
     let permAsked=false;
