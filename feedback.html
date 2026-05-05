@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stadtpuls — Feedback</title>
+<title>Stadtpuls -- Feedback</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -47,7 +47,7 @@ header{position:fixed;top:0;left:0;right:0;padding:1.25rem 2rem;display:flex;ali
 .bubble-hint{font-size:.5rem;opacity:.4;margin-top:.2rem;letter-spacing:.06em;display:block;}
 .b-moment{width:210px;height:210px;border:2px solid rgba(255,217,61,.7);color:#ffd93d;top:8%;left:3%;box-shadow:0 0 30px rgba(255,217,61,.3),0 0 70px rgba(255,217,61,.15),inset 0 0 50px rgba(255,217,61,.08),0 30px 80px rgba(0,0,0,.6);z-index:15;animation:drift0 6s ease-in-out infinite;}
 .b-moment .bubble-color{background:radial-gradient(circle at 50%,rgba(255,217,61,.25),rgba(255,140,0,.1) 50%,transparent 70%);opacity:1;}
-.b-moment:hover{box-shadow:0 0 80px rgba(255,217,61,.7),inset 0 0 80px rgba(255,217,61,.15)!important;transform:scale(1.12) translateZ(50px)!important;filter:brightness(1.25);}
+.b-moment:hover{box-shadow:0 0 80px rgba(255,217,61,.7),inset 0 0 80px rgba(255,217,61,.15),0 50px 100px rgba(0,0,0,.7)!important;transform:scale(1.12) translateZ(50px)!important;filter:brightness(1.25);}
 .b-idea{width:170px;height:170px;border:1.5px solid rgba(0,245,255,.6);color:#00f5ff;top:10%;right:4%;box-shadow:0 0 40px rgba(0,245,255,.2),inset 0 0 40px rgba(0,245,255,.06),0 30px 60px rgba(0,0,0,.5);animation:drift1 9s ease-in-out infinite;}
 .b-idea .bubble-color{background:radial-gradient(circle at 50%,#00f5ff,transparent 70%);}
 .b-idea:hover{box-shadow:0 0 60px rgba(0,245,255,.5),inset 0 0 60px rgba(0,245,255,.1)!important;transform:scale(1.15) translateZ(40px)!important;filter:brightness(1.2);}
@@ -76,7 +76,7 @@ header{position:fixed;top:0;left:0;right:0;padding:1.25rem 2rem;display:flex;ali
 .moment-label{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:1.1rem;letter-spacing:.12em;text-transform:uppercase;display:block;color:#ffd93d;text-shadow:0 0 20px rgba(255,217,61,.8);transform:translateZ(22px);line-height:1;}
 .moment-sub{font-size:.55rem;margin-top:.3rem;display:block;color:rgba(255,217,61,.55);letter-spacing:.08em;}
 @keyframes drift0{0%,100%{transform:translateY(0) translateX(0)}20%{transform:translateY(-15px) translateX(8px)}60%{transform:translateY(10px) translateX(4px)}}
-@keyframes drift1{0%,100%{transform:translateY(0) translateX(0)}25%{transform:translateY(-20px) translateX(8px)}75%{transform:translateY(14px) translateX(8px)}}
+@keyframes drift1{0%,100%{transform:translateY(0) translateX(0)}25%{transform:translateY(-20px) translateX(8px) rotateX(4deg)}75%{transform:translateY(14px) translateX(8px) rotateX(3deg)}}
 @keyframes drift2{0%,100%{transform:translateY(0) translateX(0)}30%{transform:translateY(-25px) translateX(-8px)}60%{transform:translateY(10px) translateX(6px)}}
 @keyframes drift3{0%,100%{transform:translateY(0) translateX(0)}40%{transform:translateY(-15px) translateX(10px)}70%{transform:translateY(8px) translateX(-6px)}}
 @keyframes drift4{0%,100%{transform:translateY(0) translateX(0)}35%{transform:translateY(-20px) translateX(-5px)}65%{transform:translateY(14px) translateX(8px)}}
@@ -130,11 +130,11 @@ textarea::placeholder{color:rgba(232,228,217,.18);}
 
 <header>
   <a class="logo" href="index.html"><div class="logo-dot"></div>STADTPULS</a>
-  <div class="page-label">Feedback — Sag uns was</div>
+  <div class="page-label">Feedback — Säg öis was</div>
 </header>
 
 <div class="intro-text">
-  <h1>SAG UNS<br><span class="accent">WAS</span><br>DU DENKSCH.</h1>
+  <h1>SÄG ÖIS<br><span class="accent">WAS</span><br>DU DENKSCH.</h1>
   <p>↓ TIPF AUF DINI BLASE ↓</p>
 </div>
 
@@ -207,7 +207,7 @@ textarea::placeholder{color:rgba(232,228,217,.18);}
         <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
     </div>
-    <textarea id="modalText" placeholder="Schrib us was du denksch..."></textarea>
+    <textarea id="modalText" placeholder="Schrib öis was du denksch..."></textarea>
     <div class="modal-footer">
       <button class="modal-send" id="modalSend" onclick="sendFeedback()">ABSCHICKE →</button>
       <span class="modal-char" id="charCount">0 / 500</span>
@@ -232,16 +232,17 @@ document.getElementById('modalText').addEventListener('input',function(){
   if(this.value.length>500)this.value=this.value.slice(0,500);
 });
 
-/* MODAL */
+/* MODAL CONFIG */
 const cfg={
-  moment:{icon:'◉',title:'ZÜRI MOMENT',color:'#ffd93d',acc:'linear-gradient(90deg,#ffd93d,rgba(255,140,0,.5),transparent)',ph:'Was hesch hüt in Zürich erlebt? Dini gschicht — echt, ungefiltert.',desc:'Dini Gschicht landet vilicht uf dr Startsite. Echti Züri Momente — vo Locals, für Locals. 🔴'},
-  idea:  {icon:'✦',title:'DINI IDEE',      color:'#00f5ff',acc:'linear-gradient(90deg,#00f5ff,transparent)',ph:'Was würsch du anders mache? Was fehlt?',desc:''},
-  design:{icon:'◈',title:'DESIGN',          color:'#c8ff00',acc:'linear-gradient(90deg,#c8ff00,transparent)',ph:'Was gefällt dir nöd? Was isch komisch?',desc:''},
-  bug:   {icon:'⚡',title:'BUG MELDE',      color:'#ff2d00',acc:'linear-gradient(90deg,#ff2d00,transparent)',ph:'Was isch kaputt? Wo isch es passiert? Welches Gerät?',desc:''},
-  dampf: {icon:'💢',title:'DAMPF ABLASSE',  color:'#ff6600',acc:'linear-gradient(90deg,#ff6600,transparent)',ph:'Leg los. Alles raus. Kein Filter. Mir höred zu.',desc:'Echt jetzt — alles darfst du säge. Mir nehmed das ernst.'},
+  moment:{icon:'◉',title:'ZÜRI MOMENT',color:'#ffd93d',acc:'linear-gradient(90deg,#ffd93d,rgba(255,140,0,.5),transparent)',ph:'Was hesch hüt in Zürich erlebt? Kreis 4, Regen, bestes Kebab ever. Oder Limmat um Mitternacht. Dini gschicht — echt, ungefiltert.',desc:'Dini Gschicht landet vilicht uf dr Startsite. Echti Züri Momente — vo Locals, für Locals. 🔴'},
+  idea:  {icon:'✦',title:'DINI IDEE',       color:'#00f5ff',acc:'linear-gradient(90deg,#00f5ff,transparent)',ph:'Was würsch du anders mache? Was fehlt?',desc:''},
+  design:{icon:'◈',title:'DESIGN',           color:'#c8ff00',acc:'linear-gradient(90deg,#c8ff00,transparent)',ph:'Was gefällt dir nöd? Was isch komisch?',desc:''},
+  bug:   {icon:'⚡',title:'BUG MELDE',       color:'#ff2d00',acc:'linear-gradient(90deg,#ff2d00,transparent)',ph:'Was isch kaputt? Wo isch es passiert? Welches Gerät?',desc:''},
+  dampf: {icon:'💢',title:'DAMPF ABLASSE',   color:'#ff6600',acc:'linear-gradient(90deg,#ff6600,transparent)',ph:'Leg los. Alles raus. Kein Filter. Mir hörred zu.',desc:'Echt jetzt — alles darfst du säge. Mir nehmed das ernst.'},
   lob:   {icon:'▲',title:'DANKE FÜR DE LOB!',color:'#c8ff00',acc:'linear-gradient(90deg,#c8ff00,transparent)',ph:'Was isch geil? Was hebsch du am meischte?',desc:''},
-  other: {icon:'○',title:'ANDERES',         color:'#9333ea',acc:'linear-gradient(90deg,#9333ea,transparent)',ph:'Schrib eifach was de im Chopf hesch...',desc:''}
+  other: {icon:'○',title:'ANDERES',          color:'#9333ea',acc:'linear-gradient(90deg,#9333ea,transparent)',ph:'Schrib eifach was de im Chopf hesch...',desc:''}
 };
+
 let currentType='';
 
 function openModal(t){
@@ -277,7 +278,7 @@ async function sendFeedback(){
       body:JSON.stringify({typ:currentType,nachricht:text})
     });
   }catch(e){}
-  btn.textContent='✅ GSCHICKT — MERCI!';
+  btn.textContent='⚡ GSCHICKT!';
   setTimeout(closeModal,1800);
 }
 
@@ -285,11 +286,10 @@ document.getElementById('modalOverlay').addEventListener('click',e=>{
   if(e.target===document.getElementById('modalOverlay'))closeModal();
 });
 
-/* ═══════════════════════════════════════════
-   SHAKE EASTER EGG
-   NUR auf Touch-Geräten (iPhone/iPad/Android)
-   Desktop bekommt NICHTS — kein Dialog, nie!
-═══════════════════════════════════════════ */
+/* ═══════════════════════════════════════
+   SHAKE — NUR AUF TOUCH-GERÄTEN
+   Desktop: kein Code, kein Dialog, nie!
+═══════════════════════════════════════ */
 function closeShake(){
   document.getElementById('shakeOverlay').classList.remove('active');
 }
@@ -333,9 +333,9 @@ if(isTouchDevice && window.DeviceMotionEvent){
     });
   }
 
-  /* iOS 13+: Permission erst beim ersten Bubble-Tippen — nicht beim Laden */
+  /* iOS 13+: Permission erst beim ersten Bubble-Tippen */
   const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
-  if(isIOS && typeof DeviceMotionEvent.requestPermission==='function'){
+  if(isIOS&&typeof DeviceMotionEvent.requestPermission==='function'){
     let permAsked=false;
     document.querySelectorAll('.bubble').forEach(b=>{
       b.addEventListener('touchend',()=>{
@@ -350,7 +350,6 @@ if(isTouchDevice && window.DeviceMotionEvent){
     startShakeListener();
   }
 }
-/* Desktop: kein Code, kein Dialog, nie */
 </script>
 
 </body>
