@@ -21,7 +21,6 @@
 body { background:var(--black); color:var(--white); font-family:'DM Mono',monospace; height:100vh; overflow:hidden; cursor:none; perspective:1200px; }
 
 .cursor { width:8px; height:8px; background:var(–red); border-radius:50%; position:fixed; pointer-events:none; z-index:9999; transform:translate(-50%,-50%); box-shadow:0 0 10px var(–red); }
-/* FIX: Cursor-Ring auf 0s — klebt sofort am Cursor */
 .cursor-ring { width:36px; height:36px; border:1px solid rgba(255,45,0,.6); border-radius:50%; position:fixed; pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:all 0s; }
 
 .scanlines { position:fixed; inset:0; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px); pointer-events:none; z-index:1; }
@@ -37,7 +36,6 @@ header { position:fixed; top:0; left:0; right:0; padding:1.5rem 2rem; display:fl
 .logo { font-family:‘Barlow Condensed’,sans-serif; font-style:italic; font-weight:900; font-size:1.4rem; display:flex; align-items:center; gap:.5rem; cursor:none; text-decoration:none !important; color:#e8e4d9 !important; }
 .logo-dot { width:8px; height:8px; background:var(–red); border-radius:50%; animation:pulseDot 2s infinite; flex-shrink:0; }
 @keyframes pulseDot { 0%,100%{box-shadow:0 0 6px var(–red)} 50%{box-shadow:0 0 20px var(–red),0 0 40px rgba(255,45,0,.3)} }
-/* FIX: Header-Text Zürideutsch */
 .page-label { font-size:.65rem; color:rgba(232,228,217,.25); letter-spacing:.25em; text-transform:uppercase; }
 
 .intro-text { position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; z-index:3; pointer-events:none; animation:ghostFade 1.5s ease 3s forwards; }
@@ -137,7 +135,6 @@ header { position:fixed; top:0; left:0; right:0; padding:1.5rem 2rem; display:fl
 /* FEUERWERK */
 .shake-overlay { position:fixed; inset:0; z-index:500; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s ease; }
 .shake-overlay.active { opacity:1; pointer-events:all; }
-/* FIX: Feuerwerk länger — 2s Animation */
 .particle { position:fixed; width:8px; height:8px; border-radius:50%; pointer-events:none; z-index:490; animation:particleFly 2s ease-out forwards; }
 @keyframes particleFly { 0%{transform:translate(0,0) scale(1);opacity:1} 100%{transform:translate(var(–tx),var(–ty)) scale(0);opacity:0} }
 .shake-message { position:relative; z-index:501; text-align:center; padding:2.5rem 2rem; background:rgba(4,4,10,.96); border:1px solid rgba(255,45,0,.3); border-radius:1.5rem; max-width:340px; backdrop-filter:blur(20px); box-shadow:0 0 80px rgba(255,45,0,.2),0 40px 80px rgba(0,0,0,.8); animation:messageIn .5s cubic-bezier(.34,1.56,.64,1) forwards; }
@@ -187,11 +184,8 @@ textarea::placeholder { color:rgba(232,228,217,.18); }
 
 <header>
   <a class="logo" href="index.html"><div class="logo-dot"></div>STADTPULS</a>
-  <!-- FIX: Zürideutsch Header -->
   <div class="page-label">FEEDBACK -- SÄG OIS WAS DU DÄNKSCH</div>
 </header>
-
-<!-- FIX: DÄNKSCH statt DENKSCH -->
 
 <div class="intro-text">
   <h1>SÄG OIS<br><span class="accent">WAS</span><br>DU DÄNKSCH.</h1>
@@ -295,7 +289,7 @@ textarea::placeholder { color:rgba(232,228,217,.18); }
         <button class="modal-close" onclick="closeModal()">✕</button>
       </div>
     </div>
-    <textarea id="modalText" placeholder="Schrib us was du denksch..."></textarea>
+    <textarea id="modalText" placeholder="Schrib us was du dänksch..."></textarea>
     <div class="modal-footer">
       <button class="modal-send" id="modalSend" onclick="sendFeedback()">ABSCHICKE →</button>
       <span class="modal-char" id="charCount">0 / 500</span>
@@ -304,7 +298,7 @@ textarea::placeholder { color:rgba(232,228,217,.18); }
 </div>
 
 <script>
-// Cursor — Ring folgt sofort (0s)
+// Cursor — Ring folgt sofort
 const cur=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
 let mx=0,my=0;
 document.addEventListener('mousemove',e=>{
@@ -373,7 +367,6 @@ function closeSmile(){
 
 const FWCOLORS=['#ff2d00','#c8ff00','#00f5ff','#9333ea','#ffd93d','#ff6b00','#ff2d88','#e8e4d9'];
 function spawnParticles(){
-  // FIX: 120 Partikel, 3s timeout
   for(let i=0;i<120;i++){
     const p=document.createElement('div');
     p.className='particle';
