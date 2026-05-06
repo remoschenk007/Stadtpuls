@@ -2029,6 +2029,20 @@ Farb-Legende:
 	•	⚫ Grau = Phase 5+
 
 Einfach unten im Masterplan anhängen. 🔴
+INSERT INTO sessions (datum, titel, inhalt, sort_order) VALUES
+('2026-05-06', 'feedback & kontakt — Zürideutsch + Fixes',
+'✅ feedback.html komplett neu — Em-Dash Bug gefixt
+✅ Zürideutsch: SÄG ÖIS WAS · Säg öis was · Schrib öis
+✅ ⚡ GSCHICKT! statt ✅
+✅ Smile-Blase 😏 nur Mobile via JavaScript
+✅ Supabase Insert aktiv in feedback.html
+✅ kontakt.html: RED MIT ÖIS · ZÄMMEARBEITE · KEI INVESTORS · WIITER
+✅ admin.html Titel: Dashboard
+✅ master.html RAW URLS für Claude eingetragen
+⏳ Smile-Blase überlappt ANDERES → Position fix nötig
+⏳ Intro-Text zu lange sichtbar → ghostFade auf 0.8s
+⏳ Shake-Blase auf iPad sichtbar → innerWidth < 768 Check nötig', 99);
+
 
 
 
