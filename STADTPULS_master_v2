@@ -2043,6 +2043,485 @@ INSERT INTO sessions (datum, titel, inhalt, sort_order) VALUES
 ⏳ Intro-Text zu lange sichtbar → ghostFade auf 0.8s
 ⏳ Shake-Blase auf iPad sichtbar → innerWidth < 768 Check nötig', 99);
 
+STADTPULS — MASTER BRIEFING
+Stand: 6. Mai 2026 — Abend — KOMPLETT
+© 2026 by raimondo* — «dä puls vo dä stadt»
+
+════════════════════════════════════════
+
+1. WER BIN ICH
+   ════════════════════════════════════════
+   Name: Remo Schenk
+   GitHub: remoschenk007
+   E-Mail: remoschenk@me.com
+   Hintergrund: Ehemaliger Gründer Homespeed.ch
+   Arbeitsgerät: iPad Pro
+   Sprache: Hochdeutsch von Claude / Züri-Slang nur auf dem Portal
+
+════════════════════════════════════════
+2. WAS IST STADTPULS
+════════════════════════════════════════
+Tagline: «dä puls vo dä stadt»
+Konzept: Interaktiver Lifestyle & City Guide Zürich
+Prinzip: Shopping Center — alles auf einer Plattform
+Vision: Was 2006 als Idee begann, wird 2026 mit KI gebaut.
+Strategie: Zürich first, perfekt machen → Hamburg, Berlin, Wien, London
+Monetarisierung: Gratis für User. Revenue via Partner.
+Copyright: © 2026 by raimondo*
+Live: https://depuls.ch (GitHub Pages)
+GitHub: https://github.com/remoschenk007/Stadtpuls
+Social Media:
+@stadtpuls_zh — live · 7 Follower · 1 Beitrag
+Gesichert: @stadtpuls_hamburg · @stadtpuls_berlin
+
+════════════════════════════════════════
+3. DESIGN-DNA
+════════════════════════════════════════
+#04040a — Midnight-Schwarz (Hintergrund)
+#ff2d00 — Lava-Rot (Akzent 1)
+#c8ff00 — Volt-Grün (Akzent 2)
+#00f5ff — Cyber-Cyan (Akzent 3)
+#9333ea — Lila (Dating / People & Dates)
+#e8e4d9 — Warm-Weiss (Text)
+#ffd93d — Gold (Züri Moment)
+#ff6b00 — Orange (Dampf ablasse)
+#ff2d88 — Pink (Smile / Easter Egg)
+
+Fonts:
+Barlow Condensed Italic 900 (Headlines)
+DM Mono (Body/Code)
+Bebas Neue (Logo)
+
+Spezial:
+Dualer Cursor (roter Punkt + Ring) — Ring folgt SOFORT (transition:0s)
+Doppel-Ticker gegenläufig
+Scan-Lines im Hero
+Grid-Overlay
+Reveal-Animationen (IntersectionObserver)
+Zürideutsch auf allen Seiten konsequent
+
+WICHTIG CSS-ENCODING-BUG:
+Alle CSS-Variablen IMMER als Hex schreiben (#ff2d00 statt var(–red))
+Grund: GitHub/iPad Copy-Paste wandelt – in – (En-Dash) um
+→ var(–red) funktioniert nicht → Farben verschwinden
+→ Lösung: Direkte Hex-Werte überall verwenden
+
+════════════════════════════════════════
+4. TECH-STACK
+════════════════════════════════════════
+Frontend: HTML / CSS / JS (Vanilla)
+Hosting: GitHub Pages → depuls.ch
+Editor: GitHub Web Editor (iPad) + Claude
+Backend: Supabase (live)
+DB: PostgreSQL + PostGIS via Supabase
+Auth: Supabase Auth (Phase 5)
+KI: Claude Pro (Anthropic) — Reset Di 08:00
+Kosten: Nur Claude Pro CHF 20.–/Mt — alles andere gratis
+Analyse: Plausible Analytics (live)
+
+════════════════════════════════════════
+5. DATEISTRUKTUR — AKTUELL
+════════════════════════════════════════
+Stadtpuls/
+├── index.html          ✅ Hauptseite
+├── feedback.html       ✅ Feedback-Blasen (aktuell bearbeitet)
+├── master.html         ✅ Admin-Dashboard (passwortgeschützt)
+├── admin.html          ✅
+├── kontakt.html        ✅
+├── impressum.html      ✅
+├── datenschutz.html    ✅
+├── import.html         ✅
+├── mindmap.html        ✅
+├── STADTPULS_master_v2 ✅ Dieses Dokument — einzige Wahrheit
+├── css/
+│   ├── base.css
+│   ├── components.css
+│   └── layout.css
+└── js/
+├── main.js         ✅ Commits zuverlässig
+├── supabase.js     ✅ Supabase Client
+└── api/
+└── zuerich.js  ⚠️ IGNORIEREN
+
+WICHTIG:
+go() Funktion aktiv = in index.html Script-Block (NICHT main.js)
+zuerich.js IGNORIEREN — Import-Logik läuft in main.js
+app.js existiert noch — kann gelöscht werden
+
+════════════════════════════════════════
+6. ALLE SEITEN — KOMPLETT
+════════════════════════════════════════
+Hauptkategorien (Nav):
+✅ Home / Events / Gastro / Nachtleben / Shopping / Immobilien / Marktplatz
+
+Detail-Seiten:
+✅ Event Detail / Gastro Detail / Club Detail / Immo Detail
+✅ Markt Detail / Post Detail / Job Detail / News Detail
+✅ Dating Profil / User Profil
+
+Zusätzliche Seiten (Hamburger-Menu):
+✅ GPS — Wo bisch du?
+✅ Soundtrack Züri / Musik & Sound
+✅ People & Dates
+✅ Jobs Züri / News & Stories / Community
+✅ Quartiere (Kreis 1, 4, 5, 8)
+✅ Partner & Kooperationen / Login / Register
+⏳ Mobilität (Seite vorhanden, noch leer)
+
+════════════════════════════════════════
+7. SUPABASE — AKTUELLER STAND
+════════════════════════════════════════
+URL: https://pnynkzrqnfoshojqfqxn.supabase.co
+Tabellen: locations, location_images
+230 Locations importiert via Zürich Tourismus API
+
+17 Spalten locations:
+id, name, kategorie, subkategorie, kreis, lat, lng,
+adresse, plz, oeffnungszeiten, tags, preis_niveau,
+slug, beschreibung, bild_alt, quelle, aktiv
+
+Status pro Kategorie:
+✅ Gastro → Supabase live
+✅ Nachtleben → Supabase live (Filter-Bug offen)
+❌ Shopping / Events / Immobilien / Marktplatz → noch Hardcode
+
+Geplante Tabellen (Phase 5):
+user_preferences (bookmarks, interessen, kreis)
+feedback (von feedback.html — noch nicht verbunden)
+news_stories (mit status: pending/approved/rejected)
+community_votes
+
+════════════════════════════════════════
+8. SUPABASE SQL — WICHTIGE QUERIES
+════════════════════════════════════════
+– Alle Locations einer Kategorie:
+SELECT * FROM locations WHERE kategorie = ‘Gastro’ AND aktiv = true;
+
+– Locations nach Kreis:
+SELECT * FROM locations WHERE kreis = 4 AND aktiv = true;
+
+– Locations in der Nähe (PostGIS):
+SELECT *, ST_Distance(
+ST_MakePoint(lng, lat)::geography,
+ST_MakePoint(8.5417, 47.3769)::geography
+) AS distanz
+FROM locations
+WHERE aktiv = true
+ORDER BY distanz ASC
+LIMIT 10;
+
+– Feedback Tabelle erstellen (noch ausstehend):
+CREATE TABLE feedback (
+id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+typ TEXT, – moment/idee/design/bug/dampf/lob/other
+text TEXT,
+created_at TIMESTAMP DEFAULT now()
+);
+
+– Sessions loggen (Insert Tool):
+INSERT INTO sessions (datum, thema, status, notiz)
+VALUES (now(), ‘feedback.html fixes’, ‘done’, ‘Encoding-Bug gefunden’);
+
+════════════════════════════════════════
+9. FEEDBACK.HTML — AKTUELLER STAND (6. Mai 2026)
+════════════════════════════════════════
+Seite live auf depuls.ch/feedback.html
+
+Blasen:
+✅ ZÜRI MOMENT (gold, gross, orbit-ring, NEU-badge)
+✅ IDEE (cyan)
+✅ DESIGN (grün)
+✅ BUG (rot)
+✅ DAMPF ABLASSE (orange)
+✅ LOB (grün, klein)
+✅ ANDERES (lila, bottom:22% — kein Overlap)
+✅ SMILE (pink, nur Mobile max-width:767px, bottom:22% links)
+
+Zürideutsch:
+✅ «SÄG OIS WAS DU DÄNKSCH.» — WAS in rot (#ff2d00)
+✅ Header: «FEEDBACK – SÄG OIS WAS DU DÄNKSCH»
+✅ Hint: «TIPF AUF DINI BLASE»
+✅ Textarea placeholder: «Schrib us was du dänksch…»
+
+Smile Easter Egg Flow (nur Mobile):
+
+1. User tippt auf 😊 SMILE Blase
+1. Overlay öffnet: «SCHÜTTLE DIS iPHONE!» + 📱 Animation
+1. iOS Permission für DeviceMotion wird geholt
+1. User schüttelt → smileWaiting=true Guard → nur dann aktiv
+1. Feuerwerk: 120 Partikel, 8 Farben, 2s Animation, 3s Timeout
+1. Nach 500ms: Dating Overlay «BOAH — DU HÄSCH’S GWÜSST!»
+1. Button: «ZU PEOPLE & DATES» → index.html?page=dating
+
+Fixes in dieser Session:
+✅ CSS Encoding-Bug behoben — alle var(–x) durch Hex ersetzt
+✅ textarea color:#e8e4d9 — weisse Schrift auf dunklem Hintergrund
+✅ Cursor-Ring transition:0s — klebt sofort am Cursor
+✅ Feuerwerk verlängert (120 Partikel, 2s, 3s)
+✅ Smile nur Mobile (@media max-width:767px)
+✅ b-other bottom:22% — kein Overlap mit b-smile/b-lob
+
+════════════════════════════════════════
+10. KI-SYSTEM PROBLEME — KRITISCH
+════════════════════════════════════════
+PROBLEM 1: MASTER DOKUMENT NICHT VOLLSTÄNDIG
+master.html (Admin-Dashboard) zeigt live Supabase-Daten
+aber hat WENIGER Kontext als STADTPULS_master_v2 (dieses Dokument)
+→ System funktioniert noch nicht reibungslos
+→ Lösung: Immer STADTPULS_master_v2 Raw-URL in neuen Chat laden
+→ master.html ist für Admin-Übersicht, nicht für KI-Kontext
+
+PROBLEM 2: VERSIONSKONFLIKTE
+Claude arbeitet mit der zuletzt gelesenen Raw-URL als Basis
+Wenn Commits nicht ankommen oder GitHub Cache zeigt alte Version:
+→ Claude überschreibt unbekannte Änderungen (Zürideutsch etc.)
+→ Lösung: Immer Raw-URL DIREKT VOR dem Schreiben frisch laden
+→ Nie auf Version im Chat-Kontext verlassen
+
+PROBLEM 3: ENCODING-BUG BEI COPY-PASTE
+GitHub Web Editor auf iPad wandelt – in – (En-Dash) um
+→ var(–red) wird zu var(–red) → funktioniert nicht
+→ Farben verschwinden, Cursor-Ring hängt
+→ Lösung: Direkte Hex-Werte überall (#ff2d00 statt var(–red))
+
+PROBLEM 4: GIT MERGE-KONFLIKTE
+Working Copy App und GitHub Web Editor können in Konflikt geraten
+→ feedback.html war «in Konflikt» — musste über GitHub Web Editor gelöst werden
+→ Lösung: Nur EINEN Editor gleichzeitig verwenden
+→ Empfehlung: GitHub Web Editor als primärer Editor
+
+PROBLEM 5: SUPABASE NICHT MIT MASTER VERBUNDEN
+feedback.html sendet aktuell kein Feedback an Supabase
+→ Feedback geht verloren
+→ SQL für feedback Tabelle noch nicht erstellt
+→ Verbindung feedback.html → Supabase ausstehend
+
+REGEL FÜR JEDEN NEUEN CHAT:
+
+1. Raw-URL STADTPULS_master_v2 laden
+1. Danach Raw-URL der zu bearbeitenden Datei laden
+1. Erst dann Code schreiben
+1. Nie blind arbeiten
+
+════════════════════════════════════════
+11. OFFENE BUGS — PRIORITÄT
+════════════════════════════════════════
+⏳ 1. feedback.html → Supabase verbinden (feedback Tabelle erstellen)
+⏳ 2. Nachtleben → Kategorie-Filter falsch (zeigt Gastro-Daten)
+⏳ 3. Register-Formular → nicht sichtbar, nur Login sichtbar
+⏳ 4. Login-Seite → Backtick-Zeichen sichtbar oben
+⏳ 5. Shopping / Events → noch Hardcode, nicht an Supabase
+
+════════════════════════════════════════
+12. ROADMAP
+════════════════════════════════════════
+✅ Phase 1  → Frontend
+✅ Phase 2  → Modularisierung
+✅ Phase 3a → Filter & Tabs — 08.04.2026
+✅ Phase 3b → GitHub aufgeräumt — 09.04.2026
+✅ Phase 4a → Supabase Setup — 09.04.2026
+✅ Phase 4b → Supabase Gastro live — 10.04.2026
+✅ Phase 4c → Styling CSS Klassen — 10.04.2026
+✅ Phase 4d → PLZ Spalte — 10.04.2026
+✅ Phase 4e → Zürich API erforscht — 10.04.2026
+✅ Phase 4f → 230 Locations importiert — 11.04.2026
+✅ Phase 4g → Gastro + Nachtleben live — 11.04.2026
+✅ Phase 4h → Doppel-Footer gefixt — April 2026
+✅ Phase 4n → feedback.html Zürideutsch + Easter Egg — 06.05.2026
+✅ Phase 4n → CSS Encoding-Bug behoben — 06.05.2026
+✅ Phase 4n → Smile Blase nur Mobile — 06.05.2026
+⏳ Phase 4i → Register + Backticks fixen
+⏳ Phase 4j → Nachtleben Filter fixen
+⏳ Phase 4k → Shopping + Events an Supabase
+⏳ Phase 4l → Bilder-URLs + Featured-Layout
+⏳ Phase 4m → ZVV API Mobilität
+⏳ Phase 4o → feedback.html → Supabase verbinden
+⏳ Phase 4p → index.html Zürideutsch-Kontrolle
+⏳ Phase 4q → Alle Seiten Zürideutsch-Kontrolle
+⏳ Phase 5  → Login · Onboarding · Community · Moderation
+⏳ Phase 5  → Bookmark/Favoriten System
+⏳ Phase 5  → User Profil & Settings
+⏳ Phase 5  → OpenTable · Ticketcorner APIs
+⏳ Phase 6  → KI Features (Züri-Bot, personalisierter Feed)
+⏳ Phase 7  → Hamburg, Berlin, Wien, London
+⏳ 4. Juni  → SOFT LAUNCH 🎂🔴
+
+════════════════════════════════════════
+13. ARCHITEKTUR — KRITISCH FÜR NEUE CHATS
+════════════════════════════════════════
+go() Funktion aktiv = in index.html Script-Block (NICHT main.js)
+Vor jeder Änderung Raw-URL checken — NIE BLIND ARBEITEN
+Chrome für Alert-Debugging (nicht Safari) auf iPad
+Commits in main.js zuverlässig
+zuerich.js IGNORIEREN
+CSS: Hex statt var() — Encoding-Bug Schutz
+Supabase URL: https://pnynkzrqnfoshojqfqxn.supabase.co
+
+════════════════════════════════════════
+14. FILTER & TABS
+════════════════════════════════════════
+Events     → Hüt · Wochenende · Konzert · Kultur · Open Air · Sport · Gratis
+Gastro     → Znacht · Zmittag · Brunch · Vegisch · Asiatisch · Mediterran · 📍
+Nachtleben → Techno · House · Jazz · Hip-Hop · Live Music · Afterhour · 📍
+Shopping   → Mode · Vintage · Design · Lokal · Sale · Pop-Up · 📍
+Immobilien → WG-Zimmer · 1-Zi · 2-Zi · 3+ Zi · Büro · Atelier · 📍
+Marktplatz → Velos · Möbel · Kleider · Tickets · Elektronik · 📍
+
+GPS Logik:
+→ Kreis 1 abends → Oper/Theater prominent
+→ Kreis 4 abends → Clubs/Bars prominent
+→ Kreis 5 abends → Techno/Industrie prominent
+
+════════════════════════════════════════
+15. SEO STRATEGIE
+════════════════════════════════════════
+Ziel: stadtpuls.ch/gastro · /events · /kreis/4 · /restaurant/langstrasse-77
+Phase 3 → Meta Tags, Schema.org, Open Graph
+Phase 4 → URL Routing, Ladezeit unter 2 Sekunden
+Phase 5 → Community Content täglich indexiert
+Ziel: Google AI antwortet «Laut Stadtpuls…» 🔴
+
+════════════════════════════════════════
+16. USER ONBOARDING — PHASE 5
+════════════════════════════════════════
+Progressive Onboarding — 5 Schritte (Duolingo-Prinzip):
+1 → Nickname
+2 → Quartier (Kreis 1-12)
+3 → Interessen: Gastro / Nachtleben / Dating / Jobs / Shopping / Kultur
+4 → Alter (Slider, optional, für Dating)
+5 → «Willkommen @nickname!» Konfetti 🎉
+→ Supabase Auth im Hintergrund
+
+════════════════════════════════════════
+17. BOOKMARK & FAVORITEN — PHASE 5
+════════════════════════════════════════
+USER SICHTBAR:
+❤️ / 🔖 Button auf jeder Location, Event, Artikel, Job, Inserat
+«Meine Favoriten» — eigene Liste, jederzeit abrufbar
+
+KI IM HINTERGRUND:
+Bookmark = starkes Signal · Anklicken = schwaches Signal · Ignorieren = negativ
+→ 10 Bookmarks = mehr Info als jeder Fragebogen
+
+TECHNISCH:
+Supabase Tabelle user_preferences
+Feld: bookmarks → Array von Location-IDs
+
+BUSINESS VALUE:
+500 User haben Restaurant gebookmarkt aber nie besucht
+→ Heisser Lead für Partner → Revenue via Bookmark-Insights
+
+════════════════════════════════════════
+18. USER PROFIL & SETTINGS — PHASE 5
+════════════════════════════════════════
+Profil-Seite: Bild · Nickname · Quartier · Interessen · Bookmarks öffentlich/privat
+Einstellungen: Bild/Nickname/E-Mail/Passwort ändern · Quartier aktualisieren
+Privacy: Profil sichtbar · Kontakt erlaubt · Push Notifications ein/aus
+Technisch: Supabase Auth für Reset · Alles im Browser ohne App-Store
+
+════════════════════════════════════════
+19. NEWS & STORIES — MODERATION
+════════════════════════════════════════
+Status-Spalte: pending / approved / rejected
+User postet → Queue → Admin gibt frei → live
+Verhindert rechtliche Probleme
+
+════════════════════════════════════════
+20. KI FEATURES — PHASE 5-6
+════════════════════════════════════════
+
+1. Züri-Bot → «Was mach ich heute Abend?»
+1. Personalisierter Feed → lernt was du magst
+1. Video Import → KI erkennt Züri-Locations
+1. Predictive → «Freitag Kreis 4 — wie immer?»
+1. Stimmungs-Matching → müde/energetisch/romantisch
+1. Push Alerts → «Event 200m · startet in 30min»
+
+════════════════════════════════════════
+21. MONETARISIERUNG
+════════════════════════════════════════
+OpenTable    → CHF 1-5 pro Buchung
+Ticketcorner → 5-10% pro Ticket
+Scout24      → Pay per Lead (Phase später)
+ZVV          → Integration geplant
+Bookmark-Insights → Revenue via Leads an Partner
+Prinzip: User verlässt Stadtpuls nie — alles unter einem Dach.
+
+════════════════════════════════════════
+22. WETTBEWERB
+════════════════════════════════════════
+Ron Orp      → 500k User · Newsletter · kein GPS · keine KI
+Tsüri.ch     → Journalismus · Membership · kein Lifestyle
+Tempo Zurich → Substack · Kultur · Englisch · ~2k Follower
+Zuri.net     → Adressverzeichnis · 709k Visits/Mt · veraltet
+Zuerich24    → Lokalzeitung · News/Sport · kein Lifestyle
+Mapin.social → App-only · nur Events · kein Gastro/Immo/Jobs
+Fazit: Niemand hat GPS + KI + alle Kategorien. Stadtpuls einzigartig.
+
+════════════════════════════════════════
+23. DIE VISION
+════════════════════════════════════════
+Handy · Stadtpuls offen · durch Zürich laufen
+GPS → 200m Radius → Restaurant → Menü → OpenTable → reserviert
+GPS → Event → Ticketcorner → Ticket gekauft
+GPS → Marktplatz → Velo gefunden
+ZVV → Nächstes Tram 3 Minuten · Richtung Bellevue
+KI → lernt was du magst → zeigt es bevor du suchst
+
+════════════════════════════════════════
+24. GITHUB DOKUMENTE
+════════════════════════════════════════
+STADTPULS_master_v2    ✅ Dieses Dokument — EINZIGE WAHRHEIT
+STADTPULS_master       ✅ Alt — Backup — nicht verwenden
+STADTPULS_BRIEFING_alt ✅ Archiviert
+STADTPULS_SESSION_07_APRIL ✅ Archiv
+STADTPULS_TECHNIK_APRIL    ✅ Archiv
+
+Regel: Immer nur STADTPULS_master_v2 Raw-URL in neuen Chat laden.
+master.html = Admin-Dashboard (live Supabase) ≠ KI-Kontext
+
+════════════════════════════════════════
+25. ARBEITS-HINWEISE — PFLICHTREGELN
+════════════════════════════════════════
+
+1. IMMER zuerst Raw-URL laden — nie blind arbeiten
+1. Reihenfolge: master_v2 lesen → Datei lesen → Code schreiben
+1. CSS: Hex-Farben direkt (#ff2d00) — nie var() wegen Encoding-Bug
+1. iPad · Datei für Datei · nie zu viel auf einmal
+1. Hochdeutsch von Claude / Züri-Slang nur auf Portal
+1. Claude Pro Reset Di 08:00
+1. Chrome für Alert-Debugging (nicht Safari)
+1. Commits: ✅ Was gemacht / ❌ Was noch offen
+1. Nur EINEN Editor gleichzeitig (GitHub Web Editor bevorzugt)
+1. Supabase SQL immer testen bevor einbinden
+
+════════════════════════════════════════
+26. SESSION LOG — 6. MAI 2026
+════════════════════════════════════════
+HEUTE ERLEDIGT:
+✅ feedback.html — kompletter Rebuild mit allen Fixes
+✅ CSS Encoding-Bug gefunden und dauerhaft gelöst (Hex statt var())
+✅ «SÄG OIS WAS DU DÄNKSCH» — echter Züri-Slang
+✅ WAS in Rot (#ff2d00)
+✅ Textarea weisse Schrift (color:#e8e4d9)
+✅ Cursor-Ring transition:0s — sofort
+✅ Feuerwerk: 120 Partikel, 2s, 3s timeout
+✅ Smile-Blase (#ff2d88) — nur Mobile, tippen → schütteln → Feuerwerk → Dating
+✅ b-other bottom:22% — kein Overlap
+✅ Git Merge-Konflikt in Working Copy gelöst (via GitHub Web Editor)
+✅ STADTPULS_master_v2 aktualisiert
+
+NOCH OFFEN (nächste Session):
+⏳ feedback.html → Supabase verbinden (feedback Tabelle + SQL erstellen)
+⏳ index.html Zürideutsch-Kontrolle
+⏳ Alle weiteren Seiten Zürideutsch-Kontrolle
+⏳ Nachtleben Filter-Bug fixen
+⏳ Register-Formular fixen
+
+════════════════════════════════════════
+«Zürich first. Dann die Welt.» 🔴
+════════════════════════════════════════
+
 
 
 
