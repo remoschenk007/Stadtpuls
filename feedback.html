@@ -136,7 +136,7 @@ header { position:fixed; top:0; left:0; right:0; padding:1.5rem 2rem; display:fl
 .shake-overlay { position:fixed; inset:0; z-index:500; display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity .3s ease; }
 .shake-overlay.active { opacity:1; pointer-events:all; }
 .particle { position:fixed; width:8px; height:8px; border-radius:50%; pointer-events:none; z-index:490; animation:particleFly 2s ease-out forwards; }
-@keyframes particleFly { 0%{transform:translate(0,0) scale(1);opacity:1} 100%{transform:translate(var(–tx),var(–ty)) scale(0);opacity:0} }
+@keyframes particleFly { 0%{transform:translate(0,0) scale(1);opacity:1} 100%{transform:translate(var(--tx),var(--ty)) scale(0);opacity:0} }
 .shake-message { position:relative; z-index:501; text-align:center; padding:2.5rem 2rem; background:rgba(4,4,10,.96); border:1px solid rgba(255,45,0,.3); border-radius:1.5rem; max-width:340px; backdrop-filter:blur(20px); box-shadow:0 0 80px rgba(255,45,0,.2),0 40px 80px rgba(0,0,0,.8); animation:messageIn .5s cubic-bezier(.34,1.56,.64,1) forwards; }
 @keyframes messageIn { from{transform:scale(.5) rotate(-5deg)} to{transform:scale(1) rotate(0deg)} }
 .shake-emoji { font-size:3rem; display:block; margin-bottom:1rem; animation:wiggle .5s ease-in-out infinite alternate; }
