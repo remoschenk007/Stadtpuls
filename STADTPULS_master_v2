@@ -2629,6 +2629,26 @@ krass            → KRASS / SCHAMPAR KRASS
 ganz             → GANZ / VOLL
 
 
+
+════════════════════════════════════════
+27. SESSION LOG — 7. MAI 2026
+════════════════════════════════════════
+HEUTE ERLEDIGT:
+✅ VS Code auf Mac installiert
+✅ Repo lokal geklont (index.html = 1639 Zeilen)
+✅ Zürideutsch Glossar committed (STADTPULS_master_v2 = 2639 Zeilen)
+✅ Supabase feedback Tabelle erstellt
+✅ Erkenntnis: Kategorien in Supabase kleingeschrieben
+   → 'gastro' / 'nachtleben' → das ist der Filter-Bug!
+✅ Gastro Subkategorien bestätigt:
+   cafe (67) · italienisch (64) · asiatisch (32) · american (25)
+
+NOCH OFFEN (nächste Session):
+⏳ Nachtleben Filter-Bug fixen (kategorie = 'nachtleben' lowercase)
+⏳ index.html Zürideutsch-Kontrolle in VS Code
+⏳ feedback.html → Supabase verbinden
+
+
 Soll ich das jetzt direkt in den Master v2 einbauen und committen? 🔴​​​​​​​​​​​​​​​​
 
 
