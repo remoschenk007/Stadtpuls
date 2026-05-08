@@ -2648,6 +2648,53 @@ NOCH OFFEN (nächste Session):
 ⏳ index.html Zürideutsch-Kontrolle in VS Code
 ⏳ feedback.html → Supabase verbinden
 
+Gute Idee! Frischer Start. 😄
+Hier der Master Update — Session 8. Mai 2026:
+
+════════════════════════════════════════
+27. SESSION LOG — 7. MAI 2026
+════════════════════════════════════════
+HEUTE ERLEDIGT:
+✅ VS Code auf Mac installiert
+✅ Repo lokal geklont
+✅ Zürideutsch Glossar committed
+✅ Supabase feedback Tabelle bestätigt (existiert bereits)
+✅ Supabase RLS Policies bestätigt:
+   → Insert: anon ✅
+   → Select: authenticated ✅
+✅ feedback.html komplett neu geschrieben
+✅ Supabase Insert eingebaut (typ + text)
+✅ Encoding-Bug in CSS gefixt (Hex statt var())
+
+NOCH OFFEN:
+⏳ particleFly Encoding-Bug:
+   var(–tx) / var(–ty) → var(--tx) / var(--ty)
+   → En-Dash statt doppelter Bindestrich
+   → Im Terminal fixen mit sed Befehl
+
+════════════════════════════════════════
+CLAUDE AUF MAC — SETUP:
+✅ Mac hat eigenen Claude Account
+   → Apple Private Relay E-Mail
+   → rmsqqwq29d@privaterelay.appleid.com
+⚠️ NICHT derselbe Account wie iPad/iPhone
+⚠️ Kein Chat-Verlauf auf Mac sichtbar
+→ Lösung: Immer STADTPULS_master_v2
+  in neuen Chat laden — dann hat
+  Claude den kompletten Kontext
+════════════════════════════════════════
+
+ROADMAP UPDATE:
+✅ Phase 4o → feedback.html → Supabase live
+⏳ Phase 4p → particleFly Bug fixen
+⏳ Phase 4q → index.html Zürideutsch-Kontrolle
+⏳ Phase 4r → Nachtleben Filter-Bug fixen
+
+SOFT LAUNCH: 4. Juni 2026 🔴
+
+
+Das in den Master reinkopieren → committen → dann neuer Chat auf Mac! 🔴​​​​​​​​​​​​​​​​
+
 
 Soll ich das jetzt direkt in den Master v2 einbauen und committen? 🔴​​​​​​​​​​​​​​​​
 
