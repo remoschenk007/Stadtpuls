@@ -22,7 +22,7 @@ body { background:#04040a; color:#e8e4d9; font-family:'DM Mono',monospace; heigh
 .corner-bl { bottom:0; left:0; border-bottom:1px solid rgba(255,45,0,.3); border-left:1px solid rgba(255,45,0,.3); }
 .corner-br { bottom:0; right:0; border-bottom:1px solid rgba(255,45,0,.3); border-right:1px solid rgba(255,45,0,.3); }
 
-header { position:fixed; top:0; left:0; right:0; padding:1.5rem 2rem; display:flex; align-items:center; justify-content:space-between; z-index:100; border-bottom:1px solid rgba(255,255,255,.04); }
+header { position:fixed; top:0; left:0; right:0; padding:calc(1.5rem + env(safe-area-inset-top)) 2rem; display:flex; align-items:center; justify-content:space-between; z-index:100; border-bottom:1px solid rgba(255,255,255,.04); }
 .logo { font-family:‘Barlow Condensed’,sans-serif; font-style:italic; font-weight:900; font-size:1.4rem; display:flex; align-items:center; gap:.5rem; cursor:none; text-decoration:none; color:#e8e4d9; }
 .logo-dot { width:8px; height:8px; background:#ff2d00; border-radius:50%; animation:pulseDot 2s infinite; flex-shrink:0; }
 @keyframes pulseDot { 0%,100%{box-shadow:0 0 6px #ff2d00} 50%{box-shadow:0 0 20px #ff2d00,0 0 40px rgba(255,45,0,.3)} }
