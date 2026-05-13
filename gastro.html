@@ -2,386 +2,385 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STADTPULS — GASTRO ZÜRICH</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>STADTPULS — GASTRO</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 :root{--r:#ff2d00;--g:#c8ff00;--c:#00f5ff;--l:#9333ea;--w:#e8e4d9;--b:#04040a;--d:#0a0a14;--bo:rgba(255,45,0,0.1)}
-body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none}
-body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px);pointer-events:none;z-index:9998}
+body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px);pointer-events:none;z-index:9997}
 
-/* DUAL CURSOR */
-#c1{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-#c2{position:fixed;width:36px;height:36px;border:1px solid rgba(255,45,0,.4);border-radius:50%;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease}
-
-/* TICKER */
-.ticker-wrap{overflow:hidden;background:#04040a;border-bottom:1px solid var(--bo)}
-.ticker-row{padding:7px 0;overflow:hidden}
-.ticker-row+.ticker-row{border-top:1px solid rgba(255,45,0,.06)}
-.tick{display:flex;white-space:nowrap}
-.tick.l{animation:tL 30s linear infinite}
-.tick.r{animation:tR 30s linear infinite}
-.ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(255,45,0,.35)}
-.ti b{color:#ff2d00;font-weight:400}
-.ti.g{color:rgba(200,255,0,.3)}
-.ti.g b{color:#c8ff00}
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:none}
+#cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(255,45,0,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease}
 
 /* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid var(--bo);position:sticky;top:0;background:#04040a;z-index:400}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:9px}
-.ldot{width:8px;height:8px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
-.nav-c{display:flex;gap:32px}
-.nc{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.22);transition:.15s}
-.nc:hover{color:rgba(232,228,217,.6)}
-.nc.on{color:#ff2d00}
-.nav-r{display:flex;align-items:center;gap:10px}
-.gps-btn{display:flex;align-items:center;gap:7px;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;border:1px solid rgba(0,245,255,.2);padding:6px 12px;transition:.15s}
-.gps-btn:hover{border-color:#00f5ff;background:rgba(0,245,255,.04)}
-.gps-btn::before{content:'';width:6px;height:6px;border-radius:50%;background:#00f5ff;animation:blink 1.5s infinite;flex-shrink:0}
-.btn-mm{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:9px 18px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:52px;border-bottom:1px solid rgba(255,45,0,.1);position:sticky;top:0;background:#04040a;z-index:300}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px}
+.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
+.nav-links{display:flex;gap:28px}
+.nl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2)}
+.nl.on{color:#ff2d00}
+.btn-mm{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:8px 16px}
 
-/* GPS LIVE STRIP */
-.gps-strip{background:rgba(0,245,255,.03);border-bottom:1px solid rgba(0,245,255,.1);padding:11px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
-.gps-l{display:flex;align-items:center;gap:14px}
-.gps-ping{width:10px;height:10px;border-radius:50%;background:#00f5ff;position:relative;flex-shrink:0}
-.gps-ping::after{content:'';position:absolute;inset:-4px;border:1px solid rgba(0,245,255,.3);border-radius:50%;animation:ripple 2s ease-out infinite}
-.gps-info{}
-.gps-main{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff}
-.gps-sub{font-size:8px;color:rgba(0,245,255,.4);letter-spacing:1px;margin-top:2px}
-.gps-data{display:flex;gap:20px;flex-wrap:wrap}
-.gd{text-align:center}
-.gd-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#00f5ff;line-height:1}
-.gd-l{font-size:7px;letter-spacing:1px;color:rgba(0,245,255,.35);text-transform:uppercase;margin-top:1px}
-.gps-cta{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,245,255,.35);border:1px solid rgba(0,245,255,.15);padding:5px 12px;transition:.15s}
-.gps-cta:hover{color:#00f5ff;border-color:#00f5ff}
+/* ═══════════════════════════════════
+   SMART FILTER BAR — DESKTOP
+   ═══════════════════════════════════ */
+.filter-bar{position:sticky;top:52px;z-index:200;background:#04040a;border-bottom:1px solid rgba(255,45,0,.1)}
 
-/* HERO */
-.hero{padding:60px 40px 0;display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:start}
-.hero-l{}
-.hero-eye{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:rgba(232,228,217,.18);margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.hero-eye::before{content:'';width:28px;height:1px;background:#ff2d00}
-.hero-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(90px,11vw,180px);line-height:.82;text-transform:uppercase;color:#c8ff00}
-.hero-hl2{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(60px,7vw,110px);line-height:.9;text-transform:uppercase;color:rgba(232,228,217,.08);margin-top:-8px}
-.hero-desc{font-size:10px;color:rgba(232,228,217,.4);line-height:1.9;margin-top:20px;max-width:440px}
+/* AKTIVE TAGS */
+.af-row{display:flex;align-items:center;gap:6px;padding:6px 40px;min-height:34px;border-bottom:1px solid rgba(255,45,0,.05);flex-wrap:wrap;transition:all .2s}
+.af-row:empty{display:none}
+.af-row:not(:has(.af-tag)){display:none}
+.af-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border:1px solid rgba(255,45,0,.35);background:rgba(255,45,0,.05);font-size:7px;letter-spacing:1px;text-transform:uppercase;color:#ff2d00;animation:tagIn .2s ease both}
+.af-tag.g{border-color:rgba(200,255,0,.35);background:rgba(200,255,0,.05);color:#c8ff00}
+.af-tag.c{border-color:rgba(0,245,255,.35);background:rgba(0,245,255,.05);color:#00f5ff}
+.af-tag.gold{border-color:rgba(255,204,0,.35);background:rgba(255,204,0,.05);color:#ffcc00}
+.af-x{opacity:.45;font-size:11px;line-height:1;margin-left:1px;cursor:none}
+.af-x:hover{opacity:1}
+.af-reset{margin-left:auto;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);border:1px solid rgba(232,228,217,.08);padding:3px 9px;cursor:none;transition:.15s;flex-shrink:0}
+.af-reset:hover{color:#ff2d00;border-color:rgba(255,45,0,.3)}
 
-/* ZÜRI BOT */
-.bot-card{margin-top:28px;border:1px solid rgba(255,45,0,.12);background:#07070f;padding:20px;position:relative;overflow:hidden;padding-bottom:56px}
-.bot-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,#ff2d00 0%,rgba(255,45,0,0) 100%)}
-.bot-top{display:flex;align-items:center;gap:10px;margin-bottom:12px}
-.bot-badge{font-size:7px;letter-spacing:2px;text-transform:uppercase;background:#ff2d00;color:#e8e4d9;padding:3px 8px}
-.bot-model{font-size:7px;color:rgba(232,228,217,.2);letter-spacing:1px}
-.bot-msg{font-size:11px;color:rgba(232,228,217,.65);line-height:1.8}
+/* TYP SEGMENT — RESTAURANT / BAR / CAFÉ */
+.typ-row{display:flex;align-items:stretch;border-bottom:1px solid rgba(255,45,0,.08)}
+.typ-lbl{display:flex;align-items:center;padding:0 16px;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.12);border-right:1px solid rgba(255,45,0,.06);flex-shrink:0}
+.typ-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 20px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.06);cursor:none;transition:.2s;position:relative;flex:1;max-width:160px}
+.typ-btn::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#ff2d00;transform:scaleX(0);transition:.2s;transform-origin:center}
+.typ-btn.on::after{transform:scaleX(1)}
+.typ-btn:hover{background:rgba(255,45,0,.03)}
+.typ-btn.on{background:rgba(255,45,0,.05)}
+.typ-icon{font-size:16px;line-height:1;margin-bottom:3px}
+.typ-name{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.35);transition:.2s}
+.typ-btn.on .typ-name{color:#ff2d00}
+.typ-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;color:rgba(232,228,217,.15);line-height:1;transition:.2s}
+.typ-btn.on .typ-count{color:#ff2d00}
+
+/* KÜCHEN CHIPS — animiert */
+.kueche-row{display:flex;align-items:center;border-bottom:1px solid rgba(255,45,0,.06);overflow-x:auto;min-height:40px;transition:all .3s}
+.kueche-row::-webkit-scrollbar{display:none}
+.kr-lbl{display:flex;align-items:center;padding:0 14px;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.1);border-right:1px solid rgba(255,45,0,.05);flex-shrink:0;white-space:nowrap}
+.kchip{display:flex;align-items:center;gap:5px;padding:8px 14px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.05);color:rgba(232,228,217,.25);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;cursor:none;transition:.15s;white-space:nowrap;flex-shrink:0;position:relative}
+.kchip:hover{color:#e8e4d9;background:rgba(255,45,0,.03)}
+.kchip.on{color:#04040a;background:#ff2d00}
+.kchip.disabled{opacity:.2;pointer-events:none}
+.kchip-emoji{font-size:11px}
+.kchip-cnt{font-size:7px;color:rgba(232,228,217,.2);margin-left:1px}
+.kchip.on .kchip-cnt{color:rgba(4,4,10,.5)}
+/* Fade-Indikator rechts */
+.kueche-row-wrap{position:relative;overflow:hidden}
+.kueche-row-wrap::after{content:'';position:absolute;right:0;top:0;bottom:0;width:40px;background:linear-gradient(to right,transparent,#04040a);pointer-events:none;z-index:1}
+
+/* KREIS + QUER ROW */
+.bottom-row{display:flex;align-items:stretch;overflow-x:auto}
+.bottom-row::-webkit-scrollbar{display:none}
+.kr-btn{padding:7px 10px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.05);color:rgba(232,228,217,.18);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1px;cursor:none;transition:.15s;white-space:nowrap;flex-shrink:0;position:relative}
+.kr-btn:hover{color:#00f5ff;background:rgba(0,245,255,.03)}
+.kr-btn.on{color:#04040a;background:#00f5ff}
+.kr-dot{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:#ff2d00;opacity:0}
+.kr-btn.has .kr-dot{opacity:1}
+.kr-btn.on .kr-dot{background:#04040a}
+.fsep{width:1px;background:rgba(255,45,0,.2);flex-shrink:0}
+.q-btn{display:flex;align-items:center;gap:5px;padding:7px 12px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.05);color:rgba(232,228,217,.2);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;cursor:none;transition:.15s;white-space:nowrap;flex-shrink:0}
+.q-btn.offe.on,.q-btn.offe:hover{color:#c8ff00;background:rgba(200,255,0,.04)}
+.q-btn.naehe.on,.q-btn.naehe:hover{color:#00f5ff;background:rgba(0,245,255,.04)}
+.q-btn.ki.on,.q-btn.ki:hover{color:#c8ff00;background:rgba(200,255,0,.04)}
+.q-btn.res.on,.q-btn.res:hover{color:#ffcc00;background:rgba(255,204,0,.04)}
+.q-dot{width:4px;height:4px;border-radius:50%;background:currentColor;animation:blink 1.5s infinite}
+
+/* RESULT BAR */
+.result-bar{display:flex;align-items:center;justify-content:space-between;padding:7px 40px;border-bottom:1px solid rgba(255,45,0,.06)}
+.rb-l{display:flex;align-items:center;gap:10px}
+.rb-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;color:#ff2d00;line-height:1;transition:all .3s}
+.rb-label{font-size:8px;letter-spacing:1px;color:rgba(232,228,217,.25);text-transform:uppercase}
+.rb-ki{font-size:7px;color:rgba(200,255,0,.45);letter-spacing:1px;display:none;align-items:center;gap:5px}
+.rb-ki::before{content:'';width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite}
+.rb-r{display:flex;gap:0}
+.sort-btn{font-size:7px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,45,0,.08);border-right:none;color:rgba(232,228,217,.2);background:transparent;cursor:none;transition:.15s}
+.sort-btn:last-child{border-right:1px solid rgba(255,45,0,.08)}
+.sort-btn.on{border-color:#ff2d00;color:#ff2d00;background:rgba(255,45,0,.05)}
+
+/* ═══════════════════════════════════
+   MOBILE FILTER — BOTTOM SHEET
+   ═══════════════════════════════════ */
+.mobile-fab{display:none;position:fixed;bottom:24px;right:24px;z-index:400;width:56px;height:56px;border-radius:50%;background:#ff2d00;border:none;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 20px rgba(255,45,0,.4);animation:fabPulse 3s ease-in-out infinite}
+@keyframes fabPulse{0%,100%{box-shadow:0 4px 20px rgba(255,45,0,.4)}50%{box-shadow:0 4px 32px rgba(255,45,0,.7)}}
+.sheet-overlay{position:fixed;inset:0;background:rgba(4,4,10,.85);z-index:500;opacity:0;pointer-events:none;transition:opacity .3s}
+.sheet-overlay.on{opacity:1;pointer-events:all}
+.sheet{position:fixed;bottom:-100%;left:0;right:0;background:#04040a;border-top:1px solid rgba(255,45,0,.2);border-radius:20px 20px 0 0;z-index:501;transition:bottom .35s cubic-bezier(.32,.72,0,1);max-height:85vh;overflow-y:auto;padding-bottom:env(safe-area-inset-bottom)}
+.sheet.open{bottom:0}
+.sheet-handle{width:36px;height:4px;background:rgba(232,228,217,.15);border-radius:2px;margin:12px auto 0}
+.sheet-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid rgba(255,45,0,.08)}
+.sheet-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;text-transform:uppercase}
+.sheet-close{width:30px;height:30px;border:1px solid rgba(232,228,217,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(232,228,217,.3);font-size:14px}
+/* TYP CARDS im Sheet */
+.sheet-section{padding:16px 20px}
+.sheet-section-title{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:12px}
+.typ-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
+.typ-card{border:1px solid rgba(255,45,0,.1);padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:none;transition:.2s;background:#0a0a14}
+.typ-card.on{border-color:#ff2d00;background:rgba(255,45,0,.08)}
+.typ-card-icon{font-size:24px}
+.typ-card-name{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.35)}
+.typ-card.on .typ-card-name{color:#ff2d00}
+.typ-card-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;color:rgba(232,228,217,.2)}
+.typ-card.on .typ-card-count{color:#ff2d00}
+/* Küchen Grid im Sheet */
+.kueche-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.kgrid-btn{border:1px solid rgba(255,45,0,.08);padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:none;transition:.15s;background:#0a0a14}
+.kgrid-btn.on{border-color:#ff2d00;background:rgba(255,45,0,.06)}
+.kgrid-btn-emoji{font-size:18px}
+.kgrid-btn-name{font-size:7px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.3);text-align:center}
+.kgrid-btn.on .kgrid-btn-name{color:#ff2d00}
+.kgrid-btn-cnt{font-size:8px;color:rgba(232,228,217,.15)}
+.kgrid-btn.on .kgrid-btn-cnt{color:rgba(255,45,0,.5)}
+/* Kreis Grid im Sheet */
+.kreis-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.kgrid-k{border:1px solid rgba(255,45,0,.08);padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:none;transition:.15s;background:#0a0a14}
+.kgrid-k.on{border-color:#00f5ff;background:rgba(0,245,255,.05)}
+.kgrid-k-name{font-size:8px;letter-spacing:1px;color:rgba(232,228,217,.3)}
+.kgrid-k.on .kgrid-k-name{color:#00f5ff}
+.kgrid-k-cnt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;color:rgba(232,228,217,.15)}
+.kgrid-k.on .kgrid-k-cnt{color:#00f5ff}
+/* Quer im Sheet */
+.quer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.quer-btn-sheet{border:1px solid rgba(255,45,0,.08);padding:10px 14px;display:flex;align-items:center;gap:8px;cursor:none;transition:.15s;background:#0a0a14;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.3)}
+.quer-btn-sheet.on.offe{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,.04)}
+.quer-btn-sheet.on.naehe{border-color:#00f5ff;color:#00f5ff;background:rgba(0,245,255,.04)}
+.quer-btn-sheet.on.ki{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,.04)}
+.quer-btn-sheet.on.res{border-color:#ffcc00;color:#ffcc00;background:rgba(255,204,0,.04)}
+/* Sheet Actions */
+.sheet-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:16px 20px;border-top:1px solid rgba(255,45,0,.08);position:sticky;bottom:0;background:#04040a}
+.sheet-apply{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:14px;display:flex;align-items:center;justify-content:center;gap:8px}
+.sheet-reset{background:transparent;border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.35);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:14px}
+
+/* ═══════════════════════════════════
+   HERO
+   ═══════════════════════════════════ */
+.hero{padding:44px 40px 0;display:grid;grid-template-columns:1fr 360px;gap:36px}
+.hero-eye{font-size:7px;letter-spacing:4px;text-transform:uppercase;color:rgba(232,228,217,.12);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.hero-eye::before{content:'';width:22px;height:1px;background:#ff2d00}
+.hero-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(80px,10vw,160px);line-height:.82;text-transform:uppercase;color:#c8ff00}
+.hero-sub-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(50px,6vw,88px);line-height:.9;text-transform:uppercase;color:rgba(232,228,217,.05);margin-top:-4px}
+/* DYNAMIC HEADLINE */
+.dynamic-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;color:#ff2d00;margin-top:16px;min-height:28px;transition:all .3s;letter-spacing:1px}
+.hero-desc{font-size:10px;color:rgba(232,228,217,.3);line-height:1.9;margin-top:10px;max-width:400px}
+
+/* BOT */
+.bot{margin-top:20px;border:1px solid rgba(255,45,0,.1);background:#07070f;padding:16px;position:relative;overflow:hidden;padding-bottom:44px}
+.bot::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,#ff2d00,transparent)}
+.bot-top{display:flex;align-items:center;gap:8px;margin-bottom:9px}
+.bot-badge{font-size:6px;letter-spacing:2px;text-transform:uppercase;background:#ff2d00;color:#e8e4d9;padding:3px 7px}
+.bot-model{font-size:7px;color:rgba(232,228,217,.15);letter-spacing:1px}
+.bot-msg{font-size:10px;color:rgba(232,228,217,.55);line-height:1.8}
 .bot-msg strong{color:#e8e4d9}
 .bot-msg em{color:#c8ff00;font-style:normal}
-.bot-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:12px}
-.bchip{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 10px;border:1px solid rgba(232,228,217,.08);color:rgba(232,228,217,.25);transition:.15s}
+.bot-chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:9px}
+.bchip{font-size:7px;letter-spacing:1px;text-transform:uppercase;padding:4px 9px;border:1px solid rgba(232,228,217,.07);color:rgba(232,228,217,.2);transition:.15s}
 .bchip:hover,.bchip.on{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,.03)}
-.bot-typing{position:absolute;bottom:14px;left:20px;display:flex;align-items:center;gap:8px;font-size:7px;letter-spacing:1px;color:rgba(255,45,0,.4);text-transform:uppercase}
-.bot-dots{display:flex;gap:4px}
-.bot-dot{width:4px;height:4px;border-radius:50%;background:#ff2d00;animation:bounce 1.2s infinite}
+.bot-typing{position:absolute;bottom:10px;left:16px;display:flex;align-items:center;gap:7px;font-size:7px;letter-spacing:1px;color:rgba(255,45,0,.3);text-transform:uppercase}
+.bot-dots{display:flex;gap:3px}
+.bot-dot{width:3px;height:3px;border-radius:50%;background:#ff2d00;animation:bounce 1.2s infinite}
 .bot-dot:nth-child(2){animation-delay:.2s}
 .bot-dot:nth-child(3){animation-delay:.4s}
 
-/* HEATMAP SIDE */
-.hero-r{}
-.hm-title{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.hm-live-dot{width:5px;height:5px;border-radius:50%;background:#ff2d00;animation:blink 1.5s infinite}
-.hm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
-.hm-cell{background:#07070f;border:1px solid rgba(255,45,0,.06);padding:11px 9px;position:relative;overflow:hidden;transition:.15s}
-.hm-cell:hover,.hm-cell.on{background:#0a0a18;border-color:rgba(255,45,0,.3)}
+/* HEATMAP */
+.hm-title{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.15);margin-bottom:9px;display:flex;align-items:center;gap:6px}
+.hm-live{width:4px;height:4px;border-radius:50%;background:#ff2d00;animation:blink 1.5s infinite}
+.hm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
+.hm-cell{background:#07070f;border:1px solid rgba(255,45,0,.05);padding:9px 7px;transition:.15s;position:relative;overflow:hidden}
+.hm-cell:hover,.hm-cell.on{background:#0a0a18;border-color:rgba(255,45,0,.25)}
 .hm-cell::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#ff2d00;transform:scaleX(0);transition:.2s;transform-origin:left}
 .hm-cell:hover::after,.hm-cell.on::after{transform:scaleX(1)}
-.hm-k{font-size:7px;letter-spacing:1px;color:rgba(232,228,217,.2);margin-bottom:3px}
-.hm-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;line-height:1}
-.hm-b{height:2px;background:rgba(255,45,0,.1);margin-top:7px}
+.hm-k{font-size:6px;letter-spacing:1px;color:rgba(232,228,217,.15);margin-bottom:2px}
+.hm-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;line-height:1}
+.hm-b{height:1px;background:rgba(255,45,0,.08);margin-top:6px}
 .hm-bf{height:100%;background:#ff2d00;transition:width 1.2s ease}
-.hm-pct{font-size:7px;color:rgba(255,45,0,.4);margin-top:3px;letter-spacing:.5px}
 
-/* PULSE SCORE */
-.pulse-strip{margin-top:16px;border:1px solid rgba(255,45,0,.08);background:#07070f;padding:14px 16px}
-.ps-title{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:10px}
-.ps-row{display:flex;align-items:center;gap:10px;padding:5px 0;border-bottom:1px solid rgba(255,45,0,.04)}
-.ps-row:last-child{border-bottom:none}
-.ps-name{font-size:9px;color:rgba(232,228,217,.5);flex:1}
-.ps-bar-wrap{width:80px;height:2px;background:rgba(255,45,0,.1)}
-.ps-bar{height:100%;background:#ff2d00;transition:width 1s ease}
-.ps-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;color:#ff2d00;min-width:24px;text-align:right}
+/* SCORE */
+.score-strip{margin-top:12px;border:1px solid rgba(255,45,0,.06);background:#07070f;padding:11px 13px}
+.ss-title{font-size:6px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);margin-bottom:7px}
+.ss-row{display:flex;align-items:center;gap:7px;padding:3px 0;border-bottom:1px solid rgba(255,45,0,.03)}
+.ss-row:last-child{border-bottom:none}
+.ss-name{font-size:9px;color:rgba(232,228,217,.4);flex:1}
+.ss-bar{width:48px;height:1px;background:rgba(255,45,0,.08)}
+.ss-fill{height:100%;background:#ff2d00}
+.ss-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:12px;color:#ff2d00;min-width:20px;text-align:right}
 
-/* FILTER */
-.filter-bar{border-top:1px solid var(--bo);border-bottom:1px solid var(--bo);margin-top:40px;display:flex;align-items:stretch;overflow-x:auto}
-.filter-bar::-webkit-scrollbar{display:none}
-.filter-lbl{padding:0 20px;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.18);display:flex;align-items:center;border-right:1px solid var(--bo);flex-shrink:0;white-space:nowrap}
-.fb{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;padding:12px 15px;background:transparent;border:none;color:rgba(232,228,217,.22);border-right:1px solid var(--bo);font-family:'DM Mono',monospace;white-space:nowrap;flex-shrink:0;transition:.15s}
-.fb:hover{color:#e8e4d9;background:rgba(255,45,0,.03)}
-.fb.on{color:#04040a;background:#ff2d00}
-.fsep{width:1px;background:rgba(255,45,0,.3);flex-shrink:0}
-.ftog{display:flex;align-items:center;gap:8px;padding:0 14px;flex-shrink:0}
-.tog{width:34px;height:17px;border:1px solid rgba(200,255,0,.18);border-radius:9px;position:relative;transition:.2s}
-.tog.on{border-color:#c8ff00}
-.tog-d{width:9px;height:9px;background:rgba(200,255,0,.2);border-radius:50%;position:absolute;top:3px;left:3px;transition:.2s}
-.tog.on .tog-d{left:20px;background:#c8ff00}
-.tog-l{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,255,0,.28);white-space:nowrap;transition:.2s}
+/* PULSE */
+.pulse-moment{margin:36px 40px 0;border:2px solid #ff2d00;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;overflow:hidden;flex-wrap:wrap}
+.pulse-moment::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,45,0,.04),transparent 70%);pointer-events:none}
+.pm-eye{font-size:6px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.4);margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.pm-eye::before{content:'';width:4px;height:4px;border-radius:50%;background:#ff2d00;animation:blink 1s infinite}
+.pm-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:40px;text-transform:uppercase;line-height:.9;color:#ff2d00}
+.pm-sub{font-size:9px;color:rgba(232,228,217,.3);margin-top:5px;line-height:1.6}
+.pm-stats{display:flex;gap:12px;flex-wrap:wrap}
+.pm-stat{border:1px solid rgba(255,45,0,.12);padding:10px 14px;text-align:center}
+.pm-sn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:#ff2d00;line-height:1}
+.pm-sl{font-size:6px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase;margin-top:2px}
 
-/* SECTION HEADER */
-.sh{display:flex;align-items:baseline;justify-content:space-between;padding:32px 40px 16px}
-.sh-t{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+/* STIMMUNG */
+.stimmung{margin:0 40px;margin-top:28px;border:1px solid rgba(255,45,0,.07);padding:20px 24px}
+.st-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;margin-bottom:3px}
+.st-sub{font-size:8px;color:rgba(232,228,217,.22);margin-bottom:13px;letter-spacing:.5px}
+.st-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:13px}
+.stchip{font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:7px 13px;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.22);transition:.2s}
+.stchip:hover,.stchip.on{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,.03)}
+.st-result{background:#07070f;border:1px solid rgba(200,255,0,.1);padding:12px 16px;display:none}
+.st-result.show{display:block}
+.str-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:7px}
+.str-rec{display:flex;align-items:center;justify-content:space-between;font-size:9px;color:#e8e4d9;padding:6px 0;border-bottom:1px solid rgba(200,255,0,.04)}
+.str-rec:last-child{border-bottom:none}
+
+/* SECTION */
+.sh{display:flex;align-items:baseline;justify-content:space-between;padding:24px 40px 12px}
+.sh-t{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;display:flex;align-items:center;gap:7px}
 .sh-t::before{content:'—';color:#ff2d00}
-.sh-r{font-size:8px;letter-spacing:2px;color:rgba(232,228,217,.18);text-transform:uppercase}
-.sh-r span{color:#ff2d00}
+.sh-r{font-size:8px;letter-spacing:2px;color:rgba(232,228,217,.15);text-transform:uppercase}
 
-/* MAIN GRID */
+/* GRID */
 .mgrid{display:grid;grid-template-columns:repeat(3,1fr);padding:0 40px;gap:0}
-.mcard{border:1px solid var(--bo);border-top:none;border-left:none;padding:22px 22px 26px;position:relative;background:#04040a;transition:.15s;overflow:hidden}
-.mcard:hover{background:#07070f}
-.mcard:nth-child(3n+1){border-left:1px solid var(--bo)}
-.mcard:nth-child(-n+3){border-top:1px solid var(--bo)}
-.mcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#ff2d00;transform:scaleX(0);transition:.25s;transform-origin:left}
+.mcard{border:1px solid rgba(255,45,0,.07);border-top:none;border-left:none;padding:18px 18px 22px;position:relative;background:#04040a;transition:.15s;overflow:hidden}
+.mcard:hover{background:#06060e}
+.mcard:nth-child(3n+1){border-left:1px solid rgba(255,45,0,.07)}
+.mcard:nth-child(-n+3){border-top:1px solid rgba(255,45,0,.07)}
+.mcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#ff2d00;transform:scaleX(0);transition:.22s;transform-origin:left}
 .mcard:hover::after{transform:scaleX(1)}
-
-/* card content */
-.mc-badges{display:flex;gap:5px;flex-wrap:wrap;min-height:20px;margin-bottom:14px}
-.mcb{font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:3px 7px;font-family:'DM Mono',monospace}
+.mc-badges{display:flex;gap:4px;flex-wrap:wrap;min-height:16px;margin-bottom:10px}
+.mcb{font-size:6px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 6px;font-family:'DM Mono',monospace}
 .mcb.volt{background:#c8ff00;color:#04040a}
 .mcb.red{background:#ff2d00;color:#e8e4d9}
 .mcb.cyan{background:#00f5ff;color:#04040a}
 .mcb.lila{background:#9333ea;color:#e8e4d9}
 .mcb.ora{background:#ff6600;color:#e8e4d9}
-.mcb.ghost{border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.3)}
-.mc-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;text-transform:uppercase;line-height:1;color:#e8e4d9;margin-bottom:5px}
-.mc-type{font-size:8px;color:#ff2d00;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
-.mc-meta{font-size:8px;color:rgba(232,228,217,.22);letter-spacing:.3px;line-height:1.6}
-.mc-stars{margin-top:12px;display:flex;align-items:center;gap:6px}
-.mc-s{font-size:11px;color:#c8ff00;letter-spacing:1.5px}
-.mc-sc{font-size:8px;color:rgba(232,228,217,.18)}
-.mc-dot{position:absolute;top:18px;right:18px;width:7px;height:7px;border-radius:50%}
-.mc-dot.on{background:#c8ff00}
-.mc-dot.off{background:rgba(232,228,217,.08)}
-/* KI pick ring */
-.mc-ki{position:absolute;top:14px;right:14px;width:34px;height:34px;border:1px solid rgba(200,255,0,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px}
-/* distance badge */
-.mc-dist{position:absolute;bottom:18px;right:18px;font-size:7px;letter-spacing:1px;color:rgba(0,245,255,.5);text-transform:uppercase;display:flex;align-items:center;gap:4px}
-.mc-dist::before{content:'📍';font-size:9px}
+.mcb.gold{background:#ffcc00;color:#04040a}
+.mcb.ghost{border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.25)}
+.mc-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:21px;text-transform:uppercase;line-height:1;color:#e8e4d9;margin-bottom:3px}
+.mc-type{font-size:7px;color:#ff2d00;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
+.mc-meta{font-size:8px;color:rgba(232,228,217,.18);line-height:1.6}
+.mc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,45,0,.05)}
+.mc-stars{font-size:9px;color:#c8ff00;letter-spacing:1.5px}
+.mc-dist{font-size:7px;color:rgba(0,245,255,.35);text-transform:uppercase;letter-spacing:1px}
+.mc-score{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;color:#ff2d00}
+.mc-ki{position:absolute;top:12px;right:12px;width:26px;height:26px;border:1px solid rgba(200,255,0,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px}
+/* Empty state */
+.empty-state{grid-column:1/-1;padding:56px 40px;text-align:center}
+.es-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;color:rgba(232,228,217,.1);text-transform:uppercase;margin-bottom:8px}
+.es-sub{font-size:9px;color:rgba(232,228,217,.18);letter-spacing:.5px}
+.es-reset{display:inline-block;margin-top:14px;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:6px 14px}
 
-/* VOLT GREEN BLOCK */
-.volt-block{margin:48px 40px 0;background:#c8ff00;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
-.vb-l{padding:40px}
-.vb-eye{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(4,4,10,.4);margin-bottom:10px}
-.vb-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:60px;line-height:.85;text-transform:uppercase;color:#04040a;margin-bottom:10px}
-.vb-sub{font-size:9px;color:rgba(4,4,10,.45);line-height:1.7}
-.vb-r{border-left:1px solid rgba(4,4,10,.12)}
-.vb-item{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid rgba(4,4,10,.1);transition:.15s}
+/* VOLT BLOCK */
+.volt-block{margin:36px 40px 0;background:#c8ff00;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.vb-l{padding:32px}
+.vb-eye{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(4,4,10,.35);margin-bottom:7px}
+.vb-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;line-height:.85;text-transform:uppercase;color:#04040a;margin-bottom:7px}
+.vb-sub{font-size:9px;color:rgba(4,4,10,.38);line-height:1.6}
+.vb-r{border-left:1px solid rgba(4,4,10,.1)}
+.vb-item{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;border-bottom:1px solid rgba(4,4,10,.07);transition:.15s}
 .vb-item:last-child{border-bottom:none}
 .vb-item:hover{background:rgba(4,4,10,.05)}
-.vb-nm{font-size:11px;color:#04040a;font-weight:500}
-.vb-meta{font-size:8px;color:rgba(4,4,10,.45);margin-top:2px;letter-spacing:.5px}
-.vb-arr{font-size:12px;color:rgba(4,4,10,.35)}
+.vb-nm{font-size:10px;color:#04040a;font-weight:500}
+.vb-meta{font-size:8px;color:rgba(4,4,10,.38);margin-top:1px;letter-spacing:.5px}
+.vb-btn{font-size:7px;letter-spacing:2px;text-transform:uppercase;background:#04040a;color:#c8ff00;border:none;padding:5px 9px;font-family:'DM Mono',monospace;flex-shrink:0}
 
-/* KI SECTION */
-.ki-section{margin:0 40px;margin-top:48px;border:1px solid rgba(255,45,0,.1);background:#07070f;padding:32px}
-.ki-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
-.ki-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;text-transform:uppercase;display:flex;align-items:center;gap:10px}
-.ki-title::before{content:'🤖';font-style:normal;font-size:24px}
-.ki-status{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;border:1px solid rgba(200,255,0,.2);padding:3px 8px;display:flex;align-items:center;gap:5px}
-.ki-status::before{content:'';width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite}
-.ki-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,45,0,.08)}
-.ki-card{background:#07070f;padding:20px;transition:.15s}
-.ki-card:hover{background:#0a0a18}
-.ki-card-icon{font-size:24px;margin-bottom:10px}
-.ki-card-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;color:#e8e4d9;margin-bottom:6px}
-.ki-card-desc{font-size:9px;color:rgba(232,228,217,.35);line-height:1.7}
-.ki-card-tag{display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 7px;margin-top:10px;border:1px solid rgba(200,255,0,.2);color:#c8ff00}
-
-/* PULSE MOMENT */
-.pulse-moment{margin:48px 40px 0;background:#04040a;border:2px solid #ff2d00;padding:32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;position:relative;overflow:hidden}
-.pulse-moment::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,45,0,.04),transparent 70%);pointer-events:none}
-.pm-l{}
-.pm-eye{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.5);margin-bottom:8px;display:flex;align-items:center;gap:6px}
-.pm-eye::before{content:'';width:4px;height:4px;border-radius:50%;background:#ff2d00;animation:blink 1s infinite}
-.pm-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:52px;text-transform:uppercase;line-height:.9;color:#ff2d00}
-.pm-sub{font-size:10px;color:rgba(232,228,217,.4);margin-top:8px;line-height:1.6}
-.pm-r{display:flex;gap:20px;flex-wrap:wrap}
-.pm-stat{text-align:center;border:1px solid rgba(255,45,0,.15);padding:16px 20px}
-.pm-sn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:40px;color:#ff2d00;line-height:1}
-.pm-sl{font-size:7px;letter-spacing:2px;color:rgba(232,228,217,.25);text-transform:uppercase;margin-top:3px}
-
-/* STIMMUNG BLOCK */
-.stimmung{margin:0 40px;margin-top:48px;border:1px solid var(--bo);padding:28px 32px}
-.st-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;margin-bottom:4px}
-.st-sub{font-size:9px;color:rgba(232,228,217,.3);margin-bottom:20px;letter-spacing:.5px}
-.st-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
-.stchip{font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:9px 18px;border:1px solid var(--bo);color:rgba(232,228,217,.3);transition:.2s}
-.stchip:hover,.stchip.on{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,.04)}
-.st-result{background:#07070f;border:1px solid rgba(200,255,0,.12);padding:16px 20px;display:none}
-.st-result.show{display:block}
-.str-label{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:8px}
-.str-recs{display:flex;flex-direction:column;gap:6px}
-.str-rec{display:flex;align-items:center;justify-content:space-between;font-size:10px;color:#e8e4d9;padding:8px 0;border-bottom:1px solid rgba(200,255,0,.06)}
-.str-rec:last-child{border-bottom:none}
-.str-rec-meta{font-size:8px;color:rgba(232,228,217,.3)}
-
-/* BOTTOM TICKER */
-.ticker-bot{border-top:1px solid var(--bo);margin-top:56px;overflow:hidden}
+/* TICKER */
+.ticker-wrap{border-top:1px solid rgba(255,45,0,.07);margin-top:44px;overflow:hidden}
+.ticker-row{padding:5px 0;overflow:hidden;border-bottom:1px solid rgba(255,45,0,.04)}
+.tick{display:flex;white-space:nowrap}
+.tick.l{animation:tL 28s linear infinite}
+.tick.r{animation:tR 28s linear infinite}
+.ti{font-size:7px;letter-spacing:3px;text-transform:uppercase;padding:0 26px;color:rgba(255,45,0,.28)}
+.ti b{color:#ff2d00;font-weight:400}
+.ti.g{color:rgba(200,255,0,.22)}
+.ti.g b{color:#c8ff00}
 
 /* FOOTER */
-footer{padding:48px 40px 36px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:44px;border-top:1px solid var(--bo)}
-.fb-logo{margin-bottom:12px}
-.fb-desc{font-size:9px;color:rgba(232,228,217,.22);line-height:1.9;margin-top:10px}
-.fb-copy{font-size:7px;color:rgba(232,228,217,.12);margin-top:20px;letter-spacing:.5px}
-.fc-title{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:14px}
-.fc-link{display:block;font-size:9px;color:rgba(232,228,217,.28);margin-bottom:9px;letter-spacing:.3px;transition:.15s}
+footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:36px;border-top:1px solid rgba(255,45,0,.08)}
+.fc-title{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:11px}
+.fc-link{display:block;font-size:9px;color:rgba(232,228,217,.22);margin-bottom:7px;letter-spacing:.3px;transition:.15s}
 .fc-link:hover{color:#e8e4d9}
+.fc-desc{font-size:9px;color:rgba(232,228,217,.18);line-height:1.9;margin-top:8px}
+.fc-copy{font-size:7px;color:rgba(232,228,217,.1);margin-top:14px;letter-spacing:.5px}
 
-/* DETAIL OVERLAY */
-.det{position:fixed;inset:0;background:#04040a;z-index:700;overflow-y:auto;display:none}
-.det.show{display:block}
-.det-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 40px;border-bottom:1px solid var(--bo);position:sticky;top:0;background:#04040a;z-index:10}
-.det-back{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.3);display:flex;align-items:center;gap:6px;transition:.15s}
-.det-back:hover{color:#e8e4d9}
-.det-back::before{content:'←';color:#ff2d00}
-.det-nav-badges{display:flex;gap:6px}
-.det-hero-wrap{padding:0 40px;margin-top:0}
-.det-hero{width:100%;aspect-ratio:21/7;background:#07070f;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;border:1px solid var(--bo)}
-.det-hero-art{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:160px;color:#ff2d00;opacity:.04;text-transform:uppercase;letter-spacing:-4px}
-.det-body{padding:0 40px;display:grid;grid-template-columns:1fr 360px;gap:48px;margin-top:28px;align-items:start}
-.det-name-block{margin-bottom:24px}
-.det-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(56px,7vw,110px);text-transform:uppercase;line-height:.88;color:#e8e4d9}
-.det-type{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;text-transform:uppercase;color:#ff2d00;margin-top:4px}
-.det-desc{font-size:11px;color:rgba(232,228,217,.45);line-height:1.9;margin-bottom:28px}
-.det-sec{margin-bottom:28px}
-.det-sec-t{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:8px}
-.det-sec-t::before{content:'—';color:#ff2d00;font-size:18px}
-.det-sec-txt{font-size:10px;color:rgba(232,228,217,.38);line-height:1.9}
-.det-res{border-left:3px solid #c8ff00;background:#07070f;padding:20px 24px;margin-bottom:28px}
-.det-res-tag{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:7px}
-.det-res-txt{font-size:10px;color:rgba(232,228,217,.5);line-height:1.6;margin-bottom:14px}
-.btn-volt{background:#c8ff00;color:#04040a;border:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:12px 22px}
-.rev-item{border:1px solid var(--bo);padding:14px 18px;margin-bottom:6px;background:#07070f}
-.rev-user{font-size:8px;color:#ff2d00;letter-spacing:1px;margin-bottom:5px}
-.rev-txt{font-size:9px;color:rgba(232,228,217,.4);line-height:1.7}
-.rev-stars{color:#c8ff00;font-size:10px;float:right;letter-spacing:2px}
-/* sidebar */
-.det-side{background:#07070f;border:1px solid var(--bo);position:sticky;top:68px}
-.det-side-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;padding:14px 18px;border-bottom:1px solid var(--bo)}
-.det-row2{display:flex;align-items:start;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(255,45,0,.05)}
-.det-row2:last-of-type{border-bottom:none}
-.dr-lbl{font-size:7px;color:rgba(232,228,217,.22);letter-spacing:1px;text-transform:uppercase;padding-top:1px}
-.dr-val{font-size:9px;color:#e8e4d9;text-align:right}
-.btn-res-big{display:block;margin:16px 18px 6px;background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:14px;text-align:center;width:calc(100% - 36px)}
-.btn-back-sm{display:block;margin:0 18px 18px;background:transparent;border:1px solid var(--bo);color:rgba(232,228,217,.25);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:11px;text-align:center;width:calc(100% - 36px)}
-/* KI Reko in detail */
-.det-ki{background:rgba(200,255,0,.03);border:1px solid rgba(200,255,0,.12);padding:14px 18px;margin:12px 18px}
-.det-ki-lbl{font-size:7px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase;margin-bottom:6px}
-.det-ki-txt{font-size:9px;color:rgba(200,255,0,.6);line-height:1.6}
-@media (max-width: 768px) {
-  /* NAV */
-  nav{padding:0 16px;height:48px}
-  .nav-c{display:none}
-  .nav-r{gap:8px}
-  .btn-mm{font-size:8px;padding:7px 12px}
-  .gps-btn{display:none}
+/* PANEL */
+.ov{position:fixed;inset:0;background:rgba(4,4,10,.88);z-index:600;opacity:0;pointer-events:none;transition:.25s}
+.ov.on{opacity:1;pointer-events:all}
+.panel{position:fixed;top:0;right:-500px;width:460px;height:100vh;background:#04040a;border-left:1px solid rgba(255,45,0,.1);z-index:601;transition:right .3s ease;overflow-y:auto}
+.panel.open{right:0}
+.p-hero{min-height:180px;background:#07070f;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
+.p-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:80px;color:#ff2d00;opacity:.04;text-transform:uppercase;pointer-events:none}
+.p-close{position:absolute;top:10px;right:10px;width:28px;height:28px;border:1px solid rgba(232,228,217,.1);display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(232,228,217,.25);transition:.15s}
+.p-close:hover{border-color:#ff2d00;color:#ff2d00}
+.p-score-box{position:absolute;top:10px;left:18px;border:1px solid rgba(255,45,0,.25);padding:6px 9px;background:#04040a}
+.psn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;color:#ff2d00;line-height:1}
+.psl{font-size:6px;letter-spacing:1px;color:rgba(232,228,217,.18);text-transform:uppercase}
+.p-name{position:relative;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;text-transform:uppercase;line-height:.92;color:#e8e4d9}
+.p-sub{position:relative;font-size:8px;color:rgba(232,228,217,.22);margin-top:4px;letter-spacing:1.5px;text-transform:uppercase}
+.p-body{padding:18px}
+.p-tags{display:flex;gap:4px;margin-bottom:11px;flex-wrap:wrap}
+.p-desc{font-size:10px;color:rgba(232,228,217,.38);line-height:1.9;margin-bottom:14px}
+.p-rows{border-top:1px solid rgba(255,45,0,.05);border-bottom:1px solid rgba(255,45,0,.05);margin-bottom:14px}
+.p-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,45,0,.04)}
+.p-row:last-child{border-bottom:none}
+.p-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.16);min-width:60px;padding-top:1px;flex-shrink:0}
+.p-val{font-size:9px;color:#e8e4d9}
+.pred{border-left:2px solid #c8ff00;padding:9px 12px;margin-bottom:14px}
+.pred-txt{font-size:9px;color:rgba(200,255,0,.55);line-height:1.7}
+.pred-txt strong{color:#c8ff00}
+.btn-res{display:block;width:100%;background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:15px;text-align:center;margin-bottom:6px;transition:opacity .2s}
+.btn-res:hover{opacity:.85}
+.p-acts{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:14px}
+.p-act{padding:10px;background:transparent;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.25);font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;transition:.15s;text-align:center}
+.p-act:hover{color:#e8e4d9;border-color:rgba(255,45,0,.2)}
+.rev-item{border:1px solid rgba(255,45,0,.05);padding:11px 14px;margin-bottom:4px;background:#07070f}
+.rev-user{font-size:8px;color:#ff2d00;letter-spacing:1px;margin-bottom:3px}
+.rev-txt{font-size:9px;color:rgba(232,228,217,.32);line-height:1.7}
+.rev-stars{color:#c8ff00;font-size:9px;float:right;letter-spacing:2px}
 
-  /* TICKER */
-  .ti{font-size:7px;padding:0 16px}
-
-  /* GPS STRIP */
-  .gps-strip{padding:8px 16px;flex-direction:column;gap:8px;align-items:flex-start}
-  .gps-data{gap:12px}
-  .gd-n{font-size:18px}
-  .gps-cta{display:none}
-
-  /* HERO */
-  .hero{grid-template-columns:1fr;padding:32px 16px 0;gap:24px}
-  .hero-l{}
-  .hero-hl{font-size:clamp(72px,18vw,110px)}
-  .hero-hl2{font-size:clamp(40px,12vw,70px)}
-  .hero-desc{font-size:9px}
-
-  /* BOT */
-  .bot-card{margin-top:20px;padding:16px;padding-bottom:50px}
-  .bot-msg{font-size:10px}
-  .bot-chips{gap:4px}
-  .bchip{font-size:7px;padding:4px 8px}
-
-  /* HEATMAP */
-  .hero-r{padding:0}
-  .hm-grid{grid-template-columns:repeat(4,1fr);gap:2px}
-  .hm-cell{padding:8px 6px}
-  .hm-n{font-size:20px}
-
-  /* PULSE STRIP */
-  .pulse-strip{padding:12px}
-  .ps-bar-wrap{width:48px}
-
-  /* PULSE MOMENT */
-  .pulse-moment{padding:20px 16px;flex-direction:column;gap:16px}
-  .pm-title{font-size:36px}
-  .pm-r{gap:10px}
-  .pm-stat{padding:12px 14px}
-  .pm-sn{font-size:28px}
-
-  /* STIMMUNG */
-  .stimmung{margin:0 16px;margin-top:32px;padding:20px 16px}
-  .st-chips{gap:6px}
-  .stchip{font-size:8px;padding:7px 12px}
-
-  /* FILTER */
-  .filter-bar{margin-top:24px}
-  .filter-lbl{display:none}
-  .fb{font-size:7px;padding:10px 10px}
-
-  /* SECTION HEADER */
-  .sh{padding:24px 16px 12px}
-
-  /* GRID — 1 SPALTIG */
-  .mgrid{grid-template-columns:1fr;padding:0 16px}
-  .mcard{padding:16px 16px 20px}
-  .mcard:nth-child(3n+1){border-left:none}
-  .mcard:nth-child(-n+3){border-top:none}
-  .mcard:nth-child(1){border-top:1px solid rgba(255,45,0,0.1)}
-  .mc-name{font-size:20px}
-  .mc-dist{position:static;margin-top:8px;display:flex}
-
-  /* VOLT BLOCK */
-  .volt-block{margin:32px 16px 0;grid-template-columns:1fr}
-  .vb-l{padding:24px 20px}
-  .vb-hl{font-size:44px}
-  .vb-r{border-left:none;border-top:1px solid rgba(4,4,10,.12)}
-  .vb-item{padding:12px 16px}
-
-  /* KI SECTION */
-  .ki-section{margin:32px 16px 0;padding:20px 16px}
-  .ki-grid{grid-template-columns:1fr}
-  .ki-head{flex-direction:column;gap:10px;align-items:flex-start}
-
-  /* FOOTER */
-  footer{padding:32px 16px 24px;grid-template-columns:1fr;gap:24px}
-
-  /* DETAIL OVERLAY */
-  .det-body{grid-template-columns:1fr;padding:0 16px;gap:24px}
-  .det-name{font-size:clamp(40px,10vw,72px)}
-  .det-type{font-size:20px}
-  .det-hero-wrap{padding:0 16px}
-  .det-nav{padding:10px 16px}
-  .det-side{position:static}
-  .det-ki{margin:12px 0}
-  .btn-res-big{width:100%;margin:12px 0 6px}
-  .btn-back-sm{width:100%;margin:0 0 16px}
-}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
 @keyframes tL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes tR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-@keyframes ripple{0%{transform:scale(1);opacity:.5}100%{transform:scale(2.5);opacity:0}}
 @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes tagIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes countUp{from{transform:translateY(4px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+/* MOBILE */
+@media(max-width:768px){
+  #cur,#cur2{display:none}
+  body{cursor:auto}
+  nav{padding:0 16px;height:48px}
+  .nav-links{display:none}
+  /* FILTER BAR HIDDEN ON MOBILE */
+  .filter-bar{display:none}
+  /* FAB SICHTBAR */
+  .mobile-fab{display:flex}
+  .hero{grid-template-columns:1fr;padding:24px 16px 0;gap:20px}
+  .hero-hl{font-size:clamp(68px,18vw,100px)}
+  .pulse-moment{margin:24px 16px 0;flex-direction:column}
+  .pm-title{font-size:32px}
+  .stimmung{margin:0 16px;margin-top:24px;padding:16px}
+  .sh{padding:18px 16px 10px}
+  .mgrid{grid-template-columns:1fr 1fr;padding:0 16px}
+  .mcard:nth-child(3n+1){border-left:none}
+  .mcard:nth-child(2n+1){border-left:1px solid rgba(255,45,0,.07)}
+  .mcard:nth-child(-n+2){border-top:1px solid rgba(255,45,0,.07)}
+  .volt-block{margin:24px 16px 0;grid-template-columns:1fr}
+  .vb-r{border-left:none;border-top:1px solid rgba(4,4,10,.1)}
+  footer{padding:28px 16px 20px;grid-template-columns:1fr 1fr;gap:16px}
+  .panel{width:100%;right:-100%}
+  .result-bar{padding:6px 16px}
+}
+@media(min-width:769px){
+  .sheet,.sheet-overlay,.mobile-fab{display:none!important}
+}
 </style>
 </head>
 <body>
 
-<div id="c1"></div><div id="c2"></div>
+<div id="cur"></div><div id="cur2"></div>
 
-<!-- TICKER DOPPELT GEGENLÄUFIG -->
-<div class="ticker-wrap">
+<!-- TICKER -->
+<div class="ticker-wrap" style="border-top:none;border-bottom:1px solid rgba(255,45,0,.08)">
   <div class="ticker-row"><div class="tick l" id="ta"></div></div>
   <div class="ticker-row"><div class="tick r" id="tb"></div></div>
 </div>
@@ -389,50 +388,180 @@ footer{padding:48px 40px 36px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
 <!-- NAV -->
 <nav>
   <div class="logo"><div class="ldot"></div>STADTPULS</div>
-  <div class="nav-c">
-    <span class="nc">EVENTS</span><span class="nc on">GASTRO</span>
-    <span class="nc">NACHTLEBE</span><span class="nc">SHOPPING</span>
-    <span class="nc">IMMOBILIE</span><span class="nc">MARKTPLATZ</span>
+  <div class="nav-links">
+    <span class="nl">EVENTS</span><span class="nl on">GASTRO</span>
+    <span class="nl">NACHTLEBE</span><span class="nl">SHOPPING</span>
   </div>
-  <div class="nav-r">
-    <div class="gps-btn">GPS AKTIV</div>
-    <button class="btn-mm">MITMACHE</button>
-  </div>
+  <button class="btn-mm">MITMACHE</button>
 </nav>
 
-<!-- GPS LIVE STRIP -->
-<div class="gps-strip">
-  <div class="gps-l">
-    <div class="gps-ping"></div>
-    <div class="gps-info">
-      <div class="gps-main">GPS AKTIV — KREIS 4 · LANGSTRASSE · ZÜRICH</div>
-      <div class="gps-sub">Standort live · Letzte Aktualisirig: gerade jetzt · Distanz 0–2km Radius</div>
+<!-- ═══════════════════════════
+     DESKTOP FILTER BAR
+     ═══════════════════════════ -->
+<div class="filter-bar">
+
+  <!-- AKTIVE TAGS -->
+  <div class="af-row" id="af-row"></div>
+
+  <!-- TYP: RESTAURANT / BAR / CAFÉ -->
+  <div class="typ-row">
+    <div class="typ-lbl">TYP</div>
+    <button class="typ-btn on" onclick="setTyp(this,'all')" data-typ="all">
+      <div class="typ-icon">🍽️</div>
+      <div class="typ-name">ALLES</div>
+      <div class="typ-count" id="tc-all">—</div>
+    </button>
+    <button class="typ-btn" onclick="setTyp(this,'restaurant')" data-typ="restaurant">
+      <div class="typ-icon">🍴</div>
+      <div class="typ-name">RESTAURANT</div>
+      <div class="typ-count" id="tc-rest">—</div>
+    </button>
+    <button class="typ-btn" onclick="setTyp(this,'bar')" data-typ="bar">
+      <div class="typ-icon">🍸</div>
+      <div class="typ-name">BAR</div>
+      <div class="typ-count" id="tc-bar">—</div>
+    </button>
+    <button class="typ-btn" onclick="setTyp(this,'cafe')" data-typ="cafe">
+      <div class="typ-icon">☕</div>
+      <div class="typ-name">CAFÉ</div>
+      <div class="typ-count" id="tc-cafe">—</div>
+    </button>
+  </div>
+
+  <!-- KÜCHEN — dynamisch je nach Typ -->
+  <div class="kueche-row-wrap">
+    <div class="kueche-row" id="kueche-row">
+      <div class="kr-lbl" id="kr-lbl">KÜCHE</div>
+      <div id="kueche-btns" style="display:flex"></div>
     </div>
   </div>
-  <div class="gps-data">
-    <div class="gd"><div class="gd-n">23</div><div class="gd-l">Restis in 500m</div></div>
-    <div class="gd"><div class="gd-n">14</div><div class="gd-l">Jetzt offe</div></div>
-    <div class="gd"><div class="gd-n">8</div><div class="gd-l">No Plätze frei</div></div>
-    <div class="gd"><div class="gd-n" style="color:#c8ff00">4.2°</div><div class="gd-l">Zum nächschte</div></div>
+
+  <!-- KREIS + QUER -->
+  <div class="bottom-row">
+    <button class="kr-btn on" onclick="setKreis(this,'all')">ALLE</button>
+    <button class="kr-btn has" onclick="setKreis(this,1)">K1<div class="kr-dot"></div></button>
+    <button class="kr-btn has" onclick="setKreis(this,2)">K2<div class="kr-dot"></div></button>
+    <button class="kr-btn has" onclick="setKreis(this,3)">K3<div class="kr-dot"></div></button>
+    <button class="kr-btn has" onclick="setKreis(this,4)">K4<div class="kr-dot"></div></button>
+    <button class="kr-btn has" onclick="setKreis(this,5)">K5<div class="kr-dot"></div></button>
+    <button class="kr-btn has" onclick="setKreis(this,6)">K6<div class="kr-dot"></div></button>
+    <button class="kr-btn has" onclick="setKreis(this,7)">K7<div class="kr-dot"></div></button>
+    <button class="kr-btn has" onclick="setKreis(this,8)">K8<div class="kr-dot"></div></button>
+    <button class="kr-btn has" onclick="setKreis(this,9)">K9<div class="kr-dot"></div></button>
+    <button class="kr-btn has" onclick="setKreis(this,10)">K10<div class="kr-dot"></div></button>
+    <button class="kr-btn has" onclick="setKreis(this,11)">K11<div class="kr-dot"></div></button>
+    <button class="kr-btn has" onclick="setKreis(this,12)">K12<div class="kr-dot"></div></button>
+    <div class="fsep"></div>
+    <button class="q-btn offe" id="qb-offe" onclick="setQuer(this,'offe')"><div class="q-dot"></div>JETZT OFFE</button>
+    <button class="q-btn naehe" id="qb-naehe" onclick="setQuer(this,'naehe')">📍 IN DER NÄHE</button>
+    <button class="q-btn ki" id="qb-ki" onclick="setQuer(this,'ki')">🤖 KI TOP PICK</button>
+    <button class="q-btn res" id="qb-res" onclick="setQuer(this,'res')">🍽️ RESERVIERBAR</button>
   </div>
-  <div class="gps-cta">ZEIG MIR D KARTE →</div>
+
+  <!-- RESULT BAR -->
+  <div class="result-bar">
+    <div class="rb-l">
+      <div class="rb-count" id="rb-count">—</div>
+      <div class="rb-label" id="rb-label">RESTAURANTS · CAFÉS · BARS</div>
+      <div class="rb-ki" id="rb-ki">KI ANALYSIERT</div>
+    </div>
+    <div class="rb-r">
+      <button class="sort-btn on" onclick="setSort(this,'score')">SCORE</button>
+      <button class="sort-btn" onclick="setSort(this,'dist')">DISTANZ</button>
+      <button class="sort-btn" onclick="setSort(this,'neu')">NEU</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════
+     MOBILE FAB + BOTTOM SHEET
+     ═══════════════════════════ -->
+<button class="mobile-fab" onclick="openSheet()">🔍</button>
+
+<div class="sheet-overlay" id="sh-ov" onclick="closeSheet()"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div class="sheet-title">FILTER</div>
+    <div class="sheet-close" onclick="closeSheet()">✕</div>
+  </div>
+
+  <div class="sheet-section">
+    <div class="sheet-section-title">TYP</div>
+    <div class="typ-cards">
+      <div class="typ-card on" onclick="sheetTyp(this,'all')" data-typ="all">
+        <div class="typ-card-icon">🍽️</div>
+        <div class="typ-card-name">ALLES</div>
+        <div class="typ-card-count" id="stc-all">—</div>
+      </div>
+      <div class="typ-card" onclick="sheetTyp(this,'restaurant')" data-typ="restaurant">
+        <div class="typ-card-icon">🍴</div>
+        <div class="typ-card-name">RESTAURANT</div>
+        <div class="typ-card-count" id="stc-rest">—</div>
+      </div>
+      <div class="typ-card" onclick="sheetTyp(this,'bar')" data-typ="bar">
+        <div class="typ-card-icon">🍸</div>
+        <div class="typ-card-name">BAR</div>
+        <div class="typ-card-count" id="stc-bar">—</div>
+      </div>
+      <div class="typ-card" onclick="sheetTyp(this,'cafe')" data-typ="cafe">
+        <div class="typ-card-icon">☕</div>
+        <div class="typ-card-name">CAFÉ</div>
+        <div class="typ-card-count" id="stc-cafe">—</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet-section">
+    <div class="sheet-section-title">KÜCHE</div>
+    <div class="kueche-grid" id="sheet-kueche"></div>
+  </div>
+
+  <div class="sheet-section">
+    <div class="sheet-section-title">KREIS</div>
+    <div class="kreis-grid" id="sheet-kreis"></div>
+  </div>
+
+  <div class="sheet-section">
+    <div class="sheet-section-title">WEITERE FILTER</div>
+    <div class="quer-grid">
+      <div class="quer-btn-sheet offe" id="sqb-offe" onclick="sheetQuer(this,'offe')">
+        <div class="q-dot"></div>JETZT OFFE
+      </div>
+      <div class="quer-btn-sheet naehe" id="sqb-naehe" onclick="sheetQuer(this,'naehe')">
+        📍 IN DER NÄHE
+      </div>
+      <div class="quer-btn-sheet ki" id="sqb-ki" onclick="sheetQuer(this,'ki')">
+        🤖 KI TOP PICK
+      </div>
+      <div class="quer-btn-sheet res" id="sqb-res" onclick="sheetQuer(this,'res')">
+        🍽️ RESERVIERBAR
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet-actions">
+    <button class="sheet-reset" onclick="resetAll();closeSheet()">ZURÜCKSETZE</button>
+    <button class="sheet-apply" onclick="closeSheet()">
+      ZEIGE <span id="sheet-count">—</span> LOKALE →
+    </button>
+  </div>
 </div>
 
 <!-- HERO -->
-<div class="hero" style="padding-bottom:48px">
-  <div class="hero-l">
+<div class="hero" style="padding-bottom:36px">
+  <div>
     <div class="hero-eye">STADTPULS · ZÜRICH · GASTRO</div>
     <div class="hero-hl">ZÜRI<br>ISST<br>GUET</div>
-    <div class="hero-hl2">348 LOKALE</div>
-    <div class="hero-desc">Von Kreis 1 bis Kreis 12. Ehrliche Tipps vom Züri-Volk. Keine bezahlti Bewertunge. Kei Algorithm-Bullshit. Nur was wirklich gut isch.</div>
-
-    <!-- ZÜRI-BOT -->
-    <div class="bot-card">
+    <div class="hero-sub-hl">188 LOKALE</div>
+    <div class="dynamic-hl" id="dynamic-hl">188 LOKALE IN ZÜRICH</div>
+    <div class="hero-desc">Von Kreis 1 bis Kreis 12. Ehrliche Tipps vom Züri-Volk. Keine bezahlti Bewertunge. Kei Bullshit.</div>
+    <div class="bot">
       <div class="bot-top">
         <div class="bot-badge">🤖 ZÜRI-BOT · KI</div>
         <div class="bot-model">Claude · Powered by Anthropic</div>
       </div>
-      <div class="bot-msg" id="bot-msg">«<strong>Kreis 4, Dienstig Abend, 20:15</strong> — basierend auf dim Profil: <em>Pho Saigon Express</em> isch gerade frei, 4 Plätze, 8 Minuten z Fuess. Oder <em>Langstrasse 77</em> für öppis Besonderes — hüt letzte Abig.»</div>
+      <div class="bot-msg" id="bot-msg">«<strong>Kreis 4, Dienstig Abend</strong> — <em>Pho Saigon Express</em> isch frei, 4 Plätze, 8 Min z Fuess.»</div>
       <div class="bot-chips">
         <div class="bchip on" onclick="setMood(this,'casual')">😎 CASUAL</div>
         <div class="bchip" onclick="setMood(this,'romantisch')">💫 ROMANTISCH</div>
@@ -444,336 +573,533 @@ footer{padding:48px 40px 36px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
       <div class="bot-typing"><div class="bot-dots"><div class="bot-dot"></div><div class="bot-dot"></div><div class="bot-dot"></div></div>ZÜRI-BOT ANALYSIERT...</div>
     </div>
   </div>
-
-  <div class="hero-r">
-    <!-- HEATMAP -->
-    <div class="hm-title"><div class="hm-live-dot"></div>KREIS HEATMAP — LIVE</div>
+  <div>
+    <div class="hm-title"><div class="hm-live"></div>KREIS HEATMAP — LIVE</div>
     <div class="hm-grid" id="hm"></div>
-
-    <!-- STADTPULS SCORE TOP 5 -->
-    <div class="pulse-strip">
-      <div class="ps-title">🔥 STADTPULS SCORE — TOP KREIS 4</div>
-      <div class="ps-row"><div class="ps-name">Langstrasse 77</div><div class="ps-bar-wrap"><div class="ps-bar" style="width:97%"></div></div><div class="ps-n">97</div></div>
-      <div class="ps-row"><div class="ps-name">Pho Saigon Express</div><div class="ps-bar-wrap"><div class="ps-bar" style="width:91%"></div></div><div class="ps-n">91</div></div>
-      <div class="ps-row"><div class="ps-name">Josef</div><div class="ps-bar-wrap"><div class="ps-bar" style="width:84%"></div></div><div class="ps-n">84</div></div>
-      <div class="ps-row"><div class="ps-name">Helvetiaplatz Café</div><div class="ps-bar-wrap"><div class="ps-bar" style="width:72%"></div></div><div class="ps-n">72</div></div>
-      <div class="ps-row"><div class="ps-name">Sphères</div><div class="ps-bar-wrap"><div class="ps-bar" style="width:68%"></div></div><div class="ps-n">68</div></div>
+    <div class="score-strip">
+      <div class="ss-title">🔥 STADTPULS SCORE — TOP KREIS 4</div>
+      <div class="ss-row"><div class="ss-name">Langstrasse 77</div><div class="ss-bar"><div class="ss-fill" style="width:97%"></div></div><div class="ss-n">97</div></div>
+      <div class="ss-row"><div class="ss-name">Pho Saigon</div><div class="ss-bar"><div class="ss-fill" style="width:91%"></div></div><div class="ss-n">91</div></div>
+      <div class="ss-row"><div class="ss-name">Josef</div><div class="ss-bar"><div class="ss-fill" style="width:84%"></div></div><div class="ss-n">84</div></div>
+      <div class="ss-row"><div class="ss-name">Helvetiaplatz Café</div><div class="ss-bar"><div class="ss-fill" style="width:72%"></div></div><div class="ss-n">72</div></div>
+      <div class="ss-row"><div class="ss-name">Sphères</div><div class="ss-bar"><div class="ss-fill" style="width:68%"></div></div><div class="ss-n">68</div></div>
     </div>
   </div>
 </div>
 
-<!-- PULSE MOMENT -->
+<!-- PULSE -->
 <div class="pulse-moment">
-  <div class="pm-l">
+  <div>
     <div class="pm-eye">LIVE · KREIS 4 · GERADE JETZT</div>
     <div class="pm-title">KREIS 4<br>EXPLODIERT<br>GERADE</div>
-    <div class="pm-sub">847 User gleichzeitig im Kreis 4 aktiv.<br>Langstrasse 77 hat letzte 2 Plätze.</div>
+    <div class="pm-sub">847 User gleichzeitig aktiv.<br>Langstrasse 77 — letzte 2 Plätze.</div>
   </div>
-  <div class="pm-r">
-    <div class="pm-stat"><div class="pm-sn" id="pm-users">847</div><div class="pm-sl">User jetzt aktiv</div></div>
-    <div class="pm-stat"><div class="pm-sn">23</div><div class="pm-sl">Offeni Restis</div></div>
+  <div class="pm-stats">
+    <div class="pm-stat"><div class="pm-sn" id="pm-n">847</div><div class="pm-sl">User aktiv</div></div>
+    <div class="pm-stat"><div class="pm-sn">14</div><div class="pm-sl">Jetzt offe</div></div>
     <div class="pm-stat"><div class="pm-sn" style="color:#c8ff00">2</div><div class="pm-sl">Letzte Plätze</div></div>
   </div>
 </div>
 
-<!-- STIMMUNG / MOOD MATCHER -->
+<!-- STIMMUNG -->
 <div class="stimmung">
-  <div class="st-title">WIE FÜHSCH DU DICH GERADE?</div>
+  <div class="st-title">WIE FÜHSCH DU DICH?</div>
   <div class="st-sub">KI matched dini Stimmig mit de richtige Location</div>
   <div class="st-chips">
     <div class="stchip" onclick="stimmung(this,'müde')">😴 MÜDE</div>
     <div class="stchip" onclick="stimmung(this,'energetisch')">⚡ ENERGETISCH</div>
     <div class="stchip" onclick="stimmung(this,'romantisch')">💫 ROMANTISCH</div>
     <div class="stchip" onclick="stimmung(this,'hungrig')">🍕 MEGA HUNGRIG</div>
-    <div class="stchip" onclick="stimmung(this,'feiern')">🎉 FEIERN</div>
-    <div class="stchip" onclick="stimmung(this,'vegisch')">🌿 VEGISCH-MOOD</div>
-    <div class="stchip" onclick="stimmung(this,'budget')">💰 KNAPPS BUDGET</div>
-    <div class="stchip" onclick="stimmung(this,'besonders')">🔥 ÖPPIS BESONDERS</div>
+    <div class="stchip" onclick="stimmung(this,'vegisch')">🌿 VEGISCH</div>
+    <div class="stchip" onclick="stimmung(this,'budget')">💰 BUDGET</div>
+    <div class="stchip" onclick="stimmung(this,'besonders')">🔥 BESONDERS</div>
   </div>
-  <div class="st-result" id="st-result">
-    <div class="str-label" id="str-label">KI EMPFIEHLT FÜR DICH:</div>
-    <div class="str-recs" id="str-recs"></div>
-  </div>
-</div>
-
-<!-- FILTER -->
-<div class="filter-bar" style="margin-top:40px">
-  <div class="filter-lbl">FILTER</div>
-  <button class="fb on" onclick="filt(this,'all')">ALLES</button>
-  <button class="fb" onclick="filt(this,'znacht')">ZNACHT</button>
-  <button class="fb" onclick="filt(this,'zmittag')">ZMITTAG</button>
-  <button class="fb" onclick="filt(this,'brunch')">BRUNCH</button>
-  <button class="fb" onclick="filt(this,'vegetarisch')">VEGISCH</button>
-  <button class="fb" onclick="filt(this,'asiatisch')">ASIATISCH</button>
-  <button class="fb" onclick="filt(this,'schweizer')">SCHWEIZER</button>
-  <button class="fb" onclick="filt(this,'popup')">POP-UP</button>
-  <div class="fsep"></div>
-  <button class="fb" onclick="filt(this,'open')">● JETZT OFFE</button>
-  <button class="fb" onclick="filt(this,'ki')">🤖 KI TOP PICK</button>
-  <div class="fsep"></div>
-  <div class="ftog">
-    <div class="tog" id="distTog" onclick="togDist()"><div class="tog-d"></div></div>
-    <div class="tog-l" id="distLbl">📍 IN DER NÄHE</div>
+  <div class="st-result" id="st-res">
+    <div class="str-lbl" id="str-lbl">🤖 KI EMPFIEHLT:</div>
+    <div id="str-recs"></div>
   </div>
 </div>
 
-<!-- SECTION -->
+<!-- GRID -->
 <div class="sh">
   <div class="sh-t">ALLE LOKALE</div>
-  <div class="sh-r"><span id="gc">348</span> RESTAURANTS · CAFÉS · BARS</div>
+  <div class="sh-r" id="sh-r">188 RESTAURANTS · CAFÉS · BARS</div>
 </div>
-
 <div class="mgrid" id="mgrid"></div>
 
-<!-- HÜT NO Ä TISCH FINDE -->
+<!-- VOLT BLOCK -->
 <div class="volt-block">
   <div class="vb-l">
     <div class="vb-eye">LUNCHGATE · SPONTAN RESERVATION</div>
     <div class="vb-hl">HÜT NO<br>Ä TISCH<br>FINDE</div>
-    <div class="vb-sub">8 Restaurants händ no Platz hüt Abig. Sofort buche ohne Warteziit.</div>
+    <div class="vb-sub">8 Restaurants händ no Platz hüt Abig.</div>
   </div>
   <div class="vb-r">
-    <div class="vb-item"><div><div class="vb-nm">Wirtschaft Neumarkt</div><div class="vb-meta">2 Pl. · Kreis 1 · 19:00</div></div><div class="vb-arr">→</div></div>
-    <div class="vb-item"><div><div class="vb-nm">Rosso Zürich</div><div class="vb-meta">4 Pl. · Kreis 5 · 20:30</div></div><div class="vb-arr">→</div></div>
-    <div class="vb-item"><div><div class="vb-nm">Taverna Romana</div><div class="vb-meta">6 Pl. · Kreis 4 · 18:30</div></div><div class="vb-arr">→</div></div>
-    <div class="vb-item"><div><div class="vb-nm">Pho Saigon Express</div><div class="vb-meta">3 Pl. · Kreis 4 · 21:00</div></div><div class="vb-arr">→</div></div>
-    <div class="vb-item"><div><div class="vb-nm">Café Volta</div><div class="vb-meta">8 Pl. · Kreis 5 · 12:00</div></div><div class="vb-arr">→</div></div>
+    <div class="vb-item"><div><div class="vb-nm">Wirtschaft Neumarkt</div><div class="vb-meta">2 Pl. · K1 · 19:00</div></div><button class="vb-btn">BUCHE →</button></div>
+    <div class="vb-item"><div><div class="vb-nm">Rosso Zürich</div><div class="vb-meta">4 Pl. · K5 · 20:30</div></div><button class="vb-btn">BUCHE →</button></div>
+    <div class="vb-item"><div><div class="vb-nm">Taverna Romana</div><div class="vb-meta">6 Pl. · K4 · 18:30</div></div><button class="vb-btn">BUCHE →</button></div>
+    <div class="vb-item"><div><div class="vb-nm">Pho Saigon Express</div><div class="vb-meta">3 Pl. · K4 · 21:00</div></div><button class="vb-btn">BUCHE →</button></div>
+    <div class="vb-item"><div><div class="vb-nm">Café Volta</div><div class="vb-meta">8 Pl. · K5 · 12:00</div></div><button class="vb-btn">BUCHE →</button></div>
   </div>
 </div>
 
-<!-- KI FEATURES -->
-<div class="ki-section">
-  <div class="ki-head">
-    <div class="ki-title">ZÜRI-BOT · KI FEATURES</div>
-    <div class="ki-status">AKTIV · PHASE 6</div>
-  </div>
-  <div class="ki-grid">
-    <div class="ki-card"><div class="ki-card-icon">📍</div><div class="ki-card-title">GPS MATCHING</div><div class="ki-card-desc">200m Radius · Echtzeit · Schritt-Distanz zum nächschte Lokal · ZVV Integration</div><div class="ki-card-tag">LIVE</div></div>
-    <div class="ki-card"><div class="ki-card-icon">😏</div><div class="ki-card-title">STIMMUNGS-MATCHING</div><div class="ki-card-desc">Müde, energetisch, romantisch, hungrig — KI matched di Stimmig mit de richtige Location</div><div class="ki-card-tag">AKTIV</div></div>
-    <div class="ki-card"><div class="ki-card-icon">⚡</div><div class="ki-card-title">SPONTAN-MODUS</div><div class="ki-card-desc">«Kreis 5 · 2h · CHF 30 · zu zweit» — KI generiert komplette Mini-Abig-Plan inkl. ZVV</div><div class="ki-card-tag">BALD</div></div>
-    <div class="ki-card"><div class="ki-card-icon">🔮</div><div class="ki-card-title">PREDICTIVE</div><div class="ki-card-desc">«Friitig Kreis 4 — wie immer?» — KI kennt dini Gewohnheite und schlägt vor bevor du suchsch</div><div class="ki-card-tag">PHASE 6</div></div>
-    <div class="ki-card"><div class="ki-card-icon">🔔</div><div class="ki-card-title">PUSH ALERTS</div><div class="ki-card-desc">«Event 200m · startet in 30min» · «Letzte 2 Plätze bi dim Lieblingsrestaurant»</div><div class="ki-card-tag">PHASE 5</div></div>
-    <div class="ki-card"><div class="ki-card-icon">📊</div><div class="ki-card-title">STADTPULS SCORE</div><div class="ki-card-desc">Kein Redakteur — Score steigt automatisch aus Bookmarks, GPS-Besuche, Reviews, Likes</div><div class="ki-card-tag">LIVE</div></div>
-  </div>
-</div>
+<div class="ticker-wrap"><div class="ticker-row"><div class="tick l" id="tc"></div></div></div>
 
-<!-- BOTTOM TICKER -->
-<div class="ticker-bot"><div class="ticker-row"><div class="tick l" id="tc"></div></div></div>
-
-<!-- FOOTER -->
 <footer>
   <div>
-    <div class="logo fb-logo"><div class="ldot"></div>STADTPULS</div>
-    <div class="fb-desc">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.</div>
-    <div class="fb-copy">© 2026 by raimondo* — Zürich</div>
+    <div class="logo" style="margin-bottom:6px"><div class="ldot"></div>STADTPULS</div>
+    <div class="fc-desc">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich.</div>
+    <div class="fc-copy">© 2026 by raimondo* — Zürich</div>
   </div>
-  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link">Gastro & Bars</a><a class="fc-link">Nachtleben</a><a class="fc-link">Shopping</a><a class="fc-link">Events</a><a class="fc-link">Quartiere</a><a class="fc-link">Musik & Sound</a><a class="fc-link">Mobilität</a></div>
-  <div><div class="fc-title">COMMUNITY</div><a class="fc-link">Feed & Posts</a><a class="fc-link">People & Dates</a><a class="fc-link">Jobs Züri</a><a class="fc-link">News & Stories</a><a class="fc-link">GPS — Wo bisch du?</a><a class="fc-link">Kooperatione</a></div>
-  <div><div class="fc-title">MITMACHE</div><a class="fc-link">Einlogge</a><a class="fc-link">Profil aalege</a><a class="fc-link">Blogger werde</a><a class="fc-link">Inserat schalte</a><a class="fc-link">Partner werde</a><a class="fc-link">Kontakt</a></div>
+  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link">Gastro & Bars</a><a class="fc-link">Nachtleben</a><a class="fc-link">Shopping</a><a class="fc-link">Events</a><a class="fc-link">Quartiere</a><a class="fc-link">Mobilität</a></div>
+  <div><div class="fc-title">COMMUNITY</div><a class="fc-link">Feed & Posts</a><a class="fc-link">People & Dates</a><a class="fc-link">Jobs Züri</a><a class="fc-link">News & Stories</a><a class="fc-link">GPS</a></div>
+  <div><div class="fc-title">MITMACHE</div><a class="fc-link">Einlogge</a><a class="fc-link">Profil aalege</a><a class="fc-link">Partner werde</a><a class="fc-link">Kontakt</a></div>
 </footer>
 
-<!-- DETAIL OVERLAY -->
-<div class="det" id="det">
-  <div class="det-nav">
-    <div class="det-back" onclick="closeDet()">GASTRO</div>
-    <div class="det-nav-badges" id="det-nav-badges"></div>
+<div class="ov" id="ov" onclick="closeDet()"></div>
+<div class="panel" id="panel">
+  <div class="p-hero">
+    <div class="p-art" id="p-art">GASTRO</div>
+    <div class="p-close" onclick="closeDet()">✕</div>
+    <div class="p-score-box"><div class="psn" id="p-score">97</div><div class="psl">SCORE</div></div>
+    <div class="p-name" id="p-name">—</div>
+    <div class="p-sub" id="p-sub">—</div>
   </div>
-  <div class="det-hero-wrap">
-    <div class="det-hero"><div class="det-hero-art" id="det-art">GASTRO</div></div>
-  </div>
-  <div class="det-body">
-    <div>
-      <div class="det-name-block">
-        <div class="det-name" id="det-name">—</div>
-        <div class="det-type" id="det-type">—</div>
-      </div>
-      <div class="det-desc" id="det-desc">—</div>
-      <div class="det-sec"><div class="det-sec-t">DAS MENÜ</div><div class="det-sec-txt" id="det-menu">—</div></div>
-      <div class="det-sec"><div class="det-sec-t">DIE ATMOSPHÄRE</div><div class="det-sec-txt" id="det-atmo">—</div></div>
-      <div class="det-res">
-        <div class="det-res-tag">SPONTAN RESERVATION — LUNCHGATE</div>
-        <div class="det-res-txt" id="det-res">Noch 4 Plätze frei hüt Abig</div>
-        <button class="btn-volt">JETZT RESERVIERE →</button>
-      </div>
-      <div class="det-sec"><div class="det-sec-t" id="det-rev-t">REVIEWS (0)</div><div id="det-revs"></div></div>
+  <div class="p-body">
+    <div class="p-tags" id="p-tags"></div>
+    <div class="p-desc" id="p-desc">—</div>
+    <div class="p-rows">
+      <div class="p-row"><div class="p-lbl">ADRESSE</div><div class="p-val" id="p-addr">—</div></div>
+      <div class="p-row"><div class="p-lbl">KREIS</div><div class="p-val" id="p-kreis">—</div></div>
+      <div class="p-row"><div class="p-lbl">KÜCHI</div><div class="p-val" id="p-kueche">—</div></div>
+      <div class="p-row"><div class="p-lbl">ÖFFNIG</div><div class="p-val" id="p-oeffnig">—</div></div>
+      <div class="p-row"><div class="p-lbl">DISTANZ</div><div class="p-val" style="color:#00f5ff" id="p-dist">—</div></div>
+      <div class="p-row"><div class="p-lbl">RATING</div><div class="p-val" id="p-rating">—</div></div>
     </div>
-    <div>
-      <div class="det-side">
-        <div class="det-side-title">DETAILS</div>
-        <div class="det-row2"><div class="dr-lbl">Adresse</div><div class="dr-val" id="d-addr">—</div></div>
-        <div class="det-row2"><div class="dr-lbl">Quartier</div><div class="dr-val" id="d-kreis">—</div></div>
-        <div class="det-row2"><div class="dr-lbl">Typ</div><div class="dr-val" id="d-typ">—</div></div>
-        <div class="det-row2"><div class="dr-lbl">Küche</div><div class="dr-val" id="d-kueche">—</div></div>
-        <div class="det-row2"><div class="dr-lbl">Öffnig</div><div class="dr-val" id="d-oeffnig">—</div></div>
-        <div class="det-row2"><div class="dr-lbl">Menu</div><div class="dr-val" id="d-preis">—</div></div>
-        <div class="det-row2"><div class="dr-lbl">Distanz</div><div class="dr-val" style="color:#00f5ff" id="d-dist">—</div></div>
-        <div class="det-row2"><div class="dr-lbl">Rating</div><div class="dr-val" id="d-rating">—</div></div>
-        <div class="det-ki"><div class="det-ki-lbl">🤖 ZÜRI-BOT SAGT</div><div class="det-ki-txt" id="d-ki">—</div></div>
-        <button class="btn-res-big">TISCH RESERVIERE →</button>
-        <button class="btn-back-sm" onclick="closeDet()">← ALLE RESTIS</button>
-      </div>
+    <div class="pred"><div class="pred-txt">⚡ «Friitig Abend — du bisch da meischtens. <strong>Tisch reserviere?</strong>»</div></div>
+    <button class="btn-res" id="p-res-btn">🍽️ TISCH RESERVIERE — SOFORT →</button>
+    <div class="p-acts">
+      <div class="p-act">🗺️ AUF KARTE</div>
+      <div class="p-act">❤️ SPEICHERE</div>
+      <div class="p-act">⭐ BEWERTE</div>
+      <div class="p-act">📤 TEILE</div>
     </div>
+    <div id="p-revs"></div>
   </div>
 </div>
 
 <script>
 // CURSOR
-const c1=document.getElementById('c1'),c2=document.getElementById('c2');
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
 document.addEventListener('mousemove',e=>{
-  c1.style.left=e.clientX+'px';c1.style.top=e.clientY+'px';
-  c2.style.left=e.clientX+'px';c2.style.top=e.clientY+'px';
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';
 });
 
 // DATA
-const kreise=[{k:1,n:64},{k:5,n:27},{k:4,n:22},{k:8,n:18},{k:3,n:15},{k:2,n:8},{k:7,n:6},{k:9,n:6},{k:6,n:4},{k:10,n:4},{k:11,n:2},{k:12,n:1}];
+const kreisData=[{k:1,n:64},{k:5,n:27},{k:4,n:22},{k:8,n:18},{k:3,n:15},{k:2,n:8},{k:7,n:6},{k:9,n:6},{k:6,n:4},{k:10,n:4},{k:11,n:2},{k:12,n:1}];
 
 const locs=[
-  {id:0,name:'LANGSTRASSE 77',type:'POP-UP RESTAURANT',sub:'popup',kreis:4,addr:'Langstrasse 77',open:true,ki:true,score:97,rating:5,rN:42,stars:'★★★★★',badge:'volt',badgeTxt:'HÜTIGE ERÖFFNIG',dist:'4 Min · 350m',desc:'Chef Mario Rossis neüschti Kreation isch mehr als es Restaurant — s\'isch es Statement. Rohes Ambiänz, kompromisslosä Fokus uf di Zutat.',menu:'Kei Karte. Chef entscheided morgens am Markt. 3 Gäng, CHF 45.–. Vegetarischi Option immer vorhande.',atmo:'Ehemaligi Metzgerei, rohes Beton, Holztiisch, kein Chichi. Genau richtig für Kreis 4.',preis:'CHF 45.– (3 Gäng)',oeffnig:'Di–So · 18–23',ki:'«Perfekt für öppis Besonderes hüt Abig. Letzte Chanci — nur hüt.»',res:'Letzte 2 Plätze frei hüt Abig',revs:[{u:'@zuri_insider',s:'★★★★★',t:'Beschtä neue Adresse sit langem. Kocht mit Seele.'},{u:'@langstrasse_mampf',s:'★★★★★',t:'Absoluti Pflicht. Wer das verpasst, verpasst Züri.'}]},
-  {id:1,name:'PHO SAIGON EXPRESS',type:'GEHEIMTIPP · ASIATISCH',sub:'asiatisch',kreis:4,addr:'Langstrasse 121',open:true,ki:true,score:91,rating:5,rN:67,stars:'★★★★★',badge:'lila',badgeTxt:'GEHEIMTIPP',dist:'6 Min · 480m',desc:'Di bischti Pho vo Zürich. Kein Insta, kein Hype. Nur di Lüt vom Quartier wüssed wo es isch.',menu:'Pho Bo, Pho Ga, Bun Bo Hue. Alles unter CHF 18.–. Täglich frisch.',atmo:'10 Tisch, immer voll, Warteziit normal. Lohnt sich. Authentisch.',preis:'Ab CHF 14.–',oeffnig:'Mo–Sa · 11–21',ki:'«Günstig, authentisch, 6 Minuten vo hier. Perfekt für Budget-Mood.»',res:'3 Plätze frei hüt Abig · 21:00',revs:[{u:'@pho_hunter_zh',s:'★★★★★',t:'Beschtä Pho vo Zürich. Kein Zweifel.'},{u:'@kreis4life',s:'★★★★★',t:'Komm jedi Wuche. Noch nie enttäuscht.'}]},
-  {id:2,name:'HILTL STAMMHAUS',type:'VEGISCH · SEIT 1898',sub:'vegetarisch',kreis:1,addr:'Sihlstrasse 28',open:true,ki:false,score:88,rating:5,rN:312,stars:'★★★★★',badge:'volt',badgeTxt:'VEGISCH',dist:'18 Min · 1.8km',desc:'Sit 1898. Weltrekord ältischts vegetarischs Restaurant. Kein Fleisch, kei Kompromiss. Kei Bullshit.',menu:'Täglich frischs Buffet. Morgens, mittags, abends. Buffet nach Gwicht.',atmo:'Modern, hell, entspannt. Kreis 1 Lage, top Service, immer voll.',preis:'Nach Gwicht ab CHF 4.80/100g',oeffnig:'Mo–Sa 6–24 · So 8–24',ki:'«Weltbekannt, immer gut. Dini sicheri Wahl für Vegisches.»',res:'Walk-In möglich · Kein Tisch nötig',revs:[{u:'@vegizurich',s:'★★★★★',t:'Seit 20 Jahr mii liebschti Mittagsoption.'},{u:'@tourist_zh',s:'★★★★★',t:'Muss für jede Züri-Besucher.'}]},
-  {id:3,name:'CAFÉ VOLTA',type:'ZMITTAG DEAL',sub:'zmittag',kreis:5,addr:'Voltastrasse 32',open:true,ki:false,score:84,rating:4,rN:28,stars:'★★★★☆',badge:'ora',badgeTxt:'ZMITTAG DEAL',dist:'12 Min · 1.1km',desc:'Kreis 5 Klassiker — täglich wechslends Mittagsmenü, frisch, günstig, ehrlich. Der Treffpunkt vom Quartier.',menu:'Täglich wechsled. Tagesgericht CHF 18.50 inkl. Salat.',atmo:'Alt-Züri Charme, Holzbänk, gemütlich. Stammkundschaft seit 30 Jahr.',preis:'CHF 18.50 (Tagesgericht)',oeffnig:'Mo–Fr · 11–14 / 18–22',ki:'«Günstig und gut. Für Budget-bewusseti Züri-Lüt.»',res:'Tisch frei · kein Vorreserviere nötig',revs:[{u:'@zuri5er',s:'★★★★☆',t:'Mii täglichi Mittagspause. Immer top.'}]},
-  {id:4,name:'ROSSO ZÜRICH',type:'BRUNCH · SA–SO',sub:'brunch',kreis:5,addr:'Geroldstrasse 15',open:false,ki:false,score:82,rating:4,rN:89,stars:'★★★★☆',badge:'cyan',badgeTxt:'BRUNCH',dist:'14 Min · 1.3km',desc:'Züri Wests coolschte Brunch-Location. Riisigs Buffet, alles frisch, perfekter Kafi.',menu:'Brunch-Buffet CHF 32.–. All You Can Eat Sa–So.',atmo:'Loft-Atmosphäre, hohi Decke, viel Licht. Perfekt für de Suntig-Morge.',preis:'CHF 32.– (Buffet)',oeffnig:'Sa–So · 10–14',ki:'«Beschtä Brunch Züri West. Unbedingt am Wochenende.»',res:'Geöffnet Sa–So ab 10:00',revs:[{u:'@brunch_zh',s:'★★★★☆',t:'Jede Suntig. Wird nie langweilig.'}]},
-  {id:5,name:'WIRTSCHAFT NEUMARKT',type:'SCHWEIZER KÜCHI',sub:'schweizer',kreis:1,addr:'Neumarkt 5',open:true,ki:false,score:79,rating:5,rN:134,stars:'★★★★★',badge:'ghost',badgeTxt:'KLASSIKER',dist:'20 Min · 2km',desc:'Altstadt-Klassiker sit 1964. Züri Gschnätzlets, Röschti, alles wie s\'isch sein soll.',menu:'Klassischi Züri Küchi. Tagesmenus ab CHF 22.–.',atmo:'Holzgetäfer, Stammtisch, Züri wie früher. Kein Touristikool.',preis:'Ab CHF 22.–',oeffnig:'Mo–Sa · 11–23',ki:'«Fürs authentische Züri-Erläbnis. Kein Touristikool.»',res:'2 Plätze frei hüt · 19:00',revs:[{u:'@altstadt_fan',s:'★★★★★',t:'Züri in Reinstform. Seit 1964 gleichbleibend gut.'}]},
+  {id:0,name:'LANGSTRASSE 77',typ:'restaurant',sub:'italienisch',kreis:4,addr:'Langstrasse 77',score:97,open:true,ki:true,res:true,rating:5,rN:42,stars:'★★★★★',dist:4,desc:'Chef Mario Rossis neüschti Kreation. Rohes Ambiänz, kompromisslosä Fokus uf di Zutat.',oeffnig:'Di–So · 18–23',badge:'volt',badgeTxt:'ERÖFFNIG'},
+  {id:1,name:'PHO SAIGON EXPRESS',typ:'restaurant',sub:'asiatisch',kreis:4,addr:'Langstrasse 121',score:91,open:true,ki:true,res:false,rating:5,rN:67,stars:'★★★★★',dist:6,desc:'Di bischti Pho vo Zürich. Kein Insta, kein Hype.',oeffnig:'Mo–Sa · 11–21',badge:'lila',badgeTxt:'GEHEIMTIPP'},
+  {id:2,name:'HILTL STAMMHAUS',typ:'restaurant',sub:'vegetarisch',kreis:1,addr:'Sihlstrasse 28',score:88,open:true,ki:false,res:true,rating:5,rN:312,stars:'★★★★★',dist:18,desc:'Sit 1898. Weltrekord ältischts vegetarischs Restaurant.',oeffnig:'Mo–Sa 6–24',badge:'volt',badgeTxt:'VEGISCH'},
+  {id:3,name:'CAFÉ VOLTA',typ:'cafe',sub:'cafe',kreis:5,addr:'Voltastrasse 32',score:84,open:true,ki:false,res:false,rating:4,rN:28,stars:'★★★★☆',dist:12,desc:'Kreis 5 Klassiker — täglich wechslends Mittagsmenü.',oeffnig:'Mo–Fr · 11–22',badge:'ora',badgeTxt:'ZMITTAG'},
+  {id:4,name:'SPHÈRES',typ:'cafe',sub:'cafe',kreis:4,addr:'Hardturmstr. 66',score:81,open:true,ki:false,res:false,rating:4,rN:44,stars:'★★★★☆',dist:8,desc:'Kultcafé Züri West — Büecher, Kafi, cooli Stimmig.',oeffnig:'Mo–Sa · 8–22',badge:'ghost',badgeTxt:'KULTCAFÉ'},
+  {id:5,name:'ROSSO ZÜRICH',typ:'restaurant',sub:'mediterran',kreis:5,addr:'Geroldstrasse 15',score:79,open:false,ki:false,res:true,rating:4,rN:89,stars:'★★★★☆',dist:14,desc:'Züri Wests coolschte Brunch-Location.',oeffnig:'Sa–So · 10–14',badge:'cyan',badgeTxt:'MEDITERRAN'},
+  {id:6,name:'WIRTSCHAFT NEUMARKT',typ:'restaurant',sub:'schweizer',kreis:1,addr:'Neumarkt 5',score:79,open:true,ki:false,res:true,rating:5,rN:134,stars:'★★★★★',dist:20,desc:'Altstadt-Klassiker sit 1964.',oeffnig:'Mo–Sa · 11–23',badge:'ghost',badgeTxt:'SEIT 1964'},
+  {id:7,name:'FRIEDAS BÜCHSE',typ:'bar',sub:'bar',kreis:4,addr:'Geroldstr. 23a',score:77,open:true,ki:false,res:false,rating:4,rN:56,stars:'★★★★☆',dist:7,desc:'Kein Mainstream, kein Bullshit. Bar für Lüt vom Quartier.',oeffnig:'Di–So · 18–02',badge:'red',badgeTxt:'BAR'},
+  {id:8,name:'IM VIADUKT',typ:'restaurant',sub:'american',kreis:5,addr:'Viaduktstr. 45',score:74,open:true,ki:false,res:false,rating:4,rN:45,stars:'★★★★☆',dist:15,desc:'Unter de Böge vom Viadukt — amerikanischi Küchi.',oeffnig:'Di–So · 12–23',badge:'red',badgeTxt:'AMERICAN'},
+  {id:9,name:'ALCHEMIST BAR',typ:'bar',sub:'cocktail',kreis:1,addr:'Niederdorfstr. 8',score:72,open:true,ki:false,res:true,rating:5,rN:88,stars:'★★★★★',dist:22,desc:'Beste Cocktails Zürichs. Handgefertigt, keine Shortcuts.',oeffnig:'Mi–Sa · 18–02',badge:'lila',badgeTxt:'COCKTAILBAR'},
+  {id:10,name:'TIBITS',typ:'restaurant',sub:'vegetarisch',kreis:1,addr:'Seefeldstr. 2',score:71,open:true,ki:false,res:false,rating:4,rN:156,stars:'★★★★☆',dist:19,desc:'Vegetarischs Buffet — nach Gwicht zahle.',oeffnig:'Mo–Sa 8–24',badge:'volt',badgeTxt:'VEGISCH'},
+  {id:11,name:'HELVETIAPLATZ CAFÉ',typ:'cafe',sub:'cafe',kreis:4,addr:'Helvetiaplatz 1',score:68,open:true,ki:false,res:false,rating:4,rN:33,stars:'★★★★☆',dist:5,desc:'Kreis 4 Flair — Kafi, Kuche, Lüt luege.',oeffnig:'Mo–So · 7–22',badge:'ghost',badgeTxt:'CAFÉ'},
 ];
 
-const moodMap={
-  casual:['CAFÉ VOLTA','SPHÈRES','HELVETIAPLATZ CAFÉ'],
-  romantisch:['LANGSTRASSE 77','WIRTSCHAFT NEUMARKT','ROSSO ZÜRICH'],
-  schnell:['PHO SAIGON EXPRESS','CAFÉ VOLTA','TIBITS'],
-  vegisch:['HILTL STAMMHAUS','TIBITS','SPHÈRES'],
-  budget:['PHO SAIGON EXPRESS','CAFÉ VOLTA','HILTL STAMMHAUS'],
-  besonders:['LANGSTRASSE 77','PHO SAIGON EXPRESS','WIRTSCHAFT NEUMARKT'],
+// KÜCHEN PER TYP
+const KUECHEN={
+  all:[
+    {id:'all',emoji:'🍽️',name:'ALLES'},
+    {id:'asiatisch',emoji:'🍜',name:'ASIATISCH'},
+    {id:'italienisch',emoji:'🍕',name:'ITALIAN'},
+    {id:'schweizer',emoji:'🧀',name:'SCHWEIZER'},
+    {id:'vegetarisch',emoji:'🌿',name:'VEGISCH'},
+    {id:'vegan',emoji:'🌱',name:'VEGAN'},
+    {id:'american',emoji:'🍔',name:'AMERICAN'},
+    {id:'mediterran',emoji:'🫒',name:'MEDITERRAN'},
+    {id:'gourmet',emoji:'⭐',name:'GOURMET'},
+    {id:'fisch',emoji:'🐟',name:'FISCH'},
+    {id:'französisch',emoji:'🥐',name:'FRANÇAIS'},
+    {id:'cafe',emoji:'☕',name:'CAFÉ'},
+    {id:'cocktail',emoji:'🍸',name:'COCKTAIL'},
+    {id:'bar',emoji:'🍺',name:'BAR'},
+  ],
+  restaurant:[
+    {id:'all',emoji:'🍴',name:'ALLE RESTIS'},
+    {id:'asiatisch',emoji:'🍜',name:'ASIATISCH'},
+    {id:'italienisch',emoji:'🍕',name:'ITALIAN'},
+    {id:'schweizer',emoji:'🧀',name:'SCHWEIZER'},
+    {id:'vegetarisch',emoji:'🌿',name:'VEGISCH'},
+    {id:'vegan',emoji:'🌱',name:'VEGAN'},
+    {id:'american',emoji:'🍔',name:'AMERICAN'},
+    {id:'mediterran',emoji:'🫒',name:'MEDITERRAN'},
+    {id:'gourmet',emoji:'⭐',name:'GOURMET'},
+    {id:'fisch',emoji:'🐟',name:'FISCH'},
+    {id:'französisch',emoji:'🥐',name:'FRANÇAIS'},
+  ],
+  bar:[
+    {id:'all',emoji:'🍸',name:'ALLE BARS'},
+    {id:'cocktail',emoji:'🍹',name:'COCKTAIL'},
+    {id:'weinbar',emoji:'🍷',name:'WEINBAR'},
+    {id:'pub',emoji:'🍺',name:'PUB'},
+    {id:'musicbar',emoji:'🎵',name:'MUSIC BAR'},
+    {id:'afterwork',emoji:'💼',name:'AFTER WORK'},
+    {id:'outdoor',emoji:'🌿',name:'OUTDOOR'},
+    {id:'kulturbar',emoji:'🎭',name:'KULTURBAR'},
+  ],
+  cafe:[
+    {id:'all',emoji:'☕',name:'ALLE CAFÉS'},
+    {id:'cafe',emoji:'🥐',name:'KAFI & KUCHE'},
+    {id:'brunch',emoji:'🥞',name:'BRUNCH'},
+    {id:'coworking',emoji:'💻',name:'COWORKING'},
+  ],
 };
-const stimmungMap={
-  müde:['Café Volta','Sphères — ruhig, Büecher, Kafi'],
-  energetisch:['Langstrasse 77 — volli Energie','Im Viadukt'],
-  romantisch:['Langstrasse 77 — Candlelight','Wirtschaft Neumarkt'],
-  hungrig:['Pho Saigon Express — schnell + satt','Hiltl — Buffet unlimitiert'],
-  feiern:['Rosso Zürich','Im Viadukt — Partystimmig'],
-  vegisch:['Hiltl Stammhaus — 1898','Tibits — nach Gwicht'],
-  budget:['Pho Saigon Express — ab CHF 14','Café Volta — CHF 18.50'],
-  besonders:['Langstrasse 77 — letzte Chanci hüt','Wirtschaft Neumarkt — sit 1964'],
-};
+
 const botMap={
-  casual:'«Entspannt und gemütlich — Café Volta im Kreis 5 oder Sphères. Kein Stress, guter Kafi, coole Lüt.»',
-  romantisch:'«Romantisch? Langstrasse 77 — letzte 2 Plätze, hüt letzte Abig. Oder Wirtschaft Neumarkt für Züri-Charme.»',
-  schnell:'«Schnell? Pho Saigon Express — 6 Minuten vo hier, 3 Plätze frei, CHF 14.–. Fertig.»',
-  vegisch:'«Vegisch-Mood: Hiltl Stammhaus — seit 1898, walk-in möglich, alles frisch, kein Bullshit.»',
-  budget:'«Budget knapp? Café Volta CHF 18.50 Zmittag oder Pho Saigon CHF 14.–. Beidi top.»',
-  besonders:'«Besonderes? Langstrasse 77 — hüt letzte Chanci. Chef Mario. 3 Gäng CHF 45.–. Nicht verpasse.»',
+  casual:'«Entspannt — Café Volta K5 oder Sphères K4. Kein Stress, guter Kafi.»',
+  romantisch:'«Romantisch? Langstrasse 77 — letzte 2 Plätze hüt Abig.»',
+  schnell:'«Schnell? Pho Saigon — 6 Min, CHF 14.–. Fertig.»',
+  vegisch:'«Vegisch: Hiltl Stammhaus — seit 1898, walk-in möglich.»',
+  budget:'«Budget? Café Volta CHF 18.50 oder Pho Saigon CHF 14.–.»',
+  besonders:'«Besonders? Langstrasse 77 — hüt letzte Chanci. Chef Mario.»',
+};
+const stimmMap={
+  müde:['Café Volta — ruhig, Büecher, Kafi','Sphères — entspannt, cooli Stimmig'],
+  energetisch:['Langstrasse 77 — volli Energie','Im Viadukt — laut und lebhaft'],
+  romantisch:['Langstrasse 77 — Candlelight','Wirtschaft Neumarkt — Züri-Charme'],
+  hungrig:['Pho Saigon — schnell + satt','Hiltl — Buffet unlimitiert'],
+  vegisch:['Hiltl Stammhaus — seit 1898','Tibits — nach Gwicht zahle'],
+  budget:['Pho Saigon — ab CHF 14','Café Volta — CHF 18.50'],
+  besonders:['Langstrasse 77 — letzte Chanci','Alchemist Bar — beschtä Cocktails'],
 };
 
-let activeSub='all',distOn=false;
+// STATE
+let S={typ:'all',kueche:'all',kreis:'all',offe:false,naehe:false,ki:false,res:false,sort:'score'};
 
-// HEATMAP
-function buildHM(){
-  const g=document.getElementById('hm');g.innerHTML='';
-  const MAX=64;
-  kreise.forEach(d=>{
-    const p=Math.round(d.n/MAX*100);
-    const col=p>60?'#ff2d00':p>30?'#ff6600':p>15?'rgba(232,228,217,.7)':'rgba(232,228,217,.3)';
-    const el=document.createElement('div');el.className='hm-cell';
-    el.innerHTML=`<div class="hm-k">K${d.k}</div><div class="hm-n" style="color:${col}">${d.n}</div><div class="hm-b"><div class="hm-bf" style="width:${p}%"></div></div><div class="hm-pct">${p}%</div>`;
-    el.onclick=()=>{document.querySelectorAll('.hm-cell').forEach(c=>c.classList.remove('on'));el.classList.toggle('on');};
-    g.appendChild(el);
+// TYP COUNTS
+function getTypCount(typ){
+  if(typ==='all')return locs.length;
+  return locs.filter(l=>l.typ===typ).length;
+}
+
+// UPDATE COUNTS
+function updateCounts(){
+  ['all','restaurant','bar','cafe'].forEach(t=>{
+    const n=getTypCount(t);
+    const el=document.getElementById('tc-'+t)||document.getElementById('tc-'+t.replace('restaurant','rest'));
+    if(document.getElementById('tc-all'))document.getElementById('tc-all').textContent=getTypCount('all');
+    if(document.getElementById('tc-rest'))document.getElementById('tc-rest').textContent=getTypCount('restaurant');
+    if(document.getElementById('tc-bar'))document.getElementById('tc-bar').textContent=getTypCount('bar');
+    if(document.getElementById('tc-cafe'))document.getElementById('tc-cafe').textContent=getTypCount('cafe');
+    if(document.getElementById('stc-all'))document.getElementById('stc-all').textContent=getTypCount('all');
+    if(document.getElementById('stc-rest'))document.getElementById('stc-rest').textContent=getTypCount('restaurant');
+    if(document.getElementById('stc-bar'))document.getElementById('stc-bar').textContent=getTypCount('bar');
+    if(document.getElementById('stc-cafe'))document.getElementById('stc-cafe').textContent=getTypCount('cafe');
   });
 }
 
-// GRID
+// RENDER KÜCHEN
+function renderKuechen(){
+  const kl=KUECHEN[S.typ]||KUECHEN.all;
+  const wrap=document.getElementById('kueche-btns');
+  if(!wrap)return;
+
+  // Counts
+  const counts={};
+  locs.forEach(l=>{
+    if(S.typ==='all'||l.typ===S.typ){
+      counts[l.sub]=(counts[l.sub]||0)+1;
+    }
+  });
+  const total=locs.filter(l=>S.typ==='all'||l.typ===S.typ).length;
+
+  wrap.innerHTML=kl.map(k=>{
+    const cnt=k.id==='all'?total:(counts[k.id]||0);
+    const disabled=k.id!=='all'&&cnt===0;
+    return`<button class="kchip${S.kueche===k.id?' on':''}${disabled?' disabled':''}" onclick="setKueche(this,'${k.id}')">
+      <span class="kchip-emoji">${k.emoji}</span>${k.name}<span class="kchip-cnt">${cnt||''}</span>
+    </button>`;
+  }).join('');
+
+  // Sheet küchen
+  const sg=document.getElementById('sheet-kueche');
+  if(sg){
+    sg.innerHTML=kl.map(k=>{
+      const cnt=k.id==='all'?total:(counts[k.id]||0);
+      const disabled=k.id!=='all'&&cnt===0;
+      return`<div class="kgrid-btn${S.kueche===k.id?' on':''}${disabled?' disabled':''}" onclick="setKueche(this,'${k.id}');syncSheet()">
+        <div class="kgrid-btn-emoji">${k.emoji}</div>
+        <div class="kgrid-btn-name">${k.name}</div>
+        <div class="kgrid-btn-cnt">${cnt}</div>
+      </div>`;
+    }).join('');
+  }
+
+  // Label
+  const lbl=S.typ==='all'?'KÜCHE':S.typ==='restaurant'?'KÜCHE':S.typ==='bar'?'BAR-TYP':'CAFÉ-TYP';
+  const labelEl=document.getElementById('kr-lbl');
+  if(labelEl)labelEl.textContent=lbl;
+}
+
+// RENDER KREIS SHEET
+function renderKreisSheet(){
+  const sk=document.getElementById('sheet-kreis');
+  if(!sk)return;
+  sk.innerHTML=[{k:'all',n:'ALLE'},...kreisData.map(d=>({k:d.k,n:d.k}))].map(d=>{
+    const cnt=d.k==='all'?locs.length:locs.filter(l=>l.kreis===d.k).length;
+    return`<div class="kgrid-k${S.kreis===d.k?' on':''}" onclick="setKreis(null,${d.k==='all'?'"all"':d.k});syncSheet()">
+      <div class="kgrid-k-name">${d.k==='all'?'ALL':'K'+d.k}</div>
+      <div class="kgrid-k-cnt">${cnt}</div>
+    </div>`;
+  }).join('');
+}
+
+// SET TYP
+function setTyp(el,typ){
+  document.querySelectorAll('.typ-btn').forEach(b=>b.classList.remove('on'));
+  if(el)el.classList.add('on');
+  S.typ=typ;S.kueche='all';
+  renderKuechen();updateTags();buildGrid();
+}
+function sheetTyp(el,typ){
+  document.querySelectorAll('.typ-card').forEach(b=>b.classList.remove('on'));
+  if(el)el.classList.add('on');
+  // sync desktop
+  document.querySelectorAll('.typ-btn').forEach(b=>{if(b.dataset.typ===typ)b.classList.add('on');else b.classList.remove('on')});
+  S.typ=typ;S.kueche='all';
+  renderKuechen();renderKreisSheet();syncSheet();
+}
+
+// SET KÜCHE
+function setKueche(el,k){
+  document.querySelectorAll('.kchip').forEach(b=>b.classList.remove('on'));
+  if(el)el.classList.add('on');
+  S.kueche=k;
+  updateTags();buildGrid();
+}
+
+// SET KREIS
+function setKreis(el,k){
+  document.querySelectorAll('.kr-btn').forEach(b=>b.classList.remove('on'));
+  if(el)el.classList.add('on');
+  S.kreis=k;
+  // sync heatmap
+  document.querySelectorAll('.hm-cell').forEach(c=>{c.classList.toggle('on',c.dataset.k==k)});
+  updateTags();buildGrid();renderKreisSheet();
+}
+
+// SET QUER
+function setQuer(el,q){
+  el.classList.toggle('on');S[q]=!S[q];
+  if(q==='ki')document.getElementById('rb-ki').style.display=S.ki?'flex':'none';
+  updateTags();buildGrid();
+}
+function sheetQuer(el,q){
+  el.classList.toggle('on');S[q]=!S[q];
+  // sync desktop
+  const dEl=document.getElementById('qb-'+q);
+  if(dEl)dEl.classList.toggle('on',S[q]);
+  if(q==='ki')document.getElementById('rb-ki').style.display=S.ki?'flex':'none';
+  updateTags();buildGrid();syncSheet();
+}
+
+// RESET
+function resetAll(){
+  S={typ:'all',kueche:'all',kreis:'all',offe:false,naehe:false,ki:false,res:false,sort:S.sort};
+  document.querySelectorAll('.typ-btn,.typ-card').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('[data-typ="all"]').forEach(b=>b.classList.add('on'));
+  document.querySelectorAll('.kr-btn').forEach(b=>b.classList.remove('on'));
+  document.querySelector('.kr-btn').classList.add('on');
+  document.querySelectorAll('.q-btn,.quer-btn-sheet').forEach(b=>b.classList.remove('on'));
+  document.getElementById('rb-ki').style.display='none';
+  renderKuechen();updateTags();buildGrid();
+}
+
+// SORT
+function setSort(el,s){
+  document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');S.sort=s;buildGrid();
+}
+
+// ACTIVE TAGS
+function updateTags(){
+  const row=document.getElementById('af-row');
+  if(!row)return;
+  const tags=[];
+  if(S.typ!=='all'){
+    const icons={restaurant:'🍴',bar:'🍸',cafe:'☕'};
+    tags.push(`<div class="af-tag" onclick="setTyp(document.querySelector('[data-typ=\\'all\\']'),'all')">${icons[S.typ]||''} ${S.typ.toUpperCase()}<span class="af-x">✕</span></div>`);
+  }
+  if(S.kueche!=='all'){
+    const k=KUECHEN[S.typ]?.find(x=>x.id===S.kueche)||KUECHEN.all.find(x=>x.id===S.kueche);
+    if(k)tags.push(`<div class="af-tag" onclick="setKueche(null,'all')">${k.emoji} ${k.name}<span class="af-x">✕</span></div>`);
+  }
+  if(S.kreis!=='all')tags.push(`<div class="af-tag c" onclick="setKreis(document.querySelector('.kr-btn'),'all')">📍 KREIS ${S.kreis}<span class="af-x">✕</span></div>`);
+  if(S.offe)tags.push(`<div class="af-tag g" onclick="setQuer(document.getElementById('qb-offe'),'offe')">● JETZT OFFE<span class="af-x">✕</span></div>`);
+  if(S.naehe)tags.push(`<div class="af-tag c" onclick="setQuer(document.getElementById('qb-naehe'),'naehe')">📍 IN DER NÄHE<span class="af-x">✕</span></div>`);
+  if(S.ki)tags.push(`<div class="af-tag g" onclick="setQuer(document.getElementById('qb-ki'),'ki')">🤖 KI TOP PICK<span class="af-x">✕</span></div>`);
+  if(S.res)tags.push(`<div class="af-tag gold" onclick="setQuer(document.getElementById('qb-res'),'res')">🍽️ RESERVIERBAR<span class="af-x">✕</span></div>`);
+  if(tags.length){
+    row.innerHTML='<div class="af-lbl" style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);flex-shrink:0">FILTER:</div>'+tags.join('')+'<div class="af-reset" onclick="resetAll()">✕ ALLE ZURÜCKSETZE</div>';
+  } else {
+    row.innerHTML='';
+  }
+}
+
+// BUILD GRID
 function buildGrid(){
   const g=document.getElementById('mgrid');
-  const data=activeSub==='all'?locs:activeSub==='open'?locs.filter(l=>l.open):activeSub==='ki'?locs.filter(l=>l.ki):locs.filter(l=>l.sub===activeSub);
-  document.getElementById('gc').textContent=data.length;
+  let data=locs.filter(l=>{
+    if(S.typ!=='all'&&l.typ!==S.typ)return false;
+    if(S.kueche!=='all'&&l.sub!==S.kueche)return false;
+    if(S.kreis!=='all'&&l.kreis!==S.kreis)return false;
+    if(S.offe&&!l.open)return false;
+    if(S.ki&&!l.ki)return false;
+    if(S.res&&!l.res)return false;
+    return true;
+  });
+  if(S.sort==='score')data.sort((a,b)=>b.score-a.score);
+  else if(S.sort==='dist')data.sort((a,b)=>a.dist-b.dist);
+  else data.reverse();
+
+  const cnt=data.length;
+  // Animate count
+  const rbEl=document.getElementById('rb-count');
+  if(rbEl){rbEl.style.animation='none';rbEl.offsetHeight;rbEl.style.animation='countUp .25s ease';rbEl.textContent=cnt;}
+  document.getElementById('sh-r').textContent=cnt+' RESTAURANTS · CAFÉS · BARS';
+  document.getElementById('sheet-count').textContent=cnt;
+
+  // Dynamic headline
+  const dhl=document.getElementById('dynamic-hl');
+  if(dhl){
+    let hl='';
+    if(S.kreis!=='all'&&S.kueche!=='all'){const k=KUECHEN.all.find(x=>x.id===S.kueche);hl=cnt+' '+(k?k.name:'')+' IN KREIS '+S.kreis;}
+    else if(S.kreis!=='all')hl=cnt+' LOKALE IN KREIS '+S.kreis;
+    else if(S.kueche!=='all'){const k=KUECHEN.all.find(x=>x.id===S.kueche);hl=cnt+' '+(k?k.name+' RESTAURANTS':'RESTAURANTS');}
+    else if(S.offe)hl=cnt+' JETZT OFFE';
+    else hl=cnt+' LOKALE IN ZÜRICH';
+    dhl.textContent=hl;
+  }
+
   g.innerHTML='';
+  if(!data.length){
+    g.innerHTML=`<div class="empty-state"><div class="es-title">NÜÜT GFUNDE</div><div class="es-sub">Probier andere Filter</div><div class="es-reset" onclick="resetAll()">ALLE ZURÜCKSETZE</div></div>`;
+    return;
+  }
   data.forEach((l,i)=>{
-    const c=document.createElement('div');c.className='mcard';
-    c.style.animation=`fadeUp .25s ease ${i*.05}s both`;
+    const c=document.createElement('div');
+    c.className='mcard';c.style.animation=`fadeUp .22s ease ${i*.04}s both`;
     c.innerHTML=`
-      ${l.ki?`<div class="mc-ki">🤖</div>`:`<div class="mc-dot ${l.open?'on':'off'}"></div>`}
+      ${l.ki?`<div class="mc-ki">🤖</div>`:''}
       <div class="mc-badges">
         <span class="mcb ${l.badge}">${l.badgeTxt}</span>
-        ${l.ki?'<span class="mcb volt">🤖 KI PICK</span>':''}
+        ${l.ki?'<span class="mcb volt">KI</span>':''}
+        ${l.res?'<span class="mcb gold">🍽️</span>':''}
       </div>
       <div class="mc-name">${l.name}</div>
-      <div class="mc-type">${l.type} · Kreis ${l.kreis}</div>
-      <div class="mc-meta">${l.addr}${l.open?' · <span style="color:#c8ff00">● OFFE</span>':' · <span style="color:rgba(232,228,217,.2)">○ ZU</span>'}</div>
-      <div class="mc-stars"><span class="mc-s">${l.stars}</span><span class="mc-sc">(${l.rN}) · Score ${l.score}</span></div>
-      <div class="mc-dist">${l.dist}</div>
-    `;
+      <div class="mc-type">${l.sub.toUpperCase()} · KREIS ${l.kreis}</div>
+      <div class="mc-meta">${l.addr} · ${l.open?'<span style="color:#c8ff00">● OFFE</span>':'<span style="color:rgba(232,228,217,.15)">○ ZU</span>'}</div>
+      <div class="mc-foot">
+        <div class="mc-stars">${l.stars}</div>
+        <div class="mc-dist">📍 ${l.dist} Min</div>
+        <div class="mc-score">${l.score}</div>
+      </div>`;
     c.onclick=()=>openDet(l.id);
     g.appendChild(c);
   });
 }
 
-function filt(el,s){
-  document.querySelectorAll('.fb').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');activeSub=s;buildGrid();
-}
-function togDist(){
-  distOn=!distOn;
-  const t=document.getElementById('distTog');
-  t.classList.toggle('on',distOn);
-  document.getElementById('distLbl').style.color=distOn?'#c8ff00':'rgba(200,255,0,.28)';
+// HEATMAP
+function buildHM(){
+  const g=document.getElementById('hm');g.innerHTML='';
+  const MAX=64;
+  kreisData.forEach(d=>{
+    const p=Math.round(d.n/MAX*100);
+    const col=p>60?'#ff2d00':p>30?'#ff6600':p>15?'rgba(232,228,217,.6)':'rgba(232,228,217,.2)';
+    const el=document.createElement('div');
+    el.className='hm-cell';el.dataset.k=d.k;
+    el.innerHTML=`<div class="hm-k">K${d.k}</div><div class="hm-n" style="color:${col}">${d.n}</div><div class="hm-b"><div class="hm-bf" style="width:${p}%"></div></div>`;
+    el.onclick=()=>setKreis(null,S.kreis===d.k?'all':d.k);
+    g.appendChild(el);
+  });
 }
 
 // STIMMUNG
-function stimmung(el,mood){
+function stimmung(el,m){
   document.querySelectorAll('.stchip').forEach(c=>c.classList.remove('on'));
   el.classList.add('on');
-  const recs=stimmungMap[mood]||[];
-  document.getElementById('str-label').textContent='🤖 KI EMPFIEHLT FÜR DICH:';
-  document.getElementById('str-recs').innerHTML=recs.map(r=>`<div class="str-rec"><div class="str-rec-meta">${r}</div><div style="color:rgba(255,45,0,.4);font-size:10px">→</div></div>`).join('');
-  document.getElementById('st-result').classList.add('show');
+  const recs=stimmMap[m]||[];
+  document.getElementById('str-lbl').textContent='🤖 KI EMPFIEHLT FÜR DICH:';
+  document.getElementById('str-recs').innerHTML=recs.map(r=>`<div class="str-rec"><div>${r}</div><div style="color:rgba(255,45,0,.35);font-size:10px">→</div></div>`).join('');
+  document.getElementById('st-res').classList.add('show');
 }
-
-// BOT MOOD
-function setMood(el,mood){
+function setMood(el,m){
   document.querySelectorAll('.bchip').forEach(c=>c.classList.remove('on'));
   el.classList.add('on');
-  document.getElementById('bot-msg').innerHTML=`«${botMap[mood]}»`;
+  document.getElementById('bot-msg').innerHTML=`«${botMap[m]}»`;
 }
+
+// SHEET
+function openSheet(){document.getElementById('sheet').classList.add('open');document.getElementById('sh-ov').classList.add('on');renderKreisSheet();}
+function closeSheet(){document.getElementById('sheet').classList.remove('open');document.getElementById('sh-ov').classList.remove('on');}
+function syncSheet(){document.getElementById('sheet-count').textContent=buildGrid()||'—';}
 
 // DETAIL
 function openDet(id){
   const l=locs.find(x=>x.id===id)||locs[0];
-  document.getElementById('det-art').textContent=l.name.substring(0,8);
-  document.getElementById('det-name').textContent=l.name;
-  document.getElementById('det-type').textContent=l.type;
-  document.getElementById('det-desc').textContent=l.desc;
-  document.getElementById('det-menu').textContent=l.menu;
-  document.getElementById('det-atmo').textContent=l.atmo;
-  document.getElementById('det-res').textContent=l.res;
-  document.getElementById('d-addr').textContent=l.addr;
-  document.getElementById('d-kreis').textContent='Kreis '+l.kreis;
-  document.getElementById('d-typ').textContent=l.type;
-  document.getElementById('d-kueche').textContent=l.sub.charAt(0).toUpperCase()+l.sub.slice(1);
-  document.getElementById('d-oeffnig').textContent=l.oeffnig;
-  document.getElementById('d-preis').textContent=l.preis;
-  document.getElementById('d-dist').textContent=l.dist;
-  document.getElementById('d-rating').textContent=l.stars+' ('+l.rN+')';
-  document.getElementById('d-ki').textContent=l.ki;
-  document.getElementById('det-rev-t').textContent='REVIEWS ('+l.rN+')';
-  document.getElementById('det-nav-badges').innerHTML=`<span class="mcb ${l.badge}">${l.badgeTxt}</span><span class="mcb ghost">KREIS ${l.kreis}</span>`;
-  document.getElementById('det-revs').innerHTML=(l.revs||[]).map(r=>`<div class="rev-item"><div class="rev-stars">${r.s}</div><div class="rev-user">${r.u}</div><div class="rev-txt">${r.t}</div></div>`).join('');
-  const d=document.getElementById('det');d.classList.add('show');d.scrollTop=0;
+  document.getElementById('p-art').textContent=l.name.substring(0,6);
+  document.getElementById('p-name').textContent=l.name;
+  document.getElementById('p-score').textContent=l.score;
+  document.getElementById('p-sub').textContent=l.sub.toUpperCase()+' · KREIS '+l.kreis;
+  document.getElementById('p-addr').textContent=l.addr;
+  document.getElementById('p-kreis').textContent='Kreis '+l.kreis;
+  document.getElementById('p-kueche').textContent=l.sub.charAt(0).toUpperCase()+l.sub.slice(1);
+  document.getElementById('p-oeffnig').textContent=l.oeffnig;
+  document.getElementById('p-dist').textContent=l.dist+' Min z Fuess';
+  document.getElementById('p-rating').textContent=l.stars+' ('+l.rN+')';
+  document.getElementById('p-desc').textContent=l.desc;
+  document.getElementById('p-tags').innerHTML=`
+    <span class="mcb ${l.badge}" style="padding:2px 7px;font-size:6px">${l.badgeTxt}</span>
+    <span class="mcb ghost" style="padding:2px 7px;font-size:6px">KREIS ${l.kreis}</span>
+    ${l.open?'<span class="mcb volt" style="padding:2px 7px;font-size:6px">● OFFE</span>':''}
+    ${l.res?'<span class="mcb gold" style="padding:2px 7px;font-size:6px">🍽️ RESERVIERBAR</span>':''}`;
+  document.getElementById('p-res-btn').style.display=l.res?'block':'none';
+  document.getElementById('p-revs').innerHTML=`
+    <div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);margin-bottom:8px">REVIEWS (${l.rN})</div>
+    <div class="rev-item"><div class="rev-stars">★★★★★</div><div class="rev-user">@zuri_insider</div><div class="rev-txt">Beschtä Adresse sit langem.</div></div>
+    <div class="rev-item"><div class="rev-stars">★★★★★</div><div class="rev-user">@kreis4life</div><div class="rev-txt">Absoluti Pflicht. Wer das verpasst, verpasst Züri.</div></div>`;
+  document.getElementById('panel').classList.add('open');
+  document.getElementById('ov').classList.add('on');
 }
-function closeDet(){document.getElementById('det').classList.remove('show');}
+function closeDet(){
+  document.getElementById('panel').classList.remove('open');
+  document.getElementById('ov').classList.remove('on');
+}
 
 // TICKERS
 function buildTickers(){
-  const A=['348 GASTRO LOKALE','ZÜRI ISST GUET','DÄ PULS VO DÄ STADT','KREIS 4 · LANGSTRASSE','GPS AKTIV · LIVE','KI EMPFEHLUNGE','SOFT LAUNCH · 4. JUNI 2026'];
-  const B=['BY RAIMONDO*','STADTPULS 2026','NEUE ÄRA','LIFESTYLE & CITY GUIDE','SOCIAL MEDIA','DER VIRTUELLE SPIELPLATZ','ZÜRICH FIRST'];
+  const A=['188 GASTRO LOKALE','ZÜRI ISST GUET','DÄ PULS VO DÄ STADT','GPS AKTIV','KI EMPFEHLUNGE','4. JUNI 2026','TISCH RESERVIERE'];
+  const B=['BY RAIMONDO*','STADTPULS 2026','NEUE ÄRA','CITY GUIDE','ZÜRICH FIRST','DANN D WELT'];
   const mk=(items,g)=>[...items,...items].map(i=>`<span class="ti${g?' g':''}" ><b>●</b> ${i}</span>`).join('');
   document.getElementById('ta').innerHTML=mk(A,false);
   document.getElementById('tb').innerHTML=mk(B,true);
   document.getElementById('tc').innerHTML=mk([...A,...B],false);
 }
 
-// PULSE COUNTER SIMULATION
+// PULSE
 let pu=847;
-setInterval(()=>{pu+=Math.floor(Math.random()*10)-4;pu=Math.max(800,Math.min(900,pu));const el=document.getElementById('pm-users');if(el)el.textContent=pu;},2000);
+setInterval(()=>{pu+=Math.floor(Math.random()*10)-4;pu=Math.max(800,Math.min(900,pu));const el=document.getElementById('pm-n');if(el)el.textContent=pu;},2000);
 
-buildHM();buildGrid();buildTickers();
+// INIT
+updateCounts();renderKuechen();renderKreisSheet();buildHM();buildGrid();buildTickers();updateTags();
 </script>
 </body>
 </html>
