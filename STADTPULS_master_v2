@@ -2695,6 +2695,111 @@ ROADMAP UPDATE:
 ⏳ Mobile Fix — Hero padding + Grid responsive
 ⏳ Hero top spacing fixen
 
+SESSION 13. MAI 2026 — KOMPLETT
+
+GASTRO.HTML — GODMODE v2 ✅
+Komplett neu geschrieben — 1153 Zeilen — live auf depuls.ch/gastro.html
+
+FILTER SYSTEM — 4 EBENEN:
+✅ Ebene 0: TYP — RESTAURANT / BAR / CAFÉ (mit Anzahl)
+✅ Ebene 1: KÜCHEN — dynamisch je nach Typ
+   Restaurant → Asiatisch/Italienisch/Schweizer/Vegisch/Vegan/American/Mediterran/Gourmet/Fisch/Français
+   Bar → Cocktail/Weinbar/Pub/Music Bar/After Work/Outdoor/Kulturbar
+   Café → Kafi & Kuche/Brunch/Coworking
+✅ Ebene 2: KREIS — alle 12 Kreise mit roten Dots
+✅ Ebene 3: QUER-FILTER — Jetzt Offe / In der Nähe / KI Top Pick / Reservierbar
+✅ Aktive Filter Tags — einzeln wegklickbar mit ✕
+✅ Dynamic Headline — «14 ASIATISCHE IN KREIS 4» — live
+✅ UND-Logik — alle Filter kombinierbar
+✅ Empty State — «NÜÜT GFUNDE» mit Reset
+✅ Sort — SCORE / DISTANZ / NEU
+
+MOBILE — BOTTOM SHEET:
+✅ Filter Bar auf Mobile versteckt
+✅ Roter 🔍 FAB Button unten rechts
+✅ Bottom Sheet — smooth cubic-bezier Animation
+✅ Grosse Typ-Cards (Restaurant/Bar/Café)
+✅ Küchen-Grid 3-spaltig — alles sichtbar
+✅ Kreis-Grid 6-spaltig — alle 12 Kreise
+✅ «ZEIGE X LOKALE →» Button live
+
+GPS STRIP ✅
+Cyan #00f5ff — oben unter Nav
+RESTIS IN 500M · JETZT OFFE · NO PLÄTZE FREI · ZUM NÄCHSCHTE
+Placeholder — Phase 5 mit echtem GPS
+
+KI FEATURES SECTION ✅
+GPS Matching · Stimmungs-Matching · Spontan-Modus
+Predictive · Push Alerts · Stadtpuls Score
+
+REVENUE BY DESIGN ✅
+🍽️ Badge auf Card wenn hat_reservation=true
+Grosser roter TISCH RESERVIERE Button im Detail-Panel
+Nur sichtbar wenn res=true — sauber getrennt
+Phase 5: OpenTable Integration → CHF 1-5 pro Buchung
+
+DETAIL PANEL ✅
+Score · Name · Subkategorie · Kreis
+Adresse · Öffnungszeiten · Distanz · Rating
+KI Prediction Text
+TISCH RESERVIERE Button (nur wenn reservierbar)
+AUF KARTE / SPEICHERE / BEWERTE / TEILE
+Reviews (2 Placeholder)
+
+IMPORT TOOL v3 ✅
+Bug gefixt: zt_subkategorie_id wurde immer NULL gesetzt → jetzt korrekt
+3 Modi: NEU+UPDATE / NUR NEUE / LÖSCHEN+NEU
+Alle Kategorien: Gastro/Bars/Nachtleben/Kultur/Shopping/Wellness/Sport/Sightseeing/Recreation
+PLZ→Kreis Mapping: alle 12 Kreise komplett
+Subkategorie ID→Name Mapping: vollständig (SUBKAT_MAP)
+Nur Zürich Kreis 1-12: Ausserhalb wird ignoriert
+SEO-Titel auto-generiert
+aktiv=true nur wenn Kreis erkannt
+featured=false immer beim Import
+
+MOBILE FIX gastro.html ✅
+@media (max-width:768px) Block eingefügt
+Grid 1-spaltig · Headlines kleiner · Heatmap passend
+
+SUPABASE — AKTUELLER STAND:
+188 Gastro Locations
+Nur 4 Subkategorien (cafe/italienisch/asiatisch/american)
+zt_subkategorie_id = NULL bei allen 188 — Import-Bug
+Fix: import.html v3 → Modus LÖSCHEN+NEU → Gastro neu importieren
+
+OFFENE PUNKTE — PRIORITÄT:
+⏳ Import LÖSCHEN+NEU starten → alle Gastro-Subkategorien
+⏳ Danach: Filter zeigen echte Zahlen aus Supabase
+⏳ Nachtleben Filter-Bug: kategorie='nachtleben' lowercase
+⏳ Restaurant-Profile vollständig — Bilder aus bild_urls[]
+⏳ particleFly Encoding-Bug: var(–tx) → var(--tx)
+⏳ Mobile Hero top spacing
+
+ARCHITEKTUR-ENTSCHEIDE BESCHLOSSEN:
+✅ Filter-Logik: TYP → KÜCHE → KREIS → QUER
+✅ Revenue: Reservation/Ticket IMMER im Profil — NIE im Filter
+✅ Heatmap jetzt: Placeholder mit Location-Anzahl pro Kreis
+✅ Heatmap Phase 5: echte Live-Stimmung aus User-Votes
+✅ featured=false beim Import — nur via Stadtpuls Score oder manuell
+✅ Subkategorien aus zt_subkategorie_id — nie aus Name raten
+
+ROADMAP UPDATE:
+✅ Phase 4h → Footer gefixt
+✅ Phase 4i → Register + Backticks gefixt
+✅ Phase 4j → Tab-Switch gefixt
+✅ Phase 4k → Supabase Architektur
+✅ Phase 4l → Domain + HTTPS + Impressum
+✅ Phase 4m → Import Tool v3
+✅ Phase 4n → gastro.html GODMODE v2 + Mobile
+✅ Phase 4n → GPS Strip + KI Section
+⏳ Phase 4o → Import Gastro neu (zt_subkategorie_id fix)
+⏳ Phase 4p → Filter mit echten Supabase-Daten verdrahten
+⏳ Phase 4q → Nachtleben Filter-Bug
+⏳ Phase 4r → Restaurant-Profile vollständig
+⏳ Phase 5  → Login + Community + Onboarding
+⏳ Phase 6  → KI Features live
+🔴 Soft Launch: 4. Juni 2026 (Geburtstag Remo) — kann auch Ende Juni werden
+
 SOFT LAUNCH: 4. Juni 2026 🔴
 
 
