@@ -395,6 +395,36 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
   <button class="btn-mm">MITMACHE</button>
 </nav>
 
+<!-- GPS STRIP -->
+<div class="gps-strip" id="gps-strip" style="display:flex;align-items:center;justify-content:space-between;padding:10px 40px;background:#07070f;border-bottom:1px solid rgba(0,245,255,.12);flex-wrap:wrap;gap:12px">
+  <div style="display:flex;align-items:center;gap:10px">
+    <div style="width:8px;height:8px;border-radius:50%;background:#00f5ff;animation:blink 1.5s infinite;flex-shrink:0"></div>
+    <div>
+      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff">GPS AKTIV — KREIS 4 · LANGSTRASSE · ZÜRICH</div>
+      <div style="font-size:7px;color:rgba(0,245,255,.35);letter-spacing:1px;margin-top:2px">Standort live · Letzte Aktualisierig: gerade jetzt · Distanz 0–2km Radius</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:20px;align-items:center">
+    <div style="text-align:center">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#00f5ff;line-height:1" id="gps-n1">23</div>
+      <div style="font-size:6px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,245,255,.35);margin-top:2px">RESTIS IN 500M</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#c8ff00;line-height:1" id="gps-n2">14</div>
+      <div style="font-size:6px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,255,0,.35);margin-top:2px">JETZT OFFE</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#ff2d00;line-height:1" id="gps-n3">8</div>
+      <div style="font-size:6px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,45,0,.35);margin-top:2px">NO PLÄTZE FREI</div>
+    </div>
+    <div style="text-align:center">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#00f5ff;line-height:1">4.2°</div>
+      <div style="font-size:6px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,245,255,.35);margin-top:2px">ZUM NÄCHSCHTE</div>
+    </div>
+    <button style="border:1px solid rgba(0,245,255,.3);background:transparent;color:#00f5ff;font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;white-space:nowrap">ZEIG MIR D KARTE →</button>
+  </div>
+</div>
+
 <!-- ═══════════════════════════
      DESKTOP FILTER BAR
      ═══════════════════════════ -->
@@ -642,6 +672,24 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
     <div class="vb-item"><div><div class="vb-nm">Café Volta</div><div class="vb-meta">8 Pl. · K5 · 12:00</div></div><button class="vb-btn">BUCHE →</button></div>
   </div>
 </div>
+
+<!-- KI FEATURES -->
+<div style="margin:0 40px;margin-top:40px;border:1px solid rgba(255,45,0,.1);background:#07070f;padding:28px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase">🤖 ZÜRI-BOT · KI FEATURES</div>
+    <div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;border:1px solid rgba(200,255,0,.2);padding:3px 8px;display:flex;align-items:center;gap:5px"><span style="width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite;display:inline-block"></span>AKTIV · PHASE 6</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,45,0,.06)">
+    <div style="background:#07070f;padding:18px;transition:.15s"><div style="font-size:20px;margin-bottom:8px">📍</div><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:5px">GPS MATCHING</div><div style="font-size:8px;color:rgba(232,228,217,.3);line-height:1.7">200m Radius · Echtzeit · Schritt-Distanz zum nächschte Lokal · ZVV Integration</div><div style="display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 6px;margin-top:8px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">LIVE</div></div>
+    <div style="background:#07070f;padding:18px;transition:.15s"><div style="font-size:20px;margin-bottom:8px">😏</div><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:5px">STIMMUNGS-MATCHING</div><div style="font-size:8px;color:rgba(232,228,217,.3);line-height:1.7">Müde, energetisch, romantisch, hungrig — KI matched di Stimmig mit de richtige Location</div><div style="display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 6px;margin-top:8px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">AKTIV</div></div>
+    <div style="background:#07070f;padding:18px;transition:.15s"><div style="font-size:20px;margin-bottom:8px">⚡</div><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:5px">SPONTAN-MODUS</div><div style="font-size:8px;color:rgba(232,228,217,.3);line-height:1.7">«Kreis 5 · 2h · CHF 30 · zu zweit» — KI generiert komplette Mini-Abig-Plan inkl. ZVV</div><div style="display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 6px;margin-top:8px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">BALD</div></div>
+    <div style="background:#07070f;padding:18px;transition:.15s"><div style="font-size:20px;margin-bottom:8px">🔮</div><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:5px">PREDICTIVE</div><div style="font-size:8px;color:rgba(232,228,217,.3);line-height:1.7">«Friitig Kreis 4 — wie immer?» — KI kennt dini Gewohnheite und schlägt vor bevor du suchsch</div><div style="display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 6px;margin-top:8px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">PHASE 6</div></div>
+    <div style="background:#07070f;padding:18px;transition:.15s"><div style="font-size:20px;margin-bottom:8px">🔔</div><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:5px">PUSH ALERTS</div><div style="font-size:8px;color:rgba(232,228,217,.3);line-height:1.7">«Event 200m · startet in 30min» · «Letzte 2 Plätze bi dim Lieblingsrestaurant»</div><div style="display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 6px;margin-top:8px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">PHASE 5</div></div>
+    <div style="background:#07070f;padding:18px;transition:.15s"><div style="font-size:20px;margin-bottom:8px">📊</div><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:5px">STADTPULS SCORE</div><div style="font-size:8px;color:rgba(232,228,217,.3);line-height:1.7">Kein Redakteur — Score steigt automatisch aus Bookmarks, GPS-Besuche, Reviews, Likes</div><div style="display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 6px;margin-top:8px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">LIVE</div></div>
+  </div>
+</div>
+
+
 
 <div class="ticker-wrap"><div class="ticker-row"><div class="tick l" id="tc"></div></div></div>
 
