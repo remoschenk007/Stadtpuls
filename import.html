@@ -1,166 +1,151 @@
 <!DOCTYPE html>
-
 <html lang="de">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>STADTPULS -- Import Tool</title>
+<title>STADTPULS — Import Tool v3</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--black:#04040a;--red:#ff2d00;--green:#c8ff00;--cyan:#00f5ff;--purple:#9333ea;--white:#e8e4d9;--dark:#0a0a14;--border:#1a1a2e}
 body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100vh}
-
-/* LOGIN */
-#login-screen{position:fixed;inset:0;z-index:9999;background:#04040a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;}
-.login-logo{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:64px;color:#ff2d00;letter-spacing:4px;text-align:center;line-height:1;}
-.login-logo span{display:block;font-size:12px;letter-spacing:6px;color:#333;font-style:normal;margin-top:6px;}
-.login-box{background:#0a0a14;border:1px solid #1a1a2e;border-radius:8px;padding:32px;width:340px;display:flex;flex-direction:column;gap:16px;}
-.login-box h2{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#555;text-align:center;}
-.login-input{background:#04040a;border:1px solid #1a1a2e;color:#e8e4d9;padding:12px 16px;font-family:‘DM Mono’,monospace;font-size:13px;border-radius:3px;width:100%;outline:none;transition:border-color .2s;}
-.login-input:focus{border-color:#ff2d00;}
-.login-btn{background:#ff2d00;color:#04040a;border:none;padding:14px;font-family:‘DM Mono’,monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:3px;font-weight:500;transition:background .2s;}
-.login-btn:hover{background:#ff4422;}
-.login-error{color:#ff2d00;font-size:10px;text-align:center;display:none;}
-.login-hint{color:#333;font-size:9px;text-align:center;letter-spacing:1px;}
-
-header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid var(–border);position:sticky;top:0;background:var(–black);z-index:100}
-.logo{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(–red);letter-spacing:2px}
-.logo span{color:#555;font-size:10px;font-family:‘DM Mono’,monospace;display:block;font-style:normal;letter-spacing:3px;margin-top:-2px}
-.hdr-stats{display:flex;gap:16px;align-items:center;}
-.hdr-pill{background:var(–dark);border:1px solid var(–border);padding:5px 12px;border-radius:20px;font-size:10px;letter-spacing:1px}
-.hdr-pill .n{color:var(–green)}
-.logout-btn{background:transparent;border:1px solid #333;color:#555;padding:5px 12px;font-family:‘DM Mono’,monospace;font-size:9px;letter-spacing:1px;cursor:pointer;border-radius:3px;transition:all .2s;}
-.logout-btn:hover{border-color:#ff2d00;color:#ff2d00;}
-.tabs{display:flex;border-bottom:1px solid var(–border);padding:0 28px;gap:4px}
-.tab{padding:14px 20px;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:#444;border:none;border-bottom:2px solid transparent;background:none;font-family:‘DM Mono’,monospace;transition:all .2s}
-.tab:hover{color:var(–white)}
-.tab.active{color:var(–red);border-bottom-color:var(–red)}
-.content{padding:28px}
+#login-screen{position:fixed;inset:0;z-index:9999;background:#04040a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px}
+.login-logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:64px;color:#ff2d00;letter-spacing:4px;text-align:center;line-height:1}
+.login-logo span{display:block;font-size:12px;letter-spacing:6px;color:#333;font-style:normal;margin-top:6px}
+.login-box{background:#0a0a14;border:1px solid #1a1a2e;padding:32px;width:340px;display:flex;flex-direction:column;gap:16px}
+.login-input{background:#04040a;border:1px solid #1a1a2e;color:#e8e4d9;padding:12px 16px;font-family:'DM Mono',monospace;font-size:13px;width:100%;outline:none;transition:border-color .2s}
+.login-input:focus{border-color:#ff2d00}
+.login-btn{background:#ff2d00;color:#04040a;border:none;padding:14px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer}
+.login-error{color:#ff2d00;font-size:10px;text-align:center;display:none}
+.login-hint{color:#333;font-size:9px;text-align:center;letter-spacing:1px}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid #1a1a2e;position:sticky;top:0;background:#04040a;z-index:100}
+.logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;color:#ff2d00;letter-spacing:2px}
+.logo span{color:#333;font-size:8px;font-family:'DM Mono',monospace;display:block;font-style:normal;letter-spacing:3px}
+.hdr-pills{display:flex;gap:8px;align-items:center}
+.pill{background:#0a0a14;border:1px solid #1a1a2e;padding:4px 10px;font-size:9px;letter-spacing:1px}
+.pill .n{color:#c8ff00}
+.live-dot{display:flex;align-items:center;gap:5px;font-size:8px;color:#c8ff00;letter-spacing:1px}
+.live-dot::before{content:'';width:5px;height:5px;background:#c8ff00;border-radius:50%;animation:blink 2s infinite}
+.logout-btn{background:transparent;border:1px solid #333;color:#555;padding:5px 12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;cursor:pointer;transition:all .2s}
+.logout-btn:hover{border-color:#ff2d00;color:#ff2d00}
+.tabs{display:flex;border-bottom:1px solid #1a1a2e;padding:0 28px}
+.tab{padding:12px 20px;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:#444;border:none;border-bottom:2px solid transparent;background:none;font-family:'DM Mono',monospace;transition:all .2s}
+.tab:hover{color:#e8e4d9}
+.tab.active{color:#ff2d00;border-bottom-color:#ff2d00}
+.content{padding:28px;max-width:1200px}
 .panel{display:none}
 .panel.active{display:block}
 
-.source-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-bottom:28px}
-.sc{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:20px;transition:border-color .2s}
-.sc.on{border-color:var(–red)}
-.sc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
-.sc-name{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:20px}
-.badge{font-size:9px;letter-spacing:2px;padding:3px 9px;border-radius:20px;text-transform:uppercase}
-.b-live{background:#0a1a0a;color:var(–green);border:1px solid var(–green)}
-.b-soon{background:#1a150a;color:#ffaa00;border:1px solid #ffaa00}
-.b-later{background:#140a1a;color:var(–purple);border:1px solid var(–purple)}
-.sc-desc{font-size:10px;color:#555;line-height:1.7;margin-bottom:12px}
-.tags{display:flex;flex-wrap:wrap;gap:5px}
-.tag{font-size:9px;padding:2px 7px;border-radius:3px;background:#0a0a14;border:1px solid var(–border);color:var(–cyan)}
-.tag.g{color:#ffaa00}
-.tag.p{color:var(–purple)}
+/* WARNING BOX */
+.warn-box{background:rgba(255,45,0,0.05);border:1px solid rgba(255,45,0,0.3);border-left:3px solid #ff2d00;padding:14px 18px;margin-bottom:24px}
+.warn-title{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;margin-bottom:6px}
+.warn-txt{font-size:10px;color:rgba(232,228,217,.5);line-height:1.7}
 
+/* MODUS */
+.modus-row{display:flex;gap:8px;margin-bottom:24px}
+.modus-btn{padding:10px 18px;border:1px solid #1a1a2e;background:transparent;color:#333;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.modus-btn:hover{border-color:#555;color:#e8e4d9}
+.modus-btn.active{border-color:#ff2d00;color:#ff2d00;background:rgba(255,45,0,0.05)}
+.modus-btn.danger.active{border-color:#ff2d00;background:rgba(255,45,0,0.1);color:#ff2d00}
+
+/* CATEGORIES */
 .cs{margin-bottom:20px}
-.cs-title{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(–green);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(–border)}
-.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:6px}
-.ci{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(–dark);border:1px solid var(–border);border-radius:4px;cursor:pointer;transition:all .15s}
+.cs-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#c8ff00;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;gap:8px}
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:5px}
+.ci{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0a0a14;border:1px solid #1a1a2e;cursor:pointer;transition:all .15s}
 .ci:hover{border-color:#2a2a3e}
-.ci.sel{border-color:var(–red);background:#140505}
-.ci input{accent-color:var(–red);width:13px;height:13px;flex-shrink:0;cursor:pointer}
-.ci label{font-size:11px;cursor:pointer;flex:1}
-.ci .id{font-size:9px;color:#333}
+.ci.sel{border-color:#ff2d00;background:rgba(255,45,0,0.05)}
+.ci input{accent-color:#ff2d00;width:12px;height:12px;flex-shrink:0;cursor:pointer}
+.ci label{font-size:10px;cursor:pointer;flex:1}
+.ci .cid{font-size:8px;color:#333}
 
-.action-bar{display:flex;gap:10px;align-items:center;padding:18px 0;border-top:1px solid var(–border);flex-wrap:wrap}
-.btn{font-family:‘DM Mono’,monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:11px 22px;border:none;cursor:pointer;border-radius:3px;transition:all .2s}
-.bp{background:var(–red);color:var(–black);font-weight:500}
-.bp:hover{background:#ff4422}
-.bp:disabled{background:#222;color:#444;cursor:not-allowed}
-.bo{background:transparent;color:var(–green);border:1px solid var(–green)}
-.bo:hover{background:#c8ff0010}
-.bg{background:transparent;color:#555;border:1px solid #333}
-.bg:hover{color:var(–white);border-color:#555}
-.bc{background:transparent;color:var(–cyan);border:1px solid var(–cyan)}
-.bc:hover{background:#00f5ff10}
-#sel-count{font-size:10px;color:#444;margin-left:4px}
+/* ACTION BAR */
+.action-bar{display:flex;gap:8px;align-items:center;padding:18px 0;border-top:1px solid #1a1a2e;flex-wrap:wrap;margin-top:8px}
+.btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;border:none;cursor:pointer;transition:all .2s}
+.btn-red{background:#ff2d00;color:#04040a}
+.btn-red:hover{background:#ff4020}
+.btn-red:disabled{background:#222;color:#444;cursor:not-allowed}
+.btn-green{background:transparent;color:#c8ff00;border:1px solid #c8ff00}
+.btn-green:hover{background:rgba(200,255,0,0.05)}
+.btn-ghost{background:transparent;color:#555;border:1px solid #333}
+.btn-ghost:hover{color:#e8e4d9;border-color:#555}
+.btn-cyan{background:transparent;color:#00f5ff;border:1px solid #00f5ff}
+.sel-count{font-size:9px;color:#444;margin-left:4px}
 
-.prog-box{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:20px;margin-bottom:16px;display:none}
-.prog-top{display:flex;justify-content:space-between;margin-bottom:10px}
-.prog-status{display:flex;align-items:center;gap:8px;font-size:12px}
-.dot-p{width:7px;height:7px;background:var(–red);border-radius:50%;animation:p 1s infinite;flex-shrink:0}
-@keyframes p{0%,100%{opacity:1}50%{opacity:.2}}
-.prog-track{background:var(–border);height:3px;border-radius:2px;overflow:hidden;margin-bottom:6px}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(–red),#ff8800);width:0%;transition:width .3s;border-radius:2px}
-.prog-sub{font-size:10px;color:#444;letter-spacing:1px}
-
-.log-box{background:#020208;border:1px solid var(–border);border-radius:4px;padding:14px;height:220px;overflow-y:auto;font-size:10px;line-height:1.9;display:none}
+/* PROGRESS */
+.prog-box{background:#0a0a14;border:1px solid #1a1a2e;padding:20px;margin-bottom:16px;display:none}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.prog-status{display:flex;align-items:center;gap:8px;font-size:11px}
+.prog-dot{width:6px;height:6px;background:#ff2d00;border-radius:50%;animation:blink 1s infinite;flex-shrink:0}
+.prog-track{background:#1a1a2e;height:3px;overflow:hidden;margin-bottom:6px}
+.prog-fill{height:100%;background:linear-gradient(90deg,#ff2d00,#ff8800);width:0%;transition:width .3s}
+.prog-sub{font-size:9px;color:#444;letter-spacing:1px}
+.log-box{background:#020208;border:1px solid #1a1a2e;padding:14px;height:240px;overflow-y:auto;font-size:9px;line-height:2;display:none}
 .log-box::-webkit-scrollbar{width:3px}
-.log-box::-webkit-scrollbar-thumb{background:var(–border)}
-.lok{color:var(–green)}.ler{color:var(–red)}.lin{color:var(–cyan)}.lwa{color:#ffaa00}.lsk{color:#333}
+.log-box::-webkit-scrollbar-thumb{background:#1a1a2e}
+.lok{color:#c8ff00}.ler{color:#ff2d00}.lin{color:#00f5ff}.lwa{color:#ffaa00}.lsk{color:#333}
 
+/* RESULTS */
 .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px;display:none}
-.rc{background:var(–dark);border:1px solid var(–border);border-radius:4px;padding:18px;text-align:center}
-.rc .big{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:44px;line-height:1}
-.rc .lbl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-top:4px}
-.rc.ok .big{color:var(–green)}.rc.sk .big{color:#ffaa00}.rc.er .big{color:var(–red)}.rc.ca .big{color:var(–cyan)}
+.rc{background:#0a0a14;border:1px solid #1a1a2e;padding:18px;text-align:center}
+.rc .big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:44px;line-height:1}
+.rc .lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-top:4px}
+.rc.ok .big{color:#c8ff00}.rc.sk .big{color:#ffaa00}.rc.er .big{color:#ff2d00}.rc.ca .big{color:#00f5ff}
 
-.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:24px}
-.dc{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:18px}
-.dc .t{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-bottom:6px}
-.dc .v{font-family:‘Barlow Condensed’,sans-serif;font-style:italic;font-weight:900;font-size:38px;line-height:1}
-.dc .s{font-size:10px;color:#333;margin-top:4px}
-.breakdown{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:20px;margin-bottom:20px}
-.breakdown h3{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(–green);margin-bottom:16px}
-.bar-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(–border)}
+/* DASHBOARD */
+.dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
+.dc{background:#0a0a14;border:1px solid #1a1a2e;padding:18px}
+.dc .t{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-bottom:6px}
+.dc .v{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:38px;line-height:1}
+.dc .s{font-size:9px;color:#333;margin-top:4px}
+.breakdown{background:#0a0a14;border:1px solid #1a1a2e;padding:20px;margin-bottom:16px}
+.breakdown h3{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#c8ff00;margin-bottom:16px}
+.bar-row{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #1a1a2e}
 .bar-row:last-child{border-bottom:none}
-.bar-row .nm{width:110px;font-size:11px;color:var(–white)}
-.bar-row .bw{flex:1;background:var(–border);height:3px;border-radius:2px;overflow:hidden}
-.bar-row .bf{height:100%;border-radius:2px;transition:width 1s ease}
-.bar-row .ct{width:36px;text-align:right;font-size:11px;color:var(–green)}
+.bar-nm{width:120px;font-size:10px;color:#e8e4d9}
+.bar-wrap{flex:1;background:#1a1a2e;height:2px}
+.bar-fill{height:100%;transition:width 1s ease}
+.bar-ct{width:32px;text-align:right;font-size:10px;color:#c8ff00}
 
-.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.qc{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:18px}
-.qc h3{font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:6px}
-.qdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.q-list{max-height:180px;overflow-y:auto}
-.qi{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(–border);font-size:10px}
+/* QUALITY */
+.q-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.qc{background:#0a0a14;border:1px solid #1a1a2e;padding:18px}
+.qc h3{font-size:8px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.qdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.q-list{max-height:200px;overflow-y:auto}
+.qi{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a1a2e;font-size:9px}
 .qi:last-child{border-bottom:none}
-.qi .qn{color:var(–white)}.qi .qm{color:#333}
+.qi .qn{color:#e8e4d9}.qi .qm{color:#333}
 
-.sync-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-bottom:20px}
-.sopt{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:18px;cursor:pointer;transition:border-color .2s}
-.sopt:hover{border-color:#2a2a3e}
-.sopt.sel{border-color:var(–cyan)}
-.sopt h3{font-size:12px;color:var(–cyan);margin-bottom:6px}
-.sopt p{font-size:10px;color:#444;line-height:1.6}
-.roadmap-box{background:var(–dark);border:1px solid var(–border);border-radius:6px;padding:18px;margin-bottom:18px}
-.roadmap-box .rt{font-size:9px;letter-spacing:2px;color:#333;margin-bottom:10px}
-.roadmap-box .rl{font-size:11px;line-height:2.4;color:#555}
+/* SUBKAT PREVIEW */
+.subkat-preview{background:#0a0a14;border:1px solid #1a1a2e;padding:20px;margin-bottom:20px}
+.sp-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#00f5ff;margin-bottom:14px}
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px}
+.sp-item{display:flex;justify-content:space-between;padding:6px 10px;background:#04040a;border:1px solid #1a1a2e;font-size:9px}
+.sp-item .id{color:#333}.sp-item .name{color:#e8e4d9}
 
-@media(max-width:700px){
-.source-grid,.q-grid{grid-template-columns:1fr}
-.res-grid{grid-template-columns:1fr 1fr}
-.content{padding:16px}
-.hdr-stats{display:none}
-}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+@media(max-width:700px){.q-grid{grid-template-columns:1fr}.res-grid{grid-template-columns:1fr 1fr}.content{padding:16px}}
 </style>
-
 </head>
 <body>
 
-<!-- LOGIN -->
-
 <div id="login-screen">
-  <div class="login-logo">STADTPULS<span>IMPORT TOOL v2</span></div>
+  <div class="login-logo">STADTPULS<span>IMPORT TOOL v3 — SAUBER</span></div>
   <div class="login-box">
-    <h2>Admin Login</h2>
+    <h2 style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:#555;text-align:center">Admin Login</h2>
     <input class="login-input" type="password" id="pw-input" placeholder="Passwort" onkeydown="if(event.key==='Enter')doLogin()">
     <button class="login-btn" onclick="doLogin()">▶ EINLOGGEN</button>
     <div class="login-error" id="login-error">Falsches Passwort</div>
-    <div class="login-hint">Erstes Login? Einfach dein Passwort eingeben -- wird gespeichert.</div>
+    <div class="login-hint">Erstes Login? Passwort eingeben — wird gespeichert.</div>
   </div>
 </div>
 
 <header>
-  <div class="logo">STADTPULS <span>⚡ IMPORT TOOL v2</span></div>
-  <div class="hdr-stats">
-    <div class="hdr-pill">Locations <span class="n" id="hdr-total">--</span></div>
-    <div class="hdr-pill">Update <span class="n" id="hdr-last">--</span></div>
-    <div class="hdr-pill" style="color:var(--green)">● LIVE</div>
+  <div class="logo">STADTPULS<span>⚡ IMPORT TOOL v3</span></div>
+  <div class="hdr-pills">
+    <div class="pill">Locations <span class="n" id="hdr-total">--</span></div>
+    <div class="pill">Kreise <span class="n">1–12</span></div>
+    <div class="live-dot">LIVE</div>
     <button class="logout-btn" onclick="doLogout()">Logout</button>
   </div>
 </header>
@@ -169,112 +154,179 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
   <button class="tab active" onclick="switchTab('import',this)">▶ Import</button>
   <button class="tab" onclick="switchTab('dashboard',this)">◈ Daten</button>
   <button class="tab" onclick="switchTab('qualitaet',this)">◉ Qualität</button>
-  <button class="tab" onclick="switchTab('sync',this)">↻ Sync</button>
+  <button class="tab" onclick="switchTab('subkat',this)">⚙ Subkategorien</button>
 </div>
 
 <!-- IMPORT -->
+<div class="panel active" id="panel-import">
+<div class="content">
 
-<div class="panel active" id="panel-import"><div class="content">
-
-<div class="source-grid">
-  <div class="sc on">
-    <div class="sc-top"><div class="sc-name" style="color:var(--green)">ZÜRICH TOURISMUS</div><div class="badge b-live">✓ AKTIV</div></div>
-    <div class="sc-desc">Offizielle Daten. CC BY-SA Lizenz. Gratis. Basis aller Locations.</div>
-    <div class="tags"><span class="tag">Name</span><span class="tag">Adresse</span><span class="tag">PLZ→Kreis</span><span class="tag">Koordinaten</span><span class="tag">Bilder</span><span class="tag">Öffnungszeiten</span><span class="tag">Website</span><span class="tag">Telefon</span></div>
-  </div>
-  <div class="sc">
-    <div class="sc-top"><div class="sc-name" style="color:var(--cyan)">GOOGLE PLACES</div><div class="badge b-soon">⏳ BALD</div></div>
-    <div class="sc-desc">Ergänzt fehlende Felder. Max 10k Calls/Monat gratis. API Key nötig.</div>
-    <div class="tags"><span class="tag g">Rating ⭐</span><span class="tag g">Preis CHF</span><span class="tag g">Reviews</span><span class="tag g">Fotos</span></div>
-  </div>
-  <div class="sc">
-    <div class="sc-top"><div class="sc-name" style="color:var(--purple)">TRIPADVISOR</div><div class="badge b-later">◎ SPÄTER</div></div>
-    <div class="sc-desc">Reviews + Rankings. Erst ab 1000+ MAU beantragen.</div>
-    <div class="tags"><span class="tag p">Reviews</span><span class="tag p">Ranking</span><span class="tag p">Fotos</span></div>
-  </div>
-  <div class="sc">
-    <div class="sc-top"><div class="sc-name" style="color:#ffaa00">GUIDLE / ZVV</div><div class="badge b-later">◎ SPÄTER</div></div>
-    <div class="sc-desc">Guidle → lokale Events. ZVV → Echtzeit-Abfahrten. Phase 4n.</div>
-    <div class="tags"><span class="tag g">Events live</span><span class="tag g">Tram</span><span class="tag g">Bus</span></div>
+<div class="warn-box">
+  <div class="warn-title">⚠️ MODUS WÄHLEN — LESEN BEVOR STARTEN</div>
+  <div class="warn-txt">
+    <strong style="color:#e8e4d9">NEU + UPDATE:</strong> Bestehende Locations werden mit neuen Daten überschrieben. Empfohlen für saubere Daten.<br>
+    <strong style="color:#e8e4d9">NUR NEUE:</strong> Bestehende werden übersprungen. Schneller, aber alte Fehler bleiben.<br>
+    <strong style="color:#ff2d00">LÖSCHEN + NEU:</strong> Kategorie wird komplett gelöscht und neu importiert. Garantiert sauber. Irreversibel.
   </div>
 </div>
 
-<div class="cs"><div class="cs-title">🍽 Gastro & Bars</div><div class="cg">
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="101|gastro|alle"><label>Alle Restaurants</label><span class="id">101</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="184|gastro|schweizer"><label>Schweizer Küche</label><span class="id">184</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="188|gastro|asiatisch"><label>Asiatisch</label><span class="id">188</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="185|gastro|italienisch"><label>Italienisch</label><span class="id">185</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="191|gastro|mediterran"><label>Mediterran</label><span class="id">191</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="197|gastro|vegetarisch"><label>Vegetarisch</label><span class="id">197</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="409|gastro|vegan"><label>Vegan</label><span class="id">409</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="194|gastro|gourmet"><label>Gourmet</label><span class="id">194</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="193|gastro|american"><label>American</label><span class="id">193</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="102|gastro|cafe"><label>Café & Tearoom</label><span class="id">102</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="103|nachtleben|bars"><label>Alle Bars</label><span class="id">103</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1438|nachtleben|cocktail"><label>Cocktailbar</label><span class="id">1438</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1441|nachtleben|musicbar"><label>Music Bar</label><span class="id">1441</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1465|nachtleben|weinbar"><label>Weinbar</label><span class="id">1465</span></div>
-</div></div>
+<div style="margin-bottom:20px">
+  <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#333;margin-bottom:8px">IMPORT MODUS:</div>
+  <div class="modus-row">
+    <button class="modus-btn active" id="m-update" onclick="setModus('update')">◎ NEU + UPDATE</button>
+    <button class="modus-btn" id="m-skip" onclick="setModus('skip')">→ NUR NEUE</button>
+    <button class="modus-btn danger" id="m-delete" onclick="setModus('delete')">✗ LÖSCHEN + NEU</button>
+  </div>
+</div>
 
-<div class="cs"><div class="cs-title">🌙 Nachtleben</div><div class="cg">
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="162|nachtleben|alle"><label>Alle Clubs</label><span class="id">162</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1414|nachtleben|techno"><label>House / Techno</label><span class="id">1414</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1417|nachtleben|hiphop"><label>Hip-Hop / Rap</label><span class="id">1417</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1432|nachtleben|jazz"><label>Jazz / World</label><span class="id">1432</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1429|nachtleben|afterhour"><label>Afterhour</label><span class="id">1429</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="163|nachtleben|livemusic"><label>Live Music</label><span class="id">163</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1423|nachtleben|rock"><label>Rock / Alternative</label><span class="id">1423</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="164|nachtleben|casino"><label>Casinos</label><span class="id">164</span></div>
-</div></div>
+<div class="cs">
+  <div class="cs-title">🍽 GASTRO & BARS</div>
+  <div class="cg">
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="101|gastro|restaurant|101"><label>Alle Restaurants</label><span class="cid">101</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="184|gastro|schweizer|101"><label>Schweizer Küche</label><span class="cid">184</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="185|gastro|italienisch|101"><label>Italienisch</label><span class="cid">185</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="186|gastro|spanisch|101"><label>Spanisch</label><span class="cid">186</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="187|gastro|französisch|101"><label>Französisch</label><span class="cid">187</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="188|gastro|asiatisch|101"><label>Asiatisch</label><span class="cid">188</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="189|gastro|nahost|101"><label>Nahost</label><span class="cid">189</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="190|gastro|mexikanisch|101"><label>Mexikanisch</label><span class="cid">190</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="191|gastro|mediterran|101"><label>Mediterran</label><span class="cid">191</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="192|gastro|bistro|101"><label>Bistro</label><span class="cid">192</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="193|gastro|american|101"><label>American</label><span class="cid">193</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="194|gastro|gourmet|101"><label>Gourmet</label><span class="cid">194</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="195|gastro|grill|101"><label>Grill</label><span class="cid">195</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="196|gastro|fisch|101"><label>Fisch & Meeresfrüchte</label><span class="cid">196</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="197|gastro|vegetarisch|101"><label>Vegetarisch</label><span class="cid">197</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="409|gastro|vegan|101"><label>Vegan</label><span class="cid">409</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="415|gastro|international|101"><label>International</label><span class="cid">415</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="102|gastro|cafe|102"><label>Café & Tearoom</label><span class="cid">102</span></div>
+  </div>
+</div>
 
-<div class="cs"><div class="cs-title">🎨 Kultur</div><div class="cg">
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="96|kultur|alle"><label>Alle Kultur</label><span class="id">96</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="136|kultur|museen"><label>Museen</label><span class="id">136</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="178|kultur|galerien"><label>Galerien</label><span class="id">178</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="175|kultur|oper"><label>Oper</label><span class="id">175</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="176|kultur|theater"><label>Theater</label><span class="id">176</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="133|kultur|film"><label>Film / Kino</label><span class="id">133</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="134|kultur|musik"><label>Musik</label><span class="id">134</span></div>
-</div></div>
+<div class="cs">
+  <div class="cs-title">🍸 BARS</div>
+  <div class="cg">
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="103|nachtleben|bar|103"><label>Alle Bars</label><span class="cid">103</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1438|nachtleben|cocktail|103"><label>Cocktailbar</label><span class="cid">1438</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1441|nachtleben|musicbar|103"><label>Music Bar</label><span class="cid">1441</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1444|nachtleben|pub|103"><label>Pub</label><span class="cid">1444</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1447|nachtleben|restbar|103"><label>Restaurant-Bar</label><span class="cid">1447</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1450|nachtleben|hotelbar|103"><label>Hotelbar</label><span class="cid">1450</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1456|nachtleben|kulturbar|103"><label>Kulturbar</label><span class="cid">1456</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1459|nachtleben|afterwork|103"><label>After Work</label><span class="cid">1459</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1462|nachtleben|outdoor|103"><label>Outdoor Bar</label><span class="cid">1462</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1465|nachtleben|weinbar|103"><label>Weinbar</label><span class="cid">1465</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1468|nachtleben|quartierbar|103"><label>Quartierbar</label><span class="cid">1468</span></div>
+  </div>
+</div>
 
-<div class="cs"><div class="cs-title">🛍 Shopping</div><div class="cg">
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="95|shopping|alle"><label>Alle Shopping</label><span class="id">95</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="127|shopping|mode"><label>Mode & Accessoires</label><span class="id">127</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="128|shopping|swissmade"><label>Swiss Originals</label><span class="id">128</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="131|shopping|food"><label>Food & Deli</label><span class="id">131</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="132|shopping|markt"><label>Märkte</label><span class="id">132</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="417|shopping|mall"><label>Shopping Malls</label><span class="id">417</span></div>
-</div></div>
+<div class="cs">
+  <div class="cs-title">🌙 NACHTLEBEN</div>
+  <div class="cg">
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="162|nachtleben|club|162"><label>Alle Clubs</label><span class="cid">162</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1414|nachtleben|techno|162"><label>House / Techno</label><span class="cid">1414</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1417|nachtleben|hiphop|162"><label>Hip-Hop / Rap</label><span class="cid">1417</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1423|nachtleben|rock|162"><label>Rock / Alternative</label><span class="cid">1423</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1426|nachtleben|latin|162"><label>Latin</label><span class="cid">1426</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1429|nachtleben|afterhour|162"><label>Afterhour</label><span class="cid">1429</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1432|nachtleben|jazz|162"><label>Jazz / World</label><span class="cid">1432</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1435|nachtleben|party|162"><label>Party</label><span class="cid">1435</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="163|nachtleben|livemusic|162"><label>Live Music</label><span class="cid">163</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="164|nachtleben|casino|162"><label>Casino</label><span class="cid">164</span></div>
+  </div>
+</div>
 
-<div class="cs"><div class="cs-title">💆 Wellness & Sport</div><div class="cg">
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="98|wellness|alle"><label>Wellness & Spa</label><span class="id">98</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="141|sport|swimming"><label>Swimming</label><span class="id">141</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="139|sport|cycling"><label>Cycling</label><span class="id">139</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="138|sport|hiking"><label>Hiking</label><span class="id">138</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="149|sport|sailing"><label>Sailing</label><span class="id">149</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="159|recreation|wasser"><label>Wasser & See</label><span class="id">159</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="160|recreation|parks"><label>Parks & Gärten</label><span class="id">160</span></div>
-</div></div>
+<div class="cs">
+  <div class="cs-title">🎨 KULTUR</div>
+  <div class="cg">
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="96|kultur|kultur|96"><label>Alle Kultur</label><span class="cid">96</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="136|kultur|museen|96"><label>Museen</label><span class="cid">136</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="177|kultur|kunstmuseum|96"><label>Kunstmuseum</label><span class="cid">177</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="179|kultur|fotomuseum|96"><label>Fotomuseum</label><span class="cid">179</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="180|kultur|architektur|96"><label>Architektur</label><span class="cid">180</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="181|kultur|geschichte|96"><label>Geschichte</label><span class="cid">181</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="182|kultur|wissenschaft|96"><label>Wissenschaft</label><span class="cid">182</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="178|kultur|galerien|96"><label>Galerien</label><span class="cid">178</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="175|kultur|oper|96"><label>Oper</label><span class="cid">175</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="176|kultur|theater|96"><label>Theater</label><span class="cid">176</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="133|kultur|film|96"><label>Film / Kino</label><span class="cid">133</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="134|kultur|musik|96"><label>Musik</label><span class="cid">134</span></div>
+  </div>
+</div>
 
-<div class="cs"><div class="cs-title">🏛 Sightseeing</div><div class="cg">
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="72|sightseeing|alle"><label>Alle Sights</label><span class="id">72</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="87|sightseeing|architektur"><label>Architektur</label><span class="id">87</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="92|sightseeing|kirchen"><label>Kirchen</label><span class="id">92</span></div>
-  <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="88|sightseeing|aussicht"><label>Aussichtspunkte</label><span class="id">88</span></div>
-</div></div>
+<div class="cs">
+  <div class="cs-title">🛍 SHOPPING</div>
+  <div class="cg">
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="95|shopping|shopping|95"><label>Alle Shopping</label><span class="cid">95</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="127|shopping|mode|95"><label>Mode & Accessoires</label><span class="cid">127</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="128|shopping|swissmade|95"><label>Swiss Originals</label><span class="cid">128</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="129|shopping|uhren|95"><label>Uhren & Schmuck</label><span class="cid">129</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="130|shopping|souvenirs|95"><label>Souvenirs</label><span class="cid">130</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="131|shopping|food|95"><label>Food & Deli</label><span class="cid">131</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="132|shopping|markt|95"><label>Märkte</label><span class="cid">132</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="416|shopping|warenhaus|95"><label>Warenhaus</label><span class="cid">416</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="417|shopping|mall|95"><label>Shopping Mall</label><span class="cid">417</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1090|shopping|velo|95"><label>Velo & Sport</label><span class="cid">1090</span></div>
+  </div>
+</div>
+
+<div class="cs">
+  <div class="cs-title">💆 WELLNESS</div>
+  <div class="cg">
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="98|wellness|wellness|98"><label>Wellness & Spa</label><span class="cid">98</span></div>
+  </div>
+</div>
+
+<div class="cs">
+  <div class="cs-title">⚽ SPORT</div>
+  <div class="cg">
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="97|sport|sport|97"><label>Alle Sport</label><span class="cid">97</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="137|sport|walking|97"><label>Walking</label><span class="cid">137</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="138|sport|hiking|97"><label>Hiking</label><span class="cid">138</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="139|sport|cycling|97"><label>Cycling</label><span class="cid">139</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="141|sport|swimming|97"><label>Swimming</label><span class="cid">141</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="145|sport|climbing|97"><label>Climbing</label><span class="cid">145</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="146|sport|golf|97"><label>Golf</label><span class="cid">146</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="149|sport|sailing|97"><label>Sailing</label><span class="cid">149</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="150|sport|sup|97"><label>SUP</label><span class="cid">150</span></div>
+  </div>
+</div>
+
+<div class="cs">
+  <div class="cs-title">🏛 SIGHTSEEING</div>
+  <div class="cg">
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="72|sightseeing|sightseeing|72"><label>Alle Sights</label><span class="cid">72</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="87|sightseeing|architektur|72"><label>Architektur</label><span class="cid">87</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="88|sightseeing|aussicht|72"><label>Aussichtspunkte</label><span class="cid">88</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="89|sightseeing|denkmäler|72"><label>Denkmäler</label><span class="cid">89</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="90|sightseeing|kunst|72"><label>Kunst im öff. Raum</label><span class="cid">90</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="91|sightseeing|plätze|72"><label>Plätze & Strassen</label><span class="cid">91</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="92|sightseeing|kirchen|72"><label>Kirchen</label><span class="cid">92</span></div>
+  </div>
+</div>
+
+<div class="cs">
+  <div class="cs-title">🌳 RECREATION</div>
+  <div class="cg">
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="99|recreation|recreation|99"><label>Alle Recreation</label><span class="cid">99</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="158|recreation|berge|99"><label>Berge & Hügel</label><span class="cid">158</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="159|recreation|wasser|99"><label>Wasser & See</label><span class="cid">159</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="160|recreation|parks|99"><label>Parks & Gärten</label><span class="cid">160</span></div>
+    <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="161|recreation|zoo|99"><label>Zoo & Tiere</label><span class="cid">161</span></div>
+  </div>
+</div>
 
 <div class="action-bar">
-  <button class="btn bo" onclick="selAll()">✓ Alle</button>
-  <button class="btn bg" onclick="selNone()">✗ Keine</button>
-  <button class="btn bg" onclick="selMissing()">◎ Nur fehlende</button>
-  <button class="btn bp" id="btn-go" onclick="startImport()">▶ IMPORT STARTEN</button>
-  <span id="sel-count">0 ausgewählt</span>
+  <button class="btn btn-green" onclick="selAll()">✓ ALLE</button>
+  <button class="btn btn-ghost" onclick="selNone()">✗ KEINE</button>
+  <button class="btn btn-red" id="btn-go" onclick="startImport()">▶ IMPORT STARTEN</button>
+  <span class="sel-count" id="sel-count">0 ausgewählt</span>
 </div>
 
 <div class="prog-box" id="prog-box">
   <div class="prog-top">
-    <div class="prog-status"><div class="dot-p"></div><span id="prog-lbl">Importiere...</span></div>
-    <div style="font-size:10px;color:#444" id="prog-cat"></div>
+    <div class="prog-status"><div class="prog-dot"></div><span id="prog-lbl">Importiere...</span></div>
+    <div style="font-size:9px;color:#444" id="prog-cat"></div>
   </div>
   <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
   <div class="prog-sub" id="prog-sub">0 / 0</div>
@@ -291,58 +343,51 @@ header{display:flex;align-items:center;justify-content:space-between;padding:18p
 
 </div></div>
 
-<!-- DATEN -->
-
-<div class="panel" id="panel-dashboard"><div class="content">
+<!-- DASHBOARD -->
+<div class="panel" id="panel-dashboard">
+<div class="content">
   <div class="dash-grid">
-    <div class="dc"><div class="t">Total Locations</div><div class="v" id="d0">--</div><div class="s">In Supabase</div></div>
-    <div class="dc"><div class="t">Mit Bild</div><div class="v" id="d1">--</div><div class="s">bild_url vorhanden</div></div>
-    <div class="dc"><div class="t">Mit Kreis</div><div class="v" id="d2">--</div><div class="s">PLZ erkannt</div></div>
-    <div class="dc"><div class="t">Ohne Kreis</div><div class="v" id="d3" style="color:var(--red)">--</div><div class="s">Ausserhalb Stadt</div></div>
+    <div class="dc"><div class="t">Total Locations</div><div class="v" id="d0" style="color:#ff2d00">--</div><div class="s">In Supabase</div></div>
+    <div class="dc"><div class="t">Mit Bild</div><div class="v" id="d1" style="color:#c8ff00">--</div><div class="s">bild_url vorhanden</div></div>
+    <div class="dc"><div class="t">Mit Kreis</div><div class="v" id="d2" style="color:#00f5ff">--</div><div class="s">Kreis 1–12</div></div>
+    <div class="dc"><div class="t">Mit Subkat ID</div><div class="v" id="d4" style="color:#c8ff00">--</div><div class="s">zt_subkategorie_id</div></div>
+    <div class="dc"><div class="t">Ohne Kreis</div><div class="v" id="d3" style="color:#ff2d00">--</div><div class="s">Ausserhalb Stadt</div></div>
   </div>
-  <div class="breakdown"><h3>Locations pro Kategorie</h3><div id="cat-bars"><div style="color:#333;font-size:11px">Lade...</div></div></div>
-  <div class="breakdown"><h3>Locations pro Kreis (1–12)</h3><div id="kreis-bars"><div style="color:#333;font-size:11px">Lade...</div></div></div>
-  <button class="btn bc" onclick="loadDash()" style="margin-top:8px">↻ Aktualisieren</button>
+  <div class="breakdown"><h3>Locations pro Kategorie</h3><div id="cat-bars"><div style="color:#333;font-size:10px">Lade...</div></div></div>
+  <div class="breakdown"><h3>Locations pro Kreis 1–12</h3><div id="kreis-bars"><div style="color:#333;font-size:10px">Lade...</div></div></div>
+  <div class="breakdown"><h3>Subkategorien Gastro</h3><div id="subkat-bars"><div style="color:#333;font-size:10px">Lade...</div></div></div>
+  <button class="btn btn-cyan" onclick="loadDash()" style="margin-top:8px">↻ AKTUALISIEREN</button>
 </div></div>
 
 <!-- QUALITÄT -->
-
-<div class="panel" id="panel-qualitaet"><div class="content">
+<div class="panel" id="panel-qualitaet">
+<div class="content">
   <div class="q-grid">
-    <div class="qc"><h3><span class="qdot" style="background:var(--red)"></span>Ohne Bild</h3><div class="q-list" id="q0"><div style="color:#333;font-size:11px">Lade...</div></div></div>
-    <div class="qc"><h3><span class="qdot" style="background:#ffaa00"></span>Ohne Kreis</h3><div class="q-list" id="q1"><div style="color:#333;font-size:11px">Lade...</div></div></div>
-    <div class="qc"><h3><span class="qdot" style="background:var(--cyan)"></span>Ohne Website</h3><div class="q-list" id="q2"><div style="color:#333;font-size:11px">Lade...</div></div></div>
-    <div class="qc"><h3><span class="qdot" style="background:var(--green)"></span>Ohne Öffnungszeiten</h3><div class="q-list" id="q3"><div style="color:#333;font-size:11px">Lade...</div></div></div>
+    <div class="qc"><h3><span class="qdot" style="background:#ff2d00"></span>Ohne Bild</h3><div class="q-list" id="q0"><div style="color:#333;font-size:10px">Lade...</div></div></div>
+    <div class="qc"><h3><span class="qdot" style="background:#ffaa00"></span>Ohne Kreis</h3><div class="q-list" id="q1"><div style="color:#333;font-size:10px">Lade...</div></div></div>
+    <div class="qc"><h3><span class="qdot" style="background:#00f5ff"></span>Ohne Subkat ID</h3><div class="q-list" id="q2"><div style="color:#333;font-size:10px">Lade...</div></div></div>
+    <div class="qc"><h3><span class="qdot" style="background:#c8ff00"></span>Ohne Website</h3><div class="q-list" id="q3"><div style="color:#333;font-size:10px">Lade...</div></div></div>
   </div>
-  <button class="btn bc" onclick="loadQuality()" style="margin-top:20px">↻ Qualität prüfen</button>
+  <button class="btn btn-cyan" onclick="loadQuality()" style="margin-top:20px">↻ QUALITÄT PRÜFEN</button>
 </div></div>
 
-<!-- SYNC -->
-
-<div class="panel" id="panel-sync"><div class="content">
-  <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:var(--cyan);margin-bottom:6px">SYNC & WARTUNG</div>
-  <div style="font-size:10px;color:#444;margin-bottom:20px">Datenbank aktuell halten -- automatisch oder manuell.</div>
-  <div class="sync-grid">
-    <div class="sopt sel"><h3>↻ Vollständiger Sync</h3><p>Alle Kategorien neu laden. Bereits vorhandene werden übersprungen.</p></div>
-    <div class="sopt"><h3>◎ Nur fehlende Daten</h3><p>Locations ohne Bild, Kreis oder Öffnungszeiten werden ergänzt.</p></div>
-    <div class="sopt"><h3>✗ Ausserhalb Stadt</h3><p>Alle Locations ohne gültigen Kreis 1-12 entfernen.</p></div>
-    <div class="sopt"><h3>⭐ Google Anreicherung</h3><p>Rating + Preis von Google -- Phase 4q.</p></div>
+<!-- SUBKATEGORIEN -->
+<div class="panel" id="panel-subkat">
+<div class="content">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;margin-bottom:4px">SUBKATEGORIE MAPPING</div>
+  <div style="font-size:9px;color:#444;margin-bottom:20px;letter-spacing:.5px">ZT API ID → Stadtpuls Subkategorie — alle 12 Kreise eingerechnet</div>
+  <div class="subkat-preview">
+    <div class="sp-title">GASTRO (zt_kategorie_id = 101/102)</div>
+    <div class="sp-grid" id="sp-gastro"></div>
   </div>
-  <div class="roadmap-box">
-    <div class="rt">ROADMAP -- NÄCHSTE SCHRITTE</div>
-    <div class="rl">
-      ✅ Phase 4m → ZT API Import live -- DONE<br>
-      ✅ Phase 4n → Admin Dashboard -- DONE<br>
-      ✅ Phase 4o → HTTPS live -- DONE<br>
-      ✅ Phase 4p → Feedback + Kontakt Supabase -- DONE<br>
-      ⏳ Phase 4q → Google Places API → Kreis 3/4/5<br>
-      ⏳ Phase 4r → Locations ohne Kreis bereinigen<br>
-      ⏳ Phase 4s → Filter verdrahten + Livedaten<br>
-      ⏳ Phase 5 → Login + Community + Onboarding<br>
-      🔴 Soft Launch: 4. Juni 2026
-    </div>
+  <div class="subkat-preview">
+    <div class="sp-title">NACHTLEBEN / BARS (zt_kategorie_id = 103/162)</div>
+    <div class="sp-grid" id="sp-nacht"></div>
   </div>
-  <button class="btn bp" onclick="alert('Phase 4q -- Google API Key nötig!')">▶ SYNC STARTEN</button>
+  <div class="subkat-preview">
+    <div class="sp-title">WEITERE KATEGORIEN</div>
+    <div class="sp-grid" id="sp-rest"></div>
+  </div>
 </div></div>
 
 <script>
@@ -351,28 +396,82 @@ const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6I
 const ZT='https://www.zuerich.com/en/api/v2/data';
 const PX='https://api.allorigins.win/raw?url=';
 
-/* LOGIN */
+// PLZ → KREIS — ALLE 12 KREISE
+const PLZ_KREIS={
+  '8001':1,
+  '8002':2,'8038':2,
+  '8003':3,'8036':3,'8055':3,
+  '8004':4,
+  '8005':5,'8064':5,
+  '8006':6,'8057':6,
+  '8032':7,'8044':7,'8053':7,
+  '8008':8,'8034':8,
+  '8047':9,'8048':9,
+  '8037':10,'8049':10,
+  '8046':11,'8050':11,'8051':11,
+  '8052':12
+};
+
+// ZT SUBKATEGORIE ID → STADTPULS NAME
+const SUBKAT_MAP={
+  // Gastro
+  102:'cafe', 184:'schweizer', 185:'italienisch', 186:'spanisch',
+  187:'französisch', 188:'asiatisch', 189:'nahost', 190:'mexikanisch',
+  191:'mediterran', 192:'bistro', 193:'american', 194:'gourmet',
+  195:'grill', 196:'fisch', 197:'vegetarisch', 409:'vegan',
+  415:'international', 101:'restaurant',
+  // Bars
+  103:'bar', 1438:'cocktail', 1441:'musicbar', 1444:'pub',
+  1447:'restbar', 1450:'hotelbar', 1456:'kulturbar',
+  1459:'afterwork', 1462:'outdoor', 1465:'weinbar', 1468:'quartierbar',
+  // Nachtleben
+  162:'club', 163:'livemusic', 164:'casino', 1414:'techno',
+  1417:'hiphop', 1423:'rock', 1426:'latin', 1429:'afterhour',
+  1432:'jazz', 1435:'party',
+  // Shopping
+  95:'shopping', 127:'mode', 128:'swissmade', 129:'uhren',
+  130:'souvenirs', 131:'food', 132:'markt', 416:'warenhaus',
+  417:'mall', 1090:'velo',
+  // Kultur
+  96:'kultur', 133:'film', 134:'musik', 136:'museen', 175:'oper',
+  176:'theater', 177:'kunstmuseum', 178:'galerien', 179:'fotomuseum',
+  180:'architektur', 181:'geschichte', 182:'wissenschaft',
+  // Sport
+  97:'sport', 137:'walking', 138:'hiking', 139:'cycling',
+  141:'swimming', 145:'climbing', 146:'golf', 149:'sailing', 150:'sup',
+  // Wellness
+  98:'wellness',
+  // Sightseeing
+  72:'sightseeing', 87:'architektur', 88:'aussicht', 89:'denkmäler',
+  90:'kunst', 91:'plätze', 92:'kirchen',
+  // Recreation
+  99:'recreation', 158:'berge', 159:'wasser', 160:'parks', 161:'zoo'
+};
+
+const CCOLORS={
+  gastro:'#ff2d00',nachtleben:'#9333ea',kultur:'#00f5ff',
+  shopping:'#ffcc00',wellness:'#c8ff00',sport:'#ff6600',
+  sightseeing:'#ff2d88',recreation:'#00dd66',bars:'#00f5ff'
+};
+
+let modus='update',imp=0,skp=0,err=0;
+
+// LOGIN
 function doLogin(){
   const pw=document.getElementById('pw-input').value.trim();
   if(!pw)return;
   const saved=localStorage.getItem('sp_pw');
   if(!saved){localStorage.setItem('sp_pw',btoa(pw));localStorage.setItem('sp_import_auth','1');hideLogin();}
-  else{if(btoa(pw)===saved){localStorage.setItem('sp_import_auth','1');hideLogin();}
-  else{document.getElementById('login-error').style.display='block';document.getElementById('pw-input').value='';document.getElementById('pw-input').focus();}}
+  else if(btoa(pw)===saved){localStorage.setItem('sp_import_auth','1');hideLogin();}
+  else{document.getElementById('login-error').style.display='block';document.getElementById('pw-input').value='';document.getElementById('pw-input').focus();}
 }
-function hideLogin(){document.getElementById('login-screen').style.display='none';updHdr();upd();}
+function hideLogin(){document.getElementById('login-screen').style.display='none';updHdr();buildSubkatPreview();}
 function doLogout(){localStorage.removeItem('sp_import_auth');document.getElementById('login-screen').style.display='flex';}
-window.addEventListener('DOMContentLoaded',function(){
-  if(localStorage.getItem('sp_import_auth')==='1'){document.getElementById('login-screen').style.display='none';updHdr();upd();}
+window.addEventListener('DOMContentLoaded',()=>{
+  if(localStorage.getItem('sp_import_auth')==='1'){document.getElementById('login-screen').style.display='none';updHdr();buildSubkatPreview();}
 });
 
-let imp=0,skp=0,err=0;
-const PKM={'8001':1,'8002':2,'8038':2,'8003':3,'8036':3,'8055':3,'8004':4,'8005':5,'8064':5,'8006':6,'8057':6,'8032':7,'8044':7,'8053':7,'8008':8,'8034':8,'8047':9,'8048':9,'8037':10,'8049':10,'8046':11,'8050':11,'8051':11,'8052':12};
-const CCOLORS={gastro:'#ff2d00',nachtleben:'#9333ea',kultur:'#00f5ff',shopping:'#ffaa00',wellness:'#c8ff00',sport:'#ff6600',sightseeing:'#ff2d88',recreation:'#00dd66'};
-
-function plz2k(p){return PKM[p]||null}
-function slug(n){return n.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').substring(0,80)}
-
+// TABS
 function switchTab(t,el){
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
@@ -382,159 +481,318 @@ function switchTab(t,el){
   if(t==='qualitaet')loadQuality();
 }
 
+// MODUS
+function setModus(m){
+  modus=m;
+  document.querySelectorAll('.modus-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('m-'+m).classList.add('active');
+  if(m==='delete'){
+    const warn=document.querySelector('.warn-box');
+    warn.style.borderColor='#ff2d00';
+    warn.style.background='rgba(255,45,0,0.08)';
+  }
+}
+
+// CATEGORY SELECTION
 function tc(el){const cb=el.querySelector('input');cb.checked=!cb.checked;el.classList.toggle('sel',cb.checked);upd()}
 function upd(){document.getElementById('sel-count').textContent=document.querySelectorAll('.cc:checked').length+' ausgewählt'}
 function selAll(){document.querySelectorAll('.ci').forEach(el=>{el.querySelector('input').checked=true;el.classList.add('sel')});upd()}
 function selNone(){document.querySelectorAll('.ci').forEach(el=>{el.querySelector('input').checked=false;el.classList.remove('sel')});upd()}
-function selMissing(){selNone();['nachtleben','kultur','shopping','wellness','sport','sightseeing'].forEach(c=>{document.querySelectorAll('.cc').forEach(cb=>{if(cb.value.includes('|'+c+'|')){cb.checked=true;cb.closest('.ci').classList.add('sel')}})});upd()}
 
+// LOGGING
 function lg(m,t='in'){
   const b=document.getElementById('log-box');
   b.style.display='block';
   const d=document.createElement('div');
   d.className={ok:'lok',err:'ler',info:'lin',warn:'lwa',skip:'lsk'}[t]||'lin';
-  d.textContent=new Date().toLocaleTimeString('de-CH')+' -- '+m;
+  d.textContent=new Date().toLocaleTimeString('de-CH')+' — '+m;
   b.appendChild(d);b.scrollTop=b.scrollHeight;
 }
 
+// HELPERS
+function plz2k(p){return PLZ_KREIS[p]||null}
+function slugify(n){return n.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').substring(0,80)}
+function seoTitle(name,sub,kreis){return `${name} — ${sub} Zürich Kreis ${kreis} | Stadtpuls`}
+
+// ZT API FETCH
 async function fetchZT(id){
-  const r=await fetch(PX+encodeURIComponent(ZT+'?id='+id));
+  const url=ZT+'?id='+id+'&limit=500';
+  const r=await fetch(PX+encodeURIComponent(url));
   if(!r.ok)throw new Error('HTTP '+r.status);
   const d=await r.json();
-  return Array.isArray(d)?d:[];
+  return Array.isArray(d)?d:(d.data||[]);
 }
 
-function mapRow(item,kat,sub,katId){
-  const a=item.address||{},g=item.geoCoordinates||{};
-  const plz=a.postalCode||null;
+// MAP ZT ITEM → SUPABASE ROW
+function mapRow(item,kat,subId,katId){
+  const a=item.address||{};
+  const g=item.geoCoordinates||{};
+  const plz=(a.postalCode||'').trim();
   const kreis=plz2k(plz);
+
+  // NUR ZÜRICH KREIS 1-12
+  if(!kreis)return null;
+
   const name=(item.name?.de||item.name?.en||'').trim();
   if(!name)return null;
-  if(plz&&!kreis)return null;
-  const bi=item.image?.url||null;
-  const bp=(item.photo||[]).map(p=>p.url).filter(Boolean);
-  return{
-    name,slug:slug(name),kategorie:kat,subkategorie:sub,
-    zt_kategorie_id:katId,zt_subkategorie_id:null,zt_api_id:item.identifier||null,
-    adresse:a.streetAddress||null,plz,kreis,
-    stadt:a.addressLocality||'Zürich',land:'CH',
-    lat:g.latitude||null,lng:g.longitude||null,
-    beschreibung:item.description?.de||item.description?.en||null,
-    beschreibung_kurz:item.disambiguatingDescription?.de||item.textTeaser?.de||null,
-    bild_url:bi,bild_urls:bp.length?bp:null,
-    telefon:a.telephone||null,website:a.url||null,email:a.email||null,
-    oeffnungszeiten:(item.openingHours||[]).length?item.openingHours:null,
-    zurichcard:item.zurichcard||false,
-    place_indoor:(item.place||[]).includes('Indoors'),
-    place_outdoor:(item.place||[]).includes('Outdoors'),
-    schema_type:item['@type']||'LocalBusiness',
-    quelle:'zuerich.com',aktiv:true,featured:false,verified:false
+
+  const subkat=SUBKAT_MAP[subId]||SUBKAT_MAP[katId]||'restaurant';
+  const bild_url=item.image?.url||null;
+  const bild_urls=(item.photo||[]).map(p=>p.url).filter(Boolean);
+  const oeffnungszeiten=(item.openingHours||[]);
+  const beschreibung=item.description?.de||item.description?.en||null;
+  const beschreibung_kurz=item.disambiguatingDescription?.de||item.textTeaser?.de||null;
+
+  return {
+    name,
+    slug: slugify(name),
+    kategorie: kat,
+    subkategorie: subkat,
+    zt_kategorie_id: katId,
+    zt_subkategorie_id: subId,
+    zt_api_id: item.identifier||null,
+    adresse: a.streetAddress||null,
+    plz: plz||null,
+    kreis,
+    stadt: 'Zürich',
+    land: 'CH',
+    lat: g.latitude||null,
+    lng: g.longitude||null,
+    beschreibung,
+    beschreibung_kurz,
+    bild_url,
+    bild_urls: bild_urls.length?bild_urls:null,
+    telefon: item.telephone||a.telephone||null,
+    website: item.url||a.url||null,
+    email: a.email||null,
+    oeffnungszeiten: oeffnungszeiten.length?oeffnungszeiten:null,
+    zurichcard: item.zurichcard||false,
+    place_indoor: (item.place||[]).includes('Indoors'),
+    place_outdoor: (item.place||[]).includes('Outdoors'),
+    seo_title: seoTitle(name,subkat,kreis),
+    seo_description: beschreibung_kurz||beschreibung?.substring(0,160)||null,
+    schema_type: item['@type']||'LocalBusiness',
+    quelle: 'zuerich.com',
+    aktiv: true,
+    featured: false,
+    verified: false
   };
 }
 
-async function exists(id){
-  if(!id)return false;
-  const r=await fetch(SU+'/rest/v1/locations?zt_api_id=eq.'+id+'&select=id',{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
-  const d=await r.json();
-  return Array.isArray(d)&&d.length>0;
+// SUPABASE HELPERS
+async function sbFetch(path){
+  const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+  return r.json();
 }
-
-async function insert(row){
-  const r=await fetch(SU+'/rest/v1/locations',{method:'POST',headers:{'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'resolution=ignore-duplicates'},body:JSON.stringify(row)});
+async function sbInsert(row){
+  const r=await fetch(SU+'/rest/v1/locations',{
+    method:'POST',
+    headers:{'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'resolution=ignore-duplicates'},
+    body:JSON.stringify(row)
+  });
   return r.status;
 }
+async function sbUpdate(id,row){
+  const r=await fetch(SU+'/rest/v1/locations?id=eq.'+id,{
+    method:'PATCH',
+    headers:{'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK},
+    body:JSON.stringify(row)
+  });
+  return r.status;
+}
+async function sbDelete(kat){
+  const r=await fetch(SU+'/rest/v1/locations?kategorie=eq.'+kat,{
+    method:'DELETE',
+    headers:{'apikey':SK,'Authorization':'Bearer '+SK}
+  });
+  return r.status;
+}
+async function getByApiId(apiId){
+  if(!apiId)return null;
+  const r=await sbFetch('locations?zt_api_id=eq.'+apiId+'&select=id');
+  return Array.isArray(r)&&r.length?r[0]:null;
+}
 
+// MAIN IMPORT
 async function startImport(){
   const checked=[...document.querySelectorAll('.cc:checked')];
-  if(!checked.length){alert('Bitte Kategorie wählen!');return}
+  if(!checked.length){alert('Bitte mindestens eine Kategorie wählen!');return}
+
+  if(modus==='delete'){
+    const ok=confirm('⚠️ ACHTUNG: Alle Locations der gewählten Kategorien werden GELÖSCHT und neu importiert. Bist du sicher?');
+    if(!ok)return;
+  }
+
   document.getElementById('btn-go').disabled=true;
   document.getElementById('prog-box').style.display='block';
   document.getElementById('res-grid').style.display='none';
   document.getElementById('log-box').innerHTML='';
   imp=0;skp=0;err=0;
-  const cats=checked.map(c=>c.value.split('|'));
+
+  // Deduplizieren — gleiche ZT ID nur einmal
   const seen=new Set();
-  const uni=cats.filter(([id])=>{if(seen.has(id))return false;seen.add(id);return true});
-  lg('▶ Import gestartet -- '+uni.length+' Kategorien','info');
-  for(let i=0;i<uni.length;i++){
-    const[ztId,kat,sub]=uni[i];
-    document.getElementById('prog-fill').style.width=Math.round(i/uni.length*100)+'%';
-    document.getElementById('prog-sub').textContent=(i+1)+' / '+uni.length+' Kategorien';
-    document.getElementById('prog-cat').textContent=kat+' / '+sub;
-    document.getElementById('prog-lbl').textContent='Lade id='+ztId+'...';
-    try{
-      lg('→ '+kat+'/'+sub+' (id='+ztId+')','info');
-      const items=await fetchZT(parseInt(ztId));
-      lg('  '+items.length+' Einträge','info');
-      for(const item of items){
-        const row=mapRow(item,kat,sub,parseInt(ztId));
-        if(!row){skp++;continue}
-        const ex=await exists(row.zt_api_id);
-        if(ex){skp++;continue}
-        const s=await insert(row);
-        if(s===201||s===200){lg('  ✓ '+row.name+' (Kreis '+(row.kreis||'?')+')','ok');imp++}
-        else{lg('  ✗ '+row.name+' HTTP '+s,'err');err++}
-        await new Promise(r=>setTimeout(r,60));
-      }
-    }catch(e){lg('✗ Fehler id='+ztId+': '+e.message,'err');err++}
-    await new Promise(r=>setTimeout(r,200));
+  const cats=checked.map(c=>{
+    const[subId,kat,sub,katId]=c.value.split('|');
+    return{subId:parseInt(subId),kat,sub,katId:parseInt(katId)};
+  }).filter(c=>{if(seen.has(c.subId))return false;seen.add(c.subId);return true});
+
+  lg('▶ Import gestartet — Modus: '+modus.toUpperCase()+' — '+cats.length+' Kategorien','info');
+
+  // DELETE MODUS — erst löschen
+  if(modus==='delete'){
+    const kats=[...new Set(cats.map(c=>c.kat))];
+    for(const k of kats){
+      lg('✗ Lösche alle: '+k,'warn');
+      await sbDelete(k);
+      await new Promise(r=>setTimeout(r,300));
+    }
+    lg('✓ Gelöscht. Starte Neu-Import...','info');
   }
+
+  for(let i=0;i<cats.length;i++){
+    const{subId,kat,sub,katId}=cats[i];
+    const pct=Math.round(i/cats.length*100);
+    document.getElementById('prog-fill').style.width=pct+'%';
+    document.getElementById('prog-sub').textContent=(i+1)+' / '+cats.length+' Kategorien';
+    document.getElementById('prog-cat').textContent=kat+' / '+sub+' (id='+subId+')';
+    document.getElementById('prog-lbl').textContent='Lade ZT API...';
+
+    try{
+      lg('→ '+kat+'/'+sub+' (id='+subId+')','info');
+      const items=await fetchZT(subId);
+      lg('  '+items.length+' Einträge von ZT API','info');
+
+      let catImp=0,catSkp=0;
+      for(const item of items){
+        const row=mapRow(item,kat,subId,katId);
+        if(!row){catSkp++;skp++;continue}
+
+        if(modus==='delete'){
+          // Nach DELETE direkt inserieren
+          const s=await sbInsert(row);
+          if(s===201||s===200){catImp++;imp++;lg('  ✓ '+row.name+' — K'+row.kreis+' — '+row.subkategorie,'ok');}
+          else{err++;lg('  ✗ '+row.name+' HTTP '+s,'err');}
+        } else if(modus==='update'){
+          // Prüfen ob existiert → update oder insert
+          const existing=await getByApiId(row.zt_api_id);
+          if(existing){
+            const s=await sbUpdate(existing.id,row);
+            if(s===204||s===200){catImp++;imp++;lg('  ↻ '+row.name+' — K'+row.kreis+' (aktualisiert)','ok');}
+            else{err++;lg('  ✗ '+row.name+' update HTTP '+s,'err');}
+          } else {
+            const s=await sbInsert(row);
+            if(s===201||s===200){catImp++;imp++;lg('  ✓ '+row.name+' — K'+row.kreis+' (neu)','ok');}
+            else{err++;lg('  ✗ '+row.name+' insert HTTP '+s,'err');}
+          }
+        } else {
+          // SKIP MODUS — nur neue
+          const existing=await getByApiId(row.zt_api_id);
+          if(existing){catSkp++;skp++;lg('  → '+row.name+' (bereits vorhanden)','skip');continue;}
+          const s=await sbInsert(row);
+          if(s===201||s===200){catImp++;imp++;lg('  ✓ '+row.name+' — K'+row.kreis,'ok');}
+          else{err++;lg('  ✗ '+row.name+' HTTP '+s,'err');}
+        }
+        await new Promise(r=>setTimeout(r,80));
+      }
+      lg('  Kategorie fertig: +'+catImp+' | skip '+catSkp,'info');
+    }catch(e){
+      lg('✗ Fehler id='+subId+': '+e.message,'err');err++;
+    }
+    await new Promise(r=>setTimeout(r,300));
+  }
+
   document.getElementById('prog-fill').style.width='100%';
-  document.getElementById('prog-lbl').textContent='✅ Fertig';
+  document.getElementById('prog-lbl').textContent='✅ FERTIG';
   document.getElementById('prog-cat').textContent='';
   document.getElementById('r0').textContent=imp;
   document.getElementById('r1').textContent=skp;
   document.getElementById('r2').textContent=err;
-  document.getElementById('r3').textContent=uni.length;
+  document.getElementById('r3').textContent=cats.length;
   document.getElementById('res-grid').style.display='grid';
   document.getElementById('btn-go').disabled=false;
-  lg('=== FERTIG === +'+imp+' neu | '+skp+' skip | '+err+' err','ok');
+  lg('=== IMPORT ABGESCHLOSSEN === +'+imp+' neu/aktualisiert | '+skp+' skip | '+err+' fehler','ok');
   updHdr();
 }
 
-async function sq(path){
-  const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
-  return r.json();
-}
-
+// DASHBOARD
 async function loadDash(){
   try{
-    const all=await sq('locations?select=id,kategorie,kreis,bild_url,featured&limit=2000');
+    const all=await sbFetch('locations?select=id,kategorie,kreis,bild_url,subkategorie,zt_subkategorie_id&limit=2000');
     const tot=all.length;
     document.getElementById('d0').textContent=tot;
     document.getElementById('d1').textContent=all.filter(l=>l.bild_url).length;
     document.getElementById('d2').textContent=all.filter(l=>l.kreis).length;
     document.getElementById('d3').textContent=all.filter(l=>!l.kreis).length;
-    document.getElementById('hdr-total').textContent=tot;
+    document.getElementById('d4').textContent=all.filter(l=>l.zt_subkategorie_id).length;
+
+    // Kategorien
     const cats={};all.forEach(l=>{cats[l.kategorie]=(cats[l.kategorie]||0)+1});
-    const mc=Math.max(...Object.values(cats));
-    document.getElementById('cat-bars').innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`<div class="bar-row"><div class="nm">${c}</div><div class="bw"><div class="bf" style="width:${Math.round(n/mc*100)}%;background:${CCOLORS[c]||'#ff2d00'}"></div></div><div class="ct">${n}</div></div>`).join('');
-    const ks={};all.forEach(l=>{if(l.kreis)ks['Kreis '+l.kreis]=(ks['Kreis '+l.kreis]||0)+1});
-    const mk=Math.max(...Object.values(ks));
-    document.getElementById('kreis-bars').innerHTML=Object.entries(ks).sort((a,b)=>parseInt(a[0].split(' ')[1])-parseInt(b[0].split(' ')[1])).map(([k,n])=>`<div class="bar-row"><div class="nm">${k}</div><div class="bw"><div class="bf" style="width:${Math.round(n/mk*100)}%;background:var(--red)"></div></div><div class="ct">${n}</div></div>`).join('');
+    const mc=Math.max(...Object.values(cats),1);
+    document.getElementById('cat-bars').innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`
+      <div class="bar-row">
+        <div class="bar-nm">${c}</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(n/mc*100)}%;background:${CCOLORS[c]||'#ff2d00'}"></div></div>
+        <div class="bar-ct">${n}</div>
+      </div>`).join('');
+
+    // Kreise
+    const ks={};all.forEach(l=>{if(l.kreis)ks[l.kreis]=(ks[l.kreis]||0)+1});
+    const mk=Math.max(...Object.values(ks),1);
+    document.getElementById('kreis-bars').innerHTML=Array.from({length:12},(_,i)=>i+1).map(k=>{
+      const n=ks[k]||0;
+      return`<div class="bar-row"><div class="bar-nm">Kreis ${k}</div><div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(n/mk*100)}%;background:#ff2d00"></div></div><div class="bar-ct">${n}</div></div>`;
+    }).join('');
+
+    // Subkategorien Gastro
+    const gastro=all.filter(l=>l.kategorie==='gastro');
+    const subs={};gastro.forEach(l=>{if(l.subkategorie)subs[l.subkategorie]=(subs[l.subkategorie]||0)+1});
+    const ms=Math.max(...Object.values(subs),1);
+    document.getElementById('subkat-bars').innerHTML=Object.entries(subs).sort((a,b)=>b[1]-a[1]).map(([s,n])=>`
+      <div class="bar-row">
+        <div class="bar-nm">${s}</div>
+        <div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(n/ms*100)}%;background:#c8ff00"></div></div>
+        <div class="bar-ct">${n}</div>
+      </div>`).join('');
   }catch(e){console.error(e)}
 }
 
+// QUALITY
 async function loadQuality(){
   try{
-    const all=await sq('locations?select=id,name,kategorie,kreis,plz,bild_url,website,oeffnungszeiten&limit=2000');
-    const rl=arr=>arr.length===0?'<div style="color:var(--green);font-size:11px;padding:6px 0">✓ Alle vollständig</div>':arr.slice(0,15).map(l=>`<div class="qi"><div class="qn">${l.name}</div><div class="qm">${l.kategorie}·${l.plz||'?'}</div></div>`).join('')+(arr.length>15?`<div style="color:#333;font-size:10px;padding:6px 0">+${arr.length-15} weitere</div>`:'');
+    const all=await sbFetch('locations?select=id,name,kategorie,kreis,plz,bild_url,website,zt_subkategorie_id&limit=2000');
+    const rl=arr=>arr.length===0
+      ?'<div style="color:#c8ff00;font-size:10px;padding:6px 0">✓ Alle vollständig</div>'
+      :arr.slice(0,20).map(l=>`<div class="qi"><div class="qn">${l.name}</div><div class="qm">${l.kategorie}·K${l.kreis||'?'}</div></div>`).join('')
+       +(arr.length>20?`<div style="color:#333;font-size:9px;padding:5px 0">+${arr.length-20} weitere</div>`:'');
     document.getElementById('q0').innerHTML=rl(all.filter(l=>!l.bild_url));
     document.getElementById('q1').innerHTML=rl(all.filter(l=>!l.kreis));
-    document.getElementById('q2').innerHTML=rl(all.filter(l=>!l.website));
-    document.getElementById('q3').innerHTML=rl(all.filter(l=>!l.oeffnungszeiten));
+    document.getElementById('q2').innerHTML=rl(all.filter(l=>!l.zt_subkategorie_id));
+    document.getElementById('q3').innerHTML=rl(all.filter(l=>!l.website));
   }catch(e){console.error(e)}
 }
 
+// SUBKAT PREVIEW
+function buildSubkatPreview(){
+  const gastro=Object.entries(SUBKAT_MAP).filter(([id])=>id<=415||id==102||id==409);
+  const nacht=Object.entries(SUBKAT_MAP).filter(([id])=>(id>=103&&id<=164)||(id>=1414&&id<=1468));
+  const rest=Object.entries(SUBKAT_MAP).filter(([id])=>id>=95&&id<=99||id>=127||id>=133);
+
+  const mkItems=entries=>entries.slice(0,30).map(([id,name])=>`
+    <div class="sp-item"><span class="id">${id}</span><span class="name">${name}</span></div>`).join('');
+
+  document.getElementById('sp-gastro').innerHTML=mkItems(gastro);
+  document.getElementById('sp-nacht').innerHTML=mkItems(nacht);
+  document.getElementById('sp-rest').innerHTML=mkItems(rest);
+}
+
+// HEADER
 async function updHdr(){
   try{
     const r=await fetch(SU+'/rest/v1/locations?select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
     const c=r.headers.get('content-range')?.split('/')[1]||'?';
     document.getElementById('hdr-total').textContent=c;
   }catch(e){}
-  document.getElementById('hdr-last').textContent=new Date().toLocaleTimeString('de-CH',{hour:'2-digit',minute:'2-digit'});
 }
 </script>
-
 </body>
 </html>
