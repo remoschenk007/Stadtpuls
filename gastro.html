@@ -332,8 +332,7 @@ footer{padding:44px 40px 32px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
 .p-hero{min-height:200px;background:#07070f;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;background-size:cover;background-position:center}
 .p-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(4,4,10,.9),rgba(4,4,10,.2))}
 .p-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:90px;color:#ff2d00;opacity:.04;text-transform:uppercase;pointer-events:none}
-.p-close{position:absolute;top:12px;right:12px;width:30px;height:30px;border:1px solid rgba(232,228,217,.15);display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(232,228,217,.3);transition:.15s;cursor:none;z-index:1}
-.p-close:hover{border-color:#ff2d00;color:#ff2d00}
+.p-close{position:absolute;top:12px;right:12px;width:44px;height:44px;border:1px solid rgba(232,228,217,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#e8e4d9;transition:.15s;cursor:none;z-index:10;background:rgba(4,4,10,.7)}
 .p-score-box{position:absolute;top:12px;left:20px;border:1px solid rgba(255,45,0,.3);padding:7px 10px;background:#04040a;z-index:1}
 .psn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:#ff2d00;line-height:1}
 .psl{font-size:7px;letter-spacing:1px;color:rgba(232,228,217,.18);text-transform:uppercase}
@@ -990,7 +989,7 @@ function renderKuechen(){
       const sub=isAll?null:SUBKAT[id];
       const cnt=isAll?total:(subkatCounts[id]||0);
       const on=S.kueche===(isAll?'all':String(id));
-      return`<div class="kgrid-btn${on?' on':''}" onclick="setKueche(null,'${isAll?'all':id}');closeSheet();buildGrid()">
+      return`<div class="kgrid-btn${on?' on':''}" onclick="sheetSetKueche('${isAll?'all':id}')">
         <div class="kgrid-btn-emoji">${isAll?'🍽️':sub.e}</div>
         <div class="kgrid-btn-name">${isAll?'ALLES':sub.n}</div>
         <div class="kgrid-btn-cnt">${cnt}</div>
@@ -1190,6 +1189,38 @@ function openDet(l){
   document.getElementById('ov').classList.add('on');
 }
 function closeDet(){document.getElementById('panel').classList.remove('open');document.getElementById('ov').classList.remove('on');}
+
+// BUG 1 FIX — Sheet Küche setzt Filter korrekt + schliesst Sheet
+function sheetSetKueche(id){
+  S.kueche=id;
+  renderKuechen(); // Update aktive Klassen in Sheet
+  updateTags();
+  buildGrid();
+  closeSheet();
+}
+
+// BUG 2 FIX — Kreis Sheet zeigt gefilterte Anzahl korrekt
+function renderKreisSheet(){
+  const sk=document.getElementById('sheet-kreis');
+  if(!sk)return;
+  sk.innerHTML=[{k:'all',label:'ALL'},...Array.from({length:12},(_,i)=>({k:i+1,label:'K'+(i+1)}))].map(d=>{
+    // Zeige Anzahl aus aktuell gefiltertem Set — nicht alle
+    const cnt=d.k==='all'
+      ?getFiltered().length
+      :allLocs.filter(l=>l.kreis===d.k&&(S.typ==='all'||TYP_IDS[S.typ]?.includes(l.zt_subkategorie_id))&&(S.kueche==='all'||l.zt_subkategorie_id===parseInt(S.kueche))).length;
+    return`<div class="kgrid-k${S.kreis===d.k?' on':''}" onclick="sheetSetKreis(${d.k==='all'?'"all"':d.k})">
+      <div class="kgrid-k-name">${d.label}</div>
+      <div class="kgrid-k-cnt">${cnt}</div>
+    </div>`;
+  }).join('');
+}
+
+function sheetSetKreis(k){
+  S.kreis=k;
+  document.querySelectorAll('.kr-btn').forEach(b=>b.classList.remove('on'));
+  document.querySelectorAll('.hm-cell').forEach(c=>c.classList.toggle('on',c.dataset.k==k));
+  updateTags();buildGrid();closeSheet();
+}
 
 // SHEET
 function openSheet(){document.getElementById('sheet').classList.add('open');document.getElementById('sh-ov').classList.add('on');renderKreisSheet();}
