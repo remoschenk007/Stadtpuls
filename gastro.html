@@ -3,338 +3,362 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>STADTPULS — GASTRO</title>
+<title>STADTPULS — GASTRO ZÜRICH</title>
+<meta name="description" content="Restaurants, Bars und Cafés in Zürich — Stadtpuls City Guide">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--r:#ff2d00;--g:#c8ff00;--c:#00f5ff;--l:#9333ea;--w:#e8e4d9;--b:#04040a;--d:#0a0a14;--bo:rgba(255,45,0,0.1)}
 body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
 body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px);pointer-events:none;z-index:9997}
-
-/* CURSOR */
-#cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:none}
+#cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
 #cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(255,45,0,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease}
 
 /* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:52px;border-bottom:1px solid rgba(255,45,0,.1);position:sticky;top:0;background:#04040a;z-index:300}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:20px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid rgba(255,45,0,.1);position:sticky;top:0;background:#04040a;z-index:300}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px}
 .ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
 .nav-links{display:flex;gap:28px}
-.nl{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2)}
+.nl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2)}
 .nl.on{color:#ff2d00}
-.btn-mm{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:8px 16px}
+.btn-mm{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none}
 
-/* ═══════════════════════════════════
-   SMART FILTER BAR — DESKTOP
-   ═══════════════════════════════════ */
-.filter-bar{position:sticky;top:52px;z-index:200;background:#04040a;border-bottom:1px solid rgba(255,45,0,.1)}
+/* GPS STRIP */
+.gps-strip{display:flex;align-items:center;justify-content:space-between;padding:10px 40px;background:#07070f;border-bottom:1px solid rgba(0,245,255,.1);flex-wrap:wrap;gap:12px}
+.gps-left{display:flex;align-items:center;gap:10px}
+.gps-dot{width:8px;height:8px;border-radius:50%;background:#00f5ff;animation:blink 1.5s infinite;flex-shrink:0}
+.gps-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff}
+.gps-sub{font-size:8px;color:rgba(0,245,255,.35);letter-spacing:1px;margin-top:2px}
+.gps-stats{display:flex;gap:20px;align-items:center}
+.gps-stat{text-align:center}
+.gps-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;line-height:1}
+.gps-l{font-size:7px;letter-spacing:2px;text-transform:uppercase;margin-top:2px}
+.btn-karte{border:1px solid rgba(0,245,255,.3);background:transparent;color:#00f5ff;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:7px 14px;cursor:none;white-space:nowrap}
+
+/* ═══════════════════════════
+   FILTER BAR — DESKTOP
+   ═══════════════════════════ */
+.filter-bar{position:sticky;top:54px;z-index:200;background:#04040a;border-bottom:1px solid rgba(255,45,0,.1)}
 
 /* AKTIVE TAGS */
-.af-row{display:flex;align-items:center;gap:6px;padding:6px 40px;min-height:34px;border-bottom:1px solid rgba(255,45,0,.05);flex-wrap:wrap;transition:all .2s}
-.af-row:empty{display:none}
-.af-row:not(:has(.af-tag)){display:none}
-.af-tag{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border:1px solid rgba(255,45,0,.35);background:rgba(255,45,0,.05);font-size:7px;letter-spacing:1px;text-transform:uppercase;color:#ff2d00;animation:tagIn .2s ease both}
+.af-row{display:flex;align-items:center;gap:6px;padding:7px 40px;min-height:36px;border-bottom:1px solid rgba(255,45,0,.05);flex-wrap:wrap}
+.af-row:empty,.af-row:not(:has(.af-tag)){display:none}
+.af-tag{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid rgba(255,45,0,.35);background:rgba(255,45,0,.05);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#ff2d00;animation:tagIn .2s ease both}
 .af-tag.g{border-color:rgba(200,255,0,.35);background:rgba(200,255,0,.05);color:#c8ff00}
 .af-tag.c{border-color:rgba(0,245,255,.35);background:rgba(0,245,255,.05);color:#00f5ff}
 .af-tag.gold{border-color:rgba(255,204,0,.35);background:rgba(255,204,0,.05);color:#ffcc00}
-.af-x{opacity:.45;font-size:11px;line-height:1;margin-left:1px;cursor:none}
+.af-x{opacity:.45;font-size:12px;line-height:1;margin-left:2px;cursor:none}
 .af-x:hover{opacity:1}
-.af-reset{margin-left:auto;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);border:1px solid rgba(232,228,217,.08);padding:3px 9px;cursor:none;transition:.15s;flex-shrink:0}
+.af-reset{margin-left:auto;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);border:1px solid rgba(232,228,217,.08);padding:4px 10px;cursor:none;transition:.15s;flex-shrink:0}
 .af-reset:hover{color:#ff2d00;border-color:rgba(255,45,0,.3)}
 
-/* TYP SEGMENT — RESTAURANT / BAR / CAFÉ */
+/* TYP ROW */
 .typ-row{display:flex;align-items:stretch;border-bottom:1px solid rgba(255,45,0,.08)}
-.typ-lbl{display:flex;align-items:center;padding:0 16px;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.12);border-right:1px solid rgba(255,45,0,.06);flex-shrink:0}
-.typ-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:9px 20px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.06);cursor:none;transition:.2s;position:relative;flex:1;max-width:160px}
+.typ-lbl{display:flex;align-items:center;padding:0 18px;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.12);border-right:1px solid rgba(255,45,0,.06);flex-shrink:0}
+.typ-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px 24px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.06);cursor:none;transition:.2s;position:relative;flex:1;max-width:180px;gap:3px}
 .typ-btn::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#ff2d00;transform:scaleX(0);transition:.2s;transform-origin:center}
 .typ-btn.on::after{transform:scaleX(1)}
 .typ-btn:hover{background:rgba(255,45,0,.03)}
 .typ-btn.on{background:rgba(255,45,0,.05)}
-.typ-icon{font-size:16px;line-height:1;margin-bottom:3px}
-.typ-name{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.35);transition:.2s}
+.typ-icon{font-size:18px;line-height:1}
+.typ-name{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.35);transition:.2s}
 .typ-btn.on .typ-name{color:#ff2d00}
-.typ-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;color:rgba(232,228,217,.15);line-height:1;transition:.2s}
+.typ-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;color:rgba(232,228,217,.15);line-height:1;transition:.2s}
 .typ-btn.on .typ-count{color:#ff2d00}
 
-/* KÜCHEN CHIPS — animiert */
-.kueche-row{display:flex;align-items:center;border-bottom:1px solid rgba(255,45,0,.06);overflow-x:auto;min-height:40px;transition:all .3s}
+/* KÜCHEN ROW */
+.kueche-row-wrap{position:relative;overflow:hidden}
+.kueche-row-wrap::after{content:'';position:absolute;right:0;top:0;bottom:0;width:48px;background:linear-gradient(to right,transparent,#04040a);pointer-events:none;z-index:1}
+.kueche-row{display:flex;align-items:center;border-bottom:1px solid rgba(255,45,0,.06);overflow-x:auto;min-height:46px}
 .kueche-row::-webkit-scrollbar{display:none}
-.kr-lbl{display:flex;align-items:center;padding:0 14px;font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.1);border-right:1px solid rgba(255,45,0,.05);flex-shrink:0;white-space:nowrap}
-.kchip{display:flex;align-items:center;gap:5px;padding:8px 14px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.05);color:rgba(232,228,217,.25);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;cursor:none;transition:.15s;white-space:nowrap;flex-shrink:0;position:relative}
+.kr-lbl{display:flex;align-items:center;padding:0 16px;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.1);border-right:1px solid rgba(255,45,0,.05);flex-shrink:0;white-space:nowrap}
+.kchip{display:flex;align-items:center;gap:6px;padding:12px 16px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.05);color:rgba(232,228,217,.3);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:none;transition:.15s;white-space:nowrap;flex-shrink:0}
 .kchip:hover{color:#e8e4d9;background:rgba(255,45,0,.03)}
 .kchip.on{color:#04040a;background:#ff2d00}
 .kchip.disabled{opacity:.2;pointer-events:none}
-.kchip-emoji{font-size:11px}
-.kchip-cnt{font-size:7px;color:rgba(232,228,217,.2);margin-left:1px}
+.kchip-emoji{font-size:13px}
+.kchip-cnt{font-size:9px;color:rgba(232,228,217,.25);margin-left:1px}
 .kchip.on .kchip-cnt{color:rgba(4,4,10,.5)}
-/* Fade-Indikator rechts */
-.kueche-row-wrap{position:relative;overflow:hidden}
-.kueche-row-wrap::after{content:'';position:absolute;right:0;top:0;bottom:0;width:40px;background:linear-gradient(to right,transparent,#04040a);pointer-events:none;z-index:1}
 
 /* KREIS + QUER ROW */
 .bottom-row{display:flex;align-items:stretch;overflow-x:auto}
 .bottom-row::-webkit-scrollbar{display:none}
-.kr-btn{padding:7px 10px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.05);color:rgba(232,228,217,.18);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1px;cursor:none;transition:.15s;white-space:nowrap;flex-shrink:0;position:relative}
+.kr-btn{padding:10px 12px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.05);color:rgba(232,228,217,.2);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;cursor:none;transition:.15s;white-space:nowrap;flex-shrink:0;position:relative}
 .kr-btn:hover{color:#00f5ff;background:rgba(0,245,255,.03)}
 .kr-btn.on{color:#04040a;background:#00f5ff}
 .kr-dot{position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:3px;height:3px;border-radius:50%;background:#ff2d00;opacity:0}
 .kr-btn.has .kr-dot{opacity:1}
 .kr-btn.on .kr-dot{background:#04040a}
 .fsep{width:1px;background:rgba(255,45,0,.2);flex-shrink:0}
-.q-btn{display:flex;align-items:center;gap:5px;padding:7px 12px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.05);color:rgba(232,228,217,.2);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;cursor:none;transition:.15s;white-space:nowrap;flex-shrink:0}
+.q-btn{display:flex;align-items:center;gap:6px;padding:10px 14px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.05);color:rgba(232,228,217,.22);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:none;transition:.15s;white-space:nowrap;flex-shrink:0}
 .q-btn.offe.on,.q-btn.offe:hover{color:#c8ff00;background:rgba(200,255,0,.04)}
 .q-btn.naehe.on,.q-btn.naehe:hover{color:#00f5ff;background:rgba(0,245,255,.04)}
 .q-btn.ki.on,.q-btn.ki:hover{color:#c8ff00;background:rgba(200,255,0,.04)}
 .q-btn.res.on,.q-btn.res:hover{color:#ffcc00;background:rgba(255,204,0,.04)}
-.q-dot{width:4px;height:4px;border-radius:50%;background:currentColor;animation:blink 1.5s infinite}
+.q-dot{width:5px;height:5px;border-radius:50%;background:currentColor;animation:blink 1.5s infinite}
 
 /* RESULT BAR */
-.result-bar{display:flex;align-items:center;justify-content:space-between;padding:7px 40px;border-bottom:1px solid rgba(255,45,0,.06)}
-.rb-l{display:flex;align-items:center;gap:10px}
-.rb-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;color:#ff2d00;line-height:1;transition:all .3s}
-.rb-label{font-size:8px;letter-spacing:1px;color:rgba(232,228,217,.25);text-transform:uppercase}
-.rb-ki{font-size:7px;color:rgba(200,255,0,.45);letter-spacing:1px;display:none;align-items:center;gap:5px}
-.rb-ki::before{content:'';width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite}
+.result-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 40px;border-bottom:1px solid rgba(255,45,0,.06)}
+.rb-l{display:flex;align-items:center;gap:12px}
+.rb-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:#ff2d00;line-height:1;transition:all .3s;min-width:40px}
+.rb-label{font-size:9px;letter-spacing:1px;color:rgba(232,228,217,.25);text-transform:uppercase}
+.rb-loading{font-size:9px;color:rgba(255,45,0,.4);display:none;letter-spacing:1px}
 .rb-r{display:flex;gap:0}
-.sort-btn{font-size:7px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,45,0,.08);border-right:none;color:rgba(232,228,217,.2);background:transparent;cursor:none;transition:.15s}
+.sort-btn{font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border:1px solid rgba(255,45,0,.08);border-right:none;color:rgba(232,228,217,.2);background:transparent;cursor:none;transition:.15s}
 .sort-btn:last-child{border-right:1px solid rgba(255,45,0,.08)}
 .sort-btn.on{border-color:#ff2d00;color:#ff2d00;background:rgba(255,45,0,.05)}
 
-/* ═══════════════════════════════════
-   MOBILE FILTER — BOTTOM SHEET
-   ═══════════════════════════════════ */
-.mobile-fab{display:none;position:fixed;bottom:24px;right:24px;z-index:400;width:56px;height:56px;border-radius:50%;background:#ff2d00;border:none;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 20px rgba(255,45,0,.4);animation:fabPulse 3s ease-in-out infinite}
+/* MOBILE FAB */
+.mobile-fab{display:none;position:fixed;bottom:28px;right:24px;z-index:400;width:56px;height:56px;border-radius:50%;background:#ff2d00;border:none;align-items:center;justify-content:center;font-size:22px;box-shadow:0 4px 20px rgba(255,45,0,.4);animation:fabPulse 3s ease-in-out infinite;cursor:none}
 @keyframes fabPulse{0%,100%{box-shadow:0 4px 20px rgba(255,45,0,.4)}50%{box-shadow:0 4px 32px rgba(255,45,0,.7)}}
+
+/* BOTTOM SHEET */
 .sheet-overlay{position:fixed;inset:0;background:rgba(4,4,10,.85);z-index:500;opacity:0;pointer-events:none;transition:opacity .3s}
 .sheet-overlay.on{opacity:1;pointer-events:all}
-.sheet{position:fixed;bottom:-100%;left:0;right:0;background:#04040a;border-top:1px solid rgba(255,45,0,.2);border-radius:20px 20px 0 0;z-index:501;transition:bottom .35s cubic-bezier(.32,.72,0,1);max-height:85vh;overflow-y:auto;padding-bottom:env(safe-area-inset-bottom)}
+.sheet{position:fixed;bottom:-100%;left:0;right:0;background:#04040a;border-top:1px solid rgba(255,45,0,.2);border-radius:20px 20px 0 0;z-index:501;transition:bottom .35s cubic-bezier(.32,.72,0,1);max-height:88vh;overflow-y:auto;padding-bottom:env(safe-area-inset-bottom)}
 .sheet.open{bottom:0}
 .sheet-handle{width:36px;height:4px;background:rgba(232,228,217,.15);border-radius:2px;margin:12px auto 0}
 .sheet-header{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid rgba(255,45,0,.08)}
-.sheet-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;text-transform:uppercase}
-.sheet-close{width:30px;height:30px;border:1px solid rgba(232,228,217,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(232,228,217,.3);font-size:14px}
-/* TYP CARDS im Sheet */
-.sheet-section{padding:16px 20px}
-.sheet-section-title{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:12px}
-.typ-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
-.typ-card{border:1px solid rgba(255,45,0,.1);padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:none;transition:.2s;background:#0a0a14}
+.sheet-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;text-transform:uppercase}
+.sheet-close{width:32px;height:32px;border:1px solid rgba(232,228,217,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(232,228,217,.3);font-size:14px;cursor:none}
+.sheet-section{padding:18px 20px}
+.sheet-section-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:14px}
+.typ-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:4px}
+.typ-card{border:1px solid rgba(255,45,0,.1);padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:none;transition:.2s;background:#0a0a14}
 .typ-card.on{border-color:#ff2d00;background:rgba(255,45,0,.08)}
-.typ-card-icon{font-size:24px}
-.typ-card-name{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.35)}
+.typ-card-icon{font-size:28px}
+.typ-card-name{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.35)}
 .typ-card.on .typ-card-name{color:#ff2d00}
-.typ-card-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;color:rgba(232,228,217,.2)}
+.typ-card-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:rgba(232,228,217,.2)}
 .typ-card.on .typ-card-count{color:#ff2d00}
-/* Küchen Grid im Sheet */
-.kueche-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
-.kgrid-btn{border:1px solid rgba(255,45,0,.08);padding:10px 8px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:none;transition:.15s;background:#0a0a14}
+.kueche-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.kgrid-btn{border:1px solid rgba(255,45,0,.08);padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:5px;cursor:none;transition:.15s;background:#0a0a14}
 .kgrid-btn.on{border-color:#ff2d00;background:rgba(255,45,0,.06)}
-.kgrid-btn-emoji{font-size:18px}
-.kgrid-btn-name{font-size:7px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.3);text-align:center}
+.kgrid-btn.disabled{opacity:.3;pointer-events:none}
+.kgrid-btn-emoji{font-size:20px}
+.kgrid-btn-name{font-size:8px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.3);text-align:center}
 .kgrid-btn.on .kgrid-btn-name{color:#ff2d00}
-.kgrid-btn-cnt{font-size:8px;color:rgba(232,228,217,.15)}
+.kgrid-btn-cnt{font-size:10px;color:rgba(232,228,217,.2)}
 .kgrid-btn.on .kgrid-btn-cnt{color:rgba(255,45,0,.5)}
-/* Kreis Grid im Sheet */
-.kreis-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
-.kgrid-k{border:1px solid rgba(255,45,0,.08);padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:none;transition:.15s;background:#0a0a14}
+.kreis-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:6px}
+.kgrid-k{border:1px solid rgba(255,45,0,.08);padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:none;transition:.15s;background:#0a0a14}
 .kgrid-k.on{border-color:#00f5ff;background:rgba(0,245,255,.05)}
-.kgrid-k-name{font-size:8px;letter-spacing:1px;color:rgba(232,228,217,.3)}
+.kgrid-k-name{font-size:9px;letter-spacing:1px;color:rgba(232,228,217,.3)}
 .kgrid-k.on .kgrid-k-name{color:#00f5ff}
-.kgrid-k-cnt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;color:rgba(232,228,217,.15)}
+.kgrid-k-cnt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;color:rgba(232,228,217,.15)}
 .kgrid-k.on .kgrid-k-cnt{color:#00f5ff}
-/* Quer im Sheet */
-.quer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
-.quer-btn-sheet{border:1px solid rgba(255,45,0,.08);padding:10px 14px;display:flex;align-items:center;gap:8px;cursor:none;transition:.15s;background:#0a0a14;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.3)}
+.quer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.quer-btn-sheet{border:1px solid rgba(255,45,0,.08);padding:12px 14px;display:flex;align-items:center;gap:8px;cursor:none;transition:.15s;background:#0a0a14;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.3)}
 .quer-btn-sheet.on.offe{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,.04)}
 .quer-btn-sheet.on.naehe{border-color:#00f5ff;color:#00f5ff;background:rgba(0,245,255,.04)}
 .quer-btn-sheet.on.ki{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,.04)}
 .quer-btn-sheet.on.res{border-color:#ffcc00;color:#ffcc00;background:rgba(255,204,0,.04)}
-/* Sheet Actions */
 .sheet-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:16px 20px;border-top:1px solid rgba(255,45,0,.08);position:sticky;bottom:0;background:#04040a}
-.sheet-apply{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:14px;display:flex;align-items:center;justify-content:center;gap:8px}
-.sheet-reset{background:transparent;border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.35);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:14px}
+.sheet-apply{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:16px;display:flex;align-items:center;justify-content:center;gap:8px;cursor:none}
+.sheet-reset{background:transparent;border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.35);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:16px;cursor:none}
 
-/* ═══════════════════════════════════
-   HERO
-   ═══════════════════════════════════ */
-.hero{padding:44px 40px 0;display:grid;grid-template-columns:1fr 360px;gap:36px}
-.hero-eye{font-size:7px;letter-spacing:4px;text-transform:uppercase;color:rgba(232,228,217,.12);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+/* HERO */
+.hero{padding:48px 40px 0;display:grid;grid-template-columns:1fr 360px;gap:36px}
+.hero-eye{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:rgba(232,228,217,.12);margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .hero-eye::before{content:'';width:22px;height:1px;background:#ff2d00}
 .hero-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(80px,10vw,160px);line-height:.82;text-transform:uppercase;color:#c8ff00}
-.hero-sub-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(50px,6vw,88px);line-height:.9;text-transform:uppercase;color:rgba(232,228,217,.05);margin-top:-4px}
-/* DYNAMIC HEADLINE */
-.dynamic-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;color:#ff2d00;margin-top:16px;min-height:28px;transition:all .3s;letter-spacing:1px}
-.hero-desc{font-size:10px;color:rgba(232,228,217,.3);line-height:1.9;margin-top:10px;max-width:400px}
+.hero-sub-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(48px,6vw,88px);line-height:.9;text-transform:uppercase;color:rgba(232,228,217,.05);margin-top:-4px}
+.dynamic-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;color:#ff2d00;margin-top:16px;min-height:30px;letter-spacing:1px;transition:all .3s}
+.hero-desc{font-size:11px;color:rgba(232,228,217,.3);line-height:1.9;margin-top:10px;max-width:400px}
 
 /* BOT */
-.bot{margin-top:20px;border:1px solid rgba(255,45,0,.1);background:#07070f;padding:16px;position:relative;overflow:hidden;padding-bottom:44px}
+.bot{margin-top:20px;border:1px solid rgba(255,45,0,.1);background:#07070f;padding:18px;position:relative;overflow:hidden;padding-bottom:46px}
 .bot::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,#ff2d00,transparent)}
-.bot-top{display:flex;align-items:center;gap:8px;margin-bottom:9px}
-.bot-badge{font-size:6px;letter-spacing:2px;text-transform:uppercase;background:#ff2d00;color:#e8e4d9;padding:3px 7px}
-.bot-model{font-size:7px;color:rgba(232,228,217,.15);letter-spacing:1px}
-.bot-msg{font-size:10px;color:rgba(232,228,217,.55);line-height:1.8}
+.bot-top{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.bot-badge{font-size:7px;letter-spacing:2px;text-transform:uppercase;background:#ff2d00;color:#e8e4d9;padding:3px 8px}
+.bot-model{font-size:8px;color:rgba(232,228,217,.15);letter-spacing:1px}
+.bot-msg{font-size:11px;color:rgba(232,228,217,.55);line-height:1.8}
 .bot-msg strong{color:#e8e4d9}
 .bot-msg em{color:#c8ff00;font-style:normal}
-.bot-chips{display:flex;gap:4px;flex-wrap:wrap;margin-top:9px}
-.bchip{font-size:7px;letter-spacing:1px;text-transform:uppercase;padding:4px 9px;border:1px solid rgba(232,228,217,.07);color:rgba(232,228,217,.2);transition:.15s}
+.bot-chips{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}
+.bchip{font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:6px 11px;border:1px solid rgba(232,228,217,.07);color:rgba(232,228,217,.2);transition:.15s;cursor:none}
 .bchip:hover,.bchip.on{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,.03)}
-.bot-typing{position:absolute;bottom:10px;left:16px;display:flex;align-items:center;gap:7px;font-size:7px;letter-spacing:1px;color:rgba(255,45,0,.3);text-transform:uppercase}
+.bot-typing{position:absolute;bottom:12px;left:18px;display:flex;align-items:center;gap:7px;font-size:8px;letter-spacing:1px;color:rgba(255,45,0,.3);text-transform:uppercase}
 .bot-dots{display:flex;gap:3px}
 .bot-dot{width:3px;height:3px;border-radius:50%;background:#ff2d00;animation:bounce 1.2s infinite}
 .bot-dot:nth-child(2){animation-delay:.2s}
 .bot-dot:nth-child(3){animation-delay:.4s}
 
 /* HEATMAP */
-.hm-title{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.15);margin-bottom:9px;display:flex;align-items:center;gap:6px}
-.hm-live{width:4px;height:4px;border-radius:50%;background:#ff2d00;animation:blink 1.5s infinite}
+.hm-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.15);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.hm-live{width:5px;height:5px;border-radius:50%;background:#ff2d00;animation:blink 1.5s infinite}
 .hm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px}
-.hm-cell{background:#07070f;border:1px solid rgba(255,45,0,.05);padding:9px 7px;transition:.15s;position:relative;overflow:hidden}
+.hm-cell{background:#07070f;border:1px solid rgba(255,45,0,.05);padding:10px 8px;transition:.15s;position:relative;overflow:hidden;cursor:none}
 .hm-cell:hover,.hm-cell.on{background:#0a0a18;border-color:rgba(255,45,0,.25)}
 .hm-cell::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#ff2d00;transform:scaleX(0);transition:.2s;transform-origin:left}
 .hm-cell:hover::after,.hm-cell.on::after{transform:scaleX(1)}
-.hm-k{font-size:6px;letter-spacing:1px;color:rgba(232,228,217,.15);margin-bottom:2px}
-.hm-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;line-height:1}
-.hm-b{height:1px;background:rgba(255,45,0,.08);margin-top:6px}
+.hm-k{font-size:7px;letter-spacing:1px;color:rgba(232,228,217,.15);margin-bottom:3px}
+.hm-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;line-height:1}
+.hm-b{height:1px;background:rgba(255,45,0,.08);margin-top:7px}
 .hm-bf{height:100%;background:#ff2d00;transition:width 1.2s ease}
 
 /* SCORE */
-.score-strip{margin-top:12px;border:1px solid rgba(255,45,0,.06);background:#07070f;padding:11px 13px}
-.ss-title{font-size:6px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);margin-bottom:7px}
-.ss-row{display:flex;align-items:center;gap:7px;padding:3px 0;border-bottom:1px solid rgba(255,45,0,.03)}
+.score-strip{margin-top:12px;border:1px solid rgba(255,45,0,.06);background:#07070f;padding:13px 15px}
+.ss-title{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);margin-bottom:8px}
+.ss-row{display:flex;align-items:center;gap:8px;padding:4px 0;border-bottom:1px solid rgba(255,45,0,.03)}
 .ss-row:last-child{border-bottom:none}
-.ss-name{font-size:9px;color:rgba(232,228,217,.4);flex:1}
-.ss-bar{width:48px;height:1px;background:rgba(255,45,0,.08)}
+.ss-name{font-size:10px;color:rgba(232,228,217,.4);flex:1}
+.ss-bar{width:50px;height:1px;background:rgba(255,45,0,.08)}
 .ss-fill{height:100%;background:#ff2d00}
-.ss-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:12px;color:#ff2d00;min-width:20px;text-align:right}
+.ss-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;color:#ff2d00;min-width:22px;text-align:right}
 
 /* PULSE */
-.pulse-moment{margin:36px 40px 0;border:2px solid #ff2d00;padding:22px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;position:relative;overflow:hidden;flex-wrap:wrap}
+.pulse-moment{margin:40px 40px 0;border:2px solid #ff2d00;padding:24px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;overflow:hidden;flex-wrap:wrap}
 .pulse-moment::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,45,0,.04),transparent 70%);pointer-events:none}
-.pm-eye{font-size:6px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.4);margin-bottom:5px;display:flex;align-items:center;gap:5px}
+.pm-eye{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.4);margin-bottom:6px;display:flex;align-items:center;gap:5px}
 .pm-eye::before{content:'';width:4px;height:4px;border-radius:50%;background:#ff2d00;animation:blink 1s infinite}
-.pm-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:40px;text-transform:uppercase;line-height:.9;color:#ff2d00}
-.pm-sub{font-size:9px;color:rgba(232,228,217,.3);margin-top:5px;line-height:1.6}
-.pm-stats{display:flex;gap:12px;flex-wrap:wrap}
-.pm-stat{border:1px solid rgba(255,45,0,.12);padding:10px 14px;text-align:center}
-.pm-sn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:#ff2d00;line-height:1}
-.pm-sl{font-size:6px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase;margin-top:2px}
+.pm-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:42px;text-transform:uppercase;line-height:.9;color:#ff2d00}
+.pm-sub{font-size:10px;color:rgba(232,228,217,.3);margin-top:6px;line-height:1.6}
+.pm-stats{display:flex;gap:14px;flex-wrap:wrap}
+.pm-stat{border:1px solid rgba(255,45,0,.12);padding:12px 16px;text-align:center}
+.pm-sn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:30px;color:#ff2d00;line-height:1}
+.pm-sl{font-size:7px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase;margin-top:2px}
 
 /* STIMMUNG */
-.stimmung{margin:0 40px;margin-top:28px;border:1px solid rgba(255,45,0,.07);padding:20px 24px}
-.st-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;margin-bottom:3px}
-.st-sub{font-size:8px;color:rgba(232,228,217,.22);margin-bottom:13px;letter-spacing:.5px}
-.st-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:13px}
-.stchip{font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:7px 13px;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.22);transition:.2s}
+.stimmung{margin:0 40px;margin-top:32px;border:1px solid rgba(255,45,0,.07);padding:22px 26px}
+.st-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;margin-bottom:4px}
+.st-sub{font-size:9px;color:rgba(232,228,217,.22);margin-bottom:14px;letter-spacing:.5px}
+.st-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.stchip{font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:8px 15px;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.22);transition:.2s;cursor:none}
 .stchip:hover,.stchip.on{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,.03)}
-.st-result{background:#07070f;border:1px solid rgba(200,255,0,.1);padding:12px 16px;display:none}
+.st-result{background:#07070f;border:1px solid rgba(200,255,0,.1);padding:14px 18px;display:none}
 .st-result.show{display:block}
-.str-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:7px}
-.str-rec{display:flex;align-items:center;justify-content:space-between;font-size:9px;color:#e8e4d9;padding:6px 0;border-bottom:1px solid rgba(200,255,0,.04)}
+.str-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:8px}
+.str-rec{display:flex;align-items:center;justify-content:space-between;font-size:10px;color:#e8e4d9;padding:7px 0;border-bottom:1px solid rgba(200,255,0,.04)}
 .str-rec:last-child{border-bottom:none}
 
 /* SECTION */
-.sh{display:flex;align-items:baseline;justify-content:space-between;padding:24px 40px 12px}
-.sh-t{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;display:flex;align-items:center;gap:7px}
+.sh{display:flex;align-items:baseline;justify-content:space-between;padding:26px 40px 14px}
+.sh-t{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
 .sh-t::before{content:'—';color:#ff2d00}
-.sh-r{font-size:8px;letter-spacing:2px;color:rgba(232,228,217,.15);text-transform:uppercase}
+.sh-r{font-size:9px;letter-spacing:2px;color:rgba(232,228,217,.15);text-transform:uppercase}
+
+/* LOADING STATE */
+.loading-state{grid-column:1/-1;padding:60px 40px;text-align:center}
+.loading-dots{display:flex;justify-content:center;gap:8px;margin-bottom:16px}
+.loading-dot{width:8px;height:8px;border-radius:50%;background:#ff2d00;animation:bounce 1.2s infinite}
+.loading-dot:nth-child(2){animation-delay:.2s}
+.loading-dot:nth-child(3){animation-delay:.4s}
+.loading-txt{font-size:10px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase}
 
 /* GRID */
 .mgrid{display:grid;grid-template-columns:repeat(3,1fr);padding:0 40px;gap:0}
-.mcard{border:1px solid rgba(255,45,0,.07);border-top:none;border-left:none;padding:18px 18px 22px;position:relative;background:#04040a;transition:.15s;overflow:hidden}
+.mcard{border:1px solid rgba(255,45,0,.07);border-top:none;border-left:none;padding:0 0 22px;position:relative;background:#04040a;transition:.15s;overflow:hidden;cursor:none}
 .mcard:hover{background:#06060e}
 .mcard:nth-child(3n+1){border-left:1px solid rgba(255,45,0,.07)}
 .mcard:nth-child(-n+3){border-top:1px solid rgba(255,45,0,.07)}
 .mcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#ff2d00;transform:scaleX(0);transition:.22s;transform-origin:left}
 .mcard:hover::after{transform:scaleX(1)}
-.mc-badges{display:flex;gap:4px;flex-wrap:wrap;min-height:16px;margin-bottom:10px}
-.mcb{font-size:6px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 6px;font-family:'DM Mono',monospace}
+.mc-img{width:100%;height:140px;object-fit:cover;opacity:.7;display:block}
+.mc-img-placeholder{width:100%;height:80px;background:#07070f;display:flex;align-items:center;justify-content:center;font-size:28px;opacity:.3}
+.mc-body{padding:16px 18px 0}
+.mc-badges{display:flex;gap:4px;flex-wrap:wrap;min-height:18px;margin-bottom:10px}
+.mcb{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;font-family:'DM Mono',monospace}
 .mcb.volt{background:#c8ff00;color:#04040a}
 .mcb.red{background:#ff2d00;color:#e8e4d9}
 .mcb.cyan{background:#00f5ff;color:#04040a}
-.mcb.lila{background:#9333ea;color:#e8e4d9}
-.mcb.ora{background:#ff6600;color:#e8e4d9}
 .mcb.gold{background:#ffcc00;color:#04040a}
 .mcb.ghost{border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.25)}
-.mc-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:21px;text-transform:uppercase;line-height:1;color:#e8e4d9;margin-bottom:3px}
-.mc-type{font-size:7px;color:#ff2d00;letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
-.mc-meta{font-size:8px;color:rgba(232,228,217,.18);line-height:1.6}
-.mc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,45,0,.05)}
-.mc-stars{font-size:9px;color:#c8ff00;letter-spacing:1.5px}
-.mc-dist{font-size:7px;color:rgba(0,245,255,.35);text-transform:uppercase;letter-spacing:1px}
-.mc-score{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;color:#ff2d00}
-.mc-ki{position:absolute;top:12px;right:12px;width:26px;height:26px;border:1px solid rgba(200,255,0,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px}
-/* Empty state */
-.empty-state{grid-column:1/-1;padding:56px 40px;text-align:center}
-.es-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;color:rgba(232,228,217,.1);text-transform:uppercase;margin-bottom:8px}
-.es-sub{font-size:9px;color:rgba(232,228,217,.18);letter-spacing:.5px}
-.es-reset{display:inline-block;margin-top:14px;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:6px 14px}
+.mc-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;line-height:1;color:#e8e4d9;margin-bottom:4px}
+.mc-type{font-size:10px;color:#ff2d00;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
+.mc-meta{font-size:9px;color:rgba(232,228,217,.2);line-height:1.6}
+.mc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,45,0,.05)}
+.mc-stars{font-size:10px;color:#c8ff00;letter-spacing:1.5px}
+.mc-dist{font-size:8px;color:rgba(0,245,255,.35);text-transform:uppercase;letter-spacing:1px}
+.mc-score{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;color:#ff2d00}
+
+/* EMPTY STATE */
+.empty-state{grid-column:1/-1;padding:60px 40px;text-align:center}
+.es-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:36px;color:rgba(232,228,217,.1);text-transform:uppercase;margin-bottom:10px}
+.es-sub{font-size:10px;color:rgba(232,228,217,.18);letter-spacing:.5px}
+.es-reset{display:inline-block;margin-top:16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:8px 16px;cursor:none}
 
 /* VOLT BLOCK */
-.volt-block{margin:36px 40px 0;background:#c8ff00;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
-.vb-l{padding:32px}
-.vb-eye{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(4,4,10,.35);margin-bottom:7px}
-.vb-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;line-height:.85;text-transform:uppercase;color:#04040a;margin-bottom:7px}
-.vb-sub{font-size:9px;color:rgba(4,4,10,.38);line-height:1.6}
+.volt-block{margin:40px 40px 0;background:#c8ff00;display:grid;grid-template-columns:1fr 1fr;overflow:hidden}
+.vb-l{padding:34px}
+.vb-eye{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(4,4,10,.35);margin-bottom:8px}
+.vb-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:50px;line-height:.85;text-transform:uppercase;color:#04040a;margin-bottom:8px}
+.vb-sub{font-size:10px;color:rgba(4,4,10,.38);line-height:1.6}
 .vb-r{border-left:1px solid rgba(4,4,10,.1)}
-.vb-item{display:flex;align-items:center;justify-content:space-between;padding:13px 20px;border-bottom:1px solid rgba(4,4,10,.07);transition:.15s}
+.vb-item{display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid rgba(4,4,10,.07);transition:.15s}
 .vb-item:last-child{border-bottom:none}
 .vb-item:hover{background:rgba(4,4,10,.05)}
-.vb-nm{font-size:10px;color:#04040a;font-weight:500}
-.vb-meta{font-size:8px;color:rgba(4,4,10,.38);margin-top:1px;letter-spacing:.5px}
-.vb-btn{font-size:7px;letter-spacing:2px;text-transform:uppercase;background:#04040a;color:#c8ff00;border:none;padding:5px 9px;font-family:'DM Mono',monospace;flex-shrink:0}
+.vb-nm{font-size:11px;color:#04040a}
+.vb-meta{font-size:9px;color:rgba(4,4,10,.38);margin-top:2px;letter-spacing:.5px}
+.vb-btn{font-size:8px;letter-spacing:2px;text-transform:uppercase;background:#04040a;color:#c8ff00;border:none;padding:6px 12px;font-family:'DM Mono',monospace;cursor:none}
+
+/* KI SECTION */
+.ki-section{margin:0 40px;margin-top:40px;border:1px solid rgba(255,45,0,.1);background:#07070f;padding:28px}
+.ki-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
+.ki-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase}
+.ki-status{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;border:1px solid rgba(200,255,0,.2);padding:4px 10px;display:flex;align-items:center;gap:5px}
+.ki-status::before{content:'';width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite}
+.ki-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,45,0,.06)}
+.ki-card{background:#07070f;padding:20px;transition:.15s}
+.ki-card:hover{background:#0a0a18}
+.ki-icon{font-size:22px;margin-bottom:10px}
+.ki-card-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;color:#e8e4d9;margin-bottom:6px}
+.ki-card-desc{font-size:9px;color:rgba(232,228,217,.3);line-height:1.7}
+.ki-card-tag{display:inline-block;font-size:7px;letter-spacing:2px;text-transform:uppercase;padding:3px 7px;margin-top:10px;border:1px solid rgba(200,255,0,.2);color:#c8ff00}
 
 /* TICKER */
-.ticker-wrap{border-top:1px solid rgba(255,45,0,.07);margin-top:44px;overflow:hidden}
-.ticker-row{padding:5px 0;overflow:hidden;border-bottom:1px solid rgba(255,45,0,.04)}
+.ticker-wrap{border-top:1px solid rgba(255,45,0,.07);margin-top:48px;overflow:hidden}
+.ticker-row{padding:6px 0;overflow:hidden;border-bottom:1px solid rgba(255,45,0,.04)}
 .tick{display:flex;white-space:nowrap}
 .tick.l{animation:tL 28s linear infinite}
 .tick.r{animation:tR 28s linear infinite}
-.ti{font-size:7px;letter-spacing:3px;text-transform:uppercase;padding:0 26px;color:rgba(255,45,0,.28)}
+.ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(255,45,0,.28)}
 .ti b{color:#ff2d00;font-weight:400}
 .ti.g{color:rgba(200,255,0,.22)}
 .ti.g b{color:#c8ff00}
 
 /* FOOTER */
-footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:36px;border-top:1px solid rgba(255,45,0,.08)}
-.fc-title{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:11px}
-.fc-link{display:block;font-size:9px;color:rgba(232,228,217,.22);margin-bottom:7px;letter-spacing:.3px;transition:.15s}
+footer{padding:44px 40px 32px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px;border-top:1px solid rgba(255,45,0,.08)}
+.fc-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:12px}
+.fc-link{display:block;font-size:10px;color:rgba(232,228,217,.22);margin-bottom:8px;letter-spacing:.3px;transition:.15s;text-decoration:none}
 .fc-link:hover{color:#e8e4d9}
-.fc-desc{font-size:9px;color:rgba(232,228,217,.18);line-height:1.9;margin-top:8px}
-.fc-copy{font-size:7px;color:rgba(232,228,217,.1);margin-top:14px;letter-spacing:.5px}
+.fc-desc{font-size:10px;color:rgba(232,228,217,.18);line-height:1.9;margin-top:8px}
+.fc-copy{font-size:8px;color:rgba(232,228,217,.1);margin-top:16px;letter-spacing:.5px}
 
-/* PANEL */
+/* DETAIL PANEL */
 .ov{position:fixed;inset:0;background:rgba(4,4,10,.88);z-index:600;opacity:0;pointer-events:none;transition:.25s}
 .ov.on{opacity:1;pointer-events:all}
 .panel{position:fixed;top:0;right:-500px;width:460px;height:100vh;background:#04040a;border-left:1px solid rgba(255,45,0,.1);z-index:601;transition:right .3s ease;overflow-y:auto}
 .panel.open{right:0}
-.p-hero{min-height:180px;background:#07070f;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
-.p-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:80px;color:#ff2d00;opacity:.04;text-transform:uppercase;pointer-events:none}
-.p-close{position:absolute;top:10px;right:10px;width:28px;height:28px;border:1px solid rgba(232,228,217,.1);display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(232,228,217,.25);transition:.15s}
+.p-hero{min-height:200px;background:#07070f;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;background-size:cover;background-position:center}
+.p-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(4,4,10,.9),rgba(4,4,10,.2))}
+.p-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:90px;color:#ff2d00;opacity:.04;text-transform:uppercase;pointer-events:none}
+.p-close{position:absolute;top:12px;right:12px;width:30px;height:30px;border:1px solid rgba(232,228,217,.15);display:flex;align-items:center;justify-content:center;font-size:12px;color:rgba(232,228,217,.3);transition:.15s;cursor:none;z-index:1}
 .p-close:hover{border-color:#ff2d00;color:#ff2d00}
-.p-score-box{position:absolute;top:10px;left:18px;border:1px solid rgba(255,45,0,.25);padding:6px 9px;background:#04040a}
-.psn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;color:#ff2d00;line-height:1}
-.psl{font-size:6px;letter-spacing:1px;color:rgba(232,228,217,.18);text-transform:uppercase}
-.p-name{position:relative;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;text-transform:uppercase;line-height:.92;color:#e8e4d9}
-.p-sub{position:relative;font-size:8px;color:rgba(232,228,217,.22);margin-top:4px;letter-spacing:1.5px;text-transform:uppercase}
-.p-body{padding:18px}
-.p-tags{display:flex;gap:4px;margin-bottom:11px;flex-wrap:wrap}
-.p-desc{font-size:10px;color:rgba(232,228,217,.38);line-height:1.9;margin-bottom:14px}
-.p-rows{border-top:1px solid rgba(255,45,0,.05);border-bottom:1px solid rgba(255,45,0,.05);margin-bottom:14px}
-.p-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid rgba(255,45,0,.04)}
+.p-score-box{position:absolute;top:12px;left:20px;border:1px solid rgba(255,45,0,.3);padding:7px 10px;background:#04040a;z-index:1}
+.psn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:#ff2d00;line-height:1}
+.psl{font-size:7px;letter-spacing:1px;color:rgba(232,228,217,.18);text-transform:uppercase}
+.p-name{position:relative;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;text-transform:uppercase;line-height:.92;color:#e8e4d9}
+.p-sub{position:relative;font-size:9px;color:rgba(232,228,217,.25);margin-top:5px;letter-spacing:1.5px;text-transform:uppercase}
+.p-body{padding:20px}
+.p-tags{display:flex;gap:5px;margin-bottom:12px;flex-wrap:wrap}
+.p-desc{font-size:11px;color:rgba(232,228,217,.4);line-height:1.9;margin-bottom:16px}
+.p-rows{border-top:1px solid rgba(255,45,0,.05);border-bottom:1px solid rgba(255,45,0,.05);margin-bottom:16px}
+.p-row{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,45,0,.04)}
 .p-row:last-child{border-bottom:none}
-.p-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.16);min-width:60px;padding-top:1px;flex-shrink:0}
-.p-val{font-size:9px;color:#e8e4d9}
-.pred{border-left:2px solid #c8ff00;padding:9px 12px;margin-bottom:14px}
-.pred-txt{font-size:9px;color:rgba(200,255,0,.55);line-height:1.7}
+.p-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.16);min-width:64px;padding-top:1px;flex-shrink:0}
+.p-val{font-size:10px;color:#e8e4d9}
+.pred{border-left:2px solid #c8ff00;padding:10px 14px;margin-bottom:16px}
+.pred-txt{font-size:10px;color:rgba(200,255,0,.55);line-height:1.7}
 .pred-txt strong{color:#c8ff00}
-.btn-res{display:block;width:100%;background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;text-transform:uppercase;padding:15px;text-align:center;margin-bottom:6px;transition:opacity .2s}
+.btn-res{display:block;width:100%;background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:16px;text-align:center;margin-bottom:8px;transition:opacity .2s;cursor:none}
 .btn-res:hover{opacity:.85}
-.p-acts{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:14px}
-.p-act{padding:10px;background:transparent;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.25);font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;transition:.15s;text-align:center}
+.p-acts{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:16px}
+.p-act{padding:12px;background:transparent;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.25);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;transition:.15s;text-align:center;cursor:none}
 .p-act:hover{color:#e8e4d9;border-color:rgba(255,45,0,.2)}
-.rev-item{border:1px solid rgba(255,45,0,.05);padding:11px 14px;margin-bottom:4px;background:#07070f}
-.rev-user{font-size:8px;color:#ff2d00;letter-spacing:1px;margin-bottom:3px}
-.rev-txt{font-size:9px;color:rgba(232,228,217,.32);line-height:1.7}
-.rev-stars{color:#c8ff00;font-size:9px;float:right;letter-spacing:2px}
+.rev-item{border:1px solid rgba(255,45,0,.05);padding:12px 14px;margin-bottom:5px;background:#07070f}
+.rev-user{font-size:9px;color:#ff2d00;letter-spacing:1px;margin-bottom:4px}
+.rev-txt{font-size:10px;color:rgba(232,228,217,.32);line-height:1.7}
+.rev-stars{color:#c8ff00;font-size:10px;float:right;letter-spacing:2px}
 
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
 @keyframes tL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -350,25 +374,30 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
   body{cursor:auto}
   nav{padding:0 16px;height:48px}
   .nav-links{display:none}
-  /* FILTER BAR HIDDEN ON MOBILE */
+  .gps-strip{padding:8px 16px}
+  .gps-stats{gap:14px}
   .filter-bar{display:none}
-  /* FAB SICHTBAR */
   .mobile-fab{display:flex}
   .hero{grid-template-columns:1fr;padding:24px 16px 0;gap:20px}
   .hero-hl{font-size:clamp(68px,18vw,100px)}
-  .pulse-moment{margin:24px 16px 0;flex-direction:column}
-  .pm-title{font-size:32px}
-  .stimmung{margin:0 16px;margin-top:24px;padding:16px}
+  .dynamic-hl{font-size:18px}
+  .pulse-moment{margin:24px 16px 0;flex-direction:column;padding:18px}
+  .pm-title{font-size:34px}
+  .stimmung{margin:0 16px;margin-top:24px;padding:18px}
   .sh{padding:18px 16px 10px}
   .mgrid{grid-template-columns:1fr 1fr;padding:0 16px}
   .mcard:nth-child(3n+1){border-left:none}
   .mcard:nth-child(2n+1){border-left:1px solid rgba(255,45,0,.07)}
   .mcard:nth-child(-n+2){border-top:1px solid rgba(255,45,0,.07)}
+  .mc-name{font-size:18px}
   .volt-block{margin:24px 16px 0;grid-template-columns:1fr}
   .vb-r{border-left:none;border-top:1px solid rgba(4,4,10,.1)}
+  .ki-section{margin:24px 16px 0}
+  .ki-grid{grid-template-columns:1fr}
   footer{padding:28px 16px 20px;grid-template-columns:1fr 1fr;gap:16px}
   .panel{width:100%;right:-100%}
-  .result-bar{padding:6px 16px}
+  .result-bar{padding:7px 16px}
+  .typ-cards{grid-template-columns:repeat(2,1fr)}
 }
 @media(min-width:769px){
   .sheet,.sheet-overlay,.mobile-fab{display:none!important}
@@ -376,10 +405,9 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
 </style>
 </head>
 <body>
-
 <div id="cur"></div><div id="cur2"></div>
 
-<!-- TICKER -->
+<!-- TICKER TOP -->
 <div class="ticker-wrap" style="border-top:none;border-bottom:1px solid rgba(255,45,0,.08)">
   <div class="ticker-row"><div class="tick l" id="ta"></div></div>
   <div class="ticker-row"><div class="tick r" id="tb"></div></div>
@@ -389,84 +417,55 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
 <nav>
   <div class="logo"><div class="ldot"></div>STADTPULS</div>
   <div class="nav-links">
-    <span class="nl">EVENTS</span><span class="nl on">GASTRO</span>
-    <span class="nl">NACHTLEBE</span><span class="nl">SHOPPING</span>
+    <a class="nl" href="index.html">HOME</a>
+    <span class="nl on">GASTRO</span>
+    <a class="nl" href="index.html?page=nachtleben">NACHTLEBE</a>
+    <a class="nl" href="index.html?page=shopping">SHOPPING</a>
   </div>
-  <button class="btn-mm">MITMACHE</button>
+  <button class="btn-mm" onclick="location.href='index.html?page=login'">MITMACHE</button>
 </nav>
 
 <!-- GPS STRIP -->
-<div class="gps-strip" id="gps-strip" style="display:flex;align-items:center;justify-content:space-between;padding:10px 40px;background:#07070f;border-bottom:1px solid rgba(0,245,255,.12);flex-wrap:wrap;gap:12px">
-  <div style="display:flex;align-items:center;gap:10px">
-    <div style="width:8px;height:8px;border-radius:50%;background:#00f5ff;animation:blink 1.5s infinite;flex-shrink:0"></div>
+<div class="gps-strip">
+  <div class="gps-left">
+    <div class="gps-dot"></div>
     <div>
-      <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff">GPS AKTIV — KREIS 4 · LANGSTRASSE · ZÜRICH</div>
-      <div style="font-size:7px;color:rgba(0,245,255,.35);letter-spacing:1px;margin-top:2px">Standort live · Letzte Aktualisierig: gerade jetzt · Distanz 0–2km Radius</div>
+      <div class="gps-title">GPS AKTIV — KREIS 4 · LANGSTRASSE · ZÜRICH</div>
+      <div class="gps-sub">Standort live · Letzte Aktualisierig: gerade jetzt · Distanz 0–2km Radius</div>
     </div>
   </div>
-  <div style="display:flex;gap:20px;align-items:center">
-    <div style="text-align:center">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#00f5ff;line-height:1" id="gps-n1">23</div>
-      <div style="font-size:6px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,245,255,.35);margin-top:2px">RESTIS IN 500M</div>
-    </div>
-    <div style="text-align:center">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#c8ff00;line-height:1" id="gps-n2">14</div>
-      <div style="font-size:6px;letter-spacing:2px;text-transform:uppercase;color:rgba(200,255,0,.35);margin-top:2px">JETZT OFFE</div>
-    </div>
-    <div style="text-align:center">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#ff2d00;line-height:1" id="gps-n3">8</div>
-      <div style="font-size:6px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,45,0,.35);margin-top:2px">NO PLÄTZE FREI</div>
-    </div>
-    <div style="text-align:center">
-      <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#00f5ff;line-height:1">4.2°</div>
-      <div style="font-size:6px;letter-spacing:2px;text-transform:uppercase;color:rgba(0,245,255,.35);margin-top:2px">ZUM NÄCHSCHTE</div>
-    </div>
-    <button style="border:1px solid rgba(0,245,255,.3);background:transparent;color:#00f5ff;font-family:'DM Mono',monospace;font-size:7px;letter-spacing:2px;text-transform:uppercase;padding:6px 12px;white-space:nowrap">ZEIG MIR D KARTE →</button>
+  <div class="gps-stats">
+    <div class="gps-stat"><div class="gps-n" id="gps-n1" style="color:#00f5ff">—</div><div class="gps-l" style="color:rgba(0,245,255,.35)">LOKALE TOTAL</div></div>
+    <div class="gps-stat"><div class="gps-n" id="gps-n2" style="color:#c8ff00">—</div><div class="gps-l" style="color:rgba(200,255,0,.35)">RESTAURANTS</div></div>
+    <div class="gps-stat"><div class="gps-n" id="gps-n3" style="color:#ff2d00">—</div><div class="gps-l" style="color:rgba(255,45,0,.35)">BARS & CAFÉS</div></div>
+    <button class="btn-karte">ZEIG MIR D KARTE →</button>
   </div>
 </div>
 
-<!-- ═══════════════════════════
-     DESKTOP FILTER BAR
-     ═══════════════════════════ -->
+<!-- FILTER BAR DESKTOP -->
 <div class="filter-bar">
-
-  <!-- AKTIVE TAGS -->
   <div class="af-row" id="af-row"></div>
-
-  <!-- TYP: RESTAURANT / BAR / CAFÉ -->
   <div class="typ-row">
     <div class="typ-lbl">TYP</div>
     <button class="typ-btn on" onclick="setTyp(this,'all')" data-typ="all">
-      <div class="typ-icon">🍽️</div>
-      <div class="typ-name">ALLES</div>
-      <div class="typ-count" id="tc-all">—</div>
+      <div class="typ-icon">🍽️</div><div class="typ-name">ALLES</div><div class="typ-count" id="tc-all">—</div>
     </button>
     <button class="typ-btn" onclick="setTyp(this,'restaurant')" data-typ="restaurant">
-      <div class="typ-icon">🍴</div>
-      <div class="typ-name">RESTAURANT</div>
-      <div class="typ-count" id="tc-rest">—</div>
+      <div class="typ-icon">🍴</div><div class="typ-name">RESTAURANT</div><div class="typ-count" id="tc-rest">—</div>
     </button>
     <button class="typ-btn" onclick="setTyp(this,'bar')" data-typ="bar">
-      <div class="typ-icon">🍸</div>
-      <div class="typ-name">BAR</div>
-      <div class="typ-count" id="tc-bar">—</div>
+      <div class="typ-icon">🍸</div><div class="typ-name">BAR</div><div class="typ-count" id="tc-bar">—</div>
     </button>
     <button class="typ-btn" onclick="setTyp(this,'cafe')" data-typ="cafe">
-      <div class="typ-icon">☕</div>
-      <div class="typ-name">CAFÉ</div>
-      <div class="typ-count" id="tc-cafe">—</div>
+      <div class="typ-icon">☕</div><div class="typ-name">CAFÉ</div><div class="typ-count" id="tc-cafe">—</div>
     </button>
   </div>
-
-  <!-- KÜCHEN — dynamisch je nach Typ -->
   <div class="kueche-row-wrap">
     <div class="kueche-row" id="kueche-row">
       <div class="kr-lbl" id="kr-lbl">KÜCHE</div>
       <div id="kueche-btns" style="display:flex"></div>
     </div>
   </div>
-
-  <!-- KREIS + QUER -->
   <div class="bottom-row">
     <button class="kr-btn on" onclick="setKreis(this,'all')">ALLE</button>
     <button class="kr-btn has" onclick="setKreis(this,1)">K1<div class="kr-dot"></div></button>
@@ -487,27 +486,24 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
     <button class="q-btn ki" id="qb-ki" onclick="setQuer(this,'ki')">🤖 KI TOP PICK</button>
     <button class="q-btn res" id="qb-res" onclick="setQuer(this,'res')">🍽️ RESERVIERBAR</button>
   </div>
-
-  <!-- RESULT BAR -->
   <div class="result-bar">
     <div class="rb-l">
       <div class="rb-count" id="rb-count">—</div>
       <div class="rb-label" id="rb-label">RESTAURANTS · CAFÉS · BARS</div>
-      <div class="rb-ki" id="rb-ki">KI ANALYSIERT</div>
+      <div class="rb-loading" id="rb-loading">● LÄDT...</div>
     </div>
     <div class="rb-r">
       <button class="sort-btn on" onclick="setSort(this,'score')">SCORE</button>
-      <button class="sort-btn" onclick="setSort(this,'dist')">DISTANZ</button>
+      <button class="sort-btn" onclick="setSort(this,'dist')">KREIS</button>
       <button class="sort-btn" onclick="setSort(this,'neu')">NEU</button>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════════════════
-     MOBILE FAB + BOTTOM SHEET
-     ═══════════════════════════ -->
+<!-- MOBILE FAB -->
 <button class="mobile-fab" onclick="openSheet()">🔍</button>
 
+<!-- BOTTOM SHEET -->
 <div class="sheet-overlay" id="sh-ov" onclick="closeSheet()"></div>
 <div class="sheet" id="sheet">
   <div class="sheet-handle"></div>
@@ -515,76 +511,53 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
     <div class="sheet-title">FILTER</div>
     <div class="sheet-close" onclick="closeSheet()">✕</div>
   </div>
-
   <div class="sheet-section">
     <div class="sheet-section-title">TYP</div>
     <div class="typ-cards">
       <div class="typ-card on" onclick="sheetTyp(this,'all')" data-typ="all">
-        <div class="typ-card-icon">🍽️</div>
-        <div class="typ-card-name">ALLES</div>
-        <div class="typ-card-count" id="stc-all">—</div>
+        <div class="typ-card-icon">🍽️</div><div class="typ-card-name">ALLES</div><div class="typ-card-count" id="stc-all">—</div>
       </div>
       <div class="typ-card" onclick="sheetTyp(this,'restaurant')" data-typ="restaurant">
-        <div class="typ-card-icon">🍴</div>
-        <div class="typ-card-name">RESTAURANT</div>
-        <div class="typ-card-count" id="stc-rest">—</div>
+        <div class="typ-card-icon">🍴</div><div class="typ-card-name">RESTAURANT</div><div class="typ-card-count" id="stc-rest">—</div>
       </div>
       <div class="typ-card" onclick="sheetTyp(this,'bar')" data-typ="bar">
-        <div class="typ-card-icon">🍸</div>
-        <div class="typ-card-name">BAR</div>
-        <div class="typ-card-count" id="stc-bar">—</div>
+        <div class="typ-card-icon">🍸</div><div class="typ-card-name">BAR</div><div class="typ-card-count" id="stc-bar">—</div>
       </div>
       <div class="typ-card" onclick="sheetTyp(this,'cafe')" data-typ="cafe">
-        <div class="typ-card-icon">☕</div>
-        <div class="typ-card-name">CAFÉ</div>
-        <div class="typ-card-count" id="stc-cafe">—</div>
+        <div class="typ-card-icon">☕</div><div class="typ-card-name">CAFÉ</div><div class="typ-card-count" id="stc-cafe">—</div>
       </div>
     </div>
   </div>
-
   <div class="sheet-section">
     <div class="sheet-section-title">KÜCHE</div>
-    <div class="kueche-grid" id="sheet-kueche"></div>
+    <div class="kueche-grid" id="sheet-kueche"><div style="color:#333;font-size:10px;grid-column:1/-1;text-align:center;padding:20px">Lädt...</div></div>
   </div>
-
   <div class="sheet-section">
     <div class="sheet-section-title">KREIS</div>
     <div class="kreis-grid" id="sheet-kreis"></div>
   </div>
-
   <div class="sheet-section">
     <div class="sheet-section-title">WEITERE FILTER</div>
     <div class="quer-grid">
-      <div class="quer-btn-sheet offe" id="sqb-offe" onclick="sheetQuer(this,'offe')">
-        <div class="q-dot"></div>JETZT OFFE
-      </div>
-      <div class="quer-btn-sheet naehe" id="sqb-naehe" onclick="sheetQuer(this,'naehe')">
-        📍 IN DER NÄHE
-      </div>
-      <div class="quer-btn-sheet ki" id="sqb-ki" onclick="sheetQuer(this,'ki')">
-        🤖 KI TOP PICK
-      </div>
-      <div class="quer-btn-sheet res" id="sqb-res" onclick="sheetQuer(this,'res')">
-        🍽️ RESERVIERBAR
-      </div>
+      <div class="quer-btn-sheet offe" id="sqb-offe" onclick="sheetQuer(this,'offe')"><div class="q-dot"></div>JETZT OFFE</div>
+      <div class="quer-btn-sheet naehe" id="sqb-naehe" onclick="sheetQuer(this,'naehe')">📍 IN DER NÄHE</div>
+      <div class="quer-btn-sheet ki" id="sqb-ki" onclick="sheetQuer(this,'ki')">🤖 KI TOP PICK</div>
+      <div class="quer-btn-sheet res" id="sqb-res" onclick="sheetQuer(this,'res')">🍽️ RESERVIERBAR</div>
     </div>
   </div>
-
   <div class="sheet-actions">
     <button class="sheet-reset" onclick="resetAll();closeSheet()">ZURÜCKSETZE</button>
-    <button class="sheet-apply" onclick="closeSheet()">
-      ZEIGE <span id="sheet-count">—</span> LOKALE →
-    </button>
+    <button class="sheet-apply" onclick="closeSheet()">ZEIGE <span id="sheet-count">—</span> LOKALE →</button>
   </div>
 </div>
 
 <!-- HERO -->
-<div class="hero" style="padding-bottom:36px">
+<div class="hero" style="padding-bottom:40px">
   <div>
     <div class="hero-eye">STADTPULS · ZÜRICH · GASTRO</div>
     <div class="hero-hl">ZÜRI<br>ISST<br>GUET</div>
-    <div class="hero-sub-hl">188 LOKALE</div>
-    <div class="dynamic-hl" id="dynamic-hl">188 LOKALE IN ZÜRICH</div>
+    <div class="hero-sub-hl" id="hero-sub">— LOKALE</div>
+    <div class="dynamic-hl" id="dynamic-hl">LÄDT DATEN...</div>
     <div class="hero-desc">Von Kreis 1 bis Kreis 12. Ehrliche Tipps vom Züri-Volk. Keine bezahlti Bewertunge. Kei Bullshit.</div>
     <div class="bot">
       <div class="bot-top">
@@ -607,12 +580,8 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
     <div class="hm-title"><div class="hm-live"></div>KREIS HEATMAP — LIVE</div>
     <div class="hm-grid" id="hm"></div>
     <div class="score-strip">
-      <div class="ss-title">🔥 STADTPULS SCORE — TOP KREIS 4</div>
-      <div class="ss-row"><div class="ss-name">Langstrasse 77</div><div class="ss-bar"><div class="ss-fill" style="width:97%"></div></div><div class="ss-n">97</div></div>
-      <div class="ss-row"><div class="ss-name">Pho Saigon</div><div class="ss-bar"><div class="ss-fill" style="width:91%"></div></div><div class="ss-n">91</div></div>
-      <div class="ss-row"><div class="ss-name">Josef</div><div class="ss-bar"><div class="ss-fill" style="width:84%"></div></div><div class="ss-n">84</div></div>
-      <div class="ss-row"><div class="ss-name">Helvetiaplatz Café</div><div class="ss-bar"><div class="ss-fill" style="width:72%"></div></div><div class="ss-n">72</div></div>
-      <div class="ss-row"><div class="ss-name">Sphères</div><div class="ss-bar"><div class="ss-fill" style="width:68%"></div></div><div class="ss-n">68</div></div>
+      <div class="ss-title" id="score-title">🔥 STADTPULS SCORE — TOP LOKALE</div>
+      <div id="score-rows"><div style="color:#333;font-size:10px;padding:8px 0">Lädt...</div></div>
     </div>
   </div>
 </div>
@@ -626,8 +595,8 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
   </div>
   <div class="pm-stats">
     <div class="pm-stat"><div class="pm-sn" id="pm-n">847</div><div class="pm-sl">User aktiv</div></div>
-    <div class="pm-stat"><div class="pm-sn">14</div><div class="pm-sl">Jetzt offe</div></div>
-    <div class="pm-stat"><div class="pm-sn" style="color:#c8ff00">2</div><div class="pm-sl">Letzte Plätze</div></div>
+    <div class="pm-stat"><div class="pm-sn" id="pm-open">—</div><div class="pm-sl">Jetzt offe</div></div>
+    <div class="pm-stat"><div class="pm-sn" style="color:#c8ff00" id="pm-res">—</div><div class="pm-sl">Reservierbar</div></div>
   </div>
 </div>
 
@@ -645,7 +614,7 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
     <div class="stchip" onclick="stimmung(this,'besonders')">🔥 BESONDERS</div>
   </div>
   <div class="st-result" id="st-res">
-    <div class="str-lbl" id="str-lbl">🤖 KI EMPFIEHLT:</div>
+    <div class="str-lbl" id="str-lbl">🤖 KI EMPFIEHLT FÜR DICH:</div>
     <div id="str-recs"></div>
   </div>
 </div>
@@ -653,63 +622,63 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
 <!-- GRID -->
 <div class="sh">
   <div class="sh-t">ALLE LOKALE</div>
-  <div class="sh-r" id="sh-r">188 RESTAURANTS · CAFÉS · BARS</div>
+  <div class="sh-r" id="sh-r">LÄDT...</div>
 </div>
-<div class="mgrid" id="mgrid"></div>
+<div class="mgrid" id="mgrid">
+  <div class="loading-state">
+    <div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>
+    <div class="loading-txt">Lade Locations aus Supabase...</div>
+  </div>
+</div>
 
 <!-- VOLT BLOCK -->
 <div class="volt-block">
   <div class="vb-l">
     <div class="vb-eye">LUNCHGATE · SPONTAN RESERVATION</div>
     <div class="vb-hl">HÜT NO<br>Ä TISCH<br>FINDE</div>
-    <div class="vb-sub">8 Restaurants händ no Platz hüt Abig.</div>
+    <div class="vb-sub">Reservierbare Restaurants in Zürich.</div>
   </div>
-  <div class="vb-r">
-    <div class="vb-item"><div><div class="vb-nm">Wirtschaft Neumarkt</div><div class="vb-meta">2 Pl. · K1 · 19:00</div></div><button class="vb-btn">BUCHE →</button></div>
-    <div class="vb-item"><div><div class="vb-nm">Rosso Zürich</div><div class="vb-meta">4 Pl. · K5 · 20:30</div></div><button class="vb-btn">BUCHE →</button></div>
-    <div class="vb-item"><div><div class="vb-nm">Taverna Romana</div><div class="vb-meta">6 Pl. · K4 · 18:30</div></div><button class="vb-btn">BUCHE →</button></div>
-    <div class="vb-item"><div><div class="vb-nm">Pho Saigon Express</div><div class="vb-meta">3 Pl. · K4 · 21:00</div></div><button class="vb-btn">BUCHE →</button></div>
-    <div class="vb-item"><div><div class="vb-nm">Café Volta</div><div class="vb-meta">8 Pl. · K5 · 12:00</div></div><button class="vb-btn">BUCHE →</button></div>
+  <div class="vb-r" id="vb-res-list">
+    <div style="padding:20px;font-size:10px;color:#333">Lädt...</div>
   </div>
 </div>
 
-<!-- KI FEATURES -->
-<div style="margin:0 40px;margin-top:40px;border:1px solid rgba(255,45,0,.1);background:#07070f;padding:28px">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
-    <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase">🤖 ZÜRI-BOT · KI FEATURES</div>
-    <div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;border:1px solid rgba(200,255,0,.2);padding:3px 8px;display:flex;align-items:center;gap:5px"><span style="width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite;display:inline-block"></span>AKTIV · PHASE 6</div>
+<!-- KI SECTION -->
+<div class="ki-section">
+  <div class="ki-head">
+    <div class="ki-title">🤖 ZÜRI-BOT · KI FEATURES</div>
+    <div class="ki-status">AKTIV · PHASE 6</div>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,45,0,.06)">
-    <div style="background:#07070f;padding:18px;transition:.15s"><div style="font-size:20px;margin-bottom:8px">📍</div><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:5px">GPS MATCHING</div><div style="font-size:8px;color:rgba(232,228,217,.3);line-height:1.7">200m Radius · Echtzeit · Schritt-Distanz zum nächschte Lokal · ZVV Integration</div><div style="display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 6px;margin-top:8px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">LIVE</div></div>
-    <div style="background:#07070f;padding:18px;transition:.15s"><div style="font-size:20px;margin-bottom:8px">😏</div><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:5px">STIMMUNGS-MATCHING</div><div style="font-size:8px;color:rgba(232,228,217,.3);line-height:1.7">Müde, energetisch, romantisch, hungrig — KI matched di Stimmig mit de richtige Location</div><div style="display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 6px;margin-top:8px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">AKTIV</div></div>
-    <div style="background:#07070f;padding:18px;transition:.15s"><div style="font-size:20px;margin-bottom:8px">⚡</div><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:5px">SPONTAN-MODUS</div><div style="font-size:8px;color:rgba(232,228,217,.3);line-height:1.7">«Kreis 5 · 2h · CHF 30 · zu zweit» — KI generiert komplette Mini-Abig-Plan inkl. ZVV</div><div style="display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 6px;margin-top:8px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">BALD</div></div>
-    <div style="background:#07070f;padding:18px;transition:.15s"><div style="font-size:20px;margin-bottom:8px">🔮</div><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:5px">PREDICTIVE</div><div style="font-size:8px;color:rgba(232,228,217,.3);line-height:1.7">«Friitig Kreis 4 — wie immer?» — KI kennt dini Gewohnheite und schlägt vor bevor du suchsch</div><div style="display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 6px;margin-top:8px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">PHASE 6</div></div>
-    <div style="background:#07070f;padding:18px;transition:.15s"><div style="font-size:20px;margin-bottom:8px">🔔</div><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:5px">PUSH ALERTS</div><div style="font-size:8px;color:rgba(232,228,217,.3);line-height:1.7">«Event 200m · startet in 30min» · «Letzte 2 Plätze bi dim Lieblingsrestaurant»</div><div style="display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 6px;margin-top:8px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">PHASE 5</div></div>
-    <div style="background:#07070f;padding:18px;transition:.15s"><div style="font-size:20px;margin-bottom:8px">📊</div><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:5px">STADTPULS SCORE</div><div style="font-size:8px;color:rgba(232,228,217,.3);line-height:1.7">Kein Redakteur — Score steigt automatisch aus Bookmarks, GPS-Besuche, Reviews, Likes</div><div style="display:inline-block;font-size:6px;letter-spacing:2px;text-transform:uppercase;padding:2px 6px;margin-top:8px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">LIVE</div></div>
+  <div class="ki-grid">
+    <div class="ki-card"><div class="ki-icon">📍</div><div class="ki-card-title">GPS MATCHING</div><div class="ki-card-desc">200m Radius · Echtzeit · Schritt-Distanz zum nächschte Lokal · ZVV Integration</div><div class="ki-card-tag">LIVE</div></div>
+    <div class="ki-card"><div class="ki-icon">😏</div><div class="ki-card-title">STIMMUNGS-MATCHING</div><div class="ki-card-desc">Müde, energetisch, romantisch — KI matched di Stimmig mit de richtige Location</div><div class="ki-card-tag">AKTIV</div></div>
+    <div class="ki-card"><div class="ki-icon">⚡</div><div class="ki-card-title">SPONTAN-MODUS</div><div class="ki-card-desc">«Kreis 5 · 2h · CHF 30 · zu zweit» — KI generiert komplette Mini-Abig-Plan</div><div class="ki-card-tag">BALD</div></div>
+    <div class="ki-card"><div class="ki-icon">🔮</div><div class="ki-card-title">PREDICTIVE</div><div class="ki-card-desc">«Friitig Kreis 4 — wie immer?» — KI kennt dini Gewohnheite</div><div class="ki-card-tag">PHASE 6</div></div>
+    <div class="ki-card"><div class="ki-icon">🍽️</div><div class="ki-card-title">TISCH RESERVIERE</div><div class="ki-card-desc">Direkt über Stadtpuls buche — via OpenTable. CHF 1-5 pro Buchung.</div><div class="ki-card-tag">PHASE 5</div></div>
+    <div class="ki-card"><div class="ki-icon">📊</div><div class="ki-card-title">STADTPULS SCORE</div><div class="ki-card-desc">Automatisch aus Bookmarks, GPS-Besuche, Reviews, Likes</div><div class="ki-card-tag">LIVE</div></div>
   </div>
 </div>
-
-
 
 <div class="ticker-wrap"><div class="ticker-row"><div class="tick l" id="tc"></div></div></div>
 
 <footer>
   <div>
-    <div class="logo" style="margin-bottom:6px"><div class="ldot"></div>STADTPULS</div>
+    <div class="logo" style="margin-bottom:8px"><div class="ldot"></div>STADTPULS</div>
     <div class="fc-desc">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich.</div>
     <div class="fc-copy">© 2026 by raimondo* — Zürich</div>
   </div>
-  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link">Gastro & Bars</a><a class="fc-link">Nachtleben</a><a class="fc-link">Shopping</a><a class="fc-link">Events</a><a class="fc-link">Quartiere</a><a class="fc-link">Mobilität</a></div>
-  <div><div class="fc-title">COMMUNITY</div><a class="fc-link">Feed & Posts</a><a class="fc-link">People & Dates</a><a class="fc-link">Jobs Züri</a><a class="fc-link">News & Stories</a><a class="fc-link">GPS</a></div>
-  <div><div class="fc-title">MITMACHE</div><a class="fc-link">Einlogge</a><a class="fc-link">Profil aalege</a><a class="fc-link">Partner werde</a><a class="fc-link">Kontakt</a></div>
+  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link" href="gastro.html">Gastro & Bars</a><a class="fc-link" href="index.html?page=nachtleben">Nachtleben</a><a class="fc-link" href="index.html?page=shopping">Shopping</a><a class="fc-link" href="index.html?page=events">Events</a><a class="fc-link" href="index.html?page=quartiere">Quartiere</a></div>
+  <div><div class="fc-title">COMMUNITY</div><a class="fc-link" href="index.html?page=community">Feed & Posts</a><a class="fc-link" href="index.html?page=dating">People & Dates</a><a class="fc-link" href="index.html?page=jobs">Jobs Züri</a><a class="fc-link" href="index.html?page=news">News & Stories</a></div>
+  <div><div class="fc-title">MITMACHE</div><a class="fc-link" href="index.html?page=login">Einlogge</a><a class="fc-link" href="feedback.html">Feedback</a><a class="fc-link" href="kontakt.html">Partner werde</a><a class="fc-link" href="impressum.html">Impressum</a><a class="fc-link" href="datenschutz.html">Datenschutz</a></div>
 </footer>
 
+<!-- DETAIL PANEL -->
 <div class="ov" id="ov" onclick="closeDet()"></div>
 <div class="panel" id="panel">
-  <div class="p-hero">
+  <div class="p-hero" id="p-hero">
     <div class="p-art" id="p-art">GASTRO</div>
     <div class="p-close" onclick="closeDet()">✕</div>
-    <div class="p-score-box"><div class="psn" id="p-score">97</div><div class="psl">SCORE</div></div>
+    <div class="p-score-box"><div class="psn" id="p-score">—</div><div class="psl">SCORE</div></div>
     <div class="p-name" id="p-name">—</div>
     <div class="p-sub" id="p-sub">—</div>
   </div>
@@ -721,11 +690,11 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
       <div class="p-row"><div class="p-lbl">KREIS</div><div class="p-val" id="p-kreis">—</div></div>
       <div class="p-row"><div class="p-lbl">KÜCHI</div><div class="p-val" id="p-kueche">—</div></div>
       <div class="p-row"><div class="p-lbl">ÖFFNIG</div><div class="p-val" id="p-oeffnig">—</div></div>
-      <div class="p-row"><div class="p-lbl">DISTANZ</div><div class="p-val" style="color:#00f5ff" id="p-dist">—</div></div>
-      <div class="p-row"><div class="p-lbl">RATING</div><div class="p-val" id="p-rating">—</div></div>
+      <div class="p-row"><div class="p-lbl">WEBSITE</div><div class="p-val" id="p-website">—</div></div>
+      <div class="p-row"><div class="p-lbl">TEL</div><div class="p-val" id="p-tel">—</div></div>
     </div>
     <div class="pred"><div class="pred-txt">⚡ «Friitig Abend — du bisch da meischtens. <strong>Tisch reserviere?</strong>»</div></div>
-    <button class="btn-res" id="p-res-btn">🍽️ TISCH RESERVIERE — SOFORT →</button>
+    <button class="btn-res" id="p-res-btn" style="display:none">🍽️ TISCH RESERVIERE — SOFORT →</button>
     <div class="p-acts">
       <div class="p-act">🗺️ AUF KARTE</div>
       <div class="p-act">❤️ SPEICHERE</div>
@@ -737,180 +706,362 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
 </div>
 
 <script>
-// CURSOR
-const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
-document.addEventListener('mousemove',e=>{
-  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
-  cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';
-});
+// ═══════════════════════════════════════════
+// SUPABASE
+// ═══════════════════════════════════════════
+const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
 
-// DATA
-const kreisData=[{k:1,n:64},{k:5,n:27},{k:4,n:22},{k:8,n:18},{k:3,n:15},{k:2,n:8},{k:7,n:6},{k:9,n:6},{k:6,n:4},{k:10,n:4},{k:11,n:2},{k:12,n:1}];
+async function sbGet(path){
+  const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return r.json();
+}
 
-const locs=[
-  {id:0,name:'LANGSTRASSE 77',typ:'restaurant',sub:'italienisch',kreis:4,addr:'Langstrasse 77',score:97,open:true,ki:true,res:true,rating:5,rN:42,stars:'★★★★★',dist:4,desc:'Chef Mario Rossis neüschti Kreation. Rohes Ambiänz, kompromisslosä Fokus uf di Zutat.',oeffnig:'Di–So · 18–23',badge:'volt',badgeTxt:'ERÖFFNIG'},
-  {id:1,name:'PHO SAIGON EXPRESS',typ:'restaurant',sub:'asiatisch',kreis:4,addr:'Langstrasse 121',score:91,open:true,ki:true,res:false,rating:5,rN:67,stars:'★★★★★',dist:6,desc:'Di bischti Pho vo Zürich. Kein Insta, kein Hype.',oeffnig:'Mo–Sa · 11–21',badge:'lila',badgeTxt:'GEHEIMTIPP'},
-  {id:2,name:'HILTL STAMMHAUS',typ:'restaurant',sub:'vegetarisch',kreis:1,addr:'Sihlstrasse 28',score:88,open:true,ki:false,res:true,rating:5,rN:312,stars:'★★★★★',dist:18,desc:'Sit 1898. Weltrekord ältischts vegetarischs Restaurant.',oeffnig:'Mo–Sa 6–24',badge:'volt',badgeTxt:'VEGISCH'},
-  {id:3,name:'CAFÉ VOLTA',typ:'cafe',sub:'cafe',kreis:5,addr:'Voltastrasse 32',score:84,open:true,ki:false,res:false,rating:4,rN:28,stars:'★★★★☆',dist:12,desc:'Kreis 5 Klassiker — täglich wechslends Mittagsmenü.',oeffnig:'Mo–Fr · 11–22',badge:'ora',badgeTxt:'ZMITTAG'},
-  {id:4,name:'SPHÈRES',typ:'cafe',sub:'cafe',kreis:4,addr:'Hardturmstr. 66',score:81,open:true,ki:false,res:false,rating:4,rN:44,stars:'★★★★☆',dist:8,desc:'Kultcafé Züri West — Büecher, Kafi, cooli Stimmig.',oeffnig:'Mo–Sa · 8–22',badge:'ghost',badgeTxt:'KULTCAFÉ'},
-  {id:5,name:'ROSSO ZÜRICH',typ:'restaurant',sub:'mediterran',kreis:5,addr:'Geroldstrasse 15',score:79,open:false,ki:false,res:true,rating:4,rN:89,stars:'★★★★☆',dist:14,desc:'Züri Wests coolschte Brunch-Location.',oeffnig:'Sa–So · 10–14',badge:'cyan',badgeTxt:'MEDITERRAN'},
-  {id:6,name:'WIRTSCHAFT NEUMARKT',typ:'restaurant',sub:'schweizer',kreis:1,addr:'Neumarkt 5',score:79,open:true,ki:false,res:true,rating:5,rN:134,stars:'★★★★★',dist:20,desc:'Altstadt-Klassiker sit 1964.',oeffnig:'Mo–Sa · 11–23',badge:'ghost',badgeTxt:'SEIT 1964'},
-  {id:7,name:'FRIEDAS BÜCHSE',typ:'bar',sub:'bar',kreis:4,addr:'Geroldstr. 23a',score:77,open:true,ki:false,res:false,rating:4,rN:56,stars:'★★★★☆',dist:7,desc:'Kein Mainstream, kein Bullshit. Bar für Lüt vom Quartier.',oeffnig:'Di–So · 18–02',badge:'red',badgeTxt:'BAR'},
-  {id:8,name:'IM VIADUKT',typ:'restaurant',sub:'american',kreis:5,addr:'Viaduktstr. 45',score:74,open:true,ki:false,res:false,rating:4,rN:45,stars:'★★★★☆',dist:15,desc:'Unter de Böge vom Viadukt — amerikanischi Küchi.',oeffnig:'Di–So · 12–23',badge:'red',badgeTxt:'AMERICAN'},
-  {id:9,name:'ALCHEMIST BAR',typ:'bar',sub:'cocktail',kreis:1,addr:'Niederdorfstr. 8',score:72,open:true,ki:false,res:true,rating:5,rN:88,stars:'★★★★★',dist:22,desc:'Beste Cocktails Zürichs. Handgefertigt, keine Shortcuts.',oeffnig:'Mi–Sa · 18–02',badge:'lila',badgeTxt:'COCKTAILBAR'},
-  {id:10,name:'TIBITS',typ:'restaurant',sub:'vegetarisch',kreis:1,addr:'Seefeldstr. 2',score:71,open:true,ki:false,res:false,rating:4,rN:156,stars:'★★★★☆',dist:19,desc:'Vegetarischs Buffet — nach Gwicht zahle.',oeffnig:'Mo–Sa 8–24',badge:'volt',badgeTxt:'VEGISCH'},
-  {id:11,name:'HELVETIAPLATZ CAFÉ',typ:'cafe',sub:'cafe',kreis:4,addr:'Helvetiaplatz 1',score:68,open:true,ki:false,res:false,rating:4,rN:33,stars:'★★★★☆',dist:5,desc:'Kreis 4 Flair — Kafi, Kuche, Lüt luege.',oeffnig:'Mo–So · 7–22',badge:'ghost',badgeTxt:'CAFÉ'},
-];
+// ═══════════════════════════════════════════
+// SUBKAT MAPPING
+// ═══════════════════════════════════════════
+const SUBKAT={
+  102:{e:'☕',n:'CAFÉ',typ:'cafe'},
+  184:{e:'🧀',n:'SCHWEIZER',typ:'restaurant'},
+  185:{e:'🍕',n:'ITALIAN',typ:'restaurant'},
+  186:{e:'🥘',n:'SPANISCH',typ:'restaurant'},
+  187:{e:'🥐',n:'FRANÇAIS',typ:'restaurant'},
+  188:{e:'🍜',n:'ASIATISCH',typ:'restaurant'},
+  189:{e:'🧆',n:'NAHOST',typ:'restaurant'},
+  190:{e:'🌮',n:'MEXIKANISCH',typ:'restaurant'},
+  191:{e:'🫒',n:'MEDITERRAN',typ:'restaurant'},
+  192:{e:'🥖',n:'BISTRO',typ:'restaurant'},
+  193:{e:'🍔',n:'AMERICAN',typ:'restaurant'},
+  194:{e:'⭐',n:'GOURMET',typ:'restaurant'},
+  195:{e:'🔥',n:'GRILL',typ:'restaurant'},
+  196:{e:'🐟',n:'FISCH',typ:'restaurant'},
+  197:{e:'🌿',n:'VEGISCH',typ:'restaurant'},
+  409:{e:'🌱',n:'VEGAN',typ:'restaurant'},
+  415:{e:'🌍',n:'WORLD',typ:'restaurant'},
+  101:{e:'🍴',n:'RESTAURANT',typ:'restaurant'},
+  103:{e:'🍸',n:'BAR',typ:'bar'},
+  1438:{e:'🍹',n:'COCKTAIL',typ:'bar'},
+  1441:{e:'🎵',n:'MUSIC BAR',typ:'bar'},
+  1444:{e:'🍺',n:'PUB',typ:'bar'},
+  1447:{e:'🍽️',n:'REST-BAR',typ:'bar'},
+  1450:{e:'🏨',n:'HOTELBAR',typ:'bar'},
+  1456:{e:'🎭',n:'KULTURBAR',typ:'bar'},
+  1459:{e:'💼',n:'AFTER WORK',typ:'bar'},
+  1462:{e:'🌿',n:'OUTDOOR',typ:'bar'},
+  1465:{e:'🍷',n:'WEINBAR',typ:'bar'},
+  1468:{e:'🏘️',n:'QUARTIERBAR',typ:'bar'},
+};
 
-// KÜCHEN PER TYP
-const KUECHEN={
-  all:[
-    {id:'all',emoji:'🍽️',name:'ALLES'},
-    {id:'asiatisch',emoji:'🍜',name:'ASIATISCH'},
-    {id:'italienisch',emoji:'🍕',name:'ITALIAN'},
-    {id:'schweizer',emoji:'🧀',name:'SCHWEIZER'},
-    {id:'vegetarisch',emoji:'🌿',name:'VEGISCH'},
-    {id:'vegan',emoji:'🌱',name:'VEGAN'},
-    {id:'american',emoji:'🍔',name:'AMERICAN'},
-    {id:'mediterran',emoji:'🫒',name:'MEDITERRAN'},
-    {id:'gourmet',emoji:'⭐',name:'GOURMET'},
-    {id:'fisch',emoji:'🐟',name:'FISCH'},
-    {id:'französisch',emoji:'🥐',name:'FRANÇAIS'},
-    {id:'cafe',emoji:'☕',name:'CAFÉ'},
-    {id:'cocktail',emoji:'🍸',name:'COCKTAIL'},
-    {id:'bar',emoji:'🍺',name:'BAR'},
-  ],
-  restaurant:[
-    {id:'all',emoji:'🍴',name:'ALLE RESTIS'},
-    {id:'asiatisch',emoji:'🍜',name:'ASIATISCH'},
-    {id:'italienisch',emoji:'🍕',name:'ITALIAN'},
-    {id:'schweizer',emoji:'🧀',name:'SCHWEIZER'},
-    {id:'vegetarisch',emoji:'🌿',name:'VEGISCH'},
-    {id:'vegan',emoji:'🌱',name:'VEGAN'},
-    {id:'american',emoji:'🍔',name:'AMERICAN'},
-    {id:'mediterran',emoji:'🫒',name:'MEDITERRAN'},
-    {id:'gourmet',emoji:'⭐',name:'GOURMET'},
-    {id:'fisch',emoji:'🐟',name:'FISCH'},
-    {id:'französisch',emoji:'🥐',name:'FRANÇAIS'},
-  ],
-  bar:[
-    {id:'all',emoji:'🍸',name:'ALLE BARS'},
-    {id:'cocktail',emoji:'🍹',name:'COCKTAIL'},
-    {id:'weinbar',emoji:'🍷',name:'WEINBAR'},
-    {id:'pub',emoji:'🍺',name:'PUB'},
-    {id:'musicbar',emoji:'🎵',name:'MUSIC BAR'},
-    {id:'afterwork',emoji:'💼',name:'AFTER WORK'},
-    {id:'outdoor',emoji:'🌿',name:'OUTDOOR'},
-    {id:'kulturbar',emoji:'🎭',name:'KULTURBAR'},
-  ],
-  cafe:[
-    {id:'all',emoji:'☕',name:'ALLE CAFÉS'},
-    {id:'cafe',emoji:'🥐',name:'KAFI & KUCHE'},
-    {id:'brunch',emoji:'🥞',name:'BRUNCH'},
-    {id:'coworking',emoji:'💻',name:'COWORKING'},
-  ],
+const TYP_IDS={
+  restaurant:[101,184,185,186,187,188,189,190,191,192,193,194,195,196,197,409,415],
+  bar:[103,1438,1441,1444,1447,1450,1456,1459,1462,1465,1468],
+  cafe:[102],
 };
 
 const botMap={
-  casual:'«Entspannt — Café Volta K5 oder Sphères K4. Kein Stress, guter Kafi.»',
-  romantisch:'«Romantisch? Langstrasse 77 — letzte 2 Plätze hüt Abig.»',
-  schnell:'«Schnell? Pho Saigon — 6 Min, CHF 14.–. Fertig.»',
-  vegisch:'«Vegisch: Hiltl Stammhaus — seit 1898, walk-in möglich.»',
-  budget:'«Budget? Café Volta CHF 18.50 oder Pho Saigon CHF 14.–.»',
-  besonders:'«Besonders? Langstrasse 77 — hüt letzte Chanci. Chef Mario.»',
+  casual:'«Entspannt — Café im Kreis 5 oder Sphères K4. Kein Stress, guter Kafi.»',
+  romantisch:'«Romantisch? Gourmet-Restaurant Kreis 1 — Candlelight, Reservierung empfohlen.»',
+  schnell:'«Schnell? Asiatisch in Kreis 4 — 6 Min, günstig. Fertig.»',
+  vegisch:'«Vegisch: Hiltl Stammhaus Kreis 1 — seit 1898, walk-in möglich.»',
+  budget:'«Budget? Café oder Bistro — ab CHF 15 in fast jedem Kreis.»',
+  besonders:'«Besonders? Gourmet Kreis 1 oder Top-Score Location in deiner Nähe.»',
 };
 const stimmMap={
-  müde:['Café Volta — ruhig, Büecher, Kafi','Sphères — entspannt, cooli Stimmig'],
-  energetisch:['Langstrasse 77 — volli Energie','Im Viadukt — laut und lebhaft'],
-  romantisch:['Langstrasse 77 — Candlelight','Wirtschaft Neumarkt — Züri-Charme'],
-  hungrig:['Pho Saigon — schnell + satt','Hiltl — Buffet unlimitiert'],
-  vegisch:['Hiltl Stammhaus — seit 1898','Tibits — nach Gwicht zahle'],
-  budget:['Pho Saigon — ab CHF 14','Café Volta — CHF 18.50'],
-  besonders:['Langstrasse 77 — letzte Chanci','Alchemist Bar — beschtä Cocktails'],
+  müde:['Café — ruhig, Büecher, Kafi','Bistro — entspannt, no stress'],
+  energetisch:['Grill oder American — volli Energie','Lively Bar — laut und lebhaft'],
+  romantisch:['Gourmet K1 — Candlelight','Mediterran — romantischi Atmosphäre'],
+  hungrig:['Asiatisch — schnell + satt','American — gross und günstig'],
+  vegisch:['Vegisch/Vegan Küche','Café — meistens vegische Optione'],
+  budget:['Café — günstig, gut','Bistro — unkompliziert'],
+  besonders:['Gourmet — beschtä Chöch','Top Score Location in dini Nähi'],
 };
 
-// STATE
+// ═══════════════════════════════════════════
+// STATE + DATA
+// ═══════════════════════════════════════════
 let S={typ:'all',kueche:'all',kreis:'all',offe:false,naehe:false,ki:false,res:false,sort:'score'};
+let allLocs=[];
+let subkatCounts={};
+let typCounts={all:0,restaurant:0,bar:0,cafe:0};
+let kreisData=[];
 
-// TYP COUNTS
-function getTypCount(typ){
-  if(typ==='all')return locs.length;
-  return locs.filter(l=>l.typ===typ).length;
+// ═══════════════════════════════════════════
+// LOAD FROM SUPABASE
+// ═══════════════════════════════════════════
+async function loadAllLocations(){
+  try{
+    document.getElementById('rb-loading').style.display='block';
+    
+    const data=await sbGet(
+      'locations?select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,plz,bild_url,beschreibung,beschreibung_kurz,website,telefon,oeffnungszeiten,hat_reservation,reservation_url,rating,rating_count,featured,aktiv'+
+      '&kategorie=eq.gastro&aktiv=eq.true&limit=500&order=featured.desc,id.asc'
+    );
+    
+    if(!Array.isArray(data)){console.error('Supabase error:',data);return;}
+    
+    allLocs=data;
+    
+    // Counts berechnen
+    subkatCounts={};
+    data.forEach(l=>{
+      const sid=l.zt_subkategorie_id;
+      if(sid)subkatCounts[sid]=(subkatCounts[sid]||0)+1;
+    });
+    
+    typCounts.all=data.length;
+    typCounts.restaurant=data.filter(l=>TYP_IDS.restaurant.includes(l.zt_subkategorie_id)).length;
+    typCounts.bar=data.filter(l=>TYP_IDS.bar.includes(l.zt_subkategorie_id)).length;
+    typCounts.cafe=data.filter(l=>l.zt_subkategorie_id===102).length;
+    
+    // Kreis counts für Heatmap
+    kreisData=Array.from({length:12},(_,i)=>{
+      const k=i+1;
+      const n=data.filter(l=>l.kreis===k).length;
+      return{k,n};
+    }).filter(d=>d.n>0).sort((a,b)=>b.n-a.n);
+    
+    // GPS Stats
+    document.getElementById('gps-n1').textContent=data.length;
+    document.getElementById('gps-n2').textContent=typCounts.restaurant;
+    document.getElementById('gps-n3').textContent=typCounts.bar+typCounts.cafe;
+    
+    // Hero subtitle
+    document.getElementById('hero-sub').textContent=data.length+' LOKALE';
+    
+    // Pulse stats
+    document.getElementById('pm-open').textContent=data.filter(l=>l.oeffnungszeiten&&l.oeffnungszeiten.length>0).length;
+    document.getElementById('pm-res').textContent=data.filter(l=>l.hat_reservation).length;
+    
+    // Update UI
+    updateCounts();
+    renderKuechen();
+    buildHM();
+    buildGrid();
+    buildScoreStrip();
+    buildVoltRes();
+    
+    document.getElementById('rb-loading').style.display='none';
+    
+  }catch(e){
+    console.error('Load error:',e);
+    document.getElementById('mgrid').innerHTML='<div class="loading-state"><div class="loading-txt" style="color:#ff2d00">Fehler beim Laden — bitte Seite neu laden</div></div>';
+    document.getElementById('rb-loading').style.display='none';
+  }
 }
 
-// UPDATE COUNTS
-function updateCounts(){
-  ['all','restaurant','bar','cafe'].forEach(t=>{
-    const n=getTypCount(t);
-    const el=document.getElementById('tc-'+t)||document.getElementById('tc-'+t.replace('restaurant','rest'));
-    if(document.getElementById('tc-all'))document.getElementById('tc-all').textContent=getTypCount('all');
-    if(document.getElementById('tc-rest'))document.getElementById('tc-rest').textContent=getTypCount('restaurant');
-    if(document.getElementById('tc-bar'))document.getElementById('tc-bar').textContent=getTypCount('bar');
-    if(document.getElementById('tc-cafe'))document.getElementById('tc-cafe').textContent=getTypCount('cafe');
-    if(document.getElementById('stc-all'))document.getElementById('stc-all').textContent=getTypCount('all');
-    if(document.getElementById('stc-rest'))document.getElementById('stc-rest').textContent=getTypCount('restaurant');
-    if(document.getElementById('stc-bar'))document.getElementById('stc-bar').textContent=getTypCount('bar');
-    if(document.getElementById('stc-cafe'))document.getElementById('stc-cafe').textContent=getTypCount('cafe');
+// ═══════════════════════════════════════════
+// FILTER LOGIC
+// ═══════════════════════════════════════════
+function getFiltered(){
+  return allLocs.filter(l=>{
+    const sid=l.zt_subkategorie_id;
+    if(S.typ!=='all'){
+      const ids=TYP_IDS[S.typ];
+      if(!ids||!ids.includes(sid))return false;
+    }
+    if(S.kueche!=='all'&&sid!==parseInt(S.kueche))return false;
+    if(S.kreis!=='all'&&l.kreis!==parseInt(S.kreis))return false;
+    if(S.res&&!l.hat_reservation)return false;
+    return true;
   });
 }
 
-// RENDER KÜCHEN
+// ═══════════════════════════════════════════
+// BUILD GRID
+// ═══════════════════════════════════════════
+function buildGrid(){
+  const g=document.getElementById('mgrid');
+  let data=getFiltered();
+  if(S.sort==='score')data.sort((a,b)=>(b.featured?1:0)-(a.featured?1:0)||(b.rating||0)-(a.rating||0));
+  else if(S.sort==='dist')data.sort((a,b)=>(a.kreis||99)-(b.kreis||99));
+  else data=data.slice().reverse();
+  
+  const cnt=data.length;
+  const rbEl=document.getElementById('rb-count');
+  if(rbEl){rbEl.style.animation='none';rbEl.offsetHeight;rbEl.style.animation='countUp .25s ease';rbEl.textContent=cnt;}
+  document.getElementById('sh-r').textContent=cnt+' RESTAURANTS · CAFÉS · BARS';
+  document.getElementById('sheet-count').textContent=cnt;
+  updateDynamicHL(cnt);
+  
+  g.innerHTML='';
+  if(!data.length){
+    g.innerHTML=`<div class="empty-state"><div class="es-title">NÜÜT GFUNDE</div><div class="es-sub">Probier andere Filter</div><div class="es-reset" onclick="resetAll()">ALLE ZURÜCKSETZE</div></div>`;
+    return;
+  }
+  
+  data.forEach((l,i)=>{
+    const sid=l.zt_subkategorie_id;
+    const sub=SUBKAT[sid]||{e:'🍽️',n:l.subkategorie?.toUpperCase()||'GASTRO',typ:'restaurant'};
+    const c=document.createElement('div');
+    c.className='mcard';
+    c.style.animation=`fadeUp .22s ease ${Math.min(i,.15)*0.04}s both`;
+    
+    const imgHtml=l.bild_url
+      ?`<img class="mc-img" src="${l.bild_url}" loading="lazy" alt="${l.name}" onerror="this.style.display='none'">`
+      :`<div class="mc-img-placeholder">${sub.e}</div>`;
+    
+    c.innerHTML=`
+      ${imgHtml}
+      <div class="mc-body">
+        <div class="mc-badges">
+          ${l.featured?'<span class="mcb volt">TOP</span>':''}
+          ${l.hat_reservation?'<span class="mcb gold">🍽️ RES</span>':''}
+          <span class="mcb ghost">K${l.kreis||'?'}</span>
+        </div>
+        <div class="mc-name">${l.name}</div>
+        <div class="mc-type">${sub.e} ${sub.n}</div>
+        <div class="mc-meta">${l.adresse||''}</div>
+        <div class="mc-foot">
+          <div class="mc-stars">${l.rating?'★'.repeat(Math.min(5,Math.round(l.rating))):'· · · · ·'}</div>
+          <div class="mc-dist">K${l.kreis||'?'}</div>
+          <div class="mc-score" style="color:${l.hat_reservation?'#ffcc00':'#ff2d00'}">${l.hat_reservation?'RES':'—'}</div>
+        </div>
+      </div>`;
+    c.onclick=()=>openDet(l);
+    g.appendChild(c);
+  });
+}
+
+// ═══════════════════════════════════════════
+// DYNAMIC HEADLINE
+// ═══════════════════════════════════════════
+function updateDynamicHL(cnt){
+  const dhl=document.getElementById('dynamic-hl');
+  if(!dhl)return;
+  const total=cnt!==undefined?cnt:allLocs.length;
+  let hl='';
+  if(S.kreis!=='all'&&S.kueche!=='all'){
+    const k=SUBKAT[parseInt(S.kueche)];
+    hl=total+' '+(k?k.n:'')+'  IN KREIS '+S.kreis;
+  } else if(S.kreis!=='all'){
+    hl=total+' LOKALE IN KREIS '+S.kreis;
+  } else if(S.kueche!=='all'){
+    const k=SUBKAT[parseInt(S.kueche)];
+    hl=total+' '+(k?k.n+' RESTAURANTS':'RESTAURANTS');
+  } else if(S.typ!=='all'){
+    hl=total+' '+S.typ.toUpperCase()+'S IN ZÜRICH';
+  } else {
+    hl=total+' LOKALE IN ZÜRICH';
+  }
+  dhl.textContent=hl;
+}
+
+// ═══════════════════════════════════════════
+// RENDER KÜCHEN — nur was Daten hat
+// ═══════════════════════════════════════════
 function renderKuechen(){
-  const kl=KUECHEN[S.typ]||KUECHEN.all;
   const wrap=document.getElementById('kueche-btns');
   if(!wrap)return;
-
-  // Counts
-  const counts={};
-  locs.forEach(l=>{
-    if(S.typ==='all'||l.typ===S.typ){
-      counts[l.sub]=(counts[l.sub]||0)+1;
-    }
-  });
-  const total=locs.filter(l=>S.typ==='all'||l.typ===S.typ).length;
-
-  wrap.innerHTML=kl.map(k=>{
-    const cnt=k.id==='all'?total:(counts[k.id]||0);
-    const disabled=k.id!=='all'&&cnt===0;
-    return`<button class="kchip${S.kueche===k.id?' on':''}${disabled?' disabled':''}" onclick="setKueche(this,'${k.id}')">
-      <span class="kchip-emoji">${k.emoji}</span>${k.name}<span class="kchip-cnt">${cnt||''}</span>
+  
+  // Relevante IDs für aktuellen Typ
+  let relIds;
+  if(S.typ==='restaurant')relIds=TYP_IDS.restaurant;
+  else if(S.typ==='bar')relIds=TYP_IDS.bar;
+  else if(S.typ==='cafe')relIds=TYP_IDS.cafe;
+  else relIds=Object.keys(SUBKAT).map(Number);
+  
+  // Nur was Daten hat
+  const available=relIds.filter(id=>(subkatCounts[id]||0)>0);
+  const total=S.typ==='all'?allLocs.length:allLocs.filter(l=>relIds.includes(l.zt_subkategorie_id)).length;
+  
+  const mkBtn=(id,active)=>{
+    const isAll=id==='all';
+    const sub=isAll?null:SUBKAT[id];
+    const cnt=isAll?total:(subkatCounts[id]||0);
+    const on=S.kueche===(isAll?'all':String(id));
+    return`<button class="kchip${on?' on':''}" onclick="setKueche(this,'${isAll?'all':id}')">
+      <span class="kchip-emoji">${isAll?'🍽️':sub.e}</span>${isAll?'ALLES':sub.n}<span class="kchip-cnt">${cnt}</span>
     </button>`;
-  }).join('');
-
+  };
+  
+  wrap.innerHTML=mkBtn('all')+available.map(id=>mkBtn(id)).join('');
+  
+  // Label
+  const lbl=S.typ==='bar'?'BAR-TYP':S.typ==='cafe'?'CAFÉ-TYP':'KÜCHE';
+  const labelEl=document.getElementById('kr-lbl');
+  if(labelEl)labelEl.textContent=lbl;
+  
   // Sheet küchen
   const sg=document.getElementById('sheet-kueche');
   if(sg){
-    sg.innerHTML=kl.map(k=>{
-      const cnt=k.id==='all'?total:(counts[k.id]||0);
-      const disabled=k.id!=='all'&&cnt===0;
-      return`<div class="kgrid-btn${S.kueche===k.id?' on':''}${disabled?' disabled':''}" onclick="setKueche(this,'${k.id}');syncSheet()">
-        <div class="kgrid-btn-emoji">${k.emoji}</div>
-        <div class="kgrid-btn-name">${k.name}</div>
+    const mkGrid=(id)=>{
+      const isAll=id==='all';
+      const sub=isAll?null:SUBKAT[id];
+      const cnt=isAll?total:(subkatCounts[id]||0);
+      const on=S.kueche===(isAll?'all':String(id));
+      return`<div class="kgrid-btn${on?' on':''}" onclick="setKueche(null,'${isAll?'all':id}');closeSheet();buildGrid()">
+        <div class="kgrid-btn-emoji">${isAll?'🍽️':sub.e}</div>
+        <div class="kgrid-btn-name">${isAll?'ALLES':sub.n}</div>
         <div class="kgrid-btn-cnt">${cnt}</div>
       </div>`;
-    }).join('');
+    };
+    sg.innerHTML=mkGrid('all')+available.map(id=>mkGrid(id)).join('');
   }
-
-  // Label
-  const lbl=S.typ==='all'?'KÜCHE':S.typ==='restaurant'?'KÜCHE':S.typ==='bar'?'BAR-TYP':'CAFÉ-TYP';
-  const labelEl=document.getElementById('kr-lbl');
-  if(labelEl)labelEl.textContent=lbl;
 }
 
-// RENDER KREIS SHEET
-function renderKreisSheet(){
-  const sk=document.getElementById('sheet-kreis');
-  if(!sk)return;
-  sk.innerHTML=[{k:'all',n:'ALLE'},...kreisData.map(d=>({k:d.k,n:d.k}))].map(d=>{
-    const cnt=d.k==='all'?locs.length:locs.filter(l=>l.kreis===d.k).length;
-    return`<div class="kgrid-k${S.kreis===d.k?' on':''}" onclick="setKreis(null,${d.k==='all'?'"all"':d.k});syncSheet()">
-      <div class="kgrid-k-name">${d.k==='all'?'ALL':'K'+d.k}</div>
-      <div class="kgrid-k-cnt">${cnt}</div>
-    </div>`;
+// ═══════════════════════════════════════════
+// HEATMAP
+// ═══════════════════════════════════════════
+function buildHM(){
+  const g=document.getElementById('hm');g.innerHTML='';
+  const sorted=[...kreisData].sort((a,b)=>b.n-a.n);
+  const MAX=sorted[0]?.n||1;
+  
+  // Alle 12 Kreise in Raster
+  Array.from({length:12},(_,i)=>i+1).forEach(k=>{
+    const d=kreisData.find(x=>x.k===k)||{k,n:0};
+    const p=Math.round(d.n/MAX*100);
+    const col=p>60?'#ff2d00':p>30?'#ff6600':p>10?'rgba(232,228,217,.6)':'rgba(232,228,217,.15)';
+    const el=document.createElement('div');
+    el.className='hm-cell';el.dataset.k=k;
+    el.innerHTML=`<div class="hm-k">K${k}</div><div class="hm-n" style="color:${col}">${d.n}</div><div class="hm-b"><div class="hm-bf" style="width:${p}%"></div></div>`;
+    el.onclick=()=>setKreis(null,S.kreis===k?'all':k);
+    g.appendChild(el);
+  });
+}
+
+// ═══════════════════════════════════════════
+// SCORE STRIP
+// ═══════════════════════════════════════════
+function buildScoreStrip(){
+  const top=allLocs.filter(l=>l.featured||l.rating>4).slice(0,5);
+  if(!top.length)return;
+  document.getElementById('score-rows').innerHTML=top.map((l,i)=>{
+    const score=l.featured?95-i*5:(l.rating||0)*18;
+    return`<div class="ss-row"><div class="ss-name">${l.name}</div><div class="ss-bar"><div class="ss-fill" style="width:${score}%"></div></div><div class="ss-n">${score}</div></div>`;
   }).join('');
 }
 
-// SET TYP
+// ═══════════════════════════════════════════
+// VOLT RES LIST
+// ═══════════════════════════════════════════
+function buildVoltRes(){
+  const res=allLocs.filter(l=>l.hat_reservation).slice(0,5);
+  if(!res.length){document.getElementById('vb-res-list').innerHTML='<div style="padding:20px;font-size:10px;color:#333">Noch keine reservierbaren Restaurants</div>';return;}
+  document.getElementById('vb-res-list').innerHTML=res.map(l=>`
+    <div class="vb-item">
+      <div><div class="vb-nm">${l.name}</div><div class="vb-meta">K${l.kreis||'?'} · ${l.subkategorie||''}</div></div>
+      <button class="vb-btn" onclick="${l.reservation_url?`window.open('${l.reservation_url}','_blank')`:'alert(\'Reservation kommt bald!\')'}" >BUCHE →</button>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════
+// UPDATE COUNTS
+// ═══════════════════════════════════════════
+function updateCounts(){
+  ['all','rest','bar','cafe'].forEach(t=>{
+    const n=typCounts[t==='rest'?'restaurant':t];
+    const el=document.getElementById('tc-'+t);
+    if(el)el.textContent=n;
+    const sel=document.getElementById('stc-'+t);
+    if(sel)sel.textContent=n;
+  });
+}
+
+// ═══════════════════════════════════════════
+// FILTER FUNCTIONS
+// ═══════════════════════════════════════════
 function setTyp(el,typ){
   document.querySelectorAll('.typ-btn').forEach(b=>b.classList.remove('on'));
   if(el)el.classList.add('on');
@@ -920,58 +1071,43 @@ function setTyp(el,typ){
 function sheetTyp(el,typ){
   document.querySelectorAll('.typ-card').forEach(b=>b.classList.remove('on'));
   if(el)el.classList.add('on');
-  // sync desktop
-  document.querySelectorAll('.typ-btn').forEach(b=>{if(b.dataset.typ===typ)b.classList.add('on');else b.classList.remove('on')});
+  document.querySelectorAll('.typ-btn').forEach(b=>{b.classList.toggle('on',b.dataset.typ===typ)});
   S.typ=typ;S.kueche='all';
-  renderKuechen();renderKreisSheet();syncSheet();
+  renderKuechen();buildGrid();
 }
-
-// SET KÜCHE
 function setKueche(el,k){
   document.querySelectorAll('.kchip').forEach(b=>b.classList.remove('on'));
   if(el)el.classList.add('on');
-  S.kueche=k;
-  updateTags();buildGrid();
+  S.kueche=k;updateTags();buildGrid();
 }
-
-// SET KREIS
 function setKreis(el,k){
   document.querySelectorAll('.kr-btn').forEach(b=>b.classList.remove('on'));
   if(el)el.classList.add('on');
+  else{document.querySelectorAll('.kr-btn').forEach(b=>{if(b.textContent.trim()===(k==='all'?'ALLE':'K'+k))b.classList.add('on')});}
   S.kreis=k;
-  // sync heatmap
-  document.querySelectorAll('.hm-cell').forEach(c=>{c.classList.toggle('on',c.dataset.k==k)});
-  updateTags();buildGrid();renderKreisSheet();
+  document.querySelectorAll('.hm-cell').forEach(c=>c.classList.toggle('on',c.dataset.k==k));
+  renderKreisSheet();updateTags();buildGrid();
 }
-
-// SET QUER
 function setQuer(el,q){
   el.classList.toggle('on');S[q]=!S[q];
-  if(q==='ki')document.getElementById('rb-ki').style.display=S.ki?'flex':'none';
   updateTags();buildGrid();
 }
 function sheetQuer(el,q){
   el.classList.toggle('on');S[q]=!S[q];
-  // sync desktop
   const dEl=document.getElementById('qb-'+q);
   if(dEl)dEl.classList.toggle('on',S[q]);
-  if(q==='ki')document.getElementById('rb-ki').style.display=S.ki?'flex':'none';
-  updateTags();buildGrid();syncSheet();
+  updateTags();buildGrid();
 }
-
-// RESET
 function resetAll(){
   S={typ:'all',kueche:'all',kreis:'all',offe:false,naehe:false,ki:false,res:false,sort:S.sort};
   document.querySelectorAll('.typ-btn,.typ-card').forEach(b=>b.classList.remove('on'));
   document.querySelectorAll('[data-typ="all"]').forEach(b=>b.classList.add('on'));
   document.querySelectorAll('.kr-btn').forEach(b=>b.classList.remove('on'));
-  document.querySelector('.kr-btn').classList.add('on');
+  document.querySelector('.kr-btn')?.classList.add('on');
   document.querySelectorAll('.q-btn,.quer-btn-sheet').forEach(b=>b.classList.remove('on'));
-  document.getElementById('rb-ki').style.display='none';
+  document.querySelectorAll('.hm-cell').forEach(c=>c.classList.remove('on'));
   renderKuechen();updateTags();buildGrid();
 }
-
-// SORT
 function setSort(el,s){
   document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('on'));
   el.classList.add('on');S.sort=s;buildGrid();
@@ -987,98 +1123,77 @@ function updateTags(){
     tags.push(`<div class="af-tag" onclick="setTyp(document.querySelector('[data-typ=\\'all\\']'),'all')">${icons[S.typ]||''} ${S.typ.toUpperCase()}<span class="af-x">✕</span></div>`);
   }
   if(S.kueche!=='all'){
-    const k=KUECHEN[S.typ]?.find(x=>x.id===S.kueche)||KUECHEN.all.find(x=>x.id===S.kueche);
-    if(k)tags.push(`<div class="af-tag" onclick="setKueche(null,'all')">${k.emoji} ${k.name}<span class="af-x">✕</span></div>`);
+    const k=SUBKAT[parseInt(S.kueche)];
+    if(k)tags.push(`<div class="af-tag" onclick="setKueche(null,'all')">${k.e} ${k.n}<span class="af-x">✕</span></div>`);
   }
   if(S.kreis!=='all')tags.push(`<div class="af-tag c" onclick="setKreis(document.querySelector('.kr-btn'),'all')">📍 KREIS ${S.kreis}<span class="af-x">✕</span></div>`);
   if(S.offe)tags.push(`<div class="af-tag g" onclick="setQuer(document.getElementById('qb-offe'),'offe')">● JETZT OFFE<span class="af-x">✕</span></div>`);
-  if(S.naehe)tags.push(`<div class="af-tag c" onclick="setQuer(document.getElementById('qb-naehe'),'naehe')">📍 IN DER NÄHE<span class="af-x">✕</span></div>`);
-  if(S.ki)tags.push(`<div class="af-tag g" onclick="setQuer(document.getElementById('qb-ki'),'ki')">🤖 KI TOP PICK<span class="af-x">✕</span></div>`);
   if(S.res)tags.push(`<div class="af-tag gold" onclick="setQuer(document.getElementById('qb-res'),'res')">🍽️ RESERVIERBAR<span class="af-x">✕</span></div>`);
   if(tags.length){
-    row.innerHTML='<div class="af-lbl" style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);flex-shrink:0">FILTER:</div>'+tags.join('')+'<div class="af-reset" onclick="resetAll()">✕ ALLE ZURÜCKSETZE</div>';
-  } else {
-    row.innerHTML='';
-  }
+    row.innerHTML='<div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);flex-shrink:0">FILTER:</div>'+tags.join('')+'<div class="af-reset" onclick="resetAll()">✕ ALLE ZURÜCKSETZE</div>';
+  } else {row.innerHTML='';}
 }
 
-// BUILD GRID
-function buildGrid(){
-  const g=document.getElementById('mgrid');
-  let data=locs.filter(l=>{
-    if(S.typ!=='all'&&l.typ!==S.typ)return false;
-    if(S.kueche!=='all'&&l.sub!==S.kueche)return false;
-    if(S.kreis!=='all'&&l.kreis!==S.kreis)return false;
-    if(S.offe&&!l.open)return false;
-    if(S.ki&&!l.ki)return false;
-    if(S.res&&!l.res)return false;
-    return true;
-  });
-  if(S.sort==='score')data.sort((a,b)=>b.score-a.score);
-  else if(S.sort==='dist')data.sort((a,b)=>a.dist-b.dist);
-  else data.reverse();
-
-  const cnt=data.length;
-  // Animate count
-  const rbEl=document.getElementById('rb-count');
-  if(rbEl){rbEl.style.animation='none';rbEl.offsetHeight;rbEl.style.animation='countUp .25s ease';rbEl.textContent=cnt;}
-  document.getElementById('sh-r').textContent=cnt+' RESTAURANTS · CAFÉS · BARS';
-  document.getElementById('sheet-count').textContent=cnt;
-
-  // Dynamic headline
-  const dhl=document.getElementById('dynamic-hl');
-  if(dhl){
-    let hl='';
-    if(S.kreis!=='all'&&S.kueche!=='all'){const k=KUECHEN.all.find(x=>x.id===S.kueche);hl=cnt+' '+(k?k.name:'')+' IN KREIS '+S.kreis;}
-    else if(S.kreis!=='all')hl=cnt+' LOKALE IN KREIS '+S.kreis;
-    else if(S.kueche!=='all'){const k=KUECHEN.all.find(x=>x.id===S.kueche);hl=cnt+' '+(k?k.name+' RESTAURANTS':'RESTAURANTS');}
-    else if(S.offe)hl=cnt+' JETZT OFFE';
-    else hl=cnt+' LOKALE IN ZÜRICH';
-    dhl.textContent=hl;
-  }
-
-  g.innerHTML='';
-  if(!data.length){
-    g.innerHTML=`<div class="empty-state"><div class="es-title">NÜÜT GFUNDE</div><div class="es-sub">Probier andere Filter</div><div class="es-reset" onclick="resetAll()">ALLE ZURÜCKSETZE</div></div>`;
-    return;
-  }
-  data.forEach((l,i)=>{
-    const c=document.createElement('div');
-    c.className='mcard';c.style.animation=`fadeUp .22s ease ${i*.04}s both`;
-    c.innerHTML=`
-      ${l.ki?`<div class="mc-ki">🤖</div>`:''}
-      <div class="mc-badges">
-        <span class="mcb ${l.badge}">${l.badgeTxt}</span>
-        ${l.ki?'<span class="mcb volt">KI</span>':''}
-        ${l.res?'<span class="mcb gold">🍽️</span>':''}
-      </div>
-      <div class="mc-name">${l.name}</div>
-      <div class="mc-type">${l.sub.toUpperCase()} · KREIS ${l.kreis}</div>
-      <div class="mc-meta">${l.addr} · ${l.open?'<span style="color:#c8ff00">● OFFE</span>':'<span style="color:rgba(232,228,217,.15)">○ ZU</span>'}</div>
-      <div class="mc-foot">
-        <div class="mc-stars">${l.stars}</div>
-        <div class="mc-dist">📍 ${l.dist} Min</div>
-        <div class="mc-score">${l.score}</div>
-      </div>`;
-    c.onclick=()=>openDet(l.id);
-    g.appendChild(c);
-  });
+// KREIS SHEET
+function renderKreisSheet(){
+  const sk=document.getElementById('sheet-kreis');
+  if(!sk)return;
+  sk.innerHTML=[{k:'all',label:'ALL'},...Array.from({length:12},(_,i)=>({k:i+1,label:'K'+(i+1)}))].map(d=>{
+    const cnt=d.k==='all'?allLocs.length:allLocs.filter(l=>l.kreis===d.k).length;
+    return`<div class="kgrid-k${S.kreis===d.k?' on':''}" onclick="setKreis(null,${d.k==='all'?'"all"':d.k});closeSheet();buildGrid()">
+      <div class="kgrid-k-name">${d.label}</div>
+      <div class="kgrid-k-cnt">${cnt}</div>
+    </div>`;
+  }).join('');
 }
 
-// HEATMAP
-function buildHM(){
-  const g=document.getElementById('hm');g.innerHTML='';
-  const MAX=64;
-  kreisData.forEach(d=>{
-    const p=Math.round(d.n/MAX*100);
-    const col=p>60?'#ff2d00':p>30?'#ff6600':p>15?'rgba(232,228,217,.6)':'rgba(232,228,217,.2)';
-    const el=document.createElement('div');
-    el.className='hm-cell';el.dataset.k=d.k;
-    el.innerHTML=`<div class="hm-k">K${d.k}</div><div class="hm-n" style="color:${col}">${d.n}</div><div class="hm-b"><div class="hm-bf" style="width:${p}%"></div></div>`;
-    el.onclick=()=>setKreis(null,S.kreis===d.k?'all':d.k);
-    g.appendChild(el);
-  });
+// DETAIL
+function openDet(l){
+  const sid=l.zt_subkategorie_id;
+  const sub=SUBKAT[sid]||{e:'🍽️',n:l.subkategorie||'GASTRO'};
+  const score=l.featured?'TOP':l.rating?Math.round(l.rating*20):'—';
+  
+  document.getElementById('p-art').textContent=l.name.substring(0,6);
+  document.getElementById('p-name').textContent=l.name;
+  document.getElementById('p-score').textContent=score;
+  document.getElementById('p-sub').textContent=sub.e+' '+sub.n+' · KREIS '+(l.kreis||'?');
+  document.getElementById('p-addr').textContent=l.adresse||'—';
+  document.getElementById('p-kreis').textContent='Kreis '+(l.kreis||'?')+' · PLZ '+l.plz;
+  document.getElementById('p-kueche').textContent=sub.e+' '+sub.n;
+  document.getElementById('p-oeffnig').textContent=l.oeffnungszeiten?(Array.isArray(l.oeffnungszeiten)?l.oeffnungszeiten.slice(0,2).join(' · '):l.oeffnungszeiten):'—';
+  document.getElementById('p-website').innerHTML=l.website?`<a href="${l.website}" target="_blank" style="color:#00f5ff;text-decoration:none">${l.website.replace(/^https?:\/\//,'').split('/')[0]} →</a>`:'—';
+  document.getElementById('p-tel').textContent=l.telefon||'—';
+  document.getElementById('p-desc').textContent=l.beschreibung_kurz||l.beschreibung||'Zürich Tourismus Daten · zuerich.com';
+  document.getElementById('p-tags').innerHTML=`
+    <span class="mcb ghost" style="padding:2px 7px;font-size:7px">KREIS ${l.kreis||'?'}</span>
+    ${l.featured?'<span class="mcb volt" style="padding:2px 7px;font-size:7px">TOP</span>':''}
+    ${l.hat_reservation?'<span class="mcb gold" style="padding:2px 7px;font-size:7px">🍽️ RESERVIERBAR</span>':''}
+  `;
+  
+  // Hero Bild
+  const ph=document.getElementById('p-hero');
+  if(l.bild_url){ph.style.backgroundImage=`url(${l.bild_url})`;ph.style.backgroundSize='cover';ph.style.backgroundPosition='center';}
+  else{ph.style.backgroundImage='none';}
+  
+  // Reservation
+  const resBtn=document.getElementById('p-res-btn');
+  resBtn.style.display=l.hat_reservation?'block':'none';
+  if(l.hat_reservation)resBtn.onclick=()=>window.open(l.reservation_url||'https://www.opentable.com','_blank');
+  
+  document.getElementById('p-revs').innerHTML=`
+    <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);margin-bottom:10px">INFO</div>
+    <div style="font-size:10px;color:rgba(232,228,217,.25);line-height:1.8">Quelle: Zürich Tourismus · CC BY-SA</div>
+    ${l.rating?`<div style="margin-top:8px;font-size:11px;color:#c8ff00">${'★'.repeat(Math.min(5,Math.round(l.rating)))} (${l.rating_count||'?'} Bewertungen)</div>`:''}
+  `;
+  
+  document.getElementById('panel').classList.add('open');
+  document.getElementById('ov').classList.add('on');
 }
+function closeDet(){document.getElementById('panel').classList.remove('open');document.getElementById('ov').classList.remove('on');}
+
+// SHEET
+function openSheet(){document.getElementById('sheet').classList.add('open');document.getElementById('sh-ov').classList.add('on');renderKreisSheet();}
+function closeSheet(){document.getElementById('sheet').classList.remove('open');document.getElementById('sh-ov').classList.remove('on');}
 
 // STIMMUNG
 function stimmung(el,m){
@@ -1095,46 +1210,13 @@ function setMood(el,m){
   document.getElementById('bot-msg').innerHTML=`«${botMap[m]}»`;
 }
 
-// SHEET
-function openSheet(){document.getElementById('sheet').classList.add('open');document.getElementById('sh-ov').classList.add('on');renderKreisSheet();}
-function closeSheet(){document.getElementById('sheet').classList.remove('open');document.getElementById('sh-ov').classList.remove('on');}
-function syncSheet(){document.getElementById('sheet-count').textContent=buildGrid()||'—';}
-
-// DETAIL
-function openDet(id){
-  const l=locs.find(x=>x.id===id)||locs[0];
-  document.getElementById('p-art').textContent=l.name.substring(0,6);
-  document.getElementById('p-name').textContent=l.name;
-  document.getElementById('p-score').textContent=l.score;
-  document.getElementById('p-sub').textContent=l.sub.toUpperCase()+' · KREIS '+l.kreis;
-  document.getElementById('p-addr').textContent=l.addr;
-  document.getElementById('p-kreis').textContent='Kreis '+l.kreis;
-  document.getElementById('p-kueche').textContent=l.sub.charAt(0).toUpperCase()+l.sub.slice(1);
-  document.getElementById('p-oeffnig').textContent=l.oeffnig;
-  document.getElementById('p-dist').textContent=l.dist+' Min z Fuess';
-  document.getElementById('p-rating').textContent=l.stars+' ('+l.rN+')';
-  document.getElementById('p-desc').textContent=l.desc;
-  document.getElementById('p-tags').innerHTML=`
-    <span class="mcb ${l.badge}" style="padding:2px 7px;font-size:6px">${l.badgeTxt}</span>
-    <span class="mcb ghost" style="padding:2px 7px;font-size:6px">KREIS ${l.kreis}</span>
-    ${l.open?'<span class="mcb volt" style="padding:2px 7px;font-size:6px">● OFFE</span>':''}
-    ${l.res?'<span class="mcb gold" style="padding:2px 7px;font-size:6px">🍽️ RESERVIERBAR</span>':''}`;
-  document.getElementById('p-res-btn').style.display=l.res?'block':'none';
-  document.getElementById('p-revs').innerHTML=`
-    <div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);margin-bottom:8px">REVIEWS (${l.rN})</div>
-    <div class="rev-item"><div class="rev-stars">★★★★★</div><div class="rev-user">@zuri_insider</div><div class="rev-txt">Beschtä Adresse sit langem.</div></div>
-    <div class="rev-item"><div class="rev-stars">★★★★★</div><div class="rev-user">@kreis4life</div><div class="rev-txt">Absoluti Pflicht. Wer das verpasst, verpasst Züri.</div></div>`;
-  document.getElementById('panel').classList.add('open');
-  document.getElementById('ov').classList.add('on');
-}
-function closeDet(){
-  document.getElementById('panel').classList.remove('open');
-  document.getElementById('ov').classList.remove('on');
-}
+// CURSOR
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';});
 
 // TICKERS
 function buildTickers(){
-  const A=['188 GASTRO LOKALE','ZÜRI ISST GUET','DÄ PULS VO DÄ STADT','GPS AKTIV','KI EMPFEHLUNGE','4. JUNI 2026','TISCH RESERVIERE'];
+  const A=['GASTRO ZÜRICH','ZÜRI ISST GUET','DÄ PULS VO DÄ STADT','GPS AKTIV','KI EMPFEHLUNGE','4. JUNI 2026','TISCH RESERVIERE'];
   const B=['BY RAIMONDO*','STADTPULS 2026','NEUE ÄRA','CITY GUIDE','ZÜRICH FIRST','DANN D WELT'];
   const mk=(items,g)=>[...items,...items].map(i=>`<span class="ti${g?' g':''}" ><b>●</b> ${i}</span>`).join('');
   document.getElementById('ta').innerHTML=mk(A,false);
@@ -1142,12 +1224,13 @@ function buildTickers(){
   document.getElementById('tc').innerHTML=mk([...A,...B],false);
 }
 
-// PULSE
+// PULSE COUNTER
 let pu=847;
 setInterval(()=>{pu+=Math.floor(Math.random()*10)-4;pu=Math.max(800,Math.min(900,pu));const el=document.getElementById('pm-n');if(el)el.textContent=pu;},2000);
 
 // INIT
-updateCounts();renderKuechen();renderKreisSheet();buildHM();buildGrid();buildTickers();updateTags();
+buildTickers();
+loadAllLocations();
 </script>
 </body>
 </html>
