@@ -1033,7 +1033,7 @@ function buildGrid(){
           <div class="mc-score" style="color:${l.hat_reservation?'#ffcc00':'#ff2d00'}">${l.hat_reservation?'RES':'—'}</div>
         </div>
       </div>`;
-    c.onclick=()=>openDet(l);
+    c.onclick=()=>window.location.href='gastro-profil.html?id='+l.id;
     g.appendChild(c);
   });
 }
