@@ -779,7 +779,7 @@ const stimmMap={
 // ═══════════════════════════════════════════
 // STATE + DATA
 // ═══════════════════════════════════════════
-let S={typ:'all',kueche:'all',kreis:'all',offe:false,naehe:false,ki:false,res:false,sort:'score'};
+let S={typ:'all',kueche:'all',kreis:'all',offe:false,naehe:false,ki:false,res:false,stimmung:'all',sort:'score'};
 let allLocs=[];
 let subkatCounts={};
 let typCounts={all:0,restaurant:0,bar:0,cafe:0};
@@ -793,7 +793,7 @@ async function loadAllLocations(){
     document.getElementById('rb-loading').style.display='block';
     
     const data=await sbGet(
-      'locations?select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,plz,bild_url,beschreibung,beschreibung_kurz,website,telefon,oeffnungszeiten,hat_reservation,reservation_url,rating,rating_count,featured,aktiv'+
+      'locations?select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,plz,bild_url,beschreibung,beschreibung_kurz,website,telefon,oeffnungszeiten,hat_reservation,reservation_url,rating,rating_count,featured,aktiv,stimmung_tags'+
       '&kategorie=eq.gastro&aktiv=eq.true&limit=500&order=featured.desc,id.asc'
     );
     
@@ -862,6 +862,9 @@ function getFiltered(){
     if(S.kueche!=='all'&&sid!==parseInt(S.kueche))return false;
     if(S.kreis!=='all'&&parseInt(l.kreis)!==parseInt(S.kreis))return false;
     if(S.res&&!l.hat_reservation)return false;
+    if(S.stimmung!=='all'){
+      if(!l.stimmung_tags||!l.stimmung_tags.includes(S.stimmung))return false;
+    }
     return true;
   });
 }
@@ -1098,7 +1101,7 @@ function sheetQuer(el,q){
   updateTags();buildGrid();
 }
 function resetAll(){
-  S={typ:'all',kueche:'all',kreis:'all',offe:false,naehe:false,ki:false,res:false,sort:S.sort};
+  S={typ:'all',kueche:'all',kreis:'all',offe:false,naehe:false,ki:false,res:false,stimmung:'all',sort:S.sort};
   document.querySelectorAll('.typ-btn,.typ-card').forEach(b=>b.classList.remove('on'));
   document.querySelectorAll('[data-typ="all"]').forEach(b=>b.classList.add('on'));
   document.querySelectorAll('.kr-btn').forEach(b=>b.classList.remove('on'));
@@ -1226,14 +1229,43 @@ function sheetSetKreis(k){
 function openSheet(){document.getElementById('sheet').classList.add('open');document.getElementById('sh-ov').classList.add('on');renderKreisSheet();}
 function closeSheet(){document.getElementById('sheet').classList.remove('open');document.getElementById('sh-ov').classList.remove('on');}
 
-// STIMMUNG
+// STIMMUNG — filtert echte Daten
 function stimmung(el,m){
   document.querySelectorAll('.stchip').forEach(c=>c.classList.remove('on'));
-  el.classList.add('on');
-  const recs=stimmMap[m]||[];
-  document.getElementById('str-lbl').textContent='🤖 KI EMPFIEHLT FÜR DICH:';
-  document.getElementById('str-recs').innerHTML=recs.map(r=>`<div class="str-rec"><div>${r}</div><div style="color:rgba(255,45,0,.35);font-size:10px">→</div></div>`).join('');
-  document.getElementById('st-res').classList.add('show');
+
+  // Stimmung → stimmung_tag Mapping
+  const tagMap={
+    müde:'ruhig',
+    energetisch:'energetisch',
+    romantisch:'romantisch',
+    hungrig:'schnell',
+    vegisch:'vegisch',
+    budget:'budget',
+    besonders:'besonders',
+  };
+
+  if(S.stimmung===tagMap[m]){
+    // Toggle off
+    S.stimmung='all';
+    document.getElementById('st-res').classList.remove('show');
+  } else {
+    el.classList.add('on');
+    S.stimmung=tagMap[m]||'all';
+
+    // KI Empfehlung anzeigen
+    const filtered=getFiltered();
+    document.getElementById('str-lbl').textContent='🤖 KI EMPFIEHLT — '+filtered.length+' LOKALE:';
+    document.getElementById('str-recs').innerHTML=filtered.slice(0,3).map(l=>{
+      const sub=SUBKAT[l.zt_subkategorie_id]||{e:'🍽️',n:''};
+      return`<div class="str-rec">
+        <div>${sub.e} <strong>${l.name}</strong> · K${l.kreis||'?'}</div>
+        <div style="color:rgba(255,45,0,.4);font-size:10px">→</div>
+      </div>`;
+    }).join('') || '<div style="font-size:10px;color:#333;padding:6px 0">Keine Lokale mit diesem Tag gefunden</div>';
+    document.getElementById('st-res').classList.add('show');
+  }
+
+  buildGrid();
 }
 function setMood(el,m){
   document.querySelectorAll('.bchip').forEach(c=>c.classList.remove('on'));
