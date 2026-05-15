@@ -1,3 +1,7 @@
+# Stadtpuls — depuls.ch
+# robots.txt
+
+# Standard — alle Suchmaschinen
 User-agent: *
 Disallow: /master.html
 Disallow: /mindmap.html
@@ -6,9 +10,35 @@ Disallow: /admin.html
 
 Allow: /
 Allow: /index.html
+Allow: /gastro.html
 Allow: /feedback.html
 Allow: /kontakt.html
 Allow: /impressum.html
 Allow: /datenschutz.html
+
+# KI-Suchmaschinen — AEO
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: cohere-ai
+Allow: /
+
+User-agent: Applebot
+Allow: /
 
 Sitemap: https://depuls.ch/sitemap.xml
