@@ -384,9 +384,100 @@ function renderProfil(l,similar){
       <div>
         <p class="profil-desc">${l.beschreibung||l.beschreibung_kurz||'Dieses Lokal ist Teil des Stadtpuls City Guide Zürich. Echte Bewertungen vom Züri-Volk kommen in Phase 5.'}</p>
         
+        <!-- PULSE MOMENT -->
+        <div style="border:1px solid rgba(255,45,0,.15);background:rgba(255,45,0,.03);padding:18px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+          <div>
+            <div style="font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.4);margin-bottom:4px;display:flex;align-items:center;gap:5px"><span style="width:5px;height:5px;border-radius:50%;background:#ff2d00;display:inline-block;animation:blink 1s infinite"></span>LIVE · KREIS ${l.kreis||'?'}</div>
+            <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;color:#ff2d00">STADTPULS SCORE</div>
+            <div style="font-size:10px;color:rgba(232,228,217,.3);margin-top:4px">${l.featured?'Top Pick · Empfohlen von Stadtpuls':'Verifiziertes Lokal · Zürich Tourismus'}</div>
+          </div>
+          <div style="display:flex;gap:16px">
+            <div style="text-align:center">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:36px;color:#ff2d00;line-height:1">${score}</div>
+              <div style="font-size:7px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase;margin-top:2px">SCORE</div>
+            </div>
+            <div style="text-align:center">
+              <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:36px;color:#c8ff00;line-height:1">${l.kreis||'?'}</div>
+              <div style="font-size:7px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase;margin-top:2px">KREIS</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MAP -->
+        ${l.adresse?`
+        <div style="margin-bottom:24px">
+          <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:10px;display:flex;align-items:center;gap:6px">— STANDORT</div>
+          <div style="border:1px solid rgba(0,245,255,.1);overflow:hidden;position:relative">
+            <iframe 
+              src="https://www.google.com/maps?q=${encodeURIComponent(l.adresse+' Zürich')}&output=embed&z=16" 
+              width="100%" height="220" style="border:0;display:block;filter:invert(90%) hue-rotate(180deg) saturate(0.8)" 
+              loading="lazy" allowfullscreen>
+            </iframe>
+            <div style="position:absolute;bottom:8px;right:8px">
+              <a href="https://maps.google.com?q=${encodeURIComponent(l.adresse+' Zürich')}" target="_blank" style="font-size:8px;letter-spacing:2px;text-transform:uppercase;background:#00f5ff;color:#04040a;padding:5px 10px;text-decoration:none;font-family:'DM Mono',monospace">AUF KARTE ÖFFNE →</a>
+            </div>
+          </div>
+        </div>`:''}
+
         ${resBox}
-        
-        <div class="section-title">DETAILS</div>
+
+        <!-- KI FEATURES SECTION -->
+        <div style="border:1px solid rgba(200,255,0,.1);background:#07070f;padding:22px;margin-bottom:24px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
+            <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase">🤖 ZÜRI-BOT · KI FEATURES</div>
+            <div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;border:1px solid rgba(200,255,0,.2);padding:3px 8px;display:flex;align-items:center;gap:4px"><span style="width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite;display:inline-block"></span>PHASE 5-6</div>
+          </div>
+          
+          <!-- GPS + ANREISE -->
+          <div style="border:1px solid rgba(0,245,255,.1);background:rgba(0,245,255,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px">
+            <div style="font-size:24px;flex-shrink:0">📍</div>
+            <div style="flex:1">
+              <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">GPS DISTANZ</div>
+              <div style="font-size:11px;color:rgba(232,228,217,.4)">Kreis ${l.kreis||'?'} · Standort wird in Phase 5 live berechnet</div>
+            </div>
+            <div style="font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.2);color:#00f5ff;padding:6px 10px;white-space:nowrap;cursor:none">GPS AN</div>
+          </div>
+
+          <!-- ZVV ANBINDUNG -->
+          <div style="border:1px solid rgba(0,245,255,.08);background:rgba(0,245,255,.01);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px">
+            <div style="font-size:24px;flex-shrink:0">🚋</div>
+            <div style="flex:1">
+              <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">ZVV ANBINDUNG</div>
+              <div style="font-size:11px;color:rgba(232,228,217,.4)">Nächste Haltestelle · Echtzeit-Abfahrten · Phase 5</div>
+            </div>
+            <div style="font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.15);color:rgba(0,245,255,.4);padding:6px 10px;white-space:nowrap">BALD</div>
+          </div>
+
+          <!-- BOOKMARK -->
+          <div style="border:1px solid rgba(255,204,0,.1);background:rgba(255,204,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px">
+            <div style="font-size:24px;flex-shrink:0">❤️</div>
+            <div style="flex:1">
+              <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ffcc00;margin-bottom:4px">BOOKMARK</div>
+              <div style="font-size:11px;color:rgba(232,228,217,.4)">Spar dieses Lokal — KI lernt was du magst</div>
+            </div>
+            <div onclick="alert('Login nötig — kommt in Phase 5!')" style="font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,204,0,.3);color:#ffcc00;padding:6px 10px;white-space:nowrap;cursor:none">❤️ SPARE</div>
+          </div>
+
+          <!-- KI EMPFEHLUNG -->
+          <div style="border:1px solid rgba(200,255,0,.1);background:rgba(200,255,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px">
+            <div style="font-size:24px;flex-shrink:0">⚡</div>
+            <div style="flex:1">
+              <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:4px">KI EMPFEHLUNG</div>
+              <div style="font-size:11px;color:rgba(232,228,217,.4)">«${l.featured?'Top Pick — Stadtpuls empfiehlt dieses Lokal':'Basierend auf deiner Stimmung und deinem Kreis'}»</div>
+            </div>
+            <div style="font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(200,255,0,.2);color:#c8ff00;padding:6px 10px;white-space:nowrap">AKTIV</div>
+          </div>
+
+          <!-- SPONTAN MODUS -->
+          <div style="border:1px solid rgba(255,45,0,.1);background:rgba(255,45,0,.02);padding:14px;display:flex;align-items:center;gap:14px">
+            <div style="font-size:24px;flex-shrink:0">🎯</div>
+            <div style="flex:1">
+              <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;margin-bottom:4px">SPONTAN-MODUS</div>
+              <div style="font-size:11px;color:rgba(232,228,217,.4)">«Kreis ${l.kreis||'?'} · 2h · zu zweit» — KI plant deinen Abend</div>
+            </div>
+            <div style="font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,45,0,.2);color:rgba(255,45,0,.5);padding:6px 10px;white-space:nowrap">PHASE 6</div>
+          </div>
+        </div>
         <div class="section-body">
           ${l.adresse?`<strong style="color:#e8e4d9">Adresse</strong><br>${l.adresse}, ${l.plz||''} Zürich<br><br>`:''}
           ${oeffnig!=='—'?`<strong style="color:#e8e4d9">Öffnungszeiten</strong><br>${oeffnig}<br><br>`:''}
