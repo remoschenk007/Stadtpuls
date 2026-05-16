@@ -1057,12 +1057,25 @@ async function loadAllLocations(){
   try{
     document.getElementById('rb-loading').style.display='block';
     
-    const data=await sbGet(
+    // Gastro Locations laden
+    const gastroData=await sbGet(
       'locations?select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,plz,bild_url,beschreibung,beschreibung_kurz,website,telefon,oeffnungszeiten,hat_reservation,reservation_url,rating,rating_count,featured,aktiv,stimmung_tags'+
       '&kategorie=eq.gastro&aktiv=eq.true&limit=500&order=featured.desc,id.asc'
     );
+
+    // Bars aus Nachtleben auch laden
+    const barData=await sbGet(
+      'locations?select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,plz,bild_url,beschreibung,beschreibung_kurz,website,telefon,oeffnungszeiten,hat_reservation,reservation_url,rating,rating_count,featured,aktiv,stimmung_tags'+
+      '&kategorie=eq.nachtleben&aktiv=eq.true&limit=500&order=featured.desc,id.asc'
+    );
     
-    if(!Array.isArray(data)){console.error('Supabase error:',data);return;}
+    // Zusammenführen — Bars nur wenn zt_subkategorie_id in Bar-IDs
+    const barIds=TYP_IDS.bar;
+    const bars=(Array.isArray(barData)?barData:[]).filter(l=>barIds.includes(parseInt(l.zt_subkategorie_id)));
+    
+    const data=[...(Array.isArray(gastroData)?gastroData:[]),...bars];
+    
+    if(!data.length){console.error('Keine Daten');return;}
     
     allLocs=data;
     
@@ -1125,21 +1138,48 @@ async function loadAllLocations(){
 }
 
 // ═══════════════════════════════════════════
-// FILTER LOGIC
+// FILTER LOGIC — KOMPLETT GEFIXT
 // ═══════════════════════════════════════════
 function getFiltered(){
   return allLocs.filter(l=>{
     const sid=parseInt(l.zt_subkategorie_id)||0;
+
+    // TYP Filter
     if(S.typ!=='all'){
       const ids=TYP_IDS[S.typ];
       if(!ids||!ids.includes(sid))return false;
     }
+
+    // KÜCHE Filter
     if(S.kueche!=='all'&&sid!==parseInt(S.kueche))return false;
+
+    // KREIS Filter
     if(S.kreis!=='all'&&parseInt(l.kreis)!==parseInt(S.kreis))return false;
+
+    // RESERVIERBAR Filter
     if(S.res&&!l.hat_reservation)return false;
+
+    // STIMMUNG Filter — MIT FALLBACK auf Subkategorie
     if(S.stimmung!=='all'){
-      if(!l.stimmung_tags||!l.stimmung_tags.includes(S.stimmung))return false;
+      // Erst stimmung_tags prüfen
+      if(l.stimmung_tags&&l.stimmung_tags.length>0){
+        if(!l.stimmung_tags.includes(S.stimmung))return false;
+      } else {
+        // Fallback: Stimmung → Subkategorie Mapping
+        const stimmungFallback={
+          ruhig:[102,184,191,192],          // Café, Schweizer, Mediterran, Bistro
+          energetisch:[193,195,188,103],     // American, Grill, Asiatisch, Bar
+          romantisch:[194,191,187,184],      // Gourmet, Mediterran, Français, Schweizer
+          schnell:[188,189,193,102],         // Asiatisch, Nahost, American, Café
+          vegisch:[197,409,102],             // Vegisch, Vegan, Café
+          budget:[102,192,189,188],          // Café, Bistro, Nahost, Asiatisch
+          besonders:[194,184,187,191],       // Gourmet, Schweizer, Français, Mediterran
+        };
+        const fallbackIds=stimmungFallback[S.stimmung]||[];
+        if(fallbackIds.length>0&&!fallbackIds.includes(sid))return false;
+      }
     }
+
     return true;
   });
 }
@@ -1561,11 +1601,10 @@ function sheetSetKreis(k){
 function openSheet(){document.getElementById('sheet').classList.add('open');document.getElementById('sh-ov').classList.add('on');renderKreisSheet();}
 function closeSheet(){document.getElementById('sheet').classList.remove('open');document.getElementById('sh-ov').classList.remove('on');}
 
-// STIMMUNG — filtert echte Daten
+// STIMMUNG — filtert echte Daten mit Fallback
 function stimmung(el,m){
   document.querySelectorAll('.stchip').forEach(c=>c.classList.remove('on'));
 
-  // Stimmung → stimmung_tag Mapping
   const tagMap={
     müde:'ruhig',
     energetisch:'energetisch',
@@ -1576,28 +1615,39 @@ function stimmung(el,m){
     besonders:'besonders',
   };
 
+  const stimmEmoji={
+    müde:'😴',energetisch:'⚡',romantisch:'💫',
+    hungrig:'🍕',vegisch:'🌿',budget:'💰',besonders:'🔥'
+  };
+
   if(S.stimmung===tagMap[m]){
-    // Toggle off
     S.stimmung='all';
     document.getElementById('st-res').classList.remove('show');
-  } else {
-    el.classList.add('on');
-    S.stimmung=tagMap[m]||'all';
-
-    // KI Empfehlung anzeigen
-    const filtered=getFiltered();
-    document.getElementById('str-lbl').textContent='🤖 KI EMPFIEHLT — '+filtered.length+' LOKALE:';
-    document.getElementById('str-recs').innerHTML=filtered.slice(0,3).map(l=>{
-      const sub=SUBKAT[l.zt_subkategorie_id]||{e:'🍽️',n:''};
-      return`<div class="str-rec">
-        <div>${sub.e} <strong>${l.name}</strong> · K${l.kreis||'?'}</div>
-        <div style="color:rgba(255,45,0,.4);font-size:10px">→</div>
-      </div>`;
-    }).join('') || '<div style="font-size:10px;color:#333;padding:6px 0">Keine Lokale mit diesem Tag gefunden</div>';
-    document.getElementById('st-res').classList.add('show');
+    buildGrid();
+    return;
   }
 
+  el.classList.add('on');
+  S.stimmung=tagMap[m]||'all';
   buildGrid();
+
+  // KI Empfehlung — zeigt gefilterte Lokale
+  const filtered=getFiltered();
+  const taggedCount=allLocs.filter(l=>l.stimmung_tags&&l.stimmung_tags.includes(S.stimmung)).length;
+  
+  document.getElementById('str-lbl').textContent=
+    stimmEmoji[m]+' KI EMPFIEHLT — '+filtered.length+' LOKALE'+(taggedCount>0?' ('+taggedCount+' getaggt)':'');
+  
+  document.getElementById('str-recs').innerHTML=filtered.slice(0,4).map(l=>{
+    const sub=SUBKAT[parseInt(l.zt_subkategorie_id)]||{e:'🍽️',n:''};
+    const hasTag=l.stimmung_tags&&l.stimmung_tags.includes(S.stimmung);
+    return`<div class="str-rec" onclick="openDet(l)" style="cursor:none">
+      <div>${sub.e} <strong style="color:#e8e4d9">${l.name}</strong> · K${l.kreis||'?'}${hasTag?' <span style="color:#c8ff00;font-size:8px">✓ GETAGGT</span>':''}</div>
+      <div style="color:rgba(255,45,0,.4);font-size:10px">→</div>
+    </div>`;
+  }).join('')||`<div style="font-size:10px;color:rgba(232,228,217,.2);padding:6px 0">Noch wenig Daten — wir tagge mehr Lokale bald</div>`;
+  
+  document.getElementById('st-res').classList.add('show');
 }
 function setMood(el,m){
   document.querySelectorAll('.bchip').forEach(c=>c.classList.remove('on'));
