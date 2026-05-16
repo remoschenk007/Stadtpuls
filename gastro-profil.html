@@ -403,10 +403,6 @@ function renderProfil(l,similar){
               loading="lazy" allowfullscreen>
             </iframe>
             <div style="position:absolute;bottom:10px;right:10px;display:flex;gap:8px">
-              <a href="https://maps.google.com?q=${mapQuery}" target="_blank"
-                style="min-height:44px;padding:0 16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#00f5ff;color:#04040a;text-decoration:none;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:6px;font-weight:bold">
-                🗺️ ÖFFNE →
-              </a>
               <div onclick="if(navigator.share){navigator.share({title:'${l.name} — Stadtpuls',url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);alert('Link kopiert!')}"
                 style="min-height:44px;padding:0 16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#ff2d00;color:#e8e4d9;font-family:'DM Mono',monospace;cursor:pointer;display:flex;align-items:center;gap:6px">
                 📤 TEILE
