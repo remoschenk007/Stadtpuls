@@ -289,7 +289,7 @@ function updateSEO(l,sub){
     "@context":"https://schema.org","@type":"Restaurant",
     "name":l.name,"description":l.beschreibung||'',
     "url":"https://depuls.ch/gastro-profil.html?id="+l.id,
-    "address":{"@type":"PostalAddress","streetAddress":l.adresse||'','postalCode":l.plz||'','addressLocality":"Zürich","addressCountry":"CH'},
+    "address":{"@type":"PostalAddress","streetAddress":l.adresse||"","postalCode":l.plz||"","addressLocality":"Zürich","addressCountry":"CH"},
     "telephone":l.telefon||',"servesCuisine":sub.n,"priceRange":"CHF","image":l.bild_url||''
   };
   document.getElementById('schema-ld').textContent=JSON.stringify(schema);
