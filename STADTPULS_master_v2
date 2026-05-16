@@ -2800,6 +2800,31 @@ ROADMAP UPDATE:
 ⏳ Phase 6  → KI Features live
 🔴 Soft Launch: 4. Juni 2026 (Geburtstag Remo) — kann auch Ende Juni werden
 
+✅ Phase 4m → Import Tool v3
+✅ Phase 4n → gastro.html GODMODE v2 + Mobile + Supabase live
+✅ Phase 4o → Filter Bug gefixt — Integer/String
+✅ Phase 4o → Stimmungs-Filter live — stimmung_tags aus Supabase
+✅ Phase 4p → SEO/AEO komplett — Schema.org + robots.txt + sitemap.xml
+⏳ Phase 4q → Nachtleben Filter-Bug (kategorie='nachtleben' lowercase)
+⏳ Phase 4r → Restaurant-Profile vollständig
+⏳ Phase 5  → Login + Community + Onboarding
+⏳ Phase 6  → KI Features live (Züri-Bot mit Claude API)
+🔴 Soft Launch: 4. Juni 2026 (oder Ende Juni)
+
+✅ Phase 4n → gastro.html GODMODE + Supabase live
+✅ Phase 4o → Filter System komplett gefixt
+✅ Phase 4o → Stimmungs-Filter mit Fallback
+✅ Phase 4o → Kreisrivalität + Pokal + Rangliste
+✅ Phase 4p → SEO/AEO komplett
+✅ Phase 4q → gastro-profil.html Template live
+✅ Phase 4q → Map, KI Features, Score, Share Button
+✅ Phase 4r → 745 Locations importiert
+⏳ Phase 4s → shopping.html
+⏳ Phase 4t → nachtleben.html Filter-Bug
+⏳ Phase 5  → Login + Community + Onboarding
+⏳ Phase 6  → KI Features live (Züri-Bot Claude API)
+🔴 Soft Launch: 4. Juni 2026
+
 SOFT LAUNCH: 4. Juni 2026 🔴
 
 
