@@ -13,7 +13,7 @@
 body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
 body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px);pointer-events:none;z-index:9997}
 #cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-#cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(255,45,0,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .12s ease,top .12s ease}
+#cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(255,45,0,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0s,top 0s}
 
 /* NAV */
 nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid rgba(255,45,0,.1);position:sticky;top:0;background:#04040a;z-index:300}
@@ -33,16 +33,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 .bc-current{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.5)}
 
 /* HERO */
-.hero-img{width:100%;height:420px;object-fit:cover;display:block;position:relative}
+.hero-img{width:100%;height:420px;object-fit:cover;display:block}
 .hero-wrap{position:relative;overflow:hidden}
 .hero-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,#04040a,transparent);pointer-events:none}
 .hero-placeholder{width:100%;height:420px;background:linear-gradient(135deg,#07070f,#0a0a18);display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.3}
 
 /* BOOST BANNER */
 .boost-banner{background:linear-gradient(90deg,#ff2d00,#ff6600);padding:10px 40px;display:flex;align-items:center;gap:10px}
-.bb-icon{font-size:14px}
 .bb-text{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:#e8e4d9}
-.bb-badge{font-size:7px;letter-spacing:2px;text-transform:uppercase;background:rgba(232,228,217,.2);color:#e8e4d9;padding:2px 8px;border-radius:2px}
 
 /* HEADER */
 .profil-header{padding:28px 40px 0}
@@ -58,7 +56,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 /* CONTENT GRID */
 .content-grid{display:grid;grid-template-columns:1fr 380px;gap:40px;padding:28px 40px 0;align-items:start}
 
-/* LEFT — BESCHREIBUNG */
+/* LEFT */
 .profil-desc{font-size:13px;color:rgba(232,228,217,.55);line-height:2;margin-bottom:28px}
 .section-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase;color:#e8e4d9;margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .section-title::before{content:'—';color:#ff2d00}
@@ -83,13 +81,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 .rev-user{font-size:9px;color:#ff2d00;letter-spacing:1px}
 .rev-stars{color:#c8ff00;font-size:11px;letter-spacing:2px}
 .rev-text{font-size:11px;color:rgba(232,228,217,.35);line-height:1.8}
-.rev-empty{font-size:10px;color:rgba(232,228,217,.15);padding:20px 0;text-align:center;letter-spacing:1px}
 
 /* RIGHT — DETAILS BOX */
 .details-box{border:1px solid rgba(255,45,0,.1);background:#07070f;position:sticky;top:70px}
 .db-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;padding:16px 20px;border-bottom:1px solid rgba(255,45,0,.08)}
 .db-row{display:flex;align-items:flex-start;justify-content:space-between;padding:12px 20px;border-bottom:1px solid rgba(255,45,0,.05);gap:12px}
-.db-row:last-of-type{border-bottom:none}
 .db-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);flex-shrink:0;padding-top:1px}
 .db-val{font-size:10px;color:#e8e4d9;text-align:right;line-height:1.6}
 .db-val a{color:#00f5ff;text-decoration:none}
@@ -104,15 +100,34 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 .sb-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-top:2px}
 .sb-stars{color:#c8ff00;font-size:12px;letter-spacing:2px;margin-top:4px}
 
-/* FEATURED BADGE */
+/* FEATURED */
 .featured-strip{background:#c8ff00;padding:8px 20px;display:flex;align-items:center;gap:8px}
-.fs-icon{font-size:12px}
 .fs-text{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#04040a;font-weight:bold}
 
-/* ACTION BUTTONS */
-.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:0 20px 16px}
-.act-btn{padding:10px;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.25);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;text-align:center;cursor:none;transition:.15s;background:transparent}
-.act-btn:hover{color:#e8e4d9;border-color:rgba(255,45,0,.2)}
+/* ═══════════════════════════════════
+   ACTION BUTTONS — APPLE 44px STYLE
+   ═══════════════════════════════════ */
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 20px 20px}
+.act-btn{
+  min-height:44px;
+  padding:12px 8px;
+  border:1px solid rgba(255,45,0,.12);
+  color:rgba(232,228,217,.5);
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  text-align:center;
+  cursor:none;
+  transition:.15s;
+  background:#0a0a14;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+}
+.act-btn:hover{color:#e8e4d9;border-color:rgba(255,45,0,.4);background:#0f0f1a}
+.act-btn:active{background:#1a0a0a;border-color:#ff2d00}
 
 /* ÄHNLICHE */
 .similar-section{padding:40px 40px;border-top:1px solid rgba(255,45,0,.06)}
@@ -166,12 +181,13 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
   .nav-links{display:none}
   .breadcrumb{padding:10px 16px}
   .hero-img,.hero-placeholder{height:260px}
-  .boost-banner{padding:8px 16px}
   .profil-header{padding:20px 16px 0}
   .profil-name{font-size:clamp(48px,14vw,80px)}
   .profil-subname{font-size:clamp(22px,6vw,36px)}
   .content-grid{grid-template-columns:1fr;padding:16px 16px 0}
   .details-box{position:static;margin-bottom:24px;order:-1}
+  .action-grid{grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 20px}
+  .act-btn{min-height:52px;font-size:12px}
   .similar-section{padding:24px 16px}
   .similar-grid{grid-template-columns:1fr 1fr}
   .sim-card:nth-child(3n+1){border-left:none}
@@ -189,7 +205,7 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
   <div class="nav-links">
     <a class="nl on" href="gastro.html">GASTRO</a>
     <a class="nl" href="index.html?page=nachtleben">NACHTLEBE</a>
-    <a class="nl" href="index.html?page=shopping">SHOPPING</a>
+    <a class="nl" href="shopping.html">SHOPPING</a>
     <a class="nl" href="index.html?page=events">EVENTS</a>
   </div>
   <a class="btn-mm" href="index.html?page=login">MITMACHE</a>
@@ -204,7 +220,7 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
   <span class="bc-current" id="bc-name">—</span>
 </div>
 
-<!-- MAIN CONTENT — wird via JS befüllt -->
+<!-- MAIN CONTENT -->
 <div id="main-content">
   <div class="loading-wrap">
     <div class="loading-dots">
@@ -228,7 +244,7 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
     <div class="fc-desc">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich.</div>
     <div class="fc-copy">© 2026 by raimondo* — Zürich</div>
   </div>
-  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link" href="gastro.html">Gastro & Bars</a><a class="fc-link" href="index.html?page=nachtleben">Nachtleben</a><a class="fc-link" href="index.html?page=shopping">Shopping</a><a class="fc-link" href="index.html?page=events">Events</a></div>
+  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link" href="gastro.html">Gastro & Bars</a><a class="fc-link" href="index.html?page=nachtleben">Nachtleben</a><a class="fc-link" href="shopping.html">Shopping</a><a class="fc-link" href="index.html?page=events">Events</a></div>
   <div><div class="fc-title">COMMUNITY</div><a class="fc-link" href="index.html?page=community">Feed & Posts</a><a class="fc-link" href="index.html?page=dating">People & Dates</a><a class="fc-link" href="index.html?page=jobs">Jobs Züri</a></div>
   <div><div class="fc-title">MITMACHE</div><a class="fc-link" href="index.html?page=login">Einlogge</a><a class="fc-link" href="feedback.html">Feedback</a><a class="fc-link" href="kontakt.html">Partner werde</a><a class="fc-link" href="impressum.html">Impressum</a></div>
 </footer>
@@ -249,7 +265,6 @@ const SUBKAT={
   1465:{e:'🍷',n:'WEINBAR'},1468:{e:'🏘️',n:'QUARTIERBAR'},
 };
 
-// Placeholder Reviews — Phase 5 echte Community Reviews
 const PLACEHOLDER_REVIEWS=[
   {user:'@zuri_insider',stars:5,text:'Absolut empfehlenswert — eines der besten Lokale in diesem Kreis.'},
   {user:'@langstrasse_fan',stars:4,text:'Super Atmosphäre, gutes Essen. Reservierung empfohlen am Wochenende.'},
@@ -262,83 +277,54 @@ async function sbGet(path){
   return r.json();
 }
 
-// ID aus URL lesen
 function getIdFromUrl(){
-  const p=new URLSearchParams(window.location.search);
-  return p.get('id');
+  return new URLSearchParams(window.location.search).get('id');
 }
 
-// SEO dynamisch setzen
 function updateSEO(l,sub){
   const title=`${l.name} — ${sub.n} Kreis ${l.kreis||'?'} | Stadtpuls Zürich`;
   document.title=title;
-  document.getElementById('page-title').textContent=title;
-  document.getElementById('page-desc').content=l.beschreibung_kurz||l.beschreibung||`${l.name} — ${sub.n} in Zürich Kreis ${l.kreis||'?'}`;
-  
-  // Schema.org Restaurant
+  document.getElementById('page-desc').content=l.beschreibung_kurz||l.beschreibung||`${l.name} — ${sub.n} in Zürich`;
   const schema={
-    "@context":"https://schema.org",
-    "@type":"Restaurant",
-    "name":l.name,
-    "description":l.beschreibung||l.beschreibung_kurz||'',
+    "@context":"https://schema.org","@type":"Restaurant",
+    "name":l.name,"description":l.beschreibung||'',
     "url":"https://depuls.ch/gastro-profil.html?id="+l.id,
-    "address":{"@type":"PostalAddress","streetAddress":l.adresse||'','postalCode':l.plz||'','addressLocality':'Zürich','addressCountry':'CH'},
-    "telephone":l.telefon||'',
-    "servesCuisine":sub.n,
-    "priceRange":"CHF",
-    "image":l.bild_url||''
+    "address":{"@type":"PostalAddress","streetAddress":l.adresse||'','postalCode":l.plz||'','addressLocality":"Zürich","addressCountry":"CH'},
+    "telephone":l.telefon||',"servesCuisine":sub.n,"priceRange":"CHF","image":l.bild_url||''
   };
   document.getElementById('schema-ld').textContent=JSON.stringify(schema);
 }
 
-// RENDER PROFIL
 function renderProfil(l,similar){
   const sid=parseInt(l.zt_subkategorie_id)||0;
   const sub=SUBKAT[sid]||{e:'🍽️',n:l.subkategorie?.toUpperCase()||'RESTAURANT'};
-  
-  // FIX 1 — Score: NEU statt —
   const score=l.featured?'TOP':l.rating?Math.round(l.rating*20):'NEU';
   const scoreColor=l.featured?'#c8ff00':l.rating?'#ff2d00':'rgba(232,228,217,.3)';
   const stars=l.rating?'★'.repeat(Math.min(5,Math.round(l.rating)))+'☆'.repeat(5-Math.min(5,Math.round(l.rating))):'· · · · ·';
-  
-  // Breadcrumb
+
   document.getElementById('bc-name').textContent=l.name;
-  
-  // SEO
   updateSEO(l,sub);
-  
-  // FIX 2 — Öffnungszeiten sauber
+
   let oeffnig='—';
   if(l.oeffnungszeiten){
     if(Array.isArray(l.oeffnungszeiten))oeffnig=l.oeffnungszeiten.slice(0,2).join('<br>');
     else oeffnig=l.oeffnungszeiten;
   }
-  
-  // FIX 2 — Adresse vollständig
+
   const adresseVoll=l.adresse&&l.plz?l.adresse+', '+l.plz+' Zürich':l.adresse?l.adresse+', Zürich':'—';
   const mapQuery=encodeURIComponent((l.adresse||l.name)+' Zürich');
-  
-  // Featured/Boost Banner
-  const featuredBanner=l.featured?`
-    <div class="featured-strip">
-      <span class="fs-icon">⭐</span>
-      <span class="fs-text">STADTPULS TOP PICK — EMPFOHLEN</span>
-    </div>`:'';
-  
-  // Reservation Box
+
+  const featuredBanner=l.featured?`<div class="featured-strip"><span class="fs-text">⭐ STADTPULS TOP PICK — EMPFOHLEN</span></div>`:'';
+
   const resUrl=l.reservation_url||'';
   const resOnclick=resUrl?"window.open('"+resUrl+"','_blank')":'alert("Reservation kommt bald!")';
   const resBox=l.hat_reservation?`
     <div class="res-box">
-      <div class="rb-top">
-        <span class="rb-badge">SPONTAN</span>
-        <span class="rb-title">RESERVATION — SOFORT</span>
-      </div>
+      <div class="rb-top"><span class="rb-badge">SPONTAN</span><span class="rb-title">RESERVATION — SOFORT</span></div>
       <div class="rb-sub">Plätze verfügbar — jetzt buche</div>
       <button class="btn-res" onclick="${resOnclick}">🍽️ TISCH RESERVIERE →</button>
     </div>`:'';
 
-  // Ähnliche Lokale
   const simCards=similar.slice(0,3).map(s=>{
     const ssub=SUBKAT[parseInt(s.zt_subkategorie_id)]||{e:'🍽️',n:'RESTAURANT'};
     return`<a class="sim-card" href="gastro-profil.html?id=${s.id}">
@@ -349,29 +335,21 @@ function renderProfil(l,similar){
     </a>`;
   }).join('');
 
-  // Reviews Placeholder — Phase 5 echte Reviews
   const reviewsHTML=PLACEHOLDER_REVIEWS.map(r=>`
     <div class="rev-item">
-      <div class="rev-top">
-        <div class="rev-user">${r.user}</div>
-        <div class="rev-stars">${'★'.repeat(r.stars)}</div>
-      </div>
+      <div class="rev-top"><div class="rev-user">${r.user}</div><div class="rev-stars">${'★'.repeat(r.stars)}</div></div>
       <div class="rev-text">${r.text}</div>
     </div>`).join('');
 
   document.getElementById('main-content').innerHTML=`
     ${featuredBanner}
-    
+
     <!-- HERO -->
     <div class="hero-wrap">
-      ${l.bild_url
-        ?`<img class="hero-img" src="${l.bild_url}" alt="${l.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
-        :''}
-      <div class="hero-placeholder" style="${l.bild_url?'display:none':''}">
-        ${sub.e}
-      </div>
+      ${l.bild_url?`<img class="hero-img" src="${l.bild_url}" alt="${l.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:'' }
+      <div class="hero-placeholder" style="${l.bild_url?'display:none':''}">${sub.e}</div>
     </div>
-    
+
     <!-- HEADER -->
     <div class="profil-header">
       <div class="ph-top">
@@ -383,18 +361,20 @@ function renderProfil(l,similar){
       <div class="profil-name">${l.name}</div>
       <div class="profil-subname">${sub.n}</div>
     </div>
-    
+
     <!-- CONTENT GRID -->
     <div class="content-grid">
-    
+
       <!-- LEFT -->
       <div>
-        <p class="profil-desc">${l.beschreibung||l.beschreibung_kurz||'Dieses Lokal ist Teil des Stadtpuls City Guide Zürich. Echte Bewertungen vom Züri-Volk kommen in Phase 5.'}</p>
-        
-        <!-- PULSE MOMENT -->
+        <p class="profil-desc">${l.beschreibung||l.beschreibung_kurz||'Dieses Lokal ist Teil des Stadtpuls City Guide Zürich. Echte Bewertungen kommen in Phase 5.'}</p>
+
+        <!-- SCORE -->
         <div style="border:1px solid rgba(255,45,0,.15);background:rgba(255,45,0,.03);padding:18px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
           <div>
-            <div style="font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.4);margin-bottom:4px;display:flex;align-items:center;gap:5px"><span style="width:5px;height:5px;border-radius:50%;background:#ff2d00;display:inline-block;animation:blink 1s infinite"></span>LIVE · KREIS ${l.kreis||'?'}</div>
+            <div style="font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.4);margin-bottom:4px;display:flex;align-items:center;gap:5px">
+              <span style="width:5px;height:5px;border-radius:50%;background:#ff2d00;display:inline-block;animation:blink 1s infinite"></span>LIVE · KREIS ${l.kreis||'?'}
+            </div>
             <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;color:#ff2d00">STADTPULS SCORE</div>
             <div style="font-size:10px;color:rgba(232,228,217,.3);margin-top:4px">${l.featured?'Top Pick · Empfohlen von Stadtpuls':'Verifiziertes Lokal · Zürich Tourismus'}</div>
           </div>
@@ -410,82 +390,89 @@ function renderProfil(l,similar){
           </div>
         </div>
 
-        <!-- MAP -->
+        <!-- ═══════════════════════════
+             MAP — KEIN mix-blend-mode
+             ═══════════════════════════ -->
         ${l.adresse?`
         <div style="margin-bottom:24px">
           <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:10px;display:flex;align-items:center;gap:6px">— STANDORT · ${adresseVoll}</div>
           <div style="border:1px solid rgba(0,245,255,.1);overflow:hidden;position:relative;background:#07070f">
-            <iframe 
-              src="https://www.google.com/maps?q=${mapQuery}&output=embed&z=16&hl=de" 
-              width="100%" height="240" style="border:0;display:block;opacity:.85;mix-blend-mode:luminosity" 
+            <iframe
+              src="https://www.google.com/maps?q=${mapQuery}&output=embed&z=16&hl=de"
+              width="100%" height="260" style="border:0;display:block;"
               loading="lazy" allowfullscreen>
             </iframe>
-            <div style="position:absolute;bottom:10px;right:10px;display:flex;gap:6px">
-              <a href="https://maps.google.com?q=${mapQuery}" target="_blank" style="font-size:8px;letter-spacing:2px;text-transform:uppercase;background:#00f5ff;color:#04040a;padding:6px 12px;text-decoration:none;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:4px">🗺️ ÖFFNE →</a>
-              <div onclick="if(navigator.share){navigator.share({title:'${l.name} — Stadtpuls',url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);alert('Link kopiert!')}" style="font-size:8px;letter-spacing:2px;text-transform:uppercase;background:#ff2d00;color:#e8e4d9;padding:6px 12px;font-family:'DM Mono',monospace;cursor:none;display:flex;align-items:center;gap:4px">📤 TEILE</div>
+            <div style="position:absolute;bottom:10px;right:10px;display:flex;gap:8px">
+              <a href="https://maps.google.com?q=${mapQuery}" target="_blank"
+                style="min-height:44px;padding:0 16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#00f5ff;color:#04040a;text-decoration:none;font-family:'DM Mono',monospace;display:flex;align-items:center;gap:6px;font-weight:bold">
+                🗺️ ÖFFNE →
+              </a>
+              <div onclick="if(navigator.share){navigator.share({title:'${l.name} — Stadtpuls',url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);alert('Link kopiert!')}"
+                style="min-height:44px;padding:0 16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#ff2d00;color:#e8e4d9;font-family:'DM Mono',monospace;cursor:pointer;display:flex;align-items:center;gap:6px">
+                📤 TEILE
+              </div>
             </div>
           </div>
         </div>`:''}
 
         ${resBox}
 
-        <!-- KI FEATURES SECTION -->
+        <!-- KI FEATURES -->
         <div style="border:1px solid rgba(200,255,0,.1);background:#07070f;padding:22px;margin-bottom:24px">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">
             <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase">🤖 ZÜRI-BOT · KI FEATURES</div>
-            <div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;border:1px solid rgba(200,255,0,.2);padding:3px 8px;display:flex;align-items:center;gap:4px"><span style="width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite;display:inline-block"></span>PHASE 5-6</div>
+            <div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;border:1px solid rgba(200,255,0,.2);padding:3px 8px;display:flex;align-items:center;gap:4px">
+              <span style="width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite;display:inline-block"></span>PHASE 5-6
+            </div>
           </div>
-          
-          <!-- GPS + ANREISE -->
+
           <div style="border:1px solid rgba(0,245,255,.1);background:rgba(0,245,255,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px">
             <div style="font-size:24px;flex-shrink:0">📍</div>
             <div style="flex:1">
               <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">GPS DISTANZ</div>
               <div style="font-size:11px;color:rgba(232,228,217,.4)">Kreis ${l.kreis||'?'} · Standort wird in Phase 5 live berechnet</div>
             </div>
-            <div style="font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.2);color:#00f5ff;padding:6px 10px;white-space:nowrap;cursor:none">GPS AN</div>
+            <div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.2);color:#00f5ff;display:flex;align-items:center;white-space:nowrap;cursor:none">GPS AN</div>
           </div>
 
-          <!-- ZVV ANBINDUNG -->
           <div style="border:1px solid rgba(0,245,255,.08);background:rgba(0,245,255,.01);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px">
             <div style="font-size:24px;flex-shrink:0">🚋</div>
             <div style="flex:1">
               <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">ZVV ANBINDUNG</div>
               <div style="font-size:11px;color:rgba(232,228,217,.4)">Nächste Haltestelle · Echtzeit-Abfahrten · Phase 5</div>
             </div>
-            <div style="font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.15);color:rgba(0,245,255,.4);padding:6px 10px;white-space:nowrap">BALD</div>
+            <div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.15);color:rgba(0,245,255,.4);display:flex;align-items:center;white-space:nowrap">BALD</div>
           </div>
 
-          <!-- BOOKMARK -->
           <div style="border:1px solid rgba(255,204,0,.1);background:rgba(255,204,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px">
             <div style="font-size:24px;flex-shrink:0">❤️</div>
             <div style="flex:1">
               <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ffcc00;margin-bottom:4px">BOOKMARK</div>
               <div style="font-size:11px;color:rgba(232,228,217,.4)">Spar dieses Lokal — KI lernt was du magst</div>
             </div>
-            <div onclick="alert('Login nötig — kommt in Phase 5!')" style="font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,204,0,.3);color:#ffcc00;padding:6px 10px;white-space:nowrap;cursor:none">❤️ SPARE</div>
+            <div onclick="alert('Login nötig — kommt in Phase 5!')"
+              style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,204,0,.3);color:#ffcc00;display:flex;align-items:center;white-space:nowrap;cursor:pointer">❤️ SPARE</div>
           </div>
 
-          <!-- KI EMPFEHLUNG -->
           <div style="border:1px solid rgba(200,255,0,.1);background:rgba(200,255,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px">
             <div style="font-size:24px;flex-shrink:0">⚡</div>
             <div style="flex:1">
               <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:4px">KI EMPFEHLUNG</div>
               <div style="font-size:11px;color:rgba(232,228,217,.4)">«${l.featured?'Top Pick — Stadtpuls empfiehlt dieses Lokal':'Basierend auf deiner Stimmung und deinem Kreis'}»</div>
             </div>
-            <div style="font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(200,255,0,.2);color:#c8ff00;padding:6px 10px;white-space:nowrap">AKTIV</div>
+            <div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(200,255,0,.2);color:#c8ff00;display:flex;align-items:center;white-space:nowrap">AKTIV</div>
           </div>
 
-          <!-- SPONTAN MODUS -->
           <div style="border:1px solid rgba(255,45,0,.1);background:rgba(255,45,0,.02);padding:14px;display:flex;align-items:center;gap:14px">
             <div style="font-size:24px;flex-shrink:0">🎯</div>
             <div style="flex:1">
               <div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;margin-bottom:4px">SPONTAN-MODUS</div>
               <div style="font-size:11px;color:rgba(232,228,217,.4)">«Kreis ${l.kreis||'?'} · 2h · zu zweit» — KI plant deinen Abend</div>
             </div>
-            <div style="font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,45,0,.2);color:rgba(255,45,0,.5);padding:6px 10px;white-space:nowrap">PHASE 6</div>
+            <div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,45,0,.2);color:rgba(255,45,0,.5);display:flex;align-items:center;white-space:nowrap">PHASE 6</div>
           </div>
         </div>
+
         <div class="section-body">
           ${l.adresse?`<strong style="color:#e8e4d9">Adresse</strong><br>${l.adresse}, ${l.plz||''} Zürich<br><br>`:''}
           ${oeffnig!=='—'?`<strong style="color:#e8e4d9">Öffnungszeiten</strong><br>${oeffnig}<br><br>`:''}
@@ -493,7 +480,7 @@ function renderProfil(l,similar){
           ${l.telefon?`<strong style="color:#e8e4d9">Telefon</strong><br>${l.telefon}<br><br>`:''}
           Quelle: Zürich Tourismus · zuerich.com · CC BY-SA
         </div>
-        
+
         <!-- REVIEWS -->
         <div class="reviews-wrap">
           <div class="section-title">REVIEWS</div>
@@ -501,40 +488,28 @@ function renderProfil(l,similar){
           ${reviewsHTML}
         </div>
       </div>
-      
+
       <!-- RIGHT — DETAILS BOX -->
       <div>
         <div class="details-box">
-          ${l.featured?`<div class="featured-strip"><span class="fs-icon">⭐</span><span class="fs-text">TOP PICK</span></div>`:''}
-          
+          ${l.featured?`<div class="featured-strip"><span class="fs-text">⭐ TOP PICK</span></div>`:''}
+
           <div class="score-box">
             <div class="sb-score" style="color:${scoreColor}">${score}</div>
             <div class="sb-lbl">STADTPULS SCORE</div>
             <div class="sb-stars">${stars}</div>
           </div>
-          
+
           <div class="db-title">DETAILS</div>
-          
-          <div class="db-row">
-            <div class="db-lbl">ADRESSE</div>
-            <div class="db-val">${adresseVoll}</div>
-          </div>
-          <div class="db-row">
-            <div class="db-lbl">QUARTIER</div>
-            <div class="db-val">Kreis ${l.kreis||'?'} · Zürich</div>
-          </div>
-          <div class="db-row">
-            <div class="db-lbl">TYP</div>
-            <div class="db-val">${sub.e} ${sub.n}</div>
-          </div>
-          <div class="db-row">
-            <div class="db-lbl">ÖFFNIG</div>
-            <div class="db-val">${oeffnig}</div>
-          </div>
+
+          <div class="db-row"><div class="db-lbl">ADRESSE</div><div class="db-val">${adresseVoll}</div></div>
+          <div class="db-row"><div class="db-lbl">QUARTIER</div><div class="db-val">Kreis ${l.kreis||'?'} · Zürich</div></div>
+          <div class="db-row"><div class="db-lbl">TYP</div><div class="db-val">${sub.e} ${sub.n}</div></div>
+          <div class="db-row"><div class="db-lbl">ÖFFNIG</div><div class="db-val">${oeffnig}</div></div>
           ${l.website?`<div class="db-row"><div class="db-lbl">WEBSITE</div><div class="db-val"><a href="${l.website}" target="_blank">${l.website.replace(/^https?:\/\//,'').split('/')[0]} →</a></div></div>`:''}
           ${l.telefon?`<div class="db-row"><div class="db-lbl">TEL</div><div class="db-val">${l.telefon}</div></div>`:''}
           ${l.rating?`<div class="db-row"><div class="db-lbl">RATING</div><div class="db-val">${stars}<br><span style="font-size:8px;color:rgba(232,228,217,.3)">${l.rating_count||'?'} Bewertunge</span></div></div>`:''}
-          
+
           ${l.hat_reservation?`
           <div class="db-actions">
             <button class="btn-res" onclick="${resOnclick}">🍽️ TISCH RESERVIERE →</button>
@@ -543,17 +518,20 @@ function renderProfil(l,similar){
           <div class="db-actions">
             <a class="btn-back" href="gastro.html" style="border-color:rgba(255,45,0,.2);color:rgba(255,45,0,.5)">← ALLE LOKALE IN ZÜRICH</a>
           </div>`}
-          
+
+          <!-- ═══════════════════════════
+               ACTION BUTTONS — 44px
+               ═══════════════════════════ -->
           <div class="action-grid">
-            <div class="act-btn">🗺️ KARTE</div>
-            <div class="act-btn">❤️ SPARE</div>
-            <div class="act-btn">⭐ BEWERTE</div>
-            <div class="act-btn">📤 TEILE</div>
+            <div class="act-btn" onclick="window.open('https://maps.google.com?q=${mapQuery}','_blank')">🗺️ KARTE</div>
+            <div class="act-btn" onclick="alert('Bookmark — kommt in Phase 5!')">❤️ SPARE</div>
+            <div class="act-btn" onclick="alert('Bewertung — kommt in Phase 5!')">⭐ BEWERTE</div>
+            <div class="act-btn" onclick="if(navigator.share){navigator.share({title:'${l.name}',url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);alert('Link kopiert!')}">📤 TEILE</div>
           </div>
         </div>
       </div>
     </div>
-    
+
     <!-- ÄHNLICHE -->
     ${simCards?`
     <div class="similar-section">
@@ -563,62 +541,31 @@ function renderProfil(l,similar){
   `;
 }
 
-// LADEN
 async function loadProfil(){
   const id=getIdFromUrl();
-  
   if(!id){
-    document.getElementById('main-content').innerHTML=`
-      <div class="error-wrap">
-        <div class="error-title">KÄ LOKAL GFUNDE</div>
-        <div class="error-sub">Keine ID in der URL angegeben</div>
-        <a class="error-back" href="gastro.html">← ZURÜCK ZU GASTRO</a>
-      </div>`;
+    document.getElementById('main-content').innerHTML=`<div class="error-wrap"><div class="error-title">KÄ LOKAL GFUNDE</div><a class="error-back" href="gastro.html">← ZURÜCK ZU GASTRO</a></div>`;
     return;
   }
-  
   try{
-    // Location laden
     const data=await sbGet(`locations?select=*&id=eq.${id}&limit=1`);
-    
     if(!data||!data.length){
-      document.getElementById('main-content').innerHTML=`
-        <div class="error-wrap">
-          <div class="error-title">LOKAL NÖD GFUNDE</div>
-          <div class="error-sub">Dieses Restaurant existiert nicht mehr oder wurde entfernt.</div>
-          <a class="error-back" href="gastro.html">← ZURÜCK ZU GASTRO</a>
-        </div>`;
+      document.getElementById('main-content').innerHTML=`<div class="error-wrap"><div class="error-title">LOKAL NÖD GFUNDE</div><a class="error-back" href="gastro.html">← ZURÜCK ZU GASTRO</a></div>`;
       return;
     }
-    
     const l=data[0];
-    
-    // Ähnliche Lokale laden (gleiche Subkategorie, gleicher Kreis)
     let similar=[];
     try{
-      const simData=await sbGet(
-        `locations?select=id,name,bild_url,zt_subkategorie_id,kreis,adresse&kategorie=eq.gastro&aktiv=eq.true&zt_subkategorie_id=eq.${l.zt_subkategorie_id}&id=neq.${l.id}&limit=3`
-      );
-      similar=simData||[];
-      // Fallback: gleicher Kreis
+      const s1=await sbGet(`locations?select=id,name,bild_url,zt_subkategorie_id,kreis,adresse&kategorie=eq.gastro&aktiv=eq.true&zt_subkategorie_id=eq.${l.zt_subkategorie_id}&id=neq.${l.id}&limit=3`);
+      similar=s1||[];
       if(similar.length<3){
-        const simKreis=await sbGet(
-          `locations?select=id,name,bild_url,zt_subkategorie_id,kreis,adresse&kategorie=eq.gastro&aktiv=eq.true&kreis=eq.${l.kreis}&id=neq.${l.id}&limit=3`
-        );
-        similar=[...similar,...(simKreis||[])].slice(0,3);
+        const s2=await sbGet(`locations?select=id,name,bild_url,zt_subkategorie_id,kreis,adresse&kategorie=eq.gastro&aktiv=eq.true&kreis=eq.${l.kreis}&id=neq.${l.id}&limit=3`);
+        similar=[...similar,...(s2||[])].slice(0,3);
       }
-    }catch(e){console.log('Similar load error:',e);}
-    
+    }catch(e){}
     renderProfil(l,similar);
-    
   }catch(e){
-    console.error('Load error:',e);
-    document.getElementById('main-content').innerHTML=`
-      <div class="error-wrap">
-        <div class="error-title">FEHLER</div>
-        <div class="error-sub">Verbindung zu Supabase fehlgeschlagen. Bitte neu laden.</div>
-        <a class="error-back" href="gastro.html">← ZURÜCK ZU GASTRO</a>
-      </div>`;
+    document.getElementById('main-content').innerHTML=`<div class="error-wrap"><div class="error-title">FEHLER</div><div class="error-sub">Verbindung fehlgeschlagen.</div><a class="error-back" href="gastro.html">← ZURÜCK</a></div>`;
   }
 }
 
@@ -633,7 +580,6 @@ document.addEventListener('mousemove',e=>{
 const T=['GASTRO ZÜRICH','ZÜRI ISST GUET','DÄ PULS VO DÄ STADT','TISCH RESERVIERE','KI EMPFEHLUNGE','4. JUNI 2026'];
 document.getElementById('ticker').innerHTML=[...T,...T].map(i=>`<span class="ti"><b>●</b> ${i}</span>`).join('');
 
-// INIT
 loadProfil();
 </script>
 </body>
