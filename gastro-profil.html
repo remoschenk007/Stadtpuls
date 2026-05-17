@@ -267,7 +267,7 @@ function renderProfil(l,similar){
     +'<div style="width:8px;height:8px;border-radius:50%;background:'+(offeStatus===true?'#c8ff00':'#ff2d00')+';animation:blink 2s infinite;flex-shrink:0"></div>'
     +'<div>'
     +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:18px;color:'+(offeStatus===true?'#c8ff00':offeStatus===false?'rgba(255,45,0,.6)':'rgba(232,228,217,.3)')+';text-transform:uppercase">'
-    +(offeStatus===true?'JETZT OFFE':offeStatus===false?'GESCHLOSSEN':'ÖFFNUNGSZEITE UNBEKANNT')
+    +'KREIS '+(l.kreis||'?')+' · '+(l.adresse||'')+' · '+sub.n
     +'</div>'
     +'<div style="font-size:9px;color:rgba(232,228,217,.25);letter-spacing:1px;margin-top:2px">Kreis '+(l.kreis||'?')+' · '+sub.e+' '+sub.n+'</div>'
     +'</div></div>'
