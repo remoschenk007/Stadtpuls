@@ -330,15 +330,15 @@ function updateSEO(l,sub){
 }
 
 function isOffe(oeffnungszeiten){
-  if(!oeffnungszeiten||!oeffnungszeiten.length)return null;
+  if(!oeffnungszeiten||!oeffnungszeiten.length)return false;
   const now=new Date();
   const h=now.getHours();
   const days=['So','Mo','Di','Mi','Do','Fr','Sa'];
   const day=days[now.getDay()];
   const todayStr=Array.isArray(oeffnungszeiten)?oeffnungszeiten.find(o=>o&&(o.includes('Mo,Tu')||o.includes(day))):null;
-  if(!todayStr)return null;
+  if(!todayStr)return false;
   const match=todayStr.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/);
-  if(!match)return null;
+  if(!match)return false;
   return h>=parseInt(match[1])&&h<parseInt(match[3]);
 }
 
