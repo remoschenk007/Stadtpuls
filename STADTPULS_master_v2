@@ -2825,6 +2825,86 @@ ROADMAP UPDATE:
 ⏳ Phase 6  → KI Features live (Züri-Bot Claude API)
 🔴 Soft Launch: 4. Juni 2026
 
+
+😄🔴 Hier der komplette Master v2 Update — alles von heute:
+
+---
+
+**SESSION 17. MAI 2026 — KOMPLETT**
+
+SHOPPING.HTML:
+✅ 124 Shops live aus Supabase
+✅ Headline: «DIS ZÜRI. DIN STYLE.» / Eyebrow: «ZÜRI DRIPPED»
+✅ Filter-Architektur gleich wie gastro.html
+✅ Kreisrivalität Volt-Grün statt Rot
+✅ WEBSITE ÖFFNE Button aus Panel entfernt
+✅ Detail Panel mit VOLLSTÄNDIGES PROFIL Button
+
+SHOPPING-PROFIL.HTML:
+✅ Kreis-Charakter Banner (K1 Bahnhofstrasse, K4 Langstrasse etc.)
+✅ JETZT OFFE / GESCHLOSSEN live
+✅ Swiss Made Box, Vintage Box, Markt Countdown
+✅ Drop Alert, Shopping Route, Outfit-Matcher
+✅ Dark Map (filter:invert(90%) hue-rotate(180deg))
+✅ KI Features, Ähnliche Shops
+✅ Action Buttons 44px Apple-Style
+
+GASTRO-PROFIL.HTML:
+✅ Schema.org Fix — alle double quotes, kein Template Literal Bug
+✅ JETZT OFFE / GESCHLOSSEN Banner
+✅ Banner: Links KREIS + Adresse + Kategorie — rechts einmal OFFE/GESCHLOSSEN
+✅ Dark Map
+✅ Kein ÖFFNE Button auf Karte — nur TEILE
+
+IMPORT.HTML:
+✅ Gruppen-Select «ALLE WÄHLEN» Button pro Kategorie
+
+TERMINAL WORKFLOW — AB JETZT STANDARD:
+✅ Python/sed im Terminal statt ganzer Code neu schreiben
+✅ Suchen → ersetzen → commit → push — kein Loop
+
+**OFFENE BUGS ⏳**
+
+❌ isOffe() Bug — Sonntag wird als OFFE angezeigt
+→ Wenn kein Tag gefunden → null → zeigt trotzdem grün
+→ Fix: wenn null → als GESCHLOSSEN behandeln
+
+❌ Outfit-Matcher — nur bei subkategorie MODE zeigen
+→ Bei Uhren/Schmuck nicht sinnvoll
+
+**ENTSCHEIDE BESCHLOSSEN ✅**
+
+✅ User verlässt Stadtpuls nie — kein WEBSITE ÖFFNE Button
+✅ Kein doppelter OFFE Status — nur einmal rechts
+✅ Terminal + Python = Standard-Workflow ab sofort
+✅ Outfit-Matcher nur bei MODE / VINTAGE
+
+**BOOST / FEATURED SYSTEM — KONZEPT:**
+✅ featured=true in Supabase → TOP PICK Badge + oben in Liste
+✅ Partner zahlen CHF 99/Mt → wir setzen featured=true
+✅ Später: automatisches Self-Service Onboarding Phase 5
+
+**PARTNER KONTAKT:**
+✅ kontakt.html → Formular «Partner werden»
+✅ Geht direkt per E-Mail + Supabase
+✅ Phase 5: automatisches Onboarding
+
+**ROADMAP UPDATE:**
+✅ Phase 4h-4r → abgeschlossen
+✅ Phase 4s → shopping.html live
+✅ Phase 4t → shopping-profil.html live
+✅ Phase 4u → gastro-profil.html Banner fix
+⏳ Phase 4v → isOffe() Bug fixen
+⏳ Phase 4w → Outfit-Matcher nur MODE
+⏳ Phase 4x → nachtleben.html
+⏳ Phase 5 → Login + Community + Onboarding
+⏳ Phase 6 → KI Features (Züri-Bot Claude API)
+🔴 Soft Launch: 4. Juni 2026
+
+
+Master v2 Update Session 17. Mai 2026
+
+
 SOFT LAUNCH: 4. Juni 2026 🔴
 
 
