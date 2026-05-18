@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>People & Dates Zürich — Echti Lüt | Stadtpuls</title>
+<meta name="description" content="People & Dates Zürich — Echti Züri Lüt. Kreis-basiert. Kein Tinder-Bullshit.">
+<meta property="og:title" content="People & Dates Zürich | Stadtpuls">
+<meta property="og:url" content="https://depuls.ch/dating.html">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);pointer-events:none;z-index:9997}
+#cur{position:fixed;width:8px;height:8px;background:#9333ea;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(147,51,234,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0s,top 0s}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid rgba(147,51,234,.15);position:sticky;top:0;background:#04040a;z-index:300}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px;text-decoration:none}
+.ldot{width:7px;height:7px;border-radius:50%;background:#9333ea;animation:blink 2s infinite}
+.nav-links{display:flex;gap:28px}
+.nl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);text-decoration:none;transition:.15s}
+.nl:hover{color:#e8e4d9}.nl.on{color:#9333ea}
+.btn-mm{background:#9333ea;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none;text-decoration:none}
+.tw{overflow:hidden;border-bottom:1px solid rgba(147,51,234,.08)}
+.tr{padding:6px 0;overflow:hidden;border-bottom:1px solid rgba(147,51,234,.04)}
+.tick{display:flex;white-space:nowrap}
+.tick.l{animation:tL 28s linear infinite}.tick.r{animation:tR 28s linear infinite}
+.ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(147,51,234,.28)}.ti b{color:#9333ea;font-weight:400}
+.hero{display:grid;grid-template-columns:1fr 480px;min-height:560px;overflow:hidden;position:relative}
+.hero-left{padding:60px 40px;z-index:5}
+.eyebrow{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:rgba(232,228,217,.12);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.eyebrow::before{content:'';width:20px;height:1px;background:#9333ea}
+.h1{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(72px,9vw,110px);line-height:.82;text-transform:uppercase;color:#e8e4d9}
+.h2{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(72px,9vw,110px);line-height:.82;text-transform:uppercase;color:#9333ea;margin-bottom:24px}
+.hsub{font-size:11px;color:rgba(232,228,217,.28);line-height:1.9;margin-bottom:28px;max-width:320px}
+.hstats{display:flex;gap:32px;flex-wrap:wrap}
+.sn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;color:#9333ea;line-height:1}
+.sl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);margin-top:3px}
+.arena{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 50%,rgba(147,51,234,.06),transparent 70%)}
+.kern{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
+.kr{position:absolute;border-radius:50%;border:1px solid rgba(147,51,234,.12);top:50%;left:50%;transform:translate(-50%,-50%);animation:krp 4s ease-in-out infinite}
+.kr1{width:420px;height:420px}.kr2{width:280px;height:280px;animation-delay:.9s}.kr3{width:160px;height:160px;animation-delay:1.8s}
+.kdot{position:absolute;width:14px;height:14px;border-radius:50%;background:#9333ea;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 20px rgba(147,51,234,.9),0 0 50px rgba(147,51,234,.4);animation:kdp 2s ease-in-out infinite}
+.bubble-shell{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at 28% 22%,rgba(255,255,255,.55) 0%,rgba(255,255,255,.15) 20%,transparent 50%),radial-gradient(ellipse at 72% 78%,rgba(255,255,255,.15) 0%,transparent 35%),radial-gradient(ellipse at 50% 50%,transparent 40%,rgba(0,0,0,.25) 100%)}
+.bubble-rim{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at 50% 50%,transparent 58%,rgba(255,255,255,.1) 78%,rgba(255,255,255,.05) 88%,transparent 100%)}
+.bubble-shine{position:absolute;top:9%;left:14%;width:32%;height:20%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.8) 0%,rgba(255,255,255,.3) 40%,transparent 70%);pointer-events:none;transform:rotate(-25deg)}
+.bubble-shine2{position:absolute;bottom:14%;right:16%;width:16%;height:10%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.35) 0%,transparent 70%);pointer-events:none}
+.bubble-color{position:absolute;inset:0;border-radius:50%;opacity:.18}
+.bubble-content{position:relative;z-index:2;text-align:center;padding:.5rem}
+.bubble-icon{font-size:2rem;display:block;margin-bottom:.3rem;filter:drop-shadow(0 0 16px currentColor);transform:translateZ(25px)}
+.bub{position:absolute;border-radius:50%;cursor:none;display:flex;align-items:center;justify-content:center;transform-style:preserve-3d}
+.bub:hover{transform:scale(1.15)!important;z-index:30;filter:brightness(1.2)}
+.blbl{font-size:.4rem;letter-spacing:.15em;text-transform:uppercase;line-height:1.3;font-family:'DM Mono',monospace}
+.bm{width:148px;height:148px;top:38px;left:128px;border:1.5px solid rgba(255,215,0,.55);box-shadow:0 0 45px rgba(255,215,0,.22),inset 0 0 45px rgba(255,215,0,.07);color:#ffd700;animation:d1 7s ease-in-out infinite}
+.bm .bubble-color{background:radial-gradient(circle at 50% 50%,#ffd700,transparent 70%)}.bm .blbl{color:rgba(255,215,0,.9)}
+.bd{width:116px;height:116px;top:58px;left:298px;border:1.5px solid rgba(147,51,234,.6);box-shadow:0 0 38px rgba(147,51,234,.3),inset 0 0 38px rgba(147,51,234,.08);color:#9333ea;animation:d2 8.5s ease-in-out infinite .7s}
+.bd .bubble-color{background:radial-gradient(circle at 50% 50%,#9333ea,transparent 70%)}.bd .blbl{color:rgba(200,150,255,.9)}
+.bmu{width:90px;height:90px;top:238px;left:52px;border:1.5px solid rgba(0,245,255,.5);box-shadow:0 0 30px rgba(0,245,255,.2),inset 0 0 30px rgba(0,245,255,.06);color:#00f5ff;animation:d3 9s ease-in-out infinite 1.4s}
+.bmu .bubble-color{background:radial-gradient(circle at 50% 50%,#00f5ff,transparent 70%)}.bmu .blbl{color:rgba(0,245,255,.85)}
+.bk{width:104px;height:104px;top:268px;left:298px;border:1.5px solid rgba(255,45,0,.5);box-shadow:0 0 34px rgba(255,45,0,.22),inset 0 0 34px rgba(255,45,0,.07);color:#ff2d00;animation:d1 10s ease-in-out infinite 2s}
+.bk .bubble-color{background:radial-gradient(circle at 50% 50%,#ff2d00,transparent 70%)}.bk .blbl{color:rgba(255,130,100,.9)}
+.bs{width:74px;height:74px;top:368px;left:172px;border:1px solid rgba(200,255,0,.4);box-shadow:0 0 24px rgba(200,255,0,.15),inset 0 0 24px rgba(200,255,0,.05);color:#c8ff00;animation:d2 6.5s ease-in-out infinite .3s}
+.bs .bubble-color{background:radial-gradient(circle at 50% 50%,#c8ff00,transparent 70%)}.bs .blbl{color:rgba(200,255,0,.8)}
+.bf{width:62px;height:62px;top:155px;left:218px;border:1.5px solid rgba(180,0,255,.5);box-shadow:0 0 20px rgba(180,0,255,.3),inset 0 0 30px rgba(0,0,0,.9);color:#b400ff;animation:d3 5.5s ease-in-out infinite .9s;background:radial-gradient(circle at 36% 28%,rgba(180,0,255,.15),rgba(0,0,0,.95) 70%)}
+.bf .bubble-color{background:radial-gradient(circle at 50% 50%,#b400ff,transparent 70%)}.bf .blbl{color:rgba(180,0,255,.7);font-size:.32rem}
+.bf .bubble-icon{font-size:1.4rem}
+
+/* VOTING */
+.vote-section{position:relative;padding:5rem 1rem 4rem;text-align:center;overflow:hidden;background:#04040a}
+.vring{position:absolute;border-radius:50%;border:1px solid rgba(147,51,234,.2);top:50%;left:50%;transform:translate(-50%,-50%);animation:vout 3s ease-out infinite;pointer-events:none}
+.vr1{width:200px;height:200px}.vr2{width:200px;height:200px;animation-delay:.8s}.vr3{width:200px;height:200px;animation-delay:1.6s}
+.vote-badge{font-size:7px;letter-spacing:4px;text-transform:uppercase;color:rgba(147,51,234,.5);margin-bottom:1.2rem;display:flex;align-items:center;justify-content:center;gap:8px;position:relative;z-index:2}
+.vote-badge::before,.vote-badge::after{content:'';width:30px;height:1px;background:rgba(147,51,234,.3)}
+.vote-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(3.5rem,8vw,6rem);line-height:.88;text-transform:uppercase;position:relative;z-index:2;margin-bottom:1rem}
+.v1{color:#e8e4d9}.v2{color:#9333ea;text-shadow:0 0 40px rgba(147,51,234,.5);animation:glow-text 3s ease-in-out infinite}.v3{color:#e8e4d9}
+.vote-sub{font-size:.7rem;color:rgba(232,228,217,.3);margin-bottom:2rem;position:relative;z-index:2;line-height:1.7}
+.vote-num-wrap{position:relative;display:inline-block;margin-bottom:.5rem}
+.vote-num{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:6rem;color:#9333ea;line-height:1;text-shadow:0 0 60px rgba(147,51,234,.6);position:relative;z-index:2}
+.pulse-out{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(147,51,234,.6);animation:pulseOut 2s ease-out infinite;pointer-events:none}
+.po1{width:80px;height:80px}.po2{width:80px;height:80px;animation-delay:.7s}.po3{width:80px;height:80px;animation-delay:1.4s}
+.vote-of{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:1.2rem;position:relative;z-index:2}
+.vote-prog-wrap{width:100%;max-width:520px;margin:0 auto .3rem;background:rgba(147,51,234,.1);height:3px;border-radius:2px;position:relative;z-index:2}
+.vote-prog{height:3px;border-radius:2px;background:linear-gradient(90deg,#9333ea,#c8ff00);box-shadow:0 0 10px rgba(147,51,234,.5);transition:width 1.2s ease}
+.vote-prog-lbl{display:flex;justify-content:space-between;max-width:520px;margin:0 auto 2rem;font-size:.5rem;color:rgba(232,228,217,.15);letter-spacing:.1em;position:relative;z-index:2}
+.vform{max-width:520px;margin:0 auto;background:rgba(147,51,234,.04);border:1px solid rgba(147,51,234,.15);border-radius:1.5rem;padding:2rem;position:relative;z-index:2}
+.vform-hint{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:1.5rem;text-align:center}
+.vform-lbl{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,228,217,.35);margin-bottom:.75rem;display:block;text-align:left}
+.gbtn-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;margin-bottom:1.5rem}
+.gbtn{padding:.85rem .5rem;background:rgba(147,51,234,.08);border:1px solid rgba(147,51,234,.25);border-radius:.75rem;color:#e8e4d9;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.2rem;letter-spacing:.05em;cursor:pointer;transition:.2s;text-transform:uppercase}
+.gbtn:hover{background:rgba(147,51,234,.18);border-color:rgba(147,51,234,.5)}
+.gbtn.on{background:rgba(147,51,234,.25);border-color:#9333ea;box-shadow:0 0 20px rgba(147,51,234,.25)}
+.yin{width:100%;padding:.85rem 1rem;background:rgba(147,51,234,.04);border:1px solid rgba(147,51,234,.2);border-radius:.75rem;color:#e8e4d9;font-family:'DM Mono',monospace;font-size:.9rem;margin-bottom:1.5rem;outline:none;transition:.2s}
+.yin:focus{border-color:rgba(147,51,234,.5);box-shadow:0 0 0 3px rgba(147,51,234,.1)}
+.vbtns{display:grid;grid-template-columns:1fr 2fr;gap:.75rem}
+.vnei{padding:1rem;background:transparent;border:1px solid rgba(232,228,217,.1);border-radius:.75rem;color:rgba(232,228,217,.3);font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:.2s}
+.vnei:hover{border-color:rgba(232,228,217,.3);color:rgba(232,228,217,.5)}
+.vja{padding:1rem;border:none;border-radius:.75rem;background:linear-gradient(135deg,#9333ea,#c8ff00);color:#04040a;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.5rem;cursor:pointer;transition:.2s;box-shadow:0 4px 24px rgba(147,51,234,.4)}
+.vja:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(147,51,234,.6)}
+.vdone{display:none;padding:2.5rem;position:relative;z-index:2}
+
+/* KREIS BATTLE */
+.kb-section{padding:0 40px 48px}
+.kb-head{display:flex;align-items:baseline;justify-content:space-between;padding:32px 0 20px}
+.kb-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.kb-title::before{content:'—';color:#9333ea}
+.kb-sub{font-size:8px;letter-spacing:2px;color:rgba(232,228,217,.15);text-transform:uppercase}
+.kb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(147,51,234,.08)}
+.kbcard{background:#04040a;padding:16px;display:flex;align-items:center;gap:12px;transition:.15s;cursor:none;position:relative;overflow:hidden}
+.kbcard:hover{background:#07070f}
+.k1p{background:rgba(147,51,234,.06);border-left:3px solid #9333ea}
+.k2p{background:rgba(200,255,0,.03);border-left:3px solid rgba(200,255,0,.4)}
+.k3p{background:rgba(255,45,0,.03);border-left:3px solid rgba(255,45,0,.4)}
+.kb-rank{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:rgba(232,228,217,.1);min-width:28px;text-align:center}
+.k1p .kb-rank{color:#9333ea}.k2p .kb-rank{color:#c8ff00}.k3p .kb-rank{color:#ff2d00}
+.kb-emoji{font-size:22px;flex-shrink:0}
+.kb-info{flex:1;min-width:0}
+.kb-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;text-transform:uppercase;color:#e8e4d9;line-height:1}
+.kb-char{font-size:8px;color:rgba(232,228,217,.25);letter-spacing:.5px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kb-bar-w{width:100%;height:2px;background:rgba(147,51,234,.08);border-radius:1px;margin-top:6px}
+.kb-bar{height:2px;border-radius:1px;background:rgba(147,51,234,.4);transition:width 1s ease}
+.k1p .kb-bar{background:#9333ea;box-shadow:0 0 6px rgba(147,51,234,.6)}.k2p .kb-bar{background:#c8ff00}.k3p .kb-bar{background:#ff2d00}
+.kb-cnt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:rgba(232,228,217,.2);flex-shrink:0}
+.k1p .kb-cnt{color:#9333ea}.k2p .kb-cnt{color:#c8ff00}.k3p .kb-cnt{color:#ff2d00}
+.kb-tr{position:absolute;top:8px;right:8px;font-size:14px;opacity:.6}
+
+/* PROFIL */
+.sh{display:flex;align-items:baseline;justify-content:space-between;padding:32px 40px 16px}
+.sht{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
+.sht::before{content:'—';color:#9333ea}.shr{font-size:9px;letter-spacing:2px;color:rgba(232,228,217,.15);text-transform:uppercase}
+.fr{display:flex;padding:0 40px 16px;overflow-x:auto;gap:0}.fr::-webkit-scrollbar{display:none}
+.fb{padding:8px 18px;border:1px solid rgba(147,51,234,.08);border-right:none;color:rgba(232,228,217,.25);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;background:transparent;cursor:none;transition:.15s;white-space:nowrap}
+.fb:last-child{border-right:1px solid rgba(147,51,234,.08)}.fb.on{color:#9333ea;border-color:#9333ea;background:rgba(147,51,234,.05)}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);padding:0 40px;gap:0}
+.pc{border:1px solid rgba(147,51,234,.08);border-top:none;border-left:none;padding:20px;transition:.15s;cursor:none;position:relative;overflow:hidden}
+.pc:nth-child(3n+1){border-left:1px solid rgba(147,51,234,.08)}.pc:nth-child(-n+3){border-top:1px solid rgba(147,51,234,.08)}
+.pc:hover{background:#07070f}
+.pc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#9333ea;transform:scaleX(0);transition:.22s;transform-origin:left}
+.pc:hover::after{transform:scaleX(1)}
+.pct{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.pca{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1.5px solid rgba(147,51,234,.3)}
+.pcn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;text-transform:uppercase;color:#9333ea}
+.pcm{font-size:8px;color:rgba(232,228,217,.2);letter-spacing:1px;margin-top:1px}
+.pcd{font-size:10px;color:rgba(232,228,217,.3);line-height:1.7;margin-bottom:10px}
+.pctags{display:flex;gap:4px;flex-wrap:wrap}
+.ptag{font-size:7px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border:1px solid rgba(147,51,234,.2);color:rgba(147,51,234,.7)}
+footer{padding:44px 40px 32px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px;border-top:1px solid rgba(255,45,0,.08);margin-top:48px}
+.fct{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:12px}
+.fcl{display:block;font-size:10px;color:rgba(232,228,217,.22);margin-bottom:8px;transition:.15s;text-decoration:none;cursor:none}
+.fcl:hover{color:#e8e4d9}.fcd{font-size:10px;color:rgba(232,228,217,.18);line-height:1.9;margin-top:8px}
+.fcc{font-size:8px;color:rgba(232,228,217,.1);margin-top:16px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+@keyframes tL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes tR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+@keyframes krp{0%,100%{opacity:.1;transform:translate(-50%,-50%) scale(1)}50%{opacity:.2;transform:translate(-50%,-50%) scale(1.04)}}
+@keyframes kdp{0%,100%{box-shadow:0 0 20px rgba(147,51,234,.7)}50%{box-shadow:0 0 36px rgba(147,51,234,1),0 0 72px rgba(147,51,234,.5)}}
+@keyframes d1{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-16px) rotate(2deg)}75%{transform:translateY(-20px) rotate(3deg)}}
+@keyframes d2{0%,100%{transform:translateY(0)}33%{transform:translateY(-22px) rotate(-3deg)}66%{transform:translateY(-9px) rotate(2.5deg)}}
+@keyframes d3{0%,100%{transform:translateY(0)}40%{transform:translateY(-14px) rotate(4deg)}80%{transform:translateY(-26px) rotate(-2.5deg)}}
+@keyframes pulseOut{0%{width:80px;height:80px;opacity:.8;border-color:rgba(147,51,234,.6)}100%{width:280px;height:280px;opacity:0;border-color:rgba(147,51,234,0)}}
+@keyframes vout{0%{opacity:.3;transform:translate(-50%,-50%) scale(.5)}100%{opacity:0;transform:translate(-50%,-50%) scale(2.8)}}
+@keyframes glow-text{0%,100%{text-shadow:0 0 20px rgba(147,51,234,0)}50%{text-shadow:0 0 40px rgba(147,51,234,.6),0 0 80px rgba(147,51,234,.3)}}
+@media(max-width:768px){
+#cur,#cur2{display:none}body{cursor:auto}nav{padding:0 16px;height:48px}.nav-links{display:none}
+.hero{grid-template-columns:1fr;grid-template-rows:auto 300px}.hero-left{padding:28px 16px 16px}
+.h1,.h2{font-size:68px}
+.bm{width:100px;height:100px;top:20px;left:80px}.bd{width:82px;height:82px;top:18px;left:200px}
+.bmu{width:66px;height:66px;top:148px;left:16px}.bk{width:78px;height:78px;top:153px;left:192px}
+.bs{width:56px;height:56px;top:168px;left:116px}.bf{width:48px;height:48px;top:100px;left:150px}
+.kr1{width:250px;height:250px}.kr2{width:170px;height:170px}.kr3{width:100px;height:100px}
+.vote-section{padding:3rem 1rem}.vote-num{font-size:4.5rem}
+.kb-section{padding:0 16px 48px}.kb-grid{grid-template-columns:1fr 1fr}
+.sh{padding:24px 16px 12px}.fr{padding:0 16px 12px}
+.pg{grid-template-columns:1fr 1fr;padding:0 16px}
+.pc:nth-child(3n+1){border-left:none}.pc:nth-child(2n+1){border-left:1px solid rgba(147,51,234,.08)}
+footer{padding:28px 16px;grid-template-columns:1fr 1fr;gap:16px}}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur2"></div>
+<div class="tw"><div class="tr"><div class="tick l" id="ta"></div></div><div class="tr"><div class="tick r" id="tb"></div></div></div>
+<nav>
+  <a class="logo" href="index.html"><div class="ldot"></div>STADTPULS</a>
+  <div class="nav-links">
+    <a class="nl" href="gastro.html">GASTRO</a>
+    <a class="nl" href="shopping.html">SHOPPING</a>
+    <a class="nl" href="index.html?page=nachtleben">NACHTLEBE</a>
+    <span class="nl on">PEOPLE & DATES</span>
+  </div>
+  <a class="btn-mm" href="index.html?page=login">MITMACHE</a>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="eyebrow">STADTPULS · ZÜRICH · 2026</div>
+    <div class="h1">PEOPLE</div>
+    <div class="h2">& DATES</div>
+    <div class="hsub">Echti Züri Lüt. Kein Tinder-Bullshit.<br>Dini Szene — dini Leute. Kreis-basiert.</div>
+    <div class="hstats">
+      <div><div class="sn" id="sv">—</div><div class="sl">VOTES BISHER</div></div>
+      <div><div class="sn" style="color:#c8ff00">K4</div><div class="sl">AM AKTIVSCHTE</div></div>
+      <div><div class="sn" style="color:#ff2d00">18+</div><div class="sl">NUR VOLLJÄHRIG</div></div>
+    </div>
+  </div>
+  <div class="arena">
+    <div class="kern">
+      <div class="kr kr1"></div><div class="kr kr2"></div><div class="kr kr3"></div>
+      <div class="kdot"></div>
+    </div>
+    <svg style="position:absolute;inset:0;pointer-events:none;z-index:1" width="100%" height="100%">
+      <line x1="202" y1="112" x2="238" y2="278" stroke="rgba(255,215,0,.18)" stroke-width=".8" stroke-dasharray="5,6"/>
+      <line x1="356" y1="116" x2="238" y2="278" stroke="rgba(147,51,234,.22)" stroke-width=".8" stroke-dasharray="5,6"/>
+      <line x1="97" y1="283" x2="238" y2="278" stroke="rgba(0,245,255,.18)" stroke-width=".8" stroke-dasharray="5,6"/>
+      <line x1="350" y1="320" x2="238" y2="278" stroke="rgba(255,45,0,.18)" stroke-width=".8" stroke-dasharray="5,6"/>
+      <line x1="209" y1="405" x2="238" y2="278" stroke="rgba(200,255,0,.14)" stroke-width=".8" stroke-dasharray="5,6"/>
+      <line x1="255" y1="186" x2="238" y2="278" stroke="rgba(180,0,255,.2)" stroke-width=".8" stroke-dasharray="4,6"/>
+    </svg>
+    <div class="bub bm"><div class="bubble-shell"></div><div class="bubble-rim"></div><div class="bubble-shine"></div><div class="bubble-shine2"></div><div class="bubble-color"></div><div class="bubble-content"><span class="bubble-icon">🏆</span><div class="blbl">ZÜRI<br>MOMENT</div></div></div>
+    <div class="bub bd"><div class="bubble-shell"></div><div class="bubble-rim"></div><div class="bubble-shine"></div><div class="bubble-shine2"></div><div class="bubble-color"></div><div class="bubble-content"><span class="bubble-icon">💜</span><div class="blbl">DATES</div></div></div>
+    <div class="bub bmu"><div class="bubble-shell"></div><div class="bubble-rim"></div><div class="bubble-shine"></div><div class="bubble-shine2"></div><div class="bubble-color"></div><div class="bubble-content"><span class="bubble-icon" style="font-size:1.3rem">🎸</span><div class="blbl">MUSIK</div></div></div>
+    <div class="bub bk"><div class="bubble-shell"></div><div class="bubble-rim"></div><div class="bubble-shine"></div><div class="bubble-shine2"></div><div class="bubble-color"></div><div class="bubble-content"><span class="bubble-icon" style="font-size:1.5rem">🔥</span><div class="blbl">KREIS 4</div></div></div>
+    <div class="bub bs"><div class="bubble-shell"></div><div class="bubble-rim"></div><div class="bubble-shine"></div><div class="bubble-shine2"></div><div class="bubble-color"></div><div class="bubble-content"><span class="bubble-icon" style="font-size:1rem">🚲</span><div class="blbl" style="font-size:.32rem">SPORT</div></div></div>
+    <div class="bub bf"><div class="bubble-shine" style="opacity:.25"></div><div class="bubble-color"></div><div class="bubble-content"><span class="bubble-icon" style="font-size:1.4rem">😈</span><div class="blbl">18+</div></div></div>
+  </div>
+</div>
+
+<!-- VOTING -->
+<div class="vote-section">
+  <div class="vring vr1"></div><div class="vring vr2"></div><div class="vring vr3"></div>
+  <div class="vote-badge">ZÜRI ENTSCHEIDET</div>
+  <div class="vote-hl"><div class="v1">SÖTTMER DATES</div><div class="v2">IN ZÜRI?</div></div>
+  <p class="vote-sub">100'000 JA — und mir bauen's.<br>Versprochen. 🤝</p>
+  <div class="vote-num-wrap">
+    <div class="pulse-out po1"></div><div class="pulse-out po2"></div><div class="pulse-out po3"></div>
+    <div class="vote-num" id="vote-count">—</div>
+  </div>
+  <div class="vote-of">VON 100'000 VOTES</div>
+  <div class="vote-prog-wrap"><div class="vote-prog" id="vote-bar" style="width:0%"></div></div>
+  <div class="vote-prog-lbl"><span>0</span><span>100'000</span></div>
+  <div class="vform" id="vote-form">
+    <div class="vform-hint">ANONYM · 1 VOTE PRO PERSON · NUR 18+</div>
+    <label class="vform-lbl">ICH BIN</label>
+    <div class="gbtn-row">
+      <button class="gbtn" onclick="selectGender('f')" id="gbtn-f">FRAU</button>
+      <button class="gbtn" onclick="selectGender('m')" id="gbtn-m">MANN</button>
+      <button class="gbtn" onclick="selectGender('x')" id="gbtn-x">X</button>
+    </div>
+    <label class="vform-lbl">JAHRGANG</label>
+    <input class="yin" type="number" id="vote-year" placeholder="z.B. 1990" min="1900" max="2006">
+    <div class="vbtns">
+      <button class="vnei" onclick="castVote('nei')">NEI DANKE</button>
+      <button class="vja" onclick="castVote('ja')">JA, LOS! 🔥</button>
+    </div>
+  </div>
+  <div class="vdone" id="vote-done"></div>
+</div>
+
+<!-- KREIS BATTLE -->
+<div class="kb-section">
+  <div class="kb-head">
+    <div class="kb-title">KREIS BATTLE — WO ZÜRI FLIRTET</div>
+    <div class="kb-sub">LIVE · ALL 12 KREISE</div>
+  </div>
+  <div class="kb-grid" id="kb-grid"></div>
+</div>
+
+<!-- PROFILE -->
+<div class="sh"><div class="sht">NEUI PROFILE IN ZÜRI</div><div class="shr">PHASE 5 — BALD LIVE</div></div>
+<div class="fr">
+  <button class="fb on">ALLES</button><button class="fb">FRIENDS</button><button class="fb">DATES</button>
+  <button class="fb">NETWORKING</button><button class="fb">SPORT</button><button class="fb">MUSIK</button>
+  <button class="fb">KREIS 4</button><button class="fb">KREIS 5</button>
+</div>
+<div class="pg">
+  <div class="pc"><div class="pct"><div class="pca" style="background:#2d0a4e">🎸</div><div><div class="pcn">@MUSIKERIN_ZH</div><div class="pcm">KREIS 4 · VOR 2H AKTIV</div></div></div><div class="pcd">Musikerin, Konzertgängerin, Foodie. Suche Leute für Jazz-Abende und Street-Food-Trips.</div><div class="pctags"><span class="ptag">JAZZ</span><span class="ptag">FOODIE</span><span class="ptag">KREIS 4</span></div></div>
+  <div class="pc"><div class="pct"><div class="pca" style="background:#1a2e0a">🚲</div><div><div class="pcn">@VELO_KREIS5</div><div class="pcm">KREIS 5 · VOR 30MIN AKTIV</div></div></div><div class="pcd">Designer, Velo-Nerd, Rote-Fabrik-Stammgast. Such Gleichgesinnte für Velotouren.</div><div class="pctags"><span class="ptag">DESIGN</span><span class="ptag">VELO</span><span class="ptag">KREIS 5</span></div></div>
+  <div class="pc"><div class="pct"><div class="pca" style="background:#0a2e2e">📸</div><div><div class="pcn">@FOTO_LANGSTRASSE</div><div class="pcm">KREIS 4 · ONLINE</div></div></div><div class="pcd">Strassenfotografin, Nachtmensch. Such Leute für Foto-Walks durch Züri.</div><div class="pctags"><span class="ptag">FOTO</span><span class="ptag">TECHNO</span><span class="ptag">NACHT</span></div></div>
+</div>
+
+<footer>
+  <div><div class="logo" style="margin-bottom:8px"><div class="ldot"></div>STADTPULS</div><div class="fcd">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich.</div><div class="fcc">© 2026 by raimondo* — Zürich</div></div>
+  <div><div class="fct">ENTDECKEN</div><a class="fcl" href="gastro.html">Gastro & Bars</a><a class="fcl" href="shopping.html">Shopping</a><a class="fcl" href="index.html?page=nachtleben">Nachtleben</a></div>
+  <div><div class="fct">COMMUNITY</div><a class="fcl" href="dating.html">People & Dates</a><a class="fcl" href="index.html?page=jobs">Jobs Züri</a></div>
+  <div><div class="fct">MITMACHE</div><a class="fcl" href="index.html?page=login">Einlogge</a><a class="fcl" href="feedback.html">Feedback</a><a class="fcl" href="impressum.html">Impressum</a></div>
+</footer>
+
+<script>
+const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+
+const KREISE=[
+  {k:1,e:'👑',n:'KREIS 1',c:'D Schicki-Micki · Bahnhofstrasse',p:284},
+  {k:4,e:'🔥',n:'KREIS 4',c:'D Langsträssler · Underground',p:271},
+  {k:5,e:'🏭',n:'KREIS 5',c:'D Industrie-Kids · Züri West',p:198},
+  {k:8,e:'☕',n:'KREIS 8',c:'D Seefeld-Lüt · Kafi & Style',p:156},
+  {k:3,e:'🎨',n:'KREIS 3',c:'D Künstler · Wiedikon',p:134},
+  {k:2,e:'🌊',n:'KREIS 2',c:'D Ruhige · Enge & See',p:112},
+  {k:6,e:'🌿',n:'KREIS 6',c:'D Zürichberg-Gang · Ruhig',p:98},
+  {k:7,e:'🏡',n:'KREIS 7',c:'D Flunterner · Entspannt',p:87},
+  {k:9,e:'🔧',n:'KREIS 9',c:'D Echte · Altstetten',p:76},
+  {k:10,e:'🍃',n:'KREIS 10',c:'D Höngg-Gang · Authentisch',p:65},
+  {k:11,e:'💪',n:'KREIS 11',c:'D Underdogs · Affoltern',p:54},
+  {k:12,e:'⚡',n:'KREIS 12',c:'D Wilden · Schwamendingen',p:43},
+];
+
+function buildKreisBattle(){
+  const grid=document.getElementById('kb-grid');
+  const max=KREISE[0].p;
+  grid.innerHTML=KREISE.map((k,i)=>{
+    const cls='kbcard'+(i===0?' k1p':i===1?' k2p':i===2?' k3p':'');
+    const tr=i===0?'🏆':i===1?'🥈':i===2?'🥉':'';
+    const pct=Math.round(k.p/max*100);
+    return`<div class="${cls}">
+      ${tr?`<div class="kb-tr">${tr}</div>`:''}
+      <div class="kb-rank">${i+1}</div>
+      <div class="kb-emoji">${k.e}</div>
+      <div class="kb-info">
+        <div class="kb-name">${k.n}</div>
+        <div class="kb-char">${k.c}</div>
+        <div class="kb-bar-w"><div class="kb-bar" style="width:${pct}%"></div></div>
+      </div>
+      <div class="kb-cnt">${k.p}</div>
+    </div>`;
+  }).join('');
+}
+
+let sg=null;
+function selectGender(g){
+  sg=g;
+  document.querySelectorAll('.gbtn').forEach(b=>b.classList.remove('on'));
+  document.getElementById('gbtn-'+g).classList.add('on');
+}
+
+async function castVote(type){
+  if(type==='ja'){
+    if(!sg){alert('Bitte Geschlecht wähle!');return;}
+    const y=parseInt(document.getElementById('vote-year').value);
+    if(!y||y<1900||y>2006){alert('Nur 18+ chönd abstimme!');return;}
+    try{
+      await fetch(SU+'/rest/v1/dating_votes',{
+        method:'POST',
+        headers:{'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK},
+        body:JSON.stringify({vote:'ja',geschlecht:sg,geburtsjahr:y,user_agent:navigator.userAgent})
+      });
+    }catch(e){}
+    document.getElementById('vote-form').style.display='none';
+    document.getElementById('vote-done').style.display='block';
+    document.getElementById('vote-done').innerHTML='<div style="font-size:3.5rem;margin-bottom:1rem">🔥</div><div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:2.8rem;color:#c8ff00;line-height:.9;margin-bottom:1rem;text-transform:uppercase">DANKE FÜR<br>DIN VOTE!</div><div style="font-size:.65rem;color:rgba(255,255,255,.3);line-height:1.8">Mir informiere dich sobald<br>100\'000 erreicht sind.</div>';
+  } else {
+    document.getElementById('vote-form').style.display='none';
+    document.getElementById('vote-done').style.display='block';
+    document.getElementById('vote-done').innerHTML='<div style="font-size:3rem;margin-bottom:1rem">😔</div><div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:2.2rem;color:#e8e4d9;line-height:.9;text-transform:uppercase">SCHAD.<br>VILICHT SPÄTER.</div>';
+  }
+  loadVoteCount();
+}
+
+async function loadVoteCount(){
+  try{
+    const r=await fetch(SU+'/rest/v1/dating_votes?vote=eq.ja&select=id',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
+    const total=parseInt(r.headers.get('content-range')?.split('/')[1])||0;
+    const el=document.getElementById('vote-count');
+    const sv=document.getElementById('sv');
+    if(el)el.textContent=total.toLocaleString('de-CH');
+    if(sv)sv.textContent=total;
+    const bar=document.getElementById('vote-bar');
+    if(bar)bar.style.width=Math.min(total/100000*100,100)+'%';
+  }catch(e){}
+}
+
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';});
+
+const TI=['PEOPLE & DATES','ZÜRI CONNECT','DÄ PULS VO DÄ STADT','KEIN TINDER BULLSHIT','KREIS 4 AM AKTIVSCHTE','4. JUNI 2026'];
+const TIG=['ZÜRICH KREIS 4','ZÜRICH KREIS 5','SEEFELD','LANGSTRASSE','BY RAIMONDO*','STADTPULS'];
+['ta','tb'].forEach((id,i)=>{
+  const t=document.getElementById(id);if(!t)return;
+  const items=i===0?TI:TIG;
+  t.innerHTML=[...items,...items].map(x=>`<span class="ti"><b>●</b> ${x}</span>`).join('');
+});
+
+document.querySelectorAll('.fb').forEach(b=>{
+  b.addEventListener('click',()=>{document.querySelectorAll('.fb').forEach(x=>x.classList.remove('on'));b.classList.add('on');});
+});
+
+buildKreisBattle();
+loadVoteCount();
+</script>
+</body>
+</html>
