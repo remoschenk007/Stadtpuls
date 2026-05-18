@@ -279,8 +279,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 .pred{border-left:2px solid #ff2d00;padding:10px 14px;margin-bottom:16px;background:rgba(255,45,0,.03);box-shadow:inset 2px 0 10px rgba(255,45,0,.1)}
 .pred-txt{font-size:10px;color:rgba(255,80,50,.6);line-height:1.7}
 .pred-txt strong{color:#ff2d00}
-.p-acts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.p-act{padding:12px;background:transparent;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.22);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;text-align:center;cursor:none;transition:.15s}
+.p-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.p-act{padding:16px 12px;min-height:54px;background:transparent;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.22);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;text-align:center;cursor:none;transition:.15s;display:flex;align-items:center;justify-content:center;gap:6px}
 .p-act:hover{color:#e8e4d9;border-color:rgba(255,45,0,.25);background:rgba(255,45,0,.03)}
 
 /* TICKER BOTTOM */
@@ -502,9 +502,10 @@ footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:14px}
     </div>
     <div class="pred"><div class="pred-txt" id="p-pred">⚡ «<strong>Genau din Club hüt Nacht.</strong>»</div></div>
     <div class="p-acts">
-      <div class="p-act" onclick="window.location='nachtleben-profil.html?id='+currentLoc?.id" style="border-color:rgba(255,45,0,.2);color:#ff2d00">🔍 PROFIL ÖFFNE</div>
+      <div class="p-act" onclick="window.location='nachtleben-profil.html?id='+currentLoc?.id" style="grid-column:1/-1;border-color:rgba(255,45,0,.35);color:#ff2d00;background:rgba(255,45,0,.06);font-size:10px;min-height:58px">🔍 PROFIL ÖFFNE</div>
       <div class="p-act">🗺️ AUF KARTE</div>
       <div class="p-act">❤️ SPEICHERE</div>
+      <div class="p-act">⭐ BEWERTE</div>
       <div class="p-act">📤 TEILE</div>
     </div>
   </div>
