@@ -9,176 +9,170 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
-body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);pointer-events:none;z-index:9997}
+body{background:#000;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,45,0,.015) 3px,rgba(255,45,0,.015) 4px);pointer-events:none;z-index:9997}
 #cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
 #cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(255,45,0,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0s,top 0s}
 
-/* NAV — exakt wie gastro */
-nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid rgba(255,45,0,.1);position:sticky;top:0;background:#04040a;z-index:300}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid rgba(255,45,0,.1);position:sticky;top:0;background:#000;z-index:300}
 .logo{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px;text-decoration:none}
-.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
+.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;box-shadow:0 0 8px rgba(255,45,0,.8);animation:blink 2s infinite}
 .nav-links{display:flex;gap:28px}
 .nl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);text-decoration:none;transition:.15s}
-.nl:hover{color:#e8e4d9}.nl.on{color:#ff2d00}
-.btn-mm{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none;text-decoration:none}
+.nl:hover,.nl.on{color:#ff2d00}
+.btn-mm{background:#ff2d00;color:#000;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none;text-decoration:none}
 
-/* BREADCRUMB */
-.breadcrumb{padding:10px 40px;border-bottom:1px solid rgba(255,45,0,.06);display:flex;align-items:center;gap:6px;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.2)}
-.breadcrumb a{color:rgba(232,228,217,.2);text-decoration:none;cursor:none;transition:.15s}
-.breadcrumb a:hover{color:#ff2d00}
-.breadcrumb span{color:rgba(232,228,217,.1)}
+.back-bar{padding:12px 40px;border-bottom:1px solid rgba(255,45,0,.06);display:flex;align-items:center;gap:8px}
+.back-btn{display:flex;align-items:center;gap:6px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.25);text-decoration:none;cursor:none;transition:.15s}
+.back-btn:hover{color:#ff2d00}
+.back-btn::before{content:'←'}
 
-/* MAIN */
-#main-content{min-height:60vh}
-
-/* HERO IMG */
-.hero-wrap{position:relative;overflow:hidden}
-.hero-img{width:100%;height:420px;object-fit:cover;display:block;filter:brightness(.75) saturate(.8)}
-.hero-gradient{position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(to top,#04040a,transparent);pointer-events:none}
+/* HERO */
+.hero-img-wrap{position:relative;overflow:hidden}
+.hero-img{width:100%;height:420px;object-fit:cover;display:block;filter:saturate(.75) brightness(.65)}
+.hero-img-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,#000,transparent);pointer-events:none}
+.hero-img-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,45,0,.1),transparent 60%);pointer-events:none;z-index:1}
 
 /* OFFE BADGE */
-.offe-badge{position:absolute;top:20px;left:40px;display:flex;align-items:center;gap:6px;padding:8px 14px;font-size:9px;letter-spacing:2px;text-transform:uppercase;z-index:10}
-.offe-badge.is-offe{background:#04040a;border:1px solid rgba(200,255,0,.5);color:#c8ff00;box-shadow:0 0 14px rgba(200,255,0,.15)}
-.offe-badge.is-zu{background:#04040a;border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.3)}
-.offe-dot{width:7px;height:7px;border-radius:50%;background:#c8ff00;animation:blink 1s infinite;box-shadow:0 0 6px rgba(200,255,0,.6)}
+.offe-badge{position:absolute;top:20px;left:40px;z-index:10;display:flex;align-items:center;gap:7px;padding:8px 14px;font-size:9px;letter-spacing:2px;text-transform:uppercase}
+.offe-badge.is-offe{background:#000;border:1px solid rgba(200,255,0,.5);color:#c8ff00;box-shadow:0 0 14px rgba(200,255,0,.15)}
+.offe-badge.is-zu{background:#000;border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.3)}
+.offe-dot{width:7px;height:7px;border-radius:50%;background:#c8ff00;animation:blink 1s infinite;box-shadow:0 0 6px rgba(200,255,0,.8)}
 
-/* PROFIL GRID — wie gastro */
-.profil-wrap{display:grid;grid-template-columns:1fr 340px;gap:0;padding:0 40px;margin-top:32px}
+/* PROFIL HEAD */
+.profil-head{padding:28px 40px 22px;border-bottom:1px solid rgba(255,45,0,.07);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
+.ph-left{}
+.ph-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.phb{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;font-family:'DM Mono',monospace}
+.phb.red{background:#ff2d00;color:#000}.phb.volt{background:#c8ff00;color:#000}
+.phb.gold{background:#ffd700;color:#000}.phb.ghost{border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.25)}
+.phb.offe-b{background:#c8ff00;color:#000;display:flex;align-items:center;gap:3px}
+.bdot{width:4px;height:4px;border-radius:50%;background:#000;animation:blink 1s infinite}
+.ph-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(40px,6vw,72px);text-transform:uppercase;line-height:.88;color:#e8e4d9;margin-bottom:6px}
+.ph-genre{font-size:12px;color:#ff2d00;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;text-shadow:0 0 16px rgba(255,45,0,.4)}
+.ph-adresse{font-size:10px;color:rgba(232,228,217,.3);line-height:1.7}
+.ph-right{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
+.ph-rating{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:52px;color:#ff2d00;line-height:1;text-shadow:0 0 20px rgba(255,45,0,.4)}
+.ph-stars{font-size:13px;color:rgba(255,45,0,.5)}
+.ph-rlabel{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15)}
 
-/* LINKS */
-.profil-left{}
-.pl-head{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(255,45,0,.07)}
-.pl-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.badge{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;font-family:'DM Mono',monospace}
-.badge.red{background:#ff2d00;color:#e8e4d9}
-.badge.volt{background:#c8ff00;color:#04040a}
-.badge.gold{background:#ffd700;color:#04040a}
-.badge.ghost{border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.25)}
-.badge.offe-b{background:#c8ff00;color:#04040a;display:flex;align-items:center;gap:4px}
-.badge-dot{width:4px;height:4px;border-radius:50%;background:#04040a;animation:blink 1s infinite}
+/* VIBE */
+.vibe-strip{padding:16px 40px;border-bottom:1px solid rgba(255,45,0,.06);display:flex;align-items:center;gap:14px}
+.vibe-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2)}
+.vibe-dots{display:flex;gap:4px}
+.vdot{width:9px;height:9px;border-radius:50%;background:rgba(255,45,0,.1)}
+.vdot.on{background:#ff2d00;box-shadow:0 0 7px rgba(255,45,0,.6)}
+.vdot.anim{animation:vpulse 1.2s ease-in-out infinite}
 
-.pl-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(42px,6vw,76px);text-transform:uppercase;line-height:.86;color:#e8e4d9;margin-bottom:8px}
-.pl-genre{font-size:12px;color:#ff2d00;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
-.pl-adresse{font-size:10px;color:rgba(232,228,217,.3);line-height:1.7}
+/* MAIN */
+.main{display:grid;grid-template-columns:1fr 340px;gap:0;padding:0 40px;margin-top:30px}
 
-/* BESCHREIBUNG */
-.section{margin-bottom:28px}
-.section-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:14px;color:#e8e4d9}
-.section-title::before{content:'—';color:#ff2d00}
-.section-desc{font-size:11px;color:rgba(232,228,217,.4);line-height:1.9}
+.content{}
+.c-section{margin-bottom:28px}
+.c-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.c-title::before{content:'—';color:#ff2d00}
+.c-desc{font-size:11px;color:rgba(232,228,217,.38);line-height:1.9}
 
-/* ÖFFNUNGSZEITEN */
-.oz-table{width:100%;border-collapse:collapse}
-.oz-row{display:grid;grid-template-columns:80px 1fr;border-bottom:1px solid rgba(255,45,0,.05);padding:8px 0}
+/* OZ */
+.oz-wrap{display:flex;flex-direction:column;gap:0}
+.oz-row{display:grid;grid-template-columns:64px 1fr;padding:8px 0;border-bottom:1px solid rgba(255,45,0,.05)}
 .oz-row:last-child{border-bottom:none}
-.oz-row.today{background:rgba(255,45,0,.04);border-radius:2px;padding:8px 10px;margin:0 -10px;border-bottom:none;border-left:2px solid #ff2d00}
+.oz-row.today{background:rgba(255,45,0,.05);border-radius:2px;padding:8px 10px;margin:0 -10px;border-left:2px solid #ff2d00;border-bottom:none}
 .oz-day{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.25)}
 .oz-row.today .oz-day{color:#ff2d00}
 .oz-time{font-size:10px;color:rgba(232,228,217,.5)}
 .oz-row.today .oz-time{color:#e8e4d9}
-.oz-row.closed .oz-time{color:rgba(232,228,217,.15)}
+.oz-closed .oz-time{color:rgba(232,228,217,.15)}
 
 /* KI PRED */
-.ki-pred{border-left:2px solid #ff2d00;padding:12px 16px;margin-bottom:24px;background:rgba(255,45,0,.03)}
+.ki-pred{border-left:2px solid #ff2d00;padding:12px 16px;margin-bottom:24px;background:rgba(255,45,0,.03);box-shadow:inset 2px 0 12px rgba(255,45,0,.08)}
 .ki-pred-head{display:flex;align-items:center;gap:6px;margin-bottom:6px}
-.ki-pred-icon{font-size:16px}
 .ki-pred-label{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00}
 .ki-pred-txt{font-size:10px;color:rgba(255,100,80,.6);line-height:1.8}
 .ki-pred-txt strong{color:#ff2d00}
 
-/* RECHTS — Sidebar wie gastro */
-.profil-right{padding-left:32px;border-left:1px solid rgba(255,45,0,.07)}
-
-/* GROSSER PROFIL BUTTON — volt wie gastro */
-.btn-profil-big{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:18px;background:#c8ff00;color:#04040a;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;cursor:none;margin-bottom:10px;transition:.2s;min-height:56px}
-.btn-profil-big:hover{background:#d4ff33;box-shadow:0 0 24px rgba(200,255,0,.3)}
-
-/* TICKET BTN — extra für Nachtleben */
-.btn-ticket{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px;background:#ff2d00;color:#e8e4d9;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;cursor:none;margin-bottom:10px;transition:.2s;border:none;min-height:54px;box-shadow:0 0 20px rgba(255,45,0,.2)}
-.btn-ticket:hover{background:#ff4422;box-shadow:0 0 30px rgba(255,45,0,.4)}
-
-/* GHOST BUTTONS */
-.btn-ghost{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:transparent;color:rgba(232,228,217,.3);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:none;margin-bottom:8px;transition:.2s;border:1px solid rgba(232,228,217,.1);text-decoration:none;min-height:48px}
-.btn-ghost:hover{color:#e8e4d9;border-color:rgba(255,45,0,.3)}
-
-/* INFO CARD */
-.info-card{border:1px solid rgba(255,45,0,.1);padding:18px;margin-bottom:14px;background:#07070f;position:relative;overflow:hidden}
-.info-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,#ff2d00,transparent)}
-.info-card-title{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.5);margin-bottom:12px;display:flex;align-items:center;gap:5px}
-.info-card-title::before{content:'';width:3px;height:3px;border-radius:50%;background:#ff2d00}
-.info-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:7px 0;border-bottom:1px solid rgba(255,45,0,.04)}
-.info-row:last-child{border-bottom:none}
-.ir-lbl{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,217,.18);min-width:60px;flex-shrink:0;padding-top:1px}
-.ir-val{font-size:10px;color:#e8e4d9;text-align:right}
-.ir-val a{color:#ff2d00;text-decoration:none}
-.ir-val.volt{color:#c8ff00}
-.ir-val.red{color:#ff2d00}
-
-/* VIBE */
-.vibe-row{display:flex;align-items:center;gap:10px;padding:14px 18px;border:1px solid rgba(255,45,0,.08);margin-bottom:14px}
-.vibe-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);min-width:60px}
-.vibe-dots{display:flex;gap:4px}
-.vdot{width:9px;height:9px;border-radius:50%;background:rgba(255,45,0,.1)}
-.vdot.on{background:#ff2d00;box-shadow:0 0 6px rgba(255,45,0,.5)}
-.vdot.anim{animation:vibePulse 1.2s ease-in-out infinite}
-
 /* ÄHNLICHE */
-.aehnlich-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,45,0,.06)}
-.ae-card{background:#04040a;padding:14px;transition:.15s;cursor:none}
-.ae-card:hover{background:#07070f}
-.ae-img{width:100%;height:70px;object-fit:cover;display:block;filter:brightness(.65) saturate(.7);margin-bottom:8px}
-.ae-img-ph{width:100%;height:50px;display:flex;align-items:center;justify-content:center;font-size:20px;background:#07070f;margin-bottom:8px;opacity:.3}
+.ae-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,45,0,.06)}
+.ae-card{background:#000;padding:14px;transition:.15s;cursor:none}
+.ae-card:hover{background:#080808}
+.ae-img{width:100%;height:70px;object-fit:cover;filter:brightness(.6) saturate(.7);display:block;margin-bottom:8px}
+.ae-ph{width:100%;height:50px;display:flex;align-items:center;justify-content:center;font-size:20px;background:#080808;margin-bottom:8px;opacity:.25}
 .ae-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;text-transform:uppercase;color:#e8e4d9;line-height:1;margin-bottom:2px}
 .ae-sub{font-size:7px;color:#ff2d00;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px}
 .ae-kr{font-size:7px;color:rgba(232,228,217,.2);letter-spacing:1px}
 
-/* LOADING */
-.loading-wrap{padding:80px 40px;text-align:center}
-.loading-dots{display:flex;justify-content:center;gap:8px;margin-bottom:20px}
+/* SIDEBAR */
+.sidebar{padding-left:32px;border-left:1px solid rgba(255,45,0,.07)}
+
+/* TICKET BTN */
+.btn-ticket{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:18px;background:#ff2d00;color:#000;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;cursor:none;margin-bottom:10px;transition:.2s;min-height:58px;box-shadow:0 0 24px rgba(255,45,0,.25);border:none}
+.btn-ticket:hover{background:#ff4422;box-shadow:0 0 36px rgba(255,45,0,.45)}
+
+.btn-ghost{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px;background:transparent;color:rgba(232,228,217,.3);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:none;margin-bottom:10px;transition:.2s;border:1px solid rgba(232,228,217,.1);text-decoration:none;min-height:52px}
+.btn-ghost:hover{color:#e8e4d9;border-color:rgba(255,45,0,.3)}
+
+/* INFO CARD */
+.info-card{border:1px solid rgba(255,45,0,.1);padding:18px;margin-bottom:14px;background:#050000;position:relative;overflow:hidden}
+.info-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,#ff2d00,transparent);box-shadow:0 0 8px rgba(255,45,0,.3)}
+.ic-title{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.45);margin-bottom:12px;display:flex;align-items:center;gap:5px}
+.ic-title::before{content:'';width:3px;height:3px;border-radius:50%;background:#ff2d00}
+.ir{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,45,0,.04)}
+.ir:last-child{border-bottom:none}
+.ir-l{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,217,.18);min-width:60px;flex-shrink:0}
+.ir-r{font-size:10px;color:#e8e4d9;text-align:right}
+.ir-r a{color:#ff2d00;text-decoration:none}
+.ir-r.volt{color:#c8ff00}.ir-r.red{color:#ff2d00}
+
+/* 4 ACTION BUTTONS */
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.act-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 8px;background:transparent;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.22);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;cursor:none;transition:.15s;min-height:48px}
+.act-btn:hover{color:#e8e4d9;border-color:rgba(255,45,0,.25);background:rgba(255,45,0,.03)}
+
+/* LOADING / ERROR */
+#main-content{min-height:50vh}
+.load-wrap{padding:80px 40px;text-align:center}
+.load-dots{display:flex;justify-content:center;gap:8px;margin-bottom:20px}
 .ld{width:10px;height:10px;border-radius:50%;background:#ff2d00;animation:bounce 1.2s infinite;box-shadow:0 0 8px rgba(255,45,0,.4)}
 .ld:nth-child(2){animation-delay:.2s}.ld:nth-child(3){animation-delay:.4s}
-.loading-txt{font-size:10px;letter-spacing:3px;color:rgba(255,45,0,.3);text-transform:uppercase}
+.load-txt{font-size:10px;letter-spacing:3px;color:rgba(255,45,0,.3);text-transform:uppercase}
 
-.error-wrap{padding:80px 40px;text-align:center}
-.error-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:56px;color:rgba(255,45,0,.15);text-transform:uppercase;margin-bottom:10px}
-
-/* TICKER */
-.btw{border-top:1px solid rgba(255,45,0,.07);margin-top:56px;overflow:hidden}
+/* TICKER + FOOTER */
+.btw{border-top:1px solid rgba(255,45,0,.07);margin-top:56px;overflow:hidden;background:#000}
 .tr{padding:6px 0;overflow:hidden;border-bottom:1px solid rgba(255,45,0,.04)}
 .tick{display:flex;white-space:nowrap}
 .tick.l{animation:tL 24s linear infinite}.tick.r{animation:tR 24s linear infinite}
 .ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(255,45,0,.25)}.ti b{color:#ff2d00;font-weight:400}
-
-/* FOOTER */
-footer{padding:44px 40px 32px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px;border-top:1px solid rgba(255,45,0,.08)}
+footer{padding:44px 40px 32px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px;border-top:1px solid rgba(255,45,0,.08);background:#000}
 .fc-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:12px}
-.fc-link{display:block;font-size:10px;color:rgba(232,228,217,.22);margin-bottom:8px;transition:.15s;text-decoration:none;cursor:none}
-.fc-link:hover{color:#e8e4d9}
-.fc-desc{font-size:10px;color:rgba(232,228,217,.18);line-height:1.9;margin-top:8px}
-.fc-copy{font-size:8px;color:rgba(232,228,217,.1);margin-top:16px}
+.fc-link{display:block;font-size:10px;color:rgba(232,228,217,.2);margin-bottom:8px;transition:.15s;text-decoration:none;cursor:none}
+.fc-link:hover{color:#ff2d00}
+.fc-desc{font-size:10px;color:rgba(232,228,217,.15);line-height:1.9;margin-top:8px}
+.fc-copy{font-size:8px;color:rgba(232,228,217,.08);margin-top:16px}
 
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
 @keyframes tL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes tR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
 @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
-@keyframes vibePulse{0%,100%{box-shadow:0 0 5px rgba(255,45,0,.4)}50%{box-shadow:0 0 14px rgba(255,45,0,.9)}}
+@keyframes vpulse{0%,100%{box-shadow:0 0 5px rgba(255,45,0,.4)}50%{box-shadow:0 0 14px rgba(255,45,0,.9)}}
 
 @media(max-width:768px){
 #cur,#cur2{display:none}body{cursor:auto}
 nav{padding:0 16px;height:48px}.nav-links{display:none}
-.breadcrumb{padding:8px 16px}
-.hero-img{height:260px}
+.back-bar{padding:10px 16px}
+.hero-img{height:250px}
 .offe-badge{top:12px;left:16px;padding:7px 12px}
-.profil-wrap{grid-template-columns:1fr;padding:0 16px;margin-top:20px}
-.pl-name{font-size:clamp(38px,9vw,56px)}
-.profil-right{padding-left:0;border-left:none;border-top:1px solid rgba(255,45,0,.07);padding-top:24px;margin-top:24px}
-.btn-profil-big{min-height:60px;font-size:12px;padding:20px}
-.btn-ticket{min-height:58px;font-size:11px}
-.btn-ghost{min-height:52px;font-size:10px}
-.aehnlich-grid{grid-template-columns:1fr 1fr}
-footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:14px}
-.oz-row{grid-template-columns:70px 1fr}}</style>
+.profil-head{padding:20px 16px;grid-template-columns:1fr;gap:10px}
+.ph-right{flex-direction:row;align-items:flex-start;gap:16px}
+.ph-name{font-size:clamp(36px,10vw,56px)}
+.vibe-strip{padding:14px 16px}
+.main{grid-template-columns:1fr;padding:0 16px;margin-top:20px}
+.sidebar{padding-left:0;border-left:none;border-top:1px solid rgba(255,45,0,.07);padding-top:24px;margin-top:24px}
+.btn-ticket{min-height:62px;font-size:11px}
+.btn-ghost{min-height:54px;font-size:10px}
+.act-btn{min-height:52px;font-size:9px}
+.ae-grid{grid-template-columns:1fr 1fr}
+footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:14px}}
+</style>
 </head>
 <body>
 <div id="cur"></div><div id="cur2"></div>
@@ -194,18 +188,14 @@ footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:14px}
   <a class="btn-mm" href="index.html?page=login">MITMACHE</a>
 </nav>
 
-<div class="breadcrumb">
-  <a href="index.html">HOME</a>
-  <span>›</span>
-  <a href="nachtleben.html">NACHTLEBEN</a>
-  <span>›</span>
-  <span id="bc-name">—</span>
+<div class="back-bar">
+  <a class="back-btn" href="nachtleben.html">Nachtleben Zürich</a>
 </div>
 
 <div id="main-content">
-  <div class="loading-wrap">
-    <div class="loading-dots"><div class="ld"></div><div class="ld"></div><div class="ld"></div></div>
-    <div class="loading-txt">LÄDT PROFIL...</div>
+  <div class="load-wrap">
+    <div class="load-dots"><div class="ld"></div><div class="ld"></div><div class="ld"></div></div>
+    <div class="load-txt">LÄDT PROFIL...</div>
   </div>
 </div>
 
@@ -224,19 +214,11 @@ footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:14px}
 <script>
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
-
 const SUBKAT={162:{e:'🌙',n:'NACHTLEBEN'},1414:{e:'🔊',n:'TECHNO'},1417:{e:'🎤',n:'HIP-HOP'},1423:{e:'🎸',n:'ROCK'},1426:{e:'💃',n:'LATIN'},1429:{e:'🌅',n:'AFTERHOUR'},1432:{e:'🎷',n:'JAZZ'},1435:{e:'🎉',n:'PARTY'},163:{e:'🎸',n:'LIVE MUSIC'},103:{e:'🍸',n:'BAR'},1438:{e:'🍹',n:'COCKTAILBAR'},1441:{e:'🎵',n:'MUSIC BAR'},1444:{e:'🍺',n:'PUB'},1447:{e:'🍽️',n:'RESTAURANT-BAR'}};
 const DAYS=['So','Mo','Di','Mi','Do','Fr','Sa'];
 const VIBES=['«Hüt Nacht isch genau de richtige Club für dich.»','«Kreis 4 feueret — sicher nöd hei gah.»','«Afterhour bis 8 Uhr — nur für Nachtvögel.»','«Stimmig passt — geh hüt Nacht.»','«Techno at its finest — Züri Style.»'];
 
-function isOffe(oz){
-  if(!oz||!Array.isArray(oz))return false;
-  const now=new Date();const h=now.getHours();
-  const day=DAYS[now.getDay()];
-  const s=oz.find(o=>o&&o.includes(day));if(!s)return false;
-  const m=s.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/);
-  if(!m)return false;return h>=parseInt(m[1])&&h<parseInt(m[3]);
-}
+function isOffe(oz){if(!oz||!Array.isArray(oz))return false;const now=new Date();const h=now.getHours();const day=DAYS[now.getDay()];const s=oz.find(o=>o&&o.includes(day));if(!s)return false;const m=s.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/);if(!m)return false;return h>=parseInt(m[1])&&h<parseInt(m[3]);}
 function getVibe(sid){if([1414,1429].includes(sid))return 5;if([1435,1417,1426].includes(sid))return 4;if([1432,163,1441].includes(sid))return 3;return 2;}
 
 async function loadProfil(){
@@ -244,15 +226,13 @@ async function loadProfil(){
   const id=p.get('id'),slug=p.get('slug');
   if(!id&&!slug){showError('Kein Club angegeben');return;}
   try{
-    const q=`locations?select=*&limit=1&aktiv=eq.true`+(id?`&id=eq.${id}`:`&slug=eq.${slug}`);
+    const q='locations?select=*&limit=1&aktiv=eq.true'+(id?`&id=eq.${id}`:`&slug=eq.${slug}`);
     const r=await fetch(SU+'/rest/v1/'+q,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
     const data=await r.json();
     if(!data?.length){showError('Club nöd gfunde');return;}
-    const l=data[0];
-    renderProfil(l);
-    // Ähnliche
-    const sid=parseInt(l.zt_subkategorie_id)||0;
-    const sr=await fetch(SU+`/rest/v1/locations?select=id,name,slug,zt_subkategorie_id,kreis,bild_url&aktiv=eq.true&zt_subkategorie_id=eq.${sid}&id=neq.${l.id}&limit=6`,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+    renderProfil(data[0]);
+    const sid=parseInt(data[0].zt_subkategorie_id)||0;
+    const sr=await fetch(SU+`/rest/v1/locations?select=id,name,slug,zt_subkategorie_id,kreis,bild_url&aktiv=eq.true&zt_subkategorie_id=eq.${sid}&id=neq.${data[0].id}&limit=6`,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
     renderSimilar(await sr.json(),sid);
   }catch(e){showError('Verbindungsfehler');}
 }
@@ -265,134 +245,120 @@ function renderProfil(l){
   const isAfter=sid===1429;
   const rating=l.rating||4.1;
   const today=new Date().getDay();
+  const oz=l.oeffnungszeiten||[];
 
   document.title=`${l.name} — Nachtleben Zürich | Stadtpuls`;
-  document.getElementById('bc-name').textContent=l.name;
 
-  // Öffnungszeiten
-  const oz=l.oeffnungszeiten||[];
   const ozHtml=DAYS.map((d,i)=>{
     const s=oz.find(o=>o&&o.includes(d));
     const m=s?s.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/):null;
     const isToday=i===today;
-    return`<div class="oz-row${isToday?' today':''}${!m?' closed':''}">
-      <div class="oz-day">${d}${isToday?' ←':''}</div>
-      <div class="oz-time">${m?`${m[1]}:${m[2]} – ${m[3]}:${m[4]}`:'GESCHLOSSEN'}</div>
+    return`<div class="oz-row${isToday?' today':''}${!m?' oz-closed':''}">
+      <div class="oz-day">${d}${isToday?' ◀':''}</div>
+      <div class="oz-time">${m?m[1]+':'+m[2]+' – '+m[3]+':'+m[4]:'GESCHLOSSEN'}</div>
     </div>`;
   }).join('');
 
   const vibeDots=[1,2,3,4,5].map(v=>`<div class="vdot${v<=vibe?' on'+(v>=5?' anim':''):''}"></div>`).join('');
 
   document.getElementById('main-content').innerHTML=`
-    <div class="hero-wrap">
-      ${l.bild_url
-        ?`<img class="hero-img" src="${l.bild_url}" alt="${l.name}">`
-        :`<div style="height:300px;background:#07070f;display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.1">${sub.e}</div>`}
-      <div class="hero-gradient"></div>
+    <div class="hero-img-wrap">
+      ${l.bild_url?`<img class="hero-img" src="${l.bild_url}" alt="${l.name}">`:`<div style="height:280px;background:#050000;display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.1">${sub.e}</div>`}
       <div class="offe-badge ${offe?'is-offe':'is-zu'}">
-        ${offe?`<div class="offe-dot"></div>`:''}
+        ${offe?'<div class="offe-dot"></div>':''}
         <span>${offe?'JETZT OFFE':'MOMENTAN GESCHLOSSEN'}</span>
       </div>
     </div>
 
-    <div class="profil-wrap">
-      <!-- LINKS -->
-      <div class="profil-left">
-        <div class="pl-head">
-          <div class="pl-badges">
-            ${l.featured?'<span class="badge volt">TOP</span>':''}
-            ${isAfter?'<span class="badge gold">🌅 AFTERHOUR</span>':''}
-            <span class="badge red">${sub.e} ${sub.n}</span>
-            <span class="badge ghost">KREIS ${l.kreis||'?'}</span>
-            ${offe?'<span class="badge offe-b"><div class="badge-dot"></div>OFFE</span>':''}
-          </div>
-          <div class="pl-name">${l.name}</div>
-          <div class="pl-genre">${sub.n} · KREIS ${l.kreis||'?'}</div>
-          <div class="pl-adresse">${l.adresse||''}${l.plz?' · '+l.plz+' Zürich':''}</div>
+    <div class="profil-head">
+      <div class="ph-left">
+        <div class="ph-badges">
+          ${l.featured?'<span class="phb volt">TOP</span>':''}
+          ${isAfter?'<span class="phb gold">🌅 AFTERHOUR</span>':''}
+          <span class="phb red">${sub.e} ${sub.n}</span>
+          <span class="phb ghost">KREIS ${l.kreis||'?'}</span>
+          ${offe?'<span class="phb offe-b"><div class="bdot"></div>OFFE</span>':''}
         </div>
+        <div class="ph-name">${l.name}</div>
+        <div class="ph-genre">${sub.n} · KREIS ${l.kreis||'?'}</div>
+        <div class="ph-adresse">${l.adresse||''}${l.plz?' · '+l.plz+' Zürich':''}</div>
+      </div>
+      <div class="ph-right">
+        <div class="ph-rating">${rating.toFixed(1)}</div>
+        <div class="ph-stars">${'★'.repeat(Math.min(5,Math.round(rating)))}</div>
+        <div class="ph-rlabel">SCORE</div>
+      </div>
+    </div>
 
+    <div class="vibe-strip">
+      <div class="vibe-lbl">VIBE</div>
+      <div class="vibe-dots">${vibeDots}</div>
+      ${vibe>=5?'<div style="font-size:8px;color:#ff2d00;letter-spacing:1.5px;text-transform:uppercase;margin-left:8px;text-shadow:0 0 10px rgba(255,45,0,.5)">🔥 ON FIRE</div>':''}
+    </div>
+
+    <div class="main">
+      <div class="content">
         <div class="ki-pred">
-          <div class="ki-pred-head"><span class="ki-pred-icon">🤖</span><span class="ki-pred-label">ZÜRI-BOT SAIT</span></div>
+          <div class="ki-pred-head"><span style="font-size:16px">🤖</span><span class="ki-pred-label">ZÜRI-BOT SAIT</span></div>
           <div class="ki-pred-txt">⚡ «${VIBES[Math.floor(Math.random()*VIBES.length)]}»</div>
         </div>
 
         ${l.beschreibung||l.beschreibung_kurz?`
-        <div class="section">
-          <div class="section-title">ÜBER DE CLUB</div>
-          <div class="section-desc">${l.beschreibung||l.beschreibung_kurz}</div>
+        <div class="c-section">
+          <div class="c-title">ÜBER DE CLUB</div>
+          <div class="c-desc">${l.beschreibung||l.beschreibung_kurz}</div>
         </div>`:''}
 
-        <div class="section">
-          <div class="section-title">ÖFFNIGSZITE</div>
-          <div>${ozHtml}</div>
+        <div class="c-section">
+          <div class="c-title">ÖFFNIGSZITE</div>
+          <div class="oz-wrap">${ozHtml}</div>
         </div>
 
-        <div class="section" id="similar-section">
-          <div class="section-title">ÄHNLICHI CLUBS</div>
-          <div class="aehnlich-grid" id="similar-grid">
-            <div style="grid-column:1/-1;padding:20px;text-align:center;font-size:9px;color:rgba(232,228,217,.15)">LÄDT...</div>
+        <div class="c-section">
+          <div class="c-title">ÄHNLICHI CLUBS</div>
+          <div class="ae-grid" id="ae-grid">
+            <div style="grid-column:1/-1;padding:20px;text-align:center;font-size:9px;color:rgba(232,228,217,.12)">LÄDT...</div>
           </div>
         </div>
       </div>
 
-      <!-- RECHTS -->
-      <div class="profil-right">
-
-        <!-- VOLT PROFIL BTN — wie gastro -->
-        <a class="btn-profil-big" href="${l.website||'#'}" target="_blank">
-          📄 VOLLSTÄNDIGES PROFIL →
-        </a>
-
-        <!-- TICKET BTN — Nachtleben exklusiv -->
+      <div class="sidebar">
         <a class="btn-ticket" href="https://www.ticketcorner.ch/search/?q=${encodeURIComponent(l.name)}" target="_blank">
           🎫 TICKET AUF TICKETCORNER →
         </a>
 
+        <a class="btn-ghost" href="${l.website||'#'}" target="_blank">🌐 WEBSITE ÖFFNE →</a>
         <a class="btn-ghost" href="nachtleben.html">← ZURÜCK ZUM NACHTLEBEN</a>
 
-        <!-- VIBE -->
-        <div class="vibe-row">
-          <div class="vibe-lbl">VIBE</div>
-          <div class="vibe-dots">${vibeDots}</div>
-          ${vibe>=5?'<div style="font-size:9px;color:#ff2d00;letter-spacing:1px;text-transform:uppercase;margin-left:8px;font-size:8px">🔥 ON FIRE</div>':''}
-        </div>
-
-        <!-- INFO CARD -->
         <div class="info-card">
-          <div class="info-card-title">INFOS</div>
-          ${l.adresse?`<div class="info-row"><div class="ir-lbl">ADRESSE</div><div class="ir-val">${l.adresse}</div></div>`:''}
-          <div class="info-row"><div class="ir-lbl">KREIS</div><div class="ir-val red">Kreis ${l.kreis||'?'}</div></div>
-          <div class="info-row"><div class="ir-lbl">GENRE</div><div class="ir-val">${sub.e} ${sub.n}</div></div>
-          <div class="info-row"><div class="ir-lbl">STATUS</div><div class="ir-val ${offe?'volt':''}">${offe?'● JETZT OFFE':'MOMENTAN ZU'}</div></div>
-          ${isAfter?`<div class="info-row"><div class="ir-lbl">AFTERHOUR</div><div class="ir-val" style="color:#ffd700">🌅 JA</div></div>`:''}
-          <div class="info-row"><div class="ir-lbl">RATING</div><div class="ir-val red">${rating.toFixed(1)} ★</div></div>
-          ${l.website?`<div class="info-row"><div class="ir-lbl">WEBSITE</div><div class="ir-val"><a href="${l.website}" target="_blank">ÖFFNE →</a></div></div>`:''}
-          ${l.telefon?`<div class="info-row"><div class="ir-lbl">TEL</div><div class="ir-val">${l.telefon}</div></div>`:''}
+          <div class="ic-title">INFOS</div>
+          ${l.adresse?`<div class="ir"><div class="ir-l">ADRESSE</div><div class="ir-r">${l.adresse}</div></div>`:''}
+          <div class="ir"><div class="ir-l">KREIS</div><div class="ir-r red">Kreis ${l.kreis||'?'}</div></div>
+          <div class="ir"><div class="ir-l">GENRE</div><div class="ir-r">${sub.e} ${sub.n}</div></div>
+          <div class="ir"><div class="ir-l">STATUS</div><div class="ir-r ${offe?'volt':''}">${offe?'● JETZT OFFE':'MOMENTAN ZU'}</div></div>
+          ${isAfter?`<div class="ir"><div class="ir-l">AFTERHOUR</div><div class="ir-r" style="color:#ffd700">🌅 JA</div></div>`:''}
+          <div class="ir"><div class="ir-l">RATING</div><div class="ir-r red">${rating.toFixed(1)} ★</div></div>
+          ${l.website?`<div class="ir"><div class="ir-l">WEBSITE</div><div class="ir-r"><a href="${l.website}" target="_blank">ÖFFNE →</a></div></div>`:''}
+          ${l.telefon?`<div class="ir"><div class="ir-l">TEL</div><div class="ir-r">${l.telefon}</div></div>`:''}
         </div>
 
-        <!-- NACHT ACTIONS -->
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-          <div class="btn-ghost" style="cursor:none;font-size:9px">🗺️ KARTE</div>
-          <div class="btn-ghost" style="cursor:none;font-size:9px">❤️ SPEICHERE</div>
-          <div class="btn-ghost" style="cursor:none;font-size:9px">⭐ BEWERTE</div>
-          <div class="btn-ghost" style="cursor:none;font-size:9px">📤 TEILE</div>
-        </div>
-
-        <div style="margin-top:14px;padding:14px;border:1px solid rgba(255,45,0,.07);text-align:center">
-          <div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,45,0,.3);margin-bottom:6px">KI NACHT FEATURES</div>
-          <div style="font-size:9px;color:rgba(232,228,217,.18);line-height:1.8">GPS Guide · ZVV Heimweg<br>Stimmungs-Matching · Züri-Bot<br><span style="color:rgba(255,45,0,.25)">Phase 5 — bald live</span></div>
+        <div class="action-grid">
+          <div class="act-btn">🗺️ KARTE</div>
+          <div class="act-btn">❤️ SPEICHERE</div>
+          <div class="act-btn">⭐ BEWERTE</div>
+          <div class="act-btn">📤 TEILE</div>
         </div>
       </div>
     </div>`;
 }
 
 function renderSimilar(locs,sid){
-  const g=document.getElementById('similar-grid');if(!g)return;
+  const g=document.getElementById('ae-grid');if(!g)return;
   const sub=SUBKAT[sid]||{e:'🌙',n:'NACHTLEBEN'};
   if(!locs?.length){g.innerHTML='<div style="grid-column:1/-1;padding:20px;text-align:center;font-size:9px;color:rgba(232,228,217,.12)">NÜÜT GFUNDE</div>';return;}
   g.innerHTML=locs.slice(0,6).map(l=>`
     <div class="ae-card" onclick="window.location='nachtleben-profil.html?id=${l.id}'">
-      ${l.bild_url?`<img class="ae-img" src="${l.bild_url}" loading="lazy" alt="${l.name}">`:`<div class="ae-img-ph">${sub.e}</div>`}
+      ${l.bild_url?`<img class="ae-img" src="${l.bild_url}" loading="lazy" alt="${l.name}">`:`<div class="ae-ph">${sub.e}</div>`}
       <div class="ae-name">${l.name}</div>
       <div class="ae-sub">${sub.n}</div>
       <div class="ae-kr">K${l.kreis||'?'}</div>
@@ -400,7 +366,7 @@ function renderSimilar(locs,sid){
 }
 
 function showError(msg){
-  document.getElementById('main-content').innerHTML=`<div class="error-wrap"><div class="error-title">FEHLER</div><div style="font-size:10px;color:rgba(232,228,217,.2)">${msg}</div><a href="nachtleben.html" style="display:inline-block;margin-top:20px;font-size:9px;letter-spacing:2px;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:10px 18px;text-decoration:none">← NACHTLEBEN</a></div>`;
+  document.getElementById('main-content').innerHTML=`<div class="load-wrap"><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:rgba(255,45,0,.15);text-transform:uppercase;margin-bottom:10px">FEHLER</div><div style="font-size:10px;color:rgba(232,228,217,.2)">${msg}</div><a href="nachtleben.html" style="display:inline-block;margin-top:20px;font-size:9px;letter-spacing:2px;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:10px 18px;text-decoration:none">← NACHTLEBEN</a></div>`;
 }
 
 const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
