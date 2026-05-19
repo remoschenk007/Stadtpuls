@@ -232,8 +232,25 @@ async function loadProfil(){
     if(!data?.length){showError('Club nöd gfunde');return;}
     renderProfil(data[0]);
     const sid=parseInt(data[0].zt_subkategorie_id)||0;
-    const sr=await fetch(SU+`/rest/v1/locations?select=id,name,slug,zt_subkategorie_id,kreis,bild_url&aktiv=eq.true&zt_subkategorie_id=eq.${sid}&id=neq.${data[0].id}&limit=6`,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
-    renderSimilar(await sr.json(),sid);
+    const kreis=data[0].kreis||1;
+    const subkat=(data[0].subkategorie||'').toLowerCase();
+    let simData=[];
+    // 1. Gleiche zt_subkategorie_id
+    if(sid){
+      const sr1=await fetch(SU+`/rest/v1/locations?select=id,name,slug,zt_subkategorie_id,subkategorie,kreis,bild_url&aktiv=eq.true&zt_subkategorie_id=eq.${sid}&id=neq.${data[0].id}&limit=6`,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+      simData=await sr1.json()||[];
+    }
+    // 2. Gleiche subkategorie Text
+    if(!simData.length&&subkat){
+      const sr2=await fetch(SU+`/rest/v1/locations?select=id,name,slug,zt_subkategorie_id,subkategorie,kreis,bild_url&aktiv=eq.true&subkategorie=eq.${subkat}&id=neq.${data[0].id}&limit=6`,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+      simData=await sr2.json()||[];
+    }
+    // 3. Fallback: kategorie=nachtleben
+    if(!simData.length){
+      const sr3=await fetch(SU+`/rest/v1/locations?select=id,name,slug,zt_subkategorie_id,subkategorie,kreis,bild_url&aktiv=eq.true&kategorie=eq.nachtleben&id=neq.${data[0].id}&limit=6`,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+      simData=await sr3.json()||[];
+    }
+    renderSimilar(simData,sid,subkat);
   }catch(e){showError('Verbindungsfehler');}
 }
 
@@ -323,9 +340,17 @@ function renderProfil(l){
       </div>
 
       <div class="sidebar">
-        <a class="btn-ticket" href="https://www.ticketcorner.ch/search/?q=${encodeURIComponent(l.name)}" target="_blank">
-          🎫 TICKET AUF TICKETCORNER →
-        </a>
+        <!-- TICKET BTN — nur wenn ticketcorner_url oder event vorhanden -->
+        ${l.ticketcorner_url?`
+        <a class="btn-ticket" href="${l.ticketcorner_url}" target="_blank">
+          🎫 TICKET KAUFE → TICKETCORNER
+        </a>`:''}
+
+        <!-- TISCHRESERVIERUNG — nur wenn reservierbar=true -->
+        ${l.reservierbar?`
+        <a class="btn-ticket" href="https://www.opentable.com/s/?term=${encodeURIComponent(l.name)}+Zürich" target="_blank" style="background:#c8ff00;color:#000;box-shadow:0 0 20px rgba(200,255,0,.2)">
+          🍽️ TISCH RESERVIERE →
+        </a>`:''}
 
         <a class="btn-ghost" href="${l.website||'#'}" target="_blank">🌐 WEBSITE ÖFFNE →</a>
         <a class="btn-ghost" href="nachtleben.html">← ZURÜCK ZUM NACHTLEBEN</a>
@@ -352,17 +377,20 @@ function renderProfil(l){
     </div>`;
 }
 
-function renderSimilar(locs,sid){
+function renderSimilar(locs,sid,subkat){
   const g=document.getElementById('ae-grid');if(!g)return;
-  const sub=SUBKAT[sid]||{e:'🌙',n:'NACHTLEBEN'};
+  // Sub-Info aus ID oder Text
+  const sub=SUBKAT[sid]||(subkat?{e:'🌙',n:subkat.toUpperCase()}:{e:'🌙',n:'NACHTLEBEN'});
   if(!locs?.length){g.innerHTML='<div style="grid-column:1/-1;padding:20px;text-align:center;font-size:9px;color:rgba(232,228,217,.12)">NÜÜT GFUNDE</div>';return;}
-  g.innerHTML=locs.slice(0,6).map(l=>`
-    <div class="ae-card" onclick="window.location='nachtleben-profil.html?id=${l.id}'">
-      ${l.bild_url?`<img class="ae-img" src="${l.bild_url}" loading="lazy" alt="${l.name}">`:`<div class="ae-ph">${sub.e}</div>`}
+  g.innerHTML=locs.slice(0,6).map(l=>{
+    const lsub=SUBKAT[parseInt(l.zt_subkategorie_id)]||(l.subkategorie?{e:'🌙',n:l.subkategorie.toUpperCase()}:{e:'🌙',n:'NACHTLEBEN'});
+    return`<div class="ae-card" onclick="window.location='nachtleben-profil.html?id=${l.id}'">
+      ${l.bild_url?`<img class="ae-img" src="${l.bild_url}" loading="lazy" alt="${l.name}">`:`<div class="ae-ph">${lsub.e}</div>`}
       <div class="ae-name">${l.name}</div>
-      <div class="ae-sub">${sub.n}</div>
+      <div class="ae-sub">${lsub.n}</div>
       <div class="ae-kr">K${l.kreis||'?'}</div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
 
 function showError(msg){
