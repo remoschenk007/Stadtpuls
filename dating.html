@@ -3,387 +3,914 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>People & Dates Zürich — Echti Lüt | Stadtpuls</title>
-<meta name="description" content="People & Dates Zürich — Echti Züri Lüt. Kreis-basiert. Kein Tinder-Bullshit.">
-<meta property="og:title" content="People & Dates Zürich | Stadtpuls">
+<title>People & Dates Zürich — Züri Flirtet | Stadtpuls</title>
+<meta name="description" content="Züri flirtet — aber nöd uf Tinder. Kreis-basiert. Echti Lüt. Ab 18. 100'000 JA — mir baue's.">
+<meta property="og:title" content="ZÜRI FLIRTET — People & Dates | Stadtpuls">
 <meta property="og:url" content="https://depuls.ch/dating.html">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--lila:#9333ea;--lila2:#7c3aed;--pink:#ec4899;--gold:#ffd700;--red:#ff2d00;--white:#e8e4d9;--black:#04040a}
 body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
 body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);pointer-events:none;z-index:9997}
-#cur{position:fixed;width:8px;height:8px;background:#9333ea;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-#cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(147,51,234,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0s,top 0s}
+
+/* CURSOR */
+#cur{position:fixed;width:10px;height:10px;background:#9333ea;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);box-shadow:0 0 12px rgba(147,51,234,.8)}
+#cur2{position:fixed;width:36px;height:36px;border:1px solid rgba(147,51,234,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0s,top 0s}
+
+/* NAV */
 nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid rgba(147,51,234,.15);position:sticky;top:0;background:#04040a;z-index:300}
 .logo{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px;text-decoration:none}
-.ldot{width:7px;height:7px;border-radius:50%;background:#9333ea;animation:blink 2s infinite}
+.ldot{width:7px;height:7px;border-radius:50%;background:#9333ea;box-shadow:0 0 8px rgba(147,51,234,.8);animation:blink 2s infinite}
 .nav-links{display:flex;gap:28px}
 .nl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);text-decoration:none;transition:.15s}
 .nl:hover{color:#e8e4d9}.nl.on{color:#9333ea}
-.btn-mm{background:#9333ea;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none;text-decoration:none}
+.btn-mm{background:#9333ea;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none;text-decoration:none;box-shadow:0 0 20px rgba(147,51,234,.3)}
+
+/* TICKER */
 .tw{overflow:hidden;border-bottom:1px solid rgba(147,51,234,.08)}
 .tr{padding:6px 0;overflow:hidden;border-bottom:1px solid rgba(147,51,234,.04)}
 .tick{display:flex;white-space:nowrap}
-.tick.l{animation:tL 28s linear infinite}.tick.r{animation:tR 28s linear infinite}
-.ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(147,51,234,.28)}.ti b{color:#9333ea;font-weight:400}
-.hero{display:grid;grid-template-columns:1fr 480px;min-height:560px;overflow:hidden;position:relative}
-.hero-left{padding:60px 40px;z-index:5}
-.eyebrow{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:rgba(232,228,217,.12);margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.eyebrow::before{content:'';width:20px;height:1px;background:#9333ea}
-.h1{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(72px,9vw,110px);line-height:.82;text-transform:uppercase;color:#e8e4d9}
-.h2{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(72px,9vw,110px);line-height:.82;text-transform:uppercase;color:#9333ea;margin-bottom:24px}
-.hsub{font-size:11px;color:rgba(232,228,217,.28);line-height:1.9;margin-bottom:28px;max-width:320px}
-.hstats{display:flex;gap:32px;flex-wrap:wrap}
-.sn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;color:#9333ea;line-height:1}
-.sl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);margin-top:3px}
-.arena{position:relative;overflow:hidden;background:radial-gradient(ellipse at 50% 50%,rgba(147,51,234,.06),transparent 70%)}
-.kern{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
-.kr{position:absolute;border-radius:50%;border:1px solid rgba(147,51,234,.12);top:50%;left:50%;transform:translate(-50%,-50%);animation:krp 4s ease-in-out infinite}
-.kr1{width:420px;height:420px}.kr2{width:280px;height:280px;animation-delay:.9s}.kr3{width:160px;height:160px;animation-delay:1.8s}
-.kdot{position:absolute;width:14px;height:14px;border-radius:50%;background:#9333ea;top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 20px rgba(147,51,234,.9),0 0 50px rgba(147,51,234,.4);animation:kdp 2s ease-in-out infinite}
-.bubble-shell{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at 28% 22%,rgba(255,255,255,.55) 0%,rgba(255,255,255,.15) 20%,transparent 50%),radial-gradient(ellipse at 72% 78%,rgba(255,255,255,.15) 0%,transparent 35%),radial-gradient(ellipse at 50% 50%,transparent 40%,rgba(0,0,0,.25) 100%)}
-.bubble-rim{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at 50% 50%,transparent 58%,rgba(255,255,255,.1) 78%,rgba(255,255,255,.05) 88%,transparent 100%)}
-.bubble-shine{position:absolute;top:9%;left:14%;width:32%;height:20%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.8) 0%,rgba(255,255,255,.3) 40%,transparent 70%);pointer-events:none;transform:rotate(-25deg)}
-.bubble-shine2{position:absolute;bottom:14%;right:16%;width:16%;height:10%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.35) 0%,transparent 70%);pointer-events:none}
-.bubble-color{position:absolute;inset:0;border-radius:50%;opacity:.18}
-.bubble-content{position:relative;z-index:2;text-align:center;padding:.5rem}
-.bubble-icon{font-size:2rem;display:block;margin-bottom:.3rem;filter:drop-shadow(0 0 16px currentColor);transform:translateZ(25px)}
-.bub{position:absolute;border-radius:50%;cursor:none;display:flex;align-items:center;justify-content:center;transform-style:preserve-3d}
-.bub:hover{transform:scale(1.15)!important;z-index:30;filter:brightness(1.2)}
-.blbl{font-size:.4rem;letter-spacing:.15em;text-transform:uppercase;line-height:1.3;font-family:'DM Mono',monospace}
-.bm{width:148px;height:148px;top:38px;left:128px;border:1.5px solid rgba(255,215,0,.55);box-shadow:0 0 45px rgba(255,215,0,.22),inset 0 0 45px rgba(255,215,0,.07);color:#ffd700;animation:d1 7s ease-in-out infinite}
-.bm .bubble-color{background:radial-gradient(circle at 50% 50%,#ffd700,transparent 70%)}.bm .blbl{color:rgba(255,215,0,.9)}
-.bd{width:116px;height:116px;top:58px;left:298px;border:1.5px solid rgba(147,51,234,.6);box-shadow:0 0 38px rgba(147,51,234,.3),inset 0 0 38px rgba(147,51,234,.08);color:#9333ea;animation:d2 8.5s ease-in-out infinite .7s}
-.bd .bubble-color{background:radial-gradient(circle at 50% 50%,#9333ea,transparent 70%)}.bd .blbl{color:rgba(200,150,255,.9)}
-.bmu{width:90px;height:90px;top:238px;left:52px;border:1.5px solid rgba(0,245,255,.5);box-shadow:0 0 30px rgba(0,245,255,.2),inset 0 0 30px rgba(0,245,255,.06);color:#00f5ff;animation:d3 9s ease-in-out infinite 1.4s}
-.bmu .bubble-color{background:radial-gradient(circle at 50% 50%,#00f5ff,transparent 70%)}.bmu .blbl{color:rgba(0,245,255,.85)}
-.bk{width:104px;height:104px;top:268px;left:298px;border:1.5px solid rgba(255,45,0,.5);box-shadow:0 0 34px rgba(255,45,0,.22),inset 0 0 34px rgba(255,45,0,.07);color:#ff2d00;animation:d1 10s ease-in-out infinite 2s}
-.bk .bubble-color{background:radial-gradient(circle at 50% 50%,#ff2d00,transparent 70%)}.bk .blbl{color:rgba(255,130,100,.9)}
-.bs{width:74px;height:74px;top:368px;left:172px;border:1px solid rgba(200,255,0,.4);box-shadow:0 0 24px rgba(200,255,0,.15),inset 0 0 24px rgba(200,255,0,.05);color:#c8ff00;animation:d2 6.5s ease-in-out infinite .3s}
-.bs .bubble-color{background:radial-gradient(circle at 50% 50%,#c8ff00,transparent 70%)}.bs .blbl{color:rgba(200,255,0,.8)}
-.bf{width:62px;height:62px;top:155px;left:218px;border:1.5px solid rgba(180,0,255,.5);box-shadow:0 0 20px rgba(180,0,255,.3),inset 0 0 30px rgba(0,0,0,.9);color:#b400ff;animation:d3 5.5s ease-in-out infinite .9s;background:radial-gradient(circle at 36% 28%,rgba(180,0,255,.15),rgba(0,0,0,.95) 70%)}
-.bf .bubble-color{background:radial-gradient(circle at 50% 50%,#b400ff,transparent 70%)}.bf .blbl{color:rgba(180,0,255,.7);font-size:.32rem}
-.bf .bubble-icon{font-size:1.4rem}
+.tick.l{animation:tL 22s linear infinite}.tick.r{animation:tR 22s linear infinite}
+.ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(147,51,234,.3)}.ti b{color:#9333ea;font-weight:400}
 
-/* VOTING */
-.vote-section{position:relative;padding:5rem 1rem 4rem;text-align:center;overflow:hidden;background:#04040a}
-.vring{position:absolute;border-radius:50%;border:1px solid rgba(147,51,234,.2);top:50%;left:50%;transform:translate(-50%,-50%);animation:vout 3s ease-out infinite;pointer-events:none}
-.vr1{width:200px;height:200px}.vr2{width:200px;height:200px;animation-delay:.8s}.vr3{width:200px;height:200px;animation-delay:1.6s}
-.vote-badge{font-size:7px;letter-spacing:4px;text-transform:uppercase;color:rgba(147,51,234,.5);margin-bottom:1.2rem;display:flex;align-items:center;justify-content:center;gap:8px;position:relative;z-index:2}
-.vote-badge::before,.vote-badge::after{content:'';width:30px;height:1px;background:rgba(147,51,234,.3)}
-.vote-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(3.5rem,8vw,6rem);line-height:.88;text-transform:uppercase;position:relative;z-index:2;margin-bottom:1rem}
-.v1{color:#e8e4d9}.v2{color:#9333ea;text-shadow:0 0 40px rgba(147,51,234,.5);animation:glow-text 3s ease-in-out infinite}.v3{color:#e8e4d9}
-.vote-sub{font-size:.7rem;color:rgba(232,228,217,.3);margin-bottom:2rem;position:relative;z-index:2;line-height:1.7}
-.vote-num-wrap{position:relative;display:inline-block;margin-bottom:.5rem}
-.vote-num{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:6rem;color:#9333ea;line-height:1;text-shadow:0 0 60px rgba(147,51,234,.6);position:relative;z-index:2}
-.pulse-out{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;border:2px solid rgba(147,51,234,.6);animation:pulseOut 2s ease-out infinite;pointer-events:none}
-.po1{width:80px;height:80px}.po2{width:80px;height:80px;animation-delay:.7s}.po3{width:80px;height:80px;animation-delay:1.4s}
-.vote-of{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:1.2rem;position:relative;z-index:2}
-.vote-prog-wrap{width:100%;max-width:520px;margin:0 auto .3rem;background:rgba(147,51,234,.1);height:3px;border-radius:2px;position:relative;z-index:2}
-.vote-prog{height:3px;border-radius:2px;background:linear-gradient(90deg,#9333ea,#c8ff00);box-shadow:0 0 10px rgba(147,51,234,.5);transition:width 1.2s ease}
-.vote-prog-lbl{display:flex;justify-content:space-between;max-width:520px;margin:0 auto 2rem;font-size:.5rem;color:rgba(232,228,217,.15);letter-spacing:.1em;position:relative;z-index:2}
-.vform{max-width:520px;margin:0 auto;background:rgba(147,51,234,.04);border:1px solid rgba(147,51,234,.15);border-radius:1.5rem;padding:2rem;position:relative;z-index:2}
-.vform-hint{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:1.5rem;text-align:center}
-.vform-lbl{font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,228,217,.35);margin-bottom:.75rem;display:block;text-align:left}
-.gbtn-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;margin-bottom:1.5rem}
-.gbtn{padding:.85rem .5rem;background:rgba(147,51,234,.08);border:1px solid rgba(147,51,234,.25);border-radius:.75rem;color:#e8e4d9;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.2rem;letter-spacing:.05em;cursor:pointer;transition:.2s;text-transform:uppercase}
-.gbtn:hover{background:rgba(147,51,234,.18);border-color:rgba(147,51,234,.5)}
-.gbtn.on{background:rgba(147,51,234,.25);border-color:#9333ea;box-shadow:0 0 20px rgba(147,51,234,.25)}
-.yin{width:100%;padding:.85rem 1rem;background:rgba(147,51,234,.04);border:1px solid rgba(147,51,234,.2);border-radius:.75rem;color:#e8e4d9;font-family:'DM Mono',monospace;font-size:.9rem;margin-bottom:1.5rem;outline:none;transition:.2s}
-.yin:focus{border-color:rgba(147,51,234,.5);box-shadow:0 0 0 3px rgba(147,51,234,.1)}
-.vbtns{display:grid;grid-template-columns:1fr 2fr;gap:.75rem}
-.vnei{padding:1rem;background:transparent;border:1px solid rgba(232,228,217,.1);border-radius:.75rem;color:rgba(232,228,217,.3);font-family:'DM Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:.2s}
-.vnei:hover{border-color:rgba(232,228,217,.3);color:rgba(232,228,217,.5)}
-.vja{padding:1rem;border:none;border-radius:.75rem;background:linear-gradient(135deg,#9333ea,#c8ff00);color:#04040a;font-family:'Barlow Condensed',sans-serif;font-weight:900;font-size:1.5rem;cursor:pointer;transition:.2s;box-shadow:0 4px 24px rgba(147,51,234,.4)}
-.vja:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(147,51,234,.6)}
-.vdone{display:none;padding:2.5rem;position:relative;z-index:2}
+/* ══════════════════════════════════
+   HERO — KINEMATISCH
+   ══════════════════════════════════ */
+.hero{
+  position:relative;overflow:hidden;
+  min-height:100vh;
+  display:flex;flex-direction:column;justify-content:center;
+  background:
+    radial-gradient(ellipse at 20% 50%,rgba(147,51,234,.12) 0%,transparent 50%),
+    radial-gradient(ellipse at 80% 30%,rgba(236,72,153,.08) 0%,transparent 45%),
+    radial-gradient(ellipse at 50% 100%,rgba(147,51,234,.06) 0%,transparent 40%),
+    #04040a;
+}
 
-/* KREIS BATTLE */
-.kb-section{padding:0 40px 48px}
-.kb-head{display:flex;align-items:baseline;justify-content:space-between;padding:32px 0 20px}
-.kb-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
-.kb-title::before{content:'—';color:#9333ea}
-.kb-sub{font-size:8px;letter-spacing:2px;color:rgba(232,228,217,.15);text-transform:uppercase}
-.kb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(147,51,234,.08)}
-.kbcard{background:#04040a;padding:16px;display:flex;align-items:center;gap:12px;transition:.15s;cursor:none;position:relative;overflow:hidden}
-.kbcard:hover{background:#07070f}
-.k1p{background:rgba(147,51,234,.06);border-left:3px solid #9333ea}
-.k2p{background:rgba(200,255,0,.03);border-left:3px solid rgba(200,255,0,.4)}
-.k3p{background:rgba(255,45,0,.03);border-left:3px solid rgba(255,45,0,.4)}
-.kb-rank{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:rgba(232,228,217,.1);min-width:28px;text-align:center}
-.k1p .kb-rank{color:#9333ea}.k2p .kb-rank{color:#c8ff00}.k3p .kb-rank{color:#ff2d00}
-.kb-emoji{font-size:22px;flex-shrink:0}
-.kb-info{flex:1;min-width:0}
-.kb-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;text-transform:uppercase;color:#e8e4d9;line-height:1}
-.kb-char{font-size:8px;color:rgba(232,228,217,.25);letter-spacing:.5px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.kb-bar-w{width:100%;height:2px;background:rgba(147,51,234,.08);border-radius:1px;margin-top:6px}
-.kb-bar{height:2px;border-radius:1px;background:rgba(147,51,234,.4);transition:width 1s ease}
-.k1p .kb-bar{background:#9333ea;box-shadow:0 0 6px rgba(147,51,234,.6)}.k2p .kb-bar{background:#c8ff00}.k3p .kb-bar{background:#ff2d00}
-.kb-cnt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:rgba(232,228,217,.2);flex-shrink:0}
-.k1p .kb-cnt{color:#9333ea}.k2p .kb-cnt{color:#c8ff00}.k3p .kb-cnt{color:#ff2d00}
-.kb-tr{position:absolute;top:8px;right:8px;font-size:14px;opacity:.6}
+/* Particle Field */
+.particles{position:absolute;inset:0;pointer-events:none;z-index:1}
+.particle{position:absolute;width:2px;height:2px;border-radius:50%;background:#9333ea;animation:particleFly linear infinite;opacity:0}
 
-/* PROFIL */
-.sh{display:flex;align-items:baseline;justify-content:space-between;padding:32px 40px 16px}
-.sht{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;text-transform:uppercase;display:flex;align-items:center;gap:8px}
-.sht::before{content:'—';color:#9333ea}.shr{font-size:9px;letter-spacing:2px;color:rgba(232,228,217,.15);text-transform:uppercase}
-.fr{display:flex;padding:0 40px 16px;overflow-x:auto;gap:0}.fr::-webkit-scrollbar{display:none}
-.fb{padding:8px 18px;border:1px solid rgba(147,51,234,.08);border-right:none;color:rgba(232,228,217,.25);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;background:transparent;cursor:none;transition:.15s;white-space:nowrap}
-.fb:last-child{border-right:1px solid rgba(147,51,234,.08)}.fb.on{color:#9333ea;border-color:#9333ea;background:rgba(147,51,234,.05)}
-.pg{display:grid;grid-template-columns:repeat(3,1fr);padding:0 40px;gap:0}
-.pc{border:1px solid rgba(147,51,234,.08);border-top:none;border-left:none;padding:20px;transition:.15s;cursor:none;position:relative;overflow:hidden}
-.pc:nth-child(3n+1){border-left:1px solid rgba(147,51,234,.08)}.pc:nth-child(-n+3){border-top:1px solid rgba(147,51,234,.08)}
-.pc:hover{background:#07070f}
-.pc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#9333ea;transform:scaleX(0);transition:.22s;transform-origin:left}
-.pc:hover::after{transform:scaleX(1)}
-.pct{display:flex;align-items:center;gap:10px;margin-bottom:10px}
-.pca{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;border:1.5px solid rgba(147,51,234,.3)}
-.pcn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;text-transform:uppercase;color:#9333ea}
-.pcm{font-size:8px;color:rgba(232,228,217,.2);letter-spacing:1px;margin-top:1px}
-.pcd{font-size:10px;color:rgba(232,228,217,.3);line-height:1.7;margin-bottom:10px}
-.pctags{display:flex;gap:4px;flex-wrap:wrap}
-.ptag{font-size:7px;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border:1px solid rgba(147,51,234,.2);color:rgba(147,51,234,.7)}
-footer{padding:44px 40px 32px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px;border-top:1px solid rgba(255,45,0,.08);margin-top:48px}
-.fct{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:12px}
-.fcl{display:block;font-size:10px;color:rgba(232,228,217,.22);margin-bottom:8px;transition:.15s;text-decoration:none;cursor:none}
-.fcl:hover{color:#e8e4d9}.fcd{font-size:10px;color:rgba(232,228,217,.18);line-height:1.9;margin-top:8px}
-.fcc{font-size:8px;color:rgba(232,228,217,.1);margin-top:16px}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+/* Grosse Ghost-Zahl Hintergrund */
+.hero-ghost{
+  position:absolute;right:-80px;top:50%;transform:translateY(-50%);
+  font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;
+  font-size:clamp(300px,35vw,520px);
+  color:transparent;
+  -webkit-text-stroke:1px rgba(147,51,234,.08);
+  line-height:1;pointer-events:none;z-index:1;
+  user-select:none;
+  animation:ghostBreath 8s ease-in-out infinite;
+}
+
+.hero-content{position:relative;z-index:5;padding:0 40px;max-width:680px}
+.hero-eye{font-size:8px;letter-spacing:5px;text-transform:uppercase;color:rgba(147,51,234,.4);margin-bottom:20px;display:flex;align-items:center;gap:10px}
+.hero-eye::before{content:'';width:20px;height:1px;background:#9333ea}
+.hero-eye::after{content:'AB 18 · KREIS-BASIERT · ZÜRI';display:inline}
+
+.h1{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(80px,12vw,160px);line-height:.78;text-transform:uppercase;color:#e8e4d9;letter-spacing:-3px;animation:crashIn .5s cubic-bezier(.16,1,.3,1) both}
+.h2{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(80px,12vw,160px);line-height:.78;text-transform:uppercase;color:#9333ea;letter-spacing:-3px;text-shadow:0 0 80px rgba(147,51,234,.5),0 0 160px rgba(147,51,234,.2);animation:crashIn .5s cubic-bezier(.16,1,.3,1) .06s both;margin-bottom:28px}
+.h3{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(80px,12vw,160px);line-height:.78;text-transform:uppercase;color:#ec4899;letter-spacing:-3px;text-shadow:0 0 60px rgba(236,72,153,.4);animation:crashIn .5s cubic-bezier(.16,1,.3,1) .12s both}
+
+.hero-line{width:56px;height:2px;background:linear-gradient(to right,#9333ea,#ec4899);margin:28px 0;box-shadow:0 0 12px rgba(147,51,234,.4)}
+.hero-desc{font-size:12px;color:rgba(232,228,217,.32);line-height:1.9;margin-bottom:32px;max-width:440px}
+
+/* HYPE METER */
+.hype-wrap{margin-bottom:36px}
+.hype-label{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.hype-txt{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(147,51,234,.5)}
+.hype-pct{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;color:#9333ea}
+.hype-bar{height:3px;background:rgba(147,51,234,.1);position:relative;overflow:hidden}
+.hype-fill{height:100%;background:linear-gradient(to right,#9333ea,#ec4899);transition:width 2s ease;box-shadow:0 0 8px rgba(147,51,234,.6)}
+.hype-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 0%,rgba(255,255,255,.2) 50%,transparent 100%);animation:shimmer 2s infinite}
+
+/* VOTE COUNTER */
+.vote-hero{display:flex;align-items:flex-end;gap:20px;flex-wrap:wrap}
+.vh-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:72px;color:#9333ea;line-height:1;text-shadow:0 0 30px rgba(147,51,234,.5);position:relative}
+.vh-n::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:linear-gradient(to right,#9333ea,#ec4899)}
+.vh-info{padding-bottom:8px}
+.vh-label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(147,51,234,.4)}
+.vh-sub{font-size:10px;color:rgba(232,228,217,.25);margin-top:4px}
+
+/* ══════════════════════════════════
+   ZÜRI-MATCH RADAR
+   ══════════════════════════════════ */
+.radar-section{
+  position:relative;overflow:hidden;
+  padding:80px 40px;
+  background:radial-gradient(ellipse at 50% 100%,rgba(147,51,234,.08),transparent 60%),#04040a;
+  border-top:1px solid rgba(147,51,234,.08);
+  border-bottom:1px solid rgba(147,51,234,.08);
+  display:grid;grid-template-columns:1fr 480px;gap:60px;align-items:center;
+}
+.radar-left{}
+.radar-eye{font-size:7px;letter-spacing:4px;text-transform:uppercase;color:rgba(147,51,234,.35);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.radar-eye::before{content:'';width:4px;height:4px;border-radius:50%;background:#9333ea;animation:blink 1.2s infinite}
+.radar-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(48px,6vw,80px);text-transform:uppercase;line-height:.86;color:#e8e4d9;margin-bottom:16px}
+.radar-hl span{color:#9333ea}
+.radar-desc{font-size:11px;color:rgba(232,228,217,.3);line-height:1.9;margin-bottom:28px;max-width:400px}
+.radar-stats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.rs-card{border:1px solid rgba(147,51,234,.12);padding:16px;background:rgba(147,51,234,.03)}
+.rs-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:36px;color:#9333ea;line-height:1}
+.rs-l{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-top:4px}
+
+/* RADAR CANVAS */
+.radar-right{display:flex;align-items:center;justify-content:center}
+.radar-canvas{position:relative;width:380px;height:380px}
+.r-ring{position:absolute;border-radius:50%;border:1px solid rgba(147,51,234,.15);top:50%;left:50%;transform:translate(-50%,-50%)}
+.r-ring:nth-child(1){width:100%;height:100%}
+.r-ring:nth-child(2){width:75%;height:75%}
+.r-ring:nth-child(3){width:50%;height:50%}
+.r-ring:nth-child(4){width:25%;height:25%}
+.r-cross{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:100%;height:100%}
+.r-cross::before,.r-cross::after{content:'';position:absolute;background:rgba(147,51,234,.1)}
+.r-cross::before{width:100%;height:1px;top:50%;left:0}
+.r-cross::after{width:1px;height:100%;top:0;left:50%}
+.r-sweep{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg,rgba(147,51,234,.2) 0deg,rgba(147,51,234,.05) 60deg,transparent 90deg);animation:radarSpin 4s linear infinite;transform-origin:center}
+.r-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:12px;height:12px;border-radius:50%;background:#9333ea;box-shadow:0 0 20px rgba(147,51,234,.9),0 0 40px rgba(147,51,234,.4);animation:blink .8s infinite}
+.r-blip{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%)}
+.r-blip.lila{background:#9333ea;box-shadow:0 0 10px rgba(147,51,234,.8)}
+.r-blip.pink{background:#ec4899;box-shadow:0 0 10px rgba(236,72,153,.8)}
+.r-blip.gold{background:#ffd700;box-shadow:0 0 10px rgba(255,215,0,.8)}
+.r-blip-label{position:absolute;font-size:7px;letter-spacing:1px;color:rgba(232,228,217,.4);white-space:nowrap;top:12px;left:50%;transform:translateX(-50%)}
+
+/* ══════════════════════════════════
+   KREIS BATTLE
+   ══════════════════════════════════ */
+.battle-section{padding:80px 40px;border-bottom:1px solid rgba(147,51,234,.08)}
+.bs-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:16px}
+.bs-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(40px,5vw,64px);text-transform:uppercase;color:#e8e4d9}
+.bs-title span{color:#9333ea}
+.bs-live{display:flex;align-items:center;gap:6px;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#9333ea;border:1px solid rgba(147,51,234,.2);padding:5px 12px}
+.bs-live::before{content:'';width:5px;height:5px;border-radius:50%;background:#9333ea;animation:blink 1s infinite}
+
+.battle-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:rgba(147,51,234,.06)}
+.bk-card{background:#04040a;padding:20px 16px;text-align:center;position:relative;overflow:hidden;cursor:none;transition:.2s}
+.bk-card:hover{background:#060612}
+.bk-card.winner{background:rgba(147,51,234,.06);animation:winnerGlow 3s ease-in-out infinite}
+.bk-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#9333ea;transform:scaleX(0);transition:.2s;transform-origin:center}
+.bk-card:hover::after,.bk-card.winner::after{transform:scaleX(1)}
+.bk-medal{font-size:18px;margin-bottom:6px;min-height:26px;display:flex;align-items:center;justify-content:center}
+.bk-kreis{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:rgba(232,228,217,.3);line-height:1}
+.bk-card.winner .bk-kreis{color:#9333ea;text-shadow:0 0 20px rgba(147,51,234,.5)}
+.bk-name{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-top:4px;margin-bottom:10px}
+.bk-bar-w{height:2px;background:rgba(147,51,234,.08);margin-bottom:8px}
+.bk-bar{height:2px;background:#9333ea;transition:width 1.5s ease}
+.bk-card.winner .bk-bar{box-shadow:0 0 8px rgba(147,51,234,.6)}
+.bk-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;color:rgba(232,228,217,.2)}
+.bk-card.winner .bk-n{color:#9333ea}
+.bk-char{font-size:8px;color:rgba(232,228,217,.18);margin-top:3px;letter-spacing:.5px}
+
+/* ══════════════════════════════════
+   VOTING — BRUTALE VERSION
+   ══════════════════════════════════ */
+.vote-section{
+  padding:80px 40px;
+  background:radial-gradient(ellipse at 50% 50%,rgba(147,51,234,.06),transparent 70%),#04040a;
+  border-bottom:1px solid rgba(147,51,234,.08);
+  position:relative;overflow:hidden;
+}
+.vote-section::before{content:'';position:absolute;top:-100px;left:50%;transform:translateX(-50%);width:800px;height:800px;border-radius:50%;background:radial-gradient(rgba(147,51,234,.04),transparent 70%);pointer-events:none}
+
+.vs-head{text-align:center;margin-bottom:56px}
+.vs-eye{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:rgba(147,51,234,.35);margin-bottom:16px}
+.vs-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(52px,7vw,96px);text-transform:uppercase;line-height:.85;color:#e8e4d9}
+.vs-title span{color:#9333ea;display:block}
+.vs-sub{font-size:11px;color:rgba(232,228,217,.25);margin-top:16px;line-height:1.8}
+
+/* RIESIGE VOTE ZAHL */
+.vote-counter-wrap{text-align:center;margin:0 auto 60px;position:relative;display:inline-block;left:50%;transform:translateX(-50%)}
+.vote-ghost-n{
+  font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;
+  font-size:clamp(180px,22vw,300px);
+  color:transparent;-webkit-text-stroke:1px rgba(147,51,234,.06);
+  line-height:1;pointer-events:none;position:absolute;
+  top:50%;left:50%;transform:translate(-50%,-50%);
+  user-select:none;white-space:nowrap;
+}
+.vote-big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(80px,10vw,130px);color:#9333ea;line-height:1;text-shadow:0 0 40px rgba(147,51,234,.5),0 0 80px rgba(147,51,234,.2);position:relative;z-index:2}
+.vote-label{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(147,51,234,.35);position:relative;z-index:2}
+
+/* PULS RINGE */
+.pulse-rings{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;z-index:1}
+.pr{position:absolute;border-radius:50%;border:1px solid rgba(147,51,234,.15);top:50%;left:50%;transform:translate(-50%,-50%);animation:ringExpand 3s ease-out infinite}
+.pr:nth-child(2){animation-delay:1s}.pr:nth-child(3){animation-delay:2s}
+
+/* VOTE BUBBLES */
+.bubbles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;max-width:900px;margin:0 auto 56px}
+.bubble-wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:20px}
+.bubble-btn{
+  position:relative;width:180px;height:180px;border-radius:50%;cursor:none;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  border:none;transition:.3s;
+  background:radial-gradient(ellipse at 30% 25%,rgba(255,255,255,.35) 0%,rgba(255,255,255,.1) 25%,transparent 55%),
+             radial-gradient(ellipse at 70% 75%,rgba(255,255,255,.08) 0%,transparent 40%),
+             radial-gradient(ellipse at 50% 50%,transparent 40%,rgba(0,0,0,.15) 100%);
+}
+.bubble-btn::before{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 180deg,rgba(255,255,255,.15),transparent,rgba(255,255,255,.05));pointer-events:none}
+.bubble-btn::after{content:'';position:absolute;top:8%;left:14%;width:32%;height:20%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.7) 0%,rgba(255,255,255,.2) 40%,transparent 70%);transform:rotate(-25deg);pointer-events:none}
+.bubble-btn:hover{transform:scale(1.06)}
+.bubble-btn:active{transform:scale(.95)}
+.bubble-btn.explode{animation:bubbleExplode .4s ease-out}
+
+.bubble-emoji{font-size:36px;position:relative;z-index:2;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3))}
+.bubble-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;text-transform:uppercase;position:relative;z-index:2;line-height:1;margin-top:4px}
+.bubble-badge{font-size:7px;letter-spacing:2px;text-transform:uppercase;position:relative;z-index:2;margin-top:2px;opacity:.7}
+.bubble-info{text-align:center}
+.bubble-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;margin-bottom:4px}
+.bubble-desc{font-size:9px;color:rgba(232,228,217,.25);letter-spacing:.5px;line-height:1.5}
+.bubble-votes{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:#9333ea;text-shadow:0 0 12px rgba(147,51,234,.4)}
+.bubble-votes-label{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(147,51,234,.35);margin-top:2px}
+
+/* VOTE MODAL */
+.vote-modal-ov{position:fixed;inset:0;background:rgba(4,4,10,.95);z-index:800;display:none;align-items:center;justify-content:center;backdrop-filter:blur(8px)}
+.vote-modal-ov.on{display:flex}
+.vote-modal{background:#04040a;border:1px solid rgba(147,51,234,.2);padding:40px;max-width:480px;width:90%;position:relative;text-align:center}
+.vote-modal::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#9333ea,#ec4899);box-shadow:0 0 10px rgba(147,51,234,.5)}
+.vm-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:36px;text-transform:uppercase;margin-bottom:8px}
+.vm-sub{font-size:10px;color:rgba(232,228,217,.3);margin-bottom:28px;line-height:1.7}
+.vm-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.vm-field{position:relative}
+.vm-select{width:100%;background:#07070f;border:1px solid rgba(147,51,234,.2);color:#e8e4d9;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;padding:14px 12px;text-transform:uppercase;cursor:pointer;appearance:none;-webkit-appearance:none;outline:none}
+.vm-select:focus{border-color:#9333ea}
+.vm-field::after{content:'▾';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:rgba(147,51,234,.5);pointer-events:none;font-size:12px}
+.vm-age-check{display:flex;align-items:center;gap:10px;margin-bottom:20px;padding:12px;border:1px solid rgba(147,51,234,.1);background:rgba(147,51,234,.03)}
+.vm-checkbox{width:20px;height:20px;border:1px solid rgba(147,51,234,.3);background:transparent;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:12px}
+.vm-checkbox.checked{background:#9333ea;border-color:#9333ea}
+.vm-age-txt{font-size:9px;color:rgba(232,228,217,.35);letter-spacing:.5px;line-height:1.5;text-align:left}
+.vm-btn{width:100%;background:linear-gradient(135deg,#9333ea,#ec4899);color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:18px;cursor:pointer;transition:.2s;min-height:56px;box-shadow:0 0 24px rgba(147,51,234,.3)}
+.vm-btn:hover{box-shadow:0 0 40px rgba(147,51,234,.5);transform:translateY(-1px)}
+.vm-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+.vm-close{position:absolute;top:16px;right:16px;width:32px;height:32px;border:1px solid rgba(232,228,217,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(232,228,217,.3);cursor:pointer;font-size:14px}
+.vm-close:hover{color:#e8e4d9;border-color:rgba(147,51,234,.3)}
+
+/* SUCCESS ANIMATION */
+.vote-success{position:fixed;inset:0;z-index:900;display:none;align-items:center;justify-content:center;pointer-events:none}
+.vote-success.show{display:flex}
+.vs-explosion{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(60px,10vw,120px);text-transform:uppercase;color:#9333ea;text-shadow:0 0 60px rgba(147,51,234,.8);animation:voteSuccessAnim .8s ease-out forwards}
+
+/* ══════════════════════════════════
+   GESTÄNDNIS WALL
+   ══════════════════════════════════ */
+.wall-section{padding:80px 40px;border-bottom:1px solid rgba(147,51,234,.08);overflow:hidden;position:relative}
+.wall-section::before{content:'LIEBE';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:400px;color:transparent;-webkit-text-stroke:1px rgba(147,51,234,.03);white-space:nowrap;pointer-events:none;line-height:1}
+.ws-head{text-align:center;margin-bottom:48px;position:relative;z-index:2}
+.ws-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(40px,5vw,64px);text-transform:uppercase;color:#e8e4d9}
+.ws-title span{color:#ec4899}
+.ws-sub{font-size:10px;color:rgba(232,228,217,.25);margin-top:8px;letter-spacing:.5px}
+
+.confessions-wrap{position:relative;z-index:2;display:flex;flex-direction:column;gap:12px;max-width:800px;margin:0 auto 40px}
+.confession{
+  border:1px solid rgba(147,51,234,.1);
+  padding:18px 22px;
+  background:#04040a;
+  position:relative;
+  overflow:hidden;
+  animation:confessionFly .5s ease both;
+}
+.confession::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:#9333ea;opacity:.4}
+.confession.pink::before{background:#ec4899}
+.confession.gold::before{background:#ffd700}
+.conf-text{font-size:12px;color:rgba(232,228,217,.55);line-height:1.8;font-style:italic;margin-bottom:8px}
+.conf-text strong{color:#e8e4d9;font-style:normal}
+.conf-meta{display:flex;align-items:center;gap:12px}
+.conf-kreis{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(147,51,234,.4)}
+.conf-time{font-size:8px;color:rgba(232,228,217,.2)}
+.conf-heart{margin-left:auto;font-size:14px;cursor:none;opacity:.4;transition:.15s}
+.conf-heart:hover{opacity:1}
+
+/* ══════════════════════════════════
+   COUNTDOWN BIS LAUNCH
+   ══════════════════════════════════ */
+.launch-section{
+  padding:80px 40px;
+  background:
+    radial-gradient(ellipse at 50% 0%,rgba(147,51,234,.1),transparent 50%),
+    #04040a;
+  text-align:center;
+  border-bottom:1px solid rgba(147,51,234,.08);
+}
+.ls-eye{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:rgba(147,51,234,.35);margin-bottom:16px}
+.ls-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(48px,7vw,96px);text-transform:uppercase;line-height:.85;color:#e8e4d9;margin-bottom:32px}
+.ls-title span{color:#9333ea;display:block}
+.launch-digits{display:flex;align-items:flex-start;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:32px}
+.ld-unit{text-align:center;min-width:80px}
+.ld-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(60px,8vw,100px);color:#9333ea;line-height:1;text-shadow:0 0 30px rgba(147,51,234,.4)}
+.ld-l{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-top:4px}
+.ld-sep{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:60px;color:rgba(147,51,234,.2);margin-top:10px}
+.launch-sub{font-size:11px;color:rgba(232,228,217,.25);margin-bottom:32px;line-height:1.8;max-width:500px;margin-left:auto;margin-right:auto}
+.launch-btn{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#9333ea,#ec4899);color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:18px 36px;cursor:none;text-decoration:none;box-shadow:0 0 30px rgba(147,51,234,.3);transition:.2s;min-height:56px}
+.launch-btn:hover{box-shadow:0 0 50px rgba(147,51,234,.5);transform:translateY(-2px)}
+
+/* ══════════════════════════════════
+   KI FEATURES DATING
+   ══════════════════════════════════ */
+.ki-section{padding:80px 40px;border-bottom:1px solid rgba(147,51,234,.08)}
+.ki-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:40px;flex-wrap:wrap;gap:16px}
+.ki-hl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(36px,5vw,60px);text-transform:uppercase;color:#e8e4d9}
+.ki-hl span{color:#9333ea}
+.ki-status{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#9333ea;border:1px solid rgba(147,51,234,.2);padding:5px 12px;display:flex;align-items:center;gap:5px}
+.ki-status::before{content:'';width:4px;height:4px;border-radius:50%;background:#9333ea;animation:blink 1.5s infinite}
+.ki-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(147,51,234,.06)}
+.ki-card{background:#04040a;padding:24px;transition:.15s;position:relative;overflow:hidden}
+.ki-card:hover{background:#060612}
+.ki-card.featured{border:1px solid rgba(147,51,234,.2);background:rgba(147,51,234,.03)}
+.ki-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:#9333ea;transform:scaleX(0);transition:.2s;transform-origin:left}
+.ki-card:hover::after{transform:scaleX(1)}
+.ki-icon{font-size:24px;margin-bottom:12px}
+.ki-card-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;color:#e8e4d9;margin-bottom:8px}
+.ki-card-desc{font-size:9px;color:rgba(232,228,217,.3);line-height:1.8}
+.ki-tag{display:inline-block;font-size:7px;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;margin-top:12px;border:1px solid rgba(147,51,234,.2);color:#9333ea}
+.ki-tag.hot{border-color:rgba(236,72,153,.3);color:#ec4899}
+.ki-tag.soon{border-color:rgba(255,215,0,.2);color:#ffd700}
+
+/* FOOTER */
+.btw{border-top:1px solid rgba(147,51,234,.07);overflow:hidden}
+footer{padding:44px 40px 32px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px;border-top:1px solid rgba(147,51,234,.08);background:#04040a}
+.fc-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#9333ea;margin-bottom:12px}
+.fc-link{display:block;font-size:10px;color:rgba(232,228,217,.2);margin-bottom:8px;transition:.15s;text-decoration:none;cursor:none}
+.fc-link:hover{color:#9333ea}
+.fc-desc{font-size:10px;color:rgba(232,228,217,.15);line-height:1.9;margin-top:8px}
+.fc-copy{font-size:8px;color:rgba(232,228,217,.08);margin-top:16px}
+
+/* ANIMATIONS */
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
 @keyframes tL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes tR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-@keyframes krp{0%,100%{opacity:.1;transform:translate(-50%,-50%) scale(1)}50%{opacity:.2;transform:translate(-50%,-50%) scale(1.04)}}
-@keyframes kdp{0%,100%{box-shadow:0 0 20px rgba(147,51,234,.7)}50%{box-shadow:0 0 36px rgba(147,51,234,1),0 0 72px rgba(147,51,234,.5)}}
-@keyframes d1{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-16px) rotate(2deg)}75%{transform:translateY(-20px) rotate(3deg)}}
-@keyframes d2{0%,100%{transform:translateY(0)}33%{transform:translateY(-22px) rotate(-3deg)}66%{transform:translateY(-9px) rotate(2.5deg)}}
-@keyframes d3{0%,100%{transform:translateY(0)}40%{transform:translateY(-14px) rotate(4deg)}80%{transform:translateY(-26px) rotate(-2.5deg)}}
-@keyframes pulseOut{0%{width:80px;height:80px;opacity:.8;border-color:rgba(147,51,234,.6)}100%{width:280px;height:280px;opacity:0;border-color:rgba(147,51,234,0)}}
-@keyframes vout{0%{opacity:.3;transform:translate(-50%,-50%) scale(.5)}100%{opacity:0;transform:translate(-50%,-50%) scale(2.8)}}
-@keyframes glow-text{0%,100%{text-shadow:0 0 20px rgba(147,51,234,0)}50%{text-shadow:0 0 40px rgba(147,51,234,.6),0 0 80px rgba(147,51,234,.3)}}
+@keyframes crashIn{from{opacity:0;transform:translateY(50px) skewY(2deg)}to{opacity:1;transform:translateY(0) skewY(0)}}
+@keyframes radarSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes ringExpand{0%{width:0;height:0;opacity:.6}100%{width:400px;height:400px;opacity:0}}
+@keyframes ghostBreath{0%,100%{opacity:1}50%{opacity:.6}}
+@keyframes shimmer{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+@keyframes winnerGlow{0%,100%{box-shadow:none}50%{box-shadow:inset 0 0 30px rgba(147,51,234,.06)}}
+@keyframes bubbleExplode{0%{transform:scale(1)}30%{transform:scale(1.2)}60%{transform:scale(.9)}100%{transform:scale(1)}}
+@keyframes voteSuccessAnim{0%{opacity:0;transform:scale(.5)}50%{opacity:1;transform:scale(1.1)}100%{opacity:0;transform:scale(1.4)}}
+@keyframes confessionFly{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+@keyframes particleFly{0%{opacity:0;transform:translateY(0)}10%{opacity:.6}90%{opacity:.1}100%{opacity:0;transform:translateY(-200px) translateX(var(--px))}}
+
 @media(max-width:768px){
-#cur,#cur2{display:none}body{cursor:auto}nav{padding:0 16px;height:48px}.nav-links{display:none}
-.hero{grid-template-columns:1fr;grid-template-rows:auto 300px}.hero-left{padding:28px 16px 16px}
-.h1,.h2{font-size:68px}
-.bm{width:100px;height:100px;top:20px;left:80px}.bd{width:82px;height:82px;top:18px;left:200px}
-.bmu{width:66px;height:66px;top:148px;left:16px}.bk{width:78px;height:78px;top:153px;left:192px}
-.bs{width:56px;height:56px;top:168px;left:116px}.bf{width:48px;height:48px;top:100px;left:150px}
-.kr1{width:250px;height:250px}.kr2{width:170px;height:170px}.kr3{width:100px;height:100px}
-.vote-section{padding:3rem 1rem}.vote-num{font-size:4.5rem}
-.kb-section{padding:0 16px 48px}.kb-grid{grid-template-columns:1fr 1fr}
-.sh{padding:24px 16px 12px}.fr{padding:0 16px 12px}
-.pg{grid-template-columns:1fr 1fr;padding:0 16px}
-.pc:nth-child(3n+1){border-left:none}.pc:nth-child(2n+1){border-left:1px solid rgba(147,51,234,.08)}
-footer{padding:28px 16px;grid-template-columns:1fr 1fr;gap:16px}}
+#cur,#cur2{display:none}body{cursor:auto}
+nav{padding:0 16px;height:48px}.nav-links{display:none}
+.hero{min-height:auto;padding:60px 0 40px}
+.hero-content{padding:0 20px}
+.h1,.h2,.h3{font-size:clamp(60px,16vw,90px)}
+.hero-ghost{display:none}
+.radar-section{grid-template-columns:1fr;padding:48px 20px}
+.radar-canvas{width:280px;height:280px}
+.battle-grid{grid-template-columns:repeat(3,1fr)}
+.bubbles-grid{grid-template-columns:1fr;gap:32px;padding:0 16px}
+.bubble-btn{width:160px;height:160px}
+.vote-section{padding:48px 20px}
+.launch-section{padding:48px 20px}
+.ki-section{padding:48px 20px}
+.ki-grid{grid-template-columns:1fr}
+.confessions-wrap{padding:0 4px}
+footer{padding:28px 16px;grid-template-columns:1fr 1fr;gap:16px}
+.wall-section{padding:48px 20px}
+.battle-section{padding:48px 20px}
+}
 </style>
 </head>
 <body>
 <div id="cur"></div><div id="cur2"></div>
-<div class="tw"><div class="tr"><div class="tick l" id="ta"></div></div><div class="tr"><div class="tick r" id="tb"></div></div></div>
+
+<!-- TICKER -->
+<div class="tw">
+  <div class="tr"><div class="tick l" id="ta"></div></div>
+  <div class="tr"><div class="tick r" id="tb"></div></div>
+</div>
+
+<!-- NAV -->
 <nav>
   <a class="logo" href="index.html"><div class="ldot"></div>STADTPULS</a>
   <div class="nav-links">
     <a class="nl" href="gastro.html">GASTRO</a>
+    <a class="nl" href="nachtleben.html">NACHTLEBE</a>
     <a class="nl" href="shopping.html">SHOPPING</a>
-    <a class="nl" href="index.html?page=nachtleben">NACHTLEBE</a>
-    <span class="nl on">PEOPLE & DATES</span>
+    <span class="nl on">DATES</span>
   </div>
   <a class="btn-mm" href="index.html?page=login">MITMACHE</a>
 </nav>
 
+<!-- HERO -->
 <div class="hero">
-  <div class="hero-left">
-    <div class="eyebrow">STADTPULS · ZÜRICH · 2026</div>
-    <div class="h1">PEOPLE</div>
-    <div class="h2">& DATES</div>
-    <div class="hsub">Echti Züri Lüt. Kein Tinder-Bullshit.<br>Dini Szene — dini Leute. Kreis-basiert.</div>
-    <div class="hstats">
-      <div><div class="sn" id="sv">—</div><div class="sl">VOTES BISHER</div></div>
-      <div><div class="sn" style="color:#c8ff00">K4</div><div class="sl">AM AKTIVSCHTE</div></div>
-      <div><div class="sn" style="color:#ff2d00">18+</div><div class="sl">NUR VOLLJÄHRIG</div></div>
+  <div class="particles" id="particles"></div>
+  <div class="hero-ghost" id="hero-ghost">100K</div>
+
+  <div class="hero-content">
+    <div class="hero-eye"></div>
+    <div class="h1">ZÜRI</div>
+    <div class="h2">FLIRTET</div>
+    <div class="h3">ANDERS.</div>
+    <div class="hero-line"></div>
+    <div class="hero-desc">Kei Algorithmus. Kei Swipe-Bullshit. Echti Züri Lüt — kreis-basiert, anonym, direkt. Das isch nöd Tinder. Das isch Stadtpuls.</div>
+
+    <!-- HYPE METER -->
+    <div class="hype-wrap">
+      <div class="hype-label">
+        <span class="hype-txt">💜 HYPE-METER · BIS LAUNCH</span>
+        <span class="hype-pct" id="hype-pct">—%</span>
+      </div>
+      <div class="hype-bar"><div class="hype-fill" id="hype-fill" style="width:0%"></div></div>
     </div>
-  </div>
-  <div class="arena">
-    <div class="kern">
-      <div class="kr kr1"></div><div class="kr kr2"></div><div class="kr kr3"></div>
-      <div class="kdot"></div>
+
+    <div class="vote-hero">
+      <div style="position:relative">
+        <div class="pulse-rings">
+          <div class="pr" style="width:80px;height:80px"></div>
+          <div class="pr" style="width:80px;height:80px"></div>
+          <div class="pr" style="width:80px;height:80px"></div>
+        </div>
+        <div class="vote-big" id="hero-vote-count">—</div>
+      </div>
+      <div class="vh-info">
+        <div class="vh-label">JA — MIR BAUE'S</div>
+        <div class="vh-sub">Votes bisher · Ab 100'000 geht's los</div>
+      </div>
     </div>
-    <svg style="position:absolute;inset:0;pointer-events:none;z-index:1" width="100%" height="100%">
-      <line x1="202" y1="112" x2="238" y2="278" stroke="rgba(255,215,0,.18)" stroke-width=".8" stroke-dasharray="5,6"/>
-      <line x1="356" y1="116" x2="238" y2="278" stroke="rgba(147,51,234,.22)" stroke-width=".8" stroke-dasharray="5,6"/>
-      <line x1="97" y1="283" x2="238" y2="278" stroke="rgba(0,245,255,.18)" stroke-width=".8" stroke-dasharray="5,6"/>
-      <line x1="350" y1="320" x2="238" y2="278" stroke="rgba(255,45,0,.18)" stroke-width=".8" stroke-dasharray="5,6"/>
-      <line x1="209" y1="405" x2="238" y2="278" stroke="rgba(200,255,0,.14)" stroke-width=".8" stroke-dasharray="5,6"/>
-      <line x1="255" y1="186" x2="238" y2="278" stroke="rgba(180,0,255,.2)" stroke-width=".8" stroke-dasharray="4,6"/>
-    </svg>
-    <div class="bub bm"><div class="bubble-shell"></div><div class="bubble-rim"></div><div class="bubble-shine"></div><div class="bubble-shine2"></div><div class="bubble-color"></div><div class="bubble-content"><span class="bubble-icon">🏆</span><div class="blbl">ZÜRI<br>MOMENT</div></div></div>
-    <div class="bub bd"><div class="bubble-shell"></div><div class="bubble-rim"></div><div class="bubble-shine"></div><div class="bubble-shine2"></div><div class="bubble-color"></div><div class="bubble-content"><span class="bubble-icon">💜</span><div class="blbl">DATES</div></div></div>
-    <div class="bub bmu"><div class="bubble-shell"></div><div class="bubble-rim"></div><div class="bubble-shine"></div><div class="bubble-shine2"></div><div class="bubble-color"></div><div class="bubble-content"><span class="bubble-icon" style="font-size:1.3rem">🎸</span><div class="blbl">MUSIK</div></div></div>
-    <div class="bub bk"><div class="bubble-shell"></div><div class="bubble-rim"></div><div class="bubble-shine"></div><div class="bubble-shine2"></div><div class="bubble-color"></div><div class="bubble-content"><span class="bubble-icon" style="font-size:1.5rem">🔥</span><div class="blbl">KREIS 4</div></div></div>
-    <div class="bub bs"><div class="bubble-shell"></div><div class="bubble-rim"></div><div class="bubble-shine"></div><div class="bubble-shine2"></div><div class="bubble-color"></div><div class="bubble-content"><span class="bubble-icon" style="font-size:1rem">🚲</span><div class="blbl" style="font-size:.32rem">SPORT</div></div></div>
-    <div class="bub bf"><div class="bubble-shine" style="opacity:.25"></div><div class="bubble-color"></div><div class="bubble-content"><span class="bubble-icon" style="font-size:1.4rem">😈</span><div class="blbl">18+</div></div></div>
   </div>
 </div>
 
-<!-- VOTING -->
-<div class="vote-section">
-  <div class="vring vr1"></div><div class="vring vr2"></div><div class="vring vr3"></div>
-  <div class="vote-badge">ZÜRI ENTSCHEIDET</div>
-  <div class="vote-hl"><div class="v1">SÖTTMER DATES</div><div class="v2">IN ZÜRI?</div></div>
-  <p class="vote-sub">100'000 JA — und mir bauen's.<br>Versprochen. 🤝</p>
-  <div class="vote-num-wrap">
-    <div class="pulse-out po1"></div><div class="pulse-out po2"></div><div class="pulse-out po3"></div>
-    <div class="vote-num" id="vote-count">—</div>
-  </div>
-  <div class="vote-of">VON 100'000 VOTES</div>
-  <div class="vote-prog-wrap"><div class="vote-prog" id="vote-bar" style="width:0%"></div></div>
-  <div class="vote-prog-lbl"><span>0</span><span>100'000</span></div>
-  <div class="vform" id="vote-form">
-    <div class="vform-hint">ANONYM · 1 VOTE PRO PERSON · NUR 18+</div>
-    <label class="vform-lbl">ICH BIN</label>
-    <div class="gbtn-row">
-      <button class="gbtn" onclick="selectGender('f')" id="gbtn-f">FRAU</button>
-      <button class="gbtn" onclick="selectGender('m')" id="gbtn-m">MANN</button>
-      <button class="gbtn" onclick="selectGender('x')" id="gbtn-x">X</button>
-    </div>
-    <label class="vform-lbl">JAHRGANG</label>
-    <input class="yin" type="number" id="vote-year" placeholder="z.B. 1990" min="1900" max="2006">
-    <div class="vbtns">
-      <button class="vnei" onclick="castVote('nei')">NEI DANKE</button>
-      <button class="vja" onclick="castVote('ja')">JA, LOS! 🔥</button>
+<!-- ZÜRI-MATCH RADAR -->
+<div class="radar-section">
+  <div class="radar-left">
+    <div class="radar-eye">ZÜRI-MATCH RADAR · LIVE</div>
+    <div class="radar-hl">WO FLIRTET<br><span>ZÜRICH</span><br>GRAD?</div>
+    <div class="radar-desc">Unser Radar zeigt in Echtzeit welche Kreise am aktivschte sind. Kei Bilder, kei Profile — nur Energie. Bisch du dabei?</div>
+    <div class="radar-stats">
+      <div class="rs-card">
+        <div class="rs-n" id="radar-lüt">—</div>
+        <div class="rs-l">LÜÜT ONLINE</div>
+      </div>
+      <div class="rs-card">
+        <div class="rs-n" style="color:#ec4899" id="radar-matches">—</div>
+        <div class="rs-l">MATCHES HÜT</div>
+      </div>
+      <div class="rs-card">
+        <div class="rs-n" style="color:#ffd700" id="radar-kreis">K4</div>
+        <div class="rs-l">HEISSISCHTER KREIS</div>
+      </div>
+      <div class="rs-card">
+        <div class="rs-n" style="color:#c8ff00" id="radar-active">—</div>
+        <div class="rs-l">KREISE AKTIV</div>
+      </div>
     </div>
   </div>
-  <div class="vdone" id="vote-done"></div>
+  <div class="radar-right">
+    <div class="radar-canvas" id="radar-canvas">
+      <div class="r-ring"></div>
+      <div class="r-ring"></div>
+      <div class="r-ring"></div>
+      <div class="r-ring"></div>
+      <div class="r-cross"></div>
+      <div class="r-sweep"></div>
+      <div class="r-center"></div>
+      <!-- Blips werden per JS gesetzt -->
+    </div>
+  </div>
 </div>
 
 <!-- KREIS BATTLE -->
-<div class="kb-section">
-  <div class="kb-head">
-    <div class="kb-title">KREIS BATTLE — WO ZÜRI FLIRTET</div>
-    <div class="kb-sub">LIVE · ALL 12 KREISE</div>
+<div class="battle-section">
+  <div class="bs-head">
+    <div class="bs-title">KREIS<br><span>BATTLE</span></div>
+    <div class="bs-live">LIVE · WOCHE 20</div>
   </div>
-  <div class="kb-grid" id="kb-grid"></div>
+  <div class="battle-grid" id="battle-grid"></div>
 </div>
 
-<!-- PROFILE -->
-<div class="sh"><div class="sht">NEUI PROFILE IN ZÜRI</div><div class="shr">PHASE 5 — BALD LIVE</div></div>
-<div class="fr">
-  <button class="fb on">ALLES</button><button class="fb">FRIENDS</button><button class="fb">DATES</button>
-  <button class="fb">NETWORKING</button><button class="fb">SPORT</button><button class="fb">MUSIK</button>
-  <button class="fb">KREIS 4</button><button class="fb">KREIS 5</button>
+<!-- VOTING SECTION -->
+<div class="vote-section">
+  <div class="vs-head">
+    <div class="vs-eye">DINI STIMM ZÄHLT</div>
+    <div class="vs-title">ZÜRI<br><span>ENTSCHEIDED</span></div>
+    <div class="vs-sub">Welche Züri Szene hat de bischte Vibe? Du stimmsch ab — mir baue's.<br>Ab 100'000 JA geht Stadtpuls Dating live.</div>
+  </div>
+
+  <!-- VOTE COUNTER -->
+  <div class="vote-counter-wrap">
+    <div class="vote-ghost-n" id="vote-ghost">—</div>
+    <div class="vote-big" id="vote-count">—</div>
+    <div class="vote-label">VOTES BISHER</div>
+  </div>
+
+  <!-- BUBBLES -->
+  <div class="bubbles-grid" id="bubbles-grid"></div>
 </div>
-<div class="pg">
-  <div class="pc"><div class="pct"><div class="pca" style="background:#2d0a4e">🎸</div><div><div class="pcn">@MUSIKERIN_ZH</div><div class="pcm">KREIS 4 · VOR 2H AKTIV</div></div></div><div class="pcd">Musikerin, Konzertgängerin, Foodie. Suche Leute für Jazz-Abende und Street-Food-Trips.</div><div class="pctags"><span class="ptag">JAZZ</span><span class="ptag">FOODIE</span><span class="ptag">KREIS 4</span></div></div>
-  <div class="pc"><div class="pct"><div class="pca" style="background:#1a2e0a">🚲</div><div><div class="pcn">@VELO_KREIS5</div><div class="pcm">KREIS 5 · VOR 30MIN AKTIV</div></div></div><div class="pcd">Designer, Velo-Nerd, Rote-Fabrik-Stammgast. Such Gleichgesinnte für Velotouren.</div><div class="pctags"><span class="ptag">DESIGN</span><span class="ptag">VELO</span><span class="ptag">KREIS 5</span></div></div>
-  <div class="pc"><div class="pct"><div class="pca" style="background:#0a2e2e">📸</div><div><div class="pcn">@FOTO_LANGSTRASSE</div><div class="pcm">KREIS 4 · ONLINE</div></div></div><div class="pcd">Strassenfotografin, Nachtmensch. Such Leute für Foto-Walks durch Züri.</div><div class="pctags"><span class="ptag">FOTO</span><span class="ptag">TECHNO</span><span class="ptag">NACHT</span></div></div>
+
+<!-- GESTÄNDNIS WALL -->
+<div class="wall-section">
+  <div class="ws-head">
+    <div class="ws-title">ZÜRI<br><span>GESTEHT</span></div>
+    <div class="ws-sub">Anonyme Liebesgeständnisse aus allen 12 Kreisen · Täglich neu</div>
+  </div>
+  <div class="confessions-wrap" id="confessions"></div>
+  <div style="text-align:center">
+    <div style="display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(147,51,234,.15);padding:14px 24px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(147,51,234,.35)">💜 DINI GSCHICHT KOMMT IN PHASE 5</div>
+  </div>
+</div>
+
+<!-- COUNTDOWN LAUNCH -->
+<div class="launch-section">
+  <div class="ls-eye">SOFT LAUNCH</div>
+  <div class="ls-title">4. JUNI<br><span>2026</span></div>
+  <div class="launch-digits">
+    <div class="ld-unit"><div class="ld-n" id="lc-d">--</div><div class="ld-l">TAGE</div></div>
+    <div class="ld-sep">:</div>
+    <div class="ld-unit"><div class="ld-n" id="lc-h">--</div><div class="ld-l">STUNDE</div></div>
+    <div class="ld-sep">:</div>
+    <div class="ld-unit"><div class="ld-n" id="lc-m">--</div><div class="ld-l">MINUTE</div></div>
+    <div class="ld-sep">:</div>
+    <div class="ld-unit"><div class="ld-n" id="lc-s">--</div><div class="ld-l">SEKUNDE</div></div>
+  </div>
+  <div class="launch-sub">Zürich, bisch bereit? Am 4. Juni 2026 geht Stadtpuls live. Dating kommt wenn mir 100'000 JA händ. Stimmsch du ab?</div>
+  <a class="launch-btn" href="#vote-section" onclick="document.querySelector('.vote-section').scrollIntoView({behavior:'smooth'})">💜 JA — ICH BIN DABEI →</a>
+</div>
+
+<!-- KI FEATURES -->
+<div class="ki-section">
+  <div class="ki-head">
+    <div class="ki-hl">WAS KOMMT<br>WENN MIR<br><span>100K HÄND</span></div>
+    <div class="ki-status">AKTIV · PHASE 5-6</div>
+  </div>
+  <div class="ki-grid">
+    <div class="ki-card featured">
+      <div class="ki-icon">🎯</div>
+      <div class="ki-card-title">KREIS-MATCHING</div>
+      <div class="ki-card-desc">Kei globaler Pool — nur din Kreis. K4 trifft K4. Authentisch, lokal, echt. KI matched Energie statt Fotos.</div>
+      <div class="ki-tag hot">🔥 KERN-FEATURE</div>
+    </div>
+    <div class="ki-card">
+      <div class="ki-icon">🎭</div>
+      <div class="ki-card-title">ANONYM FIRST</div>
+      <div class="ki-card-desc">Kei Fotos bis zum ersten echten Gespräch. Du wirst für das gliked wer du bisch — nöd wie du usgsiisch. Radikal ehrlich.</div>
+      <div class="ki-tag">PHASE 5</div>
+    </div>
+    <div class="ki-card">
+      <div class="ki-icon">📍</div>
+      <div class="ki-card-title">SPOT DATES</div>
+      <div class="ki-card-desc">«Kafipause im Kreis 5 — wer isch spontan dabei?» Echtzit Spot-Dates uf Basis vo GPS und aktuelle Lokale us Stadtpuls Gastro.</div>
+      <div class="ki-tag soon">🌟 PHASE 6</div>
+    </div>
+    <div class="ki-card">
+      <div class="ki-icon">🌙</div>
+      <div class="ki-card-title">NACHT-CONNECT</div>
+      <div class="ki-card-desc">Stadtpuls Nachtleben kennt wo du bisch. Im Gainsbourg, im Komplex 457 — «3 Lüt in diesem Club händ ähnlichi Vibe wie du.»</div>
+      <div class="ki-tag hot">✨ EXKLUSIV</div>
+    </div>
+    <div class="ki-card">
+      <div class="ki-icon">🤖</div>
+      <div class="ki-card-title" style="color:#9333ea">ZÜRI-BOT WINGMAN</div>
+      <div class="ki-card-desc">«Wo chann ich hüt Abig jemand kennelerne in Zürich?» — Züri-Bot kennt die Szene, die Lokale, die Energie. Din persönliche Wingman.</div>
+      <div class="ki-tag">CLAUDE API</div>
+    </div>
+    <div class="ki-card">
+      <div class="ki-icon">💜</div>
+      <div class="ki-card-title">ZÜRI MOMENTS</div>
+      <div class="ki-card-desc">«Ich han dich am Bürkliplatz gseh — du hätsch de Kafi fale la.» Anonyme Züri-Moments die viral gö. FOMO by design.</div>
+      <div class="ki-tag hot">🔥 VIRAL</div>
+    </div>
+  </div>
+</div>
+
+<!-- VOTE MODAL -->
+<div class="vote-modal-ov" id="vote-modal">
+  <div class="vote-modal">
+    <div class="vm-close" onclick="closeModal()">✕</div>
+    <div style="font-size:36px;margin-bottom:12px" id="vm-emoji">💜</div>
+    <div class="vm-title" id="vm-title">DU STIMMSCH AB</div>
+    <div class="vm-sub" id="vm-sub">Dini Stimm zählt. 100'000 JA — und Stadtpuls Dating geht live.</div>
+    <div class="vm-fields">
+      <div class="vm-field">
+        <select class="vm-select" id="vm-geschlecht">
+          <option value="">GESCHLECHT</option>
+          <option value="m">MANN</option>
+          <option value="f">FRAU</option>
+          <option value="d">DIVERS</option>
+          <option value="x">KEIN ANGABE</option>
+        </select>
+      </div>
+      <div class="vm-field">
+        <select class="vm-select" id="vm-jahrgang">
+          <option value="">JAHRGANG</option>
+        </select>
+      </div>
+    </div>
+    <div class="vm-age-check" onclick="toggleAge()">
+      <div class="vm-checkbox" id="vm-checkbox"></div>
+      <div class="vm-age-txt">Ich bestätige dass ich <strong>mindestens 18 Jahre alt</strong> bin und mit den Nutzungsbedingungen einverstanden bin.</div>
+    </div>
+    <button class="vm-btn" id="vm-btn" onclick="submitVote()" disabled>💜 JA — ICH BIN DABEI →</button>
+  </div>
+</div>
+
+<!-- SUCCESS -->
+<div class="vote-success" id="vote-success">
+  <div class="vs-explosion" id="vs-text">DANKE!</div>
+</div>
+
+<div class="btw">
+  <div class="tr"><div class="tick l" id="tc"></div></div>
+  <div class="tr"><div class="tick r" id="td"></div></div>
 </div>
 
 <footer>
-  <div><div class="logo" style="margin-bottom:8px"><div class="ldot"></div>STADTPULS</div><div class="fcd">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich.</div><div class="fcc">© 2026 by raimondo* — Zürich</div></div>
-  <div><div class="fct">ENTDECKEN</div><a class="fcl" href="gastro.html">Gastro & Bars</a><a class="fcl" href="shopping.html">Shopping</a><a class="fcl" href="index.html?page=nachtleben">Nachtleben</a></div>
-  <div><div class="fct">COMMUNITY</div><a class="fcl" href="dating.html">People & Dates</a><a class="fcl" href="index.html?page=jobs">Jobs Züri</a></div>
-  <div><div class="fct">MITMACHE</div><a class="fcl" href="index.html?page=login">Einlogge</a><a class="fcl" href="feedback.html">Feedback</a><a class="fcl" href="impressum.html">Impressum</a></div>
+  <div><div class="logo" style="margin-bottom:8px"><div class="ldot"></div>STADTPULS</div><div class="fc-desc">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich.</div><div class="fc-copy">© 2026 by raimondo* — Zürich</div></div>
+  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link" href="gastro.html">Gastro & Bars</a><a class="fc-link" href="nachtleben.html">Nachtleben</a><a class="fc-link" href="shopping.html">Shopping</a></div>
+  <div><div class="fc-title">COMMUNITY</div><a class="fc-link" href="dating.html">People & Dates</a><a class="fc-link" href="feedback.html">Feedback</a></div>
+  <div><div class="fc-title">MITMACHE</div><a class="fc-link" href="index.html?page=login">Einlogge</a><a class="fc-link" href="impressum.html">Impressum</a><a class="fc-link" href="datenschutz.html">Datenschutz</a></div>
 </footer>
 
 <script>
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
 
-const KREISE=[
-  {k:1,e:'👑',n:'KREIS 1',c:'D Schicki-Micki · Bahnhofstrasse',p:284},
-  {k:4,e:'🔥',n:'KREIS 4',c:'D Langsträssler · Underground',p:271},
-  {k:5,e:'🏭',n:'KREIS 5',c:'D Industrie-Kids · Züri West',p:198},
-  {k:8,e:'☕',n:'KREIS 8',c:'D Seefeld-Lüt · Kafi & Style',p:156},
-  {k:3,e:'🎨',n:'KREIS 3',c:'D Künstler · Wiedikon',p:134},
-  {k:2,e:'🌊',n:'KREIS 2',c:'D Ruhige · Enge & See',p:112},
-  {k:6,e:'🌿',n:'KREIS 6',c:'D Zürichberg-Gang · Ruhig',p:98},
-  {k:7,e:'🏡',n:'KREIS 7',c:'D Flunterner · Entspannt',p:87},
-  {k:9,e:'🔧',n:'KREIS 9',c:'D Echte · Altstetten',p:76},
-  {k:10,e:'🍃',n:'KREIS 10',c:'D Höngg-Gang · Authentisch',p:65},
-  {k:11,e:'💪',n:'KREIS 11',c:'D Underdogs · Affoltern',p:54},
-  {k:12,e:'⚡',n:'KREIS 12',c:'D Wilden · Schwamendingen',p:43},
+// ── BUBBLES DATA ─────────────────────────────
+const BUBBLES=[
+  {id:'zueri_moment',e:'🏆',name:'ZÜRI MOMENT',desc:'Das goldige Züri-Date',color:'radial-gradient(135deg,rgba(255,215,0,.4),rgba(255,165,0,.2))',border:'rgba(255,215,0,.5)',textColor:'#ffd700',badge:'GRAND PRIZE'},
+  {id:'dates',e:'💜',name:'DATES',desc:'People & Connect',color:'radial-gradient(135deg,rgba(147,51,234,.4),rgba(147,51,234,.15))',border:'rgba(147,51,234,.5)',textColor:'#9333ea',badge:'HAUPTKATEGORIE'},
+  {id:'musik',e:'🎸',name:'MUSIK',desc:'Konzerte & Clubs',color:'radial-gradient(135deg,rgba(0,245,255,.3),rgba(0,245,255,.08))',border:'rgba(0,245,255,.4)',textColor:'#00f5ff',badge:'NACHT-SZENE'},
+  {id:'kreis4',e:'🔥',name:'KREIS 4',desc:'Langstrasse Energy',color:'radial-gradient(135deg,rgba(255,45,0,.4),rgba(255,45,0,.12))',border:'rgba(255,45,0,.5)',textColor:'#ff2d00',badge:'HOT ZONE'},
+  {id:'sport',e:'🚲',name:'SPORT',desc:'Aktiv & Outdoor',color:'radial-gradient(135deg,rgba(200,255,0,.3),rgba(200,255,0,.08))',border:'rgba(200,255,0,.4)',textColor:'#c8ff00',badge:'ENERGIE'},
+  {id:'fetish',e:'😈',name:'FETISH',desc:'18+ · Speziell',color:'radial-gradient(135deg,rgba(80,0,80,.6),rgba(147,51,234,.2))',border:'rgba(147,51,234,.3)',textColor:'rgba(147,51,234,.7)',badge:'18+ ONLY'},
 ];
 
-function buildKreisBattle(){
-  const grid=document.getElementById('kb-grid');
-  const max=KREISE[0].p;
-  grid.innerHTML=KREISE.map((k,i)=>{
-    const cls='kbcard'+(i===0?' k1p':i===1?' k2p':i===2?' k3p':'');
-    const tr=i===0?'🏆':i===1?'🥈':i===2?'🥉':'';
-    const pct=Math.round(k.p/max*100);
-    return`<div class="${cls}">
-      ${tr?`<div class="kb-tr">${tr}</div>`:''}
-      <div class="kb-rank">${i+1}</div>
-      <div class="kb-emoji">${k.e}</div>
-      <div class="kb-info">
-        <div class="kb-name">${k.n}</div>
-        <div class="kb-char">${k.c}</div>
-        <div class="kb-bar-w"><div class="kb-bar" style="width:${pct}%"></div></div>
+// ── KREIS DATA ───────────────────────────────
+const KREISE=[
+  {k:1,name:'ALTSTADT',char:'D Schicki-Micki',emoji:'💍'},
+  {k:2,name:'ENGE',char:'D Ruhige',emoji:'⛵'},
+  {k:3,name:'HARD',char:'D Underdog',emoji:'🔨'},
+  {k:4,name:'LANGSTRASSE',char:'D Echte',emoji:'🔥'},
+  {k:5,name:'INDUSTRIE',char:'D Kreativen',emoji:'🎨'},
+  {k:6,name:'BERG',char:'D Intellekts',emoji:'🎓'},
+  {k:7,name:'FLUNTERN',char:'D Ruhige',emoji:'🌲'},
+  {k:8,name:'SEEFELD',char:'D Lifestyle',emoji:'🌊'},
+  {k:9,name:'ALBISRIEDEN',char:'D Echte',emoji:'🏠'},
+  {k:10,name:'HÖNGG',char:'D Familiäre',emoji:'🌻'},
+  {k:11,name:'AFFOLTERN',char:'D Bodenständige',emoji:'🌾'},
+  {k:12,name:'SCHWAMENDINGEN',char:'D Unverfälscht',emoji:'⭐'},
+];
+
+// ── CONFESSIONS ──────────────────────────────
+const CONFESSIONS=[
+  {text:'Ich han dich am <strong>Bürkliplatz</strong> gseh — du hätsch de Kafi fale la und gelacht. Ich han nöd dini Nummere gfragt. Ich bedüür's täglich.',kreis:'K1',time:'vor 2 Stunde',cls:''},
+  {text:'An de <strong>Langstrasse 3:47 Uhr</strong> — mir händ zäme gwartet uf ds Tram. Du häsch mir dini Kopfhörer gäh. Ich kenn din Name immer no nöd.',kreis:'K4',time:'vor 5 Stunde',cls:'pink'},
+  {text:'Jedi Wuch im <strong>Viadukt Markt</strong> — du mit dim Kafi, ich mit minere Tasche. Mir lache immer. Warum frögst du mich nöd eifach uf Kafi?',kreis:'K5',time:'vor 1 Tag',cls:'gold'},
+  {text:'Du bisch im <strong>Rote Fabrik</strong> ufem Konzert gsi, hinter mir. Als d Musik ufghört het bisch du eifach weg gsi. Das brucht no.',kreis:'K2',time:'vor 2 Tage',cls:''},
+  {text:'Mir händ im <strong>Letten</strong> am glyche Tag gschwomme — jede Summer. Nächst Jahr frog ich. I schwöre.',kreis:'K5',time:'vor 3 Tage',cls:'pink'},
+];
+
+// ── SUPABASE ──────────────────────────────────
+async function sbGet(p){
+  try{const r=await fetch(SU+'/rest/v1/'+p,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});return r.json();}catch(e){return null;}
+}
+async function sbPost(table,data){
+  try{const r=await fetch(SU+'/rest/v1/'+table,{method:'POST',headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(data)});return r.ok;}catch(e){return false;}
+}
+
+// ── STATE ─────────────────────────────────────
+let totalVotes=0;
+let bubbleVotes={};
+let currentBubble=null;
+let ageChecked=false;
+
+// ── LOAD VOTES ────────────────────────────────
+async function loadVotes(){
+  const data=await sbGet('dating_votes?select=kategorie');
+  if(!data?.length){totalVotes=14;BUBBLES.forEach(b=>bubbleVotes[b.id]=Math.floor(Math.random()*5));updateUI();return;}
+  totalVotes=data.length;
+  BUBBLES.forEach(b=>bubbleVotes[b.id]=0);
+  data.forEach(v=>{if(bubbleVotes[v.kategorie]!==undefined)bubbleVotes[v.kategorie]++;});
+  updateUI();
+}
+
+function updateUI(){
+  // Hero vote count
+  document.getElementById('hero-vote-count').textContent=totalVotes.toLocaleString('de-CH');
+  document.getElementById('vote-count').textContent=totalVotes.toLocaleString('de-CH');
+  document.getElementById('vote-ghost').textContent=totalVotes.toLocaleString('de-CH');
+
+  // Hype meter
+  const pct=Math.min(100,Math.round(totalVotes/1000*100));
+  document.getElementById('hype-pct').textContent=pct+'%';
+  setTimeout(()=>{document.getElementById('hype-fill').style.width=pct+'%';},400);
+
+  // Battle Grid
+  buildBattleGrid();
+
+  // Bubble votes
+  document.querySelectorAll('.bubble-votes').forEach(el=>{
+    const id=el.dataset.id;
+    if(id&&bubbleVotes[id]!==undefined)el.textContent=bubbleVotes[id].toLocaleString('de-CH');
+  });
+}
+
+// ── BATTLE GRID ───────────────────────────────
+function buildBattleGrid(){
+  const grid=document.getElementById('battle-grid');
+  const kreisVotes=KREISE.map(k=>({...k,votes:Math.floor(Math.random()*80)+k.k*3}));
+  kreisVotes.sort((a,b)=>b.votes-a.votes);
+  const max=kreisVotes[0].votes;
+  const medals=['🏆','🥈','🥉'];
+  grid.innerHTML=kreisVotes.map((k,i)=>`
+    <div class="bk-card${i===0?' winner':''}">
+      <div class="bk-medal">${medals[i]||k.emoji}</div>
+      <div class="bk-kreis">K${k.k}</div>
+      <div class="bk-name">${k.name}</div>
+      <div class="bk-bar-w"><div class="bk-bar" style="width:${Math.round(k.votes/max*100)}%"></div></div>
+      <div class="bk-n">${k.votes}</div>
+      <div class="bk-char">${k.char}</div>
+    </div>`).join('');
+}
+
+// ── BUBBLES ───────────────────────────────────
+function buildBubbles(){
+  const grid=document.getElementById('bubbles-grid');
+  grid.innerHTML=BUBBLES.map(b=>`
+    <div class="bubble-wrap">
+      <button class="bubble-btn" onclick="openVote('${b.id}')"
+        style="background:${b.color};border:2px solid ${b.border};box-shadow:0 0 30px ${b.border.replace(')',',.15)')}"
+        id="bubble-${b.id}">
+        <div class="bubble-emoji">${b.e}</div>
+        <div class="bubble-name" style="color:${b.textColor}">${b.name}</div>
+        <div class="bubble-badge" style="color:${b.textColor}">${b.badge}</div>
+      </button>
+      <div class="bubble-info">
+        <div class="bubble-title">${b.name}</div>
+        <div class="bubble-desc">${b.desc}</div>
+        <div class="bubble-votes" data-id="${b.id}">—</div>
+        <div class="bubble-votes-label">VOTES</div>
       </div>
-      <div class="kb-cnt">${k.p}</div>
-    </div>`;
-  }).join('');
+    </div>`).join('');
 }
 
-let sg=null;
-function selectGender(g){
-  sg=g;
-  document.querySelectorAll('.gbtn').forEach(b=>b.classList.remove('on'));
-  document.getElementById('gbtn-'+g).classList.add('on');
+// ── VOTE MODAL ────────────────────────────────
+function openVote(id){
+  const b=BUBBLES.find(x=>x.id===id);if(!b)return;
+  currentBubble=id;
+  document.getElementById('vm-emoji').textContent=b.e;
+  document.getElementById('vm-title').textContent='ICH STIMM FÜR '+b.name;
+  document.getElementById('vm-sub').textContent='Dini Stimm zählt. 100\'000 JA — und Stadtpuls Dating geht live.';
+  document.getElementById('vote-modal').classList.add('on');
+}
+function closeModal(){document.getElementById('vote-modal').classList.remove('on');}
+
+function toggleAge(){
+  ageChecked=!ageChecked;
+  const cb=document.getElementById('vm-checkbox');
+  cb.textContent=ageChecked?'✓':'';
+  cb.classList.toggle('checked',ageChecked);
+  checkForm();
+}
+function checkForm(){
+  const g=document.getElementById('vm-geschlecht').value;
+  const j=document.getElementById('vm-jahrgang').value;
+  document.getElementById('vm-btn').disabled=!(g&&j&&ageChecked);
+}
+document.getElementById('vm-geschlecht').addEventListener('change',checkForm);
+document.getElementById('vm-jahrgang').addEventListener('change',checkForm);
+
+async function submitVote(){
+  const g=document.getElementById('vm-geschlecht').value;
+  const j=document.getElementById('vm-jahrgang').value;
+  if(!g||!j||!ageChecked||!currentBubble)return;
+  const btn=document.getElementById('vm-btn');
+  btn.disabled=true;btn.textContent='LÄDT...';
+
+  // Bubble explodiere
+  const bEl=document.getElementById('bubble-'+currentBubble);
+  if(bEl){bEl.classList.add('explode');setTimeout(()=>bEl.classList.remove('explode'),400);}
+
+  const ok=await sbPost('dating_votes',{kategorie:currentBubble,geschlecht:g,jahrgang:parseInt(j),kreis:null});
+
+  closeModal();
+
+  // Success Animation
+  const suc=document.getElementById('vote-success');
+  const txt=document.getElementById('vs-text');
+  txt.textContent='💜 DANKE!';
+  suc.style.display='flex';
+  setTimeout(()=>{suc.style.display='none';},1200);
+
+  // Counter update
+  totalVotes++;
+  bubbleVotes[currentBubble]=(bubbleVotes[currentBubble]||0)+1;
+  updateUI();
+  currentBubble=null;
 }
 
-async function castVote(type){
-  if(type==='ja'){
-    if(!sg){alert('Bitte Geschlecht wähle!');return;}
-    const y=parseInt(document.getElementById('vote-year').value);
-    if(!y||y<1900||y>2006){alert('Nur 18+ chönd abstimme!');return;}
-    try{
-      await fetch(SU+'/rest/v1/dating_votes',{
-        method:'POST',
-        headers:{'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK},
-        body:JSON.stringify({vote:'ja',geschlecht:sg,geburtsjahr:y,user_agent:navigator.userAgent})
-      });
-    }catch(e){}
-    document.getElementById('vote-form').style.display='none';
-    document.getElementById('vote-done').style.display='block';
-    document.getElementById('vote-done').innerHTML='<div style="font-size:3.5rem;margin-bottom:1rem">🔥</div><div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:2.8rem;color:#c8ff00;line-height:.9;margin-bottom:1rem;text-transform:uppercase">DANKE FÜR<br>DIN VOTE!</div><div style="font-size:.65rem;color:rgba(255,255,255,.3);line-height:1.8">Mir informiere dich sobald<br>100\'000 erreicht sind.</div>';
-  } else {
-    document.getElementById('vote-form').style.display='none';
-    document.getElementById('vote-done').style.display='block';
-    document.getElementById('vote-done').innerHTML='<div style="font-size:3rem;margin-bottom:1rem">😔</div><div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:2.2rem;color:#e8e4d9;line-height:.9;text-transform:uppercase">SCHAD.<br>VILICHT SPÄTER.</div>';
+// ── RADAR BLIPS ───────────────────────────────
+function buildRadar(){
+  const canvas=document.getElementById('radar-canvas');
+  const blipData=[
+    {x:30,y:20,cls:'lila',label:'K4'},
+    {x:70,y:35,cls:'pink',label:'K1'},
+    {x:55,y:70,cls:'lila',label:'K5'},
+    {x:20,y:60,cls:'gold',label:'K8'},
+    {x:80,y:65,cls:'lila',label:'K3'},
+    {x:45,y:25,cls:'pink',label:'K2'},
+    {x:60,y:50,cls:'lila',label:'K6'},
+  ];
+  blipData.forEach(b=>{
+    const el=document.createElement('div');
+    el.className=`r-blip ${b.cls}`;
+    el.style.left=b.x+'%';el.style.top=b.y+'%';
+    el.style.animation=`blink ${1+Math.random()}s infinite ${Math.random()}s`;
+    const lbl=document.createElement('div');
+    lbl.className='r-blip-label';lbl.textContent=b.label;
+    el.appendChild(lbl);
+    canvas.appendChild(el);
+  });
+
+  // Radar stats live sim
+  document.getElementById('radar-lüt').textContent=Math.floor(Math.random()*400)+200;
+  document.getElementById('radar-matches').textContent=Math.floor(Math.random()*80)+20;
+  document.getElementById('radar-active').textContent=Math.floor(Math.random()*6)+6;
+}
+
+// ── CONFESSIONS ───────────────────────────────
+function buildConfessions(){
+  const wrap=document.getElementById('confessions');
+  wrap.innerHTML=CONFESSIONS.map((c,i)=>`
+    <div class="confession ${c.cls}" style="animation-delay:${i*0.1}s">
+      <div class="conf-text">${c.text}</div>
+      <div class="conf-meta">
+        <span class="conf-kreis">💜 ${c.kreis}</span>
+        <span class="conf-time">${c.time}</span>
+        <span class="conf-heart">♡</span>
+      </div>
+    </div>`).join('');
+}
+
+// ── COUNTDOWN LAUNCH ──────────────────────────
+function updateLaunchCD(){
+  const launch=new Date('2026-06-04T00:00:00');
+  const now=new Date();
+  const diff=launch-now;
+  if(diff<=0){['lc-d','lc-h','lc-m','lc-s'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent='00';});return;}
+  const d=Math.floor(diff/86400000);
+  const h=Math.floor((diff%86400000)/3600000);
+  const m=Math.floor((diff%3600000)/60000);
+  const s=Math.floor((diff%60000)/1000);
+  const set=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=String(v).padStart(2,'0');};
+  set('lc-d',d);set('lc-h',h);set('lc-m',m);set('lc-s',s);
+}
+setInterval(updateLaunchCD,1000);updateLaunchCD();
+
+// ── JAHRGANG DROPDOWN ─────────────────────────
+const jSel=document.getElementById('vm-jahrgang');
+for(let y=2007;y>=1940;y--){const o=document.createElement('option');o.value=y;o.textContent=y;jSel.appendChild(o);}
+
+// ── PARTICLES ────────────────────────────────
+function buildParticles(){
+  const wrap=document.getElementById('particles');
+  for(let i=0;i<30;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    p.style.left=Math.random()*100+'%';
+    p.style.bottom='-10px';
+    p.style.setProperty('--px',(Math.random()*100-50)+'px');
+    p.style.animationDuration=(8+Math.random()*12)+'s';
+    p.style.animationDelay=(Math.random()*10)+'s';
+    p.style.opacity='0';
+    wrap.appendChild(p);
   }
-  loadVoteCount();
 }
 
-async function loadVoteCount(){
-  try{
-    const r=await fetch(SU+'/rest/v1/dating_votes?vote=eq.ja&select=id',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
-    const total=parseInt(r.headers.get('content-range')?.split('/')[1])||0;
-    const el=document.getElementById('vote-count');
-    const sv=document.getElementById('sv');
-    if(el)el.textContent=total.toLocaleString('de-CH');
-    if(sv)sv.textContent=total;
-    const bar=document.getElementById('vote-bar');
-    if(bar)bar.style.width=Math.min(total/100000*100,100)+'%';
-  }catch(e){}
+// ── GHOST NUMBER ANIMATION ────────────────────
+function animateGhost(){
+  const el=document.getElementById('hero-ghost');
+  if(!el)return;
+  let n=0;
+  const target=totalVotes||14;
+  const interval=setInterval(()=>{
+    n+=Math.ceil(target/40);
+    if(n>=target){n=target;clearInterval(interval);}
+    el.textContent=n.toLocaleString('de-CH');
+  },40);
 }
 
+// ── TICKER ────────────────────────────────────
+const TA=['ZÜRI FLIRTET','PEOPLE & DATES','KEIN TINDER','100\'000 JA','KREIS-BASIERT','AB 18','ECHTI LÜÜT','4. JUNI 2026'];
+const TB=['STADTPULS','K4 DOMINIERT','ZÜRI GSCHTED','ANONYM FIRST','SPOT DATES','ZÜRI-BOT','BY RAIMONDO*'];
+['ta','tb','tc','td'].forEach((id,i)=>{
+  const el=document.getElementById(id);if(!el)return;
+  const items=i%2===0?TA:TB;
+  el.innerHTML=[...items,...items].map(x=>`<span class="ti"><b>💜</b> ${x}</span>`).join('');
+});
+
+// ── CURSOR ────────────────────────────────────
 const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
 document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';});
 
-const TI=['PEOPLE & DATES','ZÜRI CONNECT','DÄ PULS VO DÄ STADT','KEIN TINDER BULLSHIT','KREIS 4 AM AKTIVSCHTE','4. JUNI 2026'];
-const TIG=['ZÜRICH KREIS 4','ZÜRICH KREIS 5','SEEFELD','LANGSTRASSE','BY RAIMONDO*','STADTPULS'];
-['ta','tb'].forEach((id,i)=>{
-  const t=document.getElementById(id);if(!t)return;
-  const items=i===0?TI:TIG;
-  t.innerHTML=[...items,...items].map(x=>`<span class="ti"><b>●</b> ${x}</span>`).join('');
-});
-
-document.querySelectorAll('.fb').forEach(b=>{
-  b.addEventListener('click',()=>{document.querySelectorAll('.fb').forEach(x=>x.classList.remove('on'));b.classList.add('on');});
-});
-
-buildKreisBattle();
-loadVoteCount();
+// ── INIT ──────────────────────────────────────
+buildParticles();
+buildBubbles();
+buildRadar();
+buildConfessions();
+loadVotes().then(()=>animateGhost());
 </script>
 </body>
 </html>
