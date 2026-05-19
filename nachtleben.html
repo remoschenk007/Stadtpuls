@@ -433,6 +433,10 @@ footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:14px}
     <button class="kr-btn" onclick="setKreis(this,6)">K6</button>
     <button class="kr-btn" onclick="setKreis(this,7)">K7</button>
     <button class="kr-btn" onclick="setKreis(this,8)">K8</button>
+    <button class="kr-btn" onclick="setKreis(this,9)">K9</button>
+    <button class="kr-btn" onclick="setKreis(this,10)">K10</button>
+    <button class="kr-btn" onclick="setKreis(this,11)">K11</button>
+    <button class="kr-btn" onclick="setKreis(this,12)">K12</button>
     <div class="fsep"></div>
     <button class="q-btn" id="qb-offe" onclick="setQuer(this,'offe')"><div class="q-dot"></div>JETZT OFFE</button>
     <button class="q-btn" id="qb-afterhour" onclick="setQuer(this,'afterhour')">🌅 AFTERHOUR</button>
@@ -493,20 +497,22 @@ footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:14px}
   </div>
   <div class="p-body">
     <div class="p-tags" id="p-tags"></div>
+    <!-- OFFE/ZU BADGE IM PANEL -->
+    <div id="p-offe-badge" style="display:none;align-items:center;gap:7px;padding:8px 12px;margin-bottom:12px;font-size:9px;letter-spacing:2px;text-transform:uppercase"></div>
     <div class="p-desc" id="p-desc">—</div>
     <div class="p-rows">
       <div class="p-row"><div class="p-lbl">ADRESSE</div><div class="p-val" id="p-addr">—</div></div>
       <div class="p-row"><div class="p-lbl">KREIS</div><div class="p-val" id="p-kreis">—</div></div>
       <div class="p-row"><div class="p-lbl">GENRE</div><div class="p-val" id="p-genre">—</div></div>
-      <div class="p-row"><div class="p-lbl">ÖFFNIG</div><div class="p-val" id="p-oeffnig">—</div></div>
+      <div class="p-row"><div class="p-lbl">HÜT OFFE</div><div class="p-val" id="p-oeffnig">—</div></div>
     </div>
     <div class="pred"><div class="pred-txt" id="p-pred">⚡ «<strong>Genau din Club hüt Nacht.</strong>»</div></div>
     <div class="p-acts">
-      <div class="p-act" onclick="window.location='nachtleben-profil.html?id='+currentLoc?.id" style="grid-column:1/-1;border-color:rgba(255,45,0,.35);color:#ff2d00;background:rgba(255,45,0,.06);font-size:10px;min-height:58px">🔍 PROFIL ÖFFNE</div>
-      <div class="p-act">🗺️ AUF KARTE</div>
-      <div class="p-act">❤️ SPEICHERE</div>
-      <div class="p-act">⭐ BEWERTE</div>
-      <div class="p-act">📤 TEILE</div>
+      <div class="p-act" onclick="window.location='nachtleben-profil.html?id='+currentLoc?.id" style="grid-column:1/-1;border-color:rgba(255,45,0,.35);color:#ff2d00;background:rgba(255,45,0,.06);font-size:10px;min-height:58px;font-weight:bold">🔍 VOLLSTÄNDIGES PROFIL →</div>
+      <div class="p-act" style="min-height:52px">🗺️ AUF KARTE</div>
+      <div class="p-act" style="min-height:52px">❤️ SPEICHERE</div>
+      <div class="p-act" style="min-height:52px">⭐ BEWERTE</div>
+      <div class="p-act" style="min-height:52px">📤 TEILE</div>
     </div>
   </div>
 </div>
@@ -520,9 +526,37 @@ const ST=['ZÜRI SCHLAFT NÖD','TECHNO','HOUSE','JAZZ','HIP-HOP','LANGSTRASSE','
 const si=document.getElementById('strobe');
 if(si)si.innerHTML=[...ST,...ST,...ST].map(x=>`<span class="strobe-item">${x}</span>`).join('');
 
-const SUBKAT={162:{e:'🌙',n:'NACHTLEBEN'},1414:{e:'🔊',n:'TECHNO'},1417:{e:'🎤',n:'HIP-HOP'},1423:{e:'🎸',n:'ROCK'},1426:{e:'💃',n:'LATIN'},1429:{e:'🌅',n:'AFTERHOUR'},1432:{e:'🎷',n:'JAZZ'},1435:{e:'🎉',n:'PARTY'},163:{e:'🎸',n:'LIVE MUSIC'},103:{e:'🍸',n:'BAR'},1438:{e:'🍹',n:'COCKTAILBAR'},1441:{e:'🎵',n:'MUSIC BAR'},1444:{e:'🍺',n:'PUB'},1447:{e:'🍽️',n:'RESTAURANT-BAR'}};
-const GENRES=[{id:'techno',e:'🔊',n:'TECHNO',ids:[1414]},{id:'house',e:'🎛️',n:'HOUSE',ids:[1435,1426]},{id:'jazz',e:'🎷',n:'JAZZ',ids:[1432]},{id:'hiphop',e:'🎤',n:'HIP-HOP',ids:[1417]},{id:'live',e:'🎸',n:'LIVE',ids:[163,1423,1441]}];
-const GMAP={techno:[1414],house:[1435,1426],jazz:[1432],hiphop:[1417],live:[163,1423,1441],afterhour:[1429],bar:[103,1438,1441,1444,1447]};
+const SUBKAT={
+  162:{e:'🌙',n:'NACHTLEBEN'},
+  1414:{e:'🔊',n:'TECHNO'},1417:{e:'🎤',n:'HIP-HOP'},
+  1423:{e:'🎸',n:'ROCK'},1426:{e:'💃',n:'LATIN'},
+  1429:{e:'🌅',n:'AFTERHOUR'},1432:{e:'🎷',n:'JAZZ'},
+  1435:{e:'🎉',n:'PARTY'},163:{e:'🎸',n:'LIVE MUSIC'},
+  103:{e:'🍸',n:'BAR'},1438:{e:'🍹',n:'COCKTAILBAR'},
+  1441:{e:'🎵',n:'MUSIC BAR'},1444:{e:'🍺',n:'PUB'},
+  1447:{e:'🍽️',n:'RESTAURANT-BAR'},1450:{e:'🏨',n:'HOTELBAR'},
+  1468:{e:'🏘️',n:'QUARTIERBAR'},
+};
+
+// DUAL FILTER: ids = zt_subkategorie_id, subs = subkategorie Text (für NULL-IDs)
+const GMAP={
+  techno: {ids:[1414],       subs:['techno']},
+  house:  {ids:[1435,1426],  subs:['house','party']},
+  jazz:   {ids:[1432],       subs:['jazz','weinbar']},
+  hiphop: {ids:[1417],       subs:['hiphop','hip-hop','hiphop']},
+  live:   {ids:[163,1423,1441], subs:['live','rock','livemusic','live music']},
+  afterhour:{ids:[1429],     subs:['afterhour','after hour']},
+  bar:    {ids:[103,1438,1441,1444,1447,1450,1468], subs:['bar','restbar','pub','quartierbar','hotelbar','cocktailbar','weinbar']},
+};
+
+// Genre Battle Heatmap
+const GENRES=[
+  {id:'techno', e:'🔊',n:'TECHNO',   gmap:'techno'},
+  {id:'jazz',   e:'🎷',n:'JAZZ',     gmap:'jazz'},
+  {id:'bar',    e:'🍸',n:'BAR',      gmap:'bar'},
+  {id:'hiphop', e:'🎤',n:'HIP-HOP',  gmap:'hiphop'},
+  {id:'live',   e:'🎸',n:'LIVE',     gmap:'live'},
+];
 const VIBES=['«Hüt Nacht isch es wild — geh früeh.»','«Kreis 4 feueret grad — sicher nöd hei gah.»','«Afterhour bis 8 Uhr — nur für Nachtvögel.»','«Jazz-Abend — elegant und entspannt.»','«Perfekte Nacht für Techno.»'];
 
 let S={genre:'all',kreis:'all',offe:false,afterhour:false,gratis:false,sort:'score'};
@@ -539,7 +573,32 @@ function isOffe(oz){
   if(!m)return false;return h>=parseInt(m[1])&&h<parseInt(m[3]);
 }
 
-function getVibe(l){const sid=parseInt(l.zt_subkategorie_id)||0;if([1414,1429].includes(sid))return 5;if([1435,1417,1426].includes(sid))return 4;if([1432,163,1441].includes(sid))return 3;return 2;}
+function getSubInfo(l){
+  const sid=parseInt(l.zt_subkategorie_id)||0;
+  if(sid&&SUBKAT[sid])return SUBKAT[sid];
+  // Fallback: subkategorie Text → Display
+  const sub=(l.subkategorie||'').toLowerCase();
+  const MAP={
+    'techno':{e:'🔊',n:'TECHNO'},'jazz':{e:'🎷',n:'JAZZ'},
+    'hiphop':{e:'🎤',n:'HIP-HOP'},'hip-hop':{e:'🎤',n:'HIP-HOP'},
+    'weinbar':{e:'🍷',n:'WEINBAR'},'bar':{e:'🍸',n:'BAR'},
+    'restbar':{e:'🍽️',n:'RESTAURANT-BAR'},'pub':{e:'🍺',n:'PUB'},
+    'quartierbar':{e:'🏘️',n:'QUARTIERBAR'},'hotelbar':{e:'🏨',n:'HOTELBAR'},
+    'afterhour':{e:'🌅',n:'AFTERHOUR'},'live':{e:'🎸',n:'LIVE'},
+    'casino':{e:'🃏',n:'CASINO'},'party':{e:'🎉',n:'PARTY'},
+  };
+  return MAP[sub]||{e:'🌙',n:(l.subkategorie||'NACHTLEBEN').toUpperCase()};
+}
+
+function getVibe(l){
+  const sid=parseInt(l.zt_subkategorie_id)||0;
+  const sub=(l.subkategorie||'').toLowerCase();
+  if([1414].includes(sid)||sub==='techno')return 5;
+  if([1429].includes(sid)||sub==='afterhour')return 5;
+  if([1435,1417,1426].includes(sid)||['hiphop','hip-hop','party'].includes(sub))return 4;
+  if([1432,163,1441].includes(sid)||['jazz','live','weinbar'].includes(sub))return 3;
+  return 2;
+}
 
 async function loadAll(){
   try{
@@ -550,22 +609,53 @@ async function loadAll(){
   }catch(e){document.getElementById('mgrid').innerHTML='<div class="loading-state"><div class="loading-txt" style="color:#ff2d00">Verbindungsfehler</div></div>';}
 }
 
+function countGenre(key){return allLocs.filter(l=>matchesGenre(l,key)).length;}
+
 function updateStats(){
-  const t=allLocs.length,o=allLocs.filter(l=>isOffe(l.oeffnungszeiten)).length,a=allLocs.filter(l=>parseInt(l.zt_subkategorie_id)===1429).length;
+  const t=allLocs.length;
+  const o=allLocs.filter(l=>isOffe(l.oeffnungszeiten)).length;
+  const a=allLocs.filter(l=>matchesGenre(l,'afterhour')).length;
   ['stat-total','h-total'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=t});
   ['stat-offe','h-offe'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=o||'?'});
   ['stat-after','h-after'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=a});
   document.getElementById('gc-all').textContent=t;
-  Object.entries(GMAP).forEach(([k,ids])=>{const cnt=allLocs.filter(l=>ids.includes(parseInt(l.zt_subkategorie_id))).length;const el=document.getElementById('gc-'+k);if(el)el.textContent=cnt||0;});
+  ['techno','house','jazz','hiphop','live','afterhour','bar'].forEach(k=>{
+    const el=document.getElementById('gc-'+k);
+    if(el)el.textContent=countGenre(k);
+  });
 }
 
 function buildGenreHeatmap(){
-  const max=Math.max(1,...GENRES.map(g=>allLocs.filter(l=>g.ids.includes(parseInt(l.zt_subkategorie_id))).length));
-  const sorted=GENRES.map(g=>({...g,cnt:allLocs.filter(l=>g.ids.includes(parseInt(l.zt_subkategorie_id))).length})).sort((a,b)=>b.cnt-a.cnt);
-  document.getElementById('gm-rows').innerHTML=sorted.map((g,i)=>`<div class="gm-row${i===0?' top':''}" onclick="setGenre(document.querySelector('.genre-btn[data-g=\\'${g.id}\\']'),'${g.id}')"><span class="gm-e">${g.e}</span><div class="gm-info"><div class="gm-name">${g.n}</div><div class="gm-sub">${g.cnt} CLUBS</div></div><div class="gm-bar-w"><div class="gm-bar" style="width:${Math.round(g.cnt/max*100)}%"></div></div><div class="gm-n">${g.cnt}</div></div>`).join('');
+  const max=Math.max(1,...GENRES.map(g=>countGenre(g.gmap)));
+  const sorted=GENRES.map(g=>({...g,cnt:countGenre(g.gmap)})).sort((a,b)=>b.cnt-a.cnt);
+  document.getElementById('gm-rows').innerHTML=sorted.map((g,i)=>`
+    <div class="gm-row${i===0?' top':''}" onclick="setGenre(document.querySelector('.genre-btn[data-g=\\'${g.id}\\']'),'${g.id}')">
+      <span class="gm-e">${g.e}</span>
+      <div class="gm-info"><div class="gm-name">${g.n}</div><div class="gm-sub">${g.cnt} CLUBS</div></div>
+      <div class="gm-bar-w"><div class="gm-bar" style="width:${Math.round(g.cnt/max*100)}%"></div></div>
+      <div class="gm-n">${g.cnt}</div>
+    </div>`).join('');
 }
 
-function getFiltered(){return allLocs.filter(l=>{const sid=parseInt(l.zt_subkategorie_id)||0;if(S.genre!=='all'&&!(GMAP[S.genre]||[]).includes(sid))return false;if(S.kreis!=='all'&&parseInt(l.kreis)!==parseInt(S.kreis))return false;if(S.offe&&!isOffe(l.oeffnungszeiten))return false;if(S.afterhour&&sid!==1429)return false;return true;});}
+// DUAL FILTER HELPER — matched auf ID oder subkategorie Text
+function matchesGenre(l, genreKey){
+  if(genreKey==='all')return true;
+  const gm=GMAP[genreKey];if(!gm)return false;
+  const sid=parseInt(l.zt_subkategorie_id)||0;
+  const sub=(l.subkategorie||'').toLowerCase().trim();
+  // Erst ID prüfen (wenn vorhanden)
+  if(sid&&gm.ids.includes(sid))return true;
+  // Fallback: subkategorie Text
+  return gm.subs.some(s=>sub===s||sub.includes(s));
+}
+
+function getFiltered(){return allLocs.filter(l=>{
+  if(S.genre!=='all'&&!matchesGenre(l,S.genre))return false;
+  if(S.kreis!=='all'&&parseInt(l.kreis)!==parseInt(S.kreis))return false;
+  if(S.offe&&!isOffe(l.oeffnungszeiten))return false;
+  if(S.afterhour&&!matchesGenre(l,'afterhour'))return false;
+  return true;
+});}
 
 function buildGrid(){
   const g=document.getElementById('mgrid');
@@ -579,9 +669,9 @@ function buildGrid(){
   g.innerHTML='';
   if(!data.length){g.innerHTML='<div class="empty-state"><div class="es-title">NÜÜT GFUNDE</div><div class="es-sub">Probier andere Filter</div><div class="es-reset" onclick="resetAll()">ALLES ZURÜCKSETZE</div></div>';return;}
   data.forEach(l=>{
-    const sid=parseInt(l.zt_subkategorie_id)||0;
-    const sub=SUBKAT[sid]||{e:'🌙',n:l.subkategorie?.toUpperCase()||'NACHTLEBEN'};
-    const offe=isOffe(l.oeffnungszeiten);const vibe=getVibe(l);const isAfter=sid===1429;
+    const sub=getSubInfo(l);
+    const offe=isOffe(l.oeffnungszeiten);const vibe=getVibe(l);
+    const isAfter=matchesGenre(l,'afterhour');
     const c=document.createElement('div');c.className='mcard'+(offe?' is-offe':'');
     c.innerHTML=(offe?'<div class="mc-puls"></div><div class="mc-puls-ring"></div>':'')+(l.bild_url?`<img class="mc-img" src="${l.bild_url}" loading="lazy" alt="${l.name}" onerror="this.style.display='none'">`:`<div class="mc-img-placeholder">${sub.e}</div>`)+`<div class="mc-body"><div class="mc-badges">${l.featured?'<span class="mcb volt">TOP</span>':''}${offe?'<span class="mcb offe"><div class="offe-dot"></div>OFFE</span>':''}${isAfter?'<span class="mcb gold">🌅 AFTERHOUR</span>':''}<span class="mcb red">${sub.e} ${sub.n}</span><span class="mcb ghost">K${l.kreis||'?'}</span></div><div class="mc-name">${l.name}</div><div class="mc-genre">${sub.n}</div><div class="mc-meta">${l.adresse||''}</div><div class="mc-foot"><div class="mc-vibe">${[1,2,3,4,5].map(v=>`<div class="vdot${v<=vibe?' on v'+v:''}"></div>`).join('')}</div><div class="mc-kr">K${l.kreis||'?'}</div></div></div>`;
     c.onclick=()=>openDet(l);
@@ -628,19 +718,60 @@ function resetAll(){
 let currentLoc=null;
 function openDet(l){
   currentLoc=l;
-  const sid=parseInt(l.zt_subkategorie_id)||0;const sub=SUBKAT[sid]||{e:'🌙',n:'NACHTLEBEN'};const offe=isOffe(l.oeffnungszeiten);
+  const sub=getSubInfo(l);
+  const offe=isOffe(l.oeffnungszeiten);
   const hero=document.getElementById('p-hero');
-  if(l.bild_url){hero.style.backgroundImage=`url(${l.bild_url})`;hero.style.minHeight='220px';}else{hero.style.backgroundImage='';hero.style.minHeight='120px';}
+  if(l.bild_url){hero.style.backgroundImage=`url(${l.bild_url})`;hero.style.minHeight='220px';}
+  else{hero.style.backgroundImage='';hero.style.minHeight='120px';}
+
   document.getElementById('p-name').textContent=l.name;
-  document.getElementById('p-sub').textContent=sub.e+' '+sub.n+' · KREIS '+l.kreis+(offe?' · 🟢 OFFE':'');
+  document.getElementById('p-sub').textContent=sub.e+' '+sub.n+' · KREIS '+l.kreis;
+
+  // OFFE/ZU BADGE
+  const badge=document.getElementById('p-offe-badge');
+  if(offe){
+    badge.style.display='flex';
+    badge.style.background='#000';
+    badge.style.border='1px solid rgba(200,255,0,.5)';
+    badge.style.color='#c8ff00';
+    badge.innerHTML='<div style="width:7px;height:7px;border-radius:50%;background:#c8ff00;animation:blink 1s infinite;box-shadow:0 0 6px rgba(200,255,0,.8)"></div> JETZT OFFE';
+  } else {
+    badge.style.display='flex';
+    badge.style.background='transparent';
+    badge.style.border='1px solid rgba(232,228,217,.1)';
+    badge.style.color='rgba(232,228,217,.3)';
+    badge.innerHTML='MOMENTAN GESCHLOSSEN';
+  }
+
   document.getElementById('p-tags').innerHTML=`${l.featured?'<span class="mcb volt">TOP</span>':''}${offe?'<span class="mcb offe"><div class="offe-dot"></div>OFFE</span>':''}<span class="mcb ghost">K${l.kreis||'?'}</span><span class="mcb red">${sub.e} ${sub.n}</span>`;
   document.getElementById('p-desc').textContent=l.beschreibung_kurz||l.beschreibung||'Mehr Infos bald via Stadtpuls Community.';
   document.getElementById('p-addr').textContent=l.adresse||(l.plz?l.plz+' Zürich':'—');
   document.getElementById('p-kreis').textContent='Kreis '+(l.kreis||'?');
   document.getElementById('p-genre').textContent=sub.e+' '+sub.n;
-  document.getElementById('p-oeffnig').textContent=(Array.isArray(l.oeffnungszeiten)&&l.oeffnungszeiten[0])||'—';
+
+  // ÖFFNUNGSZEITEN — sauber formatiert
+  const DAYS=['So','Mo','Di','Mi','Do','Fr','Sa'];
+  const today=DAYS[new Date().getDay()];
+  const oz=l.oeffnungszeiten||[];
+  if(Array.isArray(oz)&&oz.length){
+    const todayStr=oz.find(o=>o&&o.includes(today));
+    if(todayStr){
+      const m=todayStr.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/);
+      if(m){
+        document.getElementById('p-oeffnig').textContent=`${today}: ${m[1]}:${m[2]} – ${m[3]}:${m[4]}`;
+      } else {
+        document.getElementById('p-oeffnig').textContent=today+': GESCHLOSSEN';
+      }
+    } else {
+      document.getElementById('p-oeffnig').textContent=today+': GESCHLOSSEN';
+    }
+  } else {
+    document.getElementById('p-oeffnig').textContent='—';
+  }
+
   document.getElementById('p-pred').innerHTML='⚡ «'+VIBES[Math.floor(Math.random()*VIBES.length)]+'»';
-  document.getElementById('ov').classList.add('on');document.getElementById('panel').classList.add('open');
+  document.getElementById('ov').classList.add('on');
+  document.getElementById('panel').classList.add('open');
 }
 function closeDet(){document.getElementById('ov').classList.remove('on');document.getElementById('panel').classList.remove('open');}
 
