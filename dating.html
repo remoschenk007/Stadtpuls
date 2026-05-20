@@ -125,7 +125,8 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 .po1{width:80px;height:80px}.po2{width:80px;height:80px;animation-delay:.7s}.po3{width:80px;height:80px;animation-delay:1.4s}
 .vote-of{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:1.2rem;position:relative;z-index:2}
 .vote-prog-wrap{width:100%;max-width:540px;margin:0 auto .3rem;background:rgba(147,51,234,.1);height:3px;position:relative;z-index:2}
-.vote-prog{height:3px;background:linear-gradient(90deg,#9333ea,#ec4899);box-shadow:0 0 10px rgba(147,51,234,.5);transition:width 1.2s ease}
+.vote-prog{height:3px;background:linear-gradient(90deg,#9333ea,#ec4899);box-shadow:0 0 10px rgba(147,51,234,.5);transition:width 1.2s ease;position:relative}
+.vote-prog::after{content:'';position:absolute;right:-6px;top:50%;transform:translateY(-50%);width:12px;height:12px;border-radius:50%;background:#9333ea;border:2px solid #e8e4d9;box-shadow:0 0 10px rgba(147,51,234,.8);transition:right 1.2s ease}
 .vote-prog-lbl{display:flex;justify-content:space-between;max-width:540px;margin:0 auto 2rem;font-size:.5rem;color:rgba(232,228,217,.15);letter-spacing:.1em;position:relative;z-index:2}
 /* FORMULAR — sichtbar, gross, klar */
 .vform{max-width:540px;margin:0 auto;background:rgba(147,51,234,.05);border:1px solid rgba(147,51,234,.2);border-radius:1.5rem;padding:2.5rem;position:relative;z-index:2}
@@ -542,10 +543,10 @@ async function loadVoteCount(){
     const bar=document.getElementById('vote-bar');
     if(bar)bar.style.width=Math.min(total/100000*100,100)+'%';
     // Hype Meter
-    const pct=Math.min(100,Math.round(total/1000*100));
+    const pct=Math.min(100,parseFloat((total/100000*100).toFixed(3)));
     const hpct=document.getElementById('hype-pct');
     const hfill=document.getElementById('hype-fill');
-    if(hpct)hpct.textContent=pct+'%';
+    if(hpct)hpct.textContent=pct<1?pct.toFixed(3)+'%':pct.toFixed(1)+'%';
     setTimeout(()=>{if(hfill)hfill.style.width=pct+'%';},400);
     // Ghost
     const ghost=document.getElementById('hero-ghost');
