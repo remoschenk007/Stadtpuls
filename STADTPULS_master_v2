@@ -2901,6 +2901,378 @@ TERMINAL WORKFLOW — AB JETZT STANDARD:
 ⏳ Phase 6 → KI Features (Züri-Bot Claude API)
 🔴 Soft Launch: 4. Juni 2026
 
+# STADTPULS — MASTERPLAN V2
+## depuls.ch · Stand: 21. Mai 2026
+### by raimondo* (Remo Schenk) · github.com/remoschenk007/Stadtpuls
+
+---
+
+## TECH STACK
+
+| Komponente | Detail |
+|-----------|--------|
+| Hosting | GitHub Pages → depuls.ch |
+| Repo | github.com/remoschenk007/Stadtpuls |
+| Lokal | /Users/alessandrachristen/stadtpuls/ |
+| Supabase URL | https://pnynkzrqnfoshojqfqxn.supabase.co |
+| Supabase Anon Key | eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ |
+| Fonts | Barlow Condensed Italic 900, DM Mono, Bebas Neue |
+| Soft Launch | 4. Juni 2026 |
+
+---
+
+## DESIGN DNA — IMMER EINHALTEN
+
+```
+Background:  #04040a  (Midnight) — bei Nachtleben: #000
+Lava-Rot:    #ff2d00  — Hauptakzent überall
+Volt-Grün:   #c8ff00  — OFFE Badge, CTA Buttons
+Gold:        #ffd700  — Afterhour, Specials
+Lila:        #9333ea  — Dating/People
+Pink:        #ec4899  — Dating Akzent
+Weiss:       #e8e4d9  — Text
+```
+
+**EISERNE REGEL: IMMER Hex-Farben. NIE var(). Immer.**
+
+---
+
+## SEITEN — VOLLSTÄNDIGER STATUS
+
+| Seite | Status | Notizen |
+|-------|--------|---------|
+| `index.html` | ✅ Live | unverändert |
+| `gastro.html` | ⏳ Fix pending | Fix-Script noch ausführen (Nav + Buttons + OZ Panel) |
+| `gastro-profil.html` | ✅ NEU FERTIG | outputs/ — OZ-Grid 7 Tage, OFFE Banner, Apple Buttons |
+| `nachtleben.html` | ✅ NEU FERTIG | outputs/ — Dual-Filter, Strobe-Ticker, Supabase live |
+| `nachtleben-profil.html` | ✅ NEU FERTIG | outputs/ — Sonar-Radar, Countdown, Crew Check, Ticketcorner |
+| `shopping.html` | ⏳ Fix pending | Fix-Script noch ausführen |
+| `shopping-profil.html` | ⚠️ ROLLBACK NÖTIG | Neue Version gebaut aber Remo will altes zurück — aus GitHub History holen! |
+| `dating.html` | ✅ NEU FERTIG | outputs/ — neues brutales Design + Original Voting + alle Fixes |
+| `dating.html` Voting | ✅ LIVE | 15 Votes in Supabase, Progress-Bar-Fix, Hype-Meter-Fix |
+| `feedback.html` | ✅ Live | unverändert |
+| `impressum.html` | ✅ Live | unverändert |
+| `favicon.svg` | ✅ Live | Puls-Ring-Design, roter Kern auf #04040a |
+
+---
+
+## SOFORT ZU ERLEDIGEN (in dieser Reihenfolge)
+
+### 1. shopping-profil.html zurücksetzen
+```bash
+cd /Users/alessandrachristen/stadtpuls
+git log --oneline shopping-profil.html
+# Letzten guten Commit-Hash nehmen, dann:
+git checkout COMMIT_HASH -- shopping-profil.html
+git add shopping-profil.html
+git commit -m "↩️ shopping-profil zurück auf alten Stand"
+git push origin main
+```
+
+### 2. Fix-Script ausführen (gastro.html + shopping.html)
+```bash
+cd /Users/alessandrachristen/stadtpuls
+python3 ~/Downloads/fix_stadtpuls.py
+git add -A && git commit -m "✅ Nav Fix + Buttons + OZ Panel" && git push origin main
+```
+
+### 3. Neue Files aus outputs/ deployen
+```bash
+# Einfach die Files aus /mnt/user-data/outputs/ ins Repo kopieren:
+# nachtleben.html → ersetzen
+# nachtleben-profil.html → ersetzen
+# gastro-profil.html → ersetzen
+# dating.html → ersetzen
+# shopping-profil.html → NICHT deployen, erst Rollback!
+```
+
+### 4. Supabase manuell setzen (noch offen)
+- `ticketcorner_url` pro Nachtleben-Location setzen
+- `reservierbar = true` für Jazz/Restaurant-Bars setzen
+
+---
+
+## SUPABASE TABELLEN
+
+### `locations` — Haupttabelle (1241 importiert, 859 live)
+```
+id, name, slug, kategorie, subkategorie, zt_subkategorie_id,
+kreis, adresse, plz, bild_url, beschreibung, beschreibung_kurz,
+website, telefon, oeffnungszeiten (JSONB Array),
+rating, featured, aktiv,
+ticketcorner_url TEXT,          ← neu hinzugefügt
+reservierbar BOOLEAN DEFAULT false  ← neu hinzugefügt
+```
+
+**Kategorien in DB:** `gastro`, `nachtleben`, `shopping`
+
+### `dating_votes` — Voting-Tabelle (15 Votes live!)
+```
+id, vote ('ja'/'nei'), geschlecht ('m'/'f'/'x'),
+geburtsjahr (int), user_agent TEXT, created_at
+```
+
+---
+
+## VOTING SYSTEM — ORIGINAL CODE DER FUNKTIONIERT
+
+```javascript
+const SU = 'https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SK = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'; // voller Key oben
+
+// VOTE ABSCHICKEN
+async function castVote(type) {
+  const g = document.getElementById('vote-geschlecht').value; // 'm','f','x'
+  const y = parseInt(document.getElementById('vote-year').value); // Geburtsjahr
+  if (!g || !y || y > 2006) return; // 18+ Check
+  await fetch(SU + '/rest/v1/dating_votes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'apikey': SK,
+      'Authorization': 'Bearer ' + SK
+    },
+    body: JSON.stringify({
+      vote: type,           // 'ja' oder 'nei'
+      geschlecht: g,        // 'm', 'f', 'x'
+      geburtsjahr: y,       // int z.B. 1990
+      user_agent: navigator.userAgent
+    })
+  });
+  loadVoteCount();
+}
+
+// VOTE COUNT LADEN
+async function loadVoteCount() {
+  try {
+    const r = await fetch(SU + '/rest/v1/dating_votes?vote=eq.ja&select=id', {
+      headers: { 'apikey': SK, 'Authorization': 'Bearer ' + SK, 'Prefer': 'count=exact' }
+    });
+    const total = parseInt(r.headers.get('content-range')?.split('/')[1]) || 0;
+    // Progress Bar (0 → 100'000)
+    const bar = document.getElementById('vote-bar');
+    if (bar) bar.style.width = Math.min(total / 100000 * 100, 100) + '%';
+    // Hype Meter (RICHTIG: /100000 nicht /1000!)
+    const pct = (total / 100000 * 100).toFixed(3);
+    const hfill = document.getElementById('hype-fill');
+    if (hfill) hfill.style.width = pct + '%';
+  } catch(e) {}
+}
+```
+
+**Bugs die gefixt wurden:**
+- Progress-Bar Dot: `::after` Pseudo-Element folgt jetzt der Linie
+- Hype-Meter: war `/1000` statt `/100000` — jetzt korrekt
+- isOffe(): `null` → `false` (Sonntag korrekt GESCHLOSSEN)
+
+---
+
+## ÖFFNUNGSZEITEN — FORMAT & FUNKTIONEN
+
+```javascript
+// Format in Supabase: ["Mo 09:00:00-18:00:00", "Di 09:00:00-18:00:00", ...]
+
+function isOffe(oz) {
+  if (!oz || !Array.isArray(oz) || !oz.length) return false;
+  const now = new Date();
+  const h = now.getHours();
+  const day = ['So','Mo','Di','Mi','Do','Fr','Sa'][now.getDay()];
+  const s = oz.find(o => o && o.includes(day));
+  if (!s) return false;
+  const m = s.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/);
+  if (!m) return false;
+  return h >= parseInt(m[1]) && h < parseInt(m[3]);
+}
+
+// OZ-Grid 7 Tage — heute mit ◀ markiert
+function buildOzGrid(oz) {
+  const DAYS = ['So','Mo','Di','Mi','Do','Fr','Sa'];
+  const today = new Date().getDay();
+  return '<div class="oz-grid">' + DAYS.map((d, i) => {
+    const s = (oz||[]).find(o => o && o.includes(d));
+    const m = s ? s.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/) : null;
+    const isToday = i === today;
+    return `<div class="oz-row${isToday?' today':''}">
+      <div class="oz-day">${d}${isToday?' ◀':''}</div>
+      <div class="oz-time${!m?' oz-closed':''}">${m ? m[1]+':'+m[2]+' – '+m[3]+':'+m[4] : 'GESCHLOSSEN'}</div>
+    </div>`;
+  }).join('') + '</div>';
+}
+```
+
+---
+
+## NACHTLEBEN — DUAL-FILTER (kritisch!)
+
+146 Nachtleben-Locations. Problem: 51 haben KEINE `zt_subkategorie_id`.
+Lösung: Filter auf ID **UND** subkategorie-Text gleichzeitig.
+
+```javascript
+const GMAP = {
+  techno:    { ids:[1414],                    subs:['techno'] },
+  jazz:      { ids:[1432],                    subs:['jazz','weinbar'] },
+  hiphop:    { ids:[1417],                    subs:['hiphop','hip-hop'] },
+  bar:       { ids:[103,1438,1441,1444,1447,1450,1468], subs:['bar','restbar','pub'] },
+  afterhour: { ids:[1429],                    subs:['afterhour'] },
+}
+```
+
+---
+
+## NACHTLEBEN — SUBKATEGORIEN IDs
+
+```javascript
+const SUBKAT = {
+  162:{e:'🌙',n:'NACHTLEBEN'}, 1414:{e:'🔊',n:'TECHNO'}, 1417:{e:'🎤',n:'HIP-HOP'},
+  1423:{e:'🎸',n:'ROCK'},      1426:{e:'💃',n:'LATIN'},   1429:{e:'🌅',n:'AFTERHOUR'},
+  1432:{e:'🎷',n:'JAZZ'},      1435:{e:'🎉',n:'PARTY'},   163:{e:'🎸',n:'LIVE MUSIC'},
+  103:{e:'🍸',n:'BAR'},        1438:{e:'🍹',n:'COCKTAILBAR'}, 1441:{e:'🎵',n:'MUSIC BAR'},
+  1444:{e:'🍺',n:'PUB'},       1447:{e:'🍽️',n:'RESTAURANT-BAR'},
+}
+```
+
+---
+
+## STANDARD SUPABASE QUERY
+
+```javascript
+async function sbGet(path) {
+  const r = await fetch(SU + '/rest/v1/' + path, {
+    headers: { 'apikey': SK, 'Authorization': 'Bearer ' + SK }
+  });
+  return r.json();
+}
+// Beispiel: sbGet('locations?kategorie=eq.nachtleben&aktiv=eq.true&limit=500')
+```
+
+---
+
+## NAV LINKS — EXAKT SO
+
+```html
+<a href="gastro.html">GASTRO</a>
+<a href="nachtleben.html">NACHTLEBE</a>   <!-- NIE index.html?page=nachtleben -->
+<a href="shopping.html">SHOPPING</a>
+<a href="dating.html">DATES</a>
+```
+
+---
+
+## UX / BUTTONS — APPLE REGELN
+
+- **min-height: 52–60px** auf ALLEN Buttons (Apple Touch Target)
+- **Volt-Button** (#c8ff00): Haupt-CTA (Reservieren, Shoppe, Öffnen)
+- **Rot-Button** (#ff2d00): Sekundär-CTA (Website, Ticket)
+- **Ghost-Button**: Zurück, Teilen, Speichern
+- **OFFE Badge**: #c8ff00 blinkend — immer links sichtbar wenn offen
+- **Custom Cursor**: rot auf Desktop — auf Mobile mit `cursor:auto` ausblenden
+
+---
+
+## DATING.HTML — WAS DRIN IST
+
+- **Hero**: ZÜRI FLIRTET — Hype-Meter + Ghost-Zahl (echte Votes)
+- **Züri-Match Radar**: rotierender Sweep, simulierte Blips (Phase 5: echte User)
+- **Kreis Battle**: alle 12 Kreise mit Voting-Bars
+- **Geständnis Wall**: anonyme Züri-Geständnisse
+- **Countdown**: bis 4. Juni 2026
+- **Vote-Formular**: Geschlecht + Geburtsjahr + JA/NEI Buttons
+- **Progress-Bar**: 0 → 100'000 mit Dot der der Linie folgt
+- **KI Features Block**: Phase 5/6 Teaser
+
+---
+
+## INSTAGRAM CONTENT — ERSTELLT
+
+`/mnt/user-data/outputs/insta_content.html` — Stories + Posts für Gastro & Shopping, komplett fertig, abartig geil, freie Hand genutzt.
+
+---
+
+## TECHNISCHE ROADMAP
+
+### Phase 4 — AKTUELL (Soft Launch 4. Juni 2026)
+- [x] Nachtleben komplett neu
+- [x] Nachtleben-Profil neu (Sonar-Radar, Ticketcorner, Countdown)
+- [x] Gastro-Profil neu (OZ-Grid, OFFE Banner, Apple Buttons)
+- [x] Dating neu (Voting live, 15 Votes, Progress-Bar, Hype-Meter)
+- [x] Favicon live (Puls-Ring)
+- [x] 1241 Locations in Supabase importiert
+- [ ] shopping-profil.html Rollback
+- [ ] Fix-Script für gastro.html + shopping.html
+- [ ] ticketcorner_url pro Location setzen
+- [ ] reservierbar=true für Jazz/Bars setzen
+- [ ] Alle outputs/ deployen (ausser shopping-profil!)
+
+### Phase 5 — Login + Community
+Supabase Auth: Magic Link (kein Passwort)
+```sql
+users (id, username, kreis, geschlecht, geburtsjahr, created_at)
+user_presence (user_id, kreis, last_seen)
+bookmarks (user_id, location_id)
+ratings (user_id, location_id, stars, text)
+```
+- Radar: `last_seen` bei Seitenbesuch → Kreis-Aktivität live
+- Kreis: manuell wählen (kein GPS in Phase 5)
+
+### Phase 6 — KI + Dating Live (nach 100'000 Votes)
+```sql
+dating_profiles (user_id, kreis, bio, vibe_tags, anonym)
+matches (user_id_a, user_id_b, kreis, matched_at)
+spots (user_id, location_id, text, created_at)
+```
+- Züri-Bot: Claude API, nutzt bestehende `locations` Tabelle
+- GPS Opt-in für Radar (Premium)
+- Anonym First, Spot Dates, Kreis-Matching
+
+---
+
+## FÜR NEUEN CHAT — DIREKT KOPIEREN
+
+```
+PROJEKT: Stadtpuls / depuls.ch — Zürich City Guide
+GITHUB: github.com/remoschenk007/Stadtpuls
+LOKAL: /Users/alessandrachristen/stadtpuls/
+SUPABASE: https://pnynkzrqnfoshojqfqxn.supabase.co
+ANON KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ
+SOFT LAUNCH: 4. Juni 2026
+FARBEN: #04040a bg, #000 nachtleben-bg, #ff2d00 rot, #c8ff00 volt, #9333ea lila, #ec4899 pink, #e8e4d9 text
+FONTS: Barlow Condensed Italic 900, DM Mono, Bebas Neue
+REGEL: Immer Hex, NIE var()
+
+SEITEN STATUS:
+- index.html ✅ live unverändert
+- gastro.html ⏳ Fix-Script nötig
+- gastro-profil.html ✅ neu (outputs/) — deployen
+- nachtleben.html ✅ neu (outputs/) — deployen
+- nachtleben-profil.html ✅ neu (outputs/) — deployen
+- shopping.html ⏳ Fix-Script nötig
+- shopping-profil.html ⚠️ aus GitHub History holen! NICHT outputs/ deployen
+- dating.html ✅ neu (outputs/) — Voting live 15 Votes, Progress-Bar-Fix, Hype-Meter-Fix
+
+SOFORT:
+1. git log --oneline shopping-profil.html → git checkout HASH -- shopping-profil.html → push
+2. python3 ~/Downloads/fix_stadtpuls.py → gastro.html + shopping.html fixen
+3. Alle outputs/ deployen ausser shopping-profil
+4. ticketcorner_url + reservierbar in Supabase setzen
+
+VOTING: dating_votes (vote/geschlecht/geburtsjahr/user_agent)
+COUNT: ?vote=eq.ja + Prefer:count=exact → content-range Header
+HYPE-METER: total/100000*100 (NICHT /1000!)
+PROGRESS-BAR DOT: ::after auf .vote-prog (folgt der Linie)
+DUAL-FILTER Nachtleben: IDs + subkategorie Text (51 ohne ID!)
+OZ-FORMAT: ["Mo 09:00:00-18:00:00"] → isOffe() gibt false (nie null!) + buildOzGrid()
+APPLE BUTTONS: min-height 52–60px überall
+INSTAGRAM CONTENT: /mnt/user-data/outputs/insta_content.html fertig
+
+RADAR (aktuell simuliert):
+- Phase 5: user_presence Tabelle, Kreis manuell, last_seen bei Seitenbesuch
+- Phase 6: GPS Opt-in optional
+
+SUPABASE NEUE FELDER:
+- locations.ticketcorner_url TEXT
+- locations.reservierbar BOOLEAN DEFAULT false
+```
+
 
 Master v2 Update Session 17. Mai 2026
 
