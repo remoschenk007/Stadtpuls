@@ -32,6 +32,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .tab{padding:12px 20px;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:#444;border:none;border-bottom:2px solid transparent;background:none;font-family:'DM Mono',monospace;transition:all .2s}
 .tab:hover{color:#e8e4d9}
 .tab.active{color:#ff2d00;border-bottom-color:#ff2d00}
+.tab.ev-tab.active{color:#00f5ff;border-bottom-color:#00f5ff}
 .content{padding:28px;max-width:1200px}
 .panel{display:none}
 .panel.active{display:block}
@@ -52,9 +53,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .cs{margin-bottom:20px}
 .cs-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#c8ff00;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;gap:8px}
 
-/* ═══════════════════════════════
-   GRUPPEN-SELECT BUTTON — NEU
-   ═══════════════════════════════ */
+/* GRUPPEN-SELECT BUTTON */
 .grp-btn{
   margin-left:auto;
   background:transparent;
@@ -76,7 +75,9 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .ci{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0a0a14;border:1px solid #1a1a2e;cursor:pointer;transition:all .15s}
 .ci:hover{border-color:#2a2a3e}
 .ci.sel{border-color:#ff2d00;background:rgba(255,45,0,0.05)}
+.ci.ev-sel{border-color:#00f5ff;background:rgba(0,245,255,0.05)}
 .ci input{accent-color:#ff2d00;width:12px;height:12px;flex-shrink:0;cursor:pointer}
+.ci.ev-ci input{accent-color:#00f5ff}
 .ci label{font-size:10px;cursor:pointer;flex:1}
 .ci .cid{font-size:8px;color:#333}
 
@@ -91,6 +92,8 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .btn-ghost{background:transparent;color:#555;border:1px solid #333}
 .btn-ghost:hover{color:#e8e4d9;border-color:#555}
 .btn-cyan{background:transparent;color:#00f5ff;border:1px solid #00f5ff}
+.btn-cyan:hover{background:rgba(0,245,255,0.05)}
+.btn-cyan:disabled{border-color:#333;color:#444;cursor:not-allowed}
 .sel-count{font-size:9px;color:#444;margin-left:4px}
 
 /* PROGRESS */
@@ -98,8 +101,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .prog-status{display:flex;align-items:center;gap:8px;font-size:11px}
 .prog-dot{width:6px;height:6px;background:#ff2d00;border-radius:50%;animation:blink 1s infinite;flex-shrink:0}
+.prog-dot.cyan{background:#00f5ff}
 .prog-track{background:#1a1a2e;height:3px;overflow:hidden;margin-bottom:6px}
 .prog-fill{height:100%;background:linear-gradient(90deg,#ff2d00,#ff8800);width:0%;transition:width .3s}
+.prog-fill.cyan{background:linear-gradient(90deg,#00f5ff,#0088ff)}
 .prog-sub{font-size:9px;color:#444;letter-spacing:1px}
 .log-box{background:#020208;border:1px solid #1a1a2e;padding:14px;height:240px;overflow-y:auto;font-size:9px;line-height:2;display:none}
 .log-box::-webkit-scrollbar{width:3px}
@@ -145,8 +150,29 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .sp-item{display:flex;justify-content:space-between;padding:6px 10px;background:#04040a;border:1px solid #1a1a2e;font-size:9px}
 .sp-item .id{color:#333}.sp-item .name{color:#e8e4d9}
 
+/* EVENTS SPEZIFISCH */
+.ev-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.ev-stat{background:#0a0a14;border:1px solid rgba(0,245,255,.15);padding:14px;text-align:center}
+.ev-stat .n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;color:#00f5ff;line-height:1}
+.ev-stat .l{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-top:4px}
+.date-filter{display:flex;gap:8px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+.date-filter label{font-size:9px;color:#555;letter-spacing:1px}
+.date-input{background:#0a0a14;border:1px solid #1a1a2e;color:#e8e4d9;padding:8px 12px;font-family:'DM Mono',monospace;font-size:10px;outline:none;transition:border-color .2s}
+.date-input:focus{border-color:#00f5ff}
+.ev-preview{background:#0a0a14;border:1px solid rgba(0,245,255,.15);padding:20px;margin-top:20px;display:none}
+.ev-preview h3{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#00f5ff;margin-bottom:14px}
+.ev-table{width:100%;border-collapse:collapse;font-size:9px}
+.ev-table th{text-align:left;padding:6px 10px;border-bottom:1px solid #1a1a2e;color:#555;letter-spacing:1px;text-transform:uppercase;font-weight:normal}
+.ev-table td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:top}
+.ev-table tr:hover td{background:rgba(0,245,255,.02)}
+.ev-date{color:#00f5ff;white-space:nowrap}
+.ev-name{color:#e8e4d9}
+.ev-venue{color:#555}
+.ev-kat{padding:2px 6px;border:1px solid rgba(0,245,255,.2);color:#00f5ff;font-size:7px;letter-spacing:1px;text-transform:uppercase}
+.ev-popup{padding:2px 6px;background:#c8ff00;color:#000;font-size:7px;letter-spacing:1px;text-transform:uppercase}
+
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-@media(max-width:700px){.q-grid{grid-template-columns:1fr}.res-grid{grid-template-columns:1fr 1fr}.content{padding:16px}}
+@media(max-width:700px){.q-grid{grid-template-columns:1fr}.res-grid{grid-template-columns:1fr 1fr}.content{padding:16px}.ev-stats{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -166,7 +192,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
   <div class="logo">STADTPULS<span>⚡ IMPORT TOOL v3</span></div>
   <div class="hdr-pills">
     <div class="pill">Locations <span class="n" id="hdr-total">--</span></div>
-    <div class="pill">Kreise <span class="n">1–12</span></div>
+    <div class="pill">Events <span class="n" id="hdr-events">--</span></div>
     <div class="live-dot">LIVE</div>
     <button class="logout-btn" onclick="doLogout()">Logout</button>
   </div>
@@ -177,9 +203,10 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
   <button class="tab" onclick="switchTab('dashboard',this)">◈ Daten</button>
   <button class="tab" onclick="switchTab('qualitaet',this)">◉ Qualität</button>
   <button class="tab" onclick="switchTab('subkat',this)">⚙ Subkategorien</button>
+  <button class="tab ev-tab" onclick="switchTab('events',this)" style="color:#00f5ff">⚡ Events</button>
 </div>
 
-<!-- IMPORT -->
+<!-- IMPORT — IDENTISCH WIE VORHER -->
 <div class="panel active" id="panel-import">
 <div class="content">
 
@@ -374,7 +401,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 
 </div></div>
 
-<!-- DASHBOARD -->
+<!-- DASHBOARD — IDENTISCH WIE VORHER -->
 <div class="panel" id="panel-dashboard">
 <div class="content">
   <div class="dash-grid">
@@ -390,7 +417,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
   <button class="btn btn-cyan" onclick="loadDash()" style="margin-top:8px">↻ AKTUALISIEREN</button>
 </div></div>
 
-<!-- QUALITÄT -->
+<!-- QUALITÄT — IDENTISCH WIE VORHER -->
 <div class="panel" id="panel-qualitaet">
 <div class="content">
   <div class="q-grid">
@@ -402,7 +429,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
   <button class="btn btn-cyan" onclick="loadQuality()" style="margin-top:20px">↻ QUALITÄT PRÜFEN</button>
 </div></div>
 
-<!-- SUBKATEGORIEN -->
+<!-- SUBKATEGORIEN — IDENTISCH WIE VORHER -->
 <div class="panel" id="panel-subkat">
 <div class="content">
   <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;margin-bottom:4px">SUBKATEGORIE MAPPING</div>
@@ -420,6 +447,107 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     <div class="sp-grid" id="sp-rest"></div>
   </div>
 </div></div>
+
+<!-- ═══════════════════════════════════════════
+     NEU: EVENTS TAB
+═══════════════════════════════════════════ -->
+<div class="panel" id="panel-events">
+<div class="content">
+
+<div class="warn-box" style="background:rgba(0,245,255,0.03);border-color:rgba(0,245,255,0.3);border-left-color:#00f5ff">
+  <div class="warn-title" style="color:#00f5ff">⚡ EVENTS IMPORT — ZÜRICH TOURISMUS API</div>
+  <div class="warn-txt">
+    Events werden aus der <strong style="color:#00f5ff">ZT API</strong> geladen → <strong style="color:#00f5ff">events</strong> Tabelle in Supabase.<br>
+    <strong style="color:#e8e4d9">Duplikat-Schutz</strong> via quelle_id — kann beliebig oft gestartet werden.<br>
+    <strong style="color:#c8ff00">Pop-Up Detection:</strong> Events unter 7 Tagen Laufzeit → popup=true automatisch.<br>
+    <strong style="color:#ff2d00">Nur Zürich:</strong> Events ohne erkennbaren Kreis (PLZ 8001–8052) werden übersprungen.
+  </div>
+</div>
+
+<!-- DATUM FILTER -->
+<div class="date-filter">
+  <label>VON:</label>
+  <input type="date" class="date-input" id="ev-von">
+  <label>BIS:</label>
+  <input type="date" class="date-input" id="ev-bis">
+  <button class="btn btn-ghost" onclick="evSetDates()">↺ HEUTE +30 TAGE</button>
+</div>
+
+<!-- LIVE STATS -->
+<div class="ev-stats">
+  <div class="ev-stat"><div class="n" id="ev-total">--</div><div class="l">Events Total</div></div>
+  <div class="ev-stat"><div class="n" id="ev-today">--</div><div class="l">Heute</div></div>
+  <div class="ev-stat"><div class="n" id="ev-week">--</div><div class="l">Diese Woche</div></div>
+  <div class="ev-stat"><div class="n" id="ev-popup">--</div><div class="l">Pop-Ups</div></div>
+</div>
+
+<!-- KATEGORIEN -->
+<div class="cs">
+  <div class="cs-title" style="color:#00f5ff">🎨 KULTUR EVENTS <button class="grp-btn" style="border-color:rgba(0,245,255,.3);color:#00f5ff" onclick="evSelGrp(this)">ALLE WÄHLEN</button></div>
+  <div class="cg">
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="96|kultur|kultur"><label>Alle Kulturevents</label><span class="cid">96</span></div>
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="133|kultur|film"><label>Film & Kino</label><span class="cid">133</span></div>
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="134|kultur|musik"><label>Konzerte & Musik</label><span class="cid">134</span></div>
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="175|kultur|oper"><label>Oper</label><span class="cid">175</span></div>
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="176|kultur|theater"><label>Theater</label><span class="cid">176</span></div>
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="178|kultur|galerie"><label>Galerien & Ausstellungen</label><span class="cid">178</span></div>
+  </div>
+</div>
+
+<div class="cs">
+  <div class="cs-title" style="color:#00f5ff">🌙 NACHTLEBEN EVENTS <button class="grp-btn" style="border-color:rgba(0,245,255,.3);color:#00f5ff" onclick="evSelGrp(this)">ALLE WÄHLEN</button></div>
+  <div class="cg">
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="162|nachtleben|club"><label>Alle Club Events</label><span class="cid">162</span></div>
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="1414|nachtleben|techno"><label>Techno / House</label><span class="cid">1414</span></div>
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="1432|nachtleben|jazz"><label>Jazz</label><span class="cid">1432</span></div>
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="1417|nachtleben|hiphop"><label>Hip-Hop</label><span class="cid">1417</span></div>
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="163|nachtleben|livemusic"><label>Live Music</label><span class="cid">163</span></div>
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="1435|nachtleben|party"><label>Party Events</label><span class="cid">1435</span></div>
+  </div>
+</div>
+
+<div class="cs">
+  <div class="cs-title" style="color:#00f5ff">🛒 MÄRKTE & POP-UPS <button class="grp-btn" style="border-color:rgba(0,245,255,.3);color:#00f5ff" onclick="evSelGrp(this)">ALLE WÄHLEN</button></div>
+  <div class="cg">
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="132|shopping|markt"><label>Märkte & Flohmärkte</label><span class="cid">132</span></div>
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="97|sport|sport"><label>Sport Events</label><span class="cid">97</span></div>
+    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="72|sightseeing|event"><label>Stadtführungen & Tours</label><span class="cid">72</span></div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="prog-box" id="ev-prog-box">
+  <div class="prog-top">
+    <div class="prog-status"><div class="prog-dot cyan"></div><span id="ev-prog-lbl">Lade Events...</span></div>
+    <div style="font-size:9px;color:#444" id="ev-prog-cat"></div>
+  </div>
+  <div class="prog-track"><div class="prog-fill cyan" id="ev-prog-fill"></div></div>
+  <div class="prog-sub" id="ev-prog-sub">0 / 0</div>
+</div>
+<div class="log-box" id="ev-log-box"></div>
+<div class="res-grid" id="ev-res-grid">
+  <div class="rc ok"><div class="big" id="ev-r0">0</div><div class="lbl">Importiert</div></div>
+  <div class="rc sk"><div class="big" id="ev-r1">0</div><div class="lbl">Übersprungen</div></div>
+  <div class="rc er"><div class="big" id="ev-r2">0</div><div class="lbl">Fehler</div></div>
+  <div class="rc ca"><div class="big" id="ev-r3">0</div><div class="lbl">Pop-Ups erkannt</div></div>
+</div>
+
+<!-- VORSCHAU -->
+<div class="ev-preview" id="ev-preview">
+  <h3>⚡ VORSCHAU — ERSTE EVENTS AUS API</h3>
+  <div id="ev-preview-wrap"></div>
+</div>
+
+<div class="action-bar">
+  <button class="btn btn-cyan" onclick="evPreview()">◎ VORSCHAU</button>
+  <button class="btn" style="background:#00f5ff;color:#000" id="ev-btn-go" onclick="evStartImport()">⚡ EVENTS IMPORTIEREN</button>
+  <button class="btn btn-ghost" onclick="evDeleteOld()" style="color:#ff2d00;border-color:rgba(255,45,0,.3)">🗑 VERGANGENE LÖSCHEN</button>
+  <button class="btn btn-ghost" onclick="document.getElementById('ev-log-box').innerHTML='';document.getElementById('ev-log-box').style.display='none';document.getElementById('ev-res-grid').style.display='none';document.getElementById('ev-preview').style.display='none'">✗ RESET</button>
+  <span class="sel-count" id="ev-sel-count">0 ausgewählt</span>
+</div>
+
+</div></div>
+<!-- ═══ ENDE EVENTS TAB ═══ -->
 
 <script>
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
@@ -477,10 +605,10 @@ function doLogin(){
   else if(btoa(pw)===saved){localStorage.setItem('sp_import_auth','1');hideLogin();}
   else{document.getElementById('login-error').style.display='block';document.getElementById('pw-input').value='';document.getElementById('pw-input').focus();}
 }
-function hideLogin(){document.getElementById('login-screen').style.display='none';updHdr();buildSubkatPreview();}
+function hideLogin(){document.getElementById('login-screen').style.display='none';updHdr();buildSubkatPreview();evSetDates();evLoadStats();}
 function doLogout(){localStorage.removeItem('sp_import_auth');document.getElementById('login-screen').style.display='flex';}
 window.addEventListener('DOMContentLoaded',()=>{
-  if(localStorage.getItem('sp_import_auth')==='1'){document.getElementById('login-screen').style.display='none';updHdr();buildSubkatPreview();}
+  if(localStorage.getItem('sp_import_auth')==='1'){document.getElementById('login-screen').style.display='none';updHdr();buildSubkatPreview();evSetDates();evLoadStats();}
 });
 
 // TABS
@@ -491,6 +619,7 @@ function switchTab(t,el){
   document.getElementById('panel-'+t).classList.add('active');
   if(t==='dashboard')loadDash();
   if(t==='qualitaet')loadQuality();
+  if(t==='events')evLoadStats();
 }
 
 // MODUS
@@ -510,7 +639,6 @@ function tc(el){
   const cb=el.querySelector('input');
   cb.checked=!cb.checked;
   el.classList.toggle('sel',cb.checked);
-  // Gruppen-Button Status updaten
   const grp=el.closest('.cs');
   const btn=grp.querySelector('.grp-btn');
   if(btn){
@@ -520,10 +648,6 @@ function tc(el){
   }
   upd();
 }
-
-// ═══════════════════════════════════════
-// GRUPPEN SELECT — NEU
-// ═══════════════════════════════════════
 function selGrp(btn){
   const grp=btn.closest('.cs');
   const cbs=grp.querySelectorAll('.cc');
@@ -536,22 +660,29 @@ function selGrp(btn){
   btn.textContent=!allOn?'KEINE WÄHLEN':'ALLE WÄHLEN';
   upd();
 }
-
 function upd(){document.getElementById('sel-count').textContent=document.querySelectorAll('.cc:checked').length+' ausgewählt'}
 function selAll(){
-  document.querySelectorAll('.ci').forEach(el=>{el.querySelector('input').checked=true;el.classList.add('sel')});
-  document.querySelectorAll('.grp-btn').forEach(b=>{b.classList.add('on');b.textContent='KEINE WÄHLEN'});
+  document.querySelectorAll('.ci:not(.ev-ci)').forEach(el=>{el.querySelector('input').checked=true;el.classList.add('sel')});
+  document.querySelectorAll('.cs:not(:has(.ecc)) .grp-btn').forEach(b=>{b.classList.add('on');b.textContent='KEINE WÄHLEN'});
   upd();
 }
 function selNone(){
-  document.querySelectorAll('.ci').forEach(el=>{el.querySelector('input').checked=false;el.classList.remove('sel')});
-  document.querySelectorAll('.grp-btn').forEach(b=>{b.classList.remove('on');b.textContent='ALLE WÄHLEN'});
+  document.querySelectorAll('.ci:not(.ev-ci)').forEach(el=>{el.querySelector('input').checked=false;el.classList.remove('sel')});
+  document.querySelectorAll('.cs:not(:has(.ecc)) .grp-btn').forEach(b=>{b.classList.remove('on');b.textContent='ALLE WÄHLEN'});
   upd();
 }
 
 // LOGGING
 function lg(m,t='in'){
   const b=document.getElementById('log-box');
+  b.style.display='block';
+  const d=document.createElement('div');
+  d.className={ok:'lok',err:'ler',info:'lin',warn:'lwa',skip:'lsk'}[t]||'lin';
+  d.textContent=new Date().toLocaleTimeString('de-CH')+' — '+m;
+  b.appendChild(d);b.scrollTop=b.scrollHeight;
+}
+function evLg(m,t='in'){
+  const b=document.getElementById('ev-log-box');
   b.style.display='block';
   const d=document.createElement('div');
   d.className={ok:'lok',err:'ler',info:'lin',warn:'lwa',skip:'lsk'}[t]||'lin';
@@ -567,6 +698,13 @@ function seoTitle(name,sub,kreis){return`${name} — ${sub} Zürich Kreis ${krei
 // ZT API FETCH
 async function fetchZT(id){
   const url=ZT+'?id='+id+'&limit=500';
+  const r=await fetch(PX+encodeURIComponent(url));
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  const d=await r.json();
+  return Array.isArray(d)?d:(d.data||[]);
+}
+async function fetchZTEvents(id,von,bis){
+  const url=ZT+'?id='+id+'&limit=500&dateFrom='+von+'&dateTo='+bis;
   const r=await fetch(PX+encodeURIComponent(url));
   if(!r.ok)throw new Error('HTTP '+r.status);
   const d=await r.json();
@@ -642,7 +780,7 @@ async function getByApiId(apiId){
   return Array.isArray(r)&&r.length?r[0]:null;
 }
 
-// MAIN IMPORT
+// MAIN IMPORT — IDENTISCH WIE VORHER
 async function startImport(){
   const checked=[...document.querySelectorAll('.cc:checked')];
   if(!checked.length){alert('Bitte mindestens eine Kategorie wählen!');return}
@@ -728,7 +866,7 @@ async function startImport(){
   updHdr();
 }
 
-// DASHBOARD
+// DASHBOARD — IDENTISCH WIE VORHER
 async function loadDash(){
   try{
     const all=await sbFetch('locations?select=id,kategorie,kreis,bild_url,subkategorie,zt_subkategorie_id&limit=2000');
@@ -756,7 +894,7 @@ async function loadDash(){
   }catch(e){console.error(e)}
 }
 
-// QUALITY
+// QUALITY — IDENTISCH WIE VORHER
 async function loadQuality(){
   try{
     const all=await sbFetch('locations?select=id,name,kategorie,kreis,plz,bild_url,website,zt_subkategorie_id&limit=2000');
@@ -771,7 +909,7 @@ async function loadQuality(){
   }catch(e){console.error(e)}
 }
 
-// SUBKAT PREVIEW
+// SUBKAT PREVIEW — IDENTISCH WIE VORHER
 function buildSubkatPreview(){
   const all=Object.entries(SUBKAT_MAP);
   const mkItems=entries=>entries.map(([id,name])=>`
@@ -783,13 +921,180 @@ function buildSubkatPreview(){
   document.getElementById('sp-rest').innerHTML=mkItems(all.filter(([id])=>!gastroIds.includes(parseInt(id))&&!nachtIds.includes(parseInt(id))));
 }
 
-// HEADER
+// HEADER — MIT EVENTS COUNTER NEU
 async function updHdr(){
   try{
     const r=await fetch(SU+'/rest/v1/locations?select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
     const c=r.headers.get('content-range')?.split('/')[1]||'?';
     document.getElementById('hdr-total').textContent=c;
   }catch(e){}
+  try{
+    const r=await fetch(SU+'/rest/v1/events?select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
+    const c=r.headers.get('content-range')?.split('/')[1]||'0';
+    document.getElementById('hdr-events').textContent=c;
+  }catch(e){}
+}
+
+// ═══════════════════════════════════════
+// EVENTS — NEUE FUNKTIONEN
+// ═══════════════════════════════════════
+function evSetDates(){
+  const today=new Date();
+  const plus30=new Date();plus30.setDate(plus30.getDate()+30);
+  document.getElementById('ev-von').value=today.toISOString().split('T')[0];
+  document.getElementById('ev-bis').value=plus30.toISOString().split('T')[0];
+}
+
+async function evLoadStats(){
+  try{
+    const today=new Date().toISOString().split('T')[0];
+    const week=new Date();week.setDate(week.getDate()+7);
+    const wStr=week.toISOString().split('T')[0];
+    const rTotal=await fetch(SU+'/rest/v1/events?aktiv=eq.true&select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
+    document.getElementById('ev-total').textContent=rTotal.headers.get('content-range')?.split('/')[1]||'0';
+    const rToday=await fetch(SU+'/rest/v1/events?aktiv=eq.true&datum_start=eq.'+today+'&select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
+    document.getElementById('ev-today').textContent=rToday.headers.get('content-range')?.split('/')[1]||'0';
+    const rWeek=await fetch(SU+'/rest/v1/events?aktiv=eq.true&datum_start=lte.'+wStr+'&datum_start=gte.'+today+'&select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
+    document.getElementById('ev-week').textContent=rWeek.headers.get('content-range')?.split('/')[1]||'0';
+    const rPopup=await fetch(SU+'/rest/v1/events?aktiv=eq.true&popup=eq.true&select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
+    document.getElementById('ev-popup').textContent=rPopup.headers.get('content-range')?.split('/')[1]||'0';
+    document.getElementById('hdr-events').textContent=rTotal.headers.get('content-range')?.split('/')[1]||'0';
+  }catch(e){}
+}
+
+function evTc(el){
+  const cb=el.querySelector('input');
+  cb.checked=!cb.checked;
+  el.classList.toggle('ev-sel',cb.checked);
+  evUpd();
+}
+function evSelGrp(btn){
+  const grp=btn.closest('.cs');
+  const cbs=grp.querySelectorAll('.ecc');
+  const allOn=[...cbs].every(c=>c.checked);
+  cbs.forEach(c=>{c.checked=!allOn;c.closest('.ci').classList.toggle('ev-sel',!allOn);});
+  evUpd();
+}
+function evUpd(){
+  document.getElementById('ev-sel-count').textContent=document.querySelectorAll('.ecc:checked').length+' ausgewählt';
+}
+
+async function evPreview(){
+  const sel=[...document.querySelectorAll('.ecc:checked')];
+  if(!sel.length){alert('Bitte Kategorie wählen!');return;}
+  const von=document.getElementById('ev-von').value;
+  const bis=document.getElementById('ev-bis').value;
+  const[ztId,kat,subkat]=sel[0].value.split('|');
+  document.getElementById('ev-preview').style.display='block';
+  document.getElementById('ev-preview-wrap').innerHTML='<div style="color:#555;font-size:9px;padding:10px">Lade von ZT API...</div>';
+  try{
+    const items=await fetchZTEvents(ztId,von,bis);
+    const rows=items.slice(0,8).map(item=>{
+      const name=item.name?.de||item.title||'—';
+      const venue=item.location?.name||item.venue||'—';
+      const df=item.dateFrom||item.startDate||'—';
+      const dt=item.dateTo||item.endDate||df;
+      const isPopup=df&&dt&&df!=='—'&&((new Date(dt)-new Date(df))/(1000*60*60*24))<7;
+      return`<tr><td class="ev-date">${df}</td><td class="ev-name">${name}</td><td class="ev-venue">${venue}</td><td><span class="ev-kat">${subkat}</span>${isPopup?' <span class="ev-popup">POP-UP</span>':''}</td></tr>`;
+    }).join('');
+    document.getElementById('ev-preview-wrap').innerHTML=items.length
+      ?`<table class="ev-table"><thead><tr><th>DATUM</th><th>EVENT</th><th>VENUE</th><th>TYP</th></tr></thead><tbody>${rows}</tbody></table><div style="font-size:9px;color:#555;margin-top:8px">${items.length} Events gefunden für ZT ID ${ztId}</div>`
+      :'<div style="color:#555;font-size:9px;padding:10px">Keine Events in diesem Zeitraum.</div>';
+  }catch(e){
+    document.getElementById('ev-preview-wrap').innerHTML='<div style="color:#ff2d00;font-size:9px;padding:10px">Fehler: '+e.message+'</div>';
+  }
+}
+
+async function evStartImport(){
+  const sel=[...document.querySelectorAll('.ecc:checked')];
+  if(!sel.length){alert('Bitte Kategorien wählen!');return;}
+  const von=document.getElementById('ev-von').value;
+  const bis=document.getElementById('ev-bis').value;
+  if(!von||!bis){alert('Datum Von und Bis ausfüllen!');return;}
+  document.getElementById('ev-btn-go').disabled=true;
+  document.getElementById('ev-prog-box').style.display='block';
+  document.getElementById('ev-log-box').innerHTML='';
+  document.getElementById('ev-res-grid').style.display='none';
+  let ok=0,sk=0,er=0,popups=0;
+  for(let i=0;i<sel.length;i++){
+    const[ztId,kat,subkat]=sel[i].value.split('|');
+    const pct=Math.round(i/sel.length*100);
+    document.getElementById('ev-prog-fill').style.width=pct+'%';
+    document.getElementById('ev-prog-cat').textContent=kat+'/'+subkat+' (id='+ztId+')';
+    document.getElementById('ev-prog-lbl').textContent='Lade Events...';
+    evLg('→ '+kat+'/'+subkat+' ('+von+' → '+bis+')','info');
+    try{
+      const items=await fetchZTEvents(ztId,von,bis);
+      evLg('  '+items.length+' Events von ZT API','info');
+      for(const item of items){
+        const df=item.dateFrom||item.startDate||null;
+        const dt=item.dateTo||item.endDate||df;
+        if(!df){sk++;continue;}
+        if(new Date(df)<new Date()){sk++;evLg('  → SKIP (vergangen): '+(item.name?.de||'—'),'skip');continue;}
+        const isPopup=df&&dt&&((new Date(dt)-new Date(df))/(1000*60*60*24))<7;
+        if(isPopup)popups++;
+        const plz=item.location?.postalCode||item.address?.postalCode||'';
+        const kreis=plz2k(plz)||null;
+        const quelle_id=String(item.identifier||item.id||'');
+        // Duplikat Check
+        const exR=await fetch(SU+'/rest/v1/events?quelle_id=eq.'+encodeURIComponent(quelle_id)+'&select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+        const exD=await exR.json();
+        if(exD&&exD.length>0){sk++;evLg('  → SKIP (existiert): '+(item.name?.de||'—'),'skip');continue;}
+        const ev={
+          titel:item.name?.de||item.title||'',
+          slug:slugify(item.name?.de||item.title||'unbekannt')+'-'+Math.random().toString(36).substr(2,4),
+          kategorie:kat,
+          zt_kategorie_id:parseInt(ztId)||null,
+          zt_subkategorie_id:parseInt(ztId)||null,
+          venue_name:item.location?.name||item.venue||'',
+          adresse:item.location?.streetAddress||item.address?.streetAddress||'',
+          plz:plz,kreis:kreis,
+          lat:item.geoCoordinates?.latitude||null,
+          lng:item.geoCoordinates?.longitude||null,
+          datum_start:df,datum_ende:dt||df,
+          uhrzeit_start:item.timeFrom||null,uhrzeit_ende:item.timeTo||null,
+          ganztaegig:!item.timeFrom,
+          beschreibung:item.description?.de||item.description||'',
+          beschreibung_kurz:(item.description?.de||'').substring(0,200)||'',
+          bild_url:item.image?.url||null,
+          ticket_url:item.ticketUrl||item.bookingUrl||null,
+          eintritt_typ:item.price?'kostenpflichtig':'kostenlos',
+          preis_von:item.priceFrom||null,preis_bis:item.priceTo||null,
+          popup:isPopup,veranstalter:item.organizer?.name||null,
+          quelle:'zuerich_tourismus',quelle_id:quelle_id,
+          aktiv:true,featured:false,abgesagt:false,
+          seo_title:(item.name?.de||'')+' — Event Zürich | Stadtpuls'
+        };
+        const evR=await fetch(SU+'/rest/v1/events',{
+          method:'POST',
+          headers:{'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'resolution=ignore-duplicates'},
+          body:JSON.stringify(ev)
+        });
+        if(evR.status===201||evR.status===200){ok++;evLg('  + '+ev.titel+' ('+df+')'+(isPopup?' 🎪POP-UP':''),'ok');}
+        else{er++;evLg('  x FEHLER: '+ev.titel+' HTTP '+evR.status,'err');}
+        await new Promise(r=>setTimeout(r,80));
+      }
+    }catch(e){er++;evLg('  x API FEHLER: '+e.message,'err');}
+    await new Promise(r=>setTimeout(r,300));
+  }
+  document.getElementById('ev-prog-fill').style.width='100%';
+  document.getElementById('ev-prog-lbl').textContent='FERTIG';
+  document.getElementById('ev-r0').textContent=ok;
+  document.getElementById('ev-r1').textContent=sk;
+  document.getElementById('ev-r2').textContent=er;
+  document.getElementById('ev-r3').textContent=popups;
+  document.getElementById('ev-res-grid').style.display='grid';
+  document.getElementById('ev-btn-go').disabled=false;
+  evLg('=== EVENTS FERTIG === +'+ok+' | '+sk+' skip | '+er+' fehler | '+popups+' pop-ups','ok');
+  evLoadStats();updHdr();
+}
+
+async function evDeleteOld(){
+  if(!confirm('Alle vergangenen Events löschen?'))return;
+  const today=new Date().toISOString().split('T')[0];
+  const r=await fetch(SU+'/rest/v1/events?datum_ende=lt.'+today,{method:'DELETE',headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+  alert(r.ok?'Vergangene Events gelöscht!':'Fehler beim Löschen.');
+  evLoadStats();
 }
 </script>
 </body>
