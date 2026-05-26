@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-STADTPULS — Events Import Script
-Läuft direkt vom Mac — kein CORS, kein Browser
+STADTPULS — Events Import Script v2
+Kein Duplikat-Check — direkt importieren
 """
 
 import urllib.request
@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 
 SU = 'https://pnynkzrqnfoshojqfqxn.supabase.co'
 SK = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ'
-ZT  = 'https://www.zuerich.com/en/api/v2/data'
+ZT = 'https://www.zuerich.com/en/api/v2/data'
 
 HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -64,16 +64,6 @@ def zt_fetch(zt_id):
         print(f'  ❌ Fetch Fehler: {e}')
         return []
 
-def sb_check_exists(quelle_id):
-    url = f'{SU}/rest/v1/events?quelle_id=eq.{urllib.parse.quote(str(quelle_id))}&select=id&limit=1'
-    req = urllib.request.Request(url, headers={'apikey': SK, 'Authorization': f'Bearer {SK}'})
-    try:
-        with urllib.request.urlopen(req, timeout=10) as r:
-            data = json.loads(r.read())
-            return len(data) > 0
-    except:
-        return False
-
 def sb_insert(ev):
     url = f'{SU}/rest/v1/events'
     body = json.dumps(ev).encode('utf-8')
@@ -81,13 +71,17 @@ def sb_insert(ev):
         'apikey': SK,
         'Authorization': f'Bearer {SK}',
         'Content-Type': 'application/json',
-        'Prefer': 'resolution=ignore-duplicates'
+        'Prefer': 'resolution=ignore-duplicates,return=minimal'
     }, method='POST')
     try:
         with urllib.request.urlopen(req, timeout=10) as r:
-            return r.status in [200, 201]
+            return True
+    except urllib.error.HTTPError as e:
+        body = e.read().decode('utf-8')
+        print(f'  ❌ HTTP {e.code}: {body[:100]}')
+        return False
     except Exception as e:
-        print(f'  ❌ Insert Fehler: {e}')
+        print(f'  ❌ Fehler: {e}')
         return False
 
 def map_event(item, kat, subkat, zt_id):
@@ -101,11 +95,6 @@ def map_event(item, kat, subkat, zt_id):
     dt = item.get('dateTo') or item.get('endDate') or df
     if not df:
         return None
-    try:
-        if datetime.strptime(df[:10], '%Y-%m-%d') < datetime.now():
-            return None
-    except:
-        pass
     is_popup = False
     try:
         d1 = datetime.strptime(df[:10], '%Y-%m-%d')
@@ -151,9 +140,8 @@ def map_event(item, kat, subkat, zt_id):
     }
 
 def main():
-    print(f'\n🔴 STADTPULS EVENTS IMPORT')
-    print(f'   Zeitraum: {VON} → {BIS}')
-    print(f'   Kategorien: {len(KATEGORIEN)}\n')
+    print(f'\n🔴 STADTPULS EVENTS IMPORT v2')
+    print(f'   Zeitraum: {VON} → {BIS}\n')
     total_ok = 0
     total_sk = 0
     total_er = 0
@@ -167,10 +155,6 @@ def main():
             if not ev:
                 total_sk += 1
                 continue
-            qid = ev['quelle_id']
-            if sb_check_exists(qid):
-                total_sk += 1
-                continue
             ok = sb_insert(ev)
             if ok:
                 total_ok += 1
@@ -180,7 +164,6 @@ def main():
                     total_popup += 1
             else:
                 total_er += 1
-                print(f'  ❌ FEHLER: {ev["titel"][:50]}')
     print(f'\n{"="*50}')
     print(f'✅ FERTIG — Importiert: {total_ok} | Skip: {total_sk} | Fehler: {total_er} | Pop-Ups: {total_popup}')
     print(f'{"="*50}\n')
