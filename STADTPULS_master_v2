@@ -3276,6 +3276,122 @@ SUPABASE NEUE FELDER:
 
 Master v2 Update Session 17. Mai 2026
 
+Hier der komplette Block — direkt kopieren und ans Ende vom Master v2 in GitHub anhängen:
+
+---
+
+```
+════════════════════════════════════════
+SESSION LOG — 27. MAI 2026 — KOMPLETT
+════════════════════════════════════════
+
+TECH STACK AKTUELL:
+✅ Mac (MacBook Air) + VS Code + Terminal + GitHub
+✅ Lokal: /Users/alessandrachristen/stadtpuls/
+✅ Domain: depuls.ch (hosttech, CHF 4.90/Jahr, Kundennr. 110617)
+✅ Mac Claude Account: rmsqqwq29d@privaterelay.appleid.com
+✅ Arbeitsgerät: Mac + iPad
+
+SEITEN STATUS — AKTUELL 27. MAI 2026:
+✅ index.html — live, unverändert
+✅ gastro.html — live, Supabase, 903 Locations
+✅ gastro-profil.html — live, OZ-Grid, OFFE Banner, Apple Buttons
+✅ nachtleben.html — live, Supabase
+✅ nachtleben-profil.html — live, Sonar-Radar, Countdown
+✅ shopping.html — live, 124 Shops
+✅ shopping-profil.html — live, heute rebuilt exakt wie Screenshots
+✅ dating.html — live, Voting funktioniert, 15 Votes
+✅ import.html — live, 5 Tabs inkl. Events Tab ⚡
+✅ import_events.py — in GitHub Repo (Python Script für Events)
+✅ feedback.html — live
+✅ kontakt.html — live
+✅ impressum.html — live
+✅ datenschutz.html — live
+✅ favicon.svg — live
+
+SUPABASE AKTUELL:
+✅ 903 Locations in DB
+✅ events Tabelle existiert — aber LEER ⚠️
+✅ RLS auf events: SELECT + INSERT für anon gesetzt
+✅ events Felder neu hinzugefügt: veranstalter TEXT, popup BOOLEAN, press_mention TEXT
+✅ Insert funktioniert bestätigt (HTTP 201 OK getestet)
+✅ ZT API antwortet mit Browser User-Agent ✅
+✅ dating_votes: 15 Votes live
+
+EVENTS IMPORT — STATUS UND PROBLEM:
+✅ import_events.py auf GitHub: 76 lines, 4.49 KB — korrekte Version
+✅ ZT API liefert 565 Events (getestet)
+✅ Supabase Insert funktioniert (HTTP 201 bestätigt)
+❌ Lokale import_events.py hat alte Version — überspringt alles
+❌ git pull überschreibt lokale Datei nicht automatisch
+FIX — ERSTER SCHRITT NEUER CHAT:
+git checkout origin/main -- import_events.py
+python3 /Users/alessandrachristen/stadtpuls/import_events.py
+→ Sollte 500+ Events importieren
+→ Dann events.html bauen
+
+SHOPPING-PROFIL.HTML — HEUTE REBUILT ✅
+✅ Layout exakt wie Screenshots (vorletzte Version)
+✅ Dynamisch aus Supabase via ?id= oder ?slug=
+✅ OFFE/GESCHLOSSEN: Volt-Grün wenn offe, Rot wenn geschlossen
+✅ Gleiche Architektur wie gastro-profil.html
+✅ Drop Alert + Samschtig-Route + Outfit-Matcher
+✅ KI Features Block (5 Zeilen)
+✅ Reviews + Ähnliche Shops
+✅ Sidebar mit allen Details
+
+WICHTIGE ERKENNTNISSE — HEUTE:
+✅ CSS: IMMER Hex (#ff2d00) — NIE var() — Encoding-Bug Mac/GitHub
+✅ git checkout origin/main -- DATEI = sicherste Methode lokale Datei zu überschreiben
+✅ Terminal Standard-Workflow: Python-Scripts direkt ausführen
+✅ GitHub Web Editor für schnelle Änderungen
+✅ VS Code für grosse Dateien und lokale Arbeit
+✅ Nie «git push origin maingit pull» zusammen — immer einzeln mit Enter
+✅ INSERT OK 201 = Supabase nimmt Events an
+
+NACHTLEBEN — NOCH OFFEN:
+⏳ nachtleben.html KI Features einbauen (Crowd Radar, Sound DNA, etc.)
+⏳ nachtleben-profil.html verbessern
+⏳ Ticketcorner URL pro Location in Supabase setzen
+⏳ reservierbar=true für Jazz/Bars setzen
+
+ROADMAP AKTUELL:
+✅ Phase 4h → Footer gefixt
+✅ Phase 4i → Register + Backticks gefixt
+✅ Phase 4j → Tab-Switch gefixt
+✅ Phase 4k → Supabase Architektur komplett neu
+✅ Phase 4l → Domain + HTTPS + Impressum + Datenschutz
+✅ Phase 4m → Voting live + Counter
+✅ Phase 4n → feedback.html + kontakt.html live
+✅ Phase 4o → import.html v3 mit Events Tab
+✅ Phase 4p → gastro.html GODMODE + Supabase live
+✅ Phase 4q → gastro-profil.html komplett
+✅ Phase 4r → 903 Locations importiert
+✅ Phase 4s → shopping.html live
+✅ Phase 4t → shopping-profil.html rebuilt — heute
+✅ Phase 4u → nachtleben.html + nachtleben-profil.html live
+✅ Phase 4v → import_events.py in GitHub
+✅ Phase 4w → events Tabelle RLS + neue Felder
+⏳ Phase 4x → Events importieren (PRIORITÄT 1 NEUER CHAT)
+⏳ Phase 4y → events.html + event-profil.html bauen
+⏳ Phase 4z → nachtleben KI Features
+⏳ Phase 5  → Login + Community + Onboarding
+⏳ Phase 6  → KI Features (Züri-Bot Claude API)
+⏳ Phase 7  → Hamburg, Berlin, Wien
+
+SOFT LAUNCH:
+🔴 Ursprünglich 4. Juni 2026 (Geburtstag Remo)
+🔴 Realistisch: Ende Juni 2026
+
+ERSTER SCHRITT NEUER CHAT — IMMER:
+1. STADTPULS_master_v2 Raw-URL laden
+2. git checkout origin/main -- import_events.py
+3. python3 /Users/alessandrachristen/stadtpuls/import_events.py
+4. Dann events.html bauen
+
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.» 🔴
+════════════════════════════════════════
+```
 
 SOFT LAUNCH: 4. Juni 2026 🔴
 
