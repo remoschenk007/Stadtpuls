@@ -36,41 +36,19 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .content{padding:28px;max-width:1200px}
 .panel{display:none}
 .panel.active{display:block}
-
-/* WARNING BOX */
 .warn-box{background:rgba(255,45,0,0.05);border:1px solid rgba(255,45,0,0.3);border-left:3px solid #ff2d00;padding:14px 18px;margin-bottom:24px}
 .warn-title{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;margin-bottom:6px}
 .warn-txt{font-size:10px;color:rgba(232,228,217,.5);line-height:1.7}
-
-/* MODUS */
 .modus-row{display:flex;gap:8px;margin-bottom:24px}
 .modus-btn{padding:10px 18px;border:1px solid #1a1a2e;background:transparent;color:#333;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
 .modus-btn:hover{border-color:#555;color:#e8e4d9}
 .modus-btn.active{border-color:#ff2d00;color:#ff2d00;background:rgba(255,45,0,0.05)}
 .modus-btn.danger.active{border-color:#ff2d00;background:rgba(255,45,0,0.1);color:#ff2d00}
-
-/* CATEGORIES */
 .cs{margin-bottom:20px}
 .cs-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#c8ff00;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;gap:8px}
-
-/* GRUPPEN-SELECT BUTTON */
-.grp-btn{
-  margin-left:auto;
-  background:transparent;
-  border:1px solid rgba(200,255,0,.3);
-  color:#c8ff00;
-  padding:3px 12px;
-  font-family:'DM Mono',monospace;
-  font-size:8px;
-  letter-spacing:2px;
-  text-transform:uppercase;
-  cursor:pointer;
-  transition:all .2s;
-  flex-shrink:0;
-}
+.grp-btn{margin-left:auto;background:transparent;border:1px solid rgba(200,255,0,.3);color:#c8ff00;padding:3px 12px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s;flex-shrink:0}
 .grp-btn:hover{background:rgba(200,255,0,.08);border-color:#c8ff00}
 .grp-btn.on{background:rgba(200,255,0,.12);border-color:#c8ff00;color:#c8ff00}
-
 .cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:5px}
 .ci{display:flex;align-items:center;gap:8px;padding:8px 12px;background:#0a0a14;border:1px solid #1a1a2e;cursor:pointer;transition:all .15s}
 .ci:hover{border-color:#2a2a3e}
@@ -80,8 +58,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .ci.ev-ci input{accent-color:#00f5ff}
 .ci label{font-size:10px;cursor:pointer;flex:1}
 .ci .cid{font-size:8px;color:#333}
-
-/* ACTION BAR */
 .action-bar{display:flex;gap:8px;align-items:center;padding:18px 0;border-top:1px solid #1a1a2e;flex-wrap:wrap;margin-top:8px}
 .btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:10px 20px;border:none;cursor:pointer;transition:all .2s}
 .btn-red{background:#ff2d00;color:#04040a}
@@ -95,8 +71,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .btn-cyan:hover{background:rgba(0,245,255,0.05)}
 .btn-cyan:disabled{border-color:#333;color:#444;cursor:not-allowed}
 .sel-count{font-size:9px;color:#444;margin-left:4px}
-
-/* PROGRESS */
 .prog-box{background:#0a0a14;border:1px solid #1a1a2e;padding:20px;margin-bottom:16px;display:none}
 .prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .prog-status{display:flex;align-items:center;gap:8px;font-size:11px}
@@ -110,15 +84,11 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .log-box::-webkit-scrollbar{width:3px}
 .log-box::-webkit-scrollbar-thumb{background:#1a1a2e}
 .lok{color:#c8ff00}.ler{color:#ff2d00}.lin{color:#00f5ff}.lwa{color:#ffaa00}.lsk{color:#333}
-
-/* RESULTS */
 .res-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:16px;display:none}
 .rc{background:#0a0a14;border:1px solid #1a1a2e;padding:18px;text-align:center}
 .rc .big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:44px;line-height:1}
 .rc .lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-top:4px}
 .rc.ok .big{color:#c8ff00}.rc.sk .big{color:#ffaa00}.rc.er .big{color:#ff2d00}.rc.ca .big{color:#00f5ff}
-
-/* DASHBOARD */
 .dash-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:24px}
 .dc{background:#0a0a14;border:1px solid #1a1a2e;padding:18px}
 .dc .t{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-bottom:6px}
@@ -132,8 +102,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .bar-wrap{flex:1;background:#1a1a2e;height:2px}
 .bar-fill{height:100%;transition:width 1s ease}
 .bar-ct{width:32px;text-align:right;font-size:10px;color:#c8ff00}
-
-/* QUALITY */
 .q-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .qc{background:#0a0a14;border:1px solid #1a1a2e;padding:18px}
 .qc h3{font-size:8px;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:6px}
@@ -142,37 +110,32 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
 .qi{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a1a2e;font-size:9px}
 .qi:last-child{border-bottom:none}
 .qi .qn{color:#e8e4d9}.qi .qm{color:#333}
-
-/* SUBKAT PREVIEW */
 .subkat-preview{background:#0a0a14;border:1px solid #1a1a2e;padding:20px;margin-bottom:20px}
 .sp-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#00f5ff;margin-bottom:14px}
 .sp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:6px}
 .sp-item{display:flex;justify-content:space-between;padding:6px 10px;background:#04040a;border:1px solid #1a1a2e;font-size:9px}
 .sp-item .id{color:#333}.sp-item .name{color:#e8e4d9}
-
-/* EVENTS SPEZIFISCH */
-.ev-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-.ev-stat{background:#0a0a14;border:1px solid rgba(0,245,255,.15);padding:14px;text-align:center}
-.ev-stat .n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;color:#00f5ff;line-height:1}
-.ev-stat .l{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-top:4px}
-.date-filter{display:flex;gap:8px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
-.date-filter label{font-size:9px;color:#555;letter-spacing:1px}
-.date-input{background:#0a0a14;border:1px solid #1a1a2e;color:#e8e4d9;padding:8px 12px;font-family:'DM Mono',monospace;font-size:10px;outline:none;transition:border-color .2s}
-.date-input:focus{border-color:#00f5ff}
-.ev-preview{background:#0a0a14;border:1px solid rgba(0,245,255,.15);padding:20px;margin-top:20px;display:none}
-.ev-preview h3{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#00f5ff;margin-bottom:14px}
-.ev-table{width:100%;border-collapse:collapse;font-size:9px}
-.ev-table th{text-align:left;padding:6px 10px;border-bottom:1px solid #1a1a2e;color:#555;letter-spacing:1px;text-transform:uppercase;font-weight:normal}
-.ev-table td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:top}
-.ev-table tr:hover td{background:rgba(0,245,255,.02)}
-.ev-date{color:#00f5ff;white-space:nowrap}
-.ev-name{color:#e8e4d9}
-.ev-venue{color:#555}
-.ev-kat{padding:2px 6px;border:1px solid rgba(0,245,255,.2);color:#00f5ff;font-size:7px;letter-spacing:1px;text-transform:uppercase}
-.ev-popup{padding:2px 6px;background:#c8ff00;color:#000;font-size:7px;letter-spacing:1px;text-transform:uppercase}
-
+/* EVENTFROG SPEZIFISCH */
+.ef-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.ef-stat{background:#0a0a14;border:1px solid rgba(0,245,255,.15);padding:14px;text-align:center}
+.ef-stat .n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;color:#00f5ff;line-height:1}
+.ef-stat .l{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-top:4px}
+.ef-preview{background:#0a0a14;border:1px solid rgba(0,245,255,.15);padding:20px;margin-top:20px;display:none}
+.ef-preview h3{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#00f5ff;margin-bottom:14px}
+.ef-table{width:100%;border-collapse:collapse;font-size:9px}
+.ef-table th{text-align:left;padding:6px 10px;border-bottom:1px solid #1a1a2e;color:#555;letter-spacing:1px;text-transform:uppercase;font-weight:normal}
+.ef-table td{padding:8px 10px;border-bottom:1px solid rgba(255,255,255,.03);vertical-align:top}
+.ef-table tr:hover td{background:rgba(0,245,255,.02)}
+.ef-date{color:#00f5ff;white-space:nowrap}
+.ef-name{color:#e8e4d9}
+.ef-venue{color:#555}
+.ef-tag{padding:2px 6px;border:1px solid rgba(0,245,255,.2);color:#00f5ff;font-size:7px;letter-spacing:1px;text-transform:uppercase}
+.ef-sold{padding:2px 6px;background:#ff2d00;color:#fff;font-size:7px;letter-spacing:1px;text-transform:uppercase}
+.ef-few{padding:2px 6px;background:#ffaa00;color:#000;font-size:7px;letter-spacing:1px;text-transform:uppercase}
+.ef-free{padding:2px 6px;background:#c8ff00;color:#000;font-size:7px;letter-spacing:1px;text-transform:uppercase}
+.ef-popup{padding:2px 6px;background:#9333ea;color:#fff;font-size:7px;letter-spacing:1px;text-transform:uppercase}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-@media(max-width:700px){.q-grid{grid-template-columns:1fr}.res-grid{grid-template-columns:1fr 1fr}.content{padding:16px}.ev-stats{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.q-grid{grid-template-columns:1fr}.res-grid{grid-template-columns:1fr 1fr}.content{padding:16px}.ef-stats{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -192,7 +155,7 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
   <div class="logo">STADTPULS<span>⚡ IMPORT TOOL v3</span></div>
   <div class="hdr-pills">
     <div class="pill">Locations <span class="n" id="hdr-total">--</span></div>
-    <div class="pill">Events <span class="n" id="hdr-events">--</span></div>
+    <div class="pill">EF Events <span class="n" id="hdr-events">--</span></div>
     <div class="live-dot">LIVE</div>
     <button class="logout-btn" onclick="doLogout()">Logout</button>
   </div>
@@ -203,13 +166,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
   <button class="tab" onclick="switchTab('dashboard',this)">◈ Daten</button>
   <button class="tab" onclick="switchTab('qualitaet',this)">◉ Qualität</button>
   <button class="tab" onclick="switchTab('subkat',this)">⚙ Subkategorien</button>
-  <button class="tab ev-tab" onclick="switchTab('events',this)" style="color:#00f5ff">⚡ Events</button>
+  <button class="tab ev-tab" onclick="switchTab('events',this)" style="color:#00f5ff">🐸 Eventfrog</button>
 </div>
 
-<!-- IMPORT — IDENTISCH WIE VORHER -->
+<!-- ═══ IMPORT TAB — IDENTISCH ═══ -->
 <div class="panel active" id="panel-import">
 <div class="content">
-
 <div class="warn-box">
   <div class="warn-title">⚠️ MODUS WÄHLEN — LESEN BEVOR STARTEN</div>
   <div class="warn-txt">
@@ -218,7 +180,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     <strong style="color:#ff2d00">LÖSCHEN + NEU:</strong> Kategorie wird komplett gelöscht und neu importiert. Garantiert sauber. Irreversibel.
   </div>
 </div>
-
 <div style="margin-bottom:20px">
   <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#333;margin-bottom:8px">IMPORT MODUS:</div>
   <div class="modus-row">
@@ -227,8 +188,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     <button class="modus-btn danger" id="m-delete" onclick="setModus('delete')">✗ LÖSCHEN + NEU</button>
   </div>
 </div>
-
-<!-- GASTRO -->
 <div class="cs">
   <div class="cs-title">🍽 GASTRO & BARS <button class="grp-btn" onclick="selGrp(this)">ALLE WÄHLEN</button></div>
   <div class="cg">
@@ -252,8 +211,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="102|gastro|cafe|102"><label>Café & Tearoom</label><span class="cid">102</span></div>
   </div>
 </div>
-
-<!-- BARS -->
 <div class="cs">
   <div class="cs-title">🍸 BARS <button class="grp-btn" onclick="selGrp(this)">ALLE WÄHLEN</button></div>
   <div class="cg">
@@ -270,8 +227,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1468|nachtleben|quartierbar|103"><label>Quartierbar</label><span class="cid">1468</span></div>
   </div>
 </div>
-
-<!-- NACHTLEBEN -->
 <div class="cs">
   <div class="cs-title">🌙 NACHTLEBEN <button class="grp-btn" onclick="selGrp(this)">ALLE WÄHLEN</button></div>
   <div class="cg">
@@ -287,8 +242,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="164|nachtleben|casino|162"><label>Casino</label><span class="cid">164</span></div>
   </div>
 </div>
-
-<!-- KULTUR -->
 <div class="cs">
   <div class="cs-title">🎨 KULTUR <button class="grp-btn" onclick="selGrp(this)">ALLE WÄHLEN</button></div>
   <div class="cg">
@@ -306,8 +259,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="134|kultur|musik|96"><label>Musik</label><span class="cid">134</span></div>
   </div>
 </div>
-
-<!-- SHOPPING -->
 <div class="cs">
   <div class="cs-title">🛍 SHOPPING <button class="grp-btn" onclick="selGrp(this)">ALLE WÄHLEN</button></div>
   <div class="cg">
@@ -323,16 +274,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="1090|shopping|velo|95"><label>Velo & Sport</label><span class="cid">1090</span></div>
   </div>
 </div>
-
-<!-- WELLNESS -->
 <div class="cs">
   <div class="cs-title">💆 WELLNESS <button class="grp-btn" onclick="selGrp(this)">ALLE WÄHLEN</button></div>
   <div class="cg">
     <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="98|wellness|wellness|98"><label>Wellness & Spa</label><span class="cid">98</span></div>
   </div>
 </div>
-
-<!-- SPORT -->
 <div class="cs">
   <div class="cs-title">⚽ SPORT <button class="grp-btn" onclick="selGrp(this)">ALLE WÄHLEN</button></div>
   <div class="cg">
@@ -347,8 +294,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="150|sport|sup|97"><label>SUP</label><span class="cid">150</span></div>
   </div>
 </div>
-
-<!-- SIGHTSEEING -->
 <div class="cs">
   <div class="cs-title">🏛 SIGHTSEEING <button class="grp-btn" onclick="selGrp(this)">ALLE WÄHLEN</button></div>
   <div class="cg">
@@ -361,8 +306,6 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="92|sightseeing|kirchen|72"><label>Kirchen</label><span class="cid">92</span></div>
   </div>
 </div>
-
-<!-- RECREATION -->
 <div class="cs">
   <div class="cs-title">🌳 RECREATION <button class="grp-btn" onclick="selGrp(this)">ALLE WÄHLEN</button></div>
   <div class="cg">
@@ -373,14 +316,12 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
     <div class="ci" onclick="tc(this)"><input type="checkbox" class="cc" value="161|recreation|zoo|99"><label>Zoo & Tiere</label><span class="cid">161</span></div>
   </div>
 </div>
-
 <div class="action-bar">
   <button class="btn btn-green" onclick="selAll()">✓ ALLE</button>
   <button class="btn btn-ghost" onclick="selNone()">✗ KEINE</button>
   <button class="btn btn-red" id="btn-go" onclick="startImport()">▶ IMPORT STARTEN</button>
   <span class="sel-count" id="sel-count">0 ausgewählt</span>
 </div>
-
 <div class="prog-box" id="prog-box">
   <div class="prog-top">
     <div class="prog-status"><div class="prog-dot"></div><span id="prog-lbl">Importiere...</span></div>
@@ -389,35 +330,32 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
   <div class="prog-track"><div class="prog-fill" id="prog-fill"></div></div>
   <div class="prog-sub" id="prog-sub">0 / 0</div>
 </div>
-
 <div class="log-box" id="log-box"></div>
-
 <div class="res-grid" id="res-grid">
   <div class="rc ok"><div class="big" id="r0">0</div><div class="lbl">Importiert</div></div>
   <div class="rc sk"><div class="big" id="r1">0</div><div class="lbl">Übersprungen</div></div>
   <div class="rc er"><div class="big" id="r2">0</div><div class="lbl">Fehler</div></div>
   <div class="rc ca"><div class="big" id="r3">0</div><div class="lbl">Kategorien</div></div>
 </div>
-
 </div></div>
 
-<!-- DASHBOARD — IDENTISCH WIE VORHER -->
+<!-- ═══ DASHBOARD TAB — IDENTISCH ═══ -->
 <div class="panel" id="panel-dashboard">
 <div class="content">
   <div class="dash-grid">
     <div class="dc"><div class="t">Total Locations</div><div class="v" id="d0" style="color:#ff2d00">--</div><div class="s">In Supabase</div></div>
     <div class="dc"><div class="t">Mit Bild</div><div class="v" id="d1" style="color:#c8ff00">--</div><div class="s">bild_url vorhanden</div></div>
-    <div class="dc"><div class="t">Mit Kreis</div><div class="v" id="d2" style="color:#00f5ff">--</div><div class="s">Kreis 1–12</div></div>
+    <div class="dc"><div class="t">Mit Kreis</div><div class="v" id="d2" style="color:#00f5ff">--</div><div class="s">Kreis 1-12</div></div>
     <div class="dc"><div class="t">Mit Subkat ID</div><div class="v" id="d4" style="color:#c8ff00">--</div><div class="s">zt_subkategorie_id</div></div>
     <div class="dc"><div class="t">Ohne Kreis</div><div class="v" id="d3" style="color:#ff2d00">--</div><div class="s">Ausserhalb Stadt</div></div>
   </div>
   <div class="breakdown"><h3>Locations pro Kategorie</h3><div id="cat-bars"><div style="color:#333;font-size:10px">Lade...</div></div></div>
-  <div class="breakdown"><h3>Locations pro Kreis 1–12</h3><div id="kreis-bars"><div style="color:#333;font-size:10px">Lade...</div></div></div>
+  <div class="breakdown"><h3>Locations pro Kreis 1-12</h3><div id="kreis-bars"><div style="color:#333;font-size:10px">Lade...</div></div></div>
   <div class="breakdown"><h3>Subkategorien Gastro</h3><div id="subkat-bars"><div style="color:#333;font-size:10px">Lade...</div></div></div>
   <button class="btn btn-cyan" onclick="loadDash()" style="margin-top:8px">↻ AKTUALISIEREN</button>
 </div></div>
 
-<!-- QUALITÄT — IDENTISCH WIE VORHER -->
+<!-- ═══ QUALITÄT TAB — IDENTISCH ═══ -->
 <div class="panel" id="panel-qualitaet">
 <div class="content">
   <div class="q-grid">
@@ -429,131 +367,109 @@ header{display:flex;align-items:center;justify-content:space-between;padding:14p
   <button class="btn btn-cyan" onclick="loadQuality()" style="margin-top:20px">↻ QUALITÄT PRÜFEN</button>
 </div></div>
 
-<!-- SUBKATEGORIEN — IDENTISCH WIE VORHER -->
+<!-- ═══ SUBKAT TAB — IDENTISCH ═══ -->
 <div class="panel" id="panel-subkat">
 <div class="content">
   <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;margin-bottom:4px">SUBKATEGORIE MAPPING</div>
   <div style="font-size:9px;color:#444;margin-bottom:20px;letter-spacing:.5px">ZT API ID → Stadtpuls Subkategorie — alle 12 Kreise eingerechnet</div>
-  <div class="subkat-preview">
-    <div class="sp-title">GASTRO (zt_kategorie_id = 101/102)</div>
-    <div class="sp-grid" id="sp-gastro"></div>
-  </div>
-  <div class="subkat-preview">
-    <div class="sp-title">NACHTLEBEN / BARS (zt_kategorie_id = 103/162)</div>
-    <div class="sp-grid" id="sp-nacht"></div>
-  </div>
-  <div class="subkat-preview">
-    <div class="sp-title">WEITERE KATEGORIEN</div>
-    <div class="sp-grid" id="sp-rest"></div>
-  </div>
+  <div class="subkat-preview"><div class="sp-title">GASTRO (zt_kategorie_id = 101/102)</div><div class="sp-grid" id="sp-gastro"></div></div>
+  <div class="subkat-preview"><div class="sp-title">NACHTLEBEN / BARS (zt_kategorie_id = 103/162)</div><div class="sp-grid" id="sp-nacht"></div></div>
+  <div class="subkat-preview"><div class="sp-title">WEITERE KATEGORIEN</div><div class="sp-grid" id="sp-rest"></div></div>
 </div></div>
 
 <!-- ═══════════════════════════════════════════
-     NEU: EVENTS TAB
+     NEU: EVENTFROG TAB
 ═══════════════════════════════════════════ -->
 <div class="panel" id="panel-events">
 <div class="content">
 
 <div class="warn-box" style="background:rgba(0,245,255,0.03);border-color:rgba(0,245,255,0.3);border-left-color:#00f5ff">
-  <div class="warn-title" style="color:#00f5ff">⚡ EVENTS IMPORT — ZÜRICH TOURISMUS API</div>
+  <div class="warn-title" style="color:#00f5ff">🐸 EVENTFROG API — ZÜRICH EVENTS</div>
   <div class="warn-txt">
-    Events werden aus der <strong style="color:#00f5ff">ZT API</strong> geladen → <strong style="color:#00f5ff">events</strong> Tabelle in Supabase.<br>
-    <strong style="color:#e8e4d9">Duplikat-Schutz</strong> via quelle_id — kann beliebig oft gestartet werden.<br>
-    <strong style="color:#c8ff00">Pop-Up Detection:</strong> Events unter 7 Tagen Laufzeit → popup=true automatisch.<br>
-    <strong style="color:#ff2d00">Nur Zürich:</strong> Events ohne erkennbaren Kreis (PLZ 8001–8052) werden übersprungen.
+    Events werden direkt aus der <strong style="color:#00f5ff">Eventfrog Public API</strong> geladen → <strong style="color:#00f5ff">eventfrog_events</strong> Tabelle in Supabase.<br>
+    <strong style="color:#e8e4d9">Duplikat-Schutz</strong> via ef_id (UNIQUE) — kann beliebig oft gestartet werden.<br>
+    <strong style="color:#9333ea">Pop-Up Detection:</strong> Events unter 3 Tagen Laufzeit → popup=true automatisch.<br>
+    <strong style="color:#c8ff00">FOMO Tags:</strong> soldOut / littleTicketsLeft / freeOfCharge direkt aus API.<br>
+    <strong style="color:#ff2d00">Nur Zürich:</strong> Alle Kreise 1-12 via PLZ Filter — 2238+ Events verfügbar.
   </div>
 </div>
 
-<!-- DATUM FILTER -->
-<div class="date-filter">
-  <label>VON:</label>
-  <input type="date" class="date-input" id="ev-von">
-  <label>BIS:</label>
-  <input type="date" class="date-input" id="ev-bis">
-  <button class="btn btn-ghost" onclick="evSetDates()">↺ HEUTE +30 TAGE</button>
+<!-- LIVE STATS aus eventfrog_events -->
+<div class="ef-stats">
+  <div class="ef-stat"><div class="n" id="ef-total">--</div><div class="l">EF Events Total</div></div>
+  <div class="ef-stat"><div class="n" id="ef-heute">--</div><div class="l">Heute</div></div>
+  <div class="ef-stat"><div class="n" id="ef-woche">--</div><div class="l">Diese Woche</div></div>
+  <div class="ef-stat"><div class="n" id="ef-popup">--</div><div class="l">Pop-Ups</div></div>
 </div>
 
-<!-- LIVE STATS -->
-<div class="ev-stats">
-  <div class="ev-stat"><div class="n" id="ev-total">--</div><div class="l">Events Total</div></div>
-  <div class="ev-stat"><div class="n" id="ev-today">--</div><div class="l">Heute</div></div>
-  <div class="ev-stat"><div class="n" id="ev-week">--</div><div class="l">Diese Woche</div></div>
-  <div class="ev-stat"><div class="n" id="ev-popup">--</div><div class="l">Pop-Ups</div></div>
-</div>
-
-<!-- KATEGORIEN -->
-<div class="cs">
-  <div class="cs-title" style="color:#00f5ff">🎨 KULTUR EVENTS <button class="grp-btn" style="border-color:rgba(0,245,255,.3);color:#00f5ff" onclick="evSelGrp(this)">ALLE WÄHLEN</button></div>
-  <div class="cg">
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="96|kultur|kultur"><label>Alle Kulturevents</label><span class="cid">96</span></div>
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="133|kultur|film"><label>Film & Kino</label><span class="cid">133</span></div>
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="134|kultur|musik"><label>Konzerte & Musik</label><span class="cid">134</span></div>
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="175|kultur|oper"><label>Oper</label><span class="cid">175</span></div>
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="176|kultur|theater"><label>Theater</label><span class="cid">176</span></div>
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="178|kultur|galerie"><label>Galerien & Ausstellungen</label><span class="cid">178</span></div>
+<!-- MODUS -->
+<div style="margin-bottom:20px">
+  <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#333;margin-bottom:8px">IMPORT MODUS:</div>
+  <div class="modus-row">
+    <button class="modus-btn active" id="ef-m-skip" onclick="efSetModus('skip')" style="border-color:#00f5ff;color:#00f5ff">→ NUR NEUE</button>
+    <button class="modus-btn" id="ef-m-update" onclick="efSetModus('update')">◎ UPDATE ALLE</button>
+    <button class="modus-btn danger" id="ef-m-delete" onclick="efSetModus('delete')">✗ LÖSCHEN + NEU</button>
   </div>
 </div>
 
-<div class="cs">
-  <div class="cs-title" style="color:#00f5ff">🌙 NACHTLEBEN EVENTS <button class="grp-btn" style="border-color:rgba(0,245,255,.3);color:#00f5ff" onclick="evSelGrp(this)">ALLE WÄHLEN</button></div>
-  <div class="cg">
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="162|nachtleben|club"><label>Alle Club Events</label><span class="cid">162</span></div>
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="1414|nachtleben|techno"><label>Techno / House</label><span class="cid">1414</span></div>
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="1432|nachtleben|jazz"><label>Jazz</label><span class="cid">1432</span></div>
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="1417|nachtleben|hiphop"><label>Hip-Hop</label><span class="cid">1417</span></div>
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="163|nachtleben|livemusic"><label>Live Music</label><span class="cid">163</span></div>
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="1435|nachtleben|party"><label>Party Events</label><span class="cid">1435</span></div>
-  </div>
-</div>
-
-<div class="cs">
-  <div class="cs-title" style="color:#00f5ff">🛒 MÄRKTE & POP-UPS <button class="grp-btn" style="border-color:rgba(0,245,255,.3);color:#00f5ff" onclick="evSelGrp(this)">ALLE WÄHLEN</button></div>
-  <div class="cg">
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="132|shopping|markt"><label>Märkte & Flohmärkte</label><span class="cid">132</span></div>
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="97|sport|sport"><label>Sport Events</label><span class="cid">97</span></div>
-    <div class="ci ev-ci" onclick="evTc(this)"><input type="checkbox" class="ecc" value="72|sightseeing|event"><label>Stadtführungen & Tours</label><span class="cid">72</span></div>
+<!-- SEITEN AUSWAHL -->
+<div style="margin-bottom:20px">
+  <div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#333;margin-bottom:8px">ANZAHL SEITEN (je 100 Events):</div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <button class="modus-btn active" id="ef-p-1" onclick="efSetPages(1)" style="border-color:#00f5ff;color:#00f5ff">1 Seite (~100)</button>
+    <button class="modus-btn" id="ef-p-5" onclick="efSetPages(5)">5 Seiten (~500)</button>
+    <button class="modus-btn" id="ef-p-10" onclick="efSetPages(10)">10 Seiten (~1000)</button>
+    <button class="modus-btn" id="ef-p-25" onclick="efSetPages(25)">25 Seiten (~2500 ALLE)</button>
   </div>
 </div>
 
 <!-- PROGRESS -->
-<div class="prog-box" id="ev-prog-box">
+<div class="prog-box" id="ef-prog-box">
   <div class="prog-top">
-    <div class="prog-status"><div class="prog-dot cyan"></div><span id="ev-prog-lbl">Lade Events...</span></div>
-    <div style="font-size:9px;color:#444" id="ev-prog-cat"></div>
+    <div class="prog-status"><div class="prog-dot cyan"></div><span id="ef-prog-lbl">Lade Events von Eventfrog...</span></div>
+    <div style="font-size:9px;color:#444" id="ef-prog-cat"></div>
   </div>
-  <div class="prog-track"><div class="prog-fill cyan" id="ev-prog-fill"></div></div>
-  <div class="prog-sub" id="ev-prog-sub">0 / 0</div>
+  <div class="prog-track"><div class="prog-fill cyan" id="ef-prog-fill"></div></div>
+  <div class="prog-sub" id="ef-prog-sub">0 / 0</div>
 </div>
-<div class="log-box" id="ev-log-box"></div>
-<div class="res-grid" id="ev-res-grid">
-  <div class="rc ok"><div class="big" id="ev-r0">0</div><div class="lbl">Importiert</div></div>
-  <div class="rc sk"><div class="big" id="ev-r1">0</div><div class="lbl">Übersprungen</div></div>
-  <div class="rc er"><div class="big" id="ev-r2">0</div><div class="lbl">Fehler</div></div>
-  <div class="rc ca"><div class="big" id="ev-r3">0</div><div class="lbl">Pop-Ups erkannt</div></div>
+<div class="log-box" id="ef-log-box"></div>
+
+<div class="res-grid" id="ef-res-grid">
+  <div class="rc ok"><div class="big" id="ef-r0">0</div><div class="lbl">Importiert</div></div>
+  <div class="rc sk"><div class="big" id="ef-r1">0</div><div class="lbl">Übersprungen</div></div>
+  <div class="rc er"><div class="big" id="ef-r2">0</div><div class="lbl">Fehler</div></div>
+  <div class="rc ca"><div class="big" id="ef-r3">0</div><div class="lbl">Pop-Ups</div></div>
 </div>
 
 <!-- VORSCHAU -->
-<div class="ev-preview" id="ev-preview">
-  <h3>⚡ VORSCHAU — ERSTE EVENTS AUS API</h3>
-  <div id="ev-preview-wrap"></div>
+<div class="ef-preview" id="ef-preview">
+  <h3>🐸 VORSCHAU — ERSTE EVENTS AUS EVENTFROG API</h3>
+  <div id="ef-preview-wrap"></div>
 </div>
 
 <div class="action-bar">
-  <button class="btn btn-cyan" onclick="evPreview()">◎ VORSCHAU</button>
-  <button class="btn" style="background:#00f5ff;color:#000" id="ev-btn-go" onclick="evStartImport()">⚡ EVENTS IMPORTIEREN</button>
-  <button class="btn btn-ghost" onclick="evDeleteOld()" style="color:#ff2d00;border-color:rgba(255,45,0,.3)">🗑 VERGANGENE LÖSCHEN</button>
-  <button class="btn btn-ghost" onclick="document.getElementById('ev-log-box').innerHTML='';document.getElementById('ev-log-box').style.display='none';document.getElementById('ev-res-grid').style.display='none';document.getElementById('ev-preview').style.display='none'">✗ RESET</button>
-  <span class="sel-count" id="ev-sel-count">0 ausgewählt</span>
+  <button class="btn btn-cyan" onclick="efPreview()">◎ VORSCHAU</button>
+  <button class="btn" style="background:#00f5ff;color:#000;font-weight:bold" id="ef-btn-go" onclick="efStartImport()">🐸 EVENTFROG IMPORTIEREN</button>
+  <button class="btn btn-ghost" onclick="efDeleteOld()" style="color:#ff2d00;border-color:rgba(255,45,0,.3)">🗑 VERGANGENE LÖSCHEN</button>
+  <button class="btn btn-ghost" onclick="efReset()">✗ RESET</button>
 </div>
 
 </div></div>
-<!-- ═══ ENDE EVENTS TAB ═══ -->
+<!-- ═══ ENDE EVENTFROG TAB ═══ -->
 
 <script>
+// ═══════════════════════════════════════
+// KONSTANTEN
+// ═══════════════════════════════════════
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
 const ZT='https://www.zuerich.com/en/api/v2/data';
 const PX='https://api.allorigins.win/raw?url=';
+
+// EVENTFROG
+const EF_KEY='11D282C1-D0CF-4A4E-9060-DF6B5FC4FE4C';
+const EF_URL='https://api.eventfrog.net/public/v1/events';
+const EF_TABLE='eventfrog_events';
 
 const PLZ_KREIS={
   '8001':1,'8002':2,'8038':2,'8003':3,'8036':3,'8055':3,'8004':4,
@@ -561,6 +477,7 @@ const PLZ_KREIS={
   '8008':8,'8034':8,'8047':9,'8048':9,'8037':10,'8049':10,
   '8046':11,'8050':11,'8051':11,'8052':12
 };
+const ALLE_PLZ=Object.keys(PLZ_KREIS);
 
 const SUBKAT_MAP={
   102:'cafe',184:'schweizer',185:'italienisch',186:'spanisch',
@@ -583,8 +500,8 @@ const SUBKAT_MAP={
   97:'sport',137:'walking',138:'hiking',139:'cycling',
   141:'swimming',145:'climbing',146:'golf',149:'sailing',150:'sup',
   98:'wellness',
-  72:'sightseeing',87:'architektur',88:'aussicht',89:'denkmäler',
-  90:'kunst',91:'plätze',92:'kirchen',
+  72:'sightseeing',87:'architektur',88:'aussicht',89:'denkmaeler',
+  90:'kunst',91:'plaetze',92:'kirchen',
   99:'recreation',158:'berge',159:'wasser',160:'parks',161:'zoo'
 };
 
@@ -594,9 +511,13 @@ const CCOLORS={
   sightseeing:'#ff2d88',recreation:'#00dd66'
 };
 
-let modus='update',imp=0,skp=0,err=0;
+let modus='update';
+let efModus='skip';
+let efPages=1;
 
-// LOGIN
+// ═══════════════════════════════════════
+// LOGIN — IDENTISCH
+// ═══════════════════════════════════════
 function doLogin(){
   const pw=document.getElementById('pw-input').value.trim();
   if(!pw)return;
@@ -605,13 +526,21 @@ function doLogin(){
   else if(btoa(pw)===saved){localStorage.setItem('sp_import_auth','1');hideLogin();}
   else{document.getElementById('login-error').style.display='block';document.getElementById('pw-input').value='';document.getElementById('pw-input').focus();}
 }
-function hideLogin(){document.getElementById('login-screen').style.display='none';updHdr();buildSubkatPreview();evSetDates();evLoadStats();}
+function hideLogin(){
+  document.getElementById('login-screen').style.display='none';
+  updHdr();buildSubkatPreview();efLoadStats();
+}
 function doLogout(){localStorage.removeItem('sp_import_auth');document.getElementById('login-screen').style.display='flex';}
 window.addEventListener('DOMContentLoaded',()=>{
-  if(localStorage.getItem('sp_import_auth')==='1'){document.getElementById('login-screen').style.display='none';updHdr();buildSubkatPreview();evSetDates();evLoadStats();}
+  if(localStorage.getItem('sp_import_auth')==='1'){
+    document.getElementById('login-screen').style.display='none';
+    updHdr();buildSubkatPreview();efLoadStats();
+  }
 });
 
-// TABS
+// ═══════════════════════════════════════
+// TABS — IDENTISCH
+// ═══════════════════════════════════════
 function switchTab(t,el){
   document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
@@ -619,83 +548,71 @@ function switchTab(t,el){
   document.getElementById('panel-'+t).classList.add('active');
   if(t==='dashboard')loadDash();
   if(t==='qualitaet')loadQuality();
-  if(t==='events')evLoadStats();
+  if(t==='events')efLoadStats();
 }
 
-// MODUS
+// ═══════════════════════════════════════
+// MODUS (ZT IMPORT) — IDENTISCH
+// ═══════════════════════════════════════
 function setModus(m){
   modus=m;
   document.querySelectorAll('.modus-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('m-'+m).classList.add('active');
-  if(m==='delete'){
-    const warn=document.querySelector('.warn-box');
-    warn.style.borderColor='#ff2d00';
-    warn.style.background='rgba(255,45,0,0.08)';
-  }
 }
 
-// CATEGORY SELECTION
+// ═══════════════════════════════════════
+// CATEGORY SELECTION — IDENTISCH
+// ═══════════════════════════════════════
 function tc(el){
-  const cb=el.querySelector('input');
-  cb.checked=!cb.checked;
+  const cb=el.querySelector('input');cb.checked=!cb.checked;
   el.classList.toggle('sel',cb.checked);
-  const grp=el.closest('.cs');
-  const btn=grp.querySelector('.grp-btn');
-  if(btn){
-    const allOn=[...grp.querySelectorAll('.cc')].every(c=>c.checked);
-    btn.classList.toggle('on',allOn);
-    btn.textContent=allOn?'KEINE WÄHLEN':'ALLE WÄHLEN';
-  }
+  const grp=el.closest('.cs');const btn=grp.querySelector('.grp-btn');
+  if(btn){const allOn=[...grp.querySelectorAll('.cc')].every(c=>c.checked);btn.classList.toggle('on',allOn);btn.textContent=allOn?'KEINE WÄHLEN':'ALLE WÄHLEN';}
   upd();
 }
 function selGrp(btn){
-  const grp=btn.closest('.cs');
-  const cbs=grp.querySelectorAll('.cc');
+  const grp=btn.closest('.cs');const cbs=grp.querySelectorAll('.cc');
   const allOn=[...cbs].every(c=>c.checked);
-  cbs.forEach(c=>{
-    c.checked=!allOn;
-    c.closest('.ci').classList.toggle('sel',!allOn);
-  });
-  btn.classList.toggle('on',!allOn);
-  btn.textContent=!allOn?'KEINE WÄHLEN':'ALLE WÄHLEN';
-  upd();
+  cbs.forEach(c=>{c.checked=!allOn;c.closest('.ci').classList.toggle('sel',!allOn);});
+  btn.classList.toggle('on',!allOn);btn.textContent=!allOn?'KEINE WÄHLEN':'ALLE WÄHLEN';upd();
 }
 function upd(){document.getElementById('sel-count').textContent=document.querySelectorAll('.cc:checked').length+' ausgewählt'}
 function selAll(){
   document.querySelectorAll('.ci:not(.ev-ci)').forEach(el=>{el.querySelector('input').checked=true;el.classList.add('sel')});
-  document.querySelectorAll('.cs:not(:has(.ecc)) .grp-btn').forEach(b=>{b.classList.add('on');b.textContent='KEINE WÄHLEN'});
   upd();
 }
 function selNone(){
   document.querySelectorAll('.ci:not(.ev-ci)').forEach(el=>{el.querySelector('input').checked=false;el.classList.remove('sel')});
-  document.querySelectorAll('.cs:not(:has(.ecc)) .grp-btn').forEach(b=>{b.classList.remove('on');b.textContent='ALLE WÄHLEN'});
   upd();
 }
 
-// LOGGING
+// ═══════════════════════════════════════
+// LOGGING — IDENTISCH
+// ═══════════════════════════════════════
 function lg(m,t='in'){
-  const b=document.getElementById('log-box');
-  b.style.display='block';
+  const b=document.getElementById('log-box');b.style.display='block';
   const d=document.createElement('div');
   d.className={ok:'lok',err:'ler',info:'lin',warn:'lwa',skip:'lsk'}[t]||'lin';
   d.textContent=new Date().toLocaleTimeString('de-CH')+' — '+m;
   b.appendChild(d);b.scrollTop=b.scrollHeight;
 }
-function evLg(m,t='in'){
-  const b=document.getElementById('ev-log-box');
-  b.style.display='block';
+function efLg(m,t='in'){
+  const b=document.getElementById('ef-log-box');b.style.display='block';
   const d=document.createElement('div');
   d.className={ok:'lok',err:'ler',info:'lin',warn:'lwa',skip:'lsk'}[t]||'lin';
   d.textContent=new Date().toLocaleTimeString('de-CH')+' — '+m;
   b.appendChild(d);b.scrollTop=b.scrollHeight;
 }
 
-// HELPERS
-function plz2k(p){return PLZ_KREIS[p]||null}
-function slugify(n){return n.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').substring(0,80)}
-function seoTitle(name,sub,kreis){return`${name} — ${sub} Zürich Kreis ${kreis} | Stadtpuls`}
+// ═══════════════════════════════════════
+// HELPERS — IDENTISCH
+// ═══════════════════════════════════════
+function plz2k(p){return PLZ_KREIS[String(p)]||null}
+function slugify(n){return(n||'').toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').substring(0,80)}
 
-// ZT API FETCH
+// ═══════════════════════════════════════
+// ZT API FETCH — IDENTISCH
+// ═══════════════════════════════════════
 async function fetchZT(id){
   const url=ZT+'?id='+id+'&limit=500';
   const r=await fetch(PX+encodeURIComponent(url));
@@ -703,51 +620,10 @@ async function fetchZT(id){
   const d=await r.json();
   return Array.isArray(d)?d:(d.data||[]);
 }
-async function fetchZTEvents(id,von,bis){
-  const EVPX='https://corsproxy.io/?';
-  const url=ZT+'?id='+id+'&limit=500&dateFrom='+von+'&dateTo='+bis;
-  const r=await fetch(EVPX+encodeURIComponent(url));
-  if(!r.ok)throw new Error('HTTP '+r.status);
-  const d=await r.json();
-  return Array.isArray(d)?d:(d.data||[]);
-}
 
-// MAP ZT ITEM → SUPABASE ROW
-function mapRow(item,kat,subId,katId){
-  const a=item.address||{};
-  const g=item.geoCoordinates||{};
-  const plz=(a.postalCode||'').trim();
-  const kreis=plz2k(plz);
-  if(!kreis)return null;
-  const name=(item.name?.de||item.name?.en||'').trim();
-  if(!name)return null;
-  const subkat=SUBKAT_MAP[subId]||SUBKAT_MAP[katId]||'restaurant';
-  const bild_url=item.image?.url||null;
-  const bild_urls=(item.photo||[]).map(p=>p.url).filter(Boolean);
-  const oeffnungszeiten=(item.openingHours||[]);
-  const beschreibung=item.description?.de||item.description?.en||null;
-  const beschreibung_kurz=item.disambiguatingDescription?.de||item.textTeaser?.de||null;
-  return{
-    name,slug:slugify(name),kategorie:kat,subkategorie:subkat,
-    zt_kategorie_id:katId,zt_subkategorie_id:subId,zt_api_id:item.identifier||null,
-    adresse:a.streetAddress||null,plz:plz||null,kreis,stadt:'Zürich',land:'CH',
-    lat:g.latitude||null,lng:g.longitude||null,
-    beschreibung,beschreibung_kurz,bild_url,
-    bild_urls:bild_urls.length?bild_urls:null,
-    telefon:item.telephone||a.telephone||null,
-    website:item.url||a.url||null,email:a.email||null,
-    oeffnungszeiten:oeffnungszeiten.length?oeffnungszeiten:null,
-    zurichcard:item.zurichcard||false,
-    place_indoor:(item.place||[]).includes('Indoors'),
-    place_outdoor:(item.place||[]).includes('Outdoors'),
-    seo_title:seoTitle(name,subkat,kreis),
-    seo_description:beschreibung_kurz||beschreibung?.substring(0,160)||null,
-    schema_type:item['@type']||'LocalBusiness',
-    quelle:'zuerich.com',aktiv:true,featured:false,verified:false
-  };
-}
-
-// SUPABASE HELPERS
+// ═══════════════════════════════════════
+// SUPABASE HELPERS — IDENTISCH
+// ═══════════════════════════════════════
 async function sbFetch(path){
   const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
   return r.json();
@@ -770,8 +646,7 @@ async function sbUpdate(id,row){
 }
 async function sbDelete(kat){
   const r=await fetch(SU+'/rest/v1/locations?kategorie=eq.'+kat,{
-    method:'DELETE',
-    headers:{'apikey':SK,'Authorization':'Bearer '+SK}
+    method:'DELETE',headers:{'apikey':SK,'Authorization':'Bearer '+SK}
   });
   return r.status;
 }
@@ -781,7 +656,44 @@ async function getByApiId(apiId){
   return Array.isArray(r)&&r.length?r[0]:null;
 }
 
-// MAIN IMPORT — IDENTISCH WIE VORHER
+// ═══════════════════════════════════════
+// MAP ZT ITEM → SUPABASE ROW — IDENTISCH
+// ═══════════════════════════════════════
+function mapRow(item,kat,subId,katId){
+  const a=item.address||{};const g=item.geoCoordinates||{};
+  const plz=(a.postalCode||'').trim();const kreis=plz2k(plz);
+  if(!kreis)return null;
+  const name=(item.name?.de||item.name?.en||'').trim();
+  if(!name)return null;
+  const subkat=SUBKAT_MAP[subId]||SUBKAT_MAP[katId]||'restaurant';
+  const bild_url=item.image?.url||null;
+  const bild_urls=(item.photo||[]).map(p=>p.url).filter(Boolean);
+  const oeffnungszeiten=(item.openingHours||[]);
+  const beschreibung=item.description?.de||item.description?.en||null;
+  const beschreibung_kurz=item.disambiguatingDescription?.de||item.textTeaser?.de||null;
+  return{
+    name,slug:slugify(name),kategorie:kat,subkategorie:subkat,
+    zt_kategorie_id:katId,zt_subkategorie_id:subId,zt_api_id:item.identifier||null,
+    adresse:a.streetAddress||null,plz:plz||null,kreis,stadt:'Zürich',land:'CH',
+    lat:g.latitude||null,lng:g.longitude||null,
+    beschreibung,beschreibung_kurz,bild_url,
+    bild_urls:bild_urls.length?bild_urls:null,
+    telefon:item.telephone||a.telephone||null,
+    website:item.url||a.url||null,email:a.email||null,
+    oeffnungszeiten:oeffnungszeiten.length?oeffnungszeiten:null,
+    zurichcard:item.zurichcard||false,
+    place_indoor:(item.place||[]).includes('Indoors'),
+    place_outdoor:(item.place||[]).includes('Outdoors'),
+    seo_title:name+' — '+subkat+' Zürich Kreis '+kreis+' | Stadtpuls',
+    seo_description:beschreibung_kurz||beschreibung?.substring(0,160)||null,
+    schema_type:item['@type']||'LocalBusiness',
+    quelle:'zuerich.com',aktiv:true,featured:false,verified:false
+  };
+}
+
+// ═══════════════════════════════════════
+// MAIN ZT IMPORT — IDENTISCH
+// ═══════════════════════════════════════
 async function startImport(){
   const checked=[...document.querySelectorAll('.cc:checked')];
   if(!checked.length){alert('Bitte mindestens eine Kategorie wählen!');return}
@@ -793,7 +705,7 @@ async function startImport(){
   document.getElementById('prog-box').style.display='block';
   document.getElementById('res-grid').style.display='none';
   document.getElementById('log-box').innerHTML='';
-  imp=0;skp=0;err=0;
+  let imp=0,skp=0,err=0;
   const seen=new Set();
   const cats=checked.map(c=>{
     const[subId,kat,sub,katId]=c.value.split('|');
@@ -802,17 +714,12 @@ async function startImport(){
   lg('Import gestartet — Modus: '+modus.toUpperCase()+' — '+cats.length+' Kategorien','info');
   if(modus==='delete'){
     const kats=[...new Set(cats.map(c=>c.kat))];
-    for(const k of kats){
-      lg('Lösche alle: '+k,'warn');
-      await sbDelete(k);
-      await new Promise(r=>setTimeout(r,300));
-    }
+    for(const k of kats){lg('Lösche alle: '+k,'warn');await sbDelete(k);await new Promise(r=>setTimeout(r,300));}
     lg('Gelöscht. Starte Neu-Import...','info');
   }
   for(let i=0;i<cats.length;i++){
     const{subId,kat,sub,katId}=cats[i];
-    const pct=Math.round(i/cats.length*100);
-    document.getElementById('prog-fill').style.width=pct+'%';
+    document.getElementById('prog-fill').style.width=Math.round(i/cats.length*100)+'%';
     document.getElementById('prog-sub').textContent=(i+1)+' / '+cats.length+' Kategorien';
     document.getElementById('prog-cat').textContent=kat+' / '+sub+' (id='+subId+')';
     document.getElementById('prog-lbl').textContent='Lade ZT API...';
@@ -826,18 +733,18 @@ async function startImport(){
         if(!row){catSkp++;skp++;continue}
         if(modus==='delete'){
           const s=await sbInsert(row);
-          if(s===201||s===200){catImp++;imp++;lg('  + '+row.name+' — K'+row.kreis+' — '+row.subkategorie,'ok');}
+          if(s===201||s===200){catImp++;imp++;lg('  + '+row.name+' — K'+row.kreis,'ok');}
           else{err++;lg('  x '+row.name+' HTTP '+s,'err');}
         }else if(modus==='update'){
           const existing=await getByApiId(row.zt_api_id);
           if(existing){
             const s=await sbUpdate(existing.id,row);
-            if(s===204||s===200){catImp++;imp++;lg('  ~ '+row.name+' — K'+row.kreis+' (aktualisiert)','ok');}
+            if(s===204||s===200){catImp++;imp++;lg('  ~ '+row.name+' (aktualisiert)','ok');}
             else{err++;lg('  x '+row.name+' update HTTP '+s,'err');}
           }else{
             const s=await sbInsert(row);
-            if(s===201||s===200){catImp++;imp++;lg('  + '+row.name+' — K'+row.kreis+' (neu)','ok');}
-            else{err++;lg('  x '+row.name+' insert HTTP '+s,'err');}
+            if(s===201||s===200){catImp++;imp++;lg('  + '+row.name+' — K'+row.kreis,'ok');}
+            else{err++;lg('  x '+row.name+' HTTP '+s,'err');}
           }
         }else{
           const existing=await getByApiId(row.zt_api_id);
@@ -849,14 +756,11 @@ async function startImport(){
         await new Promise(r=>setTimeout(r,80));
       }
       lg('  Kategorie fertig: +'+catImp+' | skip '+catSkp,'info');
-    }catch(e){
-      lg('x Fehler id='+subId+': '+e.message,'err');err++;
-    }
+    }catch(e){lg('x Fehler id='+subId+': '+e.message,'err');err++;}
     await new Promise(r=>setTimeout(r,300));
   }
   document.getElementById('prog-fill').style.width='100%';
   document.getElementById('prog-lbl').textContent='FERTIG';
-  document.getElementById('prog-cat').textContent='';
   document.getElementById('r0').textContent=imp;
   document.getElementById('r1').textContent=skp;
   document.getElementById('r2').textContent=err;
@@ -867,7 +771,9 @@ async function startImport(){
   updHdr();
 }
 
-// DASHBOARD — IDENTISCH WIE VORHER
+// ═══════════════════════════════════════
+// DASHBOARD — IDENTISCH
+// ═══════════════════════════════════════
 async function loadDash(){
   try{
     const all=await sbFetch('locations?select=id,kategorie,kreis,bild_url,subkategorie,zt_subkategorie_id&limit=2000');
@@ -879,30 +785,24 @@ async function loadDash(){
     document.getElementById('d4').textContent=all.filter(l=>l.zt_subkategorie_id).length;
     const cats={};all.forEach(l=>{cats[l.kategorie]=(cats[l.kategorie]||0)+1});
     const mc=Math.max(...Object.values(cats),1);
-    document.getElementById('cat-bars').innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`
-      <div class="bar-row"><div class="bar-nm">${c}</div><div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(n/mc*100)}%;background:${CCOLORS[c]||'#ff2d00'}"></div></div><div class="bar-ct">${n}</div></div>`).join('');
+    document.getElementById('cat-bars').innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,n])=>`<div class="bar-row"><div class="bar-nm">${c}</div><div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(n/mc*100)}%;background:${CCOLORS[c]||'#ff2d00'}"></div></div><div class="bar-ct">${n}</div></div>`).join('');
     const ks={};all.forEach(l=>{if(l.kreis)ks[l.kreis]=(ks[l.kreis]||0)+1});
     const mk=Math.max(...Object.values(ks),1);
-    document.getElementById('kreis-bars').innerHTML=Array.from({length:12},(_,i)=>i+1).map(k=>{
-      const n=ks[k]||0;
-      return`<div class="bar-row"><div class="bar-nm">Kreis ${k}</div><div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(n/mk*100)}%;background:#ff2d00"></div></div><div class="bar-ct">${n}</div></div>`;
-    }).join('');
+    document.getElementById('kreis-bars').innerHTML=Array.from({length:12},(_,i)=>i+1).map(k=>{const n=ks[k]||0;return`<div class="bar-row"><div class="bar-nm">Kreis ${k}</div><div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(n/mk*100)}%;background:#ff2d00"></div></div><div class="bar-ct">${n}</div></div>`;}).join('');
     const gastro=all.filter(l=>l.kategorie==='gastro');
     const subs={};gastro.forEach(l=>{if(l.subkategorie)subs[l.subkategorie]=(subs[l.subkategorie]||0)+1});
     const ms=Math.max(...Object.values(subs),1);
-    document.getElementById('subkat-bars').innerHTML=Object.entries(subs).sort((a,b)=>b[1]-a[1]).map(([s,n])=>`
-      <div class="bar-row"><div class="bar-nm">${s}</div><div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(n/ms*100)}%;background:#c8ff00"></div></div><div class="bar-ct">${n}</div></div>`).join('');
+    document.getElementById('subkat-bars').innerHTML=Object.entries(subs).sort((a,b)=>b[1]-a[1]).map(([s,n])=>`<div class="bar-row"><div class="bar-nm">${s}</div><div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(n/ms*100)}%;background:#c8ff00"></div></div><div class="bar-ct">${n}</div></div>`).join('');
   }catch(e){console.error(e)}
 }
 
-// QUALITY — IDENTISCH WIE VORHER
+// ═══════════════════════════════════════
+// QUALITÄT — IDENTISCH
+// ═══════════════════════════════════════
 async function loadQuality(){
   try{
     const all=await sbFetch('locations?select=id,name,kategorie,kreis,plz,bild_url,website,zt_subkategorie_id&limit=2000');
-    const rl=arr=>arr.length===0
-      ?'<div style="color:#c8ff00;font-size:10px;padding:6px 0">Alle vollständig</div>'
-      :arr.slice(0,20).map(l=>`<div class="qi"><div class="qn">${l.name}</div><div class="qm">${l.kategorie}·K${l.kreis||'?'}</div></div>`).join('')
-       +(arr.length>20?`<div style="color:#333;font-size:9px;padding:5px 0">+${arr.length-20} weitere</div>`:'');
+    const rl=arr=>arr.length===0?'<div style="color:#c8ff00;font-size:10px;padding:6px 0">Alle vollständig</div>':arr.slice(0,20).map(l=>`<div class="qi"><div class="qn">${l.name}</div><div class="qm">${l.kategorie}·K${l.kreis||'?'}</div></div>`).join('')+(arr.length>20?`<div style="color:#333;font-size:9px;padding:5px 0">+${arr.length-20} weitere</div>`:'');
     document.getElementById('q0').innerHTML=rl(all.filter(l=>!l.bild_url));
     document.getElementById('q1').innerHTML=rl(all.filter(l=>!l.kreis));
     document.getElementById('q2').innerHTML=rl(all.filter(l=>!l.zt_subkategorie_id));
@@ -910,11 +810,12 @@ async function loadQuality(){
   }catch(e){console.error(e)}
 }
 
-// SUBKAT PREVIEW — IDENTISCH WIE VORHER
+// ═══════════════════════════════════════
+// SUBKAT PREVIEW — IDENTISCH
+// ═══════════════════════════════════════
 function buildSubkatPreview(){
   const all=Object.entries(SUBKAT_MAP);
-  const mkItems=entries=>entries.map(([id,name])=>`
-    <div class="sp-item"><span class="id">${id}</span><span class="name">${name}</span></div>`).join('');
+  const mkItems=entries=>entries.map(([id,name])=>`<div class="sp-item"><span class="id">${id}</span><span class="name">${name}</span></div>`).join('');
   const gastroIds=[102,184,185,186,187,188,189,190,191,192,193,194,195,196,197,409,415,101];
   const nachtIds=[103,1438,1441,1444,1447,1450,1456,1459,1462,1465,1468,162,163,164,1414,1417,1423,1426,1429,1432,1435];
   document.getElementById('sp-gastro').innerHTML=mkItems(all.filter(([id])=>gastroIds.includes(parseInt(id))));
@@ -922,180 +823,273 @@ function buildSubkatPreview(){
   document.getElementById('sp-rest').innerHTML=mkItems(all.filter(([id])=>!gastroIds.includes(parseInt(id))&&!nachtIds.includes(parseInt(id))));
 }
 
-// HEADER — MIT EVENTS COUNTER NEU
+// ═══════════════════════════════════════
+// HEADER
+// ═══════════════════════════════════════
 async function updHdr(){
   try{
     const r=await fetch(SU+'/rest/v1/locations?select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
-    const c=r.headers.get('content-range')?.split('/')[1]||'?';
-    document.getElementById('hdr-total').textContent=c;
+    document.getElementById('hdr-total').textContent=r.headers.get('content-range')?.split('/')[1]||'?';
   }catch(e){}
   try{
-    const r=await fetch(SU+'/rest/v1/events?select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
-    const c=r.headers.get('content-range')?.split('/')[1]||'0';
-    document.getElementById('hdr-events').textContent=c;
+    const r=await fetch(SU+'/rest/v1/'+EF_TABLE+'?select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
+    document.getElementById('hdr-events').textContent=r.headers.get('content-range')?.split('/')[1]||'0';
   }catch(e){}
 }
 
 // ═══════════════════════════════════════
-// EVENTS — NEUE FUNKTIONEN
+// EVENTFROG — NEUE FUNKTIONEN
 // ═══════════════════════════════════════
-function evSetDates(){
-  const today=new Date();
-  const plus30=new Date();plus30.setDate(plus30.getDate()+30);
-  document.getElementById('ev-von').value=today.toISOString().split('T')[0];
-  document.getElementById('ev-bis').value=plus30.toISOString().split('T')[0];
+
+function efSetModus(m){
+  efModus=m;
+  ['skip','update','delete'].forEach(x=>document.getElementById('ef-m-'+x).classList.remove('active'));
+  document.getElementById('ef-m-'+m).classList.add('active');
+  if(m==='delete')document.getElementById('ef-m-delete').style.borderColor='#ff2d00';
 }
 
-async function evLoadStats(){
+function efSetPages(p){
+  efPages=p;
+  [1,5,10,25].forEach(x=>document.getElementById('ef-p-'+x).classList.remove('active'));
+  document.getElementById('ef-p-'+p).classList.add('active');
+}
+
+function efReset(){
+  document.getElementById('ef-log-box').innerHTML='';
+  document.getElementById('ef-log-box').style.display='none';
+  document.getElementById('ef-res-grid').style.display='none';
+  document.getElementById('ef-preview').style.display='none';
+}
+
+async function efFetchPage(page){
+  const plzParams=ALLE_PLZ.map(p=>'zip='+p).join('&');
+  const url=EF_URL+'?'+plzParams+'&page='+page+'&perPage=100';
+  const r=await fetch(url,{headers:{'Authorization':'Bearer '+EF_KEY,'Accept':'application/json'}});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return r.json();
+}
+
+function efMapItem(item){
+  const title=item.title||{};
+  const name=title.de||title.en||title.fr||'';
+  if(!name)return null;
+  if(item.cancelled)return null;
+
+  const alias=item.locationAlias||{};
+  const plz=String(alias.zip||'').trim();
+  const kreis=plz2k(plz);
+
+  const begin=item.begin||'';
+  const end=item.end||begin;
+  const datum_start=begin?begin.substring(0,10):null;
+  const datum_ende=end?end.substring(0,10):datum_start;
+
+  if(!datum_start)return null;
+  if(datum_start<new Date().toISOString().substring(0,10))return null;
+
+  let is_popup=false;
+  if(datum_start&&datum_ende){
+    try{
+      const diff=(new Date(datum_ende)-new Date(datum_start))/(1000*60*60*24);
+      is_popup=diff<3;
+    }catch(e){}
+  }
+
+  // Kategorie aus rubricId ableiten
+  const rubricId=item.rubricId||0;
+  let kategorie='event';
+  let subkategorie='allgemein';
+  if([1,2,3].includes(rubricId)){kategorie='nachtleben';subkategorie='party';}
+  else if([4,5].includes(rubricId)){kategorie='kultur';subkategorie='konzert';}
+  else if([6,7].includes(rubricId)){kategorie='sport';subkategorie='sport';}
+
+  return{
+    ef_id:String(item.id||''),
+    titel:name,
+    slug:slugify(name)+'-'+String(item.id||'').substring(0,8),
+    kategorie,subkategorie,
+    kreis:kreis||null,
+    venue_name:alias.name||'',
+    adresse:alias.street||'',
+    plz:plz||null,
+    datum_start,datum_ende,
+    uhrzeit_start:begin.length>10?begin.substring(11,16):null,
+    uhrzeit_ende:end.length>10?end.substring(11,16):null,
+    beschreibung:(item.shortDescription?.de||item.shortDescription?.en||''),
+    bild_url:item.emblemToShow||null,
+    ticket_url:item.url||null,
+    eintritt_typ:item.freeOfCharge?'kostenlos':'kostenpflichtig',
+    popup:is_popup,
+    aktiv:true,featured:false,
+    seo_title:name+' — Event Zürich | Stadtpuls'
+  };
+}
+
+async function efCheckExists(efId){
+  const r=await fetch(SU+'/rest/v1/'+EF_TABLE+'?ef_id=eq.'+encodeURIComponent(efId)+'&select=id&limit=1',{
+    headers:{'apikey':SK,'Authorization':'Bearer '+SK}
+  });
+  const d=await r.json();
+  return Array.isArray(d)&&d.length>0?d[0].id:null;
+}
+
+async function efInsert(row){
+  const r=await fetch(SU+'/rest/v1/'+EF_TABLE,{
+    method:'POST',
+    headers:{'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'resolution=ignore-duplicates,return=minimal'},
+    body:JSON.stringify(row)
+  });
+  return r.status;
+}
+
+async function efUpdateRow(id,row){
+  const r=await fetch(SU+'/rest/v1/'+EF_TABLE+'?id=eq.'+id,{
+    method:'PATCH',
+    headers:{'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK},
+    body:JSON.stringify(row)
+  });
+  return r.status;
+}
+
+async function efLoadStats(){
   try{
-    const today=new Date().toISOString().split('T')[0];
+    const today=new Date().toISOString().substring(0,10);
     const week=new Date();week.setDate(week.getDate()+7);
-    const wStr=week.toISOString().split('T')[0];
-    const rTotal=await fetch(SU+'/rest/v1/events?aktiv=eq.true&select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
-    document.getElementById('ev-total').textContent=rTotal.headers.get('content-range')?.split('/')[1]||'0';
-    const rToday=await fetch(SU+'/rest/v1/events?aktiv=eq.true&datum_start=eq.'+today+'&select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
-    document.getElementById('ev-today').textContent=rToday.headers.get('content-range')?.split('/')[1]||'0';
-    const rWeek=await fetch(SU+'/rest/v1/events?aktiv=eq.true&datum_start=lte.'+wStr+'&datum_start=gte.'+today+'&select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
-    document.getElementById('ev-week').textContent=rWeek.headers.get('content-range')?.split('/')[1]||'0';
-    const rPopup=await fetch(SU+'/rest/v1/events?aktiv=eq.true&popup=eq.true&select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'}});
-    document.getElementById('ev-popup').textContent=rPopup.headers.get('content-range')?.split('/')[1]||'0';
-    document.getElementById('hdr-events').textContent=rTotal.headers.get('content-range')?.split('/')[1]||'0';
+    const wStr=week.toISOString().substring(0,10);
+    const h={'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact'};
+    const rT=await fetch(SU+'/rest/v1/'+EF_TABLE+'?aktiv=eq.true&select=id&limit=1',{headers:h});
+    document.getElementById('ef-total').textContent=rT.headers.get('content-range')?.split('/')[1]||'0';
+    const rH=await fetch(SU+'/rest/v1/'+EF_TABLE+'?aktiv=eq.true&datum_start=eq.'+today+'&select=id&limit=1',{headers:h});
+    document.getElementById('ef-heute').textContent=rH.headers.get('content-range')?.split('/')[1]||'0';
+    const rW=await fetch(SU+'/rest/v1/'+EF_TABLE+'?aktiv=eq.true&datum_start=lte.'+wStr+'&datum_start=gte.'+today+'&select=id&limit=1',{headers:h});
+    document.getElementById('ef-woche').textContent=rW.headers.get('content-range')?.split('/')[1]||'0';
+    const rP=await fetch(SU+'/rest/v1/'+EF_TABLE+'?aktiv=eq.true&popup=eq.true&select=id&limit=1',{headers:h});
+    document.getElementById('ef-popup').textContent=rP.headers.get('content-range')?.split('/')[1]||'0';
+    document.getElementById('hdr-events').textContent=rT.headers.get('content-range')?.split('/')[1]||'0';
   }catch(e){}
 }
 
-function evTc(el){
-  const cb=el.querySelector('input');
-  cb.checked=!cb.checked;
-  el.classList.toggle('ev-sel',cb.checked);
-  evUpd();
-}
-function evSelGrp(btn){
-  const grp=btn.closest('.cs');
-  const cbs=grp.querySelectorAll('.ecc');
-  const allOn=[...cbs].every(c=>c.checked);
-  cbs.forEach(c=>{c.checked=!allOn;c.closest('.ci').classList.toggle('ev-sel',!allOn);});
-  evUpd();
-}
-function evUpd(){
-  document.getElementById('ev-sel-count').textContent=document.querySelectorAll('.ecc:checked').length+' ausgewählt';
-}
-
-async function evPreview(){
-  const sel=[...document.querySelectorAll('.ecc:checked')];
-  if(!sel.length){alert('Bitte Kategorie wählen!');return;}
-  const von=document.getElementById('ev-von').value;
-  const bis=document.getElementById('ev-bis').value;
-  const[ztId,kat,subkat]=sel[0].value.split('|');
-  document.getElementById('ev-preview').style.display='block';
-  document.getElementById('ev-preview-wrap').innerHTML='<div style="color:#555;font-size:9px;padding:10px">Lade von ZT API...</div>';
+async function efPreview(){
+  document.getElementById('ef-preview').style.display='block';
+  document.getElementById('ef-preview-wrap').innerHTML='<div style="color:#555;font-size:9px;padding:10px">Lade von Eventfrog API...</div>';
   try{
-    const items=await fetchZTEvents(ztId,von,bis);
-    const rows=items.slice(0,8).map(item=>{
-      const name=item.name?.de||item.title||'—';
-      const venue=item.location?.name||item.venue||'—';
-      const df=item.dateFrom||item.startDate||'—';
-      const dt=item.dateTo||item.endDate||df;
-      const isPopup=df&&dt&&df!=='—'&&((new Date(dt)-new Date(df))/(1000*60*60*24))<7;
-      return`<tr><td class="ev-date">${df}</td><td class="ev-name">${name}</td><td class="ev-venue">${venue}</td><td><span class="ev-kat">${subkat}</span>${isPopup?' <span class="ev-popup">POP-UP</span>':''}</td></tr>`;
+    const data=await efFetchPage(1);
+    const total=data.totalNumberOfResources||0;
+    const items=(data.events||[]).slice(0,8);
+    if(!items.length){
+      document.getElementById('ef-preview-wrap').innerHTML='<div style="color:#555;font-size:9px;padding:10px">Keine Events gefunden.</div>';
+      return;
+    }
+    const today=new Date().toISOString().substring(0,10);
+    const rows=items.map(item=>{
+      const title=item.title||{};
+      const name=title.de||title.en||'—';
+      const alias=item.locationAlias||{};
+      const venue=alias.name||'—';
+      const begin=item.begin||'';
+      const datum=begin?begin.substring(0,10):'—';
+      const plz=String(alias.zip||'');
+      const kreis=plz2k(plz);
+      const tags=[];
+      if(item.soldOut)tags.push('<span class="ef-sold">AUSVERKAUFT</span>');
+      if(item.littleTicketsLeft)tags.push('<span class="ef-few">FAST WEG</span>');
+      if(item.freeOfCharge)tags.push('<span class="ef-free">GRATIS</span>');
+      if(item.cancelled)tags.push('<span style="color:#ff2d00;font-size:7px">ABGESAGT</span>');
+      return`<tr><td class="ef-date">${datum}</td><td class="ef-name">${name}</td><td class="ef-venue">${venue}${kreis?' · K'+kreis:''}</td><td>${tags.join(' ')}</td></tr>`;
     }).join('');
-    document.getElementById('ev-preview-wrap').innerHTML=items.length
-      ?`<table class="ev-table"><thead><tr><th>DATUM</th><th>EVENT</th><th>VENUE</th><th>TYP</th></tr></thead><tbody>${rows}</tbody></table><div style="font-size:9px;color:#555;margin-top:8px">${items.length} Events gefunden für ZT ID ${ztId}</div>`
-      :'<div style="color:#555;font-size:9px;padding:10px">Keine Events in diesem Zeitraum.</div>';
+    document.getElementById('ef-preview-wrap').innerHTML=`
+      <div style="font-size:9px;color:#555;margin-bottom:8px">Total verfügbar: <span style="color:#00f5ff">${total}</span> Events — zeige erste 8</div>
+      <table class="ef-table"><thead><tr><th>DATUM</th><th>EVENT</th><th>VENUE / KREIS</th><th>STATUS</th></tr></thead><tbody>${rows}</tbody></table>`;
   }catch(e){
-    document.getElementById('ev-preview-wrap').innerHTML='<div style="color:#ff2d00;font-size:9px;padding:10px">Fehler: '+e.message+'</div>';
+    document.getElementById('ef-preview-wrap').innerHTML='<div style="color:#ff2d00;font-size:9px;padding:10px">Fehler: '+e.message+'</div>';
   }
 }
 
-async function evStartImport(){
-  const sel=[...document.querySelectorAll('.ecc:checked')];
-  if(!sel.length){alert('Bitte Kategorien wählen!');return;}
-  const von=document.getElementById('ev-von').value;
-  const bis=document.getElementById('ev-bis').value;
-  if(!von||!bis){alert('Datum Von und Bis ausfüllen!');return;}
-  document.getElementById('ev-btn-go').disabled=true;
-  document.getElementById('ev-prog-box').style.display='block';
-  document.getElementById('ev-log-box').innerHTML='';
-  document.getElementById('ev-res-grid').style.display='none';
+async function efStartImport(){
+  if(efModus==='delete'){
+    if(!confirm('ACHTUNG: Alle Eventfrog Events werden gelöscht und neu importiert!'))return;
+    await fetch(SU+'/rest/v1/'+EF_TABLE,{method:'DELETE',headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+    efLg('Alle Events gelöscht — starte Neu-Import...','warn');
+  }
+
+  document.getElementById('ef-btn-go').disabled=true;
+  document.getElementById('ef-prog-box').style.display='block';
+  document.getElementById('ef-log-box').innerHTML='';
+  document.getElementById('ef-res-grid').style.display='none';
+
   let ok=0,sk=0,er=0,popups=0;
-  for(let i=0;i<sel.length;i++){
-    const[ztId,kat,subkat]=sel[i].value.split('|');
-    const pct=Math.round(i/sel.length*100);
-    document.getElementById('ev-prog-fill').style.width=pct+'%';
-    document.getElementById('ev-prog-cat').textContent=kat+'/'+subkat+' (id='+ztId+')';
-    document.getElementById('ev-prog-lbl').textContent='Lade Events...';
-    evLg('→ '+kat+'/'+subkat+' ('+von+' → '+bis+')','info');
+  const today=new Date().toISOString().substring(0,10);
+
+  efLg('Starte Eventfrog Import — '+efPages+' Seite(n) — Modus: '+efModus.toUpperCase(),'info');
+
+  for(let page=1;page<=efPages;page++){
+    document.getElementById('ef-prog-fill').style.width=Math.round((page-1)/efPages*100)+'%';
+    document.getElementById('ef-prog-sub').textContent='Seite '+page+' / '+efPages;
+    document.getElementById('ef-prog-cat').textContent='Lade Seite '+page+'...';
+    document.getElementById('ef-prog-lbl').textContent='Eventfrog API...';
+
     try{
-      const items=await fetchZTEvents(ztId,von,bis);
-      evLg('  '+items.length+' Events von ZT API','info');
-      for(const item of items){
-        const df=item.dateFrom||item.startDate||null;
-        const dt=item.dateTo||item.endDate||df;
-        if(!df){sk++;continue;}
-        if(new Date(df)<new Date()){sk++;evLg('  → SKIP (vergangen): '+(item.name?.de||'—'),'skip');continue;}
-        const isPopup=df&&dt&&((new Date(dt)-new Date(df))/(1000*60*60*24))<7;
-        if(isPopup)popups++;
-        const plz=item.location?.postalCode||item.address?.postalCode||'';
-        const kreis=plz2k(plz)||null;
-        const quelle_id=String(item.identifier||item.id||'');
-        // Duplikat Check
-        const exR=await fetch(SU+'/rest/v1/events?quelle_id=eq.'+encodeURIComponent(quelle_id)+'&select=id&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
-        const exD=await exR.json();
-        if(exD&&exD.length>0){sk++;evLg('  → SKIP (existiert): '+(item.name?.de||'—'),'skip');continue;}
-        const ev={
-          titel:item.name?.de||item.title||'',
-          slug:slugify(item.name?.de||item.title||'unbekannt')+'-'+Math.random().toString(36).substr(2,4),
-          kategorie:kat,
-          zt_kategorie_id:parseInt(ztId)||null,
-          zt_subkategorie_id:parseInt(ztId)||null,
-          venue_name:item.location?.name||item.venue||'',
-          adresse:item.location?.streetAddress||item.address?.streetAddress||'',
-          plz:plz,kreis:kreis,
-          lat:item.geoCoordinates?.latitude||null,
-          lng:item.geoCoordinates?.longitude||null,
-          datum_start:df,datum_ende:dt||df,
-          uhrzeit_start:item.timeFrom||null,uhrzeit_ende:item.timeTo||null,
-          ganztaegig:!item.timeFrom,
-          beschreibung:item.description?.de||item.description||'',
-          beschreibung_kurz:(item.description?.de||'').substring(0,200)||'',
-          bild_url:item.image?.url||null,
-          ticket_url:item.ticketUrl||item.bookingUrl||null,
-          eintritt_typ:item.price?'kostenpflichtig':'kostenlos',
-          preis_von:item.priceFrom||null,preis_bis:item.priceTo||null,
-          popup:isPopup,veranstalter:item.organizer?.name||null,
-          quelle:'zuerich_tourismus',quelle_id:quelle_id,
-          aktiv:true,featured:false,abgesagt:false,
-          seo_title:(item.name?.de||'')+' — Event Zürich | Stadtpuls'
-        };
-        const evR=await fetch(SU+'/rest/v1/events',{
-          method:'POST',
-          headers:{'Content-Type':'application/json','apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'resolution=ignore-duplicates'},
-          body:JSON.stringify(ev)
-        });
-        if(evR.status===201||evR.status===200){ok++;evLg('  + '+ev.titel+' ('+df+')'+(isPopup?' 🎪POP-UP':''),'ok');}
-        else{er++;evLg('  x FEHLER: '+ev.titel+' HTTP '+evR.status,'err');}
-        await new Promise(r=>setTimeout(r,80));
+      const data=await efFetchPage(page);
+      const events=data.events||[];
+      const total=data.totalNumberOfResources||0;
+      efLg('Seite '+page+': '+events.length+' Events (Total: '+total+')','info');
+
+      if(!events.length)break;
+
+      for(const item of events){
+        const row=efMapItem(item);
+        if(!row){sk++;continue;}
+
+        if(efModus==='skip'||efModus==='update'){
+          const existId=await efCheckExists(row.ef_id);
+          if(existId){
+            if(efModus==='skip'){sk++;efLg('  → SKIP: '+row.titel.substring(0,40),'skip');continue;}
+            // update modus
+            const s=await efUpdateRow(existId,row);
+            if(s===204||s===200){ok++;efLg('  ~ UPDATE: '+row.titel.substring(0,40)+' ('+row.datum_start+')','ok');}
+            else{er++;efLg('  x ERR update: '+row.titel.substring(0,30)+' HTTP '+s,'err');}
+            continue;
+          }
+        }
+
+        const s=await efInsert(row);
+        if(s===201||s===200||s===204){
+          ok++;
+          if(row.popup)popups++;
+          const tags=[];
+          efLg('  + '+row.titel.substring(0,40)+' ('+row.datum_start+')'+(row.popup?' 🎪':'')+(row.kreis?' K'+row.kreis:''),'ok');
+        }else{
+          er++;
+          efLg('  x ERR: '+row.titel.substring(0,30)+' HTTP '+s,'err');
+        }
+        await new Promise(r=>setTimeout(r,50));
       }
-    }catch(e){er++;evLg('  x API FEHLER: '+e.message,'err');}
+    }catch(e){
+      er++;efLg('x SEITE '+page+' FEHLER: '+e.message,'err');
+    }
     await new Promise(r=>setTimeout(r,300));
   }
-  document.getElementById('ev-prog-fill').style.width='100%';
-  document.getElementById('ev-prog-lbl').textContent='FERTIG';
-  document.getElementById('ev-r0').textContent=ok;
-  document.getElementById('ev-r1').textContent=sk;
-  document.getElementById('ev-r2').textContent=er;
-  document.getElementById('ev-r3').textContent=popups;
-  document.getElementById('ev-res-grid').style.display='grid';
-  document.getElementById('ev-btn-go').disabled=false;
-  evLg('=== EVENTS FERTIG === +'+ok+' | '+sk+' skip | '+er+' fehler | '+popups+' pop-ups','ok');
-  evLoadStats();updHdr();
+
+  document.getElementById('ef-prog-fill').style.width='100%';
+  document.getElementById('ef-prog-lbl').textContent='FERTIG';
+  document.getElementById('ef-r0').textContent=ok;
+  document.getElementById('ef-r1').textContent=sk;
+  document.getElementById('ef-r2').textContent=er;
+  document.getElementById('ef-r3').textContent=popups;
+  document.getElementById('ef-res-grid').style.display='grid';
+  document.getElementById('ef-btn-go').disabled=false;
+  efLg('=== FERTIG === +'+ok+' | '+sk+' skip | '+er+' fehler | '+popups+' pop-ups','ok');
+  efLoadStats();updHdr();
 }
 
-async function evDeleteOld(){
-  if(!confirm('Alle vergangenen Events löschen?'))return;
-  const today=new Date().toISOString().split('T')[0];
-  const r=await fetch(SU+'/rest/v1/events?datum_ende=lt.'+today,{method:'DELETE',headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+async function efDeleteOld(){
+  if(!confirm('Alle vergangenen Eventfrog Events löschen?'))return;
+  const today=new Date().toISOString().substring(0,10);
+  const r=await fetch(SU+'/rest/v1/'+EF_TABLE+'?datum_ende=lt.'+today,{
+    method:'DELETE',headers:{'apikey':SK,'Authorization':'Bearer '+SK}
+  });
   alert(r.ok?'Vergangene Events gelöscht!':'Fehler beim Löschen.');
-  evLoadStats();
+  efLoadStats();updHdr();
 }
 </script>
 </body>
