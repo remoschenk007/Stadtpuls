@@ -864,7 +864,8 @@ function efReset(){
 async function efFetchPage(page){
   const plzParams=ALLE_PLZ.map(p=>'zip='+p).join('&');
   const url=EF_URL+'?'+plzParams+'&page='+page+'&perPage=100';
-  const r=await fetch(url,{headers:{'Authorization':'Bearer '+EF_KEY,'Accept':'application/json'}});
+  const proxy='https://corsproxy.io/?'+encodeURIComponent(url);
+  const r=await fetch(proxy,{headers:{'Authorization':'Bearer '+EF_KEY,'Accept':'application/json'}});
   if(!r.ok)throw new Error('HTTP '+r.status);
   return r.json();
 }
