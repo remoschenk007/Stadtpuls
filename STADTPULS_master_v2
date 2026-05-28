@@ -3389,6 +3389,89 @@ ERSTER SCHRITT NEUER CHAT — IMMER:
 3. python3 /Users/alessandrachristen/stadtpuls/import_events.py
 4. Dann events.html bauen
 
+════════════════════════════════════════
+SESSION LOG — 28. MAI 2026 — KOMPLETT
+════════════════════════════════════════
+
+EVENTFROG INTEGRATION — HEUTE AUFGEBAUT ✅
+
+EVENTFROG ACCOUNT:
+✅ Account erstellt: byraimondo@gmail.com
+✅ API Key erstellt: 11D282C1-D0CF-4A4E-9060-DF6B5FC4FE4C
+✅ Gültig bis: 28.5.2027
+✅ Typ: Public API Read — alle IPs erlaubt
+
+SUPABASE — NEUE TABELLE:
+✅ eventfrog_events Tabelle erstellt
+✅ RLS aktiviert — Read/Insert/Update/Delete Policies
+✅ ef_id UNIQUE — Duplikat-Schutz
+✅ Felder: ef_id, titel, slug, kategorie, subkategorie,
+   kreis, venue_name, adresse, plz, datum_start, datum_ende,
+   uhrzeit_start, uhrzeit_ende, beschreibung, bild_url,
+   ticket_url, eintritt_typ, popup, aktiv, featured, seo_title
+
+IMPORT.HTML — EVENTFROG TAB NEU ✅
+✅ Tab «🐸 Eventfrog» ersetzt alten ZT Events Tab
+✅ Ziel: eventfrog_events Tabelle (nicht events!)
+✅ 3 Modi: NUR NEUE / UPDATE ALLE / LÖSCHEN+NEU
+✅ Seitenauswahl: 1/5/10/25 Seiten (je 100 Events)
+✅ FOMO Tags: soldOut / littleTicketsLeft / freeOfCharge
+✅ Pop-Up Detection: Events unter 3 Tagen
+✅ Vorschau Button
+✅ Live auf depuls.ch/import.html
+
+EVENTFROG API — BESTÄTIGT:
+✅ URL: https://api.eventfrog.net/public/v1/events
+✅ Auth: Bearer Token
+✅ Filter: zip= Parameter für alle Zürich PLZ
+✅ 2238+ Events verfügbar für Zürich
+✅ Keys: id, title, begin, end, locationAlias,
+   soldOut, littleTicketsLeft, freeOfCharge,
+   cancelled, emblemToShow, url, shortDescription
+
+IMPORT SCRIPT:
+✅ import_eventfrog.py geschrieben
+✅ Läuft via Terminal (kein CORS Problem)
+✅ Holt 5 Seiten = ~500 Events
+✅ Speichert in eventfrog_events Tabelle
+
+PROBLEM HEUTE — CORS:
+❌ Browser kann Eventfrog API nicht direkt aufrufen
+❌ allorigins.win + corsproxy.io beide down
+❌ ZT Browser Import auch betroffen
+→ Lösung: Python Script via Terminal
+
+ERSTER SCHRITT NEUER CHAT:
+1. Terminal öffnen
+2. Script erstellen mit cat > Befehl (Claude gibt ihn)
+3. python3 import_eventfrog.py ausführen
+4. Events landen in eventfrog_events Tabelle
+
+DATEN-STRATEGIE EVENTS — BESCHLOSSEN:
+✅ Eventfrog → eventfrog_events Tabelle (separat!)
+✅ ZT API → locations Tabelle (bleibt)
+✅ Manuell 1x pro Woche → 25 Seiten = alle 2500 Events
+✅ Phase 5 → GitHub Actions → täglich automatisch 06:00
+
+KOOPERATION EVENTFROG — GEPLANT:
+✅ Erst Traffic aufbauen → dann Kooperation anfragen
+✅ Eventfrog ist grösster Event-Kalender Schweiz
+✅ Perfekte Ergänzung zu ZT API (Locations)
+
+ROADMAP UPDATE:
+✅ Phase 4h-4w → abgeschlossen
+✅ Phase 4x → eventfrog_events Tabelle erstellt
+✅ Phase 4x → import.html Eventfrog Tab live
+⏳ Phase 4y → import_eventfrog.py ausführen → Events importieren
+⏳ Phase 4z → events.html bauen
+⏳ Phase 5  → Login + Community + Onboarding
+⏳ Phase 6  → KI Features (Züri-Bot Claude API)
+⏳ Phase 7  → Hamburg, Berlin, Wien
+
+SOFT LAUNCH: 4. Juni 2026 🔴
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»
+════════════════════════════════════════
+
 «dä puls vo dä Stadt» — «Zürich first. Dann die Welt.» 🔴
 ════════════════════════════════════════
 ```
