@@ -10,7 +10,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100vh;cursor:none;overflow-x:hidden}
+body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100vh;cursor:pointer;overflow-x:hidden}
 
 /* CURSOR */
 #cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
@@ -72,7 +72,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .tki{display:flex;animation:ticker 45s linear infinite;width:max-content}
 .tkw:hover .tki{animation-play-state:paused}
 
-.fchip{flex-shrink:0;padding:11px 18px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#777;border:none;background:transparent;cursor:none;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;border-right:1px solid #0d0d1e}
+.fchip{flex-shrink:0;padding:11px 18px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#777;border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;border-right:1px solid #0d0d1e}
 .fchip:last-child{border-right:none}
 .fchip:hover{color:#e8e4d9;background:rgba(255,255,255,.02)}
 .fchip.on{color:#ff2d00;border-bottom-color:#ff2d00;background:rgba(255,45,0,.04)}
@@ -92,7 +92,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 /* DATE TABS */
 .date-tabs{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;border-bottom:1px solid #0d0d1e;background:#04040a}
 .date-tabs::-webkit-scrollbar{display:none}
-.dtab{flex-shrink:0;padding:0;border:none;background:none;cursor:none;border-bottom:3px solid transparent;transition:all .2s}
+.dtab{flex-shrink:0;padding:0;border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s}
 .dtab-inner{padding:12px 18px;display:flex;flex-direction:column;align-items:center;gap:2px}
 .dtab .dday{font-size:7px;letter-spacing:2px;color:#888;text-transform:uppercase;transition:color .2s}
 .dtab .dnum{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:#888;line-height:1;transition:color .2s}
@@ -118,7 +118,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .hour-events{padding:4px;display:flex;flex-direction:column;gap:3px}
 
 /* EVENT CARD — TIMELINE */
-.ev-card{display:grid;grid-template-columns:1fr 72px;border:1px solid #1a1a2e;cursor:none;transition:all .15s;position:relative;overflow:hidden}
+.ev-card{display:grid;grid-template-columns:1fr 72px;border:1px solid #1a1a2e;cursor:pointer;transition:all .15s;position:relative;overflow:hidden}
 .ev-card:hover{border-color:#ff2d00;background:#080814;transform:translateX(2px)}
 .ev-card.sel{border-color:#ff2d00;background:#0a0a1a;border-left-width:3px}
 .ev-card-body{padding:10px 12px}
@@ -142,7 +142,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 /* PHASE 5 — «Ich geh» mini button */
 .p5-mini{position:absolute;top:8px;right:8px;opacity:0;transition:opacity .2s}
 .ev-card:hover .p5-mini{opacity:1}
-.p5-mini-btn{background:transparent;border:1px solid rgba(0,245,255,.2);color:#00f5ff;font-family:'DM Mono',monospace;font-size:6px;letter-spacing:1px;text-transform:uppercase;padding:3px 6px;cursor:none;transition:all .2s}
+.p5-mini-btn{background:transparent;border:1px solid rgba(0,245,255,.2);color:#00f5ff;font-family:'DM Mono',monospace;font-size:6px;letter-spacing:1px;text-transform:uppercase;padding:3px 6px;cursor:pointer;transition:all .2s}
 .p5-mini-btn:hover{background:rgba(0,245,255,.08)}
 
 /* EVENT IMAGE */
@@ -196,10 +196,10 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 
 /* ACTION BUTTONS — Apple 56px */
 .dp-acts{padding:16px 20px;display:flex;flex-direction:column;gap:8px}
-.dp-main{background:#ff2d00;color:#fff;border:none;height:56px;line-height:56px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:none;text-align:center;transition:background .2s;text-decoration:none;display:block;padding:0}
+.dp-main{background:#ff2d00;color:#fff;border:none;height:56px;line-height:56px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;text-align:center;transition:background .2s;text-decoration:none;display:block;padding:0}
 .dp-main:hover{background:#ff4020}
 .dp-main.gr{background:#c8ff00;color:#000}
-.dp-s{background:transparent;color:#777;border:1px solid #1a1a2e;height:48px;line-height:48px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:none;text-align:center;transition:all .2s;width:100%;display:block;text-decoration:none;padding:0}
+.dp-s{background:transparent;color:#777;border:1px solid #1a1a2e;height:48px;line-height:48px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .2s;width:100%;display:block;text-decoration:none;padding:0}
 .dp-s:hover{color:#e8e4d9;border-color:#333}
 
 /* PHASE 5 BOX */
@@ -211,7 +211,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .dp-p5-av{width:28px;height:28px;border-radius:50%;border:2px solid #050510;background:#0d0d1e;display:inline-flex;align-items:center;justify-content:center;font-size:12px;margin-left:-6px}
 .dp-p5-av:first-child{margin-left:0}
 .dp-p5-cnt{font-size:8px;color:#555;letter-spacing:1px;margin-bottom:12px}
-.dp-p5-btn{background:transparent;border:1px solid rgba(0,245,255,.25);color:#00f5ff;height:48px;line-height:48px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;cursor:none;width:100%;transition:all .2s;margin-bottom:6px;display:block;text-align:center;padding:0}
+.dp-p5-btn{background:transparent;border:1px solid rgba(0,245,255,.25);color:#00f5ff;height:48px;line-height:48px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;width:100%;transition:all .2s;margin-bottom:6px;display:block;text-align:center;padding:0}
 .dp-p5-btn:hover{background:rgba(0,245,255,.06)}
 
 /* PHASE 6 KI BOX */
@@ -221,8 +221,18 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .dp-p6-row:last-child{margin-bottom:0}
 .dp-p6-icon{font-size:14px;flex-shrink:0;margin-top:2px}
 
-/* MOBILE FAB */
-.mob-fab{display:none;position:fixed;bottom:20px;right:20px;background:#ff2d00;border:none;color:#fff;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:2px;padding:13px 20px;cursor:none;z-index:300;animation:ring 2s infinite}
+/* MOBILE BOTTOM SHEET */
+.mob-sheet{display:none;position:fixed;inset:0;z-index:400;background:rgba(4,4,10,.85);backdrop-filter:blur(4px)}
+.mob-sheet.open{display:block}
+.mob-sheet-inner{position:absolute;bottom:0;left:0;right:0;background:#04040a;border-top:1px solid #1a1a2e;padding:0 0 40px;max-height:85vh;overflow-y:auto;border-radius:16px 16px 0 0}
+.mob-sheet-handle{width:36px;height:3px;background:#333;border-radius:2px;margin:12px auto 16px}
+.mob-sheet-title{font-size:8px;letter-spacing:3px;color:#555;text-transform:uppercase;padding:0 20px 16px;border-bottom:1px solid #1a1a2e}
+.mob-filter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:16px}
+.mob-fchip{padding:14px 8px;border:1px solid #1a1a2e;background:transparent;color:#777;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .2s;min-height:48px}
+.mob-fchip.on{border-color:#ff2d00;color:#ff2d00;background:rgba(255,45,0,.05)}
+.mob-fchip.volt.on{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,.05)}
+.mob-fchip.cyan.on{border-color:#00f5ff;color:#00f5ff;background:rgba(0,245,255,.05)}
+.mob-sheet-apply{margin:0 16px;background:#ff2d00;color:#fff;border:none;width:calc(100% - 32px);height:56px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:pointer}
 
 /* ANIMATIONS */
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -420,7 +430,30 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
   </div>
 </div>
 
-<button class="mob-fab" onclick="document.querySelector('.filter-zone').scrollIntoView({behavior:'smooth'})">⚡ FILTER</button>
+<button class="mob-fab" onclick="openSheet()" style="display:none;position:fixed;bottom:24px;right:16px;background:#ff2d00;border:none;color:#fff;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:2px;padding:14px 22px;cursor:pointer;z-index:300;animation:ring 2s infinite;align-items:center;gap:8px" id="mob-fab">⚡ FILTER</button>
+
+<!-- MOBILE BOTTOM SHEET -->
+<div class="mob-sheet" id="mob-sheet" onclick="closeSheet(event)">
+  <div class="mob-sheet-inner" onclick="event.stopPropagation()">
+    <div class="mob-sheet-handle"></div>
+    <div class="mob-sheet-title">EVENTS FILTERN</div>
+    <div class="mob-filter-grid">
+      <button class="mob-fchip on" onclick="mf('alle',this)">ALLES</button>
+      <button class="mob-fchip" onclick="mf('konzert',this)">KONZERT</button>
+      <button class="mob-fchip" onclick="mf('party',this)">PARTY</button>
+      <button class="mob-fchip" onclick="mf('kultur',this)">KULTUR</button>
+      <button class="mob-fchip" onclick="mf('comedy',this)">COMEDY</button>
+      <button class="mob-fchip" onclick="mf('sport',this)">SPORT</button>
+      <button class="mob-fchip" onclick="mf('workshop',this)">WORKSHOP</button>
+      <button class="mob-fchip" onclick="mf('markt',this)">MARKT</button>
+      <button class="mob-fchip volt" onclick="mf('gratis',this)">GRATIS</button>
+      <button class="mob-fchip cyan" onclick="mf('popup',this)">POP-UP</button>
+      <button class="mob-fchip" onclick="mf('abend',this)" style="color:#9333ea">ABEND</button>
+      <button class="mob-fchip" onclick="mf('nacht',this)" style="color:#ec4899">NACHT</button>
+    </div>
+    <button class="mob-sheet-apply" onclick="closeSheet()">ANWENDE →</button>
+  </div>
+</div>
 
 <script>
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
@@ -708,13 +741,81 @@ function selEv(ev){
   sEv=ev;
   document.querySelectorAll('.ev-card').forEach(r=>r.classList.remove('sel'));
   event.currentTarget.classList.add('sel');
-  // Mobile → direkt zur Profil-Seite
   if(window.innerWidth<=960){
-    const eid=ev.ef_id||ev.id;
-    window.location.href='event-profil.html?id='+eid;
+    showMobilePreview(ev);
     return;
   }
   showDetail(ev);
+}
+
+function showMobilePreview(ev){
+  const k=ev._k||gk(ev);const isG=ev.eintritt_typ==='kostenlos';
+  const eid=ev.ef_id||ev.id;const em=KE[k];
+  const d=new Date(ev.datum_start+'T12:00:00');
+  const dStr=DAYS[d.getDay()]+', '+d.getDate()+'. '+MONTHS[d.getMonth()];
+
+  let sheet=document.getElementById('mob-preview');
+  if(!sheet){
+    sheet=document.createElement('div');
+    sheet.id='mob-preview';
+    sheet.style.cssText='position:fixed;inset:0;z-index:500;background:rgba(4,4,10,.88);backdrop-filter:blur(4px)';
+    sheet.onclick=function(e){if(e.target===sheet)closeMobilePreview();};
+    document.body.appendChild(sheet);
+  }
+
+  sheet.innerHTML=`
+    <div style="position:absolute;bottom:0;left:0;right:0;background:#04040a;border-top:1px solid #1a1a2e;border-radius:16px 16px 0 0;max-height:80vh;overflow-y:auto">
+      <div style="width:36px;height:3px;background:#333;border-radius:2px;margin:12px auto 0"></div>
+
+      ${ev.bild_url?`<img src="${ev.bild_url}" alt="${ev.titel}" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:grayscale(10%);margin-top:12px" onerror="this.style.display='none'">`:''}
+
+      <div style="padding:20px">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+          <span style="padding:3px 8px;font-size:7px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,45,0,.4);color:#ff2d00">${KN[k]}</span>
+          ${isG?'<span style="padding:3px 8px;font-size:7px;letter-spacing:1px;text-transform:uppercase;background:#c8ff00;color:#000">GRATIS</span>':''}
+          ${ev.popup?'<span style="padding:3px 8px;font-size:7px;letter-spacing:1px;text-transform:uppercase;background:#9333ea;color:#fff">POP-UP</span>':''}
+        </div>
+
+        <div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:clamp(24px,6vw,36px);line-height:1;color:#fff;margin-bottom:14px;letter-spacing:-1px">${ev.titel}</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#1a1a2e;margin-bottom:20px">
+          <div style="background:#04040a;padding:12px 14px">
+            <div style="font-size:7px;letter-spacing:2px;color:#444;text-transform:uppercase;margin-bottom:4px">DATUM</div>
+            <div style="font-size:11px;color:#e8e4d9">${dStr}</div>
+          </div>
+          <div style="background:#04040a;padding:12px 14px">
+            <div style="font-size:7px;letter-spacing:2px;color:#444;text-transform:uppercase;margin-bottom:4px">UHRZEIT</div>
+            <div style="font-size:11px;color:#e8e4d9">${uhr(ev.uhrzeit_start)} Uhr</div>
+          </div>
+          <div style="background:#04040a;padding:12px 14px">
+            <div style="font-size:7px;letter-spacing:2px;color:#444;text-transform:uppercase;margin-bottom:4px">ORT</div>
+            <div style="font-size:11px;color:#e8e4d9">${ev.venue_name||'Zürich'}</div>
+          </div>
+          <div style="background:#04040a;padding:12px 14px">
+            <div style="font-size:7px;letter-spacing:2px;color:#444;text-transform:uppercase;margin-bottom:4px">EINTRITT</div>
+            <div style="font-size:11px;color:${isG?'#c8ff00':'#e8e4d9'}">${isG?'KOSTENLOS':'KOSTENPFLICHTIG'}</div>
+          </div>
+        </div>
+
+        ${ev.beschreibung?`<div style="font-size:10px;line-height:1.8;color:#777;margin-bottom:20px">${ev.beschreibung.substring(0,200)}${ev.beschreibung.length>200?'...':''}</div>`:''}
+
+        <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:24px">
+          ${ev.ticket_url&&!isG?`<a href="${ev.ticket_url}" target="_blank" style="background:#ff2d00;color:#fff;height:56px;line-height:56px;text-align:center;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;display:block">🎟 TICKET KAUFE</a>`:''}
+          ${isG?`<div style="background:#c8ff00;color:#000;height:56px;line-height:56px;text-align:center;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase">✓ GRATIS EINTRITT</div>`:''}
+          <a href="event-profil.html?id=${eid}" style="background:transparent;color:#e8e4d9;border:1px solid #333;height:52px;line-height:52px;text-align:center;font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:block">📄 VOLLSTÄNDIGES PROFIL →</a>
+          <button onclick="closeMobilePreview()" style="background:transparent;color:#444;border:1px solid #1a1a2e;height:44px;font-family:\'DM Mono\',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;width:100%">✕ SCHLIESSE</button>
+        </div>
+      </div>
+    </div>`;
+
+  sheet.style.display='block';
+  document.body.style.overflow='hidden';
+}
+
+function closeMobilePreview(){
+  const sheet=document.getElementById('mob-preview');
+  if(sheet){sheet.style.display='none';}
+  document.body.style.overflow='';
 }
 
 function showDetail(ev){
@@ -747,7 +848,7 @@ function showDetail(ev){
     <div class="dp-acts">
       ${ev.ticket_url&&!isG?`<a href="${ev.ticket_url}" target="_blank" class="dp-main">🎟 TICKET KAUFE</a>`:''}
       ${isG?'<div class="dp-main gr">✓ GRATIS EINTRITT</div>':''}
-      <a href="event-profil.html?id=${eid}" class="dp-s">📄 VOLLSTÄNDIGES PROFIL</a>
+      <a href="event-profil.html?id=${eid}" class="dp-s" style="display:block;text-decoration:none;text-align:center;line-height:48px;cursor:pointer" onclick="window.location.href='event-profil.html?id=${eid}'">📄 VOLLSTÄNDIGES PROFIL</a>
       <button class="dp-s" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(ev.adresse||ev.venue_name||'Zürich')}','_blank')">📍 AUF KARTE</button>
       <button class="dp-s" onclick="navigator.share?navigator.share({title:'${(ev.titel||'').replace(/'/g,'').substring(0,40)}',url:location.origin+'/event-profil.html?id=${eid}'}):navigator.clipboard&&navigator.clipboard.writeText(location.origin+'/event-profil.html?id=${eid}')">↗ TEILE</button>
     </div>
@@ -776,6 +877,26 @@ function showDetail(ev){
       <div class="dp-p6-row"><div class="dp-p6-icon">🗺</div><div>GPS → Events in 500m Radius — live</div></div>
     </div>`;
 }
+
+function openSheet(){document.getElementById('mob-sheet').classList.add('open');document.body.style.overflow='hidden';}
+function closeSheet(e){if(e&&e.target!==document.getElementById('mob-sheet')&&e.type!=='click')return;document.getElementById('mob-sheet').classList.remove('open');document.body.style.overflow='';}
+
+function mf(f,el){
+  aF=f;
+  document.querySelectorAll('.mob-fchip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  // Sync desktop filter too
+  document.querySelectorAll('.fchip').forEach(c=>{c.classList.remove('on');if(c.textContent.trim().toLowerCase()===f||(f==='alle'&&c.textContent.trim()==='ALLES'))c.classList.add('on');});
+  render();
+}
+
+// Show FAB on mobile
+if(window.innerWidth<=960){
+  document.getElementById('mob-fab').style.display='flex';
+}
+window.addEventListener('resize',()=>{
+  document.getElementById('mob-fab').style.display=window.innerWidth<=960?'flex':'none';
+});
 
 load();
 </script>
