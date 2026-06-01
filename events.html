@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Events Zürich — Was lauft hüt? | Stadtpuls</title>
+<meta name="description" content="Was lauft hüt in Züri? Konzerte, Partys, Kultur, Comedy. Live aus Zürich.">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100vh;cursor:none;overflow-x:hidden}
+
+/* CURSOR */
+#cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
+#cur2{position:fixed;width:28px;height:28px;border:1px solid rgba(255,45,0,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .08s,top .08s}
+.scan{position:fixed;inset:0;background:repeating-linear-gradient(0deg,rgba(0,0,0,.025) 0px,rgba(0,0,0,.025) 1px,transparent 1px,transparent 2px);pointer-events:none;z-index:1000}
+
+/* NAV */
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid #0d0d1e;position:sticky;top:0;background:rgba(4,4,10,.95);backdrop-filter:blur(12px);z-index:200;gap:20px}
+.logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#ff2d00;letter-spacing:2px;text-decoration:none;flex-shrink:0}
+.nav-links{display:flex;gap:24px}
+.nav-links a{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#2a2a3e;text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:#e8e4d9}
+.nav-links a.active{color:#ff2d00}
+
+/* ═══════════════════════════════
+   HERO — UNIVERSE FULLSCREEN
+═══════════════════════════════ */
+.hero{position:relative;height:100vh;display:flex;flex-direction:column;overflow:hidden;background:#04040a}
+#hc{position:absolute;top:0;left:0;width:100%;height:100%;z-index:0}
+.ho{position:absolute;inset:0;background:linear-gradient(180deg,rgba(4,4,10,0) 0%,rgba(4,4,10,.3) 40%,rgba(4,4,10,.85) 75%,#04040a 100%);z-index:1}
+
+/* HERO TEXT */
+.hero-txt{position:absolute;bottom:0;left:0;right:0;z-index:2;padding:0 28px 0}
+
+/* KREISRIVALITAET STRIP — live */
+.kreis-strip{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;border-top:1px solid #0d0d1e;background:rgba(4,4,10,.85);backdrop-filter:blur(8px);position:relative;z-index:2;flex-shrink:0}
+.kreis-strip::-webkit-scrollbar{display:none}
+.ks-item{flex-shrink:0;padding:6px 14px;display:flex;align-items:center;gap:6px;border-right:1px solid #0d0d1e}
+.ks-label{font-size:8px;letter-spacing:1px;color:#555;text-transform:uppercase;min-width:22px;font-weight:500}
+.ks-bar{width:36px;height:3px;background:#1a1a2e;position:relative}
+.ks-fill{height:100%;background:#ff2d00;transition:width 1s ease}
+.ks-count{font-size:9px;color:#555;font-family:'DM Mono',monospace;min-width:18px}
+.ks-item.top .ks-label{color:#c8ff00}
+.ks-item.top .ks-fill{background:#c8ff00}
+.ks-item.top .ks-count{color:#c8ff00}
+
+/* HEADLINE SYSTEM */
+.hl-eyebrow{font-size:8px;letter-spacing:5px;text-transform:uppercase;color:#ff2d00;margin-bottom:10px;opacity:.8}
+.hl-main{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;line-height:.82;letter-spacing:-3px}
+.hl-was{font-size:clamp(48px,7vw,88px);color:#e8e4d9;display:block;opacity:1}
+.hl-lauft{font-size:clamp(80px,13vw,160px);color:#ff2d00;display:block}
+.hl-hut{font-size:clamp(80px,13vw,160px);color:#fff;display:block}
+
+/* LIVE PULSE DOT */
+.live-dot{display:inline-flex;align-items:center;gap:6px;margin-bottom:16px}
+.live-dot-inner{width:7px;height:7px;background:#ff2d00;border-radius:50%;animation:ping 1.5s infinite}
+.live-txt{font-size:7px;letter-spacing:3px;color:#ff2d00;text-transform:uppercase}
+
+/* STATS ROW — inline im Hero unten */
+.hero-stats{display:flex;gap:0;border-top:1px solid #0d0d1e;margin-top:0;flex-shrink:0;position:relative;z-index:2}
+.hst{flex:1;padding:12px 8px;text-align:center;border-right:1px solid #0d0d1e}
+.hst:last-child{border-right:none}
+.hst-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(18px,3vw,32px);color:#c8ff00;line-height:1}
+.hst-l{font-size:6px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-top:2px;opacity:.6}
+
+/* CYAN TICKER */
+.tkw{background:#000;padding:11px 0;overflow:hidden;position:relative;z-index:2;flex-shrink:0;border-top:1px solid #1a1a2e;border-bottom:1px solid #1a1a2e}
+.tkit{padding:0 32px;font-size:9px;letter-spacing:4px;text-transform:uppercase;color:#ff2d00;white-space:nowrap;border-right:1px solid #1a1a2e}
+.tki{display:flex;animation:ticker 45s linear infinite;width:max-content}
+.tkw:hover .tki{animation-play-state:paused}
+
+.fchip{flex-shrink:0;padding:11px 18px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#777;border:none;background:transparent;cursor:none;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;border-right:1px solid #0d0d1e}
+.fchip:last-child{border-right:none}
+.fchip:hover{color:#e8e4d9;background:rgba(255,255,255,.02)}
+.fchip.on{color:#ff2d00;border-bottom-color:#ff2d00;background:rgba(255,45,0,.04)}
+.fchip.volt.on{color:#c8ff00;border-bottom-color:#c8ff00;background:rgba(200,255,0,.04)}
+.fchip.cyan.on{color:#00f5ff;border-bottom-color:#00f5ff;background:rgba(0,245,255,.04)}
+
+/* ═══════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════ */
+.main-layout{display:grid;grid-template-columns:1fr 420px;min-height:80vh}
+
+/* ═══════════════════════════════
+   LEFT — TIMELINE VIEW
+═══════════════════════════════ */
+.timeline-col{border-right:1px solid #0d0d1e}
+
+/* DATE TABS */
+.date-tabs{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;border-bottom:1px solid #0d0d1e;background:#04040a}
+.date-tabs::-webkit-scrollbar{display:none}
+.dtab{flex-shrink:0;padding:0;border:none;background:none;cursor:none;border-bottom:3px solid transparent;transition:all .2s}
+.dtab-inner{padding:12px 18px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.dtab .dday{font-size:7px;letter-spacing:2px;color:#888;text-transform:uppercase;transition:color .2s}
+.dtab .dnum{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:#888;line-height:1;transition:color .2s}
+.dtab .devt{font-size:6px;color:#666;letter-spacing:1px}
+.dtab:hover .dnum{color:#e8e4d9}
+.dtab.on{border-bottom-color:#ff2d00}
+.dtab.on .dnum{color:#ff2d00}
+.dtab.on .dday{color:rgba(255,45,0,.6)}
+.dtab.on .devt{color:rgba(255,45,0,.4)}
+.dtab.tod .dnum{color:#fff}
+.tdot{display:inline-block;width:5px;height:5px;background:#ff2d00;border-radius:50%;animation:ping 1.5s infinite;margin-left:4px;vertical-align:middle}
+
+/* TIMELINE BODY */
+.timeline-body{position:relative;padding:0}
+
+/* HOUR BLOCK */
+.hour-block{display:grid;grid-template-columns:52px 1fr;border-bottom:1px solid #080814;min-height:60px}
+.hour-block.has-events{min-height:auto}
+.hour-label{padding:12px 8px;text-align:center;border-right:1px solid #0d0d1e;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;flex-shrink:0;position:sticky;/* just layout */}
+.hl-h{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#777;line-height:1}
+.hour-block.active .hl-h{color:#ff2d00;animation:ping 2s infinite}
+.hl-m{font-size:6px;color:#666;letter-spacing:1px}
+.hour-events{padding:4px;display:flex;flex-direction:column;gap:3px}
+
+/* EVENT CARD — TIMELINE */
+.ev-card{display:grid;grid-template-columns:1fr 72px;border:1px solid #1a1a2e;cursor:none;transition:all .15s;position:relative;overflow:hidden}
+.ev-card:hover{border-color:#ff2d00;background:#080814;transform:translateX(2px)}
+.ev-card.sel{border-color:#ff2d00;background:#0a0a1a;border-left-width:3px}
+.ev-card-body{padding:10px 12px}
+.ev-chips{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px}
+.ec{padding:2px 6px;font-size:6px;letter-spacing:1px;text-transform:uppercase}
+.ek{border:1px solid rgba(255,45,0,.5);color:#ff2d00}
+.ep{border:1px solid rgba(236,72,153,.5);color:#ec4899}
+.eku{border:1px solid rgba(147,51,234,.5);color:#9333ea}
+.ew{border:1px solid rgba(255,215,0,.5);color:#ffd700}
+.es{border:1px solid rgba(0,245,255,.5);color:#00f5ff}
+.eco{border:1px solid rgba(200,255,0,.5);color:#c8ff00}
+.em{border:1px solid rgba(255,102,0,.5);color:#ff6600}
+.ee{border:1px solid #333;color:#888}
+.egr{background:#c8ff00;color:#000;border:none}
+.epo{background:#9333ea;color:#fff;border:none}
+.ev-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(16px,2vw,22px);line-height:1.05;color:#e8e4d9;margin-bottom:4px}
+.ev-venue{font-size:8px;color:#888;display:flex;align-items:center;gap:4px}
+.ev-dot{width:3px;height:3px;background:#555;border-radius:50%;flex-shrink:0}
+.ev-kb{background:#1a1a2e;padding:1px 5px;font-size:6px;color:#888;margin-left:3px}
+
+/* PHASE 5 — «Ich geh» mini button */
+.p5-mini{position:absolute;top:8px;right:8px;opacity:0;transition:opacity .2s}
+.ev-card:hover .p5-mini{opacity:1}
+.p5-mini-btn{background:transparent;border:1px solid rgba(0,245,255,.2);color:#00f5ff;font-family:'DM Mono',monospace;font-size:6px;letter-spacing:1px;text-transform:uppercase;padding:3px 6px;cursor:none;transition:all .2s}
+.p5-mini-btn:hover{background:rgba(0,245,255,.08)}
+
+/* EVENT IMAGE */
+.ev-img{position:relative;overflow:hidden;background:#080814}
+.ev-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(60%);transition:filter .3s;display:block}
+.ev-card:hover .ev-img img{filter:grayscale(10%)}
+.ev-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:20px;color:#1a1a2e}
+.badge-t{position:absolute;bottom:4px;right:4px;background:#ff2d00;color:#fff;font-size:5px;letter-spacing:1px;padding:2px 4px;text-transform:uppercase}
+.badge-g{position:absolute;bottom:4px;right:4px;background:#c8ff00;color:#000;font-size:5px;letter-spacing:1px;padding:2px 4px;text-transform:uppercase}
+
+/* KI BADGE — Phase 6 */
+.ki-badge{position:absolute;top:4px;left:4px;background:linear-gradient(90deg,#9333ea,#ec4899);color:#fff;font-size:5px;letter-spacing:1px;padding:2px 5px;text-transform:uppercase;opacity:0}
+.ev-card.ki-pick .ki-badge{opacity:1}
+
+/* EMPTY / LOADING */
+.ev-empty{padding:60px 28px;text-align:center}
+.ev-empty-big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:#111;margin-bottom:6px}
+.ev-empty-s{font-size:8px;color:#1a1a2e;letter-spacing:2px}
+.load-w{padding:80px 28px;text-align:center}
+.load-b{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:56px;color:#0d0d1e;animation:blink 1.2s infinite}
+
+/* ═══════════════════════════════
+   RIGHT — DETAIL PANEL
+═══════════════════════════════ */
+.dp{position:sticky;top:calc(57px + 40px);height:calc(100vh - 57px - 40px);overflow-y:auto;background:#050510;border-left:1px solid #0d0d1e;display:flex;flex-direction:column}
+.dp::-webkit-scrollbar{width:1px}
+.dp::-webkit-scrollbar-thumb{background:#0d0d1e}
+
+.dp-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:40px}
+.dp-empty-icon{font-size:40px;opacity:.15;filter:grayscale(1)}
+.dp-empty-sub{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:#111}
+
+/* DETAIL CONTENT */
+.dp-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:grayscale(10%)}
+.dp-iph{width:100%;aspect-ratio:16/9;background:#0a0a14;display:flex;align-items:center;justify-content:center;font-size:60px;color:#1a1a2e}
+
+/* TOP META — over image */
+.dp-top{padding:20px 20px 0}
+.dp-chips{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
+.dp-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(22px,3vw,34px);line-height:.95;color:#e8e4d9;margin-bottom:16px;letter-spacing:-1px}
+
+/* META GRID */
+.dp-meta{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#0d0d1e;margin-bottom:16px}
+.dp-mc{background:#050510;padding:10px 14px}
+.dp-ml{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#555;margin-bottom:5px}
+.dp-mv{font-size:10px;color:#e8e4d9;line-height:1.3}
+.dp-mv.red{color:#ff2d00}
+.dp-mv.volt{color:#c8ff00}
+
+.dp-desc{font-size:10px;line-height:1.9;color:#777;padding:0 20px 16px;border-bottom:1px solid #1a1a2e}
+
+/* ACTION BUTTONS — Apple 56px */
+.dp-acts{padding:16px 20px;display:flex;flex-direction:column;gap:8px}
+.dp-main{background:#ff2d00;color:#fff;border:none;height:56px;line-height:56px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:none;text-align:center;transition:background .2s;text-decoration:none;display:block;padding:0}
+.dp-main:hover{background:#ff4020}
+.dp-main.gr{background:#c8ff00;color:#000}
+.dp-s{background:transparent;color:#777;border:1px solid #1a1a2e;height:48px;line-height:48px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:none;text-align:center;transition:all .2s;width:100%;display:block;text-decoration:none;padding:0}
+.dp-s:hover{color:#e8e4d9;border-color:#333}
+
+/* PHASE 5 BOX */
+.dp-p5{margin:0 20px 16px;padding:16px;border:1px solid rgba(0,245,255,.15);background:rgba(0,245,255,.03)}
+.dp-p5-l{font-size:7px;letter-spacing:2px;color:#00f5ff;text-transform:uppercase;margin-bottom:10px}
+.dp-p5-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;color:#e8e4d9;margin-bottom:8px;line-height:1}
+.dp-p5-desc{font-size:9px;color:#555;line-height:1.7;margin-bottom:12px}
+.dp-p5-avatars{display:flex;margin-bottom:8px}
+.dp-p5-av{width:28px;height:28px;border-radius:50%;border:2px solid #050510;background:#0d0d1e;display:inline-flex;align-items:center;justify-content:center;font-size:12px;margin-left:-6px}
+.dp-p5-av:first-child{margin-left:0}
+.dp-p5-cnt{font-size:8px;color:#555;letter-spacing:1px;margin-bottom:12px}
+.dp-p5-btn{background:transparent;border:1px solid rgba(0,245,255,.25);color:#00f5ff;height:48px;line-height:48px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;cursor:none;width:100%;transition:all .2s;margin-bottom:6px;display:block;text-align:center;padding:0}
+.dp-p5-btn:hover{background:rgba(0,245,255,.06)}
+
+/* PHASE 6 KI BOX */
+.dp-p6{margin:0 20px 20px;padding:16px;border:1px solid rgba(147,51,234,.15);background:rgba(147,51,234,.03)}
+.dp-p6-l{font-size:7px;letter-spacing:2px;color:#9333ea;text-transform:uppercase;margin-bottom:12px}
+.dp-p6-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:9px;color:#555;line-height:1.6}
+.dp-p6-row:last-child{margin-bottom:0}
+.dp-p6-icon{font-size:14px;flex-shrink:0;margin-top:2px}
+
+/* MOBILE FAB */
+.mob-fab{display:none;position:fixed;bottom:20px;right:20px;background:#ff2d00;border:none;color:#fff;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:2px;padding:13px 20px;cursor:none;z-index:300;animation:ring 2s infinite}
+
+/* ANIMATIONS */
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
+@keyframes ping{0%,100%{opacity:1}50%{opacity:.3}}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(255,45,0,.4)}70%{box-shadow:0 0 0 10px rgba(255,45,0,0)}100%{box-shadow:0 0 0 0 rgba(255,45,0,0)}}
+
+/* ═══════════════════════════════
+   MOBILE — KOMPLETT NEU
+═══════════════════════════════ */
+@media(max-width:960px){
+  /* Detail Panel weg — Mobile öffnet Event-Profil direkt */
+  .main-layout{grid-template-columns:1fr}
+  .dp{display:none}
+
+  /* NAV */
+  nav{padding:12px 16px}
+  .nav-links{gap:14px}
+  .nav-links a{font-size:8px}
+
+  /* HERO */
+  .hl-was{font-size:clamp(32px,8vw,56px)}
+  .hl-lauft{font-size:clamp(60px,16vw,110px)}
+  .hl-hut{font-size:clamp(60px,16vw,110px)}
+  .hero-txt{padding:0 16px}
+
+  /* STATS — kompakter */
+  .hst{padding:10px 4px}
+  .hst-n{font-size:clamp(16px,5vw,28px)}
+
+  /* KREISRIVALITÄT — scrollbar */
+  .ks-item{padding:6px 10px}
+  .ks-bar{width:24px}
+
+  /* FILTER — grösser für Touch */
+  .fchip{padding:13px 16px;font-size:9px;min-height:44px}
+
+  /* KALENDER TABS — grösser */
+  .dtab-inner{padding:12px 14px}
+  .dtab .dnum{font-size:22px}
+
+  /* TIMELINE — volle Breite */
+  .hour-block{grid-template-columns:44px 1fr}
+  .hour-label{padding:10px 6px}
+  .hl-h{font-size:20px}
+
+  /* EVENT CARDS — Touch-friendly */
+  .ev-card{grid-template-columns:1fr 60px}
+  .ev-card-body{padding:12px 12px}
+  .ev-title{font-size:clamp(17px,4vw,22px)}
+  .ev-venue{font-size:9px}
+  .ec{padding:3px 7px;font-size:7px}
+
+  /* FAB — gross und sichtbar */
+  .mob-fab{display:flex;align-items:center;gap:8px;bottom:24px;right:16px;padding:14px 22px;font-size:14px}
+}
+
+@media(max-width:480px){
+  /* Smartphone — alles optimiert */
+  .nav-links a:not(.active){display:none}
+  .nav-links a.active{display:block}
+
+  /* Hero — kleineres Telefon */
+  .hl-was{font-size:28px}
+  .hl-lauft{font-size:clamp(52px,18vw,80px)}
+  .hl-hut{font-size:clamp(52px,18vw,80px)}
+
+  /* Stats — 3 statt 5 */
+  .hst:nth-child(4),.hst:nth-child(5){display:none}
+
+  /* Filter — Schrift grösser Touch */
+  .fchip{padding:14px 14px;font-size:8px}
+
+  /* Kalender Tabs — kompakter */
+  .dtab-inner{padding:10px 10px}
+  .dtab .dnum{font-size:18px}
+  .dtab .dday{font-size:6px}
+
+  /* Event Cards — volle Breite */
+  .ev-card{grid-template-columns:1fr 52px}
+  .ev-card-body{padding:12px 10px}
+  .ev-title{font-size:18px}
+  .hour-block{grid-template-columns:40px 1fr}
+  .hl-h{font-size:18px}
+
+  /* Ticker — grösser */
+  .tkit{font-size:8px;letter-spacing:3px;padding:0 20px}
+  .tkw{padding:10px 0}
+
+  /* Kreis Strip — kleiner */
+  .ks-label{font-size:7px}
+  .ks-bar{width:20px}
+  .ks-count{font-size:7px}
+}
+</style>
+</head>
+<body>
+<div id="cur"></div><div id="cur2"></div>
+<div class="scan"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="logo">STADTPULS</a>
+  <div class="nav-links">
+    <a href="gastro.html">GASTRO</a>
+    <a href="nachtleben.html">NACHTLEBE</a>
+    <a href="events.html" class="active">EVENTS</a>
+    <a href="shopping.html">SHOPPING</a>
+    <a href="dating.html">DATES</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <canvas id="hc"></canvas>
+  <div class="ho"></div>
+
+  <!-- KREISRIVALITÄT STRIP -->
+  <div class="kreis-strip" id="kreis-strip"></div>
+
+  <!-- HERO TEXT -->
+  <div class="hero-txt" style="position:absolute;bottom:0;left:0;right:0;z-index:2;padding:0 28px">
+    <div class="live-dot">
+      <div class="live-dot-inner"></div>
+      <span class="live-txt">ZÜRICH — EVENTS LIVE</span>
+    </div>
+    <h1 class="hl-main">
+      <span class="hl-was">WAS</span>
+      <span class="hl-lauft">LAUFT</span>
+      <span class="hl-hut">HÜT?</span>
+    </h1>
+  </div>
+
+  <!-- STATS -->
+  <div class="hero-stats" style="position:relative;z-index:2">
+    <div class="hst"><div class="hst-n" id="s-tot">--</div><div class="hst-l">Events</div></div>
+    <div class="hst"><div class="hst-n" id="s-hut">--</div><div class="hst-l">Hüt</div></div>
+    <div class="hst"><div class="hst-n" id="s-gra">--</div><div class="hst-l">Gratis</div></div>
+    <div class="hst"><div class="hst-n" id="s-wk">--</div><div class="hst-l">Diese Woche</div></div>
+    <div class="hst"><div class="hst-n" id="s-pop">--</div><div class="hst-l">Pop-Ups</div></div>
+  </div>
+
+  <!-- TICKER -->
+  <div class="tkw"><div class="tki" id="tki">
+    <span class="tkit">⚡ ZÜRI EVENTS LIVE</span>
+    <span class="tkit">KONZERTE · PARTYS · KULTUR · COMEDY · SPORT · MÄRKTE</span>
+    <span class="tkit">TÄGLICH AKTUELL — EVENTFROG API</span>
+    <span class="tkit">⚡ ZÜRI EVENTS LIVE</span>
+    <span class="tkit">KONZERTE · PARTYS · KULTUR · COMEDY · SPORT · MÄRKTE</span>
+    <span class="tkit">TÄGLICH AKTUELL — EVENTFROG API</span>
+  </div></div>
+</div>
+
+<!-- KREISRIVALITÄT -->
+<div style="display:flex;align-items:center;background:#04040a;border-bottom:1px solid #0d0d1e">
+  <div style="flex-shrink:0;padding:6px 14px;font-size:6px;letter-spacing:2px;color:#555;text-transform:uppercase;border-right:1px solid #0d0d1e;white-space:nowrap">KREIS<br>LIVE</div>
+  <div class="kreis-strip" id="kreis-strip" style="border-top:none;flex:1"></div>
+</div>
+
+<!-- FILTER -->
+<div class="filter-zone">
+  <div class="filter-inner">
+    <button class="fchip on" onclick="sf('alle',this)">ALLES</button>
+    <button class="fchip" onclick="sf('konzert',this)">KONZERT</button>
+    <button class="fchip" onclick="sf('party',this)">PARTY</button>
+    <button class="fchip" onclick="sf('kultur',this)">KULTUR</button>
+    <button class="fchip" onclick="sf('comedy',this)">COMEDY</button>
+    <button class="fchip" onclick="sf('sport',this)">SPORT</button>
+    <button class="fchip" onclick="sf('workshop',this)">WORKSHOP</button>
+    <button class="fchip" onclick="sf('markt',this)">MARKT</button>
+    <button class="fchip volt" onclick="sf('gratis',this)">GRATIS</button>
+    <button class="fchip cyan" onclick="sf('popup',this)">POP-UP</button>
+    <button class="fchip" onclick="sf('abend',this)" style="color:#9333ea;border-bottom-color:transparent" id="chip-abend">ABEND</button>
+    <button class="fchip" onclick="sf('nacht',this)" style="color:#ec4899;border-bottom-color:transparent" id="chip-nacht">NACHT</button>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main-layout">
+
+  <!-- LEFT — TIMELINE -->
+  <div class="timeline-col">
+    <div class="date-tabs" id="date-tabs"></div>
+    <div class="timeline-body" id="timeline-body">
+      <div class="load-w"><div class="load-b">ZÜRI</div><div style="font-size:7px;letter-spacing:3px;color:#111;margin-top:8px">LÄDT EVENTS...</div></div>
+    </div>
+  </div>
+
+  <!-- RIGHT — DETAIL PANEL -->
+  <div class="dp" id="dp">
+    <div class="dp-empty">
+      <div class="dp-empty-icon">⚡</div>
+      <div class="dp-empty-sub">Event wählen</div>
+    </div>
+  </div>
+</div>
+
+<button class="mob-fab" onclick="document.querySelector('.filter-zone').scrollIntoView({behavior:'smooth'})">⚡ FILTER</button>
+
+<script>
+const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+
+/* ── CURSOR ── */
+const c1=document.getElementById('cur'),c2=document.getElementById('cur2');
+document.addEventListener('mousemove',e=>{
+  c1.style.left=e.clientX+'px';c1.style.top=e.clientY+'px';
+  setTimeout(()=>{c2.style.left=e.clientX+'px';c2.style.top=e.clientY+'px'},80);
+});
+
+/* ── UNIVERSE CANVAS ── */
+(function(){
+  const c=document.getElementById('hc');
+  const ctx=c.getContext('2d');
+  let W,H,stars=[],mouse={x:-999,y:-999};
+  const MAX_DIST=230,MOUSE_DIST=280;
+
+  function resize(){
+    W=c.width=c.offsetWidth;
+    H=c.height=c.offsetHeight||window.innerHeight;
+    const n=W<768?160:200;
+    stars=Array.from({length:n},()=>({
+      x:Math.random()*W,y:Math.random()*H,
+      vx:(Math.random()-.5)*.9,vy:(Math.random()-.5)*.9,
+      r:Math.random()*2.8+.6,
+      pulse:Math.random()*Math.PI*2,
+      ps:Math.random()*.08+.02,
+      bright:Math.random()*.6+.35
+    }));
+  }
+  resize();
+  window.addEventListener('resize',resize);
+  c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();mouse.x=e.clientX-r.left;mouse.y=e.clientY-r.top;});
+  c.addEventListener('mouseleave',()=>{mouse.x=-999;mouse.y=-999;});
+
+  function draw(){
+    ctx.fillStyle='rgba(4,4,10,.11)';ctx.fillRect(0,0,W,H);
+    stars.forEach(s=>{
+      const dx=s.x-mouse.x,dy=s.y-mouse.y,md=Math.hypot(dx,dy);
+      if(md<MOUSE_DIST&&md>1){const f=((MOUSE_DIST-md)/MOUSE_DIST)*.025;s.vx+=dx/md*f*6;s.vy+=dy/md*f*6;}
+      const sp=Math.hypot(s.vx,s.vy);
+      if(sp>2.2){s.vx=s.vx/sp*2.2;s.vy=s.vy/sp*2.2;}
+      s.x+=s.vx;s.y+=s.vy;
+      if(s.x<-10)s.x=W+10;if(s.x>W+10)s.x=-10;
+      if(s.y<-10)s.y=H+10;if(s.y>H+10)s.y=-10;
+      s.pulse+=s.ps;
+      const g=Math.max(.05,s.bright+Math.sin(s.pulse)*.45+Math.sin(s.pulse*2.7+1.3)*.2);
+      const gr=ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*7);
+      gr.addColorStop(0,`rgba(255,80,10,${g*.75})`);
+      gr.addColorStop(.3,`rgba(255,45,0,${g*.3})`);
+      gr.addColorStop(1,'rgba(255,20,0,0)');
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r*7,0,Math.PI*2);ctx.fillStyle=gr;ctx.fill();
+      const core=ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r);
+      core.addColorStop(0,`rgba(255,240,200,${g})`);
+      core.addColorStop(.4,`rgba(255,120,40,${g*.9})`);
+      core.addColorStop(1,`rgba(255,45,0,${g*.5})`);
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle=core;ctx.fill();
+    });
+    for(let i=0;i<stars.length;i++){
+      for(let j=i+1;j<stars.length;j++){
+        const a=stars[i],b=stars[j];
+        const d=Math.hypot(a.x-b.x,a.y-b.y);
+        if(d<MAX_DIST){
+          const ratio=1-d/MAX_DIST;
+          const alpha=ratio*ratio*.28*(a.bright+b.bright)*.8;
+          const green=Math.floor(25+ratio*100);
+          ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+          ctx.strokeStyle=`rgba(255,${green},0,${alpha})`;
+          ctx.lineWidth=ratio*1.6;ctx.stroke();
+          if(d<MAX_DIST*.3){
+            ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+            ctx.strokeStyle=`rgba(255,180,80,${ratio*ratio*.4})`;
+            ctx.lineWidth=ratio*.5;ctx.stroke();
+          }
+        }
+      }
+    }
+    if(mouse.x>-900){
+      const mg=ctx.createRadialGradient(mouse.x,mouse.y,0,mouse.x,mouse.y,MOUSE_DIST*.7);
+      mg.addColorStop(0,'rgba(255,45,0,.07)');mg.addColorStop(1,'rgba(255,45,0,0)');
+      ctx.beginPath();ctx.arc(mouse.x,mouse.y,MOUSE_DIST*.7,0,Math.PI*2);ctx.fillStyle=mg;ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── CONSTANTS ── */
+const DAYS=['So','Mo','Di','Mi','Do','Fr','Sa'];
+const MONTHS=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+const KN={konzert:'Konzert',comedy:'Comedy',party:'Party',workshop:'Workshop',sport:'Sport',markt:'Markt',kultur:'Kultur',event:'Event'};
+const KC={konzert:'ek',comedy:'eco',party:'ep',kultur:'eku',workshop:'ew',sport:'es',markt:'em',event:'ee'};
+const KB={konzert:'k',comedy:'co',party:'p',kultur:'ku',workshop:'w',sport:'s',markt:'m',event:'e'};
+const KE={konzert:'🎵',comedy:'😂',party:'🎉',workshop:'🎯',sport:'⚡',markt:'🛍',kultur:'🎨',event:'⚡'};
+
+let A=[],aD=null,aF='alle',sEv=null;
+
+function td(){return new Date().toISOString().split('T')[0]}
+function uhr(s){return s?s.substring(0,5):'--:--';}
+
+function gk(ev){
+  const t=((ev.titel||'')+(ev.beschreibung||'')).toLowerCase();
+  if(/konzert|band|jazz|orchestra|chor|oper|musical|gig/.test(t))return'konzert';
+  if(/comedy|kabarett|stand.?up|impro/.test(t))return'comedy';
+  if(/party|disco|dj|rave|techno|house|hip.?hop/.test(t))return'party';
+  if(/workshop|kurs|vortrag|lesung|führung|tour|yoga/.test(t))return'workshop';
+  if(/sport|lauf|marathon|turnier|swim|climb/.test(t))return'sport';
+  if(/markt|flohmarkt|messe|brocki/.test(t))return'markt';
+  if(/museum|galerie|ausstellung|theater|kino|vernissage|kunst/.test(t))return'kultur';
+  return'event';
+}
+
+const DAYSFULL=['Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag'];
+
+function fd(ds){
+  const d=new Date(ds+'T12:00:00'),t=td();
+  const tm=new Date();tm.setDate(tm.getDate()+1);
+  if(ds===t)return{s:'HÜT',day:DAYS[d.getDay()],full:'Heute',isT:true,d,dayIdx:d.getDay()};
+  if(ds===tm.toISOString().split('T')[0])return{s:'MORN',day:DAYS[d.getDay()],full:'Morgen',isT:false,d,dayIdx:d.getDay()};
+  return{s:DAYSFULL[d.getDay()].toUpperCase(),day:DAYS[d.getDay()],full:DAYSFULL[d.getDay()],isT:false,d,dayIdx:d.getDay()};
+}
+
+/* ── LOAD ── */
+async function load(){
+  try{
+    const r=await fetch(SU+'/rest/v1/eventfrog_events?aktiv=eq.true&datum_start=gte.'+td()+'&order=datum_start.asc,uhrzeit_start.asc&limit=500',{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+    A=(await r.json()).map(e=>({...e,_k:gk(e)}));
+    bStats();bTicker();bKreis();buildDateTabs();render();
+  }catch(e){
+    document.getElementById('timeline-body').innerHTML='<div class="ev-empty"><div class="ev-empty-big">OOPS</div><div class="ev-empty-s">Verbindung prüfen</div></div>';
+  }
+}
+
+function bStats(){
+  const t=td(),wk=new Date();wk.setDate(wk.getDate()+7);const wS=wk.toISOString().split('T')[0];
+  document.getElementById('s-tot').textContent=A.length;
+  document.getElementById('s-hut').textContent=A.filter(e=>e.datum_start===t).length;
+  document.getElementById('s-gra').textContent=A.filter(e=>e.eintritt_typ==='kostenlos').length;
+  document.getElementById('s-wk').textContent=A.filter(e=>e.datum_start<=wS).length;
+  document.getElementById('s-pop').textContent=A.filter(e=>e.popup).length;
+}
+
+function bTicker(){
+  const te=A.filter(e=>e.datum_start===td());
+  if(!te.length)return;
+  const items=[`⚡ ${te.length} EVENTS HÜT IN ZÜRI`,...te.slice(0,8).map(e=>`${uhr(e.uhrzeit_start)} — ${(e.titel||'').toUpperCase().substring(0,30)}`)];
+  const h=items.map(i=>`<span class="tkit">${i}</span>`).join('');
+  document.getElementById('tki').innerHTML=h+h;
+}
+
+function bKreis(){
+  const kreise=[1,2,3,4,5,6,7,8,9,10,11,12];
+  const counts=kreise.map(k=>({k,n:A.filter(e=>e.datum_start===td()&&e.kreis===k).length}));
+  const max=Math.max(...counts.map(c=>c.n),1);
+  const topK=counts.reduce((a,b)=>a.n>=b.n?a:b).k;
+  const strip=document.getElementById('kreis-strip');
+  strip.innerHTML=counts.map(({k,n})=>{
+    const pct=Math.round(n/max*100);
+    const isTop=k===topK&&n>0;
+    return`<div class="ks-item${isTop?' top':''}">
+      <span class="ks-label">K${k}</span>
+      <div class="ks-bar"><div class="ks-fill" style="width:${pct}%"></div></div>
+      <span class="ks-count">${n||''}</span>
+    </div>`;
+  }).join('');
+}
+
+function buildDateTabs(){
+  const dates=[...new Set(A.map(e=>e.datum_start))].sort().slice(0,7);
+  if(!aD&&dates.length)aD=dates[0];
+  document.getElementById('date-tabs').innerHTML=dates.map(ds=>{
+    const f=fd(ds);const cnt=A.filter(e=>e.datum_start===ds).length;
+    const d=new Date(ds+'T12:00:00');
+    const isAct=ds===aD;
+    return`<button class="dtab${isAct?' on':''}${f.isT?' tod':''}" onclick="setD('${ds}',this)">
+      <div class="dtab-inner">
+        <div class="dday">${f.isT?'HEUTE':f.day} ${d.getDate()}.</div>
+        <div class="dnum">${f.isT?'HÜT':f.isT===false&&f.s==='MORN'?'MORN':DAYS[d.getDay()]}${f.isT?'<span class="tdot"></span>':''}</div>
+        <div class="devt">${cnt} Events</div>
+      </div>
+    </button>`;
+  }).join('');
+}
+
+function setD(ds,el){
+  aD=ds;
+  document.querySelectorAll('.dtab').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  render();
+}
+
+function sf(f,el){
+  aF=f;
+  document.querySelectorAll('.fchip').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  render();
+}
+
+/* ── RENDER TIMELINE ── */
+function render(){
+  let evs=A;
+  if(aD)evs=evs.filter(e=>e.datum_start===aD);
+  if(aF==='gratis')evs=evs.filter(e=>e.eintritt_typ==='kostenlos');
+  else if(aF==='popup')evs=evs.filter(e=>e.popup);
+  else if(aF==='abend')evs=evs.filter(e=>{const h=e.uhrzeit_start?parseInt(e.uhrzeit_start):0;return h>=17&&h<22;});
+  else if(aF==='nacht')evs=evs.filter(e=>{const h=e.uhrzeit_start?parseInt(e.uhrzeit_start):0;return h>=22||h<4;});
+  else if(aF!=='alle')evs=evs.filter(e=>e._k===aF);
+
+  const body=document.getElementById('timeline-body');
+
+  if(!evs.length){
+    body.innerHTML='<div class="ev-empty"><div class="ev-empty-big">NÜÜT</div><div class="ev-empty-s">Anderen Filter wähle</div></div>';
+    return;
+  }
+
+  // Group by hour
+  const now=new Date();
+  const currentH=now.getHours();
+  const isToday=aD===td();
+  const hours={};
+  evs.forEach(e=>{
+    const h=e.uhrzeit_start?parseInt(e.uhrzeit_start.substring(0,2)):0;
+    if(!hours[h])hours[h]=[];
+    hours[h].push(e);
+  });
+
+  const sortedHours=Object.keys(hours).map(Number).sort((a,b)=>a-b);
+
+  body.innerHTML=sortedHours.map(h=>{
+    const isActive=isToday&&h===currentH;
+    const isPast=isToday&&h<currentH;
+    const evList=hours[h];
+    return`<div class="hour-block has-events${isActive?' active':''}${isPast?' past':''}">
+      <div class="hour-label">
+        <div class="hl-h" style="${isPast?'opacity:.25':''}">${String(h).padStart(2,'0')}</div>
+        <div class="hl-m">:00</div>
+        ${isActive?'<div style="width:4px;height:4px;background:#ff2d00;border-radius:50%;animation:ping 1.5s infinite;margin-top:4px"></div>':''}
+      </div>
+      <div class="hour-events">
+        ${evList.map(ev=>evCard(ev,isPast)).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function isDatesEvent(ev){
+  const t=((ev.titel||'')+(ev.beschreibung||'')).toLowerCase();
+  return/single|date|flirt|kennenlernen|speed.?dating|afterwork|apéro|aperitif|tanzen|salsa|tango|yoga|meditation|workshop/.test(t);
+}
+
+function evCard(ev,isPast){
+  const k=ev._k||'event';const isG=ev.eintritt_typ==='kostenlos';
+  const isSel=sEv&&sEv.id===ev.id;const em=KE[k];
+  const isKi=Math.random()<.08;
+  const showDates=isDatesEvent(ev);
+  return`<div class="ev-card${isSel?' sel':''}${isKi?' ki-pick':''}" onclick="selEv(${JSON.stringify(ev).replace(/"/g,'&quot;')})" style="${isPast?'opacity:.35':''}">
+    <div class="ki-badge">⚡ KI TIPP</div>
+    <div class="p5-mini"><button class="p5-mini-btn" onclick="event.stopPropagation();alert('Phase 5 — Login kommt!')">♥ ICH GEH</button></div>
+    <div class="ev-card-body">
+      <div class="ev-chips">
+        <span class="ec ${KC[k]}">${KN[k]}</span>
+        ${isG?'<span class="ec egr">Gratis</span>':''}
+        ${ev.popup?'<span class="ec epo">Pop-Up</span>':''}
+        ${showDates?'<span class="ec" style="border:1px solid rgba(236,72,153,.5);color:#ec4899">💘 DATES</span>':''}
+      </div>
+      <div class="ev-title">${ev.titel}</div>
+      <div class="ev-venue">
+        <span class="ev-dot"></span>${ev.venue_name||'Zürich'}
+        ${ev.kreis?`<span class="ev-kb">K${ev.kreis}</span>`:''}
+      </div>
+      ${showDates?`<div style="margin-top:6px"><a href="dating.html" onclick="event.stopPropagation()" style="font-size:7px;letter-spacing:1px;color:#ec4899;text-decoration:none;border:1px solid rgba(236,72,153,.2);padding:2px 8px;transition:all .2s">💘 PEOPLE & DATES →</a></div>`:''}
+    </div>
+    <div class="ev-img">
+      ${ev.bild_url
+        ?`<img src="${ev.bild_url}" alt="${ev.titel}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ev-ph>${em}</div>'">`
+        :`<div class="ev-ph">${em}</div>`}
+      ${isG?'<div class="badge-g">GRATIS</div>':ev.ticket_url?'<div class="badge-t">TICKET</div>':''}
+    </div>
+  </div>`;
+}
+
+function selEv(ev){
+  sEv=ev;
+  document.querySelectorAll('.ev-card').forEach(r=>r.classList.remove('sel'));
+  event.currentTarget.classList.add('sel');
+  // Mobile → direkt zur Profil-Seite
+  if(window.innerWidth<=960){
+    const eid=ev.ef_id||ev.id;
+    window.location.href='event-profil.html?id='+eid;
+    return;
+  }
+  showDetail(ev);
+}
+
+function showDetail(ev){
+  const k=ev._k||gk(ev);const isG=ev.eintritt_typ==='kostenlos';
+  const d=new Date(ev.datum_start+'T12:00:00');
+  const dStr=DAYS[d.getDay()]+', '+d.getDate()+'. '+MONTHS[d.getMonth()]+' 2026';
+  const em=KE[k];const eid=ev.ef_id||ev.id;
+
+  document.getElementById('dp').innerHTML=`
+    ${ev.bild_url
+      ?`<img class="dp-img" src="${ev.bild_url}" alt="${ev.titel}" onerror="this.outerHTML='<div class=dp-iph>${em}</div>'">`
+      :`<div class="dp-iph">${em}</div>`}
+    <div class="dp-top">
+      <div class="dp-chips">
+        <span class="ec ${KC[k]}">${KN[k]}</span>
+        ${isG?'<span class="ec egr">Gratis</span>':''}
+        ${ev.popup?'<span class="ec epo">Pop-Up</span>':''}
+      </div>
+      <div class="dp-title">${ev.titel}</div>
+      <div class="dp-meta">
+        <div class="dp-mc"><div class="dp-ml">DATUM</div><div class="dp-mv">${dStr}</div></div>
+        <div class="dp-mc"><div class="dp-ml">UHRZEIT</div><div class="dp-mv">${uhr(ev.uhrzeit_start)} Uhr</div></div>
+        <div class="dp-mc"><div class="dp-ml">ORT</div><div class="dp-mv">${ev.venue_name||'Zürich'}</div></div>
+        <div class="dp-mc"><div class="dp-ml">KREIS</div><div class="dp-mv red">${ev.kreis?'Kreis '+ev.kreis:'--'}</div></div>
+        ${ev.adresse?`<div class="dp-mc" style="grid-column:1/-1"><div class="dp-ml">ADRESSE</div><div class="dp-mv">${ev.adresse}</div></div>`:''}
+        <div class="dp-mc"><div class="dp-ml">EINTRITT</div><div class="dp-mv ${isG?'volt':''}">${isG?'KOSTENLOS':'KOSTENPFLICHTIG'}</div></div>
+      </div>
+    </div>
+    ${ev.beschreibung?`<div class="dp-desc">${ev.beschreibung.substring(0,320)}${ev.beschreibung.length>320?'...':''}</div>`:''}
+    <div class="dp-acts">
+      ${ev.ticket_url&&!isG?`<a href="${ev.ticket_url}" target="_blank" class="dp-main">🎟 TICKET KAUFE</a>`:''}
+      ${isG?'<div class="dp-main gr">✓ GRATIS EINTRITT</div>':''}
+      <a href="event-profil.html?id=${eid}" class="dp-s">📄 VOLLSTÄNDIGES PROFIL</a>
+      <button class="dp-s" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(ev.adresse||ev.venue_name||'Zürich')}','_blank')">📍 AUF KARTE</button>
+      <button class="dp-s" onclick="navigator.share?navigator.share({title:'${(ev.titel||'').replace(/'/g,'').substring(0,40)}',url:location.origin+'/event-profil.html?id=${eid}'}):navigator.clipboard&&navigator.clipboard.writeText(location.origin+'/event-profil.html?id=${eid}')">↗ TEILE</button>
+    </div>
+
+    <div class="dp-p5">
+      <div class="dp-p5-l">⚡ PHASE 5 — COMMUNITY</div>
+      <div class="dp-p5-title">WER GEHT NOCH?</div>
+      <div class="dp-p5-desc">Speichere Events · Sieh wer noch hingeht · Spontan-Gruppe · Kreis-Freunde finden</div>
+      <div class="dp-p5-avatars">
+        <div class="dp-p5-av">🦊</div>
+        <div class="dp-p5-av">🐺</div>
+        <div class="dp-p5-av">🦋</div>
+        <div class="dp-p5-av">🦁</div>
+        <div class="dp-p5-av" style="background:rgba(0,245,255,.1);color:#00f5ff;font-size:8px;font-family:'DM Mono',monospace">+?</div>
+      </div>
+      <div class="dp-p5-cnt">? Stadtpulser gehen — Login um zu sehen</div>
+      <button class="dp-p5-btn" onclick="alert('Phase 5 — Login kommt bald!')">♥ ICH GEHE — LOGIN NÖTIG</button>
+      <button class="dp-p5-btn" style="border-color:rgba(0,245,255,.08);color:#1a1a2e" onclick="alert('Phase 5 — Community kommt!')">👥 WER GEHT NOCH?</button>
+    </div>
+
+    <div class="dp-p6">
+      <div class="dp-p6-l">🔮 PHASE 6 — KI FEATURES</div>
+      <div class="dp-p6-row"><div class="dp-p6-icon">🎯</div><div>Personalisierte Empfehlungen — KI lernt deine Vorlieben</div></div>
+      <div class="dp-p6-row"><div class="dp-p6-icon">⚡</div><div>Spontan-Modus — «2h · Kreis 4 · gratis» → KI baut deinen Abend</div></div>
+      <div class="dp-p6-row"><div class="dp-p6-icon">🎟</div><div>Ticketcorner direkt — ohne Stadtpuls zu verlassen</div></div>
+      <div class="dp-p6-row"><div class="dp-p6-icon">🗺</div><div>GPS → Events in 500m Radius — live</div></div>
+    </div>`;
+}
+
+load();
+</script>
+</body>
+</html>
