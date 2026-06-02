@@ -220,7 +220,7 @@ function isOffe(oeffnungszeiten){
   const day=days[now.getDay()];
   const todayStr=Array.isArray(oeffnungszeiten)?oeffnungszeiten.find(function(o){return o&&(o.includes('Mo,Tu')||o.includes(day));}):null;
   if(!todayStr)return null;
-  const match=todayStr.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/);
+  const match=todayStr.match(/(\d{2}):(\d{2})(?::\d{2})?-(\d{2}):(\d{2})(?::\d{2})?/);
   if(!match)return null;
   return h>=parseInt(match[1])&&h<parseInt(match[3]);
 }
