@@ -61,7 +61,7 @@
 <meta name="geo.position" content="47.3769;8.5417">
 <meta name="ICBM" content="47.3769, 8.5417">
 
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -74,7 +74,8 @@ body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height
 
 /* NAV */
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid #0d0d1e;position:sticky;top:0;background:rgba(4,4,10,.95);backdrop-filter:blur(12px);z-index:200;gap:20px}
-.logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#ff2d00;letter-spacing:2px;text-decoration:none;flex-shrink:0}
+.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite;flex-shrink:0}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px;text-decoration:none}
 .nav-links{display:flex;gap:24px}
 .nav-links a{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#bbb;text-decoration:none;transition:color .2s}
 .nav-links a:hover{color:#e8e4d9}
@@ -396,7 +397,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="logo">STADTPULS</a>
+  <a href="index.html" class="logo"><div class="ldot"></div>STADTPULS</a>
   <div class="nav-links">
     <a href="gastro.html">GASTRO</a>
     <a href="nachtleben.html">NACHTLEBE</a>
@@ -996,5 +997,76 @@ window.addEventListener('resize',updateFAB);
 
 load();
 </script>
+
+
+
+
+
+<!-- FOOTER — EXAKT WIE DEPULS.CH ORIGINAL -->
+<footer style="background:#04040a;border-top:1px solid rgba(255,45,0,.08);padding:48px 40px 0">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px">
+
+    <!-- BRAND -->
+    <div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div style="width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite;flex-shrink:0"></div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:32px;color:#e8e4d9;letter-spacing:4px">STADTPULS</div>
+      </div>
+      <div style="font-size:10px;color:rgba(232,228,217,.4);margin-bottom:16px;line-height:1.6">dä puls vo dä stadt</div>
+      <div style="font-size:10px;color:rgba(232,228,217,.25);line-height:1.8;margin-bottom:20px">Interaktiver Lifestyle &amp; City Guide für<br>Zürich. Social Media &amp; Marktplattform.<br>Der virtuelle Spielplatz für Erwachsene.</div>
+      <div style="font-size:9px;color:rgba(232,228,217,.15)">© 2026 by raimondo* -- Zürich</div>
+    </div>
+
+    <!-- ENTDECKEN -->
+    <div>
+      <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:20px">ENTDECKEN</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <a href="gastro.html" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px;transition:color .2s">Gastro &amp; Bars</a>
+        <a href="nachtleben.html" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Nachtleben</a>
+        <a href="shopping.html" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Shopping</a>
+        <a href="events.html" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Events</a>
+        <a href="index.html?page=quartiere" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Quartiere</a>
+        <a href="index.html?page=musik" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Musik &amp; Sound</a>
+        <a href="index.html?page=mobilitaet" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Mobilität</a>
+      </div>
+    </div>
+
+    <!-- COMMUNITY -->
+    <div>
+      <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:20px">COMMUNITY</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <a href="index.html?page=community" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Feed &amp; Posts</a>
+        <a href="dating.html" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">People &amp; Dates</a>
+        <a href="index.html?page=jobs" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Jobs Züri</a>
+        <a href="index.html?page=news" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">News &amp; Stories</a>
+        <a href="index.html?page=gps" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">GPS -- Wo bisch du?</a>
+        <a href="index.html?page=kooperationen" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Kooperatione</a>
+      </div>
+    </div>
+
+    <!-- MITMACHE -->
+    <div>
+      <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:20px">MITMACHE</div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <a href="index.html?page=login" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Einlogge</a>
+        <a href="index.html?page=profil" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Profil aalege</a>
+        <a href="index.html?page=blogger" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Blogger werde</a>
+        <a href="index.html?page=inserat" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Inserat schalte</a>
+        <a href="kontakt.html" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Partner werde</a>
+        <a href="kontakt.html" style="font-size:10px;color:rgba(232,228,217,.35);text-decoration:none;letter-spacing:.3px">Kontakt</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div style="border-top:1px solid rgba(255,45,0,.06);padding:16px 0;display:flex;justify-content:space-between;align-items:center">
+    <div style="font-size:8px;letter-spacing:2px;color:rgba(232,228,217,.1);text-transform:uppercase">© 2026 STADTPULS.CH -- BY RAIMONDO* -- ZÜRICH</div>
+    <div style="display:flex;gap:24px">
+      <a href="datenschutz.html" style="font-size:8px;letter-spacing:2px;color:rgba(232,228,217,.2);text-decoration:none;text-transform:uppercase;transition:color .2s">DATENSCHUTZ</a>
+      <a href="impressum.html" style="font-size:8px;letter-spacing:2px;color:rgba(232,228,217,.2);text-decoration:none;text-transform:uppercase">IMPRESSUM</a>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
