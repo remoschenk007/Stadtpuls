@@ -76,7 +76,7 @@ body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid #0d0d1e;position:sticky;top:0;background:rgba(4,4,10,.95);backdrop-filter:blur(12px);z-index:200;gap:20px}
 .logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#ff2d00;letter-spacing:2px;text-decoration:none;flex-shrink:0}
 .nav-links{display:flex;gap:24px}
-.nav-links a{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#2a2a3e;text-decoration:none;transition:color .2s}
+.nav-links a{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#bbb;text-decoration:none;transition:color .2s}
 .nav-links a:hover{color:#e8e4d9}
 .nav-links a.active{color:#ff2d00}
 
@@ -94,10 +94,10 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .kreis-strip{display:flex;overflow-x:auto;-webkit-overflow-scrolling:touch;border-top:1px solid #0d0d1e;background:rgba(4,4,10,.85);backdrop-filter:blur(8px);position:relative;z-index:2;flex-shrink:0}
 .kreis-strip::-webkit-scrollbar{display:none}
 .ks-item{flex-shrink:0;padding:6px 14px;display:flex;align-items:center;gap:6px;border-right:1px solid #0d0d1e}
-.ks-label{font-size:8px;letter-spacing:1px;color:#555;text-transform:uppercase;min-width:22px;font-weight:500}
+.ks-label{font-size:8px;letter-spacing:1px;color:#bbb;text-transform:uppercase;min-width:22px;font-weight:500}
 .ks-bar{width:36px;height:3px;background:#1a1a2e;position:relative}
 .ks-fill{height:100%;background:#ff2d00;transition:width 1s ease}
-.ks-count{font-size:9px;color:#555;font-family:'DM Mono',monospace;min-width:18px}
+.ks-count{font-size:9px;color:#bbb;font-family:'DM Mono',monospace;min-width:18px}
 .ks-item.top .ks-label{color:#c8ff00}
 .ks-item.top .ks-fill{background:#c8ff00}
 .ks-item.top .ks-count{color:#c8ff00}
@@ -127,7 +127,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .tki{display:flex;animation:ticker 45s linear infinite;width:max-content}
 .tkw:hover .tki{animation-play-state:paused}
 
-.fchip{flex-shrink:0;padding:11px 18px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#777;border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;border-right:1px solid #0d0d1e}
+.fchip{flex-shrink:0;padding:11px 18px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#aaa;border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;white-space:nowrap;border-right:1px solid #0d0d1e}
 .fchip:last-child{border-right:none}
 .fchip:hover{color:#e8e4d9;background:rgba(255,255,255,.02)}
 .fchip.on{color:#ff2d00;border-bottom-color:#ff2d00;background:rgba(255,45,0,.04)}
@@ -149,9 +149,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .date-tabs::-webkit-scrollbar{display:none}
 .dtab{flex-shrink:0;padding:0;border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s}
 .dtab-inner{padding:12px 18px;display:flex;flex-direction:column;align-items:center;gap:2px}
-.dtab .dday{font-size:7px;letter-spacing:2px;color:#888;text-transform:uppercase;transition:color .2s}
-.dtab .dnum{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:#888;line-height:1;transition:color .2s}
-.dtab .devt{font-size:6px;color:#666;letter-spacing:1px}
+.dtab .dday{font-size:7px;letter-spacing:2px;color:#bbb;text-transform:uppercase;transition:color .2s}
+.dtab .dnum{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:#bbb;line-height:1;transition:color .2s}
+.dtab .devt{font-size:6px;color:#999;letter-spacing:1px}
 .dtab:hover .dnum{color:#e8e4d9}
 .dtab.on{border-bottom-color:#ff2d00}
 .dtab.on .dnum{color:#ff2d00}
@@ -167,9 +167,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .hour-block{display:grid;grid-template-columns:52px 1fr;border-bottom:1px solid #080814;min-height:60px}
 .hour-block.has-events{min-height:auto}
 .hour-label{padding:12px 8px;text-align:center;border-right:1px solid #0d0d1e;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;flex-shrink:0;position:sticky;/* just layout */}
-.hl-h{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#777;line-height:1}
+.hl-h{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:#aaa;line-height:1}
 .hour-block.active .hl-h{color:#ff2d00;animation:ping 2s infinite}
-.hl-m{font-size:6px;color:#666;letter-spacing:1px}
+.hl-m{font-size:6px;color:#999;letter-spacing:1px}
 .hour-events{padding:4px;display:flex;flex-direction:column;gap:3px}
 
 /* EVENT CARD — TIMELINE */
@@ -186,13 +186,19 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .es{border:1px solid rgba(0,245,255,.5);color:#00f5ff}
 .eco{border:1px solid rgba(200,255,0,.5);color:#c8ff00}
 .em{border:1px solid rgba(255,102,0,.5);color:#ff6600}
-.ee{border:1px solid #333;color:#888}
+.ee{border:1px solid #333;color:#bbb}
 .egr{background:#c8ff00;color:#000;border:none}
 .epo{background:#9333ea;color:#fff;border:none}
+.ef{border:1px solid rgba(255,150,0,.5);color:#ff9600}
+.eo{border:1px solid rgba(100,200,100,.5);color:#64c864}
+.efd{border:1px solid rgba(255,200,0,.5);color:#ffc800}
+/* FOMO Badges */
+.badge-sold{position:absolute;bottom:5px;right:5px;background:#ff2d00;color:#fff;font-size:5px;letter-spacing:1px;padding:2px 4px;text-transform:uppercase;animation:blink 1.5s infinite}
+.badge-few{position:absolute;bottom:5px;right:5px;background:#ff6600;color:#fff;font-size:5px;letter-spacing:1px;padding:2px 4px;text-transform:uppercase}
 .ev-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(16px,2vw,22px);line-height:1.05;color:#e8e4d9;margin-bottom:4px}
-.ev-venue{font-size:8px;color:#888;display:flex;align-items:center;gap:4px}
+.ev-venue{font-size:8px;color:#bbb;display:flex;align-items:center;gap:4px}
 .ev-dot{width:3px;height:3px;background:#555;border-radius:50%;flex-shrink:0}
-.ev-kb{background:#1a1a2e;padding:1px 5px;font-size:6px;color:#888;margin-left:3px}
+.ev-kb{background:#1a1a2e;padding:1px 5px;font-size:6px;color:#bbb;margin-left:3px}
 
 /* PHASE 5 — «Ich geh» mini button */
 .p5-mini{position:absolute;top:8px;right:8px;opacity:0;transition:opacity .2s}
@@ -204,7 +210,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .ev-img{position:relative;overflow:hidden;background:#080814}
 .ev-img img{width:100%;height:100%;object-fit:cover;filter:grayscale(60%);transition:filter .3s;display:block}
 .ev-card:hover .ev-img img{filter:grayscale(10%)}
-.ev-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:20px;color:#1a1a2e}
+.ev-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:20px;color:#aaa}
 .badge-t{position:absolute;bottom:4px;right:4px;background:#ff2d00;color:#fff;font-size:5px;letter-spacing:1px;padding:2px 4px;text-transform:uppercase}
 .badge-g{position:absolute;bottom:4px;right:4px;background:#c8ff00;color:#000;font-size:5px;letter-spacing:1px;padding:2px 4px;text-transform:uppercase}
 
@@ -215,9 +221,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 /* EMPTY / LOADING */
 .ev-empty{padding:60px 28px;text-align:center}
 .ev-empty-big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:#111;margin-bottom:6px}
-.ev-empty-s{font-size:8px;color:#1a1a2e;letter-spacing:2px}
+.ev-empty-s{font-size:8px;color:#aaa;letter-spacing:2px}
 .load-w{padding:80px 28px;text-align:center}
-.load-b{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:56px;color:#0d0d1e;animation:blink 1.2s infinite}
+.load-b{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:56px;color:#999;animation:blink 1.2s infinite}
 
 /* ═══════════════════════════════
    RIGHT — DETAIL PANEL
@@ -232,7 +238,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 
 /* DETAIL CONTENT */
 .dp-img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:grayscale(10%)}
-.dp-iph{width:100%;aspect-ratio:16/9;background:#0a0a14;display:flex;align-items:center;justify-content:center;font-size:60px;color:#1a1a2e}
+.dp-iph{width:100%;aspect-ratio:16/9;background:#0a0a14;display:flex;align-items:center;justify-content:center;font-size:60px;color:#aaa}
 
 /* TOP META — over image */
 .dp-top{padding:20px 20px 0}
@@ -242,37 +248,37 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 /* META GRID */
 .dp-meta{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#0d0d1e;margin-bottom:16px}
 .dp-mc{background:#050510;padding:10px 14px}
-.dp-ml{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#555;margin-bottom:5px}
+.dp-ml{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#bbb;margin-bottom:5px}
 .dp-mv{font-size:10px;color:#e8e4d9;line-height:1.3}
 .dp-mv.red{color:#ff2d00}
 .dp-mv.volt{color:#c8ff00}
 
-.dp-desc{font-size:10px;line-height:1.9;color:#777;padding:0 20px 16px;border-bottom:1px solid #1a1a2e}
+.dp-desc{font-size:10px;line-height:1.9;color:#aaa;padding:0 20px 16px;border-bottom:1px solid #1a1a2e}
 
 /* ACTION BUTTONS — Apple 56px */
 .dp-acts{padding:16px 20px;display:flex;flex-direction:column;gap:8px}
 .dp-main{background:#ff2d00;color:#fff;border:none;height:56px;line-height:56px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;text-align:center;transition:background .2s;text-decoration:none;display:block;padding:0}
 .dp-main:hover{background:#ff4020}
 .dp-main.gr{background:#c8ff00;color:#000}
-.dp-s{background:transparent;color:#777;border:1px solid #1a1a2e;height:48px;line-height:48px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .2s;width:100%;display:block;text-decoration:none;padding:0}
-.dp-s:hover{color:#e8e4d9;border-color:#333}
+.dp-s{background:transparent;color:#aaa;border:1px solid #1a1a2e;height:48px;line-height:48px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .2s;width:100%;display:block;text-decoration:none;padding:0}
+.dp-s:hover{color:#e8e4d9;border-color:#222}
 
 /* PHASE 5 BOX */
 .dp-p5{margin:0 20px 16px;padding:16px;border:1px solid rgba(0,245,255,.15);background:rgba(0,245,255,.03)}
 .dp-p5-l{font-size:7px;letter-spacing:2px;color:#00f5ff;text-transform:uppercase;margin-bottom:10px}
 .dp-p5-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;color:#e8e4d9;margin-bottom:8px;line-height:1}
-.dp-p5-desc{font-size:9px;color:#555;line-height:1.7;margin-bottom:12px}
+.dp-p5-desc{font-size:9px;color:#bbb;line-height:1.7;margin-bottom:12px}
 .dp-p5-avatars{display:flex;margin-bottom:8px}
 .dp-p5-av{width:28px;height:28px;border-radius:50%;border:2px solid #050510;background:#0d0d1e;display:inline-flex;align-items:center;justify-content:center;font-size:12px;margin-left:-6px}
 .dp-p5-av:first-child{margin-left:0}
-.dp-p5-cnt{font-size:8px;color:#555;letter-spacing:1px;margin-bottom:12px}
+.dp-p5-cnt{font-size:8px;color:#bbb;letter-spacing:1px;margin-bottom:12px}
 .dp-p5-btn{background:transparent;border:1px solid rgba(0,245,255,.25);color:#00f5ff;height:48px;line-height:48px;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;width:100%;transition:all .2s;margin-bottom:6px;display:block;text-align:center;padding:0}
 .dp-p5-btn:hover{background:rgba(0,245,255,.06)}
 
 /* PHASE 6 KI BOX */
 .dp-p6{margin:0 20px 20px;padding:16px;border:1px solid rgba(147,51,234,.15);background:rgba(147,51,234,.03)}
 .dp-p6-l{font-size:7px;letter-spacing:2px;color:#9333ea;text-transform:uppercase;margin-bottom:12px}
-.dp-p6-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:9px;color:#555;line-height:1.6}
+.dp-p6-row{display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;font-size:9px;color:#bbb;line-height:1.6}
 .dp-p6-row:last-child{margin-bottom:0}
 .dp-p6-icon{font-size:14px;flex-shrink:0;margin-top:2px}
 
@@ -281,9 +287,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .mob-sheet.open{display:block}
 .mob-sheet-inner{position:absolute;bottom:0;left:0;right:0;background:#04040a;border-top:1px solid #1a1a2e;padding:0 0 40px;max-height:85vh;overflow-y:auto;border-radius:16px 16px 0 0}
 .mob-sheet-handle{width:36px;height:3px;background:#333;border-radius:2px;margin:12px auto 16px}
-.mob-sheet-title{font-size:8px;letter-spacing:3px;color:#555;text-transform:uppercase;padding:0 20px 16px;border-bottom:1px solid #1a1a2e}
+.mob-sheet-title{font-size:8px;letter-spacing:3px;color:#bbb;text-transform:uppercase;padding:0 20px 16px;border-bottom:1px solid #1a1a2e}
 .mob-filter-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;padding:16px}
-.mob-fchip{padding:14px 8px;border:1px solid #1a1a2e;background:transparent;color:#777;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .2s;min-height:48px}
+.mob-fchip{padding:14px 8px;border:1px solid #1a1a2e;background:transparent;color:#aaa;font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .2s;min-height:48px}
 .mob-fchip.on{border-color:#ff2d00;color:#ff2d00;background:rgba(255,45,0,.05)}
 .mob-fchip.volt.on{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,.05)}
 .mob-fchip.cyan.on{border-color:#00f5ff;color:#00f5ff;background:rgba(0,245,255,.05)}
@@ -443,7 +449,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 
 <!-- KREISRIVALITÄT -->
 <div style="display:flex;align-items:center;background:#04040a;border-bottom:1px solid #0d0d1e">
-  <div style="flex-shrink:0;padding:6px 14px;font-size:6px;letter-spacing:2px;color:#555;text-transform:uppercase;border-right:1px solid #0d0d1e;white-space:nowrap">KREIS<br>LIVE</div>
+  <div style="flex-shrink:0;padding:6px 14px;font-size:6px;letter-spacing:2px;color:#bbb;text-transform:uppercase;border-right:1px solid #0d0d1e;white-space:nowrap">KREIS<br>LIVE</div>
   <div class="kreis-strip" id="kreis-strip" style="border-top:none;flex:1"></div>
 </div>
 
@@ -458,6 +464,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
     <button class="fchip" onclick="sf('sport',this)">SPORT</button>
     <button class="fchip" onclick="sf('workshop',this)">WORKSHOP</button>
     <button class="fchip" onclick="sf('markt',this)">MARKT</button>
+    <button class="fchip" onclick="sf('food',this)">FOOD</button>
+    <button class="fchip" onclick="sf('outdoor',this)">OUTDOOR</button>
+    <button class="fchip" onclick="sf('kinder',this)">FAMILIE</button>
     <button class="fchip volt" onclick="sf('gratis',this)">GRATIS</button>
     <button class="fchip cyan" onclick="sf('popup',this)">POP-UP</button>
     <button class="fchip" onclick="sf('abend',this)" style="color:#9333ea;border-bottom-color:transparent" id="chip-abend">ABEND</button>
@@ -501,12 +510,15 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
       <button class="mob-fchip" onclick="mf('sport',this)">SPORT</button>
       <button class="mob-fchip" onclick="mf('workshop',this)">WORKSHOP</button>
       <button class="mob-fchip" onclick="mf('markt',this)">MARKT</button>
+      <button class="mob-fchip" onclick="mf('food',this)">FOOD</button>
+      <button class="mob-fchip" onclick="mf('outdoor',this)">OUTDOOR</button>
+      <button class="mob-fchip" onclick="mf('kinder',this)">FAMILIE</button>
       <button class="mob-fchip volt" onclick="mf('gratis',this)">GRATIS</button>
       <button class="mob-fchip cyan" onclick="mf('popup',this)">POP-UP</button>
       <button class="mob-fchip" onclick="mf('abend',this)" style="color:#9333ea">ABEND</button>
       <button class="mob-fchip" onclick="mf('nacht',this)" style="color:#ec4899">NACHT</button>
     </div>
-    <button class="mob-sheet-apply" onclick="closeSheet()">ANWENDE →</button>
+    <button class="mob-sheet-apply" onclick="applyAndClose()">ANWENDE →</button>
   </div>
 </div>
 
@@ -601,10 +613,10 @@ document.addEventListener('mousemove',e=>{
 /* ── CONSTANTS ── */
 const DAYS=['So','Mo','Di','Mi','Do','Fr','Sa'];
 const MONTHS=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
-const KN={konzert:'Konzert',comedy:'Comedy',party:'Party',workshop:'Workshop',sport:'Sport',markt:'Markt',kultur:'Kultur',event:'Event'};
-const KC={konzert:'ek',comedy:'eco',party:'ep',kultur:'eku',workshop:'ew',sport:'es',markt:'em',event:'ee'};
-const KB={konzert:'k',comedy:'co',party:'p',kultur:'ku',workshop:'w',sport:'s',markt:'m',event:'e'};
-const KE={konzert:'🎵',comedy:'😂',party:'🎉',workshop:'🎯',sport:'⚡',markt:'🛍',kultur:'🎨',event:'⚡'};
+const KN={konzert:'Konzert',comedy:'Comedy',party:'Party',workshop:'Workshop',sport:'Sport',markt:'Markt',kultur:'Kultur',food:'Food',outdoor:'Outdoor',kinder:'Familie',event:'Event'};
+const KC={konzert:'ek',comedy:'eco',party:'ep',kultur:'eku',workshop:'ew',sport:'es',markt:'em',food:'ef',outdoor:'eo',kinder:'efd',event:'ee'};
+const KB={konzert:'k',comedy:'co',party:'p',kultur:'ku',workshop:'w',sport:'s',markt:'m',food:'fo',outdoor:'ou',kinder:'ki',event:'e'};
+const KE={konzert:'🎵',comedy:'😂',party:'🎉',workshop:'🎯',sport:'⚡',markt:'🛍',kultur:'🎨',food:'🍽',outdoor:'🌿',kinder:'👨‍👩‍👧',event:'⚡'};
 
 let A=[],aD=null,aF='alle',sEv=null;
 
@@ -616,9 +628,12 @@ function gk(ev){
   if(/konzert|band|jazz|orchestra|chor|oper|musical|gig/.test(t))return'konzert';
   if(/comedy|kabarett|stand.?up|impro/.test(t))return'comedy';
   if(/party|disco|dj|rave|techno|house|hip.?hop/.test(t))return'party';
-  if(/workshop|kurs|vortrag|lesung|führung|tour|yoga/.test(t))return'workshop';
-  if(/sport|lauf|marathon|turnier|swim|climb/.test(t))return'sport';
-  if(/markt|flohmarkt|messe|brocki/.test(t))return'markt';
+  if(/food|essen|kulinar|degustation|dinner|brunch|kochen|restaurant|wein|bier/.test(t))return'food';
+  if(/outdoor|natur|park|wandern|open.?air|draussen|see|berg|wald/.test(t))return'outdoor';
+  if(/kinder|familie|family|kids|jugend|schule|eltern/.test(t))return'kinder';
+  if(/workshop|kurs|vortrag|lesung|führung|tour|yoga|seminar/.test(t))return'workshop';
+  if(/sport|lauf|marathon|turnier|swim|climb|fussball|basketball/.test(t))return'sport';
+  if(/markt|flohmarkt|messe|brocki|secondhand/.test(t))return'markt';
   if(/museum|galerie|ausstellung|theater|kino|vernissage|kunst/.test(t))return'kultur';
   return'event';
 }
@@ -787,7 +802,7 @@ function evCard(ev,isPast){
       ${ev.bild_url
         ?`<img src="${ev.bild_url}" alt="${ev.titel}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ev-ph>${em}</div>'">`
         :`<div class="ev-ph">${em}</div>`}
-      ${isG?'<div class="badge-g">GRATIS</div>':ev.ticket_url?'<div class="badge-t">TICKET</div>':''}
+      ${isG?'<div class="badge-g">GRATIS</div>':ev.sold_out?'<div class="badge-sold">AUSVERKAUFT</div>':ev.little_tickets_left?'<div class="badge-few">FAST WEG!</div>':ev.ticket_url?'<div class="badge-t">TICKET</div>':''}
     </div>
   </div>`;
 }
@@ -835,30 +850,30 @@ function showMobilePreview(ev){
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#1a1a2e;margin-bottom:20px">
           <div style="background:#04040a;padding:12px 14px">
-            <div style="font-size:7px;letter-spacing:2px;color:#444;text-transform:uppercase;margin-bottom:4px">DATUM</div>
+            <div style="font-size:7px;letter-spacing:2px;color:#aaa;text-transform:uppercase;margin-bottom:4px">DATUM</div>
             <div style="font-size:11px;color:#e8e4d9">${dStr}</div>
           </div>
           <div style="background:#04040a;padding:12px 14px">
-            <div style="font-size:7px;letter-spacing:2px;color:#444;text-transform:uppercase;margin-bottom:4px">UHRZEIT</div>
+            <div style="font-size:7px;letter-spacing:2px;color:#aaa;text-transform:uppercase;margin-bottom:4px">UHRZEIT</div>
             <div style="font-size:11px;color:#e8e4d9">${uhr(ev.uhrzeit_start)} Uhr</div>
           </div>
           <div style="background:#04040a;padding:12px 14px">
-            <div style="font-size:7px;letter-spacing:2px;color:#444;text-transform:uppercase;margin-bottom:4px">ORT</div>
+            <div style="font-size:7px;letter-spacing:2px;color:#aaa;text-transform:uppercase;margin-bottom:4px">ORT</div>
             <div style="font-size:11px;color:#e8e4d9">${ev.venue_name||'Zürich'}</div>
           </div>
           <div style="background:#04040a;padding:12px 14px">
-            <div style="font-size:7px;letter-spacing:2px;color:#444;text-transform:uppercase;margin-bottom:4px">EINTRITT</div>
+            <div style="font-size:7px;letter-spacing:2px;color:#aaa;text-transform:uppercase;margin-bottom:4px">EINTRITT</div>
             <div style="font-size:11px;color:${isG?'#c8ff00':'#e8e4d9'}">${isG?'KOSTENLOS':'KOSTENPFLICHTIG'}</div>
           </div>
         </div>
 
-        ${ev.beschreibung?`<div style="font-size:10px;line-height:1.8;color:#777;margin-bottom:20px">${ev.beschreibung.substring(0,200)}${ev.beschreibung.length>200?'...':''}</div>`:''}
+        ${ev.beschreibung?`<div style="font-size:10px;line-height:1.8;color:#aaa;margin-bottom:20px">${ev.beschreibung.substring(0,200)}${ev.beschreibung.length>200?'...':''}</div>`:''}
 
         <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:24px">
           ${ev.ticket_url&&!isG?`<a href="${ev.ticket_url}" target="_blank" style="background:#ff2d00;color:#fff;height:56px;line-height:56px;text-align:center;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;display:block">🎟 TICKET KAUFE</a>`:''}
           ${isG?`<div style="background:#c8ff00;color:#000;height:56px;line-height:56px;text-align:center;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase">✓ GRATIS EINTRITT</div>`:''}
           <a href="event-profil.html?id=${eid}" style="background:transparent;color:#e8e4d9;border:1px solid #333;height:52px;line-height:52px;text-align:center;font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:block">📄 VOLLSTÄNDIGES PROFIL →</a>
-          <button onclick="closeMobilePreview()" style="background:transparent;color:#444;border:1px solid #1a1a2e;height:44px;font-family:\'DM Mono\',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;width:100%">✕ SCHLIESSE</button>
+          <button onclick="closeMobilePreview()" style="background:transparent;color:#aaa;border:1px solid #1a1a2e;height:44px;font-family:\'DM Mono\',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;width:100%">✕ SCHLIESSE</button>
         </div>
       </div>
     </div>`;
@@ -921,7 +936,7 @@ function showDetail(ev){
       </div>
       <div class="dp-p5-cnt">? Stadtpulser gehen — Login um zu sehen</div>
       <button class="dp-p5-btn" onclick="alert('Phase 5 — Login kommt bald!')">♥ ICH GEHE — LOGIN NÖTIG</button>
-      <button class="dp-p5-btn" style="border-color:rgba(0,245,255,.08);color:#1a1a2e" onclick="alert('Phase 5 — Community kommt!')">👥 WER GEHT NOCH?</button>
+      <button class="dp-p5-btn" style="border-color:rgba(0,245,255,.25);color:#aaa" onclick="alert('Phase 5 — Community kommt!')">👥 WER GEHT NOCH?</button>
     </div>
 
     <div class="dp-p6">
@@ -933,25 +948,51 @@ function showDetail(ev){
     </div>`;
 }
 
-function openSheet(){document.getElementById('mob-sheet').classList.add('open');document.body.style.overflow='hidden';}
-function closeSheet(e){if(e&&e.target!==document.getElementById('mob-sheet')&&e.type!=='click')return;document.getElementById('mob-sheet').classList.remove('open');document.body.style.overflow='';}
+function openSheet(){
+  const s=document.getElementById('mob-sheet');
+  if(s){s.classList.add('open');document.body.style.overflow='hidden';}
+}
+
+function closeSheet(e){
+  // Backdrop click oder Button
+  const s=document.getElementById('mob-sheet');
+  if(!s)return;
+  if(!e||e.target===s){
+    s.classList.remove('open');
+    document.body.style.overflow='';
+  }
+}
 
 function mf(f,el){
+  // Filter setzen
   aF=f;
+  // Mobile chips
   document.querySelectorAll('.mob-fchip').forEach(c=>c.classList.remove('on'));
-  el.classList.add('on');
-  // Sync desktop filter too
-  document.querySelectorAll('.fchip').forEach(c=>{c.classList.remove('on');if(c.textContent.trim().toLowerCase()===f||(f==='alle'&&c.textContent.trim()==='ALLES'))c.classList.add('on');});
+  if(el)el.classList.add('on');
+  // Desktop chips sync
+  document.querySelectorAll('.fchip').forEach(c=>{
+    c.classList.remove('on');
+    const txt=c.textContent.trim().toLowerCase();
+    if(txt===f||(f==='alle'&&txt==='alles')||(f==='gratis'&&txt==='gratis')||(f==='popup'&&txt==='pop-up'))
+      c.classList.add('on');
+  });
   render();
 }
 
-// Show FAB on mobile
-if(window.innerWidth<=960){
-  document.getElementById('mob-fab').style.display='flex';
+function applyAndClose(){
+  // Sheet schliessen nach Apply
+  const s=document.getElementById('mob-sheet');
+  if(s){s.classList.remove('open');document.body.style.overflow='';}
 }
-window.addEventListener('resize',()=>{
-  document.getElementById('mob-fab').style.display=window.innerWidth<=960?'flex':'none';
-});
+
+// FAB sichtbar auf Mobile
+function updateFAB(){
+  const fab=document.getElementById('mob-fab');
+  if(!fab)return;
+  fab.style.display=window.innerWidth<=960?'flex':'none';
+}
+updateFAB();
+window.addEventListener('resize',updateFAB);
 
 load();
 </script>
