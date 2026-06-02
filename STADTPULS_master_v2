@@ -3276,6 +3276,205 @@ SUPABASE NEUE FELDER:
 
 Master v2 Update Session 17. Mai 2026
 
+Hier der komplette Block — direkt kopieren und ans Ende vom Master v2 in GitHub anhängen:
+
+---
+
+```
+════════════════════════════════════════
+SESSION LOG — 27. MAI 2026 — KOMPLETT
+════════════════════════════════════════
+
+TECH STACK AKTUELL:
+✅ Mac (MacBook Air) + VS Code + Terminal + GitHub
+✅ Lokal: /Users/alessandrachristen/stadtpuls/
+✅ Domain: depuls.ch (hosttech, CHF 4.90/Jahr, Kundennr. 110617)
+✅ Mac Claude Account: rmsqqwq29d@privaterelay.appleid.com
+✅ Arbeitsgerät: Mac + iPad
+
+SEITEN STATUS — AKTUELL 27. MAI 2026:
+✅ index.html — live, unverändert
+✅ gastro.html — live, Supabase, 903 Locations
+✅ gastro-profil.html — live, OZ-Grid, OFFE Banner, Apple Buttons
+✅ nachtleben.html — live, Supabase
+✅ nachtleben-profil.html — live, Sonar-Radar, Countdown
+✅ shopping.html — live, 124 Shops
+✅ shopping-profil.html — live, heute rebuilt exakt wie Screenshots
+✅ dating.html — live, Voting funktioniert, 15 Votes
+✅ import.html — live, 5 Tabs inkl. Events Tab ⚡
+✅ import_events.py — in GitHub Repo (Python Script für Events)
+✅ feedback.html — live
+✅ kontakt.html — live
+✅ impressum.html — live
+✅ datenschutz.html — live
+✅ favicon.svg — live
+
+SUPABASE AKTUELL:
+✅ 903 Locations in DB
+✅ events Tabelle existiert — aber LEER ⚠️
+✅ RLS auf events: SELECT + INSERT für anon gesetzt
+✅ events Felder neu hinzugefügt: veranstalter TEXT, popup BOOLEAN, press_mention TEXT
+✅ Insert funktioniert bestätigt (HTTP 201 OK getestet)
+✅ ZT API antwortet mit Browser User-Agent ✅
+✅ dating_votes: 15 Votes live
+
+EVENTS IMPORT — STATUS UND PROBLEM:
+✅ import_events.py auf GitHub: 76 lines, 4.49 KB — korrekte Version
+✅ ZT API liefert 565 Events (getestet)
+✅ Supabase Insert funktioniert (HTTP 201 bestätigt)
+❌ Lokale import_events.py hat alte Version — überspringt alles
+❌ git pull überschreibt lokale Datei nicht automatisch
+FIX — ERSTER SCHRITT NEUER CHAT:
+git checkout origin/main -- import_events.py
+python3 /Users/alessandrachristen/stadtpuls/import_events.py
+→ Sollte 500+ Events importieren
+→ Dann events.html bauen
+
+SHOPPING-PROFIL.HTML — HEUTE REBUILT ✅
+✅ Layout exakt wie Screenshots (vorletzte Version)
+✅ Dynamisch aus Supabase via ?id= oder ?slug=
+✅ OFFE/GESCHLOSSEN: Volt-Grün wenn offe, Rot wenn geschlossen
+✅ Gleiche Architektur wie gastro-profil.html
+✅ Drop Alert + Samschtig-Route + Outfit-Matcher
+✅ KI Features Block (5 Zeilen)
+✅ Reviews + Ähnliche Shops
+✅ Sidebar mit allen Details
+
+WICHTIGE ERKENNTNISSE — HEUTE:
+✅ CSS: IMMER Hex (#ff2d00) — NIE var() — Encoding-Bug Mac/GitHub
+✅ git checkout origin/main -- DATEI = sicherste Methode lokale Datei zu überschreiben
+✅ Terminal Standard-Workflow: Python-Scripts direkt ausführen
+✅ GitHub Web Editor für schnelle Änderungen
+✅ VS Code für grosse Dateien und lokale Arbeit
+✅ Nie «git push origin maingit pull» zusammen — immer einzeln mit Enter
+✅ INSERT OK 201 = Supabase nimmt Events an
+
+NACHTLEBEN — NOCH OFFEN:
+⏳ nachtleben.html KI Features einbauen (Crowd Radar, Sound DNA, etc.)
+⏳ nachtleben-profil.html verbessern
+⏳ Ticketcorner URL pro Location in Supabase setzen
+⏳ reservierbar=true für Jazz/Bars setzen
+
+ROADMAP AKTUELL:
+✅ Phase 4h → Footer gefixt
+✅ Phase 4i → Register + Backticks gefixt
+✅ Phase 4j → Tab-Switch gefixt
+✅ Phase 4k → Supabase Architektur komplett neu
+✅ Phase 4l → Domain + HTTPS + Impressum + Datenschutz
+✅ Phase 4m → Voting live + Counter
+✅ Phase 4n → feedback.html + kontakt.html live
+✅ Phase 4o → import.html v3 mit Events Tab
+✅ Phase 4p → gastro.html GODMODE + Supabase live
+✅ Phase 4q → gastro-profil.html komplett
+✅ Phase 4r → 903 Locations importiert
+✅ Phase 4s → shopping.html live
+✅ Phase 4t → shopping-profil.html rebuilt — heute
+✅ Phase 4u → nachtleben.html + nachtleben-profil.html live
+✅ Phase 4v → import_events.py in GitHub
+✅ Phase 4w → events Tabelle RLS + neue Felder
+⏳ Phase 4x → Events importieren (PRIORITÄT 1 NEUER CHAT)
+⏳ Phase 4y → events.html + event-profil.html bauen
+⏳ Phase 4z → nachtleben KI Features
+⏳ Phase 5  → Login + Community + Onboarding
+⏳ Phase 6  → KI Features (Züri-Bot Claude API)
+⏳ Phase 7  → Hamburg, Berlin, Wien
+
+SOFT LAUNCH:
+🔴 Ursprünglich 4. Juni 2026 (Geburtstag Remo)
+🔴 Realistisch: Ende Juni 2026
+
+ERSTER SCHRITT NEUER CHAT — IMMER:
+1. STADTPULS_master_v2 Raw-URL laden
+2. git checkout origin/main -- import_events.py
+3. python3 /Users/alessandrachristen/stadtpuls/import_events.py
+4. Dann events.html bauen
+
+════════════════════════════════════════
+SESSION LOG — 28. MAI 2026 — KOMPLETT
+════════════════════════════════════════
+
+EVENTFROG INTEGRATION — HEUTE AUFGEBAUT ✅
+
+EVENTFROG ACCOUNT:
+✅ Account erstellt: byraimondo@gmail.com
+✅ API Key erstellt: 11D282C1-D0CF-4A4E-9060-DF6B5FC4FE4C
+✅ Gültig bis: 28.5.2027
+✅ Typ: Public API Read — alle IPs erlaubt
+
+SUPABASE — NEUE TABELLE:
+✅ eventfrog_events Tabelle erstellt
+✅ RLS aktiviert — Read/Insert/Update/Delete Policies
+✅ ef_id UNIQUE — Duplikat-Schutz
+✅ Felder: ef_id, titel, slug, kategorie, subkategorie,
+   kreis, venue_name, adresse, plz, datum_start, datum_ende,
+   uhrzeit_start, uhrzeit_ende, beschreibung, bild_url,
+   ticket_url, eintritt_typ, popup, aktiv, featured, seo_title
+
+IMPORT.HTML — EVENTFROG TAB NEU ✅
+✅ Tab «🐸 Eventfrog» ersetzt alten ZT Events Tab
+✅ Ziel: eventfrog_events Tabelle (nicht events!)
+✅ 3 Modi: NUR NEUE / UPDATE ALLE / LÖSCHEN+NEU
+✅ Seitenauswahl: 1/5/10/25 Seiten (je 100 Events)
+✅ FOMO Tags: soldOut / littleTicketsLeft / freeOfCharge
+✅ Pop-Up Detection: Events unter 3 Tagen
+✅ Vorschau Button
+✅ Live auf depuls.ch/import.html
+
+EVENTFROG API — BESTÄTIGT:
+✅ URL: https://api.eventfrog.net/public/v1/events
+✅ Auth: Bearer Token
+✅ Filter: zip= Parameter für alle Zürich PLZ
+✅ 2238+ Events verfügbar für Zürich
+✅ Keys: id, title, begin, end, locationAlias,
+   soldOut, littleTicketsLeft, freeOfCharge,
+   cancelled, emblemToShow, url, shortDescription
+
+IMPORT SCRIPT:
+✅ import_eventfrog.py geschrieben
+✅ Läuft via Terminal (kein CORS Problem)
+✅ Holt 5 Seiten = ~500 Events
+✅ Speichert in eventfrog_events Tabelle
+
+PROBLEM HEUTE — CORS:
+❌ Browser kann Eventfrog API nicht direkt aufrufen
+❌ allorigins.win + corsproxy.io beide down
+❌ ZT Browser Import auch betroffen
+→ Lösung: Python Script via Terminal
+
+ERSTER SCHRITT NEUER CHAT:
+1. Terminal öffnen
+2. Script erstellen mit cat > Befehl (Claude gibt ihn)
+3. python3 import_eventfrog.py ausführen
+4. Events landen in eventfrog_events Tabelle
+
+DATEN-STRATEGIE EVENTS — BESCHLOSSEN:
+✅ Eventfrog → eventfrog_events Tabelle (separat!)
+✅ ZT API → locations Tabelle (bleibt)
+✅ Manuell 1x pro Woche → 25 Seiten = alle 2500 Events
+✅ Phase 5 → GitHub Actions → täglich automatisch 06:00
+
+KOOPERATION EVENTFROG — GEPLANT:
+✅ Erst Traffic aufbauen → dann Kooperation anfragen
+✅ Eventfrog ist grösster Event-Kalender Schweiz
+✅ Perfekte Ergänzung zu ZT API (Locations)
+
+ROADMAP UPDATE:
+✅ Phase 4h-4w → abgeschlossen
+✅ Phase 4x → eventfrog_events Tabelle erstellt
+✅ Phase 4x → import.html Eventfrog Tab live
+⏳ Phase 4y → import_eventfrog.py ausführen → Events importieren
+⏳ Phase 4z → events.html bauen
+⏳ Phase 5  → Login + Community + Onboarding
+⏳ Phase 6  → KI Features (Züri-Bot Claude API)
+⏳ Phase 7  → Hamburg, Berlin, Wien
+
+SOFT LAUNCH: 4. Juni 2026 🔴
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.»
+════════════════════════════════════════
+
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.» 🔴
+════════════════════════════════════════
+```
 
 SOFT LAUNCH: 4. Juni 2026 🔴
 
