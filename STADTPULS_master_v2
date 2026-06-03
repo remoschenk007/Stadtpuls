@@ -3729,3 +3729,169 @@ Soll ich das jetzt direkt in den Master v2 einbauen und committen? 🔴​​​
 
 «dä puls vo dä stadt» — «Zürich first. Dann die Welt.»
 Alles reinkopieren, Commit — fertig. Jetzt Feierabend! 😄🔴​​​​​​​​​​​​​​​​
+
+════════════════════════════════════════
+SESSION LOG — 27. MAI 2026 — KOMPLETT
+════════════════════════════════════════
+
+SEITEN STATUS:
+✅ gastro.html — live, Supabase, 903 Locations
+✅ gastro-profil.html — live, OZ-Grid, OFFE Banner, Apple Buttons
+✅ nachtleben.html — live, Supabase
+✅ nachtleben-profil.html — live, Sonar-Radar, Countdown
+✅ shopping.html — live, 124 Shops
+✅ shopping-profil.html — live, rebuilt exakt wie Screenshots
+✅ dating.html — live, Voting funktioniert, 15 Votes
+✅ import.html — live, 5 Tabs inkl. Events Tab
+✅ import_events.py — in GitHub Repo
+✅ feedback.html / kontakt.html / impressum.html / datenschutz.html — live
+
+SUPABASE:
+✅ 903 Locations in DB
+✅ events Tabelle existiert aber leer
+✅ RLS auf events: SELECT + INSERT für anon
+✅ events Felder: veranstalter TEXT, popup BOOLEAN, press_mention TEXT
+✅ dating_votes: 15 Votes live
+
+════════════════════════════════════════
+SESSION LOG — 28. MAI 2026 — KOMPLETT
+════════════════════════════════════════
+
+EVENTFROG INTEGRATION — AUFGEBAUT ✅
+
+ACCOUNT:
+✅ byraimondo@gmail.com
+✅ API Key: 11D282C1-D0CF-4A4E-9060-DF6B5FC4FE4C (gültig bis Mai 2027)
+
+SUPABASE — eventfrog_events TABELLE:
+✅ ef_id UNIQUE — Duplikat-Schutz
+✅ Felder: ef_id, titel, slug, kategorie, subkategorie, kreis,
+   venue_name, adresse, plz, datum_start, datum_ende,
+   uhrzeit_start, uhrzeit_ende, beschreibung, bild_url,
+   ticket_url, eintritt_typ, popup, aktiv, featured, seo_title
+✅ RLS: Read/Insert/Update/Delete für anon
+
+IMPORT:
+✅ import_eventfrog.py — läuft via Terminal (kein CORS)
+✅ import.html — Eventfrog Tab live
+✅ 2238+ Events für Zürich PLZ verfügbar
+✅ HTTP 409 = Duplikat = normal, wird ignoriert
+❌ Browser kann Eventfrog API nicht aufrufen (CORS) → nur Terminal
+
+AUSFÜHREN:
+cp ~/Downloads/import_eventfrog1.py /Users/alessandrachristen/stadtpuls/import_eventfrog.py
+python3 /Users/alessandrachristen/stadtpuls/import_eventfrog.py
+
+════════════════════════════════════════
+SESSION LOG — 1-2. JUNI 2026 — KOMPLETT
+════════════════════════════════════════
+
+EVENTS IMPORT — ABGESCHLOSSEN ✅
+✅ 472 Events importiert (Stand 1. Juni)
+✅ 2500 Events Import gestartet (2. Juni, MAX_PAGES=25)
+✅ import_eventfrog.py mit MAX_PAGES=25 in GitHub
+
+NEUE SEITEN — BEIDE LIVE:
+
+events.html GODMODE:
+✅ Canvas Universum Hero — 200 Sterne, Konstellationslinien,
+   Maus-Interaktion, Funkeln (doppelter Sinus), speed 0.9
+✅ Kreisrivalität Strip — live aus Supabase, Leader volt-grün
+✅ Hero: «WAS LAUFT HÜT?» — Zürideutsch, Barlow Condensed
+✅ Ticker — schwarz mit roter Schrift, langsam 45s
+✅ Stats Bar: Total/Hüt/Gratis/Woche/Pop-Ups in #c8ff00
+✅ Filter: ALLES/KONZERT/PARTY/KULTUR/COMEDY/SPORT/WORKSHOP/MARKT/GRATIS/POP-UP/ABEND/NACHT
+✅ Mobile Filter: FAB → Bottom Sheet 3x4 Grid 48px Touch-Targets
+✅ 7-Tage Date-Tabs mit Event-Anzahl
+✅ Vertikale Zeitlinie — Events nach Uhrzeit 00-23
+✅ Aktuelle Stunde rot pulsierend, vergangene opacity:.35
+✅ Detail Panel rechts (Desktop) + Mobile Preview Bottom Sheet
+✅ People & Dates Button bei passenden Events (yoga/date/flirt etc.)
+✅ Phase 5: «♥ ICH GEHE — LOGIN NÖTIG» Button
+✅ Phase 6: KI-Badge «⚡ KI TIPP» auf ~8% der Events
+✅ SEO: Schema.org WebPage, OG, Twitter Card, AEO geo-tags
+✅ Footer: exakt wie depuls.ch Original
+✅ Supabase Query: limit=2500, Range: 0-2499
+
+event-profil.html:
+✅ URL: event-profil.html?id=EF_ID
+✅ Hero Fullbleed 75vh, Uhrzeit-Badge rot, «LÄUFT GRAD JETZT» Badge
+✅ Meta-Strip: 4 Spalten
+✅ Leaflet.js Karte (CartoDB Dark) — 3 Zahnräder:
+   1. Supabase locations via venue_name ilike → echte Koordinaten
+   2. PLZ → Kreis-Zentrum Fallback
+   3. Nominatim OpenStreetMap Geocoding
+✅ Bewertungen: 4.3★, Balken-Chart, 3 Reviews (Phase 5 ready)
+✅ Bewertung schreiben (Phase 5 Login nötig)
+✅ Ähnliche Events + Venue Events (gleicher Ort)
+✅ Sidebar sticky: Ticket 60px, Profil, Karte, Teile, Kalender
+✅ Phase 5 Community Box + Phase 6 KI Box
+✅ SEO: dynamisch — Schema.org @type:Event pro Event
+✅ Footer: exakt wie depuls.ch Original
+
+BUGS GEFIXT:
+✅ isOffe() shopping-profil.html — null statt false (kein falsches GESCHLOSSEN)
+✅ isOffe() gastro-profil.html — Regex fix HH:MM:SS Format
+✅ isOffe() shopping-profil.html — englische Tageskürzel Tu/We/Th erkannt
+✅ cursor:none → cursor:pointer überall (GitHub Pages Fix)
+
+SUPABASE:
+✅ Max Rows auf 3000 gesetzt (Data API Settings)
+✅ eventfrog_events: 2552 Records
+
+CI/DESIGN REGELN — FINAL:
+
+LOGO — EXAKT:
+<a href="index.html" class="logo"><div class="ldot"></div>STADTPULS</a>
+.logo { font-family:'Bebas Neue',sans-serif; font-size:22px; color:#e8e4d9; letter-spacing:4px; display:flex; align-items:center; gap:8px; }
+.ldot { width:7px; height:7px; border-radius:50%; background:#ff2d00; animation:blink 2s infinite; }
+→ ldot = echter DIV-Kreis, KEIN Unicode ●
+→ STADTPULS = weiss #e8e4d9
+→ Bebas Neue Font
+
+FOOTER — EXAKT WIE DEPULS.CH SCREENSHOT:
+4 Spalten: Brand + ENTDECKEN + COMMUNITY + MITMACHE
+Brand: ldot + STADTPULS 32px + «dä puls vo dä stadt» + Beschreibung + © 2026 by raimondo* -- Zürich
+ENTDECKEN: Gastro / Nachtleben / Shopping / Events → events.html (NIE index.html?page=events!) / Quartiere / Musik & Sound / Mobilität
+COMMUNITY: Feed & Posts / People & Dates / Jobs Züri / News & Stories / GPS -- Wo bisch du? / Kooperatione
+MITMACHE: Einlogge / Profil aalege / Blogger werde / Inserat schalte / Partner werde / Kontakt
+Bottom Bar: © 2026 STADTPULS.CH -- BY RAIMONDO* -- ZÜRICH | DATENSCHUTZ | IMPRESSUM
+Link-Farbe: rgba(232,228,217,.35)
+
+NAV — EXAKT AUF ALLEN SEITEN:
+GASTRO → NACHTLEBE → EVENTS → SHOPPING → DATES
+Events Link: events.html (NIE index.html?page=events!)
+Aktive Seite: color:#ff2d00
+Inaktiv: rgba(232,228,217,.2)
+
+MOBILE FILTER events.html:
+openSheet() / closeSheet() / mf() / applyAndClose() als separate Funktionen
+FAB Button → Bottom Sheet 85vh, 12 Chips 3x4, ANWENDE 56px
+
+KARTE event-profil.html:
+Leaflet.js + CartoDB Dark (kostenlos, kein API Key)
+3 Zahnräder: Supabase → PLZ Fallback → Nominatim
+
+DATING.HTML:
+Alter Voting-Style bleibt — NICHT anfassen!
+
+ROADMAP AKTUELL — 2. JUNI 2026:
+✅ Phase 4h-4w → abgeschlossen
+✅ Phase 4x → eventfrog_events Tabelle + Import Script
+✅ Phase 4y → events.html GODMODE gebaut
+✅ Phase 4z → event-profil.html gebaut
+✅ isOffe() Bug gefixt in shopping-profil + gastro-profil
+✅ Footer exakt wie depuls.ch auf events + event-profil
+⏳ Phase 5 → Login + Community + Onboarding
+⏳ Phase 6 → KI Features (Züri-Bot Claude API)
+⏳ Phase 7 → Hamburg, Berlin, Wien
+🔴 Soft Launch: 4. Juni 2026 (Geburtstag Remo!)
+
+PYTHON TERMINAL FIX PATTERN:
+python3 -c "c=open('FILE.html').read();c=c.replace('ALT','NEU',1);open('FILE.html','w').write(c);print('done')"
+
+EVENTFROG IMPORT — FULL RUN:
+cp ~/Downloads/import_eventfrog1.py /Users/alessandrachristen/stadtpuls/import_eventfrog.py
+python3 /Users/alessandrachristen/stadtpuls/import_eventfrog.py
+
+«dä puls vo dä Stadt» — «Zürich first. Dann die Welt.» 🔴
