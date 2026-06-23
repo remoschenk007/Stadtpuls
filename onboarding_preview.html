@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stadtpuls — Willkumme!</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100%;cursor:none;overflow-x:hidden}
+#dot{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#ring{position:fixed;width:30px;height:30px;border:1px solid rgba(255,45,0,0.55);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .07s,top .07s}
+.scan{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,45,0,0.01) 3px,rgba(255,45,0,0.01) 4px);pointer-events:none;z-index:3}
+.gridl{position:fixed;inset:0;background-image:linear-gradient(rgba(255,45,0,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,45,0,0.03) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:2}
+.cn{position:fixed;width:20px;height:20px;border-color:rgba(255,45,0,0.4);border-style:solid;z-index:20;pointer-events:none}
+.tl{top:12px;left:12px;border-width:2px 0 0 2px}
+.tr{top:12px;right:12px;border-width:2px 2px 0 0}
+.bl{bottom:12px;left:12px;border-width:0 0 2px 2px}
+.br{bottom:12px;right:12px;border-width:0 2px 2px 0}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:15;display:flex;align-items:center;justify-content:space-between;padding:15px 24px;border-bottom:1px solid rgba(255,45,0,0.12);background:rgba(4,4,10,0.93);backdrop-filter:blur(12px)}
+.logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:4px;font-size:20px;display:flex;align-items:center;gap:8px;color:#e8e4d9;text-decoration:none}
+.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,0.6)}50%{box-shadow:0 0 0 7px transparent}}
+.pbar{display:flex;gap:5px}
+.pb{height:2px;width:20px;background:rgba(255,255,255,0.07);border-radius:1px;transition:all .5s cubic-bezier(.16,1,.3,1)}
+.pb.done{background:#c8ff00;box-shadow:0 0 8px rgba(200,255,0,0.5)}
+.pb.act{background:#ff2d00;width:38px;box-shadow:0 0 12px rgba(255,45,0,0.7)}
+
+.SC{display:none;min-height:100vh;padding-top:57px;position:relative;z-index:10;animation:fadeup .45s cubic-bezier(.16,1,.3,1)}
+.SC.on{display:block}
+@keyframes fadeup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+/* TYPO */
+.eye{font-size:8px;letter-spacing:5px;color:#ff2d00;text-transform:uppercase}
+.BH{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;line-height:.86;text-transform:uppercase;color:#e8e4d9}
+.BH.xl{font-size:62px}.BH.lg{font-size:52px}
+.r{color:#ff2d00}.v{color:#c8ff00}.p{color:#9333ea}.cy{color:#00f5ff}.pk{color:#ec4899}
+.stxt{font-size:10px;color:rgba(232,228,217,0.28);letter-spacing:.3px}
+
+/* BUTTONS */
+.BTN{width:100%;border:none;border-radius:3px;padding:16px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;letter-spacing:3px;cursor:pointer;text-transform:uppercase;transition:all .18s}
+.BTN.red{background:#ff2d00;color:#e8e4d9;box-shadow:0 4px 28px rgba(255,45,0,0.22)}
+.BTN.red:hover{box-shadow:0 4px 50px rgba(255,45,0,0.48);transform:translateY(-2px)}
+.BTN.volt{background:#c8ff00;color:#04040a;box-shadow:0 4px 28px rgba(200,255,0,0.13)}
+.BTN.volt:hover{box-shadow:0 4px 50px rgba(200,255,0,0.32);transform:translateY(-2px)}
+.BTN.ghost{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(232,228,217,0.3);font-size:12px;padding:11px}
+.BTN.ghost:hover{border-color:rgba(255,255,255,0.25);color:rgba(232,228,217,0.6)}
+.rbtns{display:grid;grid-template-columns:90px 1fr;gap:8px}
+
+/* ══ S1: KREIS ══ */
+#s1{background:linear-gradient(180deg,#04040a 0%,#070002 100%)}
+.ticker-wrap{overflow:hidden;border-top:1px solid rgba(255,45,0,0.15);border-bottom:1px solid rgba(255,45,0,0.15);background:rgba(255,45,0,0.02)}
+.ticker-line{display:flex;white-space:nowrap;padding:8px 0}
+.ticker-line.fwd{animation:tfwd 20s linear infinite}
+.ticker-line.rev{animation:trev 25s linear infinite}
+@keyframes tfwd{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes trev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+.ti{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:11px;letter-spacing:3px;padding:0 20px;text-transform:uppercase}
+.ti.r{color:rgba(255,45,0,0.45)}.ti.d{color:rgba(232,228,217,0.1)}
+
+.s1-top{padding:28px 24px 16px}
+.s1-sub{font-size:10px;color:rgba(232,228,217,0.22);letter-spacing:.5px;margin-top:6px;margin-bottom:22px}
+
+.klist{padding:0 24px;margin-bottom:22px}
+.krow{display:flex;align-items:center;padding:11px 0;border-bottom:1px solid rgba(255,45,0,0.07);cursor:pointer;transition:all .22s;position:relative;overflow:hidden}
+.krow::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:rgba(255,45,0,0.05);transition:width .25s}
+.krow:hover::before,.krow.on::before{width:100%}
+.krow.on{border-bottom-color:rgba(255,45,0,0.3)}
+.k-num{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;color:rgba(255,45,0,0.14);width:50px;min-width:50px;line-height:1;transition:color .22s;position:relative;z-index:1}
+.krow:hover .k-num,.krow.on .k-num{color:#ff2d00}
+.k-info{flex:1;position:relative;z-index:1}
+.k-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;letter-spacing:1px;color:rgba(232,228,217,0.32);text-transform:uppercase;line-height:1;transition:color .22s}
+.krow:hover .k-name,.krow.on .k-name{color:#e8e4d9}
+.k-vibe{font-size:7px;color:rgba(232,228,217,0.14);letter-spacing:1px;text-transform:uppercase;margin-top:2px;transition:color .22s}
+.krow:hover .k-vibe,.krow.on .k-vibe{color:rgba(255,45,0,0.45)}
+.k-dot{width:8px;height:8px;border-radius:50%;background:#ff2d00;opacity:0;transition:opacity .22s;box-shadow:0 0 8px rgba(255,45,0,0.8);flex-shrink:0;position:relative;z-index:1}
+.krow.on .k-dot{opacity:1}
+
+.s1-btns{padding:0 24px 32px}
+
+/* ══ S2: INTERESSEN ══ */
+.s2-wrap{padding:28px 24px 28px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+.chip{padding:9px 15px;border:1px solid rgba(255,45,0,0.16);border-radius:100px;color:rgba(232,228,217,0.36);font-size:10px;letter-spacing:1.5px;cursor:pointer;transition:all .22s;text-transform:uppercase}
+.chip:hover{border-color:#ff2d00;color:#e8e4d9;transform:translateY(-2px)}
+.chip.on{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,0.05);box-shadow:0 0 14px rgba(200,255,0,0.13);transform:translateY(-3px)}
+
+/* ══ S3: VIBE + DATUM ══ */
+#s3{background:#000}
+.s3-bgnr{position:absolute;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:260px;color:rgba(147,51,234,0.035);right:-10px;top:50%;transform:translateY(-50%);line-height:1;pointer-events:none;z-index:0;transition:all .4s}
+.s3-wrap{padding:28px 24px 28px;position:relative;z-index:2}
+
+.date-section{margin-bottom:22px}
+.date-label-top{font-size:8px;letter-spacing:4px;color:rgba(147,51,234,0.6);text-transform:uppercase;margin-bottom:10px}
+.date-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.date-field{display:flex;flex-direction:column;gap:5px}
+.date-sublabel{font-size:7px;letter-spacing:3px;color:rgba(147,51,234,0.4);text-transform:uppercase}
+.date-inp{background:rgba(147,51,234,0.04);border:1px solid rgba(147,51,234,0.18);border-radius:3px;color:#e8e4d9;padding:14px 10px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-align:center;outline:none;width:100%;transition:all .22s;-webkit-appearance:none}
+.date-inp:focus{border-color:#9333ea;background:rgba(147,51,234,0.09);box-shadow:0 0 0 2px rgba(147,51,234,0.15)}
+.date-inp::placeholder{color:rgba(232,228,217,0.1);font-size:20px}
+.date-inp::-webkit-inner-spin-button,.date-inp::-webkit-outer-spin-button{-webkit-appearance:none}
+.date-hint{font-size:8px;color:rgba(232,228,217,0.16);letter-spacing:1px;margin-top:6px;text-transform:uppercase}
+
+.vibe-label{font-size:8px;letter-spacing:4px;color:rgba(255,45,0,0.5);text-transform:uppercase;margin-bottom:12px}
+.vibes{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:22px}
+.vibe{padding:18px 12px;border:1px solid rgba(255,45,0,0.08);border-radius:5px;cursor:pointer;transition:all .26s;background:rgba(255,255,255,0.01);position:relative;overflow:hidden}
+.vibe::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:transparent;transition:.26s}
+.vibe:hover{border-color:rgba(255,45,0,0.35);transform:translateY(-3px)}
+.vibe:hover::after{background:#ff2d00}
+.vibe.on{transform:translateY(-4px)}
+.vibe.vn.on{border-color:#9333ea;background:rgba(147,51,234,0.07)}
+.vibe.vn.on::after{background:#9333ea}
+.vibe.vs.on{border-color:#ff2d00;background:rgba(255,45,0,0.06)}
+.vibe.vs.on::after{background:#ff2d00}
+.vibe.vm.on{border-color:#00f5ff;background:rgba(0,245,255,0.04)}
+.vibe.vm.on::after{background:#00f5ff}
+.vibe.vf.on{border-color:#c8ff00;background:rgba(200,255,0,0.04)}
+.vibe.vf.on::after{background:#c8ff00}
+.vibe.vd.on{border-color:#ec4899;background:rgba(236,72,153,0.05)}
+.vibe.vd.on::after{background:#ec4899}
+.vibe.va.on{border-color:#ffd700;background:rgba(255,215,0,0.04)}
+.vibe.va.on::after{background:#ffd700}
+.vibe-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}
+.vi{font-size:26px;line-height:1}
+.v-dot{width:6px;height:6px;border-radius:50%;background:transparent;transition:.26s}
+.vibe.on .v-dot{box-shadow:0 0 8px currentColor}
+.vibe.vn.on .v-dot{background:#9333ea;color:#9333ea}
+.vibe.vs.on .v-dot{background:#ff2d00;color:#ff2d00}
+.vibe.vm.on .v-dot{background:#00f5ff;color:#00f5ff}
+.vibe.vf.on .v-dot{background:#c8ff00;color:#c8ff00}
+.vibe.vd.on .v-dot{background:#ec4899;color:#ec4899}
+.vibe.va.on .v-dot{background:#ffd700;color:#ffd700}
+.v-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,0.45);line-height:1;transition:color .26s}
+.vibe:hover .v-name,.vibe.on .v-name{color:#e8e4d9}
+.v-desc{font-size:7px;color:rgba(232,228,217,0.18);letter-spacing:1px;text-transform:uppercase;line-height:1.5;margin-top:3px}
+.vibe:hover .v-desc,.vibe.on .v-desc{color:rgba(232,228,217,0.38)}
+
+/* ══ S4: WILLKOMMEN ══ */
+#s4{background:#04040a;min-height:100vh;align-items:center;justify-content:center}
+#s4.on{display:flex !important}
+.scanbeam{position:fixed;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#ff2d00,transparent);box-shadow:0 0 20px rgba(255,45,0,0.9);animation:beam 2.5s linear infinite;z-index:6;pointer-events:none}
+@keyframes beam{0%{top:-2px;opacity:0}5%{opacity:1}95%{opacity:1}100%{top:100vh;opacity:0}}
+.pulse-bg{position:fixed;top:50%;left:50%;width:700px;height:700px;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(255,45,0,0.04) 0%,transparent 70%);animation:pbg 3s ease-in-out infinite;pointer-events:none}
+@keyframes pbg{0%,100%{transform:translate(-50%,-50%) scale(1)}50%{transform:translate(-50%,-50%) scale(1.08)}}
+.wl{text-align:center;padding:40px 24px;position:relative;z-index:3;width:100%}
+.wl-flash{font-size:10px;letter-spacing:8px;color:#ff2d00;text-transform:uppercase;margin-bottom:18px;animation:flash 1.2s ease-in-out infinite alternate}
+@keyframes flash{from{opacity:.35}to{opacity:1}}
+.wbig{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;text-transform:uppercase;margin-bottom:8px}
+.wl1{font-size:46px;color:#e8e4d9;line-height:1}
+.wl2{font-size:76px;line-height:.9}
+.wl3{font-size:26px;color:rgba(232,228,217,0.28);letter-spacing:6px;margin-top:6px}
+.whandle{font-size:16px;color:#c8ff00;letter-spacing:5px;margin:14px 0 4px;text-transform:uppercase}
+.wkreis{font-size:8px;color:rgba(232,228,217,0.2);letter-spacing:3px;text-transform:uppercase;margin-bottom:18px}
+.bdgs{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-bottom:20px}
+.bdg{padding:5px 12px;border-radius:100px;font-size:7.5px;letter-spacing:2px;text-transform:uppercase}
+.bdg.r{background:rgba(255,45,0,0.1);color:#ff2d00;border:1px solid rgba(255,45,0,0.25)}
+.bdg.v{background:rgba(200,255,0,0.07);color:#c8ff00;border:1px solid rgba(200,255,0,0.2)}
+.bdg.p{background:rgba(147,51,234,0.1);color:#9333ea;border:1px solid rgba(147,51,234,0.25)}
+.bdg.cy{background:rgba(0,245,255,0.07);color:#00f5ff;border:1px solid rgba(0,245,255,0.2)}
+.bdg.pk{background:rgba(236,72,153,0.08);color:#ec4899;border:1px solid rgba(236,72,153,0.2)}
+.wdiv{height:1px;background:linear-gradient(90deg,transparent,rgba(255,45,0,0.3),transparent);margin:18px 0}
+.wclaim{font-size:9px;color:rgba(232,228,217,0.2);letter-spacing:4px;text-transform:uppercase;margin-bottom:20px}
+.wmicro{font-size:8px;color:rgba(232,228,217,0.14);letter-spacing:1.5px;text-transform:uppercase;margin-top:14px;line-height:2}
+</style>
+</head>
+<body>
+<div id="dot"></div><div id="ring"></div>
+<div class="scan"></div><div class="gridl"></div>
+<div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
+
+<div class="nav">
+  <a href="index.html" class="logo"><div class="ldot"></div>STADTPULS</a>
+  <div class="pbar">
+    <div class="pb act" id="pb0"></div>
+    <div class="pb" id="pb1"></div>
+    <div class="pb" id="pb2"></div>
+    <div class="pb" id="pb3"></div>
+  </div>
+</div>
+
+<!-- S1: KREIS -->
+<div class="SC on" id="s1">
+  <div class="ticker-wrap">
+    <div class="ticker-line fwd">
+      <span class="ti r">KREIS 1 · ALTSTADT</span><span class="ti d">·</span><span class="ti r">KREIS 4 · LANGSTRASSE</span><span class="ti d">·</span><span class="ti r">KREIS 5 · INDUSTRIE</span><span class="ti d">·</span><span class="ti r">KREIS 8 · RIESBACH</span><span class="ti d">·</span><span class="ti r">KREIS 3 · HARD</span><span class="ti d">·</span><span class="ti r">KREIS 7 · FLUNTERN</span><span class="ti d">·</span><span class="ti r">KREIS 1 · ALTSTADT</span><span class="ti d">·</span><span class="ti r">KREIS 4 · LANGSTRASSE</span><span class="ti d">·</span><span class="ti r">KREIS 5 · INDUSTRIE</span><span class="ti d">·</span>
+    </div>
+  </div>
+  <div class="s1-top">
+    <div class="eye">SCHRITT 1 VON 3 · DINI HEIMAT</div>
+    <div class="BH xl">WO BISCH<br>DU <span class="r">DAHEIM?</span></div>
+    <div class="s1-sub">Dis Quartier macht dis Erläbnis persönlich. Chasch spöter ändere.</div>
+  </div>
+  <div class="klist" id="klist"></div>
+  <div class="s1-btns">
+    <div class="rbtns">
+      <button class="BTN ghost" onclick="nxt()">SKIP</button>
+      <button class="BTN red" onclick="nxt()">WITER →</button>
+    </div>
+  </div>
+</div>
+
+<!-- S2: INTERESSEN -->
+<div class="SC" id="s2">
+  <div class="s2-wrap">
+    <div class="eye">SCHRITT 2 VON 3 · DIN ZÜRI</div>
+    <div class="BH xl">WAS ISCH<br><span class="v">DI ZÜRI?</span></div>
+    <div class="stxt" style="margin:8px 0 20px">Wähl alles was zu dir passt — kei falsche Antwort</div>
+    <div class="chips" id="chp"></div>
+    <div class="rbtns">
+      <button class="BTN ghost" onclick="nxt()">SKIP</button>
+      <button class="BTN red" onclick="nxt()">WITER →</button>
+    </div>
+  </div>
+</div>
+
+<!-- S3: VIBE + DATUM -->
+<div class="SC" id="s3">
+  <div class="s3-bgnr" id="bgnr">?</div>
+  <div class="s3-wrap">
+    <div class="eye">SCHRITT 3 VON 3 · DIN VIBE</div>
+    <div class="BH xl">WER<br><span class="p">BISCH DU?</span></div>
+    <div class="stxt" style="margin:8px 0 20px">Optional — macht dis Erläbnis 10× persönlicher</div>
+
+    <div class="date-section">
+      <div class="date-label-top">DIS GEBURTSDATUM</div>
+      <div class="date-row">
+        <div class="date-field">
+          <div class="date-sublabel">TAG</div>
+          <input class="date-inp" id="dd" type="number" placeholder="TT" min="1" max="31" oninput="onDay()"/>
+        </div>
+        <div class="date-field">
+          <div class="date-sublabel">MONAT</div>
+          <input class="date-inp" id="mm" type="number" placeholder="MM" min="1" max="12" oninput="onMonth()"/>
+        </div>
+        <div class="date-field">
+          <div class="date-sublabel">JAHR</div>
+          <input class="date-inp" id="yy" type="number" placeholder="JJJJ" min="1940" max="2008" style="font-size:18px;padding:14px 6px" oninput="onYear()"/>
+        </div>
+      </div>
+      <div class="date-hint" id="age-hint">NUR FÜR PERSONALISIERIG · MINIMUM 18 JAHRE</div>
+    </div>
+
+    <div class="vibe-label">DIN ZÜRI-VIBE</div>
+    <div class="vibes">
+      <div class="vibe vn" onclick="sv(this,'NACHTMENSCH')">
+        <div class="vibe-top"><span class="vi">🌙</span><div class="v-dot"></div></div>
+        <div class="v-name">NACHT&shy;MENSCH</div>
+        <div class="v-desc">CLUBS · BARS · AFTERHOUR</div>
+      </div>
+      <div class="vibe vs on" onclick="sv(this,'STADTMENSCH')">
+        <div class="vibe-top"><span class="vi">🌆</span><div class="v-dot"></div></div>
+        <div class="v-name">STADT&shy;MENSCH</div>
+        <div class="v-desc">KULTUR · GASTRO · EVENTS</div>
+      </div>
+      <div class="vibe vm" onclick="sv(this,'MUSIKMENSCH')">
+        <div class="vibe-top"><span class="vi">🎵</span><div class="v-dot"></div></div>
+        <div class="v-name">MUSIK&shy;MENSCH</div>
+        <div class="v-desc">KONZERTE · CLUBS · VINYL</div>
+      </div>
+      <div class="vibe vf" onclick="sv(this,'FOODIE')">
+        <div class="vibe-top"><span class="vi">🍜</span><div class="v-dot"></div></div>
+        <div class="v-name">FOODIE</div>
+        <div class="v-desc">GASTRO · MÄRKT · BRUNCH</div>
+      </div>
+      <div class="vibe vd" onclick="sv(this,'DATESMENSCH')">
+        <div class="vibe-top"><span class="vi">❤️</span><div class="v-dot"></div></div>
+        <div class="v-name">DATES&shy;MENSCH</div>
+        <div class="v-desc">PEOPLE · SPOTS · ZÜRI-LOVE</div>
+      </div>
+      <div class="vibe va" onclick="sv(this,'AKTIVMENSCH')">
+        <div class="vibe-top"><span class="vi">🚴</span><div class="v-dot"></div></div>
+        <div class="v-name">AKTIV&shy;MENSCH</div>
+        <div class="v-desc">SPORT · NATUR · BEWEGIG</div>
+      </div>
+    </div>
+    <div class="rbtns">
+      <button class="BTN ghost" onclick="finishOnboarding()">SKIP</button>
+      <button class="BTN volt" onclick="finishOnboarding()">FERTIG →</button>
+    </div>
+  </div>
+</div>
+
+<!-- S4: WELCOME -->
+<div class="SC" id="s4">
+  <div class="scanbeam"></div>
+  <div class="pulse-bg"></div>
+  <div class="wl">
+    <div class="wl-flash">— WILLKUMME BI STADTPULS —</div>
+    <div class="wbig">
+      <div class="wl1">DÄ PULS</div>
+      <div class="wl2"><span class="r">STADT</span><span class="v">PULS</span></div>
+      <div class="wl3" id="wl-handle">@ZUERIFUCHS</div>
+    </div>
+    <div class="whandle" id="wl-handle2">@ZUERIFUCHS</div>
+    <div class="wkreis" id="wl-sub">KREIS 4 · STADTMENSCH · 2026</div>
+    <div class="bdgs" id="wl-badges">
+      <div class="bdg r">🔴 NEU IN ZÜRI</div>
+      <div class="bdg v">⚡ KREIS 4</div>
+      <div class="bdg p">🌙 NACHTMENSCH</div>
+      <div class="bdg cy">🎵 EVENTS</div>
+    </div>
+    <div class="wdiv"></div>
+    <div class="wclaim">«DÄ PULS VO DÄ STADT» — JETZT ISCH ES DINI STATT</div>
+    <button class="BTN volt" style="max-width:380px;margin:0 auto;display:block;font-size:18px" onclick="window.location.href='dashboard.html'">LOS GOES → MIN DASHBOARD</button>
+    <div class="wmicro">BESTÄTIGIGS-MAIL ISCH UNDERWEGS<br>DU CHASCH SOFORT LOSLEGGE</div>
+  </div>
+</div>
+
+<script>
+
+
+
+
+
+// Cursor
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';});
+
+// State
+let selKreis='',selInteressen=[],selVibe='STADTMENSCH',selGeburt='';
+let cur=1;
+
+// Progress
+function updProg(){
+  ['pb0','pb1','pb2','pb3'].forEach((id,i)=>{
+    const e=document.getElementById(id);
+    const step=i+1;
+    e.className='pb'+(step<cur?' done':step===cur?' act':'');
+  });
+}
+
+// Next Screen
+window.nxt=function(){
+  if(cur<4){
+    document.getElementById('s'+cur).classList.remove('on');
+    cur++;
+    document.getElementById('s'+cur).classList.add('on');
+    updProg();
+    window.scrollTo(0,0);
+  }
+};
+
+// Finish
+window.finishOnboarding=function(){
+  // Geburtsdatum zusammenbauen
+  const dd=document.getElementById('dd').value;
+  const mm=document.getElementById('mm').value;
+  const yy=document.getElementById('yy').value;
+  if(dd&&mm&&yy&&yy.length===4){
+    selGeburt=`${yy}-${mm.padStart(2,'0')}-${dd.padStart(2,'0')}`;
+  }
+
+  // PREVIEW MODE
+  const username = localStorage.getItem('sp_username') || 'zuerifuchs';
+  document.getElementById('wl-handle').textContent='@'+username.toUpperCase();
+  document.getElementById('wl-handle2').textContent='@'+username.toUpperCase();
+  document.getElementById('wl-sub').textContent=(selKreis?'KREIS '+selKreis+' · ':'')+(selVibe||'STADTMENSCH')+' · 2026';
+
+  document.getElementById('s3').classList.remove('on');
+  document.getElementById('s4').classList.add('on');
+  updProg();
+  window.scrollTo(0,0);
+};
+
+// Vibe select
+window.sv=function(el,vibe){
+  document.querySelectorAll('.vibe').forEach(v=>v.classList.remove('on'));
+  el.classList.add('on');
+  selVibe=vibe;
+};
+
+// Datum
+window.onDay=function(){const v=document.getElementById('dd').value;if(v.length>=2)document.getElementById('mm').focus();};
+window.onMonth=function(){const v=document.getElementById('mm').value;if(v.length>=2)document.getElementById('yy').focus();};
+window.onYear=function(){
+  const yy=parseInt(document.getElementById('yy').value);
+  const bgnr=document.getElementById('bgnr');
+  const hint=document.getElementById('age-hint');
+  if(yy&&document.getElementById('yy').value.length===4){
+    const age=new Date().getFullYear()-yy;
+    bgnr.textContent=age>0&&age<120?age:'?';
+    if(age<18){hint.textContent='⚠ MIN. 18 JAHRE FÜR VOLLES ZUGÄNGLICHKEIT';hint.style.color='rgba(255,45,0,0.6)';}
+    else{hint.textContent='✓ GEBURTSJAHR BESTÄTIGT';hint.style.color='rgba(200,255,0,0.5)';}
+  }
+};
+
+// Kreise aufbauen
+const kreise=[
+  ['1','KREIS 1','ALTSTADT · RATHAUS · NIEDERDORF'],
+  ['2','KREIS 2','ENGE · WOLLISHOFEN · LEIMBACH'],
+  ['3','KREIS 3','HARD · SIHLFELD · WIEDIKON'],
+  ['4','KREIS 4','LANGSTRASSE · AUSSERSIHL'],
+  ['5','KREIS 5','INDUSTRIE · ESCHER WYSS'],
+  ['6','KREIS 6','HOTTINGEN · UNTERSTRASS'],
+  ['7','KREIS 7','FLUNTERN · HIRSLANDEN · WITIKON'],
+  ['8','KREIS 8','RIESBACH · SEEFELD · MÜHLEBACH'],
+  ['9','KREIS 9','ALBISRIEDEN · ALTSTETTEN'],
+  ['10','KREIS 10','HÖNGG · WIPKINGEN'],
+  ['11','KREIS 11','ÖRLIKON · SEEBACH · AFFOLTERN'],
+  ['12','KREIS 12','SCHWAMENDINGEN'],
+];
+const kl=document.getElementById('klist');
+kreise.forEach(([num,name,vibe])=>{
+  const d=document.createElement('div');d.className='krow';
+  d.innerHTML=`<div class="k-num">${num}</div><div class="k-info"><div class="k-name">${name}</div><div class="k-vibe">${vibe}</div></div><div class="k-dot"></div>`;
+  d.onclick=function(){
+    document.querySelectorAll('.krow').forEach(x=>x.classList.remove('on'));
+    this.classList.add('on');
+    selKreis=num;
+  };
+  kl.appendChild(d);
+});
+
+// Chips aufbauen
+const chipData=[
+  ['🍜','GASTRO'],['🌙','NACHTLEBE'],['🛍','SHOPPING'],['🎵','EVENTS'],
+  ['💼','JOBS'],['🏠','WOHNE'],['🎨','KULTUR'],['🧘','WELLNESS'],
+  ['🚴','SPORT'],['❤️','DATES'],['📰','NEWS & STORIES'],['🛒','MARKTPLATZ']
+];
+const cp=document.getElementById('chp');
+chipData.forEach(([ic,lb])=>{
+  const d=document.createElement('div');d.className='chip';
+  d.textContent=`${ic} ${lb}`;
+  d.onclick=function(){
+    this.classList.toggle('on');
+    const idx=selInteressen.indexOf(lb);
+    if(idx>-1)selInteressen.splice(idx,1);
+    else selInteressen.push(lb);
+  };
+  cp.appendChild(d);
+});
+
+// PREVIEW MODE - kein Auth Check
+</script>
+</body>
+</html>

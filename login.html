@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stadtpuls — Einlogge & Registriere</title>
+<meta name="description" content="Mitmache bi Stadtpuls — dä puls vo dä Stadt">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;cursor:none;overflow-x:hidden}
+#dot{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#ring{position:fixed;width:30px;height:30px;border:1px solid rgba(255,45,0,0.55);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .07s,top .07s}
+.scan{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,45,0,0.01) 3px,rgba(255,45,0,0.01) 4px);pointer-events:none;z-index:3}
+.gridl{position:fixed;inset:0;background-image:linear-gradient(rgba(255,45,0,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,45,0,0.03) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:2}
+.cn{position:fixed;width:20px;height:20px;border-color:rgba(255,45,0,0.4);border-style:solid;z-index:20;pointer-events:none}
+.tl{top:12px;left:12px;border-width:2px 0 0 2px}
+.tr{top:12px;right:12px;border-width:2px 2px 0 0}
+.bl{bottom:12px;left:12px;border-width:0 0 2px 2px}
+.br{bottom:12px;right:12px;border-width:0 2px 2px 0}
+
+.nav{position:fixed;top:0;left:0;right:0;z-index:15;display:flex;align-items:center;justify-content:space-between;padding:15px 24px;border-bottom:1px solid rgba(255,45,0,0.12);background:rgba(4,4,10,0.93);backdrop-filter:blur(12px)}
+.logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:4px;font-size:20px;display:flex;align-items:center;gap:8px;color:#e8e4d9;text-decoration:none}
+.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,0.6)}50%{box-shadow:0 0 0 7px transparent}}
+.nav-back{font-size:9px;letter-spacing:2px;color:rgba(232,228,217,0.3);text-decoration:none;text-transform:uppercase;transition:color .2s}
+.nav-back:hover{color:#ff2d00}
+
+.page{padding-top:57px;min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:10}
+
+/* BG GHOST TEXT */
+.bgtxt{position:fixed;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:160px;color:rgba(255,45,0,0.025);top:50%;transform:translateY(-50%);white-space:nowrap;text-transform:uppercase;letter-spacing:-6px;animation:zbg 18s linear infinite;pointer-events:none;z-index:1}
+@keyframes zbg{from{left:5%}to{left:-200%}}
+
+.wrap{width:100%;max-width:440px;padding:32px 24px;position:relative;z-index:5}
+
+/* TABS */
+.tabs{display:flex;border:1px solid rgba(255,45,0,0.2);border-radius:3px;overflow:hidden;margin-bottom:28px}
+.tab{flex:1;padding:12px;font-size:9px;letter-spacing:4px;text-transform:uppercase;cursor:pointer;text-align:center;color:rgba(232,228,217,0.28);transition:all .28s;background:transparent;border:none;font-family:'DM Mono',monospace}
+.tab.red-on{background:#ff2d00;color:#04040a;font-weight:500}
+.tab.volt-on{background:#c8ff00;color:#04040a;font-weight:500}
+
+.form{display:none}
+.form.on{display:block;animation:fadeup .4s cubic-bezier(.16,1,.3,1)}
+@keyframes fadeup{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.eye{font-size:8px;letter-spacing:5px;color:#ff2d00;margin-bottom:5px;text-transform:uppercase}
+.BH{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:68px;line-height:.86;text-transform:uppercase;color:#e8e4d9;margin-bottom:8px}
+.BH .r{color:#ff2d00}.BH .v{color:#c8ff00}
+.stxt{font-size:10px;color:rgba(232,228,217,0.28);margin-bottom:22px;letter-spacing:.3px}
+
+.inp{width:100%;background:rgba(255,255,255,0.025);border:1px solid rgba(255,45,0,0.14);border-radius:3px;color:#e8e4d9;padding:14px 15px;font-family:'DM Mono',monospace;font-size:13px;outline:none;margin-bottom:8px;transition:all .22s;-webkit-appearance:none}
+.inp:focus{border-color:#ff2d00;background:rgba(255,45,0,0.06);box-shadow:0 0 0 2px rgba(255,45,0,0.09)}
+.inp::placeholder{color:rgba(232,228,217,0.14)}
+.inp-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.inp-row .inp{margin:0}
+
+.BTN{width:100%;border:none;border-radius:3px;padding:17px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:23px;letter-spacing:3px;cursor:pointer;text-transform:uppercase;margin-top:8px;transition:all .18s}
+.BTN.red{background:#ff2d00;color:#e8e4d9;box-shadow:0 4px 28px rgba(255,45,0,0.22)}
+.BTN.red:hover{box-shadow:0 4px 50px rgba(255,45,0,0.48);transform:translateY(-2px)}
+.BTN.volt{background:#c8ff00;color:#04040a;box-shadow:0 4px 28px rgba(200,255,0,0.13)}
+.BTN.volt:hover{box-shadow:0 4px 50px rgba(200,255,0,0.32);transform:translateY(-2px)}
+.BTN:disabled{opacity:.4;cursor:not-allowed;transform:none !important}
+
+.divr{display:flex;align-items:center;gap:12px;margin:14px 0}
+.dl{flex:1;height:1px;background:rgba(255,45,0,0.1)}
+.dt{font-size:8px;letter-spacing:3px;color:rgba(232,228,217,0.18)}
+.soc{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sb{padding:13px;border:1px solid rgba(255,255,255,0.07);border-radius:3px;color:rgba(232,228,217,0.4);font-size:10px;cursor:pointer;text-align:center;background:rgba(255,255,255,0.01);font-family:'DM Mono',monospace;transition:all .2s;letter-spacing:1px}
+.sb:hover{border-color:rgba(255,255,255,0.2);color:#e8e4d9}
+.micro{font-size:8px;color:rgba(232,228,217,0.14);text-align:center;margin-top:12px;letter-spacing:1px;line-height:1.9}
+.micro a{color:rgba(255,45,0,0.55);text-decoration:none}
+.micro a:hover{color:#ff2d00}
+
+/* ERROR / SUCCESS */
+.msg{padding:10px 14px;border-radius:3px;font-size:10px;letter-spacing:1px;margin-bottom:10px;display:none;text-transform:uppercase}
+.msg.err{background:rgba(255,45,0,0.08);border:1px solid rgba(255,45,0,0.25);color:#ff2d00;display:block}
+.msg.ok{background:rgba(200,255,0,0.06);border:1px solid rgba(200,255,0,0.2);color:#c8ff00;display:block}
+
+/* LOADING */
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(232,228,217,0.2);border-top-color:#e8e4d9;border-radius:50%;animation:spin .7s linear infinite;vertical-align:middle;margin-right:8px}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.pw-toggle{position:relative}
+.pw-toggle .inp{padding-right:44px}
+.pw-eye{position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;color:rgba(232,228,217,0.25);font-size:12px;transition:color .2s;margin-top:-4px}
+.pw-eye:hover{color:rgba(232,228,217,0.6)}
+
+.strength{display:flex;gap:3px;margin-top:-4px;margin-bottom:8px}
+.s-seg{flex:1;height:2px;background:rgba(255,255,255,0.07);border-radius:1px;transition:all .3s}
+.s-seg.weak{background:#ff2d00}
+.s-seg.mid{background:#ffd700}
+.s-seg.strong{background:#c8ff00}
+
+.forgot{font-size:8px;color:rgba(255,45,0,0.45);cursor:pointer;text-align:center;display:block;margin-top:10px;letter-spacing:2px;text-transform:uppercase;transition:color .2s}
+.forgot:hover{color:#ff2d00}
+</style>
+</head>
+<body>
+<div id="dot"></div><div id="ring"></div>
+<div class="scan"></div><div class="gridl"></div>
+<div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
+<div class="bgtxt">ZÜRICH·ZÜRICH·ZÜRICH·ZÜRICH·ZÜRICH·ZÜRICH·</div>
+
+<div class="nav">
+  <a href="index.html" class="logo"><div class="ldot"></div>STADTPULS</a>
+  <a href="index.html" class="nav-back">← ZURÜCK</a>
+</div>
+
+<div class="page">
+  <div class="wrap">
+    <div class="tabs">
+      <button class="tab red-on" id="t0" onclick="swTab(0)">EINLOGGE</button>
+      <button class="tab" id="t1" onclick="swTab(1)">REGISTRIERE</button>
+    </div>
+
+    <!-- LOGIN FORM -->
+    <div class="form on" id="lf">
+      <div class="eye">ZÜRI-ACCOUNT</div>
+      <div class="BH">WILLKUMME<br><span class="r">ZURÜCK.</span></div>
+      <div class="stxt">dä puls vo dä stadt — din account</div>
+      <div id="l-msg" class="msg"></div>
+      <input class="inp" id="l-email" placeholder="E-Mail" type="email" autocomplete="email"/>
+      <div class="pw-toggle">
+        <input class="inp" id="l-pw" placeholder="Passwort" type="password" autocomplete="current-password"/>
+        <span class="pw-eye" onclick="togglePw('l-pw',this)">👁</span>
+      </div>
+      <button class="BTN red" id="l-btn" onclick="doLogin()">EINLOGGE →</button>
+      <span class="forgot" onclick="doForgot()">PASSWORT VERGESSE?</span>
+      <div class="divr"><div class="dl"></div><div class="dt">ODER DIREKT MIT</div><div class="dl"></div></div>
+      <div class="soc">
+        <div class="sb" onclick="doApple()">🍎 &nbsp;MIT APPLE</div>
+        <div class="sb" onclick="doGoogle()">G &nbsp;MIT GOOGLE</div>
+      </div>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div class="form" id="rf">
+      <div class="eye">NEU IN ZÜRI?</div>
+      <div class="BH">MITMACHE<br><span class="v">IN ZÜRI.</span></div>
+      <div class="stxt">Gratis. 2 Minute. Absolut kei Bullshit.</div>
+      <div id="r-msg" class="msg"></div>
+      <div class="inp-row">
+        <input class="inp" id="r-user" placeholder="@deinname" autocomplete="username" oninput="checkUser(this)"/>
+        <input class="inp" id="r-email" placeholder="E-Mail" type="email" autocomplete="email"/>
+      </div>
+      <div class="pw-toggle">
+        <input class="inp" id="r-pw" placeholder="Passwort — min. 8 Zeiche" type="password" autocomplete="new-password" oninput="checkStrength(this)"/>
+        <span class="pw-eye" onclick="togglePw('r-pw',this)">👁</span>
+      </div>
+      <div class="strength">
+        <div class="s-seg" id="ss0"></div>
+        <div class="s-seg" id="ss1"></div>
+        <div class="s-seg" id="ss2"></div>
+        <div class="s-seg" id="ss3"></div>
+      </div>
+      <button class="BTN volt" id="r-btn" onclick="doRegister()">ACCOUNT ERSTELLE →</button>
+      <div class="divr"><div class="dl"></div><div class="dt">ODER DIREKT MIT</div><div class="dl"></div></div>
+      <div class="soc">
+        <div class="sb" onclick="doApple()">🍎 &nbsp;MIT APPLE</div>
+        <div class="sb" onclick="doGoogle()">G &nbsp;MIT GOOGLE</div>
+      </div>
+      <div class="micro">Mit Registrierig akzeptiersch du d <a href="datenschutz.html">Dateschutzerklärig</a> und d <a href="impressum.html">AGB</a></div>
+    </div>
+
+  </div>
+</div>
+
+<script type="module">
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+const SU = 'https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SK = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+const sb = createClient(SU, SK);
+
+// Cursor
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';});
+
+// Tab Switch
+window.swTab = function(n){
+  document.getElementById('t0').className='tab'+(n===0?' red-on':'');
+  document.getElementById('t1').className='tab'+(n===1?' volt-on':'');
+  document.getElementById('lf').classList.toggle('on',n===0);
+  document.getElementById('rf').classList.toggle('on',n===1);
+};
+
+// Show Msg
+function showMsg(id,type,txt){
+  const el=document.getElementById(id);
+  el.className='msg '+type;
+  el.textContent=txt;
+}
+
+// PW Toggle
+window.togglePw = function(id,el){
+  const inp=document.getElementById(id);
+  inp.type=inp.type==='password'?'text':'password';
+  el.style.opacity=inp.type==='text'?'0.7':'0.25';
+};
+
+// PW Strength
+window.checkStrength = function(inp){
+  const v=inp.value;
+  ['ss0','ss1','ss2','ss3'].forEach(id=>{
+    document.getElementById(id).className='s-seg';
+  });
+  if(v.length===0)return;
+  let score=0;
+  if(v.length>=8)score++;
+  if(/[A-Z]/.test(v))score++;
+  if(/[0-9]/.test(v))score++;
+  if(/[^A-Za-z0-9]/.test(v))score++;
+  const cls=['weak','weak','mid','strong'];
+  for(let i=0;i<score;i++){
+    document.getElementById('ss'+i).className='s-seg '+cls[score-1];
+  }
+};
+
+// Username check (simple)
+window.checkUser = function(inp){
+  inp.value=inp.value.replace(/[^a-z0-9_]/gi,'').toLowerCase();
+};
+
+// LOGIN
+window.doLogin = async function(){
+  const email=document.getElementById('l-email').value.trim();
+  const pw=document.getElementById('l-pw').value;
+  if(!email||!pw){showMsg('l-msg','err','E-Mail und Passwort pflichtig');return;}
+  const btn=document.getElementById('l-btn');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spin"></span>EINLOGGE...';
+  const {error}=await sb.auth.signInWithPassword({email,password:pw});
+  if(error){
+    showMsg('l-msg','err',error.message.includes('Invalid')?'FALSCHIS PASSWORT ODER E-MAIL':error.message);
+    btn.disabled=false;btn.textContent='EINLOGGE →';
+  }else{
+    showMsg('l-msg','ok','WILLKUMME ZURÜCK! WIRD WEITERGELEITET...');
+    setTimeout(()=>window.location.href='dashboard.html',1200);
+  }
+};
+
+// REGISTER
+window.doRegister = async function(){
+  const username=document.getElementById('r-user').value.trim().replace('@','');
+  const email=document.getElementById('r-email').value.trim();
+  const pw=document.getElementById('r-pw').value;
+  if(!username||!email||!pw){showMsg('r-msg','err','ALLES FELDER PFLICHTIG');return;}
+  if(pw.length<8){showMsg('r-msg','err','PASSWORT MIN. 8 ZEICHE');return;}
+  if(username.length<3){showMsg('r-msg','err','USERNAME MIN. 3 ZEICHE');return;}
+  const btn=document.getElementById('r-btn');
+  btn.disabled=true;
+  btn.innerHTML='<span class="spin"></span>ACCOUNT WIRD ERSTELLT...';
+  const {data,error}=await sb.auth.signUp({
+    email,password:pw,
+    options:{data:{username,display_name:username}}
+  });
+  if(error){
+    showMsg('r-msg','err',error.message.includes('already')?'E-MAIL BEREITS REGISTRIERT':error.message);
+    btn.disabled=false;btn.textContent='ACCOUNT ERSTELLE →';
+  }else{
+    showMsg('r-msg','ok','ACCOUNT ERSTELLT! AB ZUM ONBOARDING...');
+    localStorage.setItem('sp_username',username);
+    localStorage.setItem('sp_email',email);
+    setTimeout(()=>window.location.href='onboarding.html',1200);
+  }
+};
+
+// FORGOT PW
+window.doForgot = async function(){
+  const email=document.getElementById('l-email').value.trim();
+  if(!email){showMsg('l-msg','err','GIB ZERSCHT DI E-MAIL AA');return;}
+  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+'/login.html'});
+  if(error){showMsg('l-msg','err',error.message);}
+  else{showMsg('l-msg','ok','RESET-MAIL UNDERWEGS!');}
+};
+
+// SOCIAL
+window.doApple = async function(){
+  await sb.auth.signInWithOAuth({provider:'apple',options:{redirectTo:window.location.origin+'/dashboard.html'}});
+};
+window.doGoogle = async function(){
+  await sb.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin+'/dashboard.html'}});
+};
+
+// Check already logged in
+const {data:{session}}=await sb.auth.getSession();
+if(session)window.location.href='dashboard.html';
+</script>
+</body>
+</html>

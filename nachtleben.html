@@ -1,788 +1,805 @@
 <!DOCTYPE html>
-<html lang="de-CH">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Nachtleben Zürich 2026 — Clubs, Bars, Afterhour | Stadtpuls</title>
-<meta name="description" content="89 Clubs & Bars in Zürich. Techno, House, Jazz, Hip-Hop. Züri schlaft nöd.">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stadtpuls Zürich — Nachtlebe | Clubs, Bars & Afterhour</title>
+<meta name="description" content="Zürichs beschtis Nachtleben — Clubs, Bars, Techno, Jazz, Afterhour. Alle 146 Locations live.">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-:root{--red:#ff2d00;--volt:#c8ff00;--gold:#ffd700;--white:#e8e4d9;--black:#000}
-body{background:#000;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
-
-/* SCAN LINES */
-body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,45,0,.015) 3px,rgba(255,45,0,.015) 4px);pointer-events:none;z-index:9997}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none}
 
 /* CURSOR */
-#cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .1s}
-#cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(255,45,0,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0s,top 0s}
-body:hover #cur{transform:translate(-50%,-50%) scale(1.5)}
+#dot{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#ring{position:fixed;width:30px;height:30px;border:1px solid rgba(255,45,0,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .07s,top .07s}
+
+/* BG — subtiler als vorher, trotzdem Charakter */
+.scan{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 4px,rgba(255,45,0,0.008) 4px,rgba(255,45,0,0.008) 5px);pointer-events:none;z-index:3}
+.gridl{position:fixed;inset:0;background-image:linear-gradient(rgba(255,45,0,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,45,0,0.02) 1px,transparent 1px);background-size:60px 60px;pointer-events:none;z-index:2}
+
+/* CORNERS */
+.cn{position:fixed;width:20px;height:20px;border-color:rgba(255,45,0,0.4);border-style:solid;z-index:20;pointer-events:none}
+.tl{top:12px;left:12px;border-width:2px 0 0 2px}
+.tr{top:12px;right:12px;border-width:2px 2px 0 0}
+.bl{bottom:12px;left:12px;border-width:0 0 2px 2px}
+.br{bottom:12px;right:12px;border-width:0 2px 2px 0}
 
 /* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid rgba(255,45,0,.12);position:sticky;top:0;background:#000;z-index:300}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px;text-decoration:none}
-.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;box-shadow:0 0 8px rgba(255,45,0,.8);animation:blink 2s infinite}
-.nav-links{display:flex;gap:28px}
-.nl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);text-decoration:none;transition:.15s}
-.nl:hover,.nl.on{color:#ff2d00}
-.btn-mm{background:#ff2d00;color:#000;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none;text-decoration:none;box-shadow:0 0 20px rgba(255,45,0,.4)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:0;background:rgba(0,0,0,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,45,0,0.15)}
+.nav-logo{padding:14px 20px;border-right:1px solid rgba(255,45,0,0.1);display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.logo-txt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:4px;font-size:19px;color:#e8e4d9}
+.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite;flex-shrink:0}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,0.7)}50%{box-shadow:0 0 0 6px rgba(255,45,0,0)}}
+.nav-links{display:flex;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-link{padding:14px 16px;font-size:9px;letter-spacing:3px;color:rgba(232,228,217,0.3);text-decoration:none;text-transform:uppercase;white-space:nowrap;transition:color .2s;border-right:1px solid rgba(255,45,0,0.06)}
+.nav-link:hover{color:#e8e4d9}
+.nav-link.active{color:#ff2d00}
+.nav-cta{padding:10px 18px;margin:8px 14px;background:#ff2d00;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;border-radius:2px;white-space:nowrap;flex-shrink:0;text-decoration:none;display:flex;align-items:center}
 
-/* STROBE TICKER — rast durch */
-.strobe-ticker{background:#ff2d00;overflow:hidden;height:32px;display:flex;align-items:center;border-bottom:1px solid rgba(255,45,0,.3)}
-.strobe-inner{display:flex;white-space:nowrap;animation:strobeRace 28s linear infinite}
-.strobe-item{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#000;padding:0 24px;letter-spacing:1px;flex-shrink:0}
-.strobe-item::before{content:'●';margin-right:12px;opacity:.4}
+/* PULSE MOMENT BANNER — NEU */
+.pulse-banner{background:linear-gradient(90deg,#9333ea,#ff2d00,#9333ea);background-size:200% 100%;animation:pulse-bg 3s ease-in-out infinite;padding:10px 24px;text-align:center;position:relative;z-index:10;margin-top:57px}
+@keyframes pulse-bg{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.pulse-banner-txt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:3px;text-transform:uppercase;color:#fff}
+.pulse-banner-dot{display:inline-block;width:8px;height:8px;background:#fff;border-radius:50%;margin-right:8px;animation:blink 1s infinite}
 
-/* HERO — Scheinwerfer von oben */
-.hero{
-  position:relative;overflow:hidden;
-  display:grid;grid-template-columns:1fr 380px;
-  min-height:480px;
-  background:#000;
-}
+/* GPS STRIP */
+.gps-strip{background:rgba(0,245,255,0.06);border-bottom:1px solid rgba(0,245,255,0.15);padding:10px 24px;display:flex;align-items:center;gap:6px;overflow:hidden;position:relative}
+.gps-strip-inner{display:flex;gap:0;white-space:nowrap;animation:gtick 30s linear infinite}
+@keyframes gtick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.gps-item{font-size:9px;letter-spacing:2px;color:#00f5ff;text-transform:uppercase;padding:0 20px;border-right:1px solid rgba(0,245,255,0.15)}
+.gps-item strong{color:#fff}
 
-/* Lichtquelle — Scheinwerfer */
-.hero-spotlight{
-  position:absolute;top:-100px;left:30%;width:400px;height:600px;
-  background:radial-gradient(ellipse at 50% 0%,rgba(255,45,0,.18) 0%,rgba(255,45,0,.06) 35%,transparent 70%);
-  pointer-events:none;z-index:1;
-  animation:spotMove 8s ease-in-out infinite;
-}
-.hero-spotlight2{
-  position:absolute;top:-80px;right:15%;width:300px;height:500px;
-  background:radial-gradient(ellipse at 50% 0%,rgba(255,45,0,.1) 0%,transparent 60%);
-  pointer-events:none;z-index:1;
-  animation:spotMove 8s ease-in-out infinite 4s;
-}
+/* HERO */
+.hero{padding:32px 24px 0;position:relative;overflow:hidden}
+.hero-bg-txt{position:absolute;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:200px;color:rgba(255,45,0,0.025);top:50%;left:50%;transform:translate(-50%,-50%);white-space:nowrap;text-transform:uppercase;pointer-events:none;letter-spacing:-8px}
+.hero-eye{font-size:9px;letter-spacing:5px;color:#9333ea;text-transform:uppercase;margin-bottom:6px}
+.hero-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:72px;line-height:.85;text-transform:uppercase;color:#e8e4d9;margin-bottom:6px}
+.hero-title .r{color:#ff2d00}
+.hero-title .p{color:#9333ea}
+.hero-sub{font-size:11px;color:rgba(232,228,217,0.45);margin-bottom:20px;letter-spacing:.5px}
 
-/* Noise */
-.hero-noise{position:absolute;inset:0;z-index:2;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:180px;mix-blend-mode:screen}
+/* KREISRIVALITÄT */
+.rivalitaet{margin:0 0 20px 0;background:rgba(255,45,0,0.04);border:1px solid rgba(255,45,0,0.12);border-radius:4px;padding:14px 16px}
+.riv-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.riv-title{font-size:8px;letter-spacing:4px;color:rgba(255,45,0,0.6);text-transform:uppercase}
+.riv-trophy{font-size:14px}
+.riv-bars{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.riv-bar{text-align:center}
+.riv-bar-name{font-size:7px;letter-spacing:1px;color:rgba(232,228,217,0.4);text-transform:uppercase;margin-bottom:4px}
+.riv-bar-track{height:28px;background:rgba(255,255,255,0.05);border-radius:2px;position:relative;overflow:hidden}
+.riv-bar-fill{position:absolute;bottom:0;left:0;right:0;border-radius:2px;transition:height 1s cubic-bezier(.16,1,.3,1)}
+.riv-bar-fill.lead{background:linear-gradient(180deg,#c8ff00,rgba(200,255,0,0.4))}
+.riv-bar-fill.norm{background:linear-gradient(180deg,rgba(255,45,0,0.6),rgba(255,45,0,0.1))}
+.riv-bar-num{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:11px;color:rgba(232,228,217,0.5);margin-top:3px}
+.riv-bar.lead .riv-bar-name{color:#c8ff00}
+.riv-bar.lead .riv-bar-num{color:#c8ff00}
 
-.hero-left{padding:52px 40px;z-index:5;display:flex;flex-direction:column;justify-content:center;position:relative}
-.hero-eye{font-size:8px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,45,0,.4);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.hero-eye::before{content:'';width:16px;height:1px;background:#ff2d00}
+/* STATS BAR */
+.stats-bar{display:flex;gap:1px;background:rgba(255,45,0,0.1);margin-bottom:20px;border-radius:3px;overflow:hidden}
+.stat{flex:1;background:#000;padding:12px 8px;text-align:center}
+.stat-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:#e8e4d9;line-height:1}
+.stat-n.red{color:#ff2d00}
+.stat-n.lila{color:#9333ea}
+.stat-n.gold{color:#ffd700}
+.stat-n.cyan{color:#00f5ff}
+.stat-l{font-size:7px;letter-spacing:1.5px;color:rgba(232,228,217,0.3);text-transform:uppercase;margin-top:2px}
 
-.h1{
-  font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;
-  font-size:clamp(100px,13vw,180px);line-height:.78;text-transform:uppercase;
-  color:#e8e4d9;letter-spacing:-4px;
-  animation:crashIn .5s cubic-bezier(.16,1,.3,1) both;
-}
-.h2{
-  font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;
-  font-size:clamp(100px,13vw,180px);line-height:.78;text-transform:uppercase;
-  color:#ff2d00;letter-spacing:-4px;
-  text-shadow:0 0 80px rgba(255,45,0,.6),0 0 160px rgba(255,45,0,.2);
-  animation:crashIn .5s cubic-bezier(.16,1,.3,1) .06s both;
-}
-.hero-line{width:48px;height:2px;background:#ff2d00;margin:22px 0;box-shadow:0 0 10px rgba(255,45,0,.6)}
-.hero-desc{font-size:11px;color:rgba(232,228,217,.3);line-height:1.9;margin-bottom:28px;max-width:380px}
+/* FILTER SYSTEM */
+.filter-section{margin-bottom:20px}
 
-.hstats{display:flex;gap:28px;flex-wrap:wrap}
-.sn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:40px;color:#ff2d00;line-height:1;text-shadow:0 0 24px rgba(255,45,0,.5)}
-.sl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);margin-top:3px}
+/* TYP FILTER — grosse klickbare Cards */
+.typ-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.typ-card{padding:14px 8px;border:1px solid rgba(255,255,255,0.08);border-radius:4px;text-align:center;cursor:pointer;transition:all .22s;background:rgba(255,255,255,0.03);position:relative}
+.typ-card:hover{border-color:rgba(255,45,0,0.4);background:rgba(255,45,0,0.05)}
+.typ-card.on{border-color:#ff2d00;background:rgba(255,45,0,0.09)}
+.typ-card-icon{font-size:22px;display:block;margin-bottom:5px}
+.typ-card-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;text-transform:uppercase;color:rgba(232,228,217,0.6);line-height:1;transition:color .22s}
+.typ-card:hover .typ-card-name,.typ-card.on .typ-card-name{color:#e8e4d9}
+.typ-card-count{font-size:8px;color:rgba(232,228,217,0.3);letter-spacing:1px;margin-top:3px}
+.typ-card.on .typ-card-count{color:rgba(255,45,0,0.6)}
 
-/* HERO RECHTS — Genre Battle brutal */
-.hero-right{position:relative;z-index:5;border-left:1px solid rgba(255,45,0,.08);display:flex;flex-direction:column;justify-content:center}
-.gm-wrap{padding:32px 28px}
-.gm-head{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.4);margin-bottom:16px;display:flex;align-items:center;gap:6px}
-.gm-live{width:5px;height:5px;border-radius:50%;background:#ff2d00;animation:blink 1s infinite;box-shadow:0 0 6px rgba(255,45,0,.8)}
+/* GENRE FILTER CHIPS */
+.genre-wrap{margin-bottom:12px}
+.genre-label{font-size:7px;letter-spacing:4px;color:rgba(232,228,217,0.25);text-transform:uppercase;margin-bottom:8px}
+.genre-chips{display:flex;flex-wrap:wrap;gap:6px}
+.gc{padding:7px 13px;border:1px solid rgba(255,255,255,0.1);border-radius:100px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;color:rgba(232,228,217,0.5);background:rgba(255,255,255,0.02)}
+.gc:hover{border-color:rgba(255,45,0,0.5);color:#e8e4d9;background:rgba(255,45,0,0.04)}
+.gc.on{border-color:#ff2d00;color:#ff2d00;background:rgba(255,45,0,0.08);box-shadow:0 0 10px rgba(255,45,0,0.15)}
+.gc.lila.on{border-color:#9333ea;color:#9333ea;background:rgba(147,51,234,0.08);box-shadow:0 0 10px rgba(147,51,234,0.15)}
+.gc.gold.on{border-color:#ffd700;color:#ffd700;background:rgba(255,215,0,0.06)}
 
-.gm-row{
-  display:flex;align-items:center;gap:10px;
-  padding:11px 14px;margin-bottom:2px;
-  border:1px solid rgba(255,45,0,.06);
-  background:#000;transition:.2s;cursor:none;position:relative;overflow:hidden;
-}
-.gm-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:#ff2d00;transform:scaleY(0);transition:.2s;transform-origin:bottom}
-.gm-row:hover,.gm-row.top{background:rgba(255,45,0,.04);border-color:rgba(255,45,0,.2)}
-.gm-row:hover::before,.gm-row.top::before{transform:scaleY(1)}
-.gm-row.top{animation:rowGlow 3s ease-in-out infinite}
-.gm-e{font-size:20px;flex-shrink:0}
-.gm-info{flex:1;min-width:0}
-.gm-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:19px;text-transform:uppercase;line-height:1}
-.gm-row.top .gm-name{color:#ff2d00}
-.gm-sub{font-size:7px;color:rgba(232,228,217,.2);letter-spacing:.5px;margin-top:1px}
-.gm-bar-w{width:50px;height:2px;background:rgba(255,45,0,.08);flex-shrink:0}
-.gm-bar{height:2px;background:#ff2d00;transition:width 1.2s ease}
-.gm-row.top .gm-bar{box-shadow:0 0 8px rgba(255,45,0,.8)}
-.gm-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:rgba(255,255,255,.12);min-width:32px;text-align:right;flex-shrink:0}
-.gm-row.top .gm-n{color:#ff2d00}
+/* QUER FILTER */
+.quer-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.qc{padding:7px 13px;border:1px solid rgba(0,245,255,0.15);border-radius:100px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;color:rgba(0,245,255,0.5);background:transparent}
+.qc:hover{border-color:#00f5ff;color:#00f5ff}
+.qc.on{border-color:#00f5ff;color:#04040a;background:#00f5ff}
 
-/* LIVE STRIP */
-.live-strip{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 40px;flex-wrap:wrap;gap:12px;
-  background:rgba(255,45,0,.04);
-  border-top:1px solid rgba(255,45,0,.1);border-bottom:1px solid rgba(255,45,0,.1);
-}
-.ls-left{display:flex;align-items:center;gap:10px}
-.ls-puls{
-  position:relative;width:12px;height:12px;flex-shrink:0;
-}
-.ls-puls::before{content:'';position:absolute;inset:0;border-radius:50%;background:#ff2d00;animation:blink .8s infinite;box-shadow:0 0 8px rgba(255,45,0,.8)}
-.ls-puls::after{content:'';position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(255,45,0,.4);animation:ringPuls 1.5s ease-out infinite}
-.ls-title{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00}
-.ls-sub{font-size:8px;color:rgba(255,45,0,.35);letter-spacing:1px;margin-top:2px}
-.ls-stats{display:flex;gap:20px}
-.ls-stat{text-align:center}
-.ls-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;line-height:1}
-.ls-l{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.18);margin-top:2px}
+/* AKTIVE FILTER TAGS */
+.active-filters{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px;min-height:0}
+.af-tag{display:flex;align-items:center;gap:5px;padding:5px 10px;background:rgba(255,45,0,0.1);border:1px solid rgba(255,45,0,0.25);border-radius:100px;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:#ff2d00;cursor:pointer}
+.af-tag:hover{background:rgba(255,45,0,0.18)}
+.af-x{opacity:.6;font-size:10px}
 
-/* FILTER BAR */
-.filter-bar{position:sticky;top:54px;z-index:200;background:#000;border-bottom:1px solid rgba(255,45,0,.1)}
-.af-row{display:flex;align-items:center;gap:6px;padding:7px 40px;min-height:36px;border-bottom:1px solid rgba(255,45,0,.05);flex-wrap:wrap}
-.af-row:empty{display:none}
-.af-tag{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border:1px solid rgba(255,45,0,.4);background:rgba(255,45,0,.06);font-size:9px;letter-spacing:1px;text-transform:uppercase;color:#ff2d00}
-.af-x{opacity:.45;font-size:12px;cursor:none}.af-x:hover{opacity:1}
-.af-reset{margin-left:auto;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);border:1px solid rgba(232,228,217,.08);padding:4px 10px;cursor:none;transition:.15s;flex-shrink:0;background:transparent}
-.af-reset:hover{color:#ff2d00;border-color:rgba(255,45,0,.4)}
+/* DYNAMIC HEADLINE */
+.dyn-headline{margin-bottom:16px}
+.dyn-h{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase;color:#e8e4d9;line-height:1}
+.dyn-h span{color:#ff2d00}
+.sort-row{display:flex;align-items:center;gap:8px;margin-top:6px}
+.sort-btn{padding:5px 10px;border:1px solid rgba(255,255,255,0.08);border-radius:2px;font-size:7px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:rgba(232,228,217,0.35);background:transparent;transition:all .2s;font-family:'DM Mono',monospace}
+.sort-btn:hover{color:#e8e4d9;border-color:rgba(255,255,255,0.2)}
+.sort-btn.on{color:#ff2d00;border-color:rgba(255,45,0,0.3);background:rgba(255,45,0,0.05)}
 
-.genre-row{display:flex;align-items:stretch;border-bottom:1px solid rgba(255,45,0,.08)}
-.genre-lbl{display:flex;align-items:center;padding:0 16px;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.1);border-right:1px solid rgba(255,45,0,.06);flex-shrink:0}
-.genre-btn{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 16px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.06);cursor:none;transition:.2s;position:relative;flex-shrink:0;gap:2px;min-width:80px}
-.genre-btn::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#ff2d00;transform:scaleX(0);transition:.2s;transform-origin:center;box-shadow:0 0 8px rgba(255,45,0,.6)}
-.genre-btn.on::after{transform:scaleX(1)}
-.genre-btn:hover{background:rgba(255,45,0,.04)}.genre-btn.on{background:rgba(255,45,0,.06)}
-.genre-icon{font-size:16px;line-height:1}
-.genre-name{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,217,.25);transition:.2s}
-.genre-btn.on .genre-name{color:#ff2d00}
-.genre-cnt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;color:rgba(232,228,217,.12);line-height:1;transition:.2s}
-.genre-btn.on .genre-cnt{color:#ff2d00;text-shadow:0 0 10px rgba(255,45,0,.5)}
+/* LOCATION CARDS — VIEL LESBARER */
+.locations-grid{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
 
-.bottom-row{display:flex;align-items:stretch;overflow-x:auto}
-.bottom-row::-webkit-scrollbar{display:none}
-.kr-btn{padding:10px 12px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.05);color:rgba(232,228,217,.18);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;cursor:none;transition:.15s;white-space:nowrap;flex-shrink:0}
-.kr-btn:hover{color:#ff2d00;background:rgba(255,45,0,.04)}
-.kr-btn.on{color:#000;background:#ff2d00;box-shadow:0 0 14px rgba(255,45,0,.4)}
-.fsep{width:1px;background:rgba(255,45,0,.2);flex-shrink:0}
-.q-btn{display:flex;align-items:center;gap:6px;padding:10px 14px;border:none;background:transparent;border-right:1px solid rgba(255,45,0,.05);color:rgba(232,228,217,.2);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:none;transition:.15s;white-space:nowrap;flex-shrink:0}
-.q-btn.on,.q-btn:hover{color:#ff2d00;background:rgba(255,45,0,.05)}
-.q-dot{width:5px;height:5px;border-radius:50%;background:#ff2d00;animation:blink 1.5s infinite;box-shadow:0 0 5px rgba(255,45,0,.6)}
+.loc-card{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);border-radius:6px;overflow:hidden;cursor:pointer;transition:all .22s;position:relative}
+.loc-card:hover{border-color:rgba(255,45,0,0.4);background:rgba(255,255,255,0.09);transform:translateX(3px)}
+.loc-card.featured{border-color:rgba(200,255,0,0.3);background:rgba(200,255,0,0.04)}
+.loc-card.featured:hover{border-color:#c8ff00}
 
-.result-bar{display:flex;align-items:center;justify-content:space-between;padding:8px 40px;border-bottom:1px solid rgba(255,45,0,.06);background:#000}
-.rb-l{display:flex;align-items:center;gap:12px}
-.rb-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:#ff2d00;line-height:1;min-width:40px;text-shadow:0 0 16px rgba(255,45,0,.4)}
-.rb-label{font-size:9px;letter-spacing:1px;color:rgba(232,228,217,.2);text-transform:uppercase}
-.rb-r{display:flex}
-.sort-btn{font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:5px 12px;border:1px solid rgba(255,45,0,.08);border-right:none;color:rgba(232,228,217,.18);background:transparent;cursor:none;transition:.15s}
-.sort-btn:last-child{border-right:1px solid rgba(255,45,0,.08)}
-.sort-btn.on{border-color:#ff2d00;color:#ff2d00;background:rgba(255,45,0,.06)}
+.loc-card-inner{display:flex;gap:0}
+.loc-img{width:90px;min-width:90px;height:90px;object-fit:cover;background:linear-gradient(135deg,rgba(147,51,234,0.3),rgba(255,45,0,0.2))}
+.loc-img-placeholder{width:90px;min-width:90px;height:90px;background:linear-gradient(135deg,rgba(147,51,234,0.2),rgba(0,0,0,0.5));display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.loc-body{flex:1;padding:12px 14px;min-width:0}
+.loc-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:5px;gap:8px}
+.loc-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;color:#e8e4d9;line-height:1;flex:1;min-width:0}
+.loc-badges{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex-shrink:0}
 
-/* KI SECTION */
-.ki-section{margin:32px 40px;border:1px solid rgba(255,45,0,.12);background:#000;padding:28px;position:relative;overflow:hidden}
-.ki-section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#ff2d00,transparent);box-shadow:0 0 10px rgba(255,45,0,.5)}
-.ki-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
-.ki-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;text-transform:uppercase}
-.ki-status{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;border:1px solid rgba(255,45,0,.2);padding:4px 10px;display:flex;align-items:center;gap:5px}
-.ki-status::before{content:'';width:4px;height:4px;border-radius:50%;background:#ff2d00;animation:blink 1.5s infinite;box-shadow:0 0 5px rgba(255,45,0,.8)}
-.ki-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,45,0,.06)}
-.ki-card{background:#000;padding:20px;transition:.15s;position:relative;overflow:hidden}
-.ki-card:hover{background:#080808}
-.ki-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:#ff2d00;transform:scaleX(0);transition:.2s;transform-origin:left}
-.ki-card:hover::after{transform:scaleX(1)}
-.ki-icon{font-size:22px;margin-bottom:10px}
-.ki-card-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;color:#e8e4d9;margin-bottom:6px}
-.ki-card-desc{font-size:9px;color:rgba(232,228,217,.28);line-height:1.7}
-.ki-card-tag{display:inline-block;font-size:7px;letter-spacing:2px;text-transform:uppercase;padding:3px 7px;margin-top:10px;border:1px solid rgba(255,45,0,.2);color:#ff2d00}
+/* OFFE BADGE — deutlich sichtbar */
+.offe-badge{padding:3px 8px;border-radius:2px;font-size:7px;letter-spacing:2px;text-transform:uppercase;font-weight:500}
+.offe-badge.open{background:#c8ff00;color:#04040a}
+.offe-badge.closed{background:rgba(255,255,255,0.08);color:rgba(232,228,217,0.4)}
 
-/* SECTION */
-.sh{display:flex;align-items:baseline;justify-content:space-between;padding:26px 40px 14px}
-.sh-t{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;text-transform:uppercase;display:flex;align-items:center;gap:8px;color:#e8e4d9}
-.sh-t::before{content:'—';color:#ff2d00}
-.sh-r{font-size:9px;letter-spacing:2px;color:rgba(232,228,217,.12);text-transform:uppercase}
+.top-pick{background:#c8ff00;color:#04040a;font-size:7px;letter-spacing:1px;padding:2px 6px;border-radius:2px;text-transform:uppercase;font-weight:500}
 
-/* GRID */
-.mgrid{display:grid;grid-template-columns:repeat(3,1fr);padding:0 40px;gap:0}
+.loc-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
 
-/* CARD — mit Leben */
-.mcard{
-  border:1px solid rgba(255,45,0,.07);border-top:none;border-left:none;
-  padding:0 0 22px;position:relative;background:#000;
-  transition:background .2s;overflow:hidden;cursor:none;
-}
-.mcard:hover{background:#060000}
-.mcard:nth-child(3n+1){border-left:1px solid rgba(255,45,0,.07)}
-.mcard:nth-child(-n+3){border-top:1px solid rgba(255,45,0,.07)}
+/* SUBKATEGORIE TAGS — klare Farben */
+.sk-tag{padding:3px 8px;border-radius:100px;font-size:7.5px;letter-spacing:1px;text-transform:uppercase}
+.sk-tag.techno{background:rgba(147,51,234,0.18);color:#c084fc;border:1px solid rgba(147,51,234,0.3)}
+.sk-tag.jazz{background:rgba(255,215,0,0.12);color:#ffd700;border:1px solid rgba(255,215,0,0.25)}
+.sk-tag.bar{background:rgba(0,245,255,0.1);color:#00f5ff;border:1px solid rgba(0,245,255,0.2)}
+.sk-tag.club{background:rgba(255,45,0,0.12);color:#ff6b4a;border:1px solid rgba(255,45,0,0.25)}
+.sk-tag.afterhour{background:rgba(255,215,0,0.08);color:#ffd700;border:1px solid rgba(255,215,0,0.2)}
+.sk-tag.hiphop{background:rgba(236,72,153,0.12);color:#f472b6;border:1px solid rgba(236,72,153,0.25)}
+.sk-tag.rock{background:rgba(239,68,68,0.12);color:#f87171;border:1px solid rgba(239,68,68,0.25)}
+.sk-tag.live{background:rgba(34,197,94,0.12);color:#4ade80;border:1px solid rgba(34,197,94,0.25)}
+.sk-tag.default{background:rgba(255,255,255,0.08);color:rgba(232,228,217,0.6);border:1px solid rgba(255,255,255,0.12)}
 
-/* Glow-Linie unten bei Hover */
-.mcard::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:#ff2d00;transform:scaleX(0);transition:.3s;transform-origin:left;box-shadow:0 0 10px rgba(255,45,0,.6)}
-.mcard:hover::after{transform:scaleX(1)}
+.loc-kreis{font-size:8px;color:rgba(232,228,217,0.4);letter-spacing:1px;text-transform:uppercase}
+.loc-desc{font-size:10px;color:rgba(232,228,217,0.55);line-height:1.5;margin-bottom:6px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.loc-bottom{display:flex;align-items:center;justify-content:space-between}
+.loc-rating{display:flex;align-items:center;gap:4px;font-size:9px;color:rgba(232,228,217,0.5)}
+.loc-rating .star{color:#ffd700;font-size:11px}
+.loc-ticket-btn{padding:6px 12px;background:#ff2d00;color:#fff;border:none;border-radius:2px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:12px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.loc-ticket-btn:hover{background:#e02800;box-shadow:0 0 12px rgba(255,45,0,0.4)}
+.loc-ticket-btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.15);color:rgba(232,228,217,0.5);font-size:11px}
+.loc-ticket-btn.ghost:hover{border-color:#ff2d00;color:#ff2d00}
 
-/* OFFE = ganzer Card pulsiert */
-.mcard.is-offe{border-color:rgba(255,45,0,.15)}
-.mcard.is-offe::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,45,0,.04),transparent 60%);pointer-events:none;z-index:1;animation:cardGlow 3s ease-in-out infinite}
+/* EMPTY STATE */
+.empty{text-align:center;padding:40px 24px}
+.empty-big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:52px;color:rgba(255,45,0,0.08);text-transform:uppercase;margin-bottom:8px}
+.empty-txt{font-size:10px;color:rgba(232,228,217,0.25);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px}
 
-.mc-img{width:100%;height:140px;object-fit:cover;display:block;filter:saturate(.7) brightness(.65);transition:filter .3s}
-.mcard:hover .mc-img{filter:saturate(.9) brightness(.8)}
-.mc-img-placeholder{width:100%;height:90px;display:flex;align-items:center;justify-content:center;font-size:36px;opacity:.2;background:#050000;position:relative;overflow:hidden}
-.mc-img-placeholder::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,45,0,.06),transparent)}
-
-.mc-puls{position:absolute;top:10px;right:10px;width:9px;height:9px;border-radius:50%;background:#c8ff00;z-index:10;box-shadow:0 0 8px rgba(200,255,0,.8),0 0 16px rgba(200,255,0,.4);animation:blink 1s infinite}
-.mc-puls-ring{position:absolute;top:6px;right:6px;width:17px;height:17px;border-radius:50%;border:1px solid rgba(200,255,0,.4);animation:cardRingPulse 2s ease-out infinite;z-index:9}
-
-.mc-body{padding:14px 16px 0;position:relative;z-index:2}
-.mc-badges{display:flex;gap:4px;flex-wrap:wrap;min-height:18px;margin-bottom:8px}
-.mcb{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;padding:2px 7px;font-family:'DM Mono',monospace}
-.mcb.red{background:#ff2d00;color:#000}
-.mcb.volt{background:#c8ff00;color:#000}
-.mcb.gold{background:#ffd700;color:#000}
-.mcb.ghost{border:1px solid rgba(232,228,217,.08);color:rgba(232,228,217,.2)}
-.mcb.offe{display:flex;align-items:center;gap:3px;background:#c8ff00;color:#000;box-shadow:0 0 8px rgba(200,255,0,.4)}
-.offe-dot{width:4px;height:4px;border-radius:50%;background:#000;animation:blink 1s infinite}
-
-.mc-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;line-height:1;color:#e8e4d9;margin-bottom:3px}
-.mc-genre{font-size:10px;color:#ff2d00;letter-spacing:.5px;text-transform:uppercase;margin-bottom:4px}
-.mc-meta{font-size:9px;color:rgba(232,228,217,.18);line-height:1.6}
-.mc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:8px;border-top:1px solid rgba(255,45,0,.05)}
-
-/* VIBE METER — lebt */
-.mc-vibe{display:flex;gap:3px;align-items:center}
-.vdot{width:6px;height:6px;border-radius:50%;background:rgba(255,45,0,.1);transition:.3s}
-.vdot.on{background:#ff2d00;box-shadow:0 0 5px rgba(255,45,0,.6)}
-.vdot.on.v5{animation:vibePulse 1s ease-in-out infinite}
-.vdot.on.v4{animation:vibePulse 1.4s ease-in-out infinite .2s}
-.mc-kr{font-size:8px;color:rgba(232,228,217,.18);text-transform:uppercase;letter-spacing:1px}
-
-/* LOADING */
-.loading-state{grid-column:1/-1;padding:80px;text-align:center}
-.loading-dots{display:flex;justify-content:center;gap:10px;margin-bottom:20px}
-.loading-dot{width:10px;height:10px;border-radius:50%;background:#ff2d00;animation:bounce 1.2s infinite;box-shadow:0 0 10px rgba(255,45,0,.5)}
-.loading-dot:nth-child(2){animation-delay:.2s}.loading-dot:nth-child(3){animation-delay:.4s}
-.loading-txt{font-size:10px;letter-spacing:3px;color:rgba(255,45,0,.3);text-transform:uppercase}
-.empty-state{grid-column:1/-1;padding:80px;text-align:center}
-.es-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:rgba(232,228,217,.06);text-transform:uppercase;margin-bottom:10px}
-.es-sub{font-size:10px;color:rgba(232,228,217,.15)}
-.es-reset{display:inline-block;margin-top:20px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:10px 20px;cursor:none;background:transparent}
+/* KI FEATURES SECTION */
+.ki-section{margin:0 0 24px;padding:20px;background:rgba(147,51,234,0.05);border:1px solid rgba(147,51,234,0.15);border-radius:6px}
+.ki-head{font-size:8px;letter-spacing:4px;color:rgba(147,51,234,0.6);text-transform:uppercase;margin-bottom:14px}
+.ki-features{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ki-feat{padding:12px;background:rgba(0,0,0,0.3);border:1px solid rgba(147,51,234,0.1);border-radius:4px}
+.ki-feat-icon{font-size:20px;margin-bottom:5px;display:block}
+.ki-feat-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;text-transform:uppercase;color:#e8e4d9;line-height:1;margin-bottom:3px}
+.ki-feat-desc{font-size:8px;color:rgba(232,228,217,0.35);letter-spacing:.5px;line-height:1.6}
+.ki-feat-badge{display:inline-block;padding:2px 6px;background:rgba(147,51,234,0.15);color:#9333ea;border:1px solid rgba(147,51,234,0.25);border-radius:100px;font-size:7px;letter-spacing:1px;text-transform:uppercase;margin-top:4px}
 
 /* DETAIL PANEL */
-.ov{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:600;opacity:0;pointer-events:none;transition:.25s;backdrop-filter:blur(6px)}
-.ov.on{opacity:1;pointer-events:all}
-.panel{position:fixed;top:0;right:-500px;width:460px;height:100vh;background:#000;border-left:1px solid rgba(255,45,0,.12);z-index:601;transition:right .3s ease;overflow-y:auto}
-.panel.open{right:0}
-.p-hero{min-height:220px;background:#050000;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;padding:22px;background-size:cover;background-position:center}
-.p-hero::before{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.98),rgba(0,0,0,.3))}
-.p-hero-red{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,45,0,.12),transparent 60%);pointer-events:none}
-.p-close{position:absolute;top:12px;right:12px;width:44px;height:44px;border:1px solid rgba(255,45,0,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;color:#e8e4d9;cursor:none;z-index:10;background:rgba(0,0,0,.8)}
-.p-name{position:relative;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;text-transform:uppercase;color:#e8e4d9;line-height:.9}
-.p-sub{position:relative;font-size:9px;color:rgba(232,228,217,.25);margin-top:5px;letter-spacing:1.5px;text-transform:uppercase}
-.p-body{padding:20px}
-.p-tags{display:flex;gap:5px;margin-bottom:14px;flex-wrap:wrap}
-.p-desc{font-size:11px;color:rgba(232,228,217,.38);line-height:1.9;margin-bottom:16px}
-.p-rows{border-top:1px solid rgba(255,45,0,.05);border-bottom:1px solid rgba(255,45,0,.05);margin-bottom:16px}
-.p-row{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid rgba(255,45,0,.04)}
-.p-row:last-child{border-bottom:none}
-.p-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15);min-width:64px;flex-shrink:0}
-.p-val{font-size:10px;color:#e8e4d9}
-.pred{border-left:2px solid #ff2d00;padding:10px 14px;margin-bottom:16px;background:rgba(255,45,0,.03);box-shadow:inset 2px 0 10px rgba(255,45,0,.1)}
-.pred-txt{font-size:10px;color:rgba(255,80,50,.6);line-height:1.7}
-.pred-txt strong{color:#ff2d00}
-.p-acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.p-act{padding:16px 12px;min-height:54px;background:transparent;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.22);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;text-align:center;cursor:none;transition:.15s;display:flex;align-items:center;justify-content:center;gap:6px}
-.p-act:hover{color:#e8e4d9;border-color:rgba(255,45,0,.25);background:rgba(255,45,0,.03)}
+.detail-panel{display:none;position:fixed;bottom:0;left:0;right:0;background:#0a0005;border-top:1px solid rgba(255,45,0,0.2);z-index:80;padding:0;max-height:70vh;overflow-y:auto;border-radius:12px 12px 0 0;box-shadow:0 -8px 40px rgba(0,0,0,0.8)}
+.detail-panel.open{display:block;animation:panelUp .3s cubic-bezier(.16,1,.3,1)}
+@keyframes panelUp{from{transform:translateY(100%)}to{transform:none}}
+.dp-handle{width:40px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:12px auto 0}
+.dp-inner{padding:16px 20px 28px}
+.dp-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:14px}
+.dp-img{width:70px;height:70px;border-radius:4px;object-fit:cover;background:linear-gradient(135deg,rgba(147,51,234,0.3),rgba(0,0,0,0.5));display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.dp-info{flex:1}
+.dp-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;text-transform:uppercase;color:#e8e4d9;line-height:1;margin-bottom:4px}
+.dp-meta{font-size:9px;color:rgba(232,228,217,0.45);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.dp-tags{display:flex;flex-wrap:wrap;gap:4px}
+.dp-desc{font-size:11px;color:rgba(232,228,217,0.6);line-height:1.6;margin-bottom:14px}
+.dp-oz{margin-bottom:14px}
+.dp-oz-title{font-size:7px;letter-spacing:4px;color:rgba(232,228,217,0.3);text-transform:uppercase;margin-bottom:8px}
+.oz-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.oz-day-col{text-align:center}
+.oz-day-name{font-size:7px;color:rgba(232,228,217,0.3);letter-spacing:1px;margin-bottom:3px;text-transform:uppercase}
+.oz-day-time{font-size:7px;color:rgba(232,228,217,0.5);line-height:1.4}
+.oz-day-col.today .oz-day-name{color:#ff2d00}
+.oz-day-col.today .oz-day-time{color:#e8e4d9}
+.dp-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.dp-btn{padding:14px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .2s;border:none}
+.dp-btn.ticket{background:#ff2d00;color:#fff;box-shadow:0 4px 20px rgba(255,45,0,0.3)}
+.dp-btn.ticket:hover{box-shadow:0 4px 30px rgba(255,45,0,0.5)}
+.dp-btn.profil{background:rgba(255,255,255,0.07);color:rgba(232,228,217,0.7);border:1px solid rgba(255,255,255,0.1)}
+.dp-btn.profil:hover{background:rgba(255,255,255,0.1);color:#e8e4d9}
+.dp-btn-row{display:flex;gap:8px}
+.dp-icon-btn{flex:1;padding:11px;border:1px solid rgba(255,255,255,0.1);border-radius:3px;background:transparent;color:rgba(232,228,217,0.5);font-size:10px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;text-align:center;font-family:'DM Mono',monospace;transition:all .2s}
+.dp-icon-btn:hover{border-color:rgba(255,45,0,0.4);color:#e8e4d9}
+.dp-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.08);border:none;color:rgba(232,228,217,0.5);font-size:16px;cursor:pointer;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.dp-close:hover{background:rgba(255,45,0,0.15);color:#ff2d00}
 
-/* TICKER BOTTOM */
-.btw{border-top:1px solid rgba(255,45,0,.07);margin-top:48px;overflow:hidden;background:#000}
-.tr{padding:6px 0;overflow:hidden;border-bottom:1px solid rgba(255,45,0,.04)}
-.tick{display:flex;white-space:nowrap}
-.tick.l{animation:tL 20s linear infinite}.tick.r{animation:tR 20s linear infinite}
-.ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(255,45,0,.25)}.ti b{color:#ff2d00;font-weight:400}
+/* FAB MOBILE FILTER */
+.fab{position:fixed;bottom:24px;right:24px;z-index:60;background:#ff2d00;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;cursor:pointer;box-shadow:0 4px 20px rgba(255,45,0,0.4);border:none;transition:all .2s}
+.fab:hover{transform:scale(1.08);box-shadow:0 4px 30px rgba(255,45,0,0.6)}
+
+/* BOTTOM SHEET */
+.sheet-bg{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(4px);z-index:70;display:none;align-items:flex-end}
+.sheet-bg.open{display:flex;animation:fadein .25s}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+.sheet{background:#0a0005;border-radius:14px 14px 0 0;width:100%;padding:0 0 32px;border-top:1px solid rgba(255,45,0,0.2);animation:sheetup .3s cubic-bezier(.16,1,.3,1)}
+@keyframes sheetup{from{transform:translateY(100%)}to{transform:none}}
+.sheet-handle{width:40px;height:4px;background:rgba(255,255,255,0.12);border-radius:2px;margin:12px auto 16px}
+.sheet-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase;color:#e8e4d9;padding:0 20px;margin-bottom:16px}
+.sheet-section{padding:0 20px;margin-bottom:16px}
+.sheet-label{font-size:7px;letter-spacing:4px;color:rgba(232,228,217,0.25);text-transform:uppercase;margin-bottom:10px}
+.sheet-typ{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px}
+.sheet-typ-card{padding:14px 8px;border:1px solid rgba(255,255,255,0.08);border-radius:4px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(255,255,255,0.03)}
+.sheet-typ-card.on{border-color:#ff2d00;background:rgba(255,45,0,0.08)}
+.sheet-typ-icon{font-size:22px;display:block;margin-bottom:4px}
+.sheet-typ-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;text-transform:uppercase;color:rgba(232,228,217,0.55)}
+.sheet-typ-card.on .sheet-typ-name{color:#e8e4d9}
+.sheet-genre{display:flex;flex-wrap:wrap;gap:6px}
+.sheet-kreis{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.sk-card{padding:10px 6px;border:1px solid rgba(255,255,255,0.07);border-radius:3px;text-align:center;cursor:pointer;transition:all .2s;background:rgba(255,255,255,0.02)}
+.sk-card.on{border-color:#ff2d00;background:rgba(255,45,0,0.06)}
+.sk-num{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;color:rgba(232,228,217,0.3);transition:color .2s}
+.sk-lbl{font-size:7px;color:rgba(232,228,217,0.18);letter-spacing:.5px;text-transform:uppercase}
+.sk-card.on .sk-num{color:#ff2d00}
+.sk-card.on .sk-lbl{color:rgba(255,45,0,0.5)}
+.sheet-apply{margin:16px 20px 0;background:#ff2d00;border:none;width:calc(100% - 40px);padding:16px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;letter-spacing:3px;text-transform:uppercase;color:#fff;cursor:pointer;border-radius:3px;box-shadow:0 4px 20px rgba(255,45,0,0.3)}
 
 /* FOOTER */
-footer{padding:44px 40px 32px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px;border-top:1px solid rgba(255,45,0,.08);background:#000}
-.fc-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:12px}
-.fc-link{display:block;font-size:10px;color:rgba(232,228,217,.2);margin-bottom:8px;transition:.15s;text-decoration:none;cursor:none}
-.fc-link:hover{color:#ff2d00}
-.fc-desc{font-size:10px;color:rgba(232,228,217,.15);line-height:1.9;margin-top:8px}
-.fc-copy{font-size:8px;color:rgba(232,228,217,.08);margin-top:16px}
+footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px 28px;margin-top:16px}
+.footer-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:24px}
+.footer-col-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:13px;letter-spacing:3px;color:rgba(255,45,0,0.6);text-transform:uppercase;margin-bottom:10px}
+.footer-link{display:block;font-size:9px;color:rgba(232,228,217,0.3);text-decoration:none;letter-spacing:1px;text-transform:uppercase;margin-bottom:7px;transition:color .2s}
+.footer-link:hover{color:#ff2d00}
+.footer-bottom{border-top:1px solid rgba(255,255,255,0.05);padding-top:16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.footer-copy{font-size:8px;color:rgba(232,228,217,0.2);letter-spacing:2px;text-transform:uppercase}
+.footer-logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;color:rgba(232,228,217,0.25);letter-spacing:3px;display:flex;align-items:center;gap:6px}
+.footer-logo .ldot{width:5px;height:5px}
 
-/* ANIMATIONS */
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
-@keyframes tL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes tR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-@keyframes strobeRace{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes crashIn{from{opacity:0;transform:translateY(50px) skewY(2deg)}to{opacity:1;transform:translateY(0) skewY(0)}}
-@keyframes spotMove{0%,100%{transform:translateX(0)}50%{transform:translateX(40px)}}
-@keyframes rowGlow{0%,100%{box-shadow:none}50%{box-shadow:inset 0 0 20px rgba(255,45,0,.06)}}
-@keyframes cardGlow{0%,100%{opacity:.5}50%{opacity:1}}
-@keyframes cardRingPulse{0%{width:17px;height:17px;opacity:.6}100%{width:40px;height:40px;opacity:0;top:-5px;right:-5px}}
-@keyframes ringPuls{0%{transform:scale(1);opacity:.6}100%{transform:scale(2.5);opacity:0}}
-@keyframes vibePulse{0%,100%{box-shadow:0 0 5px rgba(255,45,0,.5)}50%{box-shadow:0 0 14px rgba(255,45,0,.9)}}
-@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-6px)}}
-
-@media(max-width:768px){
-#cur,#cur2{display:none}body{cursor:auto}
-nav{padding:0 16px;height:48px}.nav-links{display:none}
-.hero{grid-template-columns:1fr;min-height:auto}.hero-right{display:none}
-.h1,.h2{font-size:clamp(78px,19vw,108px);letter-spacing:-2px}
-.hero-left{padding:24px 16px 20px}
-.hero-desc{font-size:10px;max-width:100%}
-.hstats{gap:20px}.sn{font-size:30px}
-.live-strip{padding:10px 16px;flex-direction:column;gap:8px;align-items:flex-start}
-.ls-stats{gap:14px}.ls-n{font-size:22px}
-.filter-bar{top:48px}
-.genre-row{overflow-x:auto}.genre-row::-webkit-scrollbar{display:none}
-.genre-lbl{display:none}
-.genre-btn{min-width:68px;padding:8px 10px;min-height:58px}
-.genre-icon{font-size:14px}.genre-name{font-size:8px}.genre-cnt{font-size:14px}
-.bottom-row{overflow-x:auto;min-height:44px}.bottom-row::-webkit-scrollbar{display:none}
-.kr-btn{padding:12px 14px;font-size:11px;min-height:44px}
-.q-btn{font-size:10px;padding:12px 14px;min-height:44px}
-.result-bar{padding:8px 16px}
-.rb-count{font-size:22px}.rb-label{font-size:8px}
-.sort-btn{font-size:8px;padding:8px 12px;min-height:44px}
-.sh{padding:16px 16px 10px}
-.mgrid{grid-template-columns:1fr 1fr;padding:0 16px}
-.mcard:nth-child(3n+1){border-left:none}.mcard:nth-child(2n+1){border-left:1px solid rgba(255,45,0,.07)}
-.mcard:nth-child(-n+2){border-top:1px solid rgba(255,45,0,.07)}
-.mc-img{height:120px}.mc-name{font-size:19px;line-height:.9}.mc-body{padding:10px 12px 0}
-.mc-genre{font-size:10px}.mc-badges{gap:3px}
-.mcb{font-size:7px;padding:3px 8px}
-.mc-foot{margin-top:8px;padding-top:8px}
-.vdot{width:7px;height:7px}
-.ki-section{margin:16px 16px}.ki-title{font-size:20px}.ki-grid{grid-template-columns:1fr}.ki-card{padding:14px}
-footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:14px}
-.panel{width:100%;right:-100%}
-.strobe-ticker{height:28px}.strobe-item{font-size:15px;padding:0 18px}}
+.page-wrap{padding-bottom:80px}
+.section-pad{padding:0 24px}
 </style>
 </head>
 <body>
-<div id="cur"></div><div id="cur2"></div>
-
-<!-- STROBE TICKER -->
-<div class="strobe-ticker">
-  <div class="strobe-inner" id="strobe"></div>
-</div>
+<div id="dot"></div><div id="ring"></div>
+<div class="scan"></div><div class="gridl"></div>
+<div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
 
 <!-- NAV -->
-<nav>
-  <a class="logo" href="index.html"><div class="ldot"></div>STADTPULS</a>
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><div class="ldot"></div><span class="logo-txt">STADTPULS</span></a>
   <div class="nav-links">
-    <a class="nl" href="gastro.html">GASTRO</a>
-    <span class="nl on">NACHTLEBE</span>
-    <a class="nl" href="shopping.html">SHOPPING</a>
-    <a class="nl" href="dating.html">DATES</a>
+    <a href="gastro.html" class="nav-link">GASTRO</a>
+    <a href="nachtleben.html" class="nav-link active">NACHTLEBE</a>
+    <a href="events.html" class="nav-link">EVENTS</a>
+    <a href="shopping.html" class="nav-link">SHOPPING</a>
+    <a href="dating.html" class="nav-link">DATES</a>
   </div>
-  <a class="btn-mm" href="index.html?page=login">MITMACHE</a>
+  <a href="login.html" class="nav-cta">MITMACHE</a>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-spotlight"></div>
-  <div class="hero-spotlight2"></div>
-  <div class="hero-noise"></div>
-  <div class="hero-left">
-    <div class="hero-eye">ZÜRI SCHLAFT NÖD · 2026</div>
-    <div class="h1">NACHT</div>
-    <div class="h2">LEBE</div>
-    <div class="hero-line"></div>
-    <div class="hero-desc">Vo Langstrasse bis Viadukt. Techno, House, Jazz, Hip-Hop. Kei Dress Code, kei Bullshit. Züri schlaft nöd.</div>
-    <div class="hstats">
-      <div><div class="sn" id="stat-total">—</div><div class="sl">CLUBS & BARS</div></div>
-      <div><div class="sn" id="stat-offe" style="color:#c8ff00;text-shadow:0 0 20px rgba(200,255,0,.4)">—</div><div class="sl">JETZT OFFE</div></div>
-      <div><div class="sn" id="stat-after" style="color:#ffd700;text-shadow:0 0 20px rgba(255,215,0,.4)">—</div><div class="sl">AFTERHOUR</div></div>
-    </div>
-  </div>
-  <div class="hero-right">
-    <div class="gm-wrap">
-      <div class="gm-head"><div class="gm-live"></div>GENRE BATTLE — HÜT NACHT</div>
-      <div id="gm-rows"></div>
-    </div>
+<!-- PULSE MOMENT BANNER -->
+<div class="pulse-banner">
+  <span class="pulse-banner-dot"></span>
+  <span class="pulse-banner-txt">PULSE MOMENT — KREIS 5 EXPLODIERT GRAD · 340 USER AKTIV</span>
+</div>
+
+<!-- GPS STRIP -->
+<div class="gps-strip">
+  <div class="gps-strip-inner">
+    <span class="gps-item">🎵 <strong>CLUBS IN 500M</strong></span>
+    <span class="gps-item">🌙 <strong>JETZT OFFE</strong> · 23 LOKALE</span>
+    <span class="gps-item">🔊 <strong>TECHNO</strong> · KREIS 5</span>
+    <span class="gps-item">🍸 <strong>AFTERHOUR</strong> · AB 04:00</span>
+    <span class="gps-item">⚡ <strong>GPS AKTIV</strong> · PHASE 5</span>
+    <span class="gps-item">🎵 <strong>CLUBS IN 500M</strong></span>
+    <span class="gps-item">🌙 <strong>JETZT OFFE</strong> · 23 LOKALE</span>
+    <span class="gps-item">🔊 <strong>TECHNO</strong> · KREIS 5</span>
+    <span class="gps-item">🍸 <strong>AFTERHOUR</strong> · AB 04:00</span>
+    <span class="gps-item">⚡ <strong>GPS AKTIV</strong> · PHASE 5</span>
   </div>
 </div>
 
-<!-- LIVE STRIP -->
-<div class="live-strip">
-  <div class="ls-left">
-    <div class="ls-puls"></div>
-    <div>
-      <div class="ls-title">NACHT-PULS LIVE · ZÜRICH</div>
-      <div class="ls-sub">Kreis 4 & 5 feueret · GPS Nacht-Guide Phase 5</div>
+<div class="page-wrap">
+
+<!-- HERO -->
+<div class="hero section-pad">
+  <div class="hero-bg-txt">NACHT</div>
+  <div class="hero-eye">ZÜRICH NACHTLEBE · 146 LOKALE</div>
+  <div class="hero-title">DÄ<br><span class="r">NACHT</span><span class="p">PULS</span></div>
+  <div class="hero-sub">Techno · Jazz · Clubs · Bars · Afterhour · dä echti Züri Nacht</div>
+
+  <!-- KREISRIVALITÄT -->
+  <div class="rivalitaet">
+    <div class="riv-head">
+      <span class="riv-title">🏆 KREISRIVALITÄT — WER FEIERT AM MEISCHTE?</span>
+      <span class="riv-trophy">🏆</span>
     </div>
+    <div class="riv-bars" id="riv-bars"></div>
   </div>
-  <div class="ls-stats">
-    <div class="ls-stat"><div class="ls-n" id="h-total" style="color:#ff2d00">—</div><div class="ls-l">TOTAL</div></div>
-    <div class="ls-stat"><div class="ls-n" id="h-offe" style="color:#c8ff00">—</div><div class="ls-l">OFFE</div></div>
-    <div class="ls-stat"><div class="ls-n" id="h-after" style="color:#ffd700">—</div><div class="ls-l">AFTERHOUR</div></div>
+
+  <!-- STATS -->
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat"><div class="stat-n red" id="st-total">146</div><div class="stat-l">LOKALE</div></div>
+    <div class="stat"><div class="stat-n lila" id="st-open">–</div><div class="stat-l">JETZT OFFE</div></div>
+    <div class="stat"><div class="stat-n gold" id="st-clubs">–</div><div class="stat-l">CLUBS</div></div>
+    <div class="stat"><div class="stat-n cyan" id="st-bars">–</div><div class="stat-l">BARS</div></div>
   </div>
 </div>
 
 <!-- FILTER -->
-<div class="filter-bar">
-  <div class="af-row" id="af-row"></div>
-  <div class="genre-row">
-    <div class="genre-lbl">GENRE</div>
-    <button class="genre-btn on" onclick="setGenre(this,'all')" data-g="all"><div class="genre-icon">🌙</div><div class="genre-name">ALLES</div><div class="genre-cnt" id="gc-all">—</div></button>
-    <button class="genre-btn" onclick="setGenre(this,'techno')" data-g="techno"><div class="genre-icon">🔊</div><div class="genre-name">TECHNO</div><div class="genre-cnt" id="gc-techno">—</div></button>
-    <button class="genre-btn" onclick="setGenre(this,'house')" data-g="house"><div class="genre-icon">🎛️</div><div class="genre-name">HOUSE</div><div class="genre-cnt" id="gc-house">—</div></button>
-    <button class="genre-btn" onclick="setGenre(this,'jazz')" data-g="jazz"><div class="genre-icon">🎷</div><div class="genre-name">JAZZ</div><div class="genre-cnt" id="gc-jazz">—</div></button>
-    <button class="genre-btn" onclick="setGenre(this,'hiphop')" data-g="hiphop"><div class="genre-icon">🎤</div><div class="genre-name">HIP-HOP</div><div class="genre-cnt" id="gc-hiphop">—</div></button>
-    <button class="genre-btn" onclick="setGenre(this,'live')" data-g="live"><div class="genre-icon">🎸</div><div class="genre-name">LIVE</div><div class="genre-cnt" id="gc-live">—</div></button>
-    <button class="genre-btn" onclick="setGenre(this,'afterhour')" data-g="afterhour"><div class="genre-icon">🌅</div><div class="genre-name">AFTERHOUR</div><div class="genre-cnt" id="gc-afterhour">—</div></button>
-    <button class="genre-btn" onclick="setGenre(this,'bar')" data-g="bar"><div class="genre-icon">🍸</div><div class="genre-name">BAR</div><div class="genre-cnt" id="gc-bar">—</div></button>
+<div class="filter-section section-pad">
+
+  <!-- TYP -->
+  <div class="typ-cards">
+    <div class="typ-card on" data-typ="" onclick="selTyp(this,'')">
+      <span class="typ-card-icon">🌙</span>
+      <div class="typ-card-name">ALLES</div>
+      <div class="typ-card-count" id="tc-all">146 LOKALE</div>
+    </div>
+    <div class="typ-card" data-typ="club" onclick="selTyp(this,'club')">
+      <span class="typ-card-icon">🔊</span>
+      <div class="typ-card-name">CLUBS</div>
+      <div class="typ-card-count" id="tc-club">– CLUBS</div>
+    </div>
+    <div class="typ-card" data-typ="bar" onclick="selTyp(this,'bar')">
+      <span class="typ-card-icon">🍸</span>
+      <div class="typ-card-name">BARS</div>
+      <div class="typ-card-count" id="tc-bar">– BARS</div>
+    </div>
   </div>
-  <div class="bottom-row">
-    <button class="kr-btn on" onclick="setKreis(this,'all')">ALLE</button>
-    <button class="kr-btn" onclick="setKreis(this,1)">K1</button>
-    <button class="kr-btn" onclick="setKreis(this,2)">K2</button>
-    <button class="kr-btn" onclick="setKreis(this,3)">K3</button>
-    <button class="kr-btn" onclick="setKreis(this,4)">K4</button>
-    <button class="kr-btn" onclick="setKreis(this,5)">K5</button>
-    <button class="kr-btn" onclick="setKreis(this,6)">K6</button>
-    <button class="kr-btn" onclick="setKreis(this,7)">K7</button>
-    <button class="kr-btn" onclick="setKreis(this,8)">K8</button>
-    <button class="kr-btn" onclick="setKreis(this,9)">K9</button>
-    <button class="kr-btn" onclick="setKreis(this,10)">K10</button>
-    <button class="kr-btn" onclick="setKreis(this,11)">K11</button>
-    <button class="kr-btn" onclick="setKreis(this,12)">K12</button>
-    <div class="fsep"></div>
-    <button class="q-btn" id="qb-offe" onclick="setQuer(this,'offe')"><div class="q-dot"></div>JETZT OFFE</button>
-    <button class="q-btn" id="qb-afterhour" onclick="setQuer(this,'afterhour')">🌅 AFTERHOUR</button>
-    <button class="q-btn" id="qb-gratis" onclick="setQuer(this,'gratis')">🆓 GRATIS</button>
+
+  <!-- GENRE -->
+  <div class="genre-wrap">
+    <div class="genre-label">GENRE / SOUND</div>
+    <div class="genre-chips">
+      <div class="gc lila" data-ids="1414" onclick="togGc(this)">🔊 TECHNO</div>
+      <div class="gc" data-ids="1432,1456" onclick="togGc(this)">🎷 JAZZ</div>
+      <div class="gc" data-ids="1417" onclick="togGc(this)">🎤 HIP-HOP</div>
+      <div class="gc" data-ids="1423" onclick="togGc(this)">🎸 ROCK</div>
+      <div class="gc gold" data-ids="1429" onclick="togGc(this)">🌅 AFTERHOUR</div>
+      <div class="gc" data-ids="163" onclick="togGc(this)">🎵 LIVE MUSIC</div>
+      <div class="gc" data-ids="1426" onclick="togGc(this)">💃 LATIN</div>
+      <div class="gc" data-ids="1435" onclick="togGc(this)">🎉 PARTY</div>
+    </div>
   </div>
-  <div class="result-bar">
-    <div class="rb-l"><div class="rb-count" id="rb-count">—</div><div class="rb-label">LOCATIONS IN ZÜRICH</div></div>
-    <div class="rb-r">
+
+  <!-- QUER -->
+  <div class="quer-chips">
+    <div class="qc" onclick="this.classList.toggle('on');applyFilter()">🕐 JETZT OFFE</div>
+    <div class="qc" onclick="this.classList.toggle('on');applyFilter()">📍 IN DER NÄCHI</div>
+    <div class="qc" onclick="this.classList.toggle('on');applyFilter()">⚡ KI TOP PICK</div>
+    <div class="qc" onclick="this.classList.toggle('on');applyFilter()">🎫 MIT TICKET</div>
+  </div>
+
+  <!-- AKTIVE FILTER -->
+  <div class="active-filters" id="active-filters"></div>
+
+  <!-- DYNAMIC HEADLINE -->
+  <div class="dyn-headline">
+    <div class="dyn-h" id="dyn-h">ALLE <span id="dyn-count">146</span> NACHTLEBE-LOKALE</div>
+    <div class="sort-row">
+      <span style="font-size:8px;color:rgba(232,228,217,0.25);letter-spacing:2px;text-transform:uppercase;margin-right:4px">SORT:</span>
       <button class="sort-btn on" onclick="setSort(this,'score')">SCORE</button>
-      <button class="sort-btn" onclick="setSort(this,'kreis')">KREIS</button>
+      <button class="sort-btn" onclick="setSort(this,'distanz')">DISTANZ</button>
       <button class="sort-btn" onclick="setSort(this,'neu')">NEU</button>
     </div>
   </div>
-</div>
 
-<!-- KI -->
-<div class="ki-section">
-  <div class="ki-head"><div class="ki-title">🤖 ZÜRI-BOT · NACHT FEATURES</div><div class="ki-status">AKTIV · PHASE 5-6</div></div>
-  <div class="ki-grid">
-    <div class="ki-card"><div class="ki-icon">🔊</div><div class="ki-card-title">STIMMUNGS-MATCHING</div><div class="ki-card-desc">Müed aber will no? KI matched dich mit em perfekte Club für dini Stimmig hüt Nacht.</div><div class="ki-card-tag">PHASE 5</div></div>
-    <div class="ki-card"><div class="ki-icon">📍</div><div class="ki-card-title">GPS NACHT-GUIDE</div><div class="ki-card-desc">«Komplex 457 isch 300m vo dir. Türöffnig in 47 Minute. Gratis bis 23:00.»</div><div class="ki-card-tag">PHASE 5</div></div>
-    <div class="ki-card"><div class="ki-icon">⚡</div><div class="ki-card-title">SPONTAN-NACHT</div><div class="ki-card-desc">«Kreis 4 · CHF 30 · House · zu zweit» → KI plant dini kompletti Nacht inkl. ZVV Heimweg.</div><div class="ki-card-tag">PHASE 6</div></div>
-    <div class="ki-card"><div class="ki-icon">🚋</div><div class="ki-card-title">ZVV HEIMWEG</div><div class="ki-card-desc">«Letzts Tram in 23 Minute» — nie mer verpasse.</div><div class="ki-card-tag">PHASE 5</div></div>
-    <div class="ki-card"><div class="ki-icon">🔥</div><div class="ki-card-title">NACHT-PULS LIVE</div><div class="ki-card-desc">Welcher Club isch grad am heissischte? Live us echte User-Daten.</div><div class="ki-card-tag" style="color:#c8ff00;border-color:rgba(200,255,0,.3)">LIVE ✓</div></div>
-    <div class="ki-card" style="border:1px solid rgba(255,45,0,.15)"><div class="ki-icon">💬</div><div class="ki-card-title" style="color:#ff2d00">ZÜRI-BOT CHAT</div><div class="ki-card-desc">«Wo chann ich hüt Nacht no ane?» — kennt jeden Club, jedi Bar, jedi Afterhour.</div><div class="ki-card-tag">PHASE 6 · CLAUDE API</div></div>
+</div><!-- end filter section-pad -->
+
+<!-- LOCATIONS -->
+<div class="section-pad">
+  <div class="locations-grid" id="locations-grid">
+    <div style="text-align:center;padding:40px;color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:2px">LÄDT...</div>
   </div>
 </div>
 
-<!-- GRID -->
-<div class="sh"><div class="sh-t">CLUBS & BARS</div><div class="sh-r" id="sh-r">LÄDT...</div></div>
-<div class="mgrid" id="mgrid">
-  <div class="loading-state">
-    <div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>
-    <div class="loading-txt">Lade Nachtleben...</div>
+<!-- KI FEATURES -->
+<div class="section-pad">
+  <div class="ki-section">
+    <div class="ki-head">⚡ STADTPULS KI-FEATURES — NACHTLEBE</div>
+    <div class="ki-features">
+      <div class="ki-feat">
+        <span class="ki-feat-icon">🎵</span>
+        <div class="ki-feat-name">SOUND DNA</div>
+        <div class="ki-feat-desc">KI erkennt dis Musik-Profil und findet Clubs wo perfekt zu dir passe</div>
+        <span class="ki-feat-badge">PHASE 6</span>
+      </div>
+      <div class="ki-feat">
+        <span class="ki-feat-icon">👥</span>
+        <div class="ki-feat-name">CROWD RADAR</div>
+        <div class="ki-feat-desc">Sieh wo grad wieviele User sind — kein Reinfall mehr</div>
+        <span class="ki-feat-badge">PHASE 5</span>
+      </div>
+      <div class="ki-feat">
+        <span class="ki-feat-icon">🌅</span>
+        <div class="ki-feat-name">AFTERHOUR ALERT</div>
+        <div class="ki-feat-desc">Push wenn Afterhour in dim Kreis startet — 5 Min Vorsprung</div>
+        <span class="ki-feat-badge">PHASE 6</span>
+      </div>
+      <div class="ki-feat">
+        <span class="ki-feat-icon">🎯</span>
+        <div class="ki-feat-name">VIBE MATCH</div>
+        <div class="ki-feat-desc">Müde? Energetisch? KI schlägt dir den passende Club vor</div>
+        <span class="ki-feat-badge">PHASE 6</span>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="btw">
-  <div class="tr"><div class="tick l" id="tc"></div></div>
-  <div class="tr"><div class="tick r" id="td"></div></div>
-</div>
-
+<!-- FOOTER -->
 <footer>
-  <div><div class="logo" style="margin-bottom:8px"><div class="ldot"></div>STADTPULS</div><div class="fc-desc">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich.</div><div class="fc-copy">© 2026 by raimondo* — Zürich</div></div>
-  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link" href="gastro.html">Gastro & Bars</a><a class="fc-link" href="nachtleben.html">Nachtleben</a><a class="fc-link" href="shopping.html">Shopping</a></div>
-  <div><div class="fc-title">COMMUNITY</div><a class="fc-link" href="dating.html">People & Dates</a><a class="fc-link" href="index.html?page=jobs">Jobs Züri</a></div>
-  <div><div class="fc-title">MITMACHE</div><a class="fc-link" href="index.html?page=login">Einlogge</a><a class="fc-link" href="feedback.html">Feedback</a><a class="fc-link" href="impressum.html">Impressum</a></div>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-col-title">ENTDECKE</div>
+      <a href="gastro.html" class="footer-link">Gastro</a>
+      <a href="nachtleben.html" class="footer-link">Nachtlebe</a>
+      <a href="shopping.html" class="footer-link">Shopping</a>
+      <a href="events.html" class="footer-link">Events</a>
+      <a href="index.html" class="footer-link">Quartiere</a>
+      <a href="index.html" class="footer-link">Musik & Sound</a>
+      <a href="index.html" class="footer-link">Mobilität</a>
+    </div>
+    <div>
+      <div class="footer-col-title">MITMACHE</div>
+      <a href="login.html" class="footer-link">Einlogge</a>
+      <a href="login.html" class="footer-link">Profil aalege</a>
+      <a href="index.html" class="footer-link">People & Dates</a>
+      <a href="index.html" class="footer-link">Jobs Züri</a>
+      <a href="index.html" class="footer-link">News & Stories</a>
+      <a href="kontakt.html" class="footer-link">Kooperatione</a>
+      <a href="kontakt.html" class="footer-link">Kontakt</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-logo"><div class="ldot"></div>STADTPULS</div>
+    <div class="footer-copy">© 2026 STADTPULS.CH -- BY RAIMONDO* -- ZÜRICH</div>
+    <div style="display:flex;gap:14px">
+      <a href="datenschutz.html" class="footer-link" style="margin:0">DATENSCHUTZ</a>
+      <a href="impressum.html" class="footer-link" style="margin:0">IMPRESSUM</a>
+    </div>
+  </div>
 </footer>
 
-<!-- PANEL -->
-<div class="ov" id="ov" onclick="closeDet()"></div>
-<div class="panel" id="panel">
-  <div class="p-hero" id="p-hero">
-    <div class="p-hero-red"></div>
-    <div class="p-close" onclick="closeDet()">✕</div>
-    <div class="p-name" id="p-name">—</div>
-    <div class="p-sub" id="p-sub">—</div>
-  </div>
-  <div class="p-body">
-    <div class="p-tags" id="p-tags"></div>
-    <!-- OFFE/ZU BADGE IM PANEL -->
-    <div id="p-offe-badge" style="display:none;align-items:center;gap:7px;padding:8px 12px;margin-bottom:12px;font-size:9px;letter-spacing:2px;text-transform:uppercase"></div>
-    <div class="p-desc" id="p-desc">—</div>
-    <div class="p-rows">
-      <div class="p-row"><div class="p-lbl">ADRESSE</div><div class="p-val" id="p-addr">—</div></div>
-      <div class="p-row"><div class="p-lbl">KREIS</div><div class="p-val" id="p-kreis">—</div></div>
-      <div class="p-row"><div class="p-lbl">GENRE</div><div class="p-val" id="p-genre">—</div></div>
-      <div class="p-row"><div class="p-lbl">HÜT OFFE</div><div class="p-val" id="p-oeffnig">—</div></div>
+</div><!-- end page-wrap -->
+
+<!-- FAB -->
+<button class="fab" onclick="openSheet()" aria-label="Filter">🎚️</button>
+
+<!-- BOTTOM SHEET -->
+<div class="sheet-bg" id="sheet-bg" onclick="if(event.target===this)closeSheet()">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">FILTER</div>
+    <div class="sheet-section">
+      <div class="sheet-label">TYP</div>
+      <div class="sheet-typ">
+        <div class="sheet-typ-card on" onclick="sheetTyp(this,'')"><span class="sheet-typ-icon">🌙</span><div class="sheet-typ-name">ALLES</div></div>
+        <div class="sheet-typ-card" onclick="sheetTyp(this,'club')"><span class="sheet-typ-icon">🔊</span><div class="sheet-typ-name">CLUBS</div></div>
+        <div class="sheet-typ-card" onclick="sheetTyp(this,'bar')"><span class="sheet-typ-icon">🍸</span><div class="sheet-typ-name">BARS</div></div>
+      </div>
     </div>
-    <div class="pred"><div class="pred-txt" id="p-pred">⚡ «<strong>Genau din Club hüt Nacht.</strong>»</div></div>
-    <div class="p-acts">
-      <div class="p-act" onclick="window.location='nachtleben-profil.html?id='+currentLoc?.id" style="grid-column:1/-1;border-color:rgba(255,45,0,.35);color:#ff2d00;background:rgba(255,45,0,.06);font-size:10px;min-height:58px;font-weight:bold">🔍 VOLLSTÄNDIGES PROFIL →</div>
-      <div class="p-act" style="min-height:52px">🗺️ AUF KARTE</div>
-      <div class="p-act" style="min-height:52px">❤️ SPEICHERE</div>
-      <div class="p-act" style="min-height:52px">⭐ BEWERTE</div>
-      <div class="p-act" style="min-height:52px">📤 TEILE</div>
+    <div class="sheet-section">
+      <div class="sheet-label">GENRE</div>
+      <div class="sheet-genre">
+        <div class="gc" onclick="this.classList.toggle('on')">🔊 TECHNO</div>
+        <div class="gc" onclick="this.classList.toggle('on')">🎷 JAZZ</div>
+        <div class="gc" onclick="this.classList.toggle('on')">🎤 HIP-HOP</div>
+        <div class="gc" onclick="this.classList.toggle('on')">🌅 AFTERHOUR</div>
+        <div class="gc" onclick="this.classList.toggle('on')">🎵 LIVE</div>
+        <div class="gc" onclick="this.classList.toggle('on')">🎉 PARTY</div>
+      </div>
     </div>
+    <div class="sheet-section">
+      <div class="sheet-label">KREIS</div>
+      <div class="sheet-kreis" id="sheet-kreise"></div>
+    </div>
+    <button class="sheet-apply" onclick="closeSheet();applyFilter()">ZEIGE NACHTLEBE →</button>
   </div>
+</div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detail-panel">
+  <div class="dp-handle"></div>
+  <button class="dp-close" onclick="closeDetail()">✕</button>
+  <div class="dp-inner" id="dp-inner"></div>
 </div>
 
 <script>
+// Cursor
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';});
+
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
 
-// Strobe Ticker
-const ST=['ZÜRI SCHLAFT NÖD','TECHNO','HOUSE','JAZZ','HIP-HOP','LANGSTRASSE','KREIS 4','VIADUKT','AFTERHOUR','KOMPLEX 457','ROTE FABRIK','ZÜRI WEST','FEUERT','4. JUNI 2026','STADTPULS'];
-const si=document.getElementById('strobe');
-if(si)si.innerHTML=[...ST,...ST,...ST].map(x=>`<span class="strobe-item">${x}</span>`).join('');
-
-const SUBKAT={
-  162:{e:'🌙',n:'NACHTLEBEN'},
-  1414:{e:'🔊',n:'TECHNO'},1417:{e:'🎤',n:'HIP-HOP'},
-  1423:{e:'🎸',n:'ROCK'},1426:{e:'💃',n:'LATIN'},
-  1429:{e:'🌅',n:'AFTERHOUR'},1432:{e:'🎷',n:'JAZZ'},
-  1435:{e:'🎉',n:'PARTY'},163:{e:'🎸',n:'LIVE MUSIC'},
-  103:{e:'🍸',n:'BAR'},1438:{e:'🍹',n:'COCKTAILBAR'},
-  1441:{e:'🎵',n:'MUSIC BAR'},1444:{e:'🍺',n:'PUB'},
-  1447:{e:'🍽️',n:'RESTAURANT-BAR'},1450:{e:'🏨',n:'HOTELBAR'},
-  1468:{e:'🏘️',n:'QUARTIERBAR'},
-};
-
-// DUAL FILTER: ids = zt_subkategorie_id, subs = subkategorie Text (für NULL-IDs)
-const GMAP={
-  techno: {ids:[1414],       subs:['techno']},
-  house:  {ids:[1435,1426],  subs:['house','party']},
-  jazz:   {ids:[1432],       subs:['jazz','weinbar']},
-  hiphop: {ids:[1417],       subs:['hiphop','hip-hop','hiphop']},
-  live:   {ids:[163,1423,1441], subs:['live','rock','livemusic','live music']},
-  afterhour:{ids:[1429],     subs:['afterhour','after hour']},
-  bar:    {ids:[103,1438,1441,1444,1447,1450,1468], subs:['bar','restbar','pub','quartierbar','hotelbar','cocktailbar','weinbar']},
-};
-
-// Genre Battle Heatmap
-const GENRES=[
-  {id:'techno', e:'🔊',n:'TECHNO',   gmap:'techno'},
-  {id:'jazz',   e:'🎷',n:'JAZZ',     gmap:'jazz'},
-  {id:'bar',    e:'🍸',n:'BAR',      gmap:'bar'},
-  {id:'hiphop', e:'🎤',n:'HIP-HOP',  gmap:'hiphop'},
-  {id:'live',   e:'🎸',n:'LIVE',     gmap:'live'},
-];
-const VIBES=['«Hüt Nacht isch es wild — geh früeh.»','«Kreis 4 feueret grad — sicher nöd hei gah.»','«Afterhour bis 8 Uhr — nur für Nachtvögel.»','«Jazz-Abend — elegant und entspannt.»','«Perfekte Nacht für Techno.»'];
-
-let S={genre:'all',kreis:'all',offe:false,afterhour:false,gratis:false,sort:'score'};
 let allLocs=[];
+let filtTyp='';
+let filtIds=[];
+let filtKreis=0;
+let sortMode='score';
 
-async function sbGet(p){const r=await fetch(SU+'/rest/v1/'+p,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});return r.json();}
+// SUPABASE FETCH
+async function sbGet(path){
+  const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Range':'0-499'}});
+  return r.json();
+}
 
+// LOAD
+async function load(){
+  const data=await sbGet('locations?kategorie=eq.nachtleben&aktiv=eq.true&select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,bild_url,beschreibung,beschreibung_kurz,oeffnungszeiten,rating,featured,website&order=featured.desc,rating.desc.nullslast&limit=200');
+  if(!Array.isArray(data)||data.error){
+    document.getElementById('locations-grid').innerHTML=`<div class="empty"><div class="empty-big">OFFLINE</div><div class="empty-txt">SUPABASE VERBINDIG FEHLT</div></div>`;
+    return;
+  }
+  allLocs=data;
+  updateStats(data);
+  buildRivalitaet(data);
+  renderLocs(data);
+}
+
+// STATS
+function updateStats(locs){
+  const now=new Date();
+  const h=now.getHours();
+  const day=['So','Mo','Di','Mi','Do','Fr','Sa'][now.getDay()];
+  let open=0,clubs=0,bars=0;
+  locs.forEach(l=>{
+    if(isOffe(l.oeffnungszeiten))open++;
+    const sub=(l.subkategorie||'').toLowerCase();
+    if(sub.includes('club')||sub.includes('techno'))clubs++;
+    if(sub.includes('bar'))bars++;
+  });
+  document.getElementById('st-total').textContent=locs.length;
+  document.getElementById('st-open').textContent=open;
+  document.getElementById('st-clubs').textContent=clubs;
+  document.getElementById('st-bars').textContent=bars;
+  document.getElementById('tc-all').textContent=locs.length+' LOKALE';
+  document.getElementById('tc-club').textContent=clubs+' CLUBS';
+  document.getElementById('tc-bar').textContent=bars+' BARS';
+}
+
+// ISOFFENE
 function isOffe(oz){
   if(!oz||!Array.isArray(oz)||!oz.length)return false;
-  const now=new Date();const h=now.getHours();
-  const day=['So','Mo','Di','Mi','Do','Fr','Sa'][now.getDay()];
-  const s=oz.find(o=>o&&o.includes(day));if(!s)return false;
-  const m=s.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/);
-  if(!m)return false;return h>=parseInt(m[1])&&h<parseInt(m[3]);
+  const now=new Date();
+  const h=now.getHours();
+  const dayMap=['So','Mo','Di','Mi','Do','Fr','Sa'];
+  const day=dayMap[now.getDay()];
+  const s=oz.find(o=>o&&o.includes(day));
+  if(!s)return false;
+  const m=s.match(/(\d{2}):(\d{2}):?\d*-(\d{2}):(\d{2})/);
+  if(!m)return false;
+  return h>=parseInt(m[1])&&h<parseInt(m[3]);
 }
 
-function getSubInfo(l){
-  const sid=parseInt(l.zt_subkategorie_id)||0;
-  if(sid&&SUBKAT[sid])return SUBKAT[sid];
-  // Fallback: subkategorie Text → Display
-  const sub=(l.subkategorie||'').toLowerCase();
-  const MAP={
-    'techno':{e:'🔊',n:'TECHNO'},'jazz':{e:'🎷',n:'JAZZ'},
-    'hiphop':{e:'🎤',n:'HIP-HOP'},'hip-hop':{e:'🎤',n:'HIP-HOP'},
-    'weinbar':{e:'🍷',n:'WEINBAR'},'bar':{e:'🍸',n:'BAR'},
-    'restbar':{e:'🍽️',n:'RESTAURANT-BAR'},'pub':{e:'🍺',n:'PUB'},
-    'quartierbar':{e:'🏘️',n:'QUARTIERBAR'},'hotelbar':{e:'🏨',n:'HOTELBAR'},
-    'afterhour':{e:'🌅',n:'AFTERHOUR'},'live':{e:'🎸',n:'LIVE'},
-    'casino':{e:'🃏',n:'CASINO'},'party':{e:'🎉',n:'PARTY'},
-  };
-  return MAP[sub]||{e:'🌙',n:(l.subkategorie||'NACHTLEBEN').toUpperCase()};
-}
-
-function getVibe(l){
-  const sid=parseInt(l.zt_subkategorie_id)||0;
-  const sub=(l.subkategorie||'').toLowerCase();
-  if([1414].includes(sid)||sub==='techno')return 5;
-  if([1429].includes(sid)||sub==='afterhour')return 5;
-  if([1435,1417,1426].includes(sid)||['hiphop','hip-hop','party'].includes(sub))return 4;
-  if([1432,163,1441].includes(sid)||['jazz','live','weinbar'].includes(sub))return 3;
-  return 2;
-}
-
-async function loadAll(){
-  try{
-    const NIDS=[162,1414,1417,1423,1426,1429,1432,1435,163,103,1438,1441,1444,1447];
-    let data=await sbGet('locations?select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,plz,bild_url,beschreibung,beschreibung_kurz,website,oeffnungszeiten,rating,featured,aktiv&kategorie=eq.nachtleben&aktiv=eq.true&limit=500&order=featured.desc,id.asc');
-    if(!data||!data.length){const all=await sbGet('locations?select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,plz,bild_url,beschreibung,beschreibung_kurz,website,oeffnungszeiten,rating,featured,aktiv&aktiv=eq.true&limit=500');data=(all||[]).filter(l=>NIDS.includes(parseInt(l.zt_subkategorie_id)));}
-    allLocs=data||[];updateStats();buildGenreHeatmap();buildGrid();
-  }catch(e){document.getElementById('mgrid').innerHTML='<div class="loading-state"><div class="loading-txt" style="color:#ff2d00">Verbindungsfehler</div></div>';}
-}
-
-function countGenre(key){return allLocs.filter(l=>matchesGenre(l,key)).length;}
-
-function updateStats(){
-  const t=allLocs.length;
-  const o=allLocs.filter(l=>isOffe(l.oeffnungszeiten)).length;
-  const a=allLocs.filter(l=>matchesGenre(l,'afterhour')).length;
-  ['stat-total','h-total'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=t});
-  ['stat-offe','h-offe'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=o||'?'});
-  ['stat-after','h-after'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=a});
-  document.getElementById('gc-all').textContent=t;
-  ['techno','house','jazz','hiphop','live','afterhour','bar'].forEach(k=>{
-    const el=document.getElementById('gc-'+k);
-    if(el)el.textContent=countGenre(k);
+// KREISRIVALITÄT
+function buildRivalitaet(locs){
+  const counts={};
+  locs.forEach(l=>{if(l.kreis)counts[l.kreis]=(counts[l.kreis]||0)+1;});
+  const top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,4);
+  const max=top[0]?top[0][1]:1;
+  const el=document.getElementById('riv-bars');
+  el.innerHTML='';
+  top.forEach(([k,n],i)=>{
+    const pct=Math.round(n/max*100);
+    el.innerHTML+=`<div class="riv-bar${i===0?' lead':''}">
+      <div class="riv-bar-name">KREIS ${k}</div>
+      <div class="riv-bar-track"><div class="riv-bar-fill ${i===0?'lead':'norm'}" style="height:${pct}%"></div></div>
+      <div class="riv-bar-num">${n}</div>
+    </div>`;
   });
 }
 
-function buildGenreHeatmap(){
-  const max=Math.max(1,...GENRES.map(g=>countGenre(g.gmap)));
-  const sorted=GENRES.map(g=>({...g,cnt:countGenre(g.gmap)})).sort((a,b)=>b.cnt-a.cnt);
-  document.getElementById('gm-rows').innerHTML=sorted.map((g,i)=>`
-    <div class="gm-row${i===0?' top':''}" onclick="setGenre(document.querySelector('.genre-btn[data-g=\\'${g.id}\\']'),'${g.id}')">
-      <span class="gm-e">${g.e}</span>
-      <div class="gm-info"><div class="gm-name">${g.n}</div><div class="gm-sub">${g.cnt} CLUBS</div></div>
-      <div class="gm-bar-w"><div class="gm-bar" style="width:${Math.round(g.cnt/max*100)}%"></div></div>
-      <div class="gm-n">${g.cnt}</div>
-    </div>`).join('');
+// SUBKATEGORIE TAG
+function getSkTag(loc){
+  const sub=(loc.subkategorie||'').toLowerCase();
+  const id=loc.zt_subkategorie_id;
+  if(id==1414||sub.includes('techno'))return{cls:'techno',lbl:'TECHNO'};
+  if(id==1432||sub.includes('jazz'))return{cls:'jazz',lbl:'JAZZ'};
+  if(id==1429||sub.includes('afterhour'))return{cls:'afterhour',lbl:'AFTERHOUR'};
+  if(id==1417||sub.includes('hip'))return{cls:'hiphop',lbl:'HIP-HOP'};
+  if(id==1423||sub.includes('rock'))return{cls:'rock',lbl:'ROCK'};
+  if(id==163||sub.includes('live'))return{cls:'live',lbl:'LIVE MUSIC'};
+  if(sub.includes('bar')||[103,1438,1441,1444,1447,1450,1468].includes(id))return{cls:'bar',lbl:'BAR'};
+  if(sub.includes('club')||id==162)return{cls:'club',lbl:'CLUB'};
+  return{cls:'default',lbl:sub.toUpperCase()||'NACHTLEBE'};
 }
 
-// DUAL FILTER HELPER — matched auf ID oder subkategorie Text
-function matchesGenre(l, genreKey){
-  if(genreKey==='all')return true;
-  const gm=GMAP[genreKey];if(!gm)return false;
-  const sid=parseInt(l.zt_subkategorie_id)||0;
-  const sub=(l.subkategorie||'').toLowerCase().trim();
-  // Erst ID prüfen (wenn vorhanden)
-  if(sid&&gm.ids.includes(sid))return true;
-  // Fallback: subkategorie Text
-  return gm.subs.some(s=>sub===s||sub.includes(s));
+// RENDER CARDS
+function renderLocs(locs){
+  const grid=document.getElementById('locations-grid');
+  if(!locs.length){
+    grid.innerHTML=`<div class="empty"><div class="empty-big">NÜÜT GFUNDE</div><div class="empty-txt">VERSUCH ANDERI FILTER</div><button onclick="resetFilter()" style="background:#ff2d00;border:none;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:2px;text-transform:uppercase;color:#fff;cursor:pointer;border-radius:2px;margin-top:12px">FILTER ZURÜCKSETZE</button></div>`;
+    return;
+  }
+  document.getElementById('dyn-count').textContent=locs.length;
+  grid.innerHTML=locs.map(l=>{
+    const sk=getSkTag(l);
+    const offe=isOffe(l.oeffnungszeiten);
+    const img=l.bild_url?`<img class="loc-img" src="${l.bild_url}" alt="${l.name}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`:'';
+    const placeholder=`<div class="loc-img-placeholder" ${l.bild_url?'style="display:none"':''}>🌙</div>`;
+    const desc=l.beschreibung_kurz||l.beschreibung||'';
+    const rating=l.rating?`<span class="star">★</span> ${parseFloat(l.rating).toFixed(1)}`:'';
+    return`<div class="loc-card${l.featured?' featured':''}" onclick="openDetail(${l.id})">
+      <div class="loc-card-inner">
+        ${img}${placeholder}
+        <div class="loc-body">
+          <div class="loc-top">
+            <div class="loc-name">${l.name}</div>
+            <div class="loc-badges">
+              <div class="offe-badge ${offe?'open':'closed'}">${offe?'OFFE':'GESCHLOSSEN'}</div>
+              ${l.featured?'<div class="top-pick">⚡ TOP</div>':''}
+            </div>
+          </div>
+          <div class="loc-meta">
+            <span class="sk-tag ${sk.cls}">${sk.lbl}</span>
+            <span class="loc-kreis">KREIS ${l.kreis||'–'}</span>
+          </div>
+          ${desc?`<div class="loc-desc">${desc}</div>`:''}
+          <div class="loc-bottom">
+            <div class="loc-rating">${rating?`<span class="star">★</span>${parseFloat(l.rating||0).toFixed(1)}<span style="color:rgba(232,228,217,0.25);font-size:8px;margin-left:2px">(${l.rating_count||0})</span>`:''}</div>
+            <button class="loc-ticket-btn ${l.website?'':'ghost'}" onclick="event.stopPropagation();${l.website?`window.open('${l.website}','_blank')`:'openDetail('+l.id+')'}">${l.website?'TICKET →':'MEHR →'}</button>
+          </div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
 }
 
-function getFiltered(){return allLocs.filter(l=>{
-  if(S.genre!=='all'&&!matchesGenre(l,S.genre))return false;
-  if(S.kreis!=='all'&&parseInt(l.kreis)!==parseInt(S.kreis))return false;
-  if(S.offe&&!isOffe(l.oeffnungszeiten))return false;
-  if(S.afterhour&&!matchesGenre(l,'afterhour'))return false;
-  return true;
-});}
-
-function buildGrid(){
-  const g=document.getElementById('mgrid');
-  let data=getFiltered();
-  if(S.sort==='score')data.sort((a,b)=>(b.featured?1:0)-(a.featured?1:0)||(b.rating||0)-(a.rating||0));
-  else if(S.sort==='kreis')data.sort((a,b)=>(a.kreis||99)-(b.kreis||99));
-  else data=data.slice().reverse();
-  const cnt=data.length;
-  document.getElementById('rb-count').textContent=cnt;
-  document.getElementById('sh-r').textContent=cnt+' LOCATIONS IN ZÜRICH';
-  g.innerHTML='';
-  if(!data.length){g.innerHTML='<div class="empty-state"><div class="es-title">NÜÜT GFUNDE</div><div class="es-sub">Probier andere Filter</div><div class="es-reset" onclick="resetAll()">ALLES ZURÜCKSETZE</div></div>';return;}
-  data.forEach(l=>{
-    const sub=getSubInfo(l);
-    const offe=isOffe(l.oeffnungszeiten);const vibe=getVibe(l);
-    const isAfter=matchesGenre(l,'afterhour');
-    const c=document.createElement('div');c.className='mcard'+(offe?' is-offe':'');
-    c.innerHTML=(offe?'<div class="mc-puls"></div><div class="mc-puls-ring"></div>':'')+(l.bild_url?`<img class="mc-img" src="${l.bild_url}" loading="lazy" alt="${l.name}" onerror="this.style.display='none'">`:`<div class="mc-img-placeholder">${sub.e}</div>`)+`<div class="mc-body"><div class="mc-badges">${l.featured?'<span class="mcb volt">TOP</span>':''}${offe?'<span class="mcb offe"><div class="offe-dot"></div>OFFE</span>':''}${isAfter?'<span class="mcb gold">🌅 AFTERHOUR</span>':''}<span class="mcb red">${sub.e} ${sub.n}</span><span class="mcb ghost">K${l.kreis||'?'}</span></div><div class="mc-name">${l.name}</div><div class="mc-genre">${sub.n}</div><div class="mc-meta">${l.adresse||''}</div><div class="mc-foot"><div class="mc-vibe">${[1,2,3,4,5].map(v=>`<div class="vdot${v<=vibe?' on v'+v:''}"></div>`).join('')}</div><div class="mc-kr">K${l.kreis||'?'}</div></div></div>`;
-    c.onclick=()=>openDet(l);
-    // Doppelklick / long press → Profil
-    let pressTimer;
-    c.addEventListener('mousedown',()=>{pressTimer=setTimeout(()=>{window.location='nachtleben-profil.html?id='+l.id;},600);});
-    c.addEventListener('mouseup',()=>clearTimeout(pressTimer));
-    c.addEventListener('touchstart',()=>{pressTimer=setTimeout(()=>{window.location='nachtleben-profil.html?id='+l.id;},600);},{passive:true});
-    c.addEventListener('touchend',()=>clearTimeout(pressTimer));
-    g.appendChild(c);
-  });
+// FILTER
+function applyFilter(){
+  let locs=[...allLocs];
+  if(filtTyp){
+    locs=locs.filter(l=>{
+      const sub=(l.subkategorie||'').toLowerCase();
+      if(filtTyp==='club')return sub.includes('club')||sub.includes('techno')||sub.includes('party');
+      if(filtTyp==='bar')return sub.includes('bar')&&!sub.includes('club');
+      return true;
+    });
+  }
+  if(filtIds.length){
+    locs=locs.filter(l=>filtIds.includes(l.zt_subkategorie_id)||filtIds.some(id=>{
+      const sub=(l.subkategorie||'').toLowerCase();
+      if(id===1414)return sub.includes('techno');
+      if(id===1432)return sub.includes('jazz');
+      if(id===1429)return sub.includes('afterhour');
+      if(id===1417)return sub.includes('hip');
+      return false;
+    }));
+  }
+  if(filtKreis)locs=locs.filter(l=>l.kreis===filtKreis);
+  updateActiveFilters();
+  updateDynH(locs);
+  renderLocs(locs);
 }
 
-function setGenre(btn,val){S.genre=val;document.querySelectorAll('.genre-btn').forEach(b=>b.classList.toggle('on',b===btn||b.dataset.g===val));buildGrid();updateAfRow();}
-function setKreis(btn,val){S.kreis=val;document.querySelectorAll('.kr-btn').forEach(b=>b.classList.toggle('on',b===btn));buildGrid();updateAfRow();}
-function setQuer(btn,key){S[key]=!S[key];btn.classList.toggle('on',S[key]);buildGrid();updateAfRow();}
-function setSort(btn,val){S.sort=val;document.querySelectorAll('.sort-btn').forEach(b=>b.classList.toggle('on',b===btn));buildGrid();}
+function updateDynH(locs){
+  const h=document.getElementById('dyn-h');
+  if(filtTyp||filtIds.length||filtKreis){
+    const typMap={club:'CLUBS',bar:'BARS','':'LOKALE'};
+    const kreisStr=filtKreis?` IN KREIS ${filtKreis}`:'';
+    h.innerHTML=`<span id="dyn-count">${locs.length}</span> ${typMap[filtTyp]||'LOKALE'}${kreisStr}`;
+  }else{
+    h.innerHTML=`ALLE <span id="dyn-count">${locs.length}</span> NACHTLEBE-LOKALE`;
+  }
+}
 
-function updateAfRow(){
-  const row=document.getElementById('af-row');if(!row)return;
+function updateActiveFilters(){
+  const el=document.getElementById('active-filters');
   const tags=[];
-  if(S.genre!=='all')tags.push({l:S.genre.toUpperCase(),k:'genre'});
-  if(S.kreis!=='all')tags.push({l:'KREIS '+S.kreis,k:'kreis'});
-  if(S.offe)tags.push({l:'JETZT OFFE',k:'offe'});
-  if(S.afterhour)tags.push({l:'AFTERHOUR',k:'afterhour'});
-  row.innerHTML=tags.map(t=>`<span class="af-tag">${t.l}<span class="af-x" onclick="clearF('${t.k}')">✕</span></span>`).join('');
-  if(tags.length)row.innerHTML+=`<button class="af-reset" onclick="resetAll()">RESET</button>`;
+  if(filtTyp)tags.push({lbl:filtTyp.toUpperCase(),fn:()=>{filtTyp='';document.querySelectorAll('.typ-card').forEach(c=>{c.classList.toggle('on',c.dataset.typ==='')});applyFilter();}});
+  document.querySelectorAll('.gc.on').forEach(c=>tags.push({lbl:c.textContent.trim(),fn:()=>{c.classList.remove('on');updFiltIds();applyFilter();}}));
+  if(filtKreis)tags.push({lbl:'KREIS '+filtKreis,fn:()=>{filtKreis=0;applyFilter();}});
+  el.innerHTML=tags.map((_,i)=>`<div class="af-tag" onclick="afClick(${i})"><span>${_.lbl}</span><span class="af-x">✕</span></div>`).join('');
+  el._tags=tags;
 }
-function clearF(key){
-  if(key==='genre'){S.genre='all';document.querySelectorAll('.genre-btn').forEach(b=>b.classList.toggle('on',b.dataset.g==='all'));}
-  if(key==='kreis'){S.kreis='all';document.querySelectorAll('.kr-btn').forEach(b=>b.classList.toggle('on',b.textContent==='ALLE'));}
-  if(key==='offe'){S.offe=false;document.getElementById('qb-offe')?.classList.remove('on');}
-  if(key==='afterhour'){S.afterhour=false;document.getElementById('qb-afterhour')?.classList.remove('on');}
-  buildGrid();updateAfRow();
-}
-function resetAll(){
-  S={genre:'all',kreis:'all',offe:false,afterhour:false,gratis:false,sort:S.sort};
-  document.querySelectorAll('.genre-btn').forEach(b=>b.classList.toggle('on',b.dataset.g==='all'));
-  document.querySelectorAll('.kr-btn').forEach(b=>b.classList.toggle('on',b.textContent.trim()==='ALLE'));
-  document.querySelectorAll('#qb-offe,#qb-afterhour,#qb-gratis').forEach(b=>b.classList.remove('on'));
-  buildGrid();updateAfRow();
+window.afClick=function(i){document.getElementById('active-filters')._tags[i].fn();};
+
+function updFiltIds(){
+  filtIds=[];
+  document.querySelectorAll('.gc.on').forEach(c=>{
+    (c.dataset.ids||'').split(',').forEach(id=>{const n=parseInt(id);if(n)filtIds.push(n);});
+  });
 }
 
-let currentLoc=null;
-function openDet(l){
-  currentLoc=l;
-  const sub=getSubInfo(l);
+function selTyp(el,typ){
+  document.querySelectorAll('.typ-card').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');
+  filtTyp=typ;
+  applyFilter();
+}
+
+function togGc(el){
+  el.classList.toggle('on');
+  updFiltIds();
+  applyFilter();
+}
+
+function setSort(el,mode){
+  document.querySelectorAll('.sort-btn').forEach(b=>b.classList.remove('on'));
+  el.classList.add('on');
+  sortMode=mode;
+  applyFilter();
+}
+
+function resetFilter(){
+  filtTyp='';filtIds=[];filtKreis=0;
+  document.querySelectorAll('.typ-card').forEach(c=>c.classList.toggle('on',c.dataset.typ===''));
+  document.querySelectorAll('.gc.on').forEach(c=>c.classList.remove('on'));
+  applyFilter();
+}
+
+// SHEET
+function openSheet(){document.getElementById('sheet-bg').classList.add('open');}
+function closeSheet(){document.getElementById('sheet-bg').classList.remove('open');}
+function sheetTyp(el,typ){
+  document.querySelectorAll('.sheet-typ-card').forEach(c=>c.classList.remove('on'));
+  el.classList.add('on');filtTyp=typ;
+}
+
+// SHEET KREISE
+const skEl=document.getElementById('sheet-kreise');
+for(let i=1;i<=12;i++){
+  const d=document.createElement('div');d.className='sk-card';
+  d.innerHTML=`<div class="sk-num">${i}</div><div class="sk-lbl">KREIS</div>`;
+  d.onclick=function(){
+    document.querySelectorAll('.sk-card').forEach(c=>c.classList.remove('on'));
+    this.classList.add('on');filtKreis=i;
+  };
+  skEl.appendChild(d);
+}
+
+// DETAIL PANEL
+window.openDetail=function(id){
+  const l=allLocs.find(x=>x.id===id);
+  if(!l)return;
+  const sk=getSkTag(l);
   const offe=isOffe(l.oeffnungszeiten);
-  const hero=document.getElementById('p-hero');
-  if(l.bild_url){hero.style.backgroundImage=`url(${l.bild_url})`;hero.style.minHeight='220px';}
-  else{hero.style.backgroundImage='';hero.style.minHeight='120px';}
+  const dp=document.getElementById('dp-inner');
+  dp.innerHTML=`
+    <div class="dp-top">
+      ${l.bild_url?`<img class="dp-img" src="${l.bild_url}" alt="${l.name}">`:`<div class="dp-img">🌙</div>`}
+      <div class="dp-info">
+        <div class="dp-name">${l.name}</div>
+        <div class="dp-meta">${l.adresse||''} · KREIS ${l.kreis||'–'}</div>
+        <div class="dp-tags">
+          <span class="sk-tag ${sk.cls}">${sk.lbl}</span>
+          <span class="offe-badge ${offe?'open':'closed'}" style="font-size:8px">${offe?'JETZT OFFE':'GESCHLOSSEN'}</span>
+          ${l.featured?'<span class="top-pick">⚡ TOP</span>':''}
+        </div>
+      </div>
+    </div>
+    ${l.beschreibung?`<div class="dp-desc">${l.beschreibung.substring(0,200)}${l.beschreibung.length>200?'...':''}</div>`:''}
+    <div class="dp-actions">
+      <button class="dp-btn ticket" onclick="window.open('${l.website||'#'}','_blank')">TICKET →</button>
+      <button class="dp-btn profil" onclick="window.location.href='nachtleben-profil.html?slug=${l.slug||l.id}'">VOLLSTÄNDIGS PROFIL</button>
+    </div>
+    <div class="dp-btn-row">
+      <button class="dp-icon-btn" onclick="closeDetail()">📍 KARTE</button>
+      <button class="dp-icon-btn">❤️ SPEICHERE</button>
+      <button class="dp-icon-btn">⭐ BEWERTE</button>
+      <button class="dp-icon-btn">↗ TEILE</button>
+    </div>`;
+  document.getElementById('detail-panel').classList.add('open');
+};
 
-  document.getElementById('p-name').textContent=l.name;
-  document.getElementById('p-sub').textContent=sub.e+' '+sub.n+' · KREIS '+l.kreis;
+function closeDetail(){document.getElementById('detail-panel').classList.remove('open');}
 
-  // OFFE/ZU BADGE
-  const badge=document.getElementById('p-offe-badge');
-  if(offe){
-    badge.style.display='flex';
-    badge.style.background='#000';
-    badge.style.border='1px solid rgba(200,255,0,.5)';
-    badge.style.color='#c8ff00';
-    badge.innerHTML='<div style="width:7px;height:7px;border-radius:50%;background:#c8ff00;animation:blink 1s infinite;box-shadow:0 0 6px rgba(200,255,0,.8)"></div> JETZT OFFE';
-  } else {
-    badge.style.display='flex';
-    badge.style.background='transparent';
-    badge.style.border='1px solid rgba(232,228,217,.1)';
-    badge.style.color='rgba(232,228,217,.3)';
-    badge.innerHTML='MOMENTAN GESCHLOSSEN';
-  }
-
-  document.getElementById('p-tags').innerHTML=`${l.featured?'<span class="mcb volt">TOP</span>':''}${offe?'<span class="mcb offe"><div class="offe-dot"></div>OFFE</span>':''}<span class="mcb ghost">K${l.kreis||'?'}</span><span class="mcb red">${sub.e} ${sub.n}</span>`;
-  document.getElementById('p-desc').textContent=l.beschreibung_kurz||l.beschreibung||'Mehr Infos bald via Stadtpuls Community.';
-  document.getElementById('p-addr').textContent=l.adresse||(l.plz?l.plz+' Zürich':'—');
-  document.getElementById('p-kreis').textContent='Kreis '+(l.kreis||'?');
-  document.getElementById('p-genre').textContent=sub.e+' '+sub.n;
-
-  // ÖFFNUNGSZEITEN — sauber formatiert
-  const DAYS=['So','Mo','Di','Mi','Do','Fr','Sa'];
-  const today=DAYS[new Date().getDay()];
-  const oz=l.oeffnungszeiten||[];
-  if(Array.isArray(oz)&&oz.length){
-    const todayStr=oz.find(o=>o&&o.includes(today));
-    if(todayStr){
-      const m=todayStr.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/);
-      if(m){
-        document.getElementById('p-oeffnig').textContent=`${today}: ${m[1]}:${m[2]} – ${m[3]}:${m[4]}`;
-      } else {
-        document.getElementById('p-oeffnig').textContent=today+': GESCHLOSSEN';
-      }
-    } else {
-      document.getElementById('p-oeffnig').textContent=today+': GESCHLOSSEN';
-    }
-  } else {
-    document.getElementById('p-oeffnig').textContent='—';
-  }
-
-  document.getElementById('p-pred').innerHTML='⚡ «'+VIBES[Math.floor(Math.random()*VIBES.length)]+'»';
-  document.getElementById('ov').classList.add('on');
-  document.getElementById('panel').classList.add('open');
-}
-function closeDet(){document.getElementById('ov').classList.remove('on');document.getElementById('panel').classList.remove('open');}
-
-const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
-document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';});
-
-const TI=['ZÜRI SCHLAFT NÖD','NACHT LEBE ZÜRICH','TECHNO · HOUSE · JAZZ','LANGSTRASSE FEUERT','KREIS 4 IS ON FIRE','4. JUNI 2026'];
-const TIG=['KOMPLEX 457','ROTE FABRIK','ZÜRI WEST','AFTERHOUR ZÜRICH','BY RAIMONDO*','STADTPULS'];
-['tc','td'].forEach((id,i)=>{const t=document.getElementById(id);if(!t)return;const items=i===0?TI:TIG;t.innerHTML=[...items,...items].map(x=>`<span class="ti"><b>●</b> ${x}</span>`).join('');});
-
-loadAll();
+// INIT
+load();
 </script>
 </body>
 </html>

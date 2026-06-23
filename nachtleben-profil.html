@@ -1,410 +1,572 @@
 <!DOCTYPE html>
-<html lang="de-CH">
+<html lang="de">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Club — Nachtleben Zürich | Stadtpuls</title>
-<meta name="description" content="Club & Bar Profil — Nachtleben Zürich | Stadtpuls">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stadtpuls — Nachtlebe Profil</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{background:#000;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
-body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,45,0,.015) 3px,rgba(255,45,0,.015) 4px);pointer-events:none;z-index:9997}
-#cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-#cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(255,45,0,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0s,top 0s}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#000;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none}
+#dot{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#ring{position:fixed;width:30px;height:30px;border:1px solid rgba(255,45,0,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .07s,top .07s}
+.scan{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 4px,rgba(255,45,0,0.006) 4px,rgba(255,45,0,0.006) 5px);pointer-events:none;z-index:3}
 
-nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid rgba(255,45,0,.1);position:sticky;top:0;background:#000;z-index:300}
-.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px;text-decoration:none}
-.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;box-shadow:0 0 8px rgba(255,45,0,.8);animation:blink 2s infinite}
-.nav-links{display:flex;gap:28px}
-.nl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);text-decoration:none;transition:.15s}
-.nl:hover,.nl.on{color:#ff2d00}
-.btn-mm{background:#ff2d00;color:#000;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none;text-decoration:none}
-
-.back-bar{padding:12px 40px;border-bottom:1px solid rgba(255,45,0,.06);display:flex;align-items:center;gap:8px}
-.back-btn{display:flex;align-items:center;gap:6px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.25);text-decoration:none;cursor:none;transition:.15s}
-.back-btn:hover{color:#ff2d00}
-.back-btn::before{content:'←'}
+/* NAV */
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:0;background:rgba(0,0,0,0.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,45,0,0.12)}
+.nav-logo{padding:14px 20px;border-right:1px solid rgba(255,45,0,0.1);display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo-txt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:4px;font-size:19px;color:#e8e4d9}
+.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,0.7)}50%{box-shadow:0 0 0 6px rgba(255,45,0,0)}}
+.nav-back{padding:14px 20px;font-size:9px;letter-spacing:2px;color:rgba(232,228,217,0.4);text-decoration:none;text-transform:uppercase;transition:color .2s;border-left:1px solid rgba(255,45,0,0.08);margin-left:auto}
+.nav-back:hover{color:#ff2d00}
 
 /* HERO */
-.hero-img-wrap{position:relative;overflow:hidden}
-.hero-img{width:100%;height:420px;object-fit:cover;display:block;filter:saturate(.75) brightness(.65)}
-.hero-img-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,#000,transparent);pointer-events:none}
-.hero-img-wrap::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,45,0,.1),transparent 60%);pointer-events:none;z-index:1}
+.hero{margin-top:57px;position:relative;height:65vh;min-height:340px;overflow:hidden}
+.hero-img{width:100%;height:100%;object-fit:cover;filter:brightness(.45)}
+.hero-placeholder{width:100%;height:100%;background:linear-gradient(180deg,rgba(147,51,234,0.3) 0%,rgba(255,45,0,0.15) 50%,#000 100%);display:flex;align-items:center;justify-content:center;font-size:80px}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(0deg,#000 0%,rgba(0,0,0,0.6) 40%,transparent 100%)}
 
-/* OFFE BADGE */
-.offe-badge{position:absolute;top:20px;left:40px;z-index:10;display:flex;align-items:center;gap:7px;padding:8px 14px;font-size:9px;letter-spacing:2px;text-transform:uppercase}
-.offe-badge.is-offe{background:#000;border:1px solid rgba(200,255,0,.5);color:#c8ff00;box-shadow:0 0 14px rgba(200,255,0,.15)}
-.offe-badge.is-zu{background:#000;border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.3)}
-.offe-dot{width:7px;height:7px;border-radius:50%;background:#c8ff00;animation:blink 1s infinite;box-shadow:0 0 6px rgba(200,255,0,.8)}
+/* STATUS BADGE — prominent und klar */
+.hero-status{position:absolute;top:20px;left:20px;display:flex;align-items:center;gap:8px}
+.offe-pill{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:100px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:2px;text-transform:uppercase}
+.offe-pill.open{background:#c8ff00;color:#04040a}
+.offe-pill.closed{background:rgba(255,255,255,0.12);color:rgba(232,228,217,0.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15)}
+.offe-dot{width:8px;height:8px;border-radius:50%;background:currentColor;animation:blink 1.5s infinite}
 
-/* PROFIL HEAD */
-.profil-head{padding:28px 40px 22px;border-bottom:1px solid rgba(255,45,0,.07);display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start}
-.ph-left{}
-.ph-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.phb{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 8px;font-family:'DM Mono',monospace}
-.phb.red{background:#ff2d00;color:#000}.phb.volt{background:#c8ff00;color:#000}
-.phb.gold{background:#ffd700;color:#000}.phb.ghost{border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.25)}
-.phb.offe-b{background:#c8ff00;color:#000;display:flex;align-items:center;gap:3px}
-.bdot{width:4px;height:4px;border-radius:50%;background:#000;animation:blink 1s infinite}
-.ph-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(40px,6vw,72px);text-transform:uppercase;line-height:.88;color:#e8e4d9;margin-bottom:6px}
-.ph-genre{font-size:12px;color:#ff2d00;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;text-shadow:0 0 16px rgba(255,45,0,.4)}
-.ph-adresse{font-size:10px;color:rgba(232,228,217,.3);line-height:1.7}
-.ph-right{display:flex;flex-direction:column;gap:6px;align-items:flex-end}
-.ph-rating{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:52px;color:#ff2d00;line-height:1;text-shadow:0 0 20px rgba(255,45,0,.4)}
-.ph-stars{font-size:13px;color:rgba(255,45,0,.5)}
-.ph-rlabel{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.15)}
+.hero-score{position:absolute;top:20px;right:20px;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);border:1px solid rgba(255,45,0,0.2);border-radius:4px;padding:8px 14px;text-align:center}
+.hero-score-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:#ff2d00;line-height:1}
+.hero-score-l{font-size:7px;letter-spacing:2px;color:rgba(232,228,217,0.4);text-transform:uppercase}
 
-/* VIBE */
-.vibe-strip{padding:16px 40px;border-bottom:1px solid rgba(255,45,0,.06);display:flex;align-items:center;gap:14px}
-.vibe-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2)}
-.vibe-dots{display:flex;gap:4px}
-.vdot{width:9px;height:9px;border-radius:50%;background:rgba(255,45,0,.1)}
-.vdot.on{background:#ff2d00;box-shadow:0 0 7px rgba(255,45,0,.6)}
-.vdot.anim{animation:vpulse 1.2s ease-in-out infinite}
+.hero-content{position:absolute;bottom:0;left:0;right:0;padding:20px 20px 24px}
+.hero-sk{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.sk-pill{padding:4px 10px;border-radius:100px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase}
+.sk-pill.techno{background:rgba(147,51,234,0.25);color:#c084fc;border:1px solid rgba(147,51,234,0.4)}
+.sk-pill.jazz{background:rgba(255,215,0,0.18);color:#ffd700;border:1px solid rgba(255,215,0,0.35)}
+.sk-pill.bar{background:rgba(0,245,255,0.15);color:#00f5ff;border:1px solid rgba(0,245,255,0.3)}
+.sk-pill.club{background:rgba(255,45,0,0.18);color:#ff6b4a;border:1px solid rgba(255,45,0,0.35)}
+.sk-pill.afterhour{background:rgba(255,215,0,0.12);color:#ffd700;border:1px solid rgba(255,215,0,0.28)}
+.sk-pill.default{background:rgba(255,255,255,0.1);color:#e8e4d9;border:1px solid rgba(255,255,255,0.2)}
+.hero-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:52px;line-height:.88;text-transform:uppercase;color:#fff;margin-bottom:6px}
+.hero-addr{font-size:10px;color:rgba(232,228,217,0.55);letter-spacing:1px;display:flex;align-items:center;gap:6px}
+.hero-addr-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,45,0,0.6)}
 
-/* MAIN */
-.main{display:grid;grid-template-columns:1fr 340px;gap:0;padding:0 40px;margin-top:30px}
+/* STICKY ACTION BAR */
+.action-bar{position:sticky;top:57px;z-index:40;background:rgba(0,0,0,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,45,0,0.1);padding:10px 20px;display:flex;gap:8px;align-items:center}
+.act-btn{flex:1;padding:13px 8px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .2s;border:none;display:flex;align-items:center;justify-content:center;gap:5px}
+.act-btn.primary{background:#ff2d00;color:#fff;box-shadow:0 0 20px rgba(255,45,0,0.25);flex:2}
+.act-btn.primary:hover{box-shadow:0 0 30px rgba(255,45,0,0.45)}
+.act-btn.ghost{background:rgba(255,255,255,0.06);color:rgba(232,228,217,0.6);border:1px solid rgba(255,255,255,0.1)}
+.act-btn.ghost:hover{background:rgba(255,255,255,0.1);color:#e8e4d9}
 
-.content{}
-.c-section{margin-bottom:28px}
-.c-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:14px}
-.c-title::before{content:'—';color:#ff2d00}
-.c-desc{font-size:11px;color:rgba(232,228,217,.38);line-height:1.9}
+/* CONTENT */
+.content{padding:0 20px}
 
-/* OZ */
-.oz-wrap{display:flex;flex-direction:column;gap:0}
-.oz-row{display:grid;grid-template-columns:64px 1fr;padding:8px 0;border-bottom:1px solid rgba(255,45,0,.05)}
+/* META STRIP */
+.meta-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,45,0,0.08);margin:0 -20px 20px;border-top:1px solid rgba(255,45,0,0.08);border-bottom:1px solid rgba(255,45,0,0.08)}
+.meta-cell{background:#000;padding:14px 20px}
+.meta-label{font-size:7px;letter-spacing:3px;color:rgba(232,228,217,0.3);text-transform:uppercase;margin-bottom:4px}
+.meta-val{font-size:13px;color:#e8e4d9;letter-spacing:.5px}
+.meta-val.volt{color:#c8ff00}
+.meta-val.lila{color:#9333ea}
+.meta-val.cyan{color:#00f5ff}
+
+/* SECTION */
+.sec{margin-bottom:28px}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;text-transform:uppercase;color:#e8e4d9;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.sec-title::after{content:'';flex:1;height:1px;background:rgba(255,45,0,0.15)}
+
+/* ÖFFNUNGSZEITEN */
+.oz-grid{display:flex;flex-direction:column;gap:0;border:1px solid rgba(255,255,255,0.07);border-radius:4px;overflow:hidden}
+.oz-row{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,0.05);transition:background .2s}
 .oz-row:last-child{border-bottom:none}
-.oz-row.today{background:rgba(255,45,0,.05);border-radius:2px;padding:8px 10px;margin:0 -10px;border-left:2px solid #ff2d00;border-bottom:none}
-.oz-day{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.25)}
-.oz-row.today .oz-day{color:#ff2d00}
-.oz-time{font-size:10px;color:rgba(232,228,217,.5)}
+.oz-row.today{background:rgba(255,45,0,0.06);border-bottom-color:rgba(255,45,0,0.1)}
+.oz-day{font-size:10px;letter-spacing:2px;color:rgba(232,228,217,0.45);text-transform:uppercase;width:50px}
+.oz-row.today .oz-day{color:#ff2d00;font-weight:500}
+.oz-time{font-size:12px;color:rgba(232,228,217,0.75);letter-spacing:.5px}
 .oz-row.today .oz-time{color:#e8e4d9}
-.oz-closed .oz-time{color:rgba(232,228,217,.15)}
+.oz-closed{color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:1px}
+.oz-now{font-size:8px;padding:3px 8px;background:#c8ff00;color:#04040a;border-radius:100px;letter-spacing:1px;text-transform:uppercase;margin-left:auto}
 
-/* KI PRED */
-.ki-pred{border-left:2px solid #ff2d00;padding:12px 16px;margin-bottom:24px;background:rgba(255,45,0,.03);box-shadow:inset 2px 0 12px rgba(255,45,0,.08)}
-.ki-pred-head{display:flex;align-items:center;gap:6px;margin-bottom:6px}
-.ki-pred-label{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00}
-.ki-pred-txt{font-size:10px;color:rgba(255,100,80,.6);line-height:1.8}
-.ki-pred-txt strong{color:#ff2d00}
+/* KARTE */
+#map{width:100%;height:220px;border-radius:4px;border:1px solid rgba(255,45,0,0.15);margin-bottom:10px;background:#0a0005}
+.map-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.map-btn{padding:11px;border:1px solid rgba(255,255,255,0.1);border-radius:3px;background:rgba(255,255,255,0.04);color:rgba(232,228,217,0.6);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .2s;font-family:'DM Mono',monospace}
+.map-btn:hover{border-color:rgba(255,45,0,0.4);color:#e8e4d9;background:rgba(255,45,0,0.05)}
 
-/* ÄHNLICHE */
-.ae-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,45,0,.06)}
-.ae-card{background:#000;padding:14px;transition:.15s;cursor:none}
-.ae-card:hover{background:#080808}
-.ae-img{width:100%;height:70px;object-fit:cover;filter:brightness(.6) saturate(.7);display:block;margin-bottom:8px}
-.ae-ph{width:100%;height:50px;display:flex;align-items:center;justify-content:center;font-size:20px;background:#080808;margin-bottom:8px;opacity:.25}
-.ae-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;text-transform:uppercase;color:#e8e4d9;line-height:1;margin-bottom:2px}
-.ae-sub{font-size:7px;color:#ff2d00;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px}
-.ae-kr{font-size:7px;color:rgba(232,228,217,.2);letter-spacing:1px}
+/* DESCRIPTION */
+.desc-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:4px;padding:16px;font-size:12px;line-height:1.75;color:rgba(232,228,217,0.7);letter-spacing:.3px}
 
-/* SIDEBAR */
-.sidebar{padding-left:32px;border-left:1px solid rgba(255,45,0,.07)}
+/* SONAR RADAR */
+.radar-wrap{position:relative;width:200px;height:200px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
+.radar-rings{position:absolute;inset:0}
+.radar-ring{position:absolute;border-radius:50%;border:1px solid rgba(255,45,0,0.12)}
+.radar-ring:nth-child(1){inset:0}
+.radar-ring:nth-child(2){inset:25%}
+.radar-ring:nth-child(3){inset:48%}
+.radar-sweep{position:absolute;inset:0;border-radius:50%;overflow:hidden}
+.radar-sweep-inner{position:absolute;inset:0;background:conic-gradient(from 0deg,rgba(255,45,0,0) 0%,rgba(255,45,0,0.25) 60deg,rgba(255,45,0,0) 60deg);animation:sweep 3s linear infinite;transform-origin:center}
+@keyframes sweep{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.radar-center{width:6px;height:6px;background:#ff2d00;border-radius:50%;position:relative;z-index:2;box-shadow:0 0 8px rgba(255,45,0,0.8)}
+.radar-blip{position:absolute;width:7px;height:7px;border-radius:50%;transform:translate(-50%,-50%)}
+.radar-blip.active{background:#c8ff00;box-shadow:0 0 8px rgba(200,255,0,0.6);animation:blippulse 2s ease-in-out infinite}
+@keyframes blippulse{0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1)}50%{opacity:.5;transform:translate(-50%,-50%) scale(1.5)}}
+.radar-info{text-align:center}
+.radar-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:36px;color:#c8ff00;line-height:1}
+.radar-sub{font-size:8px;color:rgba(232,228,217,0.35);letter-spacing:2px;text-transform:uppercase}
 
-/* TICKET BTN */
-.btn-ticket{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:18px;background:#ff2d00;color:#000;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;cursor:none;margin-bottom:10px;transition:.2s;min-height:58px;box-shadow:0 0 24px rgba(255,45,0,.25);border:none}
-.btn-ticket:hover{background:#ff4422;box-shadow:0 0 36px rgba(255,45,0,.45)}
+/* SOUND DNA */
+.sound-bars{display:flex;align-items:flex-end;justify-content:center;gap:4px;height:60px;margin-bottom:16px}
+.sound-bar{width:12px;border-radius:2px 2px 0 0;animation:soundbar var(--dur,1.2s) ease-in-out infinite alternate}
+@keyframes soundbar{from{height:var(--min,20%)}to{height:var(--max,100%)}}
+.dna-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.dna-tag{padding:5px 12px;border-radius:100px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase}
+.dna-tag.t{background:rgba(147,51,234,0.15);color:#c084fc;border:1px solid rgba(147,51,234,0.3)}
+.dna-tag.h{background:rgba(255,215,0,0.1);color:#ffd700;border:1px solid rgba(255,215,0,0.25)}
 
-.btn-ghost{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px;background:transparent;color:rgba(232,228,217,.3);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:none;margin-bottom:10px;transition:.2s;border:1px solid rgba(232,228,217,.1);text-decoration:none;min-height:52px}
-.btn-ghost:hover{color:#e8e4d9;border-color:rgba(255,45,0,.3)}
+/* REVIEWS */
+.review-summary{display:flex;gap:16px;align-items:center;margin-bottom:16px;padding:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:4px}
+.review-big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:52px;color:#ffd700;line-height:1}
+.review-stars{display:flex;gap:2px;font-size:16px;color:#ffd700;margin-bottom:4px}
+.review-count{font-size:8px;color:rgba(232,228,217,0.35);letter-spacing:2px;text-transform:uppercase}
+.review-bars{flex:1}
+.rbar-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.rbar-lbl{font-size:8px;color:rgba(232,228,217,0.4);width:12px;text-align:right}
+.rbar-track{flex:1;height:5px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden}
+.rbar-fill{height:100%;background:#ffd700;border-radius:2px}
 
-/* INFO CARD */
-.info-card{border:1px solid rgba(255,45,0,.1);padding:18px;margin-bottom:14px;background:#050000;position:relative;overflow:hidden}
-.info-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,#ff2d00,transparent);box-shadow:0 0 8px rgba(255,45,0,.3)}
-.ic-title{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.45);margin-bottom:12px;display:flex;align-items:center;gap:5px}
-.ic-title::before{content:'';width:3px;height:3px;border-radius:50%;background:#ff2d00}
-.ir{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:8px 0;border-bottom:1px solid rgba(255,45,0,.04)}
-.ir:last-child{border-bottom:none}
-.ir-l{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,217,.18);min-width:60px;flex-shrink:0}
-.ir-r{font-size:10px;color:#e8e4d9;text-align:right}
-.ir-r a{color:#ff2d00;text-decoration:none}
-.ir-r.volt{color:#c8ff00}.ir-r.red{color:#ff2d00}
+.reviews-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
+.rv-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:4px;padding:14px}
+.rv-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
+.rv-user{font-size:10px;color:#e8e4d9;letter-spacing:1px}
+.rv-stars{color:#ffd700;font-size:12px}
+.rv-date{font-size:8px;color:rgba(232,228,217,0.3);letter-spacing:1px}
+.rv-text{font-size:11px;color:rgba(232,228,217,0.65);line-height:1.65}
+.rv-add{width:100%;padding:13px;border:1px solid rgba(255,45,0,0.2);border-radius:3px;background:rgba(255,45,0,0.03);color:rgba(232,228,217,0.5);font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.rv-add:hover{border-color:#ff2d00;color:#ff2d00;background:rgba(255,45,0,0.06)}
 
-/* 4 ACTION BUTTONS */
-.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
-.act-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 8px;background:transparent;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.22);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;cursor:none;transition:.15s;min-height:48px}
-.act-btn:hover{color:#e8e4d9;border-color:rgba(255,45,0,.25);background:rgba(255,45,0,.03)}
+/* SIMILAR */
+.similar-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.sim-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;cursor:pointer;transition:all .2s}
+.sim-card:hover{border-color:rgba(255,45,0,0.3);background:rgba(255,45,0,0.04)}
+.sim-img{height:70px;background:linear-gradient(135deg,rgba(147,51,234,0.25),rgba(0,0,0,0.5));display:flex;align-items:center;justify-content:center;font-size:24px;object-fit:cover;width:100%}
+.sim-body{padding:10px 12px}
+.sim-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;text-transform:uppercase;color:#e8e4d9;line-height:1;margin-bottom:3px}
+.sim-meta{font-size:8px;color:rgba(232,228,217,0.35);letter-spacing:1px;text-transform:uppercase}
 
-/* LOADING / ERROR */
-#main-content{min-height:50vh}
-.load-wrap{padding:80px 40px;text-align:center}
-.load-dots{display:flex;justify-content:center;gap:8px;margin-bottom:20px}
-.ld{width:10px;height:10px;border-radius:50%;background:#ff2d00;animation:bounce 1.2s infinite;box-shadow:0 0 8px rgba(255,45,0,.4)}
-.ld:nth-child(2){animation-delay:.2s}.ld:nth-child(3){animation-delay:.4s}
-.load-txt{font-size:10px;letter-spacing:3px;color:rgba(255,45,0,.3);text-transform:uppercase}
+/* KI BOX */
+.ki-box{background:rgba(147,51,234,0.05);border:1px solid rgba(147,51,234,0.15);border-radius:4px;padding:16px;margin-bottom:28px}
+.ki-box-head{font-size:8px;letter-spacing:4px;color:rgba(147,51,234,0.6);text-transform:uppercase;margin-bottom:10px}
+.ki-feat-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.ki-feat-row:last-child{margin-bottom:0}
+.ki-feat-ico{font-size:18px;flex-shrink:0}
+.ki-feat-info{}
+.ki-feat-nm{font-size:11px;color:#e8e4d9;margin-bottom:2px;letter-spacing:.5px}
+.ki-feat-ds{font-size:9px;color:rgba(232,228,217,0.35);letter-spacing:.3px;line-height:1.5}
+.ki-badge{display:inline-block;padding:2px 6px;background:rgba(147,51,234,0.12);color:#9333ea;border:1px solid rgba(147,51,234,0.2);border-radius:100px;font-size:7px;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
 
-/* TICKER + FOOTER */
-.btw{border-top:1px solid rgba(255,45,0,.07);margin-top:56px;overflow:hidden;background:#000}
-.tr{padding:6px 0;overflow:hidden;border-bottom:1px solid rgba(255,45,0,.04)}
-.tick{display:flex;white-space:nowrap}
-.tick.l{animation:tL 24s linear infinite}.tick.r{animation:tR 24s linear infinite}
-.ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(255,45,0,.25)}.ti b{color:#ff2d00;font-weight:400}
-footer{padding:44px 40px 32px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px;border-top:1px solid rgba(255,45,0,.08);background:#000}
-.fc-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:12px}
-.fc-link{display:block;font-size:10px;color:rgba(232,228,217,.2);margin-bottom:8px;transition:.15s;text-decoration:none;cursor:none}
-.fc-link:hover{color:#ff2d00}
-.fc-desc{font-size:10px;color:rgba(232,228,217,.15);line-height:1.9;margin-top:8px}
-.fc-copy{font-size:8px;color:rgba(232,228,217,.08);margin-top:16px}
-
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
-@keyframes tL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes tR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
-@keyframes vpulse{0%,100%{box-shadow:0 0 5px rgba(255,45,0,.4)}50%{box-shadow:0 0 14px rgba(255,45,0,.9)}}
-
-@media(max-width:768px){
-#cur,#cur2{display:none}body{cursor:auto}
-nav{padding:0 16px;height:48px}.nav-links{display:none}
-.back-bar{padding:10px 16px}
-.hero-img{height:250px}
-.offe-badge{top:12px;left:16px;padding:7px 12px}
-.profil-head{padding:20px 16px;grid-template-columns:1fr;gap:10px}
-.ph-right{flex-direction:row;align-items:flex-start;gap:16px}
-.ph-name{font-size:clamp(36px,10vw,56px)}
-.vibe-strip{padding:14px 16px}
-.main{grid-template-columns:1fr;padding:0 16px;margin-top:20px}
-.sidebar{padding-left:0;border-left:none;border-top:1px solid rgba(255,45,0,.07);padding-top:24px;margin-top:24px}
-.btn-ticket{min-height:62px;font-size:11px}
-.btn-ghost{min-height:54px;font-size:10px}
-.act-btn{min-height:52px;font-size:9px}
-.ae-grid{grid-template-columns:1fr 1fr}
-footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:14px}}
+/* FOOTER */
+footer{background:#000;border-top:1px solid rgba(255,45,0,0.08);padding:28px 20px;margin-top:16px}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.footer-logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;color:rgba(232,228,217,0.2);letter-spacing:3px;display:flex;align-items:center;gap:6px}
+.footer-logo .ldot{width:5px;height:5px}
+.footer-copy{font-size:7px;color:rgba(232,228,217,0.18);letter-spacing:2px;text-transform:uppercase}
+.footer-links{display:flex;gap:12px}
+.footer-links a{font-size:7px;color:rgba(232,228,217,0.25);text-decoration:none;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
+.footer-links a:hover{color:#ff2d00}
 </style>
 </head>
 <body>
-<div id="cur"></div><div id="cur2"></div>
+<div id="dot"></div><div id="ring"></div>
+<div class="scan"></div>
 
-<nav>
-  <a class="logo" href="index.html"><div class="ldot"></div>STADTPULS</a>
-  <div class="nav-links">
-    <a class="nl" href="gastro.html">GASTRO</a>
-    <a class="nl on" href="nachtleben.html">NACHTLEBE</a>
-    <a class="nl" href="shopping.html">SHOPPING</a>
-    <a class="nl" href="dating.html">DATES</a>
-  </div>
-  <a class="btn-mm" href="index.html?page=login">MITMACHE</a>
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><div class="ldot"></div><span class="logo-txt">STADTPULS</span></a>
+  <a href="nachtleben.html" class="nav-back">← NACHTLEBE</a>
 </nav>
 
-<div class="back-bar">
-  <a class="back-btn" href="nachtleben.html">Nachtleben Zürich</a>
-</div>
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-placeholder" id="hero-placeholder">🌙</div>
+  <div class="hero-overlay"></div>
 
-<div id="main-content">
-  <div class="load-wrap">
-    <div class="load-dots"><div class="ld"></div><div class="ld"></div><div class="ld"></div></div>
-    <div class="load-txt">LÄDT PROFIL...</div>
+  <div class="hero-status">
+    <div class="offe-pill closed" id="offe-pill">
+      <div class="offe-dot"></div>
+      <span id="offe-txt">LÄDT...</span>
+    </div>
+  </div>
+
+  <div class="hero-score">
+    <div class="hero-score-n" id="hero-rating">–</div>
+    <div class="hero-score-l">RATING</div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-sk" id="hero-sk"></div>
+    <div class="hero-name" id="hero-name">LÄDT...</div>
+    <div class="hero-addr" id="hero-addr">
+      <span class="hero-addr-dot"></span>
+      <span>ZÜRICH</span>
+    </div>
   </div>
 </div>
 
-<div class="btw">
-  <div class="tr"><div class="tick l" id="ta"></div></div>
-  <div class="tr"><div class="tick r" id="tb"></div></div>
+<!-- ACTION BAR -->
+<div class="action-bar">
+  <button class="act-btn primary" id="act-ticket">🎫 TICKET / EINTRITT</button>
+  <button class="act-btn ghost" onclick="document.getElementById('map').scrollIntoView({behavior:'smooth'})">📍 KARTE</button>
+  <button class="act-btn ghost" id="act-save">❤️</button>
+  <button class="act-btn ghost" id="act-share">↗</button>
 </div>
 
+<div class="content">
+
+  <!-- META STRIP -->
+  <div class="meta-strip" id="meta-strip">
+    <div class="meta-cell"><div class="meta-label">KREIS</div><div class="meta-val volt" id="m-kreis">–</div></div>
+    <div class="meta-cell"><div class="meta-label">KATEGORIE</div><div class="meta-val" id="m-kat">–</div></div>
+    <div class="meta-cell"><div class="meta-label">ADRESSE</div><div class="meta-val" id="m-addr">–</div></div>
+    <div class="meta-cell"><div class="meta-label">WEBSITE</div><div class="meta-val cyan" id="m-web" style="cursor:pointer">–</div></div>
+  </div>
+
+  <!-- BESCHREIBUNG -->
+  <div class="sec">
+    <div class="sec-title">ÜBER DEN CLUB</div>
+    <div class="desc-box" id="desc-box">Informationen werden geladen...</div>
+  </div>
+
+  <!-- ÖFFNUNGSZEITEN -->
+  <div class="sec">
+    <div class="sec-title">ÖFFNIGSZITTE</div>
+    <div class="oz-grid" id="oz-grid">
+      <div style="padding:16px;color:rgba(232,228,217,0.3);font-size:10px;letter-spacing:2px;text-align:center;text-transform:uppercase">LÄDT...</div>
+    </div>
+  </div>
+
+  <!-- SONAR RADAR -->
+  <div class="sec">
+    <div class="sec-title">CROWD RADAR</div>
+    <div class="radar-wrap">
+      <div class="radar-rings">
+        <div class="radar-ring"></div>
+        <div class="radar-ring"></div>
+        <div class="radar-ring"></div>
+      </div>
+      <div class="radar-sweep">
+        <div class="radar-sweep-inner"></div>
+      </div>
+      <!-- simulierte Blips -->
+      <div class="radar-blip active" style="left:65%;top:35%"></div>
+      <div class="radar-blip active" style="left:30%;top:60%;animation-delay:.8s"></div>
+      <div class="radar-blip active" style="left:70%;top:65%;animation-delay:1.4s"></div>
+      <div class="radar-blip" style="left:45%;top:25%;background:rgba(255,45,0,0.4);width:5px;height:5px"></div>
+      <div class="radar-center"></div>
+    </div>
+    <div class="radar-info">
+      <div class="radar-count">47</div>
+      <div class="radar-sub">USER AKTIV HEUTE NACHT · PHASE 5 LIVE</div>
+    </div>
+  </div>
+
+  <!-- SOUND DNA -->
+  <div class="sec">
+    <div class="sec-title">SOUND DNA</div>
+    <div class="sound-bars" id="sound-bars"></div>
+    <div class="dna-tags" id="dna-tags"></div>
+    <div style="font-size:8px;color:rgba(232,228,217,0.2);letter-spacing:2px;text-align:center;margin-top:10px;text-transform:uppercase">KI-ANALYSE BASIEREND AUF VERGANGENE EVENTS · PHASE 6</div>
+  </div>
+
+  <!-- KARTE -->
+  <div class="sec">
+    <div class="sec-title">STANDORT</div>
+    <div id="map"></div>
+    <div class="map-actions">
+      <div class="map-btn" id="map-nav-btn">🗺 ROUTE STARTE</div>
+      <div class="map-btn" onclick="window.open('https://zvv.ch','_blank')">🚇 ZVV VERBINDIG</div>
+    </div>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="sec">
+    <div class="sec-title">BEWERTIGEN</div>
+    <div class="review-summary">
+      <div>
+        <div class="review-big" id="rv-big">4.2</div>
+        <div class="review-stars">★★★★☆</div>
+        <div class="review-count" id="rv-count">47 BEWERTIGEN</div>
+      </div>
+      <div class="review-bars">
+        <div class="rbar-row"><span class="rbar-lbl">5</span><div class="rbar-track"><div class="rbar-fill" style="width:55%"></div></div></div>
+        <div class="rbar-row"><span class="rbar-lbl">4</span><div class="rbar-track"><div class="rbar-fill" style="width:28%"></div></div></div>
+        <div class="rbar-row"><span class="rbar-lbl">3</span><div class="rbar-track"><div class="rbar-fill" style="width:12%"></div></div></div>
+        <div class="rbar-row"><span class="rbar-lbl">2</span><div class="rbar-track"><div class="rbar-fill" style="width:4%"></div></div></div>
+        <div class="rbar-row"><span class="rbar-lbl">1</span><div class="rbar-track"><div class="rbar-fill" style="width:1%"></div></div></div>
+      </div>
+    </div>
+    <div class="reviews-list">
+      <div class="rv-card">
+        <div class="rv-top"><span class="rv-user">@zueri_nacht</span><span class="rv-stars">★★★★★</span></div>
+        <div class="rv-date">VOR 2 TAGE · KREIS 5</div>
+        <div class="rv-text" style="margin-top:6px">Absolut mega Abig — Sound system ist top, Crowd war super. Einer vo de beschte Clubs i Züri ohne Frag.</div>
+      </div>
+      <div class="rv-card">
+        <div class="rv-top"><span class="rv-user">@techno_lisa</span><span class="rv-stars">★★★★☆</span></div>
+        <div class="rv-date">VOR 1 WOCHE · KREIS 4</div>
+        <div class="rv-text" style="margin-top:6px">Gutes Lineup, etwas lang Schlange. Aber wenn mal drin isch es sich würklich lohnt.</div>
+      </div>
+    </div>
+    <button class="rv-add" onclick="window.location.href='login.html'">+ BEWERTUNG SCHREIBE → LOGIN NÖTIG</button>
+  </div>
+
+  <!-- KI FEATURES -->
+  <div class="ki-box">
+    <div class="ki-box-head">⚡ STADTPULS KI-FEATURES</div>
+    <div class="ki-feat-row">
+      <span class="ki-feat-ico">🎵</span>
+      <div class="ki-feat-info">
+        <div class="ki-feat-nm">Sound DNA Matching</div>
+        <div class="ki-feat-ds">KI vergleicht dis Musik-Profil mit dem Club und zeigt wie gut er zu dir passt</div>
+        <span class="ki-badge">PHASE 6</span>
+      </div>
+    </div>
+    <div class="ki-feat-row">
+      <span class="ki-feat-ico">🌅</span>
+      <div class="ki-feat-info">
+        <div class="ki-feat-nm">Afterhour Countdown</div>
+        <div class="ki-feat-ds">Live-Countdown bis zur nächste Afterhour in dim Kreis</div>
+        <span class="ki-badge">PHASE 5</span>
+      </div>
+    </div>
+    <div class="ki-feat-row">
+      <span class="ki-feat-ico">👥</span>
+      <div class="ki-feat-info">
+        <div class="ki-feat-nm">Crowd Prognose</div>
+        <div class="ki-feat-ds">KI schätzt wie voll es heute Nacht wird — basierend auf Wochentag + Events</div>
+        <span class="ki-badge">PHASE 6</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIMILAR -->
+  <div class="sec">
+    <div class="sec-title">ÄHNLICHI CLUBS</div>
+    <div class="similar-grid" id="similar-grid">
+      <div class="sim-card" onclick="">
+        <div class="sim-img">🔊</div>
+        <div class="sim-body"><div class="sim-name">WIRD GELADEN</div><div class="sim-meta">KREIS – · TECHNO</div></div>
+      </div>
+      <div class="sim-card">
+        <div class="sim-img">🎵</div>
+        <div class="sim-body"><div class="sim-name">WIRD GELADEN</div><div class="sim-meta">KREIS – · CLUB</div></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- end content -->
+
 <footer>
-  <div><div class="logo" style="margin-bottom:8px"><div class="ldot"></div>STADTPULS</div><div class="fc-desc">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich.</div><div class="fc-copy">© 2026 by raimondo* — Zürich</div></div>
-  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link" href="gastro.html">Gastro & Bars</a><a class="fc-link" href="nachtleben.html">Nachtleben</a><a class="fc-link" href="shopping.html">Shopping</a></div>
-  <div><div class="fc-title">COMMUNITY</div><a class="fc-link" href="dating.html">People & Dates</a><a class="fc-link" href="feedback.html">Feedback</a></div>
-  <div><div class="fc-title">MITMACHE</div><a class="fc-link" href="index.html?page=login">Einlogge</a><a class="fc-link" href="impressum.html">Impressum</a></div>
+  <div class="footer-bottom">
+    <div class="footer-logo"><div class="ldot"></div>STADTPULS</div>
+    <div class="footer-copy">© 2026 BY RAIMONDO* · ZÜRICH</div>
+    <div class="footer-links">
+      <a href="datenschutz.html">DATENSCHUTZ</a>
+      <a href="impressum.html">IMPRESSUM</a>
+    </div>
+  </div>
 </footer>
 
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
+// Cursor
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';});
+
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
-const SUBKAT={162:{e:'🌙',n:'NACHTLEBEN'},1414:{e:'🔊',n:'TECHNO'},1417:{e:'🎤',n:'HIP-HOP'},1423:{e:'🎸',n:'ROCK'},1426:{e:'💃',n:'LATIN'},1429:{e:'🌅',n:'AFTERHOUR'},1432:{e:'🎷',n:'JAZZ'},1435:{e:'🎉',n:'PARTY'},163:{e:'🎸',n:'LIVE MUSIC'},103:{e:'🍸',n:'BAR'},1438:{e:'🍹',n:'COCKTAILBAR'},1441:{e:'🎵',n:'MUSIC BAR'},1444:{e:'🍺',n:'PUB'},1447:{e:'🍽️',n:'RESTAURANT-BAR'}};
-const DAYS=['So','Mo','Di','Mi','Do','Fr','Sa'];
-const VIBES=['«Hüt Nacht isch genau de richtige Club für dich.»','«Kreis 4 feueret — sicher nöd hei gah.»','«Afterhour bis 8 Uhr — nur für Nachtvögel.»','«Stimmig passt — geh hüt Nacht.»','«Techno at its finest — Züri Style.»'];
 
-function isOffe(oz){if(!oz||!Array.isArray(oz))return false;const now=new Date();const h=now.getHours();const day=DAYS[now.getDay()];const s=oz.find(o=>o&&o.includes(day));if(!s)return false;const m=s.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/);if(!m)return false;return h>=parseInt(m[1])&&h<parseInt(m[3]);}
-function getVibe(sid){if([1414,1429].includes(sid))return 5;if([1435,1417,1426].includes(sid))return 4;if([1432,163,1441].includes(sid))return 3;return 2;}
+// URL PARAMS
+const params=new URLSearchParams(location.search);
+const slug=params.get('slug')||params.get('id');
 
-async function loadProfil(){
-  const p=new URLSearchParams(window.location.search);
-  const id=p.get('id'),slug=p.get('slug');
-  if(!id&&!slug){showError('Kein Club angegeben');return;}
-  try{
-    const q='locations?select=*&limit=1&aktiv=eq.true'+(id?`&id=eq.${id}`:`&slug=eq.${slug}`);
-    const r=await fetch(SU+'/rest/v1/'+q,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
-    const data=await r.json();
-    if(!data?.length){showError('Club nöd gfunde');return;}
-    renderProfil(data[0]);
-    const sid=parseInt(data[0].zt_subkategorie_id)||0;
-    const kreis=data[0].kreis||1;
-    const subkat=(data[0].subkategorie||'').toLowerCase();
-    let simData=[];
-    // 1. Gleiche zt_subkategorie_id
-    if(sid){
-      const sr1=await fetch(SU+`/rest/v1/locations?select=id,name,slug,zt_subkategorie_id,subkategorie,kreis,bild_url&aktiv=eq.true&zt_subkategorie_id=eq.${sid}&id=neq.${data[0].id}&limit=6`,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
-      simData=await sr1.json()||[];
-    }
-    // 2. Gleiche subkategorie Text
-    if(!simData.length&&subkat){
-      const sr2=await fetch(SU+`/rest/v1/locations?select=id,name,slug,zt_subkategorie_id,subkategorie,kreis,bild_url&aktiv=eq.true&subkategorie=eq.${subkat}&id=neq.${data[0].id}&limit=6`,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
-      simData=await sr2.json()||[];
-    }
-    // 3. Fallback: kategorie=nachtleben
-    if(!simData.length){
-      const sr3=await fetch(SU+`/rest/v1/locations?select=id,name,slug,zt_subkategorie_id,subkategorie,kreis,bild_url&aktiv=eq.true&kategorie=eq.nachtleben&id=neq.${data[0].id}&limit=6`,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
-      simData=await sr3.json()||[];
-    }
-    renderSimilar(simData,sid,subkat);
-  }catch(e){showError('Verbindungsfehler');}
+async function sbGet(path){
+  const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+  return r.json();
 }
 
-function renderProfil(l){
-  const sid=parseInt(l.zt_subkategorie_id)||0;
-  const sub=SUBKAT[sid]||{e:'🌙',n:'NACHTLEBEN'};
-  const offe=isOffe(l.oeffnungszeiten);
-  const vibe=getVibe(sid);
-  const isAfter=sid===1429;
-  const rating=l.rating||4.1;
+function isOffe(oz){
+  if(!oz||!Array.isArray(oz)||!oz.length)return false;
+  const now=new Date();
+  const h=now.getHours();
+  const day=['So','Mo','Di','Mi','Do','Fr','Sa'][now.getDay()];
+  const s=oz.find(o=>o&&o.includes(day));
+  if(!s)return false;
+  const m=s.match(/(\d{2}):(\d{2}):?\d*-(\d{2}):(\d{2})/);
+  if(!m)return false;
+  return h>=parseInt(m[1])&&h<parseInt(m[3]);
+}
+
+function buildOzGrid(oz){
+  const DAYS=['Mo','Di','Mi','Do','Fr','Sa','So'];
   const today=new Date().getDay();
-  const oz=l.oeffnungszeiten||[];
-
-  document.title=`${l.name} — Nachtleben Zürich | Stadtpuls`;
-
-  const ozHtml=DAYS.map((d,i)=>{
-    const s=oz.find(o=>o&&o.includes(d));
-    const m=s?s.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/):null;
-    const isToday=i===today;
-    return`<div class="oz-row${isToday?' today':''}${!m?' oz-closed':''}">
+  const todayKey=['So','Mo','Di','Mi','Do','Fr','Sa'][today];
+  return DAYS.map(d=>{
+    const s=(oz||[]).find(o=>o&&o.includes(d));
+    const m=s?s.match(/(\d{2}):(\d{2}):?\d*-(\d{2}):(\d{2})/):null;
+    const isToday=d===todayKey;
+    const nowOpen=isToday&&m&&(new Date().getHours()>=parseInt(m[1]))&&(new Date().getHours()<parseInt(m[3]));
+    return`<div class="oz-row${isToday?' today':''}">
       <div class="oz-day">${d}${isToday?' ◀':''}</div>
-      <div class="oz-time">${m?m[1]+':'+m[2]+' – '+m[3]+':'+m[4]:'GESCHLOSSEN'}</div>
-    </div>`;
-  }).join('');
-
-  const vibeDots=[1,2,3,4,5].map(v=>`<div class="vdot${v<=vibe?' on'+(v>=5?' anim':''):''}"></div>`).join('');
-
-  document.getElementById('main-content').innerHTML=`
-    <div class="hero-img-wrap">
-      ${l.bild_url?`<img class="hero-img" src="${l.bild_url}" alt="${l.name}">`:`<div style="height:280px;background:#050000;display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.1">${sub.e}</div>`}
-      <div class="offe-badge ${offe?'is-offe':'is-zu'}">
-        ${offe?'<div class="offe-dot"></div>':''}
-        <span>${offe?'JETZT OFFE':'MOMENTAN GESCHLOSSEN'}</span>
-      </div>
-    </div>
-
-    <div class="profil-head">
-      <div class="ph-left">
-        <div class="ph-badges">
-          ${l.featured?'<span class="phb volt">TOP</span>':''}
-          ${isAfter?'<span class="phb gold">🌅 AFTERHOUR</span>':''}
-          <span class="phb red">${sub.e} ${sub.n}</span>
-          <span class="phb ghost">KREIS ${l.kreis||'?'}</span>
-          ${offe?'<span class="phb offe-b"><div class="bdot"></div>OFFE</span>':''}
-        </div>
-        <div class="ph-name">${l.name}</div>
-        <div class="ph-genre">${sub.n} · KREIS ${l.kreis||'?'}</div>
-        <div class="ph-adresse">${l.adresse||''}${l.plz?' · '+l.plz+' Zürich':''}</div>
-      </div>
-      <div class="ph-right">
-        <div class="ph-rating">${rating.toFixed(1)}</div>
-        <div class="ph-stars">${'★'.repeat(Math.min(5,Math.round(rating)))}</div>
-        <div class="ph-rlabel">SCORE</div>
-      </div>
-    </div>
-
-    <div class="vibe-strip">
-      <div class="vibe-lbl">VIBE</div>
-      <div class="vibe-dots">${vibeDots}</div>
-      ${vibe>=5?'<div style="font-size:8px;color:#ff2d00;letter-spacing:1.5px;text-transform:uppercase;margin-left:8px;text-shadow:0 0 10px rgba(255,45,0,.5)">🔥 ON FIRE</div>':''}
-    </div>
-
-    <div class="main">
-      <div class="content">
-        <div class="ki-pred">
-          <div class="ki-pred-head"><span style="font-size:16px">🤖</span><span class="ki-pred-label">ZÜRI-BOT SAIT</span></div>
-          <div class="ki-pred-txt">⚡ «${VIBES[Math.floor(Math.random()*VIBES.length)]}»</div>
-        </div>
-
-        ${l.beschreibung||l.beschreibung_kurz?`
-        <div class="c-section">
-          <div class="c-title">ÜBER DE CLUB</div>
-          <div class="c-desc">${l.beschreibung||l.beschreibung_kurz}</div>
-        </div>`:''}
-
-        <div class="c-section">
-          <div class="c-title">ÖFFNIGSZITE</div>
-          <div class="oz-wrap">${ozHtml}</div>
-        </div>
-
-        <div class="c-section">
-          <div class="c-title">ÄHNLICHI CLUBS</div>
-          <div class="ae-grid" id="ae-grid">
-            <div style="grid-column:1/-1;padding:20px;text-align:center;font-size:9px;color:rgba(232,228,217,.12)">LÄDT...</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="sidebar">
-        <!-- TICKET BTN — nur wenn ticketcorner_url oder event vorhanden -->
-        ${l.ticketcorner_url?`
-        <a class="btn-ticket" href="${l.ticketcorner_url}" target="_blank">
-          🎫 TICKET KAUFE → TICKETCORNER
-        </a>`:''}
-
-        <!-- TISCHRESERVIERUNG — nur wenn reservierbar=true -->
-        ${l.reservierbar?`
-        <a class="btn-ticket" href="https://www.opentable.com/s/?term=${encodeURIComponent(l.name)}+Zürich" target="_blank" style="background:#c8ff00;color:#000;box-shadow:0 0 20px rgba(200,255,0,.2)">
-          🍽️ TISCH RESERVIERE →
-        </a>`:''}
-
-        <a class="btn-ghost" href="${l.website||'#'}" target="_blank">🌐 WEBSITE ÖFFNE →</a>
-        <a class="btn-ghost" href="nachtleben.html">← ZURÜCK ZUM NACHTLEBEN</a>
-
-        <div class="info-card">
-          <div class="ic-title">INFOS</div>
-          ${l.adresse?`<div class="ir"><div class="ir-l">ADRESSE</div><div class="ir-r">${l.adresse}</div></div>`:''}
-          <div class="ir"><div class="ir-l">KREIS</div><div class="ir-r red">Kreis ${l.kreis||'?'}</div></div>
-          <div class="ir"><div class="ir-l">GENRE</div><div class="ir-r">${sub.e} ${sub.n}</div></div>
-          <div class="ir"><div class="ir-l">STATUS</div><div class="ir-r ${offe?'volt':''}">${offe?'● JETZT OFFE':'MOMENTAN ZU'}</div></div>
-          ${isAfter?`<div class="ir"><div class="ir-l">AFTERHOUR</div><div class="ir-r" style="color:#ffd700">🌅 JA</div></div>`:''}
-          <div class="ir"><div class="ir-l">RATING</div><div class="ir-r red">${rating.toFixed(1)} ★</div></div>
-          ${l.website?`<div class="ir"><div class="ir-l">WEBSITE</div><div class="ir-r"><a href="${l.website}" target="_blank">ÖFFNE →</a></div></div>`:''}
-          ${l.telefon?`<div class="ir"><div class="ir-l">TEL</div><div class="ir-r">${l.telefon}</div></div>`:''}
-        </div>
-
-        <div class="action-grid">
-          <div class="act-btn">🗺️ KARTE</div>
-          <div class="act-btn">❤️ SPEICHERE</div>
-          <div class="act-btn">⭐ BEWERTE</div>
-          <div class="act-btn">📤 TEILE</div>
-        </div>
-      </div>
-    </div>`;
-}
-
-function renderSimilar(locs,sid,subkat){
-  const g=document.getElementById('ae-grid');if(!g)return;
-  // Sub-Info aus ID oder Text
-  const sub=SUBKAT[sid]||(subkat?{e:'🌙',n:subkat.toUpperCase()}:{e:'🌙',n:'NACHTLEBEN'});
-  if(!locs?.length){g.innerHTML='<div style="grid-column:1/-1;padding:20px;text-align:center;font-size:9px;color:rgba(232,228,217,.12)">NÜÜT GFUNDE</div>';return;}
-  g.innerHTML=locs.slice(0,6).map(l=>{
-    const lsub=SUBKAT[parseInt(l.zt_subkategorie_id)]||(l.subkategorie?{e:'🌙',n:l.subkategorie.toUpperCase()}:{e:'🌙',n:'NACHTLEBEN'});
-    return`<div class="ae-card" onclick="window.location='nachtleben-profil.html?id=${l.id}'">
-      ${l.bild_url?`<img class="ae-img" src="${l.bild_url}" loading="lazy" alt="${l.name}">`:`<div class="ae-ph">${lsub.e}</div>`}
-      <div class="ae-name">${l.name}</div>
-      <div class="ae-sub">${lsub.n}</div>
-      <div class="ae-kr">K${l.kreis||'?'}</div>
+      ${m?`<div class="oz-time">${m[1]}:${m[2]} – ${m[3]}:${m[4]}</div>`:`<div class="oz-time oz-closed">GESCHLOSSEN</div>`}
+      ${nowOpen?'<div class="oz-now">JETZT OFFE</div>':''}
     </div>`;
   }).join('');
 }
 
-function showError(msg){
-  document.getElementById('main-content').innerHTML=`<div class="load-wrap"><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:rgba(255,45,0,.15);text-transform:uppercase;margin-bottom:10px">FEHLER</div><div style="font-size:10px;color:rgba(232,228,217,.2)">${msg}</div><a href="nachtleben.html" style="display:inline-block;margin-top:20px;font-size:9px;letter-spacing:2px;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:10px 18px;text-decoration:none">← NACHTLEBEN</a></div>`;
+function getSkClass(loc){
+  const sub=(loc.subkategorie||'').toLowerCase();
+  const id=loc.zt_subkategorie_id;
+  if(id==1414||sub.includes('techno'))return{cls:'techno',lbl:'TECHNO'};
+  if(id==1432||sub.includes('jazz'))return{cls:'jazz',lbl:'JAZZ'};
+  if(id==1429||sub.includes('afterhour'))return{cls:'afterhour',lbl:'AFTERHOUR'};
+  if(sub.includes('bar'))return{cls:'bar',lbl:'BAR'};
+  if(sub.includes('club'))return{cls:'club',lbl:'CLUB'};
+  return{cls:'default',lbl:'NACHTLEBE'};
 }
 
-const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
-document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';});
+// SOUND DNA
+function buildSoundDNA(sk){
+  const bars=document.getElementById('sound-bars');
+  const tags=document.getElementById('dna-tags');
+  const colors=['#9333ea','#ff2d00','#c8ff00','#00f5ff','#ffd700','#ec4899','#9333ea','#ff2d00','#c8ff00','#00f5ff','#ffd700','#ec4899'];
+  let barsHTML='';
+  for(let i=0;i<16;i++){
+    const min=15+Math.random()*20;
+    const max=40+Math.random()*60;
+    const dur=0.8+Math.random()*1.2;
+    barsHTML+=`<div class="sound-bar" style="background:${colors[i%colors.length]};opacity:.8;--min:${min}%;--max:${max}%;--dur:${dur}s"></div>`;
+  }
+  bars.innerHTML=barsHTML;
+  const genreMap={techno:['TECHNO','INDUSTRIAL','DARK'],jazz:['JAZZ','BLUES','SOUL'],club:['HOUSE','TECHNO','DANCE'],bar:['LIVE','INDIE','JAZZ'],afterhour:['AFTERHOUR','DEEP','AMBIENT']};
+  const genre=(sk.cls in genreMap)?genreMap[sk.cls]:['ELECTRONIC','LIVE','DANCE'];
+  tags.innerHTML=genre.map(g=>`<span class="dna-tag t">${g}</span>`).join('');
+}
 
-const TI=['ZÜRI SCHLAFT NÖD','TECHNO · HOUSE · JAZZ','LANGSTRASSE FEUERT','KREIS 4','4. JUNI 2026'];
-const TIG=['KOMPLEX 457','ROTE FABRIK','AFTERHOUR ZÜRICH','BY RAIMONDO*','STADTPULS'];
-['ta','tb'].forEach((id,i)=>{const t=document.getElementById(id);if(!t)return;const items=i===0?TI:TIG;t.innerHTML=[...items,...items].map(x=>`<span class="ti"><b>●</b> ${x}</span>`).join('');});
+// MAP
+let mapInited=false;
+function initMap(lat,lng,name){
+  if(mapInited)return;
+  mapInited=true;
+  const map=L.map('map',{zoomControl:false,scrollWheelZoom:false}).setView([lat||47.3769,lng||8.5417],16);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'© CartoDB',maxZoom:19}).addTo(map);
+  const icon=L.divIcon({className:'',html:`<div style="width:14px;height:14px;background:#ff2d00;border-radius:50%;border:2px solid #fff;box-shadow:0 0 12px rgba(255,45,0,0.8)"></div>`,iconSize:[14,14],iconAnchor:[7,7]});
+  L.marker([lat||47.3769,lng||8.5417],{icon}).addTo(map).bindPopup(`<b>${name}</b>`);
+  document.getElementById('map-nav-btn').onclick=()=>window.open(`https://maps.google.com/?q=${lat},${lng}`,'_blank');
+}
 
-loadProfil();
+// LOAD
+async function load(){
+  if(!slug){
+    document.getElementById('hero-name').textContent='LOCATION NOT FOUND';
+    return;
+  }
+
+  // Versuche via slug oder id
+  let data;
+  if(isNaN(slug)){
+    data=await sbGet(`locations?slug=eq.${slug}&kategorie=eq.nachtleben&select=*&limit=1`);
+  }else{
+    data=await sbGet(`locations?id=eq.${slug}&select=*&limit=1`);
+  }
+  if(!Array.isArray(data)||!data.length){
+    document.getElementById('hero-name').textContent='LOCATION NOT FOUND';
+    return;
+  }
+  const l=data[0];
+  const sk=getSkClass(l);
+  const offe=isOffe(l.oeffnungszeiten);
+
+  // TITLE
+  document.title=`Stadtpuls — ${l.name}`;
+
+  // HERO
+  if(l.bild_url){
+    const img=document.createElement('img');
+    img.src=l.bild_url;img.alt=l.name;
+    img.style='width:100%;height:100%;object-fit:cover;filter:brightness(.45)';
+    document.getElementById('hero-placeholder').replaceWith(img);
+  }
+  document.getElementById('hero-name').textContent=l.name;
+  document.getElementById('hero-addr').innerHTML=`<span class="hero-addr-dot"></span><span>${l.adresse||'Zürich'}</span><span class="hero-addr-dot"></span><span>KREIS ${l.kreis||'–'}</span>`;
+  document.getElementById('hero-sk').innerHTML=`<span class="sk-pill ${sk.cls}">${sk.lbl}</span>${l.featured?'<span class="sk-pill default">⚡ TOP PICK</span>':''}`;
+
+  // OFFE BADGE
+  const pill=document.getElementById('offe-pill');
+  pill.className=`offe-pill ${offe?'open':'closed'}`;
+  document.getElementById('offe-txt').textContent=offe?'JETZT OFFE':'GESCHLOSSEN';
+
+  // RATING
+  document.getElementById('hero-rating').textContent=l.rating?parseFloat(l.rating).toFixed(1):'–';
+  document.getElementById('rv-big').textContent=l.rating?parseFloat(l.rating).toFixed(1):'–';
+  document.getElementById('rv-count').textContent=(l.rating_count||'0')+' BEWERTIGEN';
+
+  // META
+  document.getElementById('m-kreis').textContent=l.kreis?'KREIS '+l.kreis:'–';
+  document.getElementById('m-kat').textContent=sk.lbl;
+  document.getElementById('m-addr').textContent=l.adresse||'–';
+  const webEl=document.getElementById('m-web');
+  if(l.website){webEl.textContent='WEBSITE ÖFFNE →';webEl.onclick=()=>window.open(l.website,'_blank');}
+  else{webEl.textContent='–';}
+
+  // BESCHREIBUNG
+  document.getElementById('desc-box').textContent=l.beschreibung||l.beschreibung_kurz||'Kei Beschreibig vorhande.';
+
+  // OZ
+  document.getElementById('oz-grid').innerHTML=l.oeffnungszeiten&&l.oeffnungszeiten.length?buildOzGrid(l.oeffnungszeiten):`<div style="padding:16px;color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:2px;text-align:center;text-transform:uppercase">KEINE ÖFFNUNGSZEITEN VORHANDEN</div>`;
+
+  // TICKET BTN
+  const ticketBtn=document.getElementById('act-ticket');
+  if(l.website){ticketBtn.onclick=()=>window.open(l.website,'_blank');}
+
+  // SOUND DNA
+  buildSoundDNA(sk);
+
+  // MAP
+  if(l.lat&&l.lng){
+    initMap(l.lat,l.lng,l.name);
+  }else{
+    // Fallback: Kreis-Zentrum
+    const kreisCoords={1:[47.3762,8.5407],2:[47.3574,8.5374],3:[47.3728,8.5148],4:[47.3779,8.5285],5:[47.3879,8.5158],6:[47.3836,8.5551],7:[47.3694,8.5713],8:[47.3552,8.5567],9:[47.3818,8.4862],10:[47.4011,8.5113],11:[47.4126,8.5459],12:[47.4180,8.5751]};
+    const c=kreisCoords[l.kreis]||[47.3769,8.5417];
+    initMap(c[0],c[1],l.name);
+  }
+
+  // SIMILAR
+  loadSimilar(l);
+}
+
+async function loadSimilar(loc){
+  const similar=await sbGet(`locations?kategorie=eq.nachtleben&aktiv=eq.true&zt_subkategorie_id=eq.${loc.zt_subkategorie_id||162}&id=neq.${loc.id}&select=id,name,slug,subkategorie,kreis,bild_url&limit=4`);
+  if(!Array.isArray(similar)||!similar.length)return;
+  document.getElementById('similar-grid').innerHTML=similar.slice(0,4).map(s=>`
+    <div class="sim-card" onclick="window.location.href='nachtleben-profil.html?id=${s.id}'">
+      ${s.bild_url?`<img class="sim-img" src="${s.bild_url}" alt="${s.name}" style="height:70px;object-fit:cover;width:100%">`:`<div class="sim-img">🌙</div>`}
+      <div class="sim-body">
+        <div class="sim-name">${s.name}</div>
+        <div class="sim-meta">KREIS ${s.kreis||'–'} · ${(s.subkategorie||'NACHTLEBE').toUpperCase()}</div>
+      </div>
+    </div>`).join('');
+}
+
+// SHARE
+document.getElementById('act-share').onclick=()=>{
+  if(navigator.share)navigator.share({title:document.title,url:location.href});
+  else{navigator.clipboard.writeText(location.href);alert('Link kopiert!');}
+};
+
+load();
 </script>
 </body>
 </html>
