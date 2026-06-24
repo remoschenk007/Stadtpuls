@@ -191,7 +191,7 @@ textarea.inp{resize:none;min-height:80px;line-height:1.6}
 /* STARFIELD BG */
 
 /* UNIVERSE CONTAINER */
-.universe-wrap{position:relative;width:100%;height:580px;overflow:hidden;border-bottom:1px solid rgba(255,45,0,0.15);background:radial-gradient(ellipse at 50% 40%,rgba(255,45,0,0.13) 0%,rgba(147,51,234,0.08) 35%,#04040a 78%)}
+.universe-wrap{position:relative;width:100%;height:680px;overflow:hidden;border-bottom:1px solid rgba(255,45,0,0.15);background:radial-gradient(ellipse at 50% 40%,rgba(255,45,0,0.13) 0%,rgba(147,51,234,0.08) 35%,#04040a 78%)}
 @media(max-width:600px){.universe-wrap{height:720px}}
 @media(max-width:380px){.universe-wrap{height:760px}}
 #starfield{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
@@ -558,20 +558,38 @@ function getRank(pts){
 }
 
 async function loadDashboard(){
-  const {data:{user}}=await sb.auth.getUser();
-  if(!user){window.location.href='login.html';return;}
+  const {data:{user},error:authError}=await sb.auth.getUser();
+  if(authError||!user){window.location.href='login.html';return;}
   CURRENT_USER=user;
 
   const {data:profile,error}=await sb.from('users').select('*').eq('auth_id',user.id).single();
-  if(error||!profile){
-    const {data:newProfile}=await sb.from('users').insert({
+
+  if(profile){
+    PROFILE=profile;
+  }else{
+    // Kein Profil gefunden — versuchen wir eins anzulegen.
+    // Wichtig: falls das auch fehlschlägt (z.B. nickname bereits vergeben durch
+    // einen früheren, unvollständigen Versuch), brechen wir NICHT stillschweigend ab.
+    const {data:newProfile,error:insertError}=await sb.from('users').insert({
       auth_id:user.id,
-      nickname:user.user_metadata?.nickname||'zuerifuchs',
+      nickname:user.user_metadata?.nickname||('zueri_'+user.id.slice(0,6)),
       role:'user',aktiv:true
     }).select().single();
-    PROFILE=newProfile;
-  }else{
-    PROFILE=profile;
+
+    if(newProfile){
+      PROFILE=newProfile;
+    }else{
+      // Echter Fehlerfall — zeig dem User eine ehrliche Meldung statt eines stillen Crashs
+      console.error('Profil konnte nicht geladen oder erstellt werden:', error, insertError);
+      document.querySelector('.page').innerHTML=`
+        <div style="padding:60px 24px;text-align:center">
+          <div style="font-size:40px;margin-bottom:16px">⚠️</div>
+          <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;color:#ff2d00;text-transform:uppercase;margin-bottom:10px">PROFIL KONNT NÖD GLADE WÄRDE</div>
+          <div style="font-size:11px;color:rgba(232,228,217,0.5);line-height:1.7;margin-bottom:20px">Da isch öppis schiefgloffe bim Lade vo dim Profil.<br>Versuech's nomal oder kontaktier de Support.</div>
+          <button onclick="location.reload()" style="background:#ff2d00;color:#fff;border:none;padding:13px 28px;border-radius:6px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:2px;text-transform:uppercase;cursor:pointer">NOMAL VERSUECHE</button>
+        </div>`;
+      return;
+    }
   }
 
   renderProfile();
@@ -733,56 +751,56 @@ async function buildUniverse(p){
   UNI_CATEGORIES=[
     {id:'gastro',ic:'🍜',name:'GASTRO',meta:bookmarksGastro+' BOOKMARKS',color:'#ff2d00',glow:'rgba(255,45,0,0.5)',
      size:Math.min(130,80+bookmarksGastro*3), sizeM:Math.min(90,60+bookmarksGastro*2),
-     pos:{top:'14%',left:'15%'}, posM:{top:'16%',left:'6%'},
+     pos:{top:'18%',left:'12%'}, posM:{top:'16%',left:'6%'},
      drift:'driftA',dur:'9s',
      stats:[[gastroCount||'903','LOKALE'],[bookmarksGastro,'GSPEICHERET'],['—','Ø RATING']],link:'gastro.html',pulseLive:false},
 
     {id:'nachtleben',ic:'🌙',name:'NACHTLEBE',meta:p.vibe?vibeEmoji(p.vibe)+' '+p.vibe:'ENTDECKE',color:'#9333ea',glow:'rgba(147,51,234,0.55)',
      size:p.vibe==='NACHTMENSCH'?128:88, sizeM:p.vibe==='NACHTMENSCH'?92:64,
-     pos:{top:'6%',left:'56%'}, posM:{top:'17%',left:'52%'},
+     pos:{top:'14%',left:'58%'}, posM:{top:'17%',left:'52%'},
      drift:'driftB',dur:'11s',
      stats:[[nachtlebenCount||'146','LOKALE'],['—','JETZT OFFE'],['0','BOOKMARKS']],link:'nachtleben.html',
      pulseLive:isPulseKreis, badge:isPulseKreis?('KREIS '+p.kreis+' PULSED'):null},
 
     {id:'ki',ic:'✨',name:'ZÜRI-BOT',meta:'FRAG MI',color:'#00f5ff',glow:'rgba(0,245,255,0.6)',
      size:74, sizeM:58,
-     pos:{top:'2%',left:'84%'}, posM:{top:'15%',left:'80%'},
+     pos:{top:'14%',left:'86%'}, posM:{top:'15%',left:'80%'},
      drift:'driftC',dur:'7s',
      stats:[['BALD','PHASE 6'],['KI','ASSISTENT'],['—','—']],link:'#',pulseLive:false,isKi:true},
 
     {id:'events',ic:'☄️',name:'EVENTS',meta:(eventsToday||0)+' LIVE',color:'#ffd700',glow:'rgba(255,215,0,0.45)',
      size:84, sizeM:62,
-     pos:{top:'32%',left:'84%'}, posM:{top:'35%',left:'70%'},
+     pos:{top:'36%',left:'86%'}, posM:{top:'35%',left:'70%'},
      drift:'driftC',dur:'8s',
      stats:[[eventsToday||'2552','EVENTS'],['—','HÜT'],['—','POP-UPS']],link:'events.html',pulseLive:false},
 
     {id:'dates',ic:'❤️',name:'PEOPLE & DATES',meta:'VOTING PHASE',color:'#ec4899',glow:'rgba(236,72,153,0.5)',
      size:p.vibe==='DATESMENSCH'?110:88, sizeM:p.vibe==='DATESMENSCH'?80:64,
-     pos:{top:'56%',left:'78%'}, posM:{top:'52%',left:'62%'},
+     pos:{top:'58%',left:'80%'}, posM:{top:'52%',left:'62%'},
      drift:'driftA',dur:'10s',
      stats:[['—','PROFIL'],['—','KREIS '+(p.kreis||'?')],['—','MATCHES']],link:'dating.html',pulseLive:false},
 
     {id:'shopping',ic:'🛍️',name:'SHOPPING',meta:'0 BOOKMARKS',color:'#00f5ff',glow:'rgba(0,245,255,0.4)',
      size:76, sizeM:60,
-     pos:{top:'72%',left:'50%'}, posM:{top:'70%',left:'8%'},
+     pos:{top:'74%',left:'48%'}, posM:{top:'70%',left:'8%'},
      drift:'driftB',dur:'12s',
      stats:[['214','SHOPS'],['0','GSPEICHERET'],['—','IM SALE']],link:'shopping.html',pulseLive:false},
 
     {id:'news',ic:'📰',name:'NEWS & STORIES',meta:'0 BEITRÄG',color:'#c8ff00',glow:'rgba(200,255,0,0.4)',
      size:68, sizeM:56,
-     pos:{top:'70%',left:'12%'}, posM:{top:'72%',left:'60%'},
+     pos:{top:'72%',left:'10%'}, posM:{top:'72%',left:'60%'},
      drift:'driftC',dur:'9.5s',
      stats:[['—','ARTIKEL'],['0','DIN BEITRÄG'],['—','HÜT NEU']],link:'#',pulseLive:false},
 
     {id:'markt',ic:'🛒',name:'MARKTPLATZ',meta:'0 INSERAT',color:'#ff6b00',glow:'rgba(255,107,0,0.35)',
      size:54, sizeM:48,
-     pos:{top:'42%',left:'4%'}, posM:{top:'28%',left:'20%'},
+     pos:{top:'44%',left:'4%'}, posM:{top:'28%',left:'20%'},
      drift:'driftA',dur:'13s',
      stats:[[marktCount||'—','INSERAT'],['0','DIS INSERAT'],['—','VERKAUFT']],link:'#',pulseLive:false},
 
     {id:'gps',ic:'📍',name:'GPS',meta:'PHASE 5',color:'#666666',glow:'rgba(120,120,120,0.25)',
      size:50, sizeM:44,
-     pos:{top:'62%',left:'30%'}, posM:{top:'46%',left:'30%'},
+     pos:{top:'60%',left:'28%'}, posM:{top:'46%',left:'30%'},
      drift:'driftB',dur:'14s',
      stats:[['⏳','PHASE 5'],['200M','RADIUS GEPLANT'],['—','—']],link:'#',pulseLive:false,isComingSoon:true},
   ];
@@ -795,9 +813,10 @@ async function buildUniverse(p){
 async function sbCount(path){
   try{
     const r=await fetch(SU+'/rest/v1/'+path+'&select=id',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact','Range':'0-0'}});
+    if(!r.ok)return 0; // Tabelle/Spalte existiert evtl. noch nicht — kein Crash, einfach 0 zeigen
     const range=r.headers.get('content-range');
-    return range?parseInt(range.split('/')[1]):null;
-  }catch(e){return null;}
+    return range?parseInt(range.split('/')[1]):0;
+  }catch(e){return 0;}
 }
 
 function renderUniCenter(p){
