@@ -10,6 +10,7 @@
 html,body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100%;cursor:none;overflow-x:hidden}
 #dot{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
 #ring{position:fixed;width:30px;height:30px;border:1px solid rgba(255,45,0,0.55);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .07s,top .07s}
+@media(hover:none){#dot,#ring{display:none}body{cursor:auto}}
 .scan{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,45,0,0.01) 3px,rgba(255,45,0,0.01) 4px);pointer-events:none;z-index:3}
 .gridl{position:fixed;inset:0;background-image:linear-gradient(rgba(255,45,0,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,45,0,0.025) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:2}
 .cn{position:fixed;width:18px;height:18px;border-color:rgba(255,45,0,0.3);border-style:solid;z-index:20;pointer-events:none}
@@ -18,7 +19,6 @@ html,body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-h
 .bl{bottom:12px;left:12px;border-width:0 0 2px 2px}
 .br{bottom:12px;right:12px;border-width:0 2px 2px 0}
 
-/* NAV */
 .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid rgba(255,45,0,0.1);background:rgba(4,4,10,0.96);backdrop-filter:blur(14px)}
 .logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:4px;font-size:19px;display:flex;align-items:center;gap:7px;color:#e8e4d9;text-decoration:none}
 .ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
@@ -30,32 +30,27 @@ html,body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-h
 .nav-out:hover{color:#ff2d00}
 
 .page{padding-top:57px;position:relative;z-index:10}
-
-/* TYPO */
 .eye{font-size:8px;letter-spacing:5px;color:#ff2d00;text-transform:uppercase;margin-bottom:4px}
 .H{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;text-transform:uppercase;color:#e8e4d9;line-height:.88}
 .r{color:#ff2d00}.v{color:#c8ff00}.p{color:#9333ea}.cy{color:#00f5ff}.pk{color:#ec4899}
 
-/* NOTIF */
-.notif{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#ff2d00;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:3px;z-index:200;box-shadow:0 4px 30px rgba(255,45,0,0.4);opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
+.notif{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#ff2d00;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:6px;z-index:200;box-shadow:0 8px 30px rgba(255,45,0,0.4);opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
 .notif.show{opacity:1}
 
-/* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(4,4,10,0.9);backdrop-filter:blur(8px);z-index:100;display:none;align-items:flex-end;justify-content:center}
 .modal-bg.open{display:flex;animation:mfade .3s}
 @keyframes mfade{from{opacity:0}to{opacity:1}}
-.modal{background:#04040a;border:1px solid rgba(255,45,0,0.18);border-radius:8px 8px 0 0;width:100%;max-width:560px;padding:24px;animation:mup .35s cubic-bezier(.16,1,.3,1)}
+.modal{background:#0a0005;border:1px solid rgba(255,45,0,0.18);border-radius:14px 14px 0 0;width:100%;max-width:560px;padding:24px;animation:mup .35s cubic-bezier(.16,1,.3,1)}
 @keyframes mup{from{transform:translateY(60px)}to{transform:none}}
 .modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
-.modal-close{color:rgba(232,228,217,0.3);cursor:pointer;font-size:18px;line-height:1;transition:color .2s}
+.modal-close{color:rgba(232,228,217,0.3);cursor:pointer;font-size:18px;line-height:1;transition:color .2s;background:none;border:none}
 .modal-close:hover{color:#ff2d00}
 
-/* SECTIONS */
 .sec{border-bottom:1px solid rgba(255,45,0,0.07);padding:26px 22px}
 .sec:last-child{border-bottom:none;padding-bottom:60px}
 .sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:18px}
 .sec-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:30px;text-transform:uppercase;color:#e8e4d9;line-height:.9}
-.sec-act{font-size:8px;letter-spacing:2px;color:rgba(255,45,0,0.45);cursor:pointer;text-transform:uppercase;transition:color .2s;white-space:nowrap;margin-left:12px}
+.sec-act{font-size:8px;letter-spacing:2px;color:rgba(255,45,0,0.45);cursor:pointer;text-transform:uppercase;transition:color .2s;white-space:nowrap;margin-left:12px;background:none;border:none}
 .sec-act:hover{color:#ff2d00}
 
 /* HERO */
@@ -80,16 +75,16 @@ html,body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-h
 .hbdg.v{background:rgba(200,255,0,0.06);color:#c8ff00;border:1px solid rgba(200,255,0,0.18)}
 .hbdg.p{background:rgba(147,51,234,0.09);color:#9333ea;border:1px solid rgba(147,51,234,0.22)}
 .hbdg.cy{background:rgba(0,245,255,0.06);color:#00f5ff;border:1px solid rgba(0,245,255,0.18)}
+.hbdg.gold{background:rgba(255,215,0,0.08);color:#ffd700;border:1px solid rgba(255,215,0,0.2)}
 
-/* SCORE */
-.score-box{background:rgba(255,45,0,0.03);border:1px solid rgba(255,45,0,0.1);border-radius:4px;padding:14px;margin-bottom:16px}
+.score-box{background:rgba(255,45,0,0.03);border:1px solid rgba(255,45,0,0.1);border-radius:10px;padding:14px;margin-bottom:16px}
 .score-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
 .score-lbl{font-size:7px;letter-spacing:4px;color:rgba(232,228,217,0.25);text-transform:uppercase}
 .score-val{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:38px;color:#ff2d00;line-height:1}
 .score-max{font-size:10px;color:rgba(232,228,217,0.18)}
 .score-rank{font-size:7px;letter-spacing:3px;color:rgba(232,228,217,0.18);text-transform:uppercase;margin-bottom:8px}
-.sbar{height:2px;background:rgba(255,255,255,0.06);border-radius:1px;margin-bottom:10px;overflow:hidden}
-.sbar-fill{height:100%;background:linear-gradient(90deg,#ff2d00,#c8ff00);border-radius:1px;transition:width 1.2s cubic-bezier(.16,1,.3,1)}
+.sbar{height:3px;background:rgba(255,255,255,0.06);border-radius:2px;margin-bottom:10px;overflow:hidden}
+.sbar-fill{height:100%;background:linear-gradient(90deg,#ff2d00,#c8ff00);border-radius:2px;transition:width 1.2s cubic-bezier(.16,1,.3,1)}
 .tasks{display:flex;flex-direction:column;gap:5px}
 .task{display:flex;align-items:center;gap:8px;font-size:8px;color:rgba(232,228,217,0.28);letter-spacing:.5px;cursor:pointer;transition:color .2s;text-transform:uppercase}
 .task:hover{color:rgba(232,228,217,0.6)}
@@ -99,13 +94,11 @@ html,body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-h
 .tpts{margin-left:auto;color:rgba(255,45,0,0.4);font-size:7px;letter-spacing:1px}
 .task.done .tpts{color:rgba(200,255,0,0.35)}
 
-/* STATS */
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,45,0,0.08)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,45,0,0.08);border-radius:8px;overflow:hidden}
 .stat{background:#04040a;padding:12px 10px;text-align:center}
 .stn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:#e8e4d9;line-height:1;margin-bottom:2px}
 .stl{font-size:6px;letter-spacing:2px;color:rgba(232,228,217,0.22);text-transform:uppercase}
 
-/* INFO ROWS */
 .ir{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.035);cursor:pointer;transition:all .2s}
 .ir:last-child{border-bottom:none}
 .ir:hover{padding-left:5px}
@@ -115,40 +108,32 @@ html,body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-h
 .ira{color:rgba(255,45,0,0.25);font-size:9px}
 .ire{color:rgba(255,45,0,0.35);font-size:9px;letter-spacing:1px}
 
-/* INPUTS */
-.inp{width:100%;background:rgba(255,255,255,0.02);border:1px solid rgba(255,45,0,0.12);border-radius:3px;color:#e8e4d9;padding:12px 13px;font-family:'DM Mono',monospace;font-size:12px;outline:none;margin-bottom:7px;transition:all .2s}
+.inp{width:100%;background:rgba(255,255,255,0.02);border:1px solid rgba(255,45,0,0.12);border-radius:6px;color:#e8e4d9;padding:12px 13px;font-family:'DM Mono',monospace;font-size:12px;outline:none;margin-bottom:7px;transition:all .2s}
 .inp:focus{border-color:#ff2d00;background:rgba(255,45,0,0.05)}
 .inp::placeholder{color:rgba(232,228,217,0.13)}
 textarea.inp{resize:none;min-height:80px;line-height:1.6}
 
-/* CHIPS */
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
 .chip{padding:7px 13px;border:1px solid rgba(255,45,0,0.14);border-radius:100px;color:rgba(232,228,217,0.34);font-size:9px;letter-spacing:1.5px;cursor:pointer;transition:all .2s;text-transform:uppercase}
 .chip:hover{border-color:#ff2d00;color:#e8e4d9}
 .chip.on{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,0.04);box-shadow:0 0 10px rgba(200,255,0,0.1)}
 
-/* TABS */
-.tabs{display:flex;border:1px solid rgba(255,45,0,0.14);border-radius:3px;overflow:hidden;margin-bottom:14px}
+.tabs{display:flex;border:1px solid rgba(255,45,0,0.14);border-radius:8px;overflow:hidden;margin-bottom:14px}
 .tab{flex:1;padding:9px 5px;font-size:7px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-align:center;color:rgba(232,228,217,0.26);transition:all .22s;background:transparent;border:none;font-family:'DM Mono',monospace}
 .tab.on{background:rgba(255,45,0,0.1);color:#ff2d00}
 
-/* BUTTONS */
-.BTN{width:100%;border:none;border-radius:3px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;letter-spacing:3px;cursor:pointer;text-transform:uppercase;transition:all .18s}
-.BTN.red{background:#ff2d00;color:#e8e4d9;box-shadow:0 4px 20px rgba(255,45,0,0.18)}
-.BTN.red:hover{box-shadow:0 4px 40px rgba(255,45,0,0.42);transform:translateY(-1px)}
-.BTN.volt{background:#c8ff00;color:#04040a}
-.BTN.volt:hover{box-shadow:0 4px 30px rgba(200,255,0,0.28);transform:translateY(-1px)}
+.BTN{width:100%;border:none;border-radius:8px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;letter-spacing:3px;cursor:pointer;text-transform:uppercase;transition:all .22s}
+.BTN.red{background:linear-gradient(135deg,#ff2d00,#e02800);color:#fff;box-shadow:0 6px 22px rgba(255,45,0,0.22)}
+.BTN.red:hover{box-shadow:0 10px 34px rgba(255,45,0,0.4);transform:translateY(-1px)}
+.BTN.volt{background:linear-gradient(135deg,#c8ff00,#a8e000);color:#04040a}
+.BTN.volt:hover{box-shadow:0 10px 30px rgba(200,255,0,0.3);transform:translateY(-1px)}
 .BTN.ghost{background:transparent;border:1px solid rgba(255,255,255,0.09);color:rgba(232,228,217,0.3);font-size:11px;padding:10px}
 .BTN.ghost:hover{border-color:rgba(255,255,255,0.22);color:rgba(232,228,217,0.6)}
-.BTN.lila{background:rgba(147,51,234,0.12);border:1px solid rgba(147,51,234,0.3);color:#9333ea;font-size:14px;padding:12px}
-.BTN.lila:hover{background:rgba(147,51,234,0.2)}
 
-/* EMPTY STATE */
 .empty{text-align:center;padding:20px 0}
 .empty-big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:38px;color:rgba(255,45,0,0.07);text-transform:uppercase;margin-bottom:5px}
 .empty-txt{font-size:8px;color:rgba(232,228,217,0.18);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
 
-/* TOGGLE */
 .tog-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
 .tog-row:last-child{border-bottom:none}
 .tog-lbl{font-size:11px;color:rgba(232,228,217,0.6);margin-bottom:2px}
@@ -158,64 +143,132 @@ textarea.inp{resize:none;min-height:80px;line-height:1.6}
 .tog::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:rgba(232,228,217,0.25);transition:all .25s}
 .tog.on::after{left:20px;background:#ff2d00;box-shadow:0 0 6px rgba(255,45,0,0.6)}
 
-/* STATUS BADGES */
 .status{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:100px;font-size:7px;letter-spacing:2px;text-transform:uppercase}
 .status.live{background:rgba(200,255,0,0.07);color:#c8ff00;border:1px solid rgba(200,255,0,0.2)}
 .status.pending{background:rgba(255,215,0,0.07);color:#ffd700;border:1px solid rgba(255,215,0,0.2)}
 .status.rejected{background:rgba(255,45,0,0.07);color:#ff2d00;border:1px solid rgba(255,45,0,0.2)}
-.status.queue{background:rgba(0,245,255,0.06);color:#00f5ff;border:1px solid rgba(0,245,255,0.18)}
 
-/* POST / INSERAT CARD */
-.p-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,45,0,0.09);border-radius:4px;padding:14px;margin-bottom:8px;cursor:pointer;transition:all .2s}
-.p-card:hover{border-color:rgba(255,45,0,0.25);background:rgba(255,45,0,0.03)}
-.p-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px}
-.p-card-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;line-height:1;flex:1;margin-right:10px}
-.p-card-meta{font-size:7px;color:rgba(232,228,217,0.22);letter-spacing:1px;text-transform:uppercase;margin-top:4px}
-.p-ki-reason{font-size:8px;color:rgba(255,45,0,0.5);letter-spacing:1px;margin-top:6px;padding:6px 10px;background:rgba(255,45,0,0.04);border-radius:2px;border-left:2px solid rgba(255,45,0,0.3)}
-
-/* VERWARNUNG */
-.vw-box{background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.2);border-radius:4px;padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:10px}
-.vw-icon{font-size:20px}
-.vw-txt{font-size:9px;color:rgba(255,215,0,0.7);letter-spacing:1px;text-transform:uppercase;line-height:1.6}
-
-/* MARKTPLATZ */
-.ins-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.ins-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,45,0,0.09);border-radius:4px;overflow:hidden;cursor:pointer;transition:all .2s}
-.ins-card:hover{border-color:rgba(255,45,0,0.25)}
-.ins-img{height:80px;background:linear-gradient(135deg,rgba(255,45,0,0.1),rgba(147,51,234,0.1));display:flex;align-items:center;justify-content:center;font-size:28px}
-.ins-body{padding:10px}
-.ins-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;text-transform:uppercase;color:#e8e4d9;line-height:1;margin-bottom:4px}
-.ins-price{font-size:12px;color:#c8ff00;letter-spacing:1px;margin-bottom:4px}
-.ins-meta{font-size:7px;color:rgba(232,228,217,0.22);letter-spacing:1px;text-transform:uppercase}
-
-/* DATES */
-.dates-box{background:rgba(147,51,234,0.03);border:1px solid rgba(147,51,234,0.12);border-radius:4px;padding:16px}
-.dv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px}
-.dv{padding:13px 6px;border:1px solid rgba(147,51,234,0.1);border-radius:4px;text-align:center;cursor:pointer;transition:all .22s}
-.dv:hover{border-color:rgba(147,51,234,0.35);transform:translateY(-2px)}
-.dv.on{border-color:#9333ea;background:rgba(147,51,234,0.07);transform:translateY(-2px)}
-.dv-icon{font-size:22px;display:block;margin-bottom:4px}
-.dv-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,0.22)}
-.dv.on .dv-lbl{color:#9333ea}
-.seek-opts{display:flex;gap:7px;margin-bottom:14px}
-.seek{flex:1;padding:9px;border:1px solid rgba(147,51,234,0.1);border-radius:3px;text-align:center;font-size:8px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:rgba(232,228,217,0.25);transition:all .2s}
-.seek:hover{border-color:rgba(147,51,234,0.35)}
-.seek.on{border-color:#9333ea;color:#9333ea;background:rgba(147,51,234,0.06)}
-
-/* SCORE RANKS */
 .ranks{display:flex;flex-direction:column;gap:6px}
-.rank-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.04);border-radius:3px}
+.rank-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.04);border-radius:6px}
 .rank-row.cur{border-color:rgba(255,45,0,0.25);background:rgba(255,45,0,0.04)}
 .rank-icon{font-size:18px;width:28px;text-align:center}
 .rank-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;text-transform:uppercase;color:rgba(232,228,217,0.4);flex:1}
 .rank-row.cur .rank-name{color:#ff2d00}
 .rank-pts{font-size:8px;color:rgba(232,228,217,0.2);letter-spacing:1px}
 
-/* DANGER */
-.danger{margin-top:18px;padding:14px;border:1px solid rgba(255,45,0,0.13);border-radius:3px;background:rgba(255,45,0,0.02)}
+.danger{margin-top:18px;padding:14px;border:1px solid rgba(255,45,0,0.13);border-radius:8px;background:rgba(255,45,0,0.02)}
 .danger-title{font-size:7px;letter-spacing:4px;color:rgba(255,45,0,0.35);text-transform:uppercase;margin-bottom:10px}
-.danger-btn{width:100%;padding:11px;border:1px solid rgba(255,45,0,0.18);border-radius:3px;background:transparent;color:rgba(255,45,0,0.4);font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.danger-btn{width:100%;padding:11px;border:1px solid rgba(255,45,0,0.18);border-radius:6px;background:transparent;color:rgba(255,45,0,0.4);font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
 .danger-btn:hover{border-color:#ff2d00;color:#ff2d00;background:rgba(255,45,0,0.04)}
+
+/* GESPERRT BANNER */
+.banned-banner{background:rgba(255,45,0,0.08);border:1px solid rgba(255,45,0,0.3);border-radius:8px;padding:14px 18px;margin:0 22px 0;display:flex;align-items:center;gap:12px}
+.banned-icon{font-size:20px}
+.banned-txt{font-size:9px;color:#ff2d00;letter-spacing:1px;line-height:1.6;text-transform:uppercase}
+
+/* NOTIFICATIONS BELL */
+.bell-wrap{position:relative;cursor:pointer}
+.bell-dot{position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:#ff2d00;border-radius:50%;border:2px solid #04040a;display:none}
+.bell-dot.show{display:block}
+.notif-panel{position:absolute;top:50px;right:22px;width:300px;max-height:380px;overflow-y:auto;background:#0a0005;border:1px solid rgba(255,45,0,0.18);border-radius:10px;box-shadow:0 20px 50px rgba(0,0,0,0.6);z-index:90;display:none}
+.notif-panel.open{display:block;animation:mfade .2s}
+.np-item{padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:10px;display:flex;gap:10px}
+.np-item:last-child{border-bottom:none}
+.np-icon{font-size:16px;flex-shrink:0}
+.np-title{color:#e8e4d9;margin-bottom:3px;font-size:10px}
+.np-text{color:rgba(232,228,217,0.4);font-size:9px;line-height:1.5}
+.np-empty{padding:24px;text-align:center;color:rgba(232,228,217,0.2);font-size:9px;letter-spacing:1px;text-transform:uppercase}
+
+
+/* ═══════════════════════════════════════
+   UNIVERSUM SEKTION — DIS STADTPULS KOSMOS
+   ═══════════════════════════════════════ */
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+/* PREVIEW LABEL */
+
+/* STARFIELD BG */
+
+/* UNIVERSE CONTAINER */
+.universe-wrap{position:relative;width:100%;height:580px;overflow:hidden;border-bottom:1px solid rgba(255,45,0,0.15);background:radial-gradient(ellipse at 50% 40%,rgba(255,45,0,0.13) 0%,rgba(147,51,234,0.08) 35%,#04040a 78%)}
+@media(max-width:600px){.universe-wrap{height:720px}}
+@media(max-width:380px){.universe-wrap{height:760px}}
+#starfield{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+.universe-head{position:absolute;top:22px;left:0;right:0;text-align:center;z-index:15;padding:0 24px;pointer-events:none}
+.uh-eye{font-size:8px;letter-spacing:5px;color:#ff2d00;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:6px}
+.uh-eye::before,.uh-eye::after{content:'';width:16px;height:1px;background:rgba(255,45,0,0.3)}
+.uh-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:30px;text-transform:uppercase;color:#e8e4d9;line-height:1}
+.uh-title span{color:#ff2d00}
+.uh-sub{font-size:8px;color:rgba(232,228,217,0.25);letter-spacing:1.5px;margin-top:4px;text-transform:uppercase}
+
+/* CENTER STAR — DU */
+.center-star{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);z-index:8;display:flex;flex-direction:column;align-items:center;cursor:pointer}
+@media(max-width:600px){.center-star{top:38%}}
+.cs-glow{position:absolute;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(255,45,0,0.65) 0%,rgba(255,45,0,0.25) 40%,transparent 70%);animation:csPulse 3s ease-in-out infinite;left:50%;top:50%;transform:translate(-50%,-50%)}
+@media(max-width:600px){.cs-glow{width:128px;height:128px}}
+@keyframes csPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.85}50%{transform:translate(-50%,-50%) scale(1.3);opacity:1}}
+.cs-core{position:relative;width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ff6b3a 35%,#ff2d00 70%);box-shadow:0 0 45px rgba(255,45,0,0.9),0 0 90px rgba(255,45,0,0.5),0 0 130px rgba(255,45,0,0.25),inset -4px -4px 10px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;color:#04040a;z-index:2}
+@media(max-width:600px){.cs-core{width:46px;height:46px;font-size:18px}}
+.cs-ring{position:absolute;border-radius:50%;border:1.5px solid rgba(255,45,0,0.4);animation:csRing 12s linear infinite}
+.cs-ring.r1{width:90px;height:90px;box-shadow:0 0 15px rgba(255,45,0,0.2)}
+.cs-ring.r2{width:118px;height:118px;border-color:rgba(255,45,0,0.22);animation-duration:18s;animation-direction:reverse}
+@media(max-width:600px){.cs-ring.r1{width:66px;height:66px}.cs-ring.r2{width:86px;height:86px}}
+@keyframes csRing{to{transform:rotate(360deg)}}
+.cs-label{margin-top:10px;font-size:9px;letter-spacing:2px;color:rgba(232,228,217,0.4);text-transform:uppercase;text-align:center}
+.cs-label strong{color:#e8e4d9;display:block;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:1px;margin-bottom:1px}
+
+/* BUBBLES — generic */
+.bubble{position:absolute;border-radius:50%;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;backdrop-filter:blur(2px);transition:transform .25s ease;z-index:5}
+.bubble:hover{transform:scale(1.07)!important}
+.bubble::before{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.1) 30%,transparent 55%);pointer-events:none}
+.bubble::after{content:'';position:absolute;width:20%;height:11%;top:13%;left:23%;background:rgba(255,255,255,0.75);border-radius:50%;filter:blur(1.5px);pointer-events:none;transform:rotate(-30deg)}
+.b-icon{font-size:22px;line-height:1;margin-bottom:2px;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.4))}
+.b-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:.5px;text-transform:uppercase;line-height:1.05}
+.b-meta{font-size:6.5px;letter-spacing:1px;text-transform:uppercase;opacity:.7;margin-top:1px}
+
+/* Drift animations - each bubble gets its own via inline style timing, base keyframes vary */
+@keyframes driftA{0%,100%{transform:translate(0,0) rotate(0deg)}25%{transform:translate(calc(10px * var(--drift-scale,1)),calc(-14px * var(--drift-scale,1))) rotate(2deg)}50%{transform:translate(calc(-6px * var(--drift-scale,1)),calc(8px * var(--drift-scale,1))) rotate(-1deg)}75%{transform:translate(calc(-12px * var(--drift-scale,1)),calc(-6px * var(--drift-scale,1))) rotate(1deg)}}
+@keyframes driftB{0%,100%{transform:translate(0,0) rotate(0deg)}30%{transform:translate(calc(-14px * var(--drift-scale,1)),calc(10px * var(--drift-scale,1))) rotate(-2deg)}60%{transform:translate(calc(8px * var(--drift-scale,1)),calc(-10px * var(--drift-scale,1))) rotate(2deg)}}
+@keyframes driftC{0%,100%{transform:translate(0,0)}40%{transform:translate(calc(12px * var(--drift-scale,1)),calc(12px * var(--drift-scale,1)))}80%{transform:translate(calc(-8px * var(--drift-scale,1)),calc(-6px * var(--drift-scale,1)))}}
+@keyframes pulseGlow{0%,100%{filter:brightness(1) saturate(1)}50%{filter:brightness(1.35) saturate(1.3)}}
+@keyframes kiShimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.bubble-ki .b-icon{animation:kiSparkle 2.2s ease-in-out infinite}
+@keyframes kiSparkle{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+
+/* Pulse Moment special ring (gold, like ZÜRI MOMENT) */
+.b-pulsemoment{position:absolute;inset:-12px;border-radius:50%;border:2px solid rgba(255,215,0,0.7);pointer-events:none;box-shadow:0 0 20px rgba(255,215,0,0.4)}
+.b-pulsemoment::before{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;margin-left:-4px;background:#ffd700;border-radius:50%;box-shadow:0 0 14px rgba(255,215,0,1),0 0 24px rgba(255,215,0,0.6);animation:orbitDot 5s linear infinite}
+@keyframes orbitDot{from{transform:rotate(0deg) translateX(0) rotate(0deg)}to{transform:rotate(360deg) translateX(0) rotate(-360deg)}}
+.b-badge-live{position:absolute;top:-9px;right:-6px;background:#ff2d00;color:#fff;font-size:6px;letter-spacing:1px;padding:3px 7px;border-radius:100px;font-weight:bold;box-shadow:0 2px 12px rgba(255,45,0,0.8),0 0 20px rgba(255,45,0,0.4);animation:badgeBlink 1.4s ease-in-out infinite}
+@keyframes badgeBlink{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* TOOLTIP / DETAIL CARD on tap */
+.bubble-card{position:fixed;bottom:0;left:0;right:0;background:#0a0005;border-top:1px solid rgba(255,45,0,0.2);border-radius:16px 16px 0 0;padding:0;z-index:110;box-shadow:0 -10px 50px rgba(0,0,0,0.6);transform:translateY(100%);transition:transform .35s cubic-bezier(.16,1,.3,1);max-width:480px;margin:0 auto;right:0}
+.bubble-card.open{transform:translateY(0)}
+.bc-handle{width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:12px auto 0}
+.bc-inner{padding:18px 22px 26px}
+.bc-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.bc-icon{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.bc-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;text-transform:uppercase;color:#e8e4d9;line-height:1}
+.bc-sub{font-size:8px;letter-spacing:2px;color:rgba(232,228,217,0.3);text-transform:uppercase;margin-top:2px}
+.bc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;margin-bottom:16px}
+.bc-stat{background:#0a0005;padding:10px 6px;text-align:center}
+.bc-stat-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;color:#e8e4d9;line-height:1}
+.bc-stat-l{font-size:6px;letter-spacing:1.5px;color:rgba(232,228,217,0.25);text-transform:uppercase;margin-top:2px}
+.bc-btn{display:block;width:100%;text-align:center;padding:14px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none}
+.bc-close{position:absolute;top:14px;right:16px;background:rgba(255,255,255,0.08);border:none;color:rgba(232,228,217,0.5);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:13px}
+.bc-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:109;opacity:0;pointer-events:none;transition:opacity .3s}
+.bc-backdrop.open{opacity:1;pointer-events:auto}
+
+/* LEGEND below universe */
+.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:16px 24px;position:relative;z-index:10}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:7px;letter-spacing:1px;color:rgba(232,228,217,0.25);text-transform:uppercase}
+.legend-dot{width:6px;height:6px;border-radius:50%}
+
+footer.spacer{height:60px}
+
 </style>
 </head>
 <body>
@@ -224,7 +277,6 @@ textarea.inp{resize:none;min-height:80px;line-height:1.6}
 <div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
 <div class="notif" id="notif"></div>
 
-<!-- MODAL -->
 <div class="modal-bg" id="modal">
   <div class="modal">
     <div class="modal-head">
@@ -232,25 +284,67 @@ textarea.inp{resize:none;min-height:80px;line-height:1.6}
         <div class="eye" id="modal-eye">NEU ERSTELLE</div>
         <div class="H" style="font-size:28px" id="modal-title">BEITRAG SCHREIBE</div>
       </div>
-      <span class="modal-close" onclick="closeModal()">✕</span>
+      <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div id="modal-body"></div>
   </div>
 </div>
 
-<!-- NAV -->
 <div class="nav">
   <a href="index.html" class="logo"><div class="ldot"></div>STADTPULS</a>
   <div class="nav-r">
+    <div class="bell-wrap" onclick="toggleNotifPanel()">
+      🔔<div class="bell-dot" id="bell-dot"></div>
+    </div>
     <span class="nav-handle" id="nav-handle">@ZUERIFUCHS</span>
     <div class="nav-av" id="nav-av">Z</div>
     <span class="nav-out" id="nav-out">ABLOGGE</span>
   </div>
 </div>
 
+<div class="notif-panel" id="notif-panel">
+  <div id="notif-panel-content"><div class="np-empty">LÄDT...</div></div>
+</div>
+
+<div id="banned-wrap"></div>
+
+<!-- ═══════════════════════════════════════
+     DIS UNIVERSUM — Live-Kosmos vo dim Stadtpuls-Läbe
+     ═══════════════════════════════════════ -->
+<div class="universe-wrap">
+  <canvas id="starfield"></canvas>
+  <div class="universe-head">
+    <div class="uh-eye">DIS STADTPULS</div>
+    <div class="uh-title">DIS <span>UNIVERSUM</span></div>
+    <div class="uh-sub">Tipf uf ä Blase für Live-Zahle</div>
+  </div>
+
+  <div class="center-star" onclick="openUniCard('du')">
+    <div class="cs-ring r1"></div>
+    <div class="cs-ring r2"></div>
+    <div class="cs-glow"></div>
+    <div class="cs-core" id="uni-core">Z</div>
+    <div class="cs-label"><strong id="uni-handle">@ZUERIFUCHS</strong><span id="uni-meta">145 PTS · KREIS 4</span></div>
+  </div>
+
+  <div id="bubbles-layer"></div>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#ff2d00"></div>Grössi Blase = aktivi Kategorie</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ffd700"></div>Gold + Ring = Pulse Moment grad live</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#00f5ff"></div>✨ = Züri-Bot, dini KI</div>
+</div>
+
+<div class="bc-backdrop" id="bc-backdrop" onclick="closeUniCard()"></div>
+<div class="bubble-card" id="bubble-card">
+  <button class="bc-close" onclick="closeUniCard()">✕</button>
+  <div class="bc-handle"></div>
+  <div class="bc-inner" id="bc-inner"></div>
+</div>
+
 <div class="page">
 
-  <!-- ═══ HERO ═══ -->
   <div class="hero">
     <div class="hero-bg"></div>
     <div class="hero-scan"></div>
@@ -263,41 +357,23 @@ textarea.inp{resize:none;min-height:80px;line-height:1.6}
         </div>
         <div class="hero-info">
           <div class="hero-handle"><span>@</span><span id="h-handle">ZUERIFUCHS</span></div>
-          <div class="hero-kreis" id="h-kreis">KREIS 4 · LANGSTRASSE · SEIT JUNI 2026</div>
-          <div class="hero-bdgs">
-            <div class="hbdg r">🔴 NEU IN ZÜRI</div>
-            <div class="hbdg v" id="h-kreis-bdg">⚡ KREIS 4</div>
-            <div class="hbdg p" id="h-vibe-bdg">🌙 NACHTMENSCH</div>
-            <div class="hbdg cy">🎵 EVENTS</div>
-          </div>
+          <div class="hero-kreis" id="h-kreis">LÄDT...</div>
+          <div class="hero-bdgs" id="h-badges"></div>
         </div>
       </div>
 
-      <!-- SCORE -->
       <div class="score-box">
         <div class="score-top">
           <div>
             <div class="score-lbl">STADTPULS SCORE</div>
-            <div class="score-rank" id="s-rank">ZÜRI-NEULING · NÄCHSTES: ZÜRI-INSIDER (500 PTS)</div>
+            <div class="score-rank" id="s-rank">LÄDT...</div>
           </div>
-          <div><span class="score-val" id="s-val">145</span><span class="score-max"> / 500</span></div>
+          <div><span class="score-val" id="s-val">0</span><span class="score-max" id="s-max"> / 500</span></div>
         </div>
-        <div class="sbar"><div class="sbar-fill" id="sbar" style="width:29%"></div></div>
-        <div class="tasks">
-          <div class="task done"><div class="td"></div>Account erstellt<span class="tpts">+50 ✓</span></div>
-          <div class="task done"><div class="td"></div>Kreis gewählt<span class="tpts">+20 ✓</span></div>
-          <div class="task done"><div class="td"></div>Interessen definiert<span class="tpts">+35 ✓</span></div>
-          <div class="task done"><div class="td"></div>Vibe definiert<span class="tpts">+40 ✓</span></div>
-          <div class="task" onclick="notif('+40 PTS FÜR ERSTE REVIEW!')"><div class="td"></div>Erste Review schreibe<span class="tpts">+40 PTS</span></div>
-          <div class="task" onclick="notif('+30 PTS FÜR 5 BOOKMARKS!')"><div class="td"></div>5 Locations bookmarke<span class="tpts">+30 PTS</span></div>
-          <div class="task" onclick="notif('+20 PTS FÜR BIO!')"><div class="td"></div>Bio schreibe<span class="tpts">+20 PTS</span></div>
-          <div class="task" onclick="notif('+35 PTS FÜR DATES-PROFIL!')"><div class="td"></div>People & Dates Profil<span class="tpts">+35 PTS</span></div>
-          <div class="task" onclick="notif('+25 PTS FÜR BEITRAG!')"><div class="td"></div>Ersten Beitrag publiziere<span class="tpts">+25 PTS</span></div>
-          <div class="task" onclick="notif('+30 PTS FÜR INSERAT!')"><div class="td"></div>Erstes Inserat erstelle<span class="tpts">+30 PTS</span></div>
-        </div>
+        <div class="sbar"><div class="sbar-fill" id="sbar" style="width:0%"></div></div>
+        <div class="tasks" id="task-list"></div>
       </div>
 
-      <!-- STATS -->
       <div class="stats">
         <div class="stat"><div class="stn" id="st-bm">0</div><div class="stl">BOOKMARKS</div></div>
         <div class="stat"><div class="stn" id="st-rv">0</div><div class="stl">REVIEWS</div></div>
@@ -307,50 +383,45 @@ textarea.inp{resize:none;min-height:80px;line-height:1.6}
     </div>
   </div>
 
-  <!-- ═══ 1: MIIN PROFIL ═══ -->
+  <!-- MIIN PROFIL -->
   <div class="sec">
     <div class="sec-head">
       <div class="sec-title">MIIN<br><span class="r">PROFIL</span></div>
-      <span class="sec-act" onclick="notif('GSPEICHERET! +20 PTS')">SPEICHERE</span>
+      <button class="sec-act" onclick="saveBio()">SPEICHERE</button>
     </div>
     <div style="font-size:7px;letter-spacing:3px;color:rgba(232,228,217,0.22);text-transform:uppercase;margin-bottom:7px">DI BIO</div>
-    <textarea class="inp" placeholder="Säg Züri wer du bisch. Kei Bullshit." maxlength="160" oninput="document.getElementById('bcc').textContent=this.value.length+'/160'"></textarea>
+    <textarea class="inp" id="bio-field" placeholder="Säg Züri wer du bisch. Kei Bullshit." maxlength="160" oninput="document.getElementById('bcc').textContent=this.value.length+'/160'"></textarea>
     <div style="font-size:7px;color:rgba(232,228,217,0.18);text-align:right;margin-top:-4px;margin-bottom:12px;letter-spacing:1px" id="bcc">0/160</div>
-    <div class="ir" onclick="notif('E-MAIL ÄNDERE')"><div class="irl">E-MAIL</div><div class="irv">zuerifuchs@gmail.com <span class="ira">›</span></div></div>
-    <div class="ir" onclick="notif('USERNAME ÄNDERE')"><div class="irl">USERNAME</div><div class="irv">@zuerifuchs <span class="ira">›</span></div></div>
-    <div class="ir" onclick="notif('GEBURTSDATUM')"><div class="irl">GEBURTSDATUM</div><div class="irv">15.03.1994 · 32 JAHRE <span class="ira">›</span></div></div>
-    <div class="ir" onclick="notif('KREIS ÄNDERE')"><div class="irl">KREIS / QUARTIER</div><div class="irv">KREIS 4 · LANGSTRASSE <span class="ira">›</span></div></div>
-    <div class="ir" onclick="openGeschlecht()"><div class="irl">GESCHLECHT</div><div class="irv"><span class="ire">NOCH NÖD AAGÄH</span> <span class="ira">›</span></div></div>
-    <div class="ir" onclick="notif('MUTTERSPRACH ÄNDERE')"><div class="irl">MUTTERSPRACH</div><div class="irv"><span class="ire">NOCH NÖD AAGÄH</span> <span class="ira">›</span></div></div>
-    <div class="ir" onclick="notif('BERUF ÄNDERE')"><div class="irl">BERUF / BRANCHE</div><div class="irv"><span class="ire">NOCH NÖD AAGÄH</span> <span class="ira">›</span></div></div>
-    <div class="ir" onclick="notif('BEZIEHIGSSTATUS ÄNDERE')"><div class="irl">BEZIEHIGSSTATUS</div><div class="irv"><span class="ire">NOCH NÖD AAGÄH</span> <span class="ira">›</span></div></div>
+    <div class="ir" onclick="notif('E-MAIL: KONTAKTIER SUPPORT FÜR ÄNDERUNG')"><div class="irl">E-MAIL</div><div class="irv" id="p-email">– <span class="ira">›</span></div></div>
+    <div class="ir" onclick="notif('USERNAME ÄNDERE — BALD')"><div class="irl">NICKNAME</div><div class="irv" id="p-nick">– <span class="ira">›</span></div></div>
+    <div class="ir" onclick="openYearModal()"><div class="irl">GEBURTSJAHR</div><div class="irv" id="p-year">– <span class="ira">›</span></div></div>
+    <div class="ir" onclick="notif('KREIS ÄNDERE — BALD')"><div class="irl">KREIS / QUARTIER</div><div class="irv" id="p-kreis">– <span class="ira">›</span></div></div>
+    <div class="ir" onclick="openGeschlecht()"><div class="irl">GESCHLECHT</div><div class="irv" id="p-geschlecht"><span class="ire">NOCH NÖD AAGÄH</span> <span class="ira">›</span></div></div>
+    <div class="ir" onclick="notif('WEBSITE ÄNDERE — BALD')"><div class="irl">WEBSITE</div><div class="irv" id="p-website"><span class="ire">HINZUFÜGE</span> <span class="ira">›</span></div></div>
   </div>
 
-  <!-- ═══ 2: MINI ZÜRI ═══ -->
+  <!-- MINI ZÜRI -->
   <div class="sec">
     <div class="sec-head">
       <div class="sec-title">MINI<br><span class="v">ZÜRI</span></div>
-      <span class="sec-act" onclick="notif('INTERESSEN GSPEICHERET!')">SPEICHERE</span>
+      <button class="sec-act" onclick="saveInteressen()">SPEICHERE</button>
     </div>
     <div style="font-size:9px;color:rgba(232,228,217,0.22);margin-bottom:14px">Was isch dis Züri? Wähl alles was zu dir passt.</div>
     <div class="chips" id="int-chips"></div>
-    <div class="ir"><div class="irl">DIN VIBE</div><div class="irv">🌙 NACHTMENSCH <span class="ira">›</span></div></div>
-    <div class="ir" onclick="notif('SPRACHEN ÄNDERE')"><div class="irl">SPRACHEN</div><div class="irv"><span class="ire">HINZUFÜGE</span> <span class="ira">›</span></div></div>
-    <div class="ir" onclick="notif('LIEBLINGSKREIS')"><div class="irl">LIEBLINGSKREIS</div><div class="irv">KREIS 4 <span class="ira">›</span></div></div>
+    <div class="ir"><div class="irl">DIN VIBE</div><div class="irv" id="p-vibe">– <span class="ira">›</span></div></div>
   </div>
 
-  <!-- ═══ 3: MINI FAVORITEN ═══ -->
+  <!-- FAVORITEN -->
   <div class="sec">
     <div class="sec-head">
       <div class="sec-title">MINI<br><span class="cy">FAVORITEN</span></div>
-      <span class="sec-act" onclick="window.location.href='gastro.html'">ENTDECKE →</span>
+      <button class="sec-act" onclick="window.location.href='gastro.html'">ENTDECKE →</button>
     </div>
     <div class="tabs">
       <button class="tab on" onclick="bmTab(this,'GASTRO','gastro.html')">GASTRO</button>
       <button class="tab" onclick="bmTab(this,'EVENTS','events.html')">EVENTS</button>
       <button class="tab" onclick="bmTab(this,'SHOPPING','shopping.html')">SHOPPING</button>
-      <button class="tab" onclick="bmTab(this,'JOBS','index.html')">JOBS</button>
-      <button class="tab" onclick="bmTab(this,'MARKT','index.html')">MARKT</button>
+      <button class="tab" onclick="bmTab(this,'NACHTLEBE','nachtleben.html')">NACHTLEBE</button>
     </div>
     <div id="bm-content">
       <div class="empty">
@@ -361,25 +432,18 @@ textarea.inp{resize:none;min-height:80px;line-height:1.6}
     </div>
   </div>
 
-  <!-- ═══ 4: NEWS & STORIES ═══ -->
+  <!-- NEWS & STORIES -->
   <div class="sec">
     <div class="sec-head">
       <div class="sec-title">NEWS<br><span class="v">& STORIES</span></div>
-      <span class="sec-act" onclick="openNewsModal()">+ BEITRAG</span>
+      <button class="sec-act" onclick="openNewsModal()">+ BEITRAG</button>
     </div>
-
-    <!-- KI MODERATION INFO -->
-    <div style="background:rgba(200,255,0,0.03);border:1px solid rgba(200,255,0,0.1);border-radius:3px;padding:10px 12px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start">
+    <div style="background:rgba(200,255,0,0.03);border:1px solid rgba(200,255,0,0.1);border-radius:6px;padding:10px 12px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start">
       <span style="font-size:16px">⚡</span>
       <div>
         <div style="font-size:8px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase;margin-bottom:3px">KI-MODERATION AKTIV</div>
         <div style="font-size:8px;color:rgba(232,228,217,0.25);letter-spacing:.5px;line-height:1.7">Beiträg wärde automatisch geprüft. Klari Fäll: sofort live oder abglehnt. Unsichere Fäll: manuelli Prüfig.</div>
       </div>
-    </div>
-
-    <div class="tabs">
-      <button class="tab on" onclick="newsTab(this,'mine')">MINI BEITRÄG</button>
-      <button class="tab" onclick="newsTab(this,'all')">ALL STORIES</button>
     </div>
     <div id="news-content">
       <div class="empty">
@@ -390,24 +454,18 @@ textarea.inp{resize:none;min-height:80px;line-height:1.6}
     </div>
   </div>
 
-  <!-- ═══ 5: MARKTPLATZ ═══ -->
+  <!-- MARKTPLATZ -->
   <div class="sec">
     <div class="sec-head">
       <div class="sec-title">MINI<br><span class="r">MARKT</span></div>
-      <span class="sec-act" onclick="openMarktModal()">+ INSERAT</span>
+      <button class="sec-act" onclick="openMarktModal()">+ INSERAT</button>
     </div>
-
-    <div style="background:rgba(200,255,0,0.03);border:1px solid rgba(200,255,0,0.1);border-radius:3px;padding:10px 12px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start">
+    <div style="background:rgba(200,255,0,0.03);border:1px solid rgba(200,255,0,0.1);border-radius:6px;padding:10px 12px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start">
       <span style="font-size:16px">⚡</span>
       <div>
         <div style="font-size:8px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase;margin-bottom:3px">KI-MODERATION AKTIV</div>
         <div style="font-size:8px;color:rgba(232,228,217,0.25);letter-spacing:.5px;line-height:1.7">Inserat wärde automatisch geprüft. Verboteni Artikel wärde sofort abglehnt.</div>
       </div>
-    </div>
-
-    <div class="tabs">
-      <button class="tab on" onclick="marktTab(this,'mine')">MINI INSERAT</button>
-      <button class="tab" onclick="marktTab(this,'all')">MARKTPLATZ</button>
     </div>
     <div id="markt-content">
       <div class="empty">
@@ -418,79 +476,56 @@ textarea.inp{resize:none;min-height:80px;line-height:1.6}
     </div>
   </div>
 
-  <!-- ═══ 6: PEOPLE & DATES ═══ -->
+  <!-- PEOPLE & DATES -->
   <div class="sec" style="background:rgba(147,51,234,0.015)">
     <div class="sec-head">
       <div class="sec-title">PEOPLE<br><span class="p">& DATES</span></div>
-      <span class="sec-act" onclick="notif('DATES PROFIL +35 PTS!')">SPEICHERE</span>
+      <button class="sec-act" onclick="notif('DATES PROFIL — VOTING PHASE')">MEH INFOS</button>
     </div>
-    <div class="dates-box">
-      <div style="font-size:7px;letter-spacing:4px;color:rgba(147,51,234,0.5);text-transform:uppercase;margin-bottom:10px">DIN ZÜRI-VIBE FÜR DATES</div>
-      <div class="dv-grid">
-        <div class="dv" onclick="selDv(this)"><span class="dv-icon">🌙</span><div class="dv-lbl">NACHT</div></div>
-        <div class="dv on" onclick="selDv(this)"><span class="dv-icon">🌆</span><div class="dv-lbl">KULTUR</div></div>
-        <div class="dv" onclick="selDv(this)"><span class="dv-icon">🍜</span><div class="dv-lbl">FOODIE</div></div>
-        <div class="dv" onclick="selDv(this)"><span class="dv-icon">🎵</span><div class="dv-lbl">MUSIK</div></div>
-        <div class="dv" onclick="selDv(this)"><span class="dv-icon">🚴</span><div class="dv-lbl">AKTIV</div></div>
-        <div class="dv" onclick="selDv(this)"><span class="dv-icon">🎨</span><div class="dv-lbl">KREATIV</div></div>
-      </div>
-      <div style="font-size:7px;letter-spacing:3px;color:rgba(147,51,234,0.45);text-transform:uppercase;margin-bottom:8px">WAS SUESCH DU?</div>
-      <div class="seek-opts">
-        <div class="seek on" onclick="selSeek(this)">DATES</div>
-        <div class="seek" onclick="selSeek(this)">FRIENDS</div>
-        <div class="seek" onclick="selSeek(this)">BEIDES</div>
-      </div>
-      <div class="ir" style="border-top:1px solid rgba(147,51,234,0.1);padding-top:12px"><div class="irl">PROFIL SICHTBAR</div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-      <div class="ir"><div class="irl">KREIS-MATCHING</div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-      <div class="ir"><div class="irl">ALTERSRANGE ZEIGE</div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+    <div style="background:rgba(147,51,234,0.03);border:1px solid rgba(147,51,234,0.12);border-radius:10px;padding:16px">
+      <div style="font-size:9px;color:rgba(232,228,217,0.4);letter-spacing:.5px;line-height:1.7;margin-bottom:10px">People & Dates isch grad in der Voting-Phase. Sobald 100'000 Stimme erreicht sind, schalte mir's frei.</div>
+      <button class="BTN" style="background:rgba(147,51,234,0.12);border:1px solid rgba(147,51,234,0.3);color:#9333ea;font-size:14px;padding:12px" onclick="window.location.href='dating.html'">JETZT VOTE →</button>
     </div>
-    <div style="margin-top:12px;font-size:8px;color:rgba(147,51,234,0.3);letter-spacing:2px;text-align:center;text-transform:uppercase">DATING LIVE NACH 100'000 VOTES — <span style="color:#9333ea;cursor:pointer" onclick="window.location.href='dating.html'">JETZT VOTE →</span></div>
   </div>
 
-  <!-- ═══ 7: SCORE DETAILS ═══ -->
+  <!-- SCORE -->
   <div class="sec">
     <div class="sec-head">
       <div class="sec-title">DIN<br><span class="v">SCORE</span></div>
     </div>
-    <div class="ranks">
-      <div class="rank-row cur"><div class="rank-icon">🌱</div><div class="rank-name">ZÜRI-NEULING</div><div class="rank-pts">0 – 499 PTS</div></div>
-      <div class="rank-row"><div class="rank-icon">🔍</div><div class="rank-name">ZÜRI-INSIDER</div><div class="rank-pts">500 – 999 PTS</div></div>
-      <div class="rank-row"><div class="rank-icon">⚡</div><div class="rank-name">ZÜRI-KENNER</div><div class="rank-pts">1000 – 2499 PTS</div></div>
-      <div class="rank-row"><div class="rank-icon">🔥</div><div class="rank-name">ZÜRI-EXPERTE</div><div class="rank-pts">2500 – 4999 PTS</div></div>
-      <div class="rank-row"><div class="rank-icon">🏆</div><div class="rank-name">ZÜRI-LEGENDE</div><div class="rank-pts">5000+ PTS</div></div>
-    </div>
+    <div class="ranks" id="ranks-list"></div>
   </div>
 
-  <!-- ═══ 8: EINSTELLUNGEN ═══ -->
+  <!-- NOTIFICATIONS EINSTELLUNGEN -->
+  <div class="sec">
+    <div class="sec-head">
+      <div class="sec-title">BSCHEID<br><span class="r">BIM</span></div>
+    </div>
+    <div id="notif-toggles"></div>
+  </div>
+
+  <!-- EINSTELLUNGEN -->
   <div class="sec">
     <div class="sec-head">
       <div class="sec-title">IISTELLIGE<br><span class="r">& PRIVACY</span></div>
     </div>
 
-    <div style="font-size:7px;letter-spacing:4px;color:rgba(232,228,217,0.22);text-transform:uppercase;margin-bottom:12px">NOTIFICATIONS</div>
-    <div class="tog-row"><div><div class="tog-lbl">Push Notifications</div><div class="tog-sub">Events · Dates · Neuigkeite im Kreis</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-    <div class="tog-row"><div><div class="tog-lbl">E-Mail Digest</div><div class="tog-sub">Wöchentlichi Züri-Tipps</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
-    <div class="tog-row"><div><div class="tog-lbl">Moderation-Meldige</div><div class="tog-sub">Wenn min Beitrag in d Prüf-Queue chunnt</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-
-    <div style="font-size:7px;letter-spacing:4px;color:rgba(232,228,217,0.22);text-transform:uppercase;margin:18px 0 12px">PRIVACY</div>
-    <div class="tog-row"><div><div class="tog-lbl">Profil öffentlich</div><div class="tog-sub">Anderi User chönd dis Profil gseh</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-    <div class="tog-row"><div><div class="tog-lbl">Bookmarks öffentlich</div><div class="tog-sub">Dis Favoriten-Liste isch sichtbar</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
-    <div class="tog-row"><div><div class="tog-lbl">Im People & Dates Radar</div><div class="tog-sub">Sichtbarkeit im Dating-Bereich</div></div><div class="tog on" onclick="this.classList.toggle('on')"></div></div>
-    <div class="tog-row"><div><div class="tog-lbl">Anonym browsen</div><div class="tog-sub">Kei Präsenz-Tracking im Kreis</div></div><div class="tog" onclick="this.classList.toggle('on')"></div></div>
+    <div style="font-size:7px;letter-spacing:4px;color:rgba(232,228,217,0.22);text-transform:uppercase;margin-bottom:12px">PRIVACY</div>
+    <div class="tog-row"><div><div class="tog-lbl">Profil öffentlich</div><div class="tog-sub">Anderi User chönd dis Profil gseh</div></div><div class="tog" id="tog-profil_oeffentlich" onclick="togglePref(this,'profil_oeffentlich')"></div></div>
+    <div class="tog-row"><div><div class="tog-lbl">Bookmarks öffentlich</div><div class="tog-sub">Dis Favoriten-Liste isch sichtbar</div></div><div class="tog" id="tog-bookmarks_oeffentlich" onclick="togglePref(this,'bookmarks_oeffentlich')"></div></div>
+    <div class="tog-row"><div><div class="tog-lbl">Kontakt erlaubt</div><div class="tog-sub">Anderi User chönd dich kontaktiere</div></div><div class="tog" id="tog-kontakt_erlaubt" onclick="togglePref(this,'kontakt_erlaubt')"></div></div>
 
     <div style="font-size:7px;letter-spacing:4px;color:rgba(232,228,217,0.22);text-transform:uppercase;margin:18px 0 12px">PASSWORT ÄNDERE</div>
-    <input class="inp" placeholder="Eus Passwort" type="password"/>
-    <input class="inp" placeholder="Neus Passwort" type="password"/>
-    <input class="inp" placeholder="Neus Passwort bestätigen" type="password"/>
-    <button class="BTN volt" onclick="notif('PASSWORT GSPEICHERET!')">PASSWORT ÄNDERE →</button>
+    <input class="inp" id="pw-new" placeholder="Neus Passwort — min. 8 Zeiche" type="password"/>
+    <button class="BTN volt" onclick="changePw()">PASSWORT ÄNDERE →</button>
 
     <div class="danger">
       <div class="danger-title">⚠ DANGER ZONE</div>
-      <button class="danger-btn" onclick="notif('ACCOUNT LÖSCHE — BALD')">ACCOUNT LÖSCHE</button>
+      <button class="danger-btn" onclick="notif('ACCOUNT LÖSCHE — KONTAKTIER SUPPORT')">ACCOUNT LÖSCHE</button>
     </div>
   </div>
 
-</div><!-- end page -->
+</div>
 
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
@@ -498,156 +533,598 @@ const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
 const sb=createClient(SU,SK);
 
-// Cursor
 const dot=document.getElementById('dot'),ring=document.getElementById('ring');
 document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';});
 
-// Notif
 window.notif=function(msg){
   const n=document.getElementById('notif');
   n.textContent=msg;n.classList.add('show');
   clearTimeout(n._t);n._t=setTimeout(()=>n.classList.remove('show'),2400);
 };
 
-// Load User
-const {data:{user}}=await sb.auth.getUser();
-if(!user){window.location.href='login.html';}
-else{
-  const username=user.user_metadata?.username||'zuerifuchs';
-  const letter=username[0].toUpperCase();
-  document.getElementById('nav-handle').textContent='@'+username.toUpperCase();
-  document.getElementById('nav-av').textContent=letter;
-  document.getElementById('av-big').textContent=letter;
-  document.getElementById('h-handle').textContent=username.toUpperCase();
-  // Load from users table
-  const {data:profile}=await sb.from('users').select('*').eq('id',user.id).single();
-  if(profile){
-    if(profile.kreis){
-      document.getElementById('h-kreis').textContent='KREIS '+profile.kreis+' · SEIT JUNI 2026';
-      document.getElementById('h-kreis-bdg').textContent='⚡ KREIS '+profile.kreis;
-    }
-    if(profile.vibe){
-      document.getElementById('h-vibe-bdg').textContent='🌙 '+profile.vibe;
-    }
-  }
+let CURRENT_USER=null; // auth user
+let PROFILE=null;      // users Tabellen-Zeile
+
+const RANKS=[
+  {min:0,max:499,icon:'🌱',name:'ZÜRI-NEULING'},
+  {min:500,max:999,icon:'🔍',name:'ZÜRI-INSIDER'},
+  {min:1000,max:2499,icon:'⚡',name:'ZÜRI-KENNER'},
+  {min:2500,max:4999,icon:'🔥',name:'ZÜRI-EXPERTE'},
+  {min:5000,max:999999,icon:'🏆',name:'ZÜRI-LEGENDE'}
+];
+
+function getRank(pts){
+  return RANKS.find(r=>pts>=r.min&&pts<=r.max)||RANKS[0];
 }
 
-// Logout
-document.getElementById('nav-out').onclick=async()=>{
-  await sb.auth.signOut();
-  window.location.href='login.html';
+async function loadDashboard(){
+  const {data:{user}}=await sb.auth.getUser();
+  if(!user){window.location.href='login.html';return;}
+  CURRENT_USER=user;
+
+  const {data:profile,error}=await sb.from('users').select('*').eq('auth_id',user.id).single();
+  if(error||!profile){
+    const {data:newProfile}=await sb.from('users').insert({
+      auth_id:user.id,
+      nickname:user.user_metadata?.nickname||'zuerifuchs',
+      role:'user',aktiv:true
+    }).select().single();
+    PROFILE=newProfile;
+  }else{
+    PROFILE=profile;
+  }
+
+  renderProfile();
+  loadNotifications();
+}
+
+function renderProfile(){
+  const p=PROFILE;
+  const nick=p.nickname||'zuerifuchs';
+  const letter=nick[0].toUpperCase();
+
+  document.getElementById('nav-handle').textContent='@'+nick.toUpperCase();
+  document.getElementById('nav-av').textContent=letter;
+  document.getElementById('av-big').textContent=letter;
+  document.getElementById('h-handle').textContent=nick.toUpperCase();
+  document.getElementById('h-kreis').textContent=(p.kreis?'KREIS '+p.kreis+' · ':'')+(p.created_at?'SEIT '+new Date(p.created_at).toLocaleDateString('de-CH',{month:'long',year:'numeric'}).toUpperCase():'');
+
+  // Badges
+  const badges=[];
+  if(p.created_at && (new Date()-new Date(p.created_at))/86400000 < 30) badges.push('<div class="hbdg r">🔴 NEU IN ZÜRI</div>');
+  if(p.kreis) badges.push(`<div class="hbdg v">⚡ KREIS ${p.kreis}</div>`);
+  if(p.vibe) badges.push(`<div class="hbdg p">🌙 ${p.vibe}</div>`);
+  if(p.role==='moderator'||p.role==='admin') badges.push(`<div class="hbdg gold">⭐ ${p.role.toUpperCase()}</div>`);
+  document.getElementById('h-badges').innerHTML=badges.join('');
+
+  // GESPERRT Banner
+  if(p.gesperrt){
+    document.getElementById('banned-wrap').innerHTML=`
+      <div class="banned-banner">
+        <span class="banned-icon">⚠</span>
+        <div class="banned-txt">Dis Konto isch gsperrt — kontaktier de Support für meh Infos</div>
+      </div>`;
+  }
+
+  // SCORE
+  const pts=p.punkte||0;
+  const rank=getRank(pts);
+  const nextRank=RANKS[RANKS.indexOf(rank)+1];
+  document.getElementById('s-val').textContent=pts;
+  document.getElementById('s-max').textContent=' / '+(nextRank?nextRank.min:pts);
+  document.getElementById('s-rank').textContent=rank.name+(nextRank?' · NÄCHSTES: '+nextRank.name+' ('+nextRank.min+' PTS)':' · MAX RANK!');
+  const pct=nextRank?Math.min(100,((pts-rank.min)/(nextRank.min-rank.min))*100):100;
+  document.getElementById('sbar').style.width=pct+'%';
+
+  // TASKS
+  const tasks=[
+    {done:true,txt:'Account erstellt',pts:50},
+    {done:!!p.kreis,txt:'Kreis gewählt',pts:20},
+    {done:!!(p.interessen&&p.interessen.length),txt:'Interessen definiert',pts:35},
+    {done:!!p.vibe,txt:'Vibe definiert',pts:40},
+    {done:!!p.bio,txt:'Bio schreibe',pts:20},
+    {done:false,txt:'Erste Review schreibe',pts:40},
+    {done:false,txt:'5 Locations bookmarke',pts:30},
+    {done:false,txt:'Ersten Beitrag publiziere',pts:25},
+    {done:false,txt:'Erstes Inserat erstelle',pts:30}
+  ];
+  document.getElementById('task-list').innerHTML=tasks.map((t,i)=>
+    `<div class="task${t.done?' done':''}" data-idx="${i}" data-pts="${t.pts}"><div class="td"></div>${t.txt}<span class="tpts">${t.done?'✓':'+'+t.pts+' PTS'}</span></div>`
+  ).join('');
+  document.querySelectorAll('#task-list .task').forEach(el=>{
+    if(!el.classList.contains('done')){
+      el.onclick=()=>notif('+'+el.dataset.pts+' PTS WENN ERLEDIGT!');
+    }
+  });
+
+  // PROFIL FELDER
+  document.getElementById('bio-field').value=p.bio||'';
+  document.getElementById('bcc').textContent=(p.bio||'').length+'/160';
+  document.getElementById('p-email').innerHTML=(CURRENT_USER.email||'–')+' <span class="ira">›</span>';
+  document.getElementById('p-nick').innerHTML='@'+nick+' <span class="ira">›</span>';
+  document.getElementById('p-year').innerHTML=(p.geburtsjahr?p.geburtsjahr+' · '+(new Date().getFullYear()-p.geburtsjahr)+' JAHRE':'<span class="ire">NOCH NÖD AAGÄH</span>')+' <span class="ira">›</span>';
+  document.getElementById('p-kreis').innerHTML=(p.kreis?'KREIS '+p.kreis:'<span class="ire">NOCH NÖD AAGÄH</span>')+' <span class="ira">›</span>';
+  document.getElementById('p-geschlecht').innerHTML=(p.geschlecht?p.geschlecht.toUpperCase():'<span class="ire">NOCH NÖD AAGÄH</span>')+' <span class="ira">›</span>';
+  document.getElementById('p-website').innerHTML=(p.website?p.website:'<span class="ire">HINZUFÜGE</span>')+' <span class="ira">›</span>';
+  document.getElementById('p-vibe').innerHTML=(p.vibe?vibeEmoji(p.vibe)+' '+p.vibe:'–')+' <span class="ira">›</span>';
+
+  // STATS
+  document.getElementById('st-bm').textContent='0';
+  document.getElementById('st-rv').textContent='0';
+  document.getElementById('st-btr').textContent='0';
+  document.getElementById('st-ins').textContent='0';
+
+  // CHIPS
+  buildChips(p.interessen||[]);
+
+  // RANKS LIST
+  document.getElementById('ranks-list').innerHTML=RANKS.map(r=>
+    `<div class="rank-row${r.name===rank.name?' cur':''}"><div class="rank-icon">${r.icon}</div><div class="rank-name">${r.name}</div><div class="rank-pts">${r.min} – ${r.max>=999999?'+':r.max} PTS</div></div>`
+  ).join('');
+
+  // TOGGLES
+  setTog('tog-profil_oeffentlich',p.profil_oeffentlich);
+  setTog('tog-bookmarks_oeffentlich',p.bookmarks_oeffentlich);
+  setTog('tog-kontakt_erlaubt',p.kontakt_erlaubt);
+
+  // NOTIFICATION TOGGLES
+  buildNotifToggles(p.notification_typen||[]);
+
+  // UNIVERSUM
+  buildUniverse(p);
+}
+
+function vibeEmoji(v){
+  const m={NACHTMENSCH:'🌙',STADTMENSCH:'🌆',MUSIKMENSCH:'🎵',FOODIE:'🍜',DATESMENSCH:'❤️',AKTIVMENSCH:'🚴'};
+  return m[v]||'✨';
+}
+
+// ═══════════════════════════════════════
+// DIS UNIVERSUM — datengetriebener Bubble-Kosmos
+// ═══════════════════════════════════════
+
+// Starfield
+const uniCanvas=document.getElementById('starfield');
+const uniCtx=uniCanvas.getContext('2d');
+const uniWrap=document.querySelector('.universe-wrap');
+function uniResize(){
+  uniCanvas.width=uniWrap.offsetWidth;
+  uniCanvas.height=uniWrap.offsetHeight;
+}
+uniResize();window.addEventListener('resize',uniResize);
+const uniStars=[];
+for(let i=0;i<120;i++){
+  uniStars.push({x:Math.random()*uniCanvas.width,y:Math.random()*uniCanvas.height,r:Math.random()*1.3+.3,baseA:Math.random()*.4+.15,speed:Math.random()*.015+.005,phase:Math.random()*Math.PI*2});
+}
+function uniDrawStars(t){
+  uniCtx.clearRect(0,0,uniCanvas.width,uniCanvas.height);
+  uniStars.forEach(s=>{
+    const a=s.baseA+Math.sin(t*s.speed+s.phase)*0.15;
+    uniCtx.beginPath();
+    uniCtx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    uniCtx.fillStyle=`rgba(255,255,255,${Math.max(0,a)})`;
+    uniCtx.fill();
+  });
+  requestAnimationFrame(()=>uniDrawStars(t+1));
+}
+uniDrawStars(0);
+
+const isUniMobile = window.innerWidth <= 600;
+let UNI_CATEGORIES=[]; // wird befüllt sobald Profil + Live-Daten da sind
+
+// Baut die Kategorien-Definitionen basierend auf echtem Profil + Supabase-Live-Zahlen
+async function buildUniverse(p){
+  // Live-Zahlen parallel holen (Locations-Count etc.) — nicht blockierend für UI
+  const [gastroCount, nachtlebenCount, eventsToday, marktCount] = await Promise.all([
+    sbCount('locations?kategorie=eq.gastro&aktiv=eq.true'),
+    sbCount('locations?kategorie=eq.nachtleben&aktiv=eq.true'),
+    sbCount('eventfrog_events?aktiv=eq.true'),
+    sbCount('inserate?status=eq.approved').catch(()=>0)
+  ]);
+
+  const bookmarksGastro=0; // Phase 5: bookmarks Tabelle noch nicht angebunden
+
+  // PULSE MOMENT — strukturell für mehrere gleichzeitige Kreise vorbereitet.
+  // Aktuell: Demo-Regel (User-Kreis = 4). Phase 6: ersetzt durch echte Live-Aktivitäts-Abfrage
+  // z.B. SELECT kreis FROM notifications WHERE typ='pulse_moment' AND created_at > now()-interval '15 min'
+  const activePulseKreise = [4]; // später dynamisch aus Live-Daten
+  const isPulseKreis = activePulseKreise.includes(p.kreis);
+
+  UNI_CATEGORIES=[
+    {id:'gastro',ic:'🍜',name:'GASTRO',meta:bookmarksGastro+' BOOKMARKS',color:'#ff2d00',glow:'rgba(255,45,0,0.5)',
+     size:Math.min(130,80+bookmarksGastro*3), sizeM:Math.min(90,60+bookmarksGastro*2),
+     pos:{top:'14%',left:'15%'}, posM:{top:'16%',left:'6%'},
+     drift:'driftA',dur:'9s',
+     stats:[[gastroCount||'903','LOKALE'],[bookmarksGastro,'GSPEICHERET'],['—','Ø RATING']],link:'gastro.html',pulseLive:false},
+
+    {id:'nachtleben',ic:'🌙',name:'NACHTLEBE',meta:p.vibe?vibeEmoji(p.vibe)+' '+p.vibe:'ENTDECKE',color:'#9333ea',glow:'rgba(147,51,234,0.55)',
+     size:p.vibe==='NACHTMENSCH'?128:88, sizeM:p.vibe==='NACHTMENSCH'?92:64,
+     pos:{top:'6%',left:'56%'}, posM:{top:'17%',left:'52%'},
+     drift:'driftB',dur:'11s',
+     stats:[[nachtlebenCount||'146','LOKALE'],['—','JETZT OFFE'],['0','BOOKMARKS']],link:'nachtleben.html',
+     pulseLive:isPulseKreis, badge:isPulseKreis?('KREIS '+p.kreis+' PULSED'):null},
+
+    {id:'ki',ic:'✨',name:'ZÜRI-BOT',meta:'FRAG MI',color:'#00f5ff',glow:'rgba(0,245,255,0.6)',
+     size:74, sizeM:58,
+     pos:{top:'2%',left:'84%'}, posM:{top:'15%',left:'80%'},
+     drift:'driftC',dur:'7s',
+     stats:[['BALD','PHASE 6'],['KI','ASSISTENT'],['—','—']],link:'#',pulseLive:false,isKi:true},
+
+    {id:'events',ic:'☄️',name:'EVENTS',meta:(eventsToday||0)+' LIVE',color:'#ffd700',glow:'rgba(255,215,0,0.45)',
+     size:84, sizeM:62,
+     pos:{top:'32%',left:'84%'}, posM:{top:'35%',left:'70%'},
+     drift:'driftC',dur:'8s',
+     stats:[[eventsToday||'2552','EVENTS'],['—','HÜT'],['—','POP-UPS']],link:'events.html',pulseLive:false},
+
+    {id:'dates',ic:'❤️',name:'PEOPLE & DATES',meta:'VOTING PHASE',color:'#ec4899',glow:'rgba(236,72,153,0.5)',
+     size:p.vibe==='DATESMENSCH'?110:88, sizeM:p.vibe==='DATESMENSCH'?80:64,
+     pos:{top:'56%',left:'78%'}, posM:{top:'52%',left:'62%'},
+     drift:'driftA',dur:'10s',
+     stats:[['—','PROFIL'],['—','KREIS '+(p.kreis||'?')],['—','MATCHES']],link:'dating.html',pulseLive:false},
+
+    {id:'shopping',ic:'🛍️',name:'SHOPPING',meta:'0 BOOKMARKS',color:'#00f5ff',glow:'rgba(0,245,255,0.4)',
+     size:76, sizeM:60,
+     pos:{top:'72%',left:'50%'}, posM:{top:'70%',left:'8%'},
+     drift:'driftB',dur:'12s',
+     stats:[['214','SHOPS'],['0','GSPEICHERET'],['—','IM SALE']],link:'shopping.html',pulseLive:false},
+
+    {id:'news',ic:'📰',name:'NEWS & STORIES',meta:'0 BEITRÄG',color:'#c8ff00',glow:'rgba(200,255,0,0.4)',
+     size:68, sizeM:56,
+     pos:{top:'70%',left:'12%'}, posM:{top:'72%',left:'60%'},
+     drift:'driftC',dur:'9.5s',
+     stats:[['—','ARTIKEL'],['0','DIN BEITRÄG'],['—','HÜT NEU']],link:'#',pulseLive:false},
+
+    {id:'markt',ic:'🛒',name:'MARKTPLATZ',meta:'0 INSERAT',color:'#ff6b00',glow:'rgba(255,107,0,0.35)',
+     size:54, sizeM:48,
+     pos:{top:'42%',left:'4%'}, posM:{top:'28%',left:'20%'},
+     drift:'driftA',dur:'13s',
+     stats:[[marktCount||'—','INSERAT'],['0','DIS INSERAT'],['—','VERKAUFT']],link:'#',pulseLive:false},
+
+    {id:'gps',ic:'📍',name:'GPS',meta:'PHASE 5',color:'#666666',glow:'rgba(120,120,120,0.25)',
+     size:50, sizeM:44,
+     pos:{top:'62%',left:'30%'}, posM:{top:'46%',left:'30%'},
+     drift:'driftB',dur:'14s',
+     stats:[['⏳','PHASE 5'],['200M','RADIUS GEPLANT'],['—','—']],link:'#',pulseLive:false,isComingSoon:true},
+  ];
+
+  renderUniBubbles();
+  renderUniCenter(p);
+}
+
+// Fallback: zählt Zeilen via Supabase Count-Header
+async function sbCount(path){
+  try{
+    const r=await fetch(SU+'/rest/v1/'+path+'&select=id',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact','Range':'0-0'}});
+    const range=r.headers.get('content-range');
+    return range?parseInt(range.split('/')[1]):null;
+  }catch(e){return null;}
+}
+
+function renderUniCenter(p){
+  const nick=p.nickname||'zuerifuchs';
+  document.getElementById('uni-core').textContent=nick[0].toUpperCase();
+  document.getElementById('uni-handle').textContent='@'+nick.toUpperCase();
+  document.getElementById('uni-meta').textContent=(p.punkte||0)+' PTS'+(p.kreis?' · KREIS '+p.kreis:'');
+}
+
+function renderUniBubbles(){
+  const layer=document.getElementById('bubbles-layer');
+  layer.innerHTML='';
+  UNI_CATEGORIES.forEach(c=>{
+    const b=document.createElement('div');
+    b.className='bubble';
+    const sz = isUniMobile ? c.sizeM : c.size;
+    const position = isUniMobile ? c.posM : c.pos;
+    b.style.width=sz+'px';
+    b.style.height=sz+'px';
+    b.style.top=position.top;
+    b.style.left=position.left;
+    b.style.background=c.isKi
+      ? `linear-gradient(135deg, ${c.color}88, #9333ea66 50%, ${c.color}55)`
+      : c.isComingSoon
+      ? `radial-gradient(circle at 35% 30%, rgba(120,120,120,0.18), rgba(120,120,120,0.06) 60%, transparent 100%)`
+      : `radial-gradient(circle at 35% 30%, ${c.color}77, ${c.color}33 55%, ${c.color}1a 100%)`;
+    b.style.border=c.isKi ? `1.5px solid rgba(255,255,255,0.4)` : c.isComingSoon ? `1.5px dashed rgba(255,255,255,0.22)` : `1.5px solid ${c.color}99`;
+    b.style.boxShadow=c.isKi
+      ? `0 0 ${sz*0.6}px ${c.glow}, 0 0 ${sz*1.1}px rgba(147,51,234,0.4), inset 0 0 20px rgba(255,255,255,0.15)`
+      : c.isComingSoon
+      ? `0 0 ${sz*0.3}px ${c.glow}, inset 0 0 14px rgba(255,255,255,0.04)`
+      : `0 0 ${sz*0.5}px ${c.glow}, 0 0 ${sz*0.9}px ${c.glow}, inset 0 0 24px rgba(255,255,255,0.08)`;
+    if(c.isKi) b.classList.add('bubble-ki');
+    if(c.isComingSoon) b.style.opacity='0.55';
+    const driftScale = isUniMobile ? '0.5' : '1';
+    b.style.setProperty('--drift-scale', driftScale);
+    b.style.animation=c.isKi
+      ? `${c.drift} ${c.dur} ease-in-out infinite, kiShimmer 4s ease-in-out infinite`
+      : `${c.drift} ${c.dur} ease-in-out infinite`+(c.pulseLive?', pulseGlow 2s ease-in-out infinite':'');
+    if(c.isKi) b.style.backgroundSize='200% 200%';
+
+    const fontSize=Math.max(isUniMobile?7:9, sz*0.125);
+    const iconSize=sz*0.28;
+    const metaSize=Math.max(5.5,sz*0.07);
+    b.innerHTML=`
+      ${c.pulseLive?'<div class="b-pulsemoment"></div><div class="b-badge-live">🔥 LIVE</div>':''}
+      <span class="b-icon" style="font-size:${iconSize}px">${c.ic}</span>
+      <span class="b-name" style="font-size:${fontSize}px;color:${c.isComingSoon?'rgba(255,255,255,0.4)':c.color}">${c.name}</span>
+      ${sz>60?`<span class="b-meta" style="font-size:${metaSize}px;color:${c.isComingSoon?'rgba(255,255,255,0.3)':c.color}">${c.meta}</span>`:''}`;
+    b.onclick=()=>openUniCard(c.id);
+    layer.appendChild(b);
+  });
+}
+
+window.openUniCard=function(id){
+  const backdrop=document.getElementById('bc-backdrop');
+  const card=document.getElementById('bubble-card');
+  const inner=document.getElementById('bc-inner');
+
+  if(id==='du'){
+    const p=PROFILE;
+    const rank=getRank(p.punkte||0);
+    inner.innerHTML=`
+      <div class="bc-top">
+        <div class="bc-icon" style="background:linear-gradient(135deg,#ff2d00,#9333ea)">${(p.nickname||'Z')[0].toUpperCase()}</div>
+        <div><div class="bc-title">@${(p.nickname||'zuerifuchs').toUpperCase()}</div><div class="bc-sub">${p.kreis?'KREIS '+p.kreis+' · ':''}${p.vibe||'STADTMENSCH'}</div></div>
+      </div>
+      <div class="bc-stats">
+        <div class="bc-stat"><div class="bc-stat-n">${p.punkte||0}</div><div class="bc-stat-l">SCORE PTS</div></div>
+        <div class="bc-stat"><div class="bc-stat-n">0</div><div class="bc-stat-l">BOOKMARKS</div></div>
+        <div class="bc-stat"><div class="bc-stat-n">${rank.icon}</div><div class="bc-stat-l">${rank.name}</div></div>
+      </div>
+      <a class="bc-btn" style="background:linear-gradient(135deg,#ff2d00,#e02800);color:#fff" href="#miin-profil" onclick="closeUniCard()">ZU MIM PROFIL →</a>`;
+  }else if(id==='ki'){
+    inner.innerHTML=`
+      <div class="bc-top">
+        <div class="bc-icon" style="background:linear-gradient(135deg,#00f5ff,#9333ea)">✨</div>
+        <div><div class="bc-title">ZÜRI-BOT</div><div class="bc-sub">DIN PERSÖNLICHE KI-ASSISTENT</div></div>
+      </div>
+      <div style="font-size:11px;color:rgba(232,228,217,0.55);line-height:1.7;margin-bottom:16px">
+        «Was mach ich hüt Abig?» · «Wo geits grad ab in Kreis 4?» · «Find mir öppis Vegisches in der Nächi» — dä Züri-Bot lernt dini Vibe und schickt dir genau das wo zu dir passt, bevor du überhaupt gsuecht hesch.
+      </div>
+      <div class="bc-stats">
+        <div class="bc-stat"><div class="bc-stat-n" style="color:#00f5ff">KI</div><div class="bc-stat-l">CLAUDE-POWERED</div></div>
+        <div class="bc-stat"><div class="bc-stat-n" style="color:#00f5ff">100%</div><div class="bc-stat-l">PERSÖNLECH</div></div>
+        <div class="bc-stat"><div class="bc-stat-n" style="color:#00f5ff">⏳</div><div class="bc-stat-l">PHASE 6</div></div>
+      </div>
+      <button class="bc-btn" style="background:linear-gradient(135deg,#00f5ff,#9333ea);color:#04040a" onclick="notif('ZÜRI-BOT CHUNT BALD — WIR SIND SCHO DRAA! ✨')">BENACHRICHTIGE MICH →</button>`;
+  }else if(id==='gps'){
+    inner.innerHTML=`
+      <div class="bc-top">
+        <div class="bc-icon" style="background:rgba(120,120,120,0.15);border:1px dashed rgba(255,255,255,0.25)">📍</div>
+        <div><div class="bc-title" style="color:rgba(232,228,217,0.55)">GPS</div><div class="bc-sub">HYPER-LOKAL · PHASE 5</div></div>
+      </div>
+      <div style="font-size:11px;color:rgba(232,228,217,0.5);line-height:1.7;margin-bottom:16px">
+        Dini Position. Dini Events. Dini Restis. Sobald GPS live isch, gseht das hie automatisch was 200 Meter um dich rum grad lauft — kei Suche, kei Tippe.
+      </div>
+      <div class="bc-stats">
+        <div class="bc-stat"><div class="bc-stat-n" style="color:rgba(232,228,217,0.4)">200M</div><div class="bc-stat-l">RADIUS GEPLANT</div></div>
+        <div class="bc-stat"><div class="bc-stat-n" style="color:rgba(232,228,217,0.4)">OPT-IN</div><div class="bc-stat-l">FREIWILLIG</div></div>
+        <div class="bc-stat"><div class="bc-stat-n" style="color:rgba(232,228,217,0.4)">⏳</div><div class="bc-stat-l">PHASE 5</div></div>
+      </div>
+      <button class="bc-btn" style="background:rgba(255,255,255,0.08);color:rgba(232,228,217,0.6);border:1px solid rgba(255,255,255,0.15)" onclick="notif('BENACHRICHTIGE DICH SOBALD GPS LIVE ISCH!')">BENACHRICHTIGE MICH →</button>`;
+  }else{
+    const c=UNI_CATEGORIES.find(x=>x.id===id);
+    if(!c)return;
+    inner.innerHTML=`
+      <div class="bc-top">
+        <div class="bc-icon" style="background:${c.color}22;border:1px solid ${c.color}55">${c.ic}</div>
+        <div><div class="bc-title">${c.name}</div><div class="bc-sub">${c.badge||c.meta}</div></div>
+      </div>
+      <div class="bc-stats">
+        ${c.stats.map(s=>`<div class="bc-stat"><div class="bc-stat-n" style="color:${c.color}">${s[0]}</div><div class="bc-stat-l">${s[1]}</div></div>`).join('')}
+      </div>
+      <a class="bc-btn" style="background:${c.color};color:#04040a" href="${c.link}">ENTDECKE →</a>`;
+  }
+
+  backdrop.classList.add('open');
+  card.classList.add('open');
+};
+window.closeUniCard=function(){
+  document.getElementById('bc-backdrop').classList.remove('open');
+  document.getElementById('bubble-card').classList.remove('open');
 };
 
-// Geschlecht Modal
-window.openGeschlecht=function(){
-  document.getElementById('modal-eye').textContent='PROFIL';
-  document.getElementById('modal-title').textContent='GESCHLECHT';
-  document.getElementById('modal-body').innerHTML=`
-    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:16px">
-      ${['MANN','FRAU','NON-BINARY','ANDERES','LIEBER NÖD AAGÄH'].map(g=>`
-        <div onclick="notif('${g} GSPEICHERET!')" style="padding:13px;border:1px solid rgba(255,45,0,0.14);border-radius:3px;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,0.45);transition:all .2s" onmouseover="this.style.borderColor='#ff2d00';this.style.color='#e8e4d9'" onmouseout="this.style.borderColor='rgba(255,45,0,0.14)';this.style.color='rgba(232,228,217,0.45)'">${g}</div>
-      `).join('')}
-    </div>`;
-  document.getElementById('modal').classList.add('open');
+function setTog(id,val){
+  const el=document.getElementById(id);
+  el.classList.toggle('on',!!val);
+}
+
+window.togglePref=async function(el,field){
+  el.classList.toggle('on');
+  const val=el.classList.contains('on');
+  await sb.from('users').update({[field]:val}).eq('auth_id',CURRENT_USER.id);
+  PROFILE[field]=val;
+  notif('GSPEICHERET!');
 };
 
-// News Modal
-window.openNewsModal=function(){
-  document.getElementById('modal-eye').textContent='NEWS & STORIES';
-  document.getElementById('modal-title').textContent='BEITRAG SCHREIBE';
-  document.getElementById('modal-body').innerHTML=`
-    <div style="font-size:7px;letter-spacing:3px;color:rgba(232,228,217,0.22);text-transform:uppercase;margin-bottom:7px">KATEGORIE</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:14px">
-      ${['📰 STORY','🍜 GASTRO-TIPP','🎵 EVENT-BERICHT','🛍 SHOPPING-TIPP','🌆 KREIS-NEWS','💡 TIPP & TRICK'].map((c,i)=>`
-        <div onclick="selCat(this)" style="padding:10px;border:1px solid rgba(255,45,0,0.14);border-radius:3px;cursor:pointer;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,0.35);text-align:center;transition:all .2s">${c}</div>
-      `).join('')}
-    </div>
-    <div style="font-size:7px;letter-spacing:3px;color:rgba(232,228,217,0.22);text-transform:uppercase;margin-bottom:7px">TITEL</div>
-    <input style="width:100%;background:rgba(255,255,255,0.02);border:1px solid rgba(255,45,0,0.14);border-radius:3px;color:#e8e4d9;padding:12px 13px;font-family:'DM Mono',monospace;font-size:12px;outline:none;margin-bottom:10px" placeholder="Dini Überschrift..." type="text"/>
-    <div style="font-size:7px;letter-spacing:3px;color:rgba(232,228,217,0.22);text-transform:uppercase;margin-bottom:7px">INHALT</div>
-    <textarea style="width:100%;background:rgba(255,255,255,0.02);border:1px solid rgba(255,45,0,0.14);border-radius:3px;color:#e8e4d9;padding:12px 13px;font-family:'DM Mono',monospace;font-size:12px;outline:none;min-height:100px;resize:none;line-height:1.6;margin-bottom:14px" placeholder="Schrib dis Story..."></textarea>
-    <div style="background:rgba(200,255,0,0.03);border:1px solid rgba(200,255,0,0.1);border-radius:3px;padding:10px 12px;margin-bottom:14px;font-size:8px;color:rgba(200,255,0,0.45);letter-spacing:1px;text-transform:uppercase;line-height:1.8">⚡ KI prüft din Beitrag automatisch<br>Sauberi Beiträg: sofort live · Mobbing/Hate: sofort abglehnt + Verwarnung · Unsicher: manuelli Prüfig</div>
-    <button onclick="submitNews()" style="width:100%;border:none;border-radius:3px;padding:14px;background:#c8ff00;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;letter-spacing:3px;cursor:pointer;text-transform:uppercase">PUBLIZIERE → +25 PTS</button>`;
-  document.getElementById('modal').classList.add('open');
-};
-
-window.submitNews=function(){
-  closeModal();
-  notif('BEITRAG ISCH IN PRÜFIG... ⚡');
-};
-
-// Markt Modal
-window.openMarktModal=function(){
-  document.getElementById('modal-eye').textContent='MARKTPLATZ';
-  document.getElementById('modal-title').textContent='INSERAT ERSTELLE';
-  document.getElementById('modal-body').innerHTML=`
-    <div style="font-size:7px;letter-spacing:3px;color:rgba(232,228,217,0.22);text-transform:uppercase;margin-bottom:7px">KATEGORIE</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:14px">
-      ${['🚴 VELO','🛋 MÖBEL','👗 KLEIDER','🎫 TICKETS','💻 ELEKTRONIK','📦 ANDERES'].map(c=>`
-        <div onclick="selCat(this)" style="padding:10px;border:1px solid rgba(255,45,0,0.14);border-radius:3px;cursor:pointer;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,0.32);text-align:center;transition:all .2s">${c}</div>
-      `).join('')}
-    </div>
-    <input style="width:100%;background:rgba(255,255,255,0.02);border:1px solid rgba(255,45,0,0.14);border-radius:3px;color:#e8e4d9;padding:12px 13px;font-family:'DM Mono',monospace;font-size:12px;outline:none;margin-bottom:8px" placeholder="Titel des Inserats..." type="text"/>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-      <input style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,45,0,0.14);border-radius:3px;color:#e8e4d9;padding:12px 13px;font-family:'DM Mono',monospace;font-size:12px;outline:none;width:100%" placeholder="Preis (CHF)" type="number"/>
-      <select style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,45,0,0.14);border-radius:3px;color:rgba(232,228,217,0.5);padding:12px 13px;font-family:'DM Mono',monospace;font-size:12px;outline:none;width:100%">
-        <option>ZÜRIWIDE</option><option>KREIS 1</option><option>KREIS 4</option><option>KREIS 5</option>
-      </select>
-    </div>
-    <textarea style="width:100%;background:rgba(255,255,255,0.02);border:1px solid rgba(255,45,0,0.14);border-radius:3px;color:#e8e4d9;padding:12px 13px;font-family:'DM Mono',monospace;font-size:12px;outline:none;min-height:80px;resize:none;line-height:1.6;margin-bottom:14px" placeholder="Beschreibig..."></textarea>
-    <div style="background:rgba(200,255,0,0.03);border:1px solid rgba(200,255,0,0.1);border-radius:3px;padding:10px 12px;margin-bottom:14px;font-size:8px;color:rgba(200,255,0,0.45);letter-spacing:1px;text-transform:uppercase;line-height:1.8">⚡ KI prüft dis Inserat automatisch<br>Verboteni Artikel (Waffe etc.): sofort abglehnt · Unrealistische Preis: Prüfig · Duplikat: Prüfig</div>
-    <button onclick="submitMarkt()" style="width:100%;border:none;border-radius:3px;padding:14px;background:#ff2d00;color:#e8e4d9;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;letter-spacing:3px;cursor:pointer;text-transform:uppercase">INSERAT STARTE → +30 PTS</button>`;
-  document.getElementById('modal').classList.add('open');
-};
-
-window.submitMarkt=function(){
-  closeModal();
-  notif('INSERAT ISCH IN PRÜFIG... ⚡');
-};
-
-// Modal Close
-window.closeModal=function(){document.getElementById('modal').classList.remove('open');};
-document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeModal();});
-
-// Cat select helper
-window.selCat=function(el){
-  el.parentElement.querySelectorAll('div').forEach(d=>{d.style.borderColor='rgba(255,45,0,0.14)';d.style.color='rgba(232,228,217,0.32)';d.style.background='transparent';});
-  el.style.borderColor='#ff2d00';el.style.color='#ff2d00';el.style.background='rgba(255,45,0,0.06)';
-};
-
-// Tabs
-window.bmTab=function(el,cat,link){
-  document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-  document.getElementById('bm-content').innerHTML=`<div class="empty"><div class="empty-big">LEER</div><div class="empty-txt">NO KÄI ${cat} GSPEICHERET</div><button class="BTN red" style="max-width:220px;margin:0 auto;display:block;font-size:14px" onclick="window.location.href='${link}'">${cat} ENTDECKE →</button></div>`;
-};
-window.newsTab=function(el,type){
-  el.closest('.tabs').querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-};
-window.marktTab=function(el,type){
-  el.closest('.tabs').querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
-  el.classList.add('on');
-};
-
-// People & Dates
-window.selDv=function(el){document.querySelectorAll('.dv').forEach(v=>v.classList.remove('on'));el.classList.add('on');};
-window.selSeek=function(el){document.querySelectorAll('.seek').forEach(v=>v.classList.remove('on'));el.classList.add('on');};
-
-// Interessen Chips
+// CHIPS
 const chipData=[
   ['🍜','GASTRO'],['🌙','NACHTLEBE'],['🛍','SHOPPING'],['🎵','EVENTS'],
   ['💼','JOBS'],['🏠','WOHNE'],['🎨','KULTUR'],['🧘','WELLNESS'],
   ['🚴','SPORT'],['❤️','DATES'],['📰','NEWS & STORIES'],['🛒','MARKTPLATZ']
 ];
-const cc=document.getElementById('int-chips');
-chipData.forEach(([ic,lb],i)=>{
-  const d=document.createElement('div');
-  d.className='chip'+(i<3?' on':'');
-  d.textContent=`${ic} ${lb}`;
-  d.onclick=function(){this.classList.toggle('on');notif('GSPEICHERET!');};
-  cc.appendChild(d);
-});
+let currentInteressen=[];
+function buildChips(interessen){
+  currentInteressen=[...interessen];
+  const cc=document.getElementById('int-chips');
+  cc.innerHTML='';
+  chipData.forEach(([ic,lb])=>{
+    const d=document.createElement('div');
+    d.className='chip'+(interessen.includes(lb)?' on':'');
+    d.textContent=`${ic} ${lb}`;
+    d.onclick=function(){
+      this.classList.toggle('on');
+      const idx=currentInteressen.indexOf(lb);
+      if(idx>-1)currentInteressen.splice(idx,1);
+      else currentInteressen.push(lb);
+    };
+    cc.appendChild(d);
+  });
+}
+
+window.saveInteressen=async function(){
+  await sb.from('users').update({interessen:currentInteressen}).eq('auth_id',CURRENT_USER.id);
+  PROFILE.interessen=currentInteressen;
+  notif('INTERESSEN GSPEICHERET!');
+};
+
+window.saveBio=async function(){
+  const bio=document.getElementById('bio-field').value;
+  await sb.from('users').update({bio}).eq('auth_id',CURRENT_USER.id);
+  PROFILE.bio=bio;
+  notif('BIO GSPEICHERET! +20 PTS');
+};
+
+// NOTIFICATION TYPEN TOGGLES
+const NOTIF_DEFS=[
+  {typ:'pulse_moment',ic:'🔥',name:'PULSE MOMENT',desc:'Wenn dis Kreis grad explodiert'},
+  {typ:'popup_event',ic:'⚡',name:'NEUI POP-UPS',desc:'Neui Events & Pop-Ups i dim Kreis'},
+  {typ:'ki_top_pick',ic:'🎯',name:'KI TOP PICKS',desc:'Persönlichi Empfehlige'},
+  {typ:'kreis_battle',ic:'🏆',name:'KREISRIVALITÄT',desc:'Wenn dis Kreis d Führung wechslet'},
+  {typ:'news_approved',ic:'📰',name:'BEITRÄG STATUS',desc:'Wenn dini News/Story freigeschalte wird'},
+  {typ:'inserat_status',ic:'🛒',name:'INSERAT STATUS',desc:'Wenn dis Inserat freigeschalte wird'}
+];
+let currentNotifTypen=[];
+function buildNotifToggles(typen){
+  currentNotifTypen=[...typen];
+  const c=document.getElementById('notif-toggles');
+  c.innerHTML=NOTIF_DEFS.map(n=>`
+    <div class="tog-row">
+      <div><div class="tog-lbl">${n.ic} ${n.name}</div><div class="tog-sub">${n.desc}</div></div>
+      <div class="tog${typen.includes(n.typ)?' on':''}" data-typ="${n.typ}" onclick="toggleNotifTyp(this)"></div>
+    </div>`).join('');
+}
+window.toggleNotifTyp=async function(el){
+  el.classList.toggle('on');
+  const typ=el.dataset.typ;
+  if(el.classList.contains('on')) currentNotifTypen.push(typ);
+  else currentNotifTypen=currentNotifTypen.filter(t=>t!==typ);
+  await sb.from('users').update({notification_typen:currentNotifTypen}).eq('auth_id',CURRENT_USER.id);
+  PROFILE.notification_typen=currentNotifTypen;
+  notif('GSPEICHERET!');
+};
+
+// NOTIFICATIONS PANEL (echte notifications Tabelle)
+window.toggleNotifPanel=function(){
+  document.getElementById('notif-panel').classList.toggle('open');
+};
+async function loadNotifications(){
+  const {data}=await sb.from('notifications').select('*').eq('user_id',PROFILE.id).order('created_at',{ascending:false}).limit(10);
+  const c=document.getElementById('notif-panel-content');
+  if(!data||!data.length){
+    c.innerHTML='<div class="np-empty">NO KÄI NOTIFICATIONS</div>';
+    document.getElementById('bell-dot').classList.remove('show');
+    return;
+  }
+  const unread=data.filter(n=>!n.gelesen).length;
+  if(unread>0) document.getElementById('bell-dot').classList.add('show');
+  const icons={pulse_moment:'🔥',popup_event:'⚡',ki_top_pick:'🎯',kreis_battle:'🏆',match:'❤️',news_approved:'📰',inserat_status:'🛒'};
+  c.innerHTML=data.map(n=>`
+    <div class="np-item">
+      <span class="np-icon">${icons[n.typ]||'🔔'}</span>
+      <div><div class="np-title">${n.titel||''}</div><div class="np-text">${n.inhalt||''}</div></div>
+    </div>`).join('');
+}
+
+// MODALS
+window.openYearModal=function(){
+  document.getElementById('modal-eye').textContent='PROFIL';
+  document.getElementById('modal-title').textContent='GEBURTSJAHR';
+  document.getElementById('modal-body').innerHTML=`
+    <input class="inp" id="modal-year" type="number" placeholder="JJJJ" min="1940" max="2008" value="${PROFILE.geburtsjahr||''}" style="font-size:18px;text-align:center;margin-bottom:14px"/>
+    <button class="BTN volt" onclick="saveYear()">SPEICHERE →</button>`;
+  document.getElementById('modal').classList.add('open');
+};
+window.saveYear=async function(){
+  const yy=parseInt(document.getElementById('modal-year').value);
+  if(!yy||yy<1940||yy>2008){notif('UNGÜLTIGS JAHR');return;}
+  await sb.from('users').update({geburtsjahr:yy}).eq('auth_id',CURRENT_USER.id);
+  PROFILE.geburtsjahr=yy;
+  closeModal();
+  renderProfile();
+  notif('GEBURTSJAHR GSPEICHERET!');
+};
+
+window.openGeschlecht=function(){
+  document.getElementById('modal-eye').textContent='PROFIL';
+  document.getElementById('modal-title').textContent='GESCHLECHT';
+  const opts=['MANN','FRAU','NON-BINARY','ANDERES'];
+  document.getElementById('modal-body').innerHTML=`
+    <div style="display:flex;flex-direction:column;gap:8px">
+      ${opts.map(g=>`<button onclick="saveGeschlecht('${g}')" style="padding:13px;border:1px solid rgba(255,45,0,0.14);border-radius:8px;cursor:pointer;background:transparent;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,0.45)" onmouseover="this.style.borderColor='#ff2d00';this.style.color='#e8e4d9'" onmouseout="this.style.borderColor='rgba(255,45,0,0.14)';this.style.color='rgba(232,228,217,0.45)'">${g}</button>`).join('')}
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+};
+window.saveGeschlecht=async function(g){
+  await sb.from('users').update({geschlecht:g}).eq('auth_id',CURRENT_USER.id);
+  PROFILE.geschlecht=g;
+  closeModal();
+  renderProfile();
+  notif('GSPEICHERET!');
+};
+
+window.openNewsModal=function(){
+  document.getElementById('modal-eye').textContent='NEWS & STORIES';
+  document.getElementById('modal-title').textContent='BEITRAG SCHREIBE';
+  document.getElementById('modal-body').innerHTML=`
+    <input class="inp" id="news-titel" placeholder="Dini Überschrift..." type="text"/>
+    <textarea class="inp" id="news-inhalt" placeholder="Schrib dis Story..." style="min-height:100px"></textarea>
+    <div style="background:rgba(200,255,0,0.03);border:1px solid rgba(200,255,0,0.1);border-radius:6px;padding:10px 12px;margin-bottom:14px;font-size:8px;color:rgba(200,255,0,0.45);letter-spacing:1px;text-transform:uppercase;line-height:1.8">⚡ KI prüft din Beitrag automatisch</div>
+    <button class="BTN volt" onclick="submitNews()">PUBLIZIERE → +25 PTS</button>`;
+  document.getElementById('modal').classList.add('open');
+};
+window.submitNews=async function(){
+  const titel=document.getElementById('news-titel').value.trim();
+  const inhalt=document.getElementById('news-inhalt').value.trim();
+  if(!titel||!inhalt){notif('TITEL UND INHALT PFLICHTIG');return;}
+  await sb.from('news_stories').insert({titel,inhalt,user_id:PROFILE.id,status:'pending'});
+  closeModal();
+  notif('BEITRAG ISCH IN PRÜFIG... ⚡');
+};
+
+window.openMarktModal=function(){
+  document.getElementById('modal-eye').textContent='MARKTPLATZ';
+  document.getElementById('modal-title').textContent='INSERAT ERSTELLE';
+  document.getElementById('modal-body').innerHTML=`
+    <input class="inp" id="markt-titel" placeholder="Titel des Inserats..." type="text"/>
+    <input class="inp" id="markt-preis" placeholder="Preis (CHF)" type="number"/>
+    <textarea class="inp" id="markt-beschr" placeholder="Beschreibig..." style="min-height:80px"></textarea>
+    <div style="background:rgba(200,255,0,0.03);border:1px solid rgba(200,255,0,0.1);border-radius:6px;padding:10px 12px;margin-bottom:14px;font-size:8px;color:rgba(200,255,0,0.45);letter-spacing:1px;text-transform:uppercase;line-height:1.8">⚡ KI prüft dis Inserat automatisch</div>
+    <button class="BTN red" onclick="submitMarkt()">INSERAT STARTE → +30 PTS</button>`;
+  document.getElementById('modal').classList.add('open');
+};
+window.submitMarkt=async function(){
+  const titel=document.getElementById('markt-titel').value.trim();
+  const preis=parseFloat(document.getElementById('markt-preis').value)||null;
+  const beschreibung=document.getElementById('markt-beschr').value.trim();
+  if(!titel){notif('TITEL PFLICHTIG');return;}
+  await sb.from('inserate').insert({titel,preis,beschreibung,user_id:PROFILE.id,status:'pending'});
+  closeModal();
+  notif('INSERAT ISCH IN PRÜFIG... ⚡');
+};
+
+window.closeModal=function(){document.getElementById('modal').classList.remove('open');};
+document.getElementById('modal').addEventListener('click',e=>{if(e.target===document.getElementById('modal'))closeModal();});
+
+window.bmTab=function(el,cat,link){
+  document.querySelectorAll('.tabs .tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('bm-content').innerHTML=`<div class="empty"><div class="empty-big">LEER</div><div class="empty-txt">NO KÄI ${cat} GSPEICHERET</div><button class="BTN red" style="max-width:220px;margin:0 auto;display:block;font-size:14px" onclick="window.location.href='${link}'">${cat} ENTDECKE →</button></div>`;
+};
+
+window.changePw=async function(){
+  const pw=document.getElementById('pw-new').value;
+  if(pw.length<8){notif('PASSWORT MIN. 8 ZEICHE');return;}
+  const {error}=await sb.auth.updateUser({password:pw});
+  if(error){notif('FEHLER: '+error.message);}
+  else{notif('PASSWORT GSPEICHERET!');document.getElementById('pw-new').value='';}
+};
+
+document.getElementById('nav-out').onclick=async()=>{
+  await sb.auth.signOut();
+  window.location.href='login.html';
+};
+
+loadDashboard();
 </script>
 </body>
 </html>
