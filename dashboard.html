@@ -245,22 +245,26 @@ textarea.inp{resize:none;min-height:80px;line-height:1.6}
 .b-badge-live{position:absolute;top:-9px;right:-6px;background:#ff2d00;color:#fff;font-size:6px;letter-spacing:1px;padding:3px 7px;border-radius:100px;font-weight:bold;box-shadow:0 2px 12px rgba(255,45,0,0.8),0 0 20px rgba(255,45,0,0.4);animation:badgeBlink 1.4s ease-in-out infinite}
 @keyframes badgeBlink{0%,100%{opacity:1}50%{opacity:.5}}
 
-/* TOOLTIP / DETAIL CARD on tap */
-.bubble-card{position:fixed;bottom:0;left:0;right:0;background:#0a0005;border-top:1px solid rgba(255,45,0,0.2);border-radius:16px 16px 0 0;padding:0;z-index:110;box-shadow:0 -10px 50px rgba(0,0,0,0.6);transform:translateY(100%);transition:transform .35s cubic-bezier(.16,1,.3,1);max-width:480px;margin:0 auto;right:0}
-.bubble-card.open{transform:translateY(0)}
-.bc-handle{width:36px;height:4px;background:rgba(255,255,255,0.15);border-radius:2px;margin:12px auto 0}
-.bc-inner{padding:18px 22px 26px}
-.bc-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
-.bc-icon{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
-.bc-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;text-transform:uppercase;color:#e8e4d9;line-height:1}
-.bc-sub{font-size:8px;letter-spacing:2px;color:rgba(232,228,217,0.3);text-transform:uppercase;margin-top:2px}
-.bc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.06);border-radius:8px;overflow:hidden;margin-bottom:16px}
-.bc-stat{background:#0a0005;padding:10px 6px;text-align:center}
-.bc-stat-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;color:#e8e4d9;line-height:1}
-.bc-stat-l{font-size:6px;letter-spacing:1.5px;color:rgba(232,228,217,0.25);text-transform:uppercase;margin-top:2px}
-.bc-btn{display:block;width:100%;text-align:center;padding:14px;border-radius:8px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none}
-.bc-close{position:absolute;top:14px;right:16px;background:rgba(255,255,255,0.08);border:none;color:rgba(232,228,217,0.5);width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:13px}
-.bc-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:109;opacity:0;pointer-events:none;transition:opacity .3s}
+/* TOOLTIP / DETAIL CARD on tap — feedback.html-Stil: zentriertes Glow-Modal */
+.bubble-card{position:fixed;top:50%;left:50%;transform:translate(-50%,-48%) scale(0.94);background:#0a0a12;border-radius:20px;padding:0;z-index:110;box-shadow:0 30px 90px rgba(0,0,0,0.7);max-width:540px;width:calc(100% - 48px);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s cubic-bezier(.16,1,.3,1);overflow:hidden}
+.bubble-card.open{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
+.bc-topbar{height:4px;width:100%}
+.bc-handle{display:none}
+.bc-inner{padding:32px 32px 28px}
+.bc-top{display:flex;align-items:center;gap:18px;margin-bottom:20px}
+.bc-icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;box-shadow:0 0 30px currentColor,inset 0 0 16px rgba(255,255,255,0.15)}
+.bc-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;text-transform:uppercase;color:#fff;line-height:1;text-shadow:0 0 24px currentColor}
+.bc-sub{font-size:9px;letter-spacing:2.5px;color:rgba(232,228,217,0.4);text-transform:uppercase;margin-top:4px}
+.bc-desc{font-size:12px;color:rgba(232,228,217,0.6);line-height:1.7;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.bc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;margin-bottom:20px}
+.bc-stat{background:#0a0a12;padding:14px 8px;text-align:center}
+.bc-stat-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;color:#e8e4d9;line-height:1}
+.bc-stat-l{font-size:7px;letter-spacing:1.5px;color:rgba(232,228,217,0.3);text-transform:uppercase;margin-top:3px}
+.bc-btn{display:block;width:100%;text-align:center;padding:17px;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:19px;letter-spacing:2.5px;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;transition:all .2s}
+.bc-btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
+.bc-close{position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.1);border:none;color:rgba(232,228,217,0.6);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;z-index:5;transition:all .2s}
+.bc-close:hover{background:rgba(255,255,255,0.18);color:#fff}
+.bc-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:109;opacity:0;pointer-events:none;transition:opacity .3s}
 .bc-backdrop.open{opacity:1;pointer-events:auto}
 
 /* LEGEND below universe */
@@ -340,8 +344,8 @@ footer.spacer{height:60px}
 
 <div class="bc-backdrop" id="bc-backdrop" onclick="closeUniCard()"></div>
 <div class="bubble-card" id="bubble-card">
+  <div class="bc-topbar" id="bc-topbar"></div>
   <button class="bc-close" onclick="closeUniCard()">✕</button>
-  <div class="bc-handle"></div>
   <div class="bc-inner" id="bc-inner"></div>
 </div>
 
@@ -877,13 +881,15 @@ window.openUniCard=function(id){
   const backdrop=document.getElementById('bc-backdrop');
   const card=document.getElementById('bubble-card');
   const inner=document.getElementById('bc-inner');
+  const topbar=document.getElementById('bc-topbar');
 
   if(id==='du'){
     const p=PROFILE;
     const rank=getRank(p.punkte||0);
+    topbar.style.background='linear-gradient(90deg,#ff2d00,#9333ea)';
     inner.innerHTML=`
-      <div class="bc-top">
-        <div class="bc-icon" style="background:linear-gradient(135deg,#ff2d00,#9333ea)">${(p.nickname||'Z')[0].toUpperCase()}</div>
+      <div class="bc-top" style="color:#ff2d00">
+        <div class="bc-icon" style="background:linear-gradient(135deg,#ff2d00,#9333ea);color:#ff2d00">${(p.nickname||'Z')[0].toUpperCase()}</div>
         <div><div class="bc-title">@${(p.nickname||'zuerifuchs').toUpperCase()}</div><div class="bc-sub">${p.kreis?'KREIS '+p.kreis+' · ':''}${p.vibe||'STADTMENSCH'}</div></div>
       </div>
       <div class="bc-stats">
@@ -893,14 +899,13 @@ window.openUniCard=function(id){
       </div>
       <a class="bc-btn" style="background:linear-gradient(135deg,#ff2d00,#e02800);color:#fff" href="#miin-profil" onclick="closeUniCard()">ZU MIM PROFIL →</a>`;
   }else if(id==='ki'){
+    topbar.style.background='linear-gradient(90deg,#00f5ff,#9333ea)';
     inner.innerHTML=`
-      <div class="bc-top">
-        <div class="bc-icon" style="background:linear-gradient(135deg,#00f5ff,#9333ea)">✨</div>
+      <div class="bc-top" style="color:#00f5ff">
+        <div class="bc-icon" style="background:linear-gradient(135deg,#00f5ff,#9333ea);color:#00f5ff">✨</div>
         <div><div class="bc-title">ZÜRI-BOT</div><div class="bc-sub">DIN PERSÖNLICHE KI-ASSISTENT</div></div>
       </div>
-      <div style="font-size:11px;color:rgba(232,228,217,0.55);line-height:1.7;margin-bottom:16px">
-        «Was mach ich hüt Abig?» · «Wo geits grad ab in Kreis 4?» · «Find mir öppis Vegisches in der Nächi» — dä Züri-Bot lernt dini Vibe und schickt dir genau das wo zu dir passt, bevor du überhaupt gsuecht hesch.
-      </div>
+      <div class="bc-desc">«Was mach ich hüt Abig?» · «Wo geits grad ab in Kreis 4?» · «Find mir öppis Vegisches in der Nächi» — dä Züri-Bot lernt dini Vibe und schickt dir genau das wo zu dir passt, bevor du überhaupt gsuecht hesch.</div>
       <div class="bc-stats">
         <div class="bc-stat"><div class="bc-stat-n" style="color:#00f5ff">KI</div><div class="bc-stat-l">CLAUDE-POWERED</div></div>
         <div class="bc-stat"><div class="bc-stat-n" style="color:#00f5ff">100%</div><div class="bc-stat-l">PERSÖNLECH</div></div>
@@ -908,14 +913,13 @@ window.openUniCard=function(id){
       </div>
       <button class="bc-btn" style="background:linear-gradient(135deg,#00f5ff,#9333ea);color:#04040a" onclick="notif('ZÜRI-BOT CHUNT BALD — WIR SIND SCHO DRAA! ✨')">BENACHRICHTIGE MICH →</button>`;
   }else if(id==='gps'){
+    topbar.style.background='rgba(160,160,160,0.5)';
     inner.innerHTML=`
-      <div class="bc-top">
-        <div class="bc-icon" style="background:rgba(120,120,120,0.15);border:1px dashed rgba(255,255,255,0.25)">📍</div>
-        <div><div class="bc-title" style="color:rgba(232,228,217,0.55)">GPS</div><div class="bc-sub">HYPER-LOKAL · PHASE 5</div></div>
+      <div class="bc-top" style="color:rgba(232,228,217,0.6)">
+        <div class="bc-icon" style="background:rgba(120,120,120,0.15);border:1px dashed rgba(255,255,255,0.25);color:rgba(255,255,255,0.3)">📍</div>
+        <div><div class="bc-title" style="color:rgba(232,228,217,0.65)">GPS</div><div class="bc-sub">HYPER-LOKAL · PHASE 5</div></div>
       </div>
-      <div style="font-size:11px;color:rgba(232,228,217,0.5);line-height:1.7;margin-bottom:16px">
-        Dini Position. Dini Events. Dini Restis. Sobald GPS live isch, gseht das hie automatisch was 200 Meter um dich rum grad lauft — kei Suche, kei Tippe.
-      </div>
+      <div class="bc-desc">Dini Position. Dini Events. Dini Restis. Sobald GPS live isch, gseht das hie automatisch was 200 Meter um dich rum grad lauft — kei Suche, kei Tippe.</div>
       <div class="bc-stats">
         <div class="bc-stat"><div class="bc-stat-n" style="color:rgba(232,228,217,0.4)">200M</div><div class="bc-stat-l">RADIUS GEPLANT</div></div>
         <div class="bc-stat"><div class="bc-stat-n" style="color:rgba(232,228,217,0.4)">OPT-IN</div><div class="bc-stat-l">FREIWILLIG</div></div>
@@ -925,9 +929,10 @@ window.openUniCard=function(id){
   }else{
     const c=UNI_CATEGORIES.find(x=>x.id===id);
     if(!c)return;
+    topbar.style.background=c.color;
     inner.innerHTML=`
-      <div class="bc-top">
-        <div class="bc-icon" style="background:${c.color}22;border:1px solid ${c.color}55">${c.ic}</div>
+      <div class="bc-top" style="color:${c.color}">
+        <div class="bc-icon" style="background:${c.color}33;border:1px solid ${c.color}88;color:${c.color}">${c.ic}</div>
         <div><div class="bc-title">${c.name}</div><div class="bc-sub">${c.badge||c.meta}</div></div>
       </div>
       <div class="bc-stats">
