@@ -197,7 +197,7 @@ textarea.inp{resize:none;min-height:80px;line-height:1.6}
 @media(max-width:380px){.universe-wrap{height:760px}}
 #starfield{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
 
-.universe-head{position:absolute;top:22px;left:0;right:0;text-align:center;z-index:15;padding:0 24px;pointer-events:none}
+.universe-head{position:absolute;top:36px;left:0;right:0;text-align:center;z-index:15;padding:0 24px;pointer-events:none}
 .uh-eye{font-size:8px;letter-spacing:5px;color:#ff2d00;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:6px}
 .uh-eye::before,.uh-eye::after{content:'';width:16px;height:1px;background:rgba(255,45,0,0.3)}
 .uh-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;text-transform:uppercase;color:#fff;line-height:1;text-shadow:0 2px 20px rgba(0,0,0,0.8),0 0 40px rgba(0,0,0,0.6);letter-spacing:.5px}
@@ -226,8 +226,8 @@ textarea.inp{resize:none;min-height:80px;line-height:1.6}
 .bubble::before{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.1) 30%,transparent 55%);pointer-events:none}
 .bubble::after{content:'';position:absolute;width:20%;height:11%;top:13%;left:23%;background:rgba(255,255,255,0.75);border-radius:50%;filter:blur(1.5px);pointer-events:none;transform:rotate(-30deg)}
 .b-icon{font-size:22px;line-height:1;margin-bottom:2px;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.4))}
-.b-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:.5px;text-transform:uppercase;line-height:1.05}
-.b-meta{font-size:6.5px;letter-spacing:1px;text-transform:uppercase;opacity:.7;margin-top:1px}
+.b-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:.5px;text-transform:uppercase;line-height:1.05;text-shadow:0 1px 3px rgba(0,0,0,0.9),0 0 12px rgba(0,0,0,0.7)}
+.b-meta{font-size:6.5px;letter-spacing:1px;text-transform:uppercase;opacity:.95;margin-top:1px;text-shadow:0 1px 3px rgba(0,0,0,0.9)}
 
 /* Drift animations - each bubble gets its own via inline style timing, base keyframes vary */
 @keyframes driftA{0%,100%{transform:translate(0,0) rotate(0deg)}25%{transform:translate(calc(10px * var(--drift-scale,1)),calc(-14px * var(--drift-scale,1))) rotate(2deg)}50%{transform:translate(calc(-6px * var(--drift-scale,1)),calc(8px * var(--drift-scale,1))) rotate(-1deg)}75%{transform:translate(calc(-12px * var(--drift-scale,1)),calc(-6px * var(--drift-scale,1))) rotate(1deg)}}
@@ -759,14 +759,14 @@ async function buildUniverse(p){
 
     {id:'nachtleben',ic:'🌙',name:'NACHTLEBE',meta:p.vibe?vibeEmoji(p.vibe)+' '+p.vibe:'ENTDECKE',color:'#9333ea',glow:'rgba(147,51,234,0.55)',
      size:p.vibe==='NACHTMENSCH'?128:88, sizeM:p.vibe==='NACHTMENSCH'?92:64,
-     pos:{top:'14%',left:'58%'}, posM:{top:'17%',left:'52%'},
+     pos:{top:'17%',left:'58%'}, posM:{top:'17%',left:'52%'},
      drift:'driftB',dur:'11s',
      stats:[[nachtlebenCount||'146','LOKALE'],['—','JETZT OFFE'],['0','BOOKMARKS']],link:'nachtleben.html',
      pulseLive:isPulseKreis, badge:isPulseKreis?('KREIS '+p.kreis+' PULSED'):null},
 
     {id:'ki',ic:'✨',name:'ZÜRI-BOT',meta:'FRAG MI',color:'#00f5ff',glow:'rgba(0,245,255,0.6)',
      size:74, sizeM:58,
-     pos:{top:'14%',left:'86%'}, posM:{top:'15%',left:'80%'},
+     pos:{top:'17%',left:'86%'}, posM:{top:'15%',left:'80%'},
      drift:'driftC',dur:'7s',
      stats:[['BALD','PHASE 6'],['KI','ASSISTENT'],['—','—']],link:'#',pulseLive:false,isKi:true},
 
@@ -841,18 +841,18 @@ function renderUniBubbles(){
     b.style.top=position.top;
     b.style.left=position.left;
     b.style.background=c.isKi
-      ? `linear-gradient(135deg, ${c.color}88, #9333ea66 50%, ${c.color}55)`
+      ? `linear-gradient(135deg, ${c.color}cc, #9333ea99 50%, ${c.color}88)`
       : c.isComingSoon
-      ? `radial-gradient(circle at 35% 30%, rgba(120,120,120,0.18), rgba(120,120,120,0.06) 60%, transparent 100%)`
-      : `radial-gradient(circle at 35% 30%, ${c.color}77, ${c.color}33 55%, ${c.color}1a 100%)`;
-    b.style.border=c.isKi ? `1.5px solid rgba(255,255,255,0.4)` : c.isComingSoon ? `1.5px dashed rgba(255,255,255,0.22)` : `1.5px solid ${c.color}99`;
+      ? `radial-gradient(circle at 35% 30%, rgba(140,140,140,0.22), rgba(120,120,120,0.08) 60%, transparent 100%)`
+      : `radial-gradient(circle at 35% 30%, ${c.color}aa, ${c.color}55 55%, ${c.color}28 100%)`;
+    b.style.border=c.isKi ? `2px solid rgba(255,255,255,0.55)` : c.isComingSoon ? `1.5px dashed rgba(255,255,255,0.28)` : `2px solid ${c.color}cc`;
     b.style.boxShadow=c.isKi
-      ? `0 0 ${sz*0.6}px ${c.glow}, 0 0 ${sz*1.1}px rgba(147,51,234,0.4), inset 0 0 20px rgba(255,255,255,0.15)`
+      ? `0 0 ${sz*0.6}px ${c.glow}, 0 0 ${sz*1.1}px rgba(147,51,234,0.5), inset 0 0 20px rgba(255,255,255,0.2)`
       : c.isComingSoon
-      ? `0 0 ${sz*0.3}px ${c.glow}, inset 0 0 14px rgba(255,255,255,0.04)`
-      : `0 0 ${sz*0.5}px ${c.glow}, 0 0 ${sz*0.9}px ${c.glow}, inset 0 0 24px rgba(255,255,255,0.08)`;
+      ? `0 0 ${sz*0.3}px ${c.glow}, inset 0 0 14px rgba(255,255,255,0.05)`
+      : `0 0 ${sz*0.5}px ${c.glow}, 0 0 ${sz*0.9}px ${c.glow}, inset 0 0 24px rgba(255,255,255,0.12)`;
     if(c.isKi) b.classList.add('bubble-ki');
-    if(c.isComingSoon) b.style.opacity='0.55';
+    if(c.isComingSoon) b.style.opacity='0.6';
     const driftScale = isUniMobile ? '0.5' : '1';
     b.style.setProperty('--drift-scale', driftScale);
     b.style.animation=c.isKi
