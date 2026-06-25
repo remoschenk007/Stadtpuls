@@ -128,6 +128,39 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
 .footer-copy{font-size:8px;color:rgba(232,228,217,0.2);letter-spacing:2px;text-transform:uppercase}
 .footer-logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;color:rgba(232,228,217,0.25);letter-spacing:3px;display:flex;align-items:center;gap:6px}
 .footer-logo .ldot{width:5px;height:5px}
+
+/* ═══ BENTO — fotografische Kacheln (alt) + Live-Counts (neu) ═══ */
+.bento{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bt{position:relative;border-radius:12px;overflow:hidden;min-height:148px;display:flex;align-items:flex-end;text-decoration:none;cursor:pointer;border:1px solid rgba(255,255,255,0.08);transition:transform .25s,border-color .25s}
+.bt:hover{transform:translateY(-3px);border-color:rgba(255,45,0,0.45)}
+.bt.big{grid-column:1/-1;min-height:170px}
+.bt-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:grayscale(.35) contrast(1.05) brightness(.9);transition:transform .6s}
+.bt:hover .bt-bg{transform:scale(1.07)}
+.bt-over{position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,4,10,.94) 0%,rgba(4,4,10,.45) 52%,rgba(4,4,10,.12) 100%)}
+.bt-c{position:relative;z-index:2;padding:15px}
+.bt-ico{font-size:23px;display:block;margin-bottom:6px;filter:drop-shadow(0 2px 6px rgba(0,0,0,.6))}
+.bt-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;color:#fff;line-height:1}
+.bt-n{font-size:9px;color:#ff2d00;letter-spacing:1px;text-transform:uppercase;margin-top:3px;font-weight:500}
+.bt-n .n{font-weight:500}
+@media(min-width:720px){.bento{grid-template-columns:repeat(3,1fr)}.bt{min-height:210px}.bt.big{grid-column:span 2}}
+
+/* ═══ HÜT ABIG — grüner Akzent (alt) ═══ */
+.tonight-wrap{background:rgba(200,255,0,0.025);border:1px solid rgba(200,255,0,0.14);border-radius:14px;padding:16px 16px 10px}
+.tonight-tag{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.tonight-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite}
+
+/* ═══ COMMUNITY — Farbquadranten (alt) ═══ */
+.com-tiles{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:18px 0;border-radius:12px;overflow:hidden}
+.ct{padding:18px 14px;text-decoration:none;cursor:pointer;transition:filter .2s,transform .2s;text-align:left}
+.ct:hover{filter:brightness(1.12)}
+.ct-ico{font-size:22px;display:block;margin-bottom:7px}
+.ct h4{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;line-height:1;margin-bottom:3px}
+.ct small{font-size:8px;letter-spacing:1px;text-transform:uppercase;opacity:.72}
+.ct.o{background:#ff2d00;color:#fff}
+.ct.d{background:#15151c;color:#e8e4d9}
+.ct.cy{background:#00f5ff;color:#04040a}
+.ct.vo{background:#c8ff00;color:#04040a}
+
 </style>
 </head>
 <body>
@@ -176,57 +209,53 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
   <!-- HÜT ABIG -->
   <div class="section">
     <div class="section-head">
-      <div class="section-eye">WAS LAUFT GRAD</div>
+      <div class="section-eye">WAS LAUFT GAD · KEI BULLSHIT</div>
       <div class="section-title">HÜT <span class="v">ABIG</span></div>
     </div>
-    <div class="tonight-list" id="tonight-list">
-      <div style="text-align:center;padding:20px;color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:2px">LÄDT...</div>
+    <div class="tonight-wrap">
+      <div class="tonight-tag">JETZT LIVE IN ZÜRI</div>
+      <div class="tonight-list" id="tonight-list">
+        <div style="text-align:center;padding:20px;color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:2px">LÄDT...</div>
+      </div>
     </div>
   </div>
 
-  <!-- KATEGORIEN — der Hub -->
+  <!-- KATEGORIEN — BENTO -->
   <div class="section" id="kategorien">
     <div class="section-head">
-      <div class="section-eye">ALLES UF EINERE SYTE</div>
-      <div class="section-title">WAS WOTTSCH<br>DU <span class="v">ERLEBE?</span></div>
+      <div class="section-eye">ENTDECKE</div>
+      <div class="section-title">DIS ZÜRI,<br>DIS <span class="v">TEMPO</span></div>
     </div>
-    <div class="cat-grid">
-      <a href="gastro.html" class="cat-card featured">
-        <span class="cat-card-icon">🍽️</span>
-        <div>
-          <div class="cat-card-name">GASTRO</div>
-          <div class="cat-card-count"><span class="n" id="cnt-gastro">–</span> Lokale · Ehrlichi Tipps vom Züri-Volk</div>
-        </div>
+    <div class="bento">
+      <a href="gastro.html" class="bt big">
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1544148103-0773bf10d330?w=800&q=80')"></div>
+        <div class="bt-over"></div>
+        <div class="bt-c"><span class="bt-ico">🍽️</span><div class="bt-name">Gastro</div><div class="bt-n"><span class="n" id="cnt-gastro">–</span> Lokale · Ehrlichi Tipps</div></div>
       </a>
-      <a href="nachtleben.html" class="cat-card">
-        <span class="cat-card-icon">🎶</span>
-        <div class="cat-card-name">NACHTLEBE</div>
-        <div class="cat-card-count"><span class="n" id="cnt-nachtleben">–</span> Clubs</div>
+      <a href="nachtleben.html" class="bt">
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80')"></div>
+        <div class="bt-over"></div>
+        <div class="bt-c"><span class="bt-ico">🎶</span><div class="bt-name">Nachtlebe</div><div class="bt-n"><span class="n" id="cnt-nachtleben">–</span> Clubs & Bars</div></div>
       </a>
-      <a href="events.html" class="cat-card">
-        <span class="cat-card-icon">🎉</span>
-        <div class="cat-card-name">EVENTS</div>
-        <div class="cat-card-count"><span class="n" id="cnt-events">–</span> diese Wuche</div>
+      <a href="events.html" class="bt">
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?w=700&q=80')"></div>
+        <div class="bt-over"></div>
+        <div class="bt-c"><span class="bt-ico">🎉</span><div class="bt-name">Events</div><div class="bt-n"><span class="n" id="cnt-events">–</span> uf Stadtpuls</div></div>
       </a>
-      <a href="shopping.html" class="cat-card">
-        <span class="cat-card-icon">🛍️</span>
-        <div class="cat-card-name">SHOPPING</div>
-        <div class="cat-card-count">Shops & Sales</div>
+      <a href="shopping.html" class="bt">
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80')"></div>
+        <div class="bt-over"></div>
+        <div class="bt-c"><span class="bt-ico">🛍️</span><div class="bt-name">Shopping</div><div class="bt-n"><span class="n" id="cnt-shopping">–</span> Shops & Sales</div></div>
       </a>
-      <a href="dating.html" class="cat-card">
-        <span class="cat-card-icon">👥</span>
-        <div class="cat-card-name">PEOPLE & DATES</div>
-        <div class="cat-card-count">Vote für Stadtpuls Dating</div>
+      <a href="immobilien.html" class="bt">
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=80')"></div>
+        <div class="bt-over"></div>
+        <div class="bt-c"><span class="bt-ico">🏢</span><div class="bt-name">Immobilie</div><div class="bt-n">Wohnige & Büros</div></div>
       </a>
-      <a href="news.html" class="cat-card">
-        <span class="cat-card-icon">📰</span>
-        <div class="cat-card-name">NEWS & STORIES</div>
-        <div class="cat-card-count">Insider-Storys</div>
-      </a>
-      <a href="quartiere.html" class="cat-card">
-        <span class="cat-card-icon">📍</span>
-        <div class="cat-card-name">QUARTIERE</div>
-        <div class="cat-card-count">12 Kreise, 12 Wält</div>
+      <a href="login.html" class="bt">
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1517457373958-b7bdd4587205?w=700&q=80')"></div>
+        <div class="bt-over"></div>
+        <div class="bt-c"><span class="bt-ico">👥</span><div class="bt-name">Community</div><div class="bt-n">Vom Züri-Volk</div></div>
       </a>
     </div>
   </div>
@@ -266,6 +295,12 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
     <div class="community-cta">
       <div class="cc-title">DIS ZÜRI. <span class="v">DINI</span> STIMM.</div>
       <div class="cc-sub">Blogge, bewertet, teil — mit dim persönliche Profil bisch Teil vo Züris lebendigschter Community. Kein Algorithm-Bullshit.</div>
+      <div class="com-tiles">
+        <a href="login.html" class="ct o"><span class="ct-ico">✍️</span><h4>Blogge</h4><small>Dini Stadt, dini Stories</small></a>
+        <a href="login.html" class="ct d"><span class="ct-ico">⭐</span><h4>Bewertet</h4><small>Ehrlich & direkt</small></a>
+        <a href="login.html" class="ct cy"><span class="ct-ico">📤</span><h4>Uploade</h4><small>Fotos & Momänt</small></a>
+        <a href="login.html" class="ct vo"><span class="ct-ico">💬</span><h4>Kommentiere</h4><small>Überall, sofort</small></a>
+      </div>
       <div class="cc-stats">
         <div><div class="cc-stat-n" id="cc-member">–</div><div class="cc-stat-l">MEMBER</div></div>
         <div><div class="cc-stat-n" id="cc-posts">–</div><div class="cc-stat-l">STORYS</div></div>
@@ -394,6 +429,7 @@ async function loadLiveData(){
   document.getElementById('cnt-gastro').textContent=gastroCount||'–';
   document.getElementById('cnt-nachtleben').textContent=nachtlebenCount||'–';
   document.getElementById('cnt-events').textContent=eventsTotal||'–';
+  document.getElementById('cnt-shopping').textContent=shoppingCount||'–';
 
   // Ticker mit echten Zahlen befüllen
   const tickerItems=[
@@ -440,5 +476,154 @@ async function loadTonight(){
 loadLiveData();
 loadTonight();
 </script>
+
+<!-- ═══ BUBBLE-MENÜ / Roter Puls-Punkt (aus Backup) ═══ -->
+<style>
+/* BUBBLE MENU */
+.bm-trig{position:fixed;bottom:1.8rem;right:1.8rem;z-index:9000;width:54px;height:54px;border-radius:50%;background:rgba(255,45,0,.07);border:1px solid rgba(255,45,0,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .4s,border-color .4s,box-shadow .4s;}
+.bm-trig::before{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(255,45,0,.08);animation:bm-rp 3s ease-in-out infinite;}
+.bm-trig::after{content:'';position:absolute;inset:-18px;border-radius:50%;border:1px solid rgba(255,45,0,.04);animation:bm-rp 3s ease-in-out infinite 1s;}
+@keyframes bm-rp{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.14);opacity:1}}
+.bm-dot{width:12px;height:12px;background:#ff2d00;border-radius:50%;box-shadow:0 0 14px #ff2d00,0 0 30px rgba(255,45,0,.6);animation:bm-db 2s ease-in-out infinite;transition:all .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes bm-db{0%,100%{box-shadow:0 0 12px #ff2d00,0 0 25px rgba(255,45,0,.5)}50%{box-shadow:0 0 20px #ff2d00,0 0 50px rgba(255,45,0,.8),0 0 80px rgba(255,45,0,.25)}}
+.bm-x{position:absolute;font-size:1.2rem;color:#ff2d00;opacity:0;transition:opacity .3s;line-height:1;font-weight:300;}
+.bm-trig.open{background:rgba(255,45,0,.15);border-color:rgba(255,45,0,.5);box-shadow:0 0 60px rgba(255,45,0,.2);}
+.bm-trig.open .bm-dot{opacity:0;transform:scale(0) rotate(180deg);}
+.bm-trig.open .bm-x{opacity:1;}
+
+.bm-bd{position:fixed;inset:0;z-index:8900;opacity:0;pointer-events:none;transition:opacity .6s;background:rgba(4,4,10,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);}
+.bm-bd.show{opacity:1;pointer-events:all;}
+
+.bm-cg{position:fixed;width:300px;height:300px;border-radius:50%;opacity:0;pointer-events:none;transition:opacity .8s;z-index:8901;filter:blur(60px);}
+.bm-cg-tl{top:-100px;left:-100px;background:radial-gradient(circle,rgba(0,245,255,.12),transparent 70%);}
+.bm-cg-tr{top:-100px;right:-100px;background:radial-gradient(circle,rgba(200,255,0,.1),transparent 70%);}
+.bm-cg-bl{bottom:-100px;left:-100px;background:radial-gradient(circle,rgba(255,107,0,.1),transparent 70%);}
+.bm-cg-br{bottom:-100px;right:-100px;background:radial-gradient(circle,rgba(147,51,234,.1),transparent 70%);}
+.bm-cg.show{opacity:1;}
+
+.nb{position:fixed;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-decoration:none;z-index:9100;bottom:1.5rem;right:1.5rem;opacity:0;transform:scale(0);pointer-events:none;-webkit-tap-highlight-color:transparent;cursor:pointer;transition:bottom .7s cubic-bezier(.34,1.4,.64,1),right .7s cubic-bezier(.34,1.4,.64,1),top .7s cubic-bezier(.34,1.4,.64,1),left .7s cubic-bezier(.34,1.4,.64,1),opacity .5s ease,transform .5s cubic-bezier(.34,1.56,.64,1),box-shadow .3s,filter .3s;}
+.nb .bm-s{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at 25% 20%,rgba(255,255,255,.72) 0%,rgba(255,255,255,.22) 15%,transparent 40%),radial-gradient(ellipse at 75% 80%,rgba(255,255,255,.14) 0%,transparent 30%),radial-gradient(circle at 50% 50%,transparent 38%,rgba(0,0,0,.4) 100%);}
+.nb .bm-r{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at 50% 50%,transparent 52%,rgba(255,255,255,.18) 72%,rgba(255,255,255,.06) 90%,transparent 100%);}
+.nb .bm-h1{position:absolute;top:7%;left:10%;width:36%;height:24%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,1) 0%,rgba(255,255,255,.4) 35%,transparent 65%);transform:rotate(-18deg);pointer-events:none;}
+.nb .bm-h2{position:absolute;bottom:10%;right:12%;width:16%;height:11%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.45) 0%,transparent 70%);pointer-events:none;}
+.nb .bm-cl{position:absolute;inset:0;border-radius:50%;}
+.nb .bm-cc{position:relative;z-index:2;text-align:center;padding:.6rem;}
+.nb .bm-ic{display:block;margin-bottom:.2rem;}
+.nb .bm-lb{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:.06em;text-transform:uppercase;display:block;line-height:1.05;}
+.nb .bm-sub{font-size:.42rem;letter-spacing:.18em;opacity:.5;margin-top:.2rem;display:block;font-family:'DM Mono',monospace;}
+.nb.open{opacity:1;transform:scale(1);pointer-events:all;}
+
+.nb-fb{width:120px;height:120px;border:1.5px solid rgba(0,245,255,.7);color:#00f5ff;box-shadow:0 0 60px rgba(0,245,255,.3),inset 0 0 50px rgba(0,245,255,.1),0 30px 80px rgba(0,0,0,.7);}
+.nb-fb .bm-cl{background:radial-gradient(circle at 38% 32%,rgba(0,245,255,.32),rgba(0,80,100,.18) 55%,transparent 75%);}
+.nb-fb .bm-ic{font-size:2rem;filter:drop-shadow(0 0 16px #00f5ff) drop-shadow(0 0 35px rgba(0,245,255,.6));}
+.nb-fb .bm-lb{font-size:.9rem;filter:drop-shadow(0 0 10px #00f5ff);}
+.nb-fb.open{bottom:auto!important;right:auto!important;top:1.5rem!important;left:1.5rem!important;animation:bm-fb 6s ease-in-out infinite .7s;}
+.nb-fb:hover{box-shadow:0 0 100px rgba(0,245,255,.7),inset 0 0 70px rgba(0,245,255,.18)!important;filter:brightness(1.25) saturate(1.4);transform:scale(1.08)!important;}
+@keyframes bm-fb{0%,100%{transform:translateY(0) translateX(0)}25%{transform:translateY(-14px) translateX(8px)}50%{transform:translateY(-8px) translateX(-6px)}75%{transform:translateY(10px) translateX(4px)}}
+
+.nb-kt{width:140px;height:140px;border:2px solid rgba(200,255,0,.8);color:#c8ff00;box-shadow:0 0 80px rgba(200,255,0,.4),inset 0 0 60px rgba(200,255,0,.14),0 40px 100px rgba(0,0,0,.7);}
+.nb-kt .bm-cl{background:radial-gradient(circle at 38% 32%,rgba(200,255,0,.35),rgba(60,100,0,.2) 55%,transparent 75%);}
+.nb-kt .bm-ic{font-size:2.4rem;filter:drop-shadow(0 0 20px #c8ff00) drop-shadow(0 0 45px rgba(200,255,0,.7));}
+.nb-kt .bm-lb{font-size:1.05rem;filter:drop-shadow(0 0 12px #c8ff00);}
+.nb-kt.open{bottom:auto!important;right:1.5rem!important;top:1.5rem!important;left:auto!important;animation:bm-kt 7s ease-in-out infinite .3s;}
+.nb-kt:hover{box-shadow:0 0 120px rgba(200,255,0,.75),inset 0 0 80px rgba(200,255,0,.2)!important;filter:brightness(1.25) saturate(1.4);transform:scale(1.07)!important;}
+@keyframes bm-kt{0%,100%{transform:translateY(0) translateX(0)}33%{transform:translateY(-18px) translateX(-10px)}66%{transform:translateY(9px) translateX(7px)}}
+
+.nb-im{width:100px;height:100px;border:1.5px solid rgba(255,107,0,.72);color:#ff6b00;box-shadow:0 0 50px rgba(255,107,0,.3),inset 0 0 40px rgba(255,107,0,.1),0 25px 70px rgba(0,0,0,.65);}
+.nb-im .bm-cl{background:radial-gradient(circle at 38% 32%,rgba(255,107,0,.3),rgba(120,45,0,.15) 55%,transparent 75%);}
+.nb-im .bm-ic{font-size:1.7rem;filter:drop-shadow(0 0 14px #ff6b00) drop-shadow(0 0 30px rgba(255,107,0,.6));}
+.nb-im .bm-lb{font-size:.78rem;filter:drop-shadow(0 0 9px #ff6b00);}
+.nb-im.open{bottom:1.5rem!important;right:auto!important;left:1.5rem!important;animation:bm-im 8s ease-in-out infinite 1s;}
+.nb-im:hover{box-shadow:0 0 80px rgba(255,107,0,.65),inset 0 0 55px rgba(255,107,0,.16)!important;filter:brightness(1.25) saturate(1.4);transform:scale(1.08)!important;}
+@keyframes bm-im{0%,100%{transform:translateY(0) translateX(0)}40%{transform:translateY(-12px) translateX(9px)}70%{transform:translateY(8px) translateX(-6px)}}
+
+.nb-ds{width:96px;height:96px;border:1.5px solid rgba(147,51,234,.72);color:#9333ea;box-shadow:0 0 50px rgba(147,51,234,.3),inset 0 0 40px rgba(147,51,234,.1),0 25px 70px rgba(0,0,0,.65);}
+.nb-ds .bm-cl{background:radial-gradient(circle at 38% 32%,rgba(147,51,234,.32),rgba(55,0,100,.16) 55%,transparent 75%);}
+.nb-ds .bm-ic{font-size:1.6rem;filter:drop-shadow(0 0 14px #9333ea) drop-shadow(0 0 30px rgba(147,51,234,.6));}
+.nb-ds .bm-lb{font-size:.72rem;filter:drop-shadow(0 0 9px #9333ea);}
+.nb-ds.open{bottom:1.5rem!important;right:4.5rem!important;left:auto!important;animation:bm-ds 9s ease-in-out infinite 1.3s;}
+.nb-ds:hover{box-shadow:0 0 80px rgba(147,51,234,.65),inset 0 0 55px rgba(147,51,234,.16)!important;filter:brightness(1.25) saturate(1.4);transform:scale(1.08)!important;}
+@keyframes bm-ds{0%,100%{transform:translateY(0) translateX(0)}35%{transform:translateY(-15px) translateX(-8px)}65%{transform:translateY(9px) translateX(5px)}}
+
+.nb-fb{transition-delay:0s;} .nb-kt{transition-delay:.08s;} .nb-im{transition-delay:.16s;} .nb-ds{transition-delay:.24s;}
+.nb-fb:not(.open){transition-delay:.24s;} .nb-kt:not(.open){transition-delay:.16s;} .nb-im:not(.open){transition-delay:.08s;} .nb-ds:not(.open){transition-delay:0s;}
+</style>
+
+<!-- Corner Glows -->
+
+<div class="bm-cg bm-cg-tl" id="bmCg1"></div>
+<div class="bm-cg bm-cg-tr" id="bmCg2"></div>
+<div class="bm-cg bm-cg-bl" id="bmCg3"></div>
+<div class="bm-cg bm-cg-br" id="bmCg4"></div>
+
+<!-- Backdrop -->
+
+<div class="bm-bd" id="bmBd" onclick="bmClose()"></div>
+
+<!-- FEEDBACK -- oben links -->
+
+<a class="nb nb-fb" id="bmNb1" href="feedback.html">
+  <div class="bm-s"></div><div class="bm-r"></div><div class="bm-cl"></div><div class="bm-h1"></div><div class="bm-h2"></div>
+  <div class="bm-cc"><span class="bm-ic">&#9675;</span><span class="bm-lb">FEED-<br>BACK</span><span class="bm-sub">SAG UNS WAS</span></div>
+</a>
+
+<!-- KONTAKT -- oben rechts -->
+
+<a class="nb nb-kt" id="bmNb2" href="kontakt.html">
+  <div class="bm-s"></div><div class="bm-r"></div><div class="bm-cl"></div><div class="bm-h1"></div><div class="bm-h2"></div>
+  <div class="bm-cc"><span class="bm-ic">&#10022;</span><span class="bm-lb">KON-<br>TAKT</span><span class="bm-sub">RED MIT UNS</span></div>
+</a>
+
+<!-- IMPRESSUM -- unten links -->
+
+<a class="nb nb-im" id="bmNb3" href="impressum.html">
+  <div class="bm-s"></div><div class="bm-r"></div><div class="bm-cl"></div><div class="bm-h1"></div><div class="bm-h2"></div>
+  <div class="bm-cc"><span class="bm-ic">&#9632;</span><span class="bm-lb" style="font-size:.7rem">IMPRES-<br>SUM</span><span class="bm-sub">RECHTLICHES</span></div>
+</a>
+
+<!-- DATENSCHUTZ -- neben Trigger -->
+
+<a class="nb nb-ds" id="bmNb4" href="datenschutz.html">
+  <div class="bm-s"></div><div class="bm-r"></div><div class="bm-cl"></div><div class="bm-h1"></div><div class="bm-h2"></div>
+  <div class="bm-cc"><span class="bm-ic">&#9673;</span><span class="bm-lb" style="font-size:.62rem">DATEN-<br>SCHUTZ</span><span class="bm-sub">PRIVATSPHÄRE</span></div>
+</a>
+
+<!-- TRIGGER -->
+
+<button class="bm-trig" id="bmTrig" onclick="bmToggle()">
+  <div class="bm-dot"></div>
+  <span class="bm-x">&#10005;</span>
+</button>
+
+<script>
+(function(){
+  var isOpen=false;
+  var nbs=['bmNb1','bmNb2','bmNb3','bmNb4'];
+  var cgs=['bmCg1','bmCg2','bmCg3','bmCg4'];
+  window.bmToggle=function(){
+    isOpen=!isOpen;
+    document.getElementById('bmTrig').classList.toggle('open',isOpen);
+    document.getElementById('bmBd').classList.toggle('show',isOpen);
+    cgs.forEach(function(id){document.getElementById(id).classList.toggle('show',isOpen);});
+    nbs.forEach(function(id,i){
+      var el=document.getElementById(id);
+      if(isOpen){setTimeout(function(){el.classList.add('open');},i*80);}
+      else{setTimeout(function(){el.classList.remove('open');},(nbs.length-1-i)*60);}
+    });
+  };
+  window.bmClose=function(){
+    if(!isOpen)return;
+    isOpen=false;
+    document.getElementById('bmTrig').classList.remove('open');
+    document.getElementById('bmBd').classList.remove('show');
+    cgs.forEach(function(id){document.getElementById(id).classList.remove('show');});
+    nbs.forEach(function(id,i){
+      setTimeout(function(){document.getElementById(id).classList.remove('open');},(nbs.length-1-i)*60);
+    });
+  };
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')bmClose();});
+})();
+</script>
+
 </body>
 </html>
