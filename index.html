@@ -161,6 +161,78 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
 .ct.cy{background:#00f5ff;color:#04040a}
 .ct.vo{background:#c8ff00;color:#04040a}
 
+
+/* ═══ KREIS-UNIVERSUM ═══ */
+.ku-bar{display:flex;gap:8px;margin-top:6px}
+.ku-input{flex:1;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:12px 14px;color:#e8e4d9;font-family:'DM Mono',monospace;font-size:12px;cursor:text;outline:none}
+.ku-input:focus{border-color:rgba(200,255,0,.5)}
+.ku-input::placeholder{color:rgba(232,228,217,.35)}
+.ku-go{flex-shrink:0;width:46px;border:none;border-radius:10px;background:#c8ff00;font-size:18px;cursor:pointer}
+.ku-barhint{font-size:8px;letter-spacing:1px;color:rgba(200,255,0,.5);text-transform:uppercase;margin-top:6px}
+.ku-chips{display:flex;gap:7px;overflow-x:auto;scrollbar-width:none;margin:14px 0 2px;padding-bottom:4px}
+.ku-chips::-webkit-scrollbar{display:none}
+.ku-chip{flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:60px;padding:9px 13px 8px;border-radius:14px;cursor:pointer;position:relative;overflow:hidden;background:linear-gradient(160deg,rgba(255,255,255,.06),rgba(255,255,255,.012));border:1px solid rgba(255,255,255,.09);transition:transform .2s,border-color .2s,box-shadow .25s}
+.ku-chip::before{content:'';position:absolute;top:0;left:0;right:0;height:46%;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent);pointer-events:none}
+.ku-chip:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.2)}
+.ku-chip .kn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:19px;line-height:1;color:#e8e4d9}
+.ku-chip small{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,217,.42);white-space:nowrap}
+.ku-chip.on{background:linear-gradient(160deg,rgba(255,45,0,.30),rgba(255,45,0,.07));border-color:#ff2d00;box-shadow:0 0 22px rgba(255,45,0,.4),inset 0 0 16px rgba(255,45,0,.12)}
+.ku-chip.on .kn{color:#fff;text-shadow:0 0 12px rgba(255,45,0,.8)}
+.ku-chip.on small{color:#ff7a5c}
+.ku-stage{position:relative;width:100%;height:430px;margin-top:8px;perspective:1100px}
+.ku-galaxy{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .25s ease-out}
+.ku-star{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:104px;height:104px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:5;background:radial-gradient(ellipse at 30% 24%,rgba(255,255,255,.4),rgba(255,255,255,.1) 22%,transparent 48%),radial-gradient(circle at 50% 50%,rgba(255,45,0,.35),rgba(4,4,10,.85) 70%);border:1.5px solid rgba(255,45,0,.55);box-shadow:0 0 45px rgba(255,45,0,.35),0 0 100px rgba(255,45,0,.18),inset 0 0 40px rgba(255,45,0,.1),0 30px 70px rgba(0,0,0,.6)}
+.ku-so{position:absolute;inset:-12px;border-radius:50%;border:1px dashed rgba(255,45,0,.35);animation:kuspin 16s linear infinite}
+.ku-so::before{content:'';position:absolute;top:-3px;left:50%;width:7px;height:7px;margin-left:-3px;border-radius:50%;background:#ff2d00;box-shadow:0 0 12px #ff2d00}
+.ku-sk{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:30px;line-height:.9;color:#fff;text-shadow:0 0 14px rgba(255,45,0,.7);transform:translateZ(30px)}
+.ku-snm{font-size:7.5px;letter-spacing:1.5px;text-transform:uppercase;color:#ff2d00;margin-top:3px;transform:translateZ(24px)}
+.ku-sact{font-size:6.5px;color:rgba(232,228,217,.45);margin-top:3px;letter-spacing:1px;transform:translateZ(20px)}
+.ku-bub{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transform-style:preserve-3d;opacity:0;transform:scale(.2);transition:transform .55s cubic-bezier(.34,1.56,.64,1),opacity .45s,left .55s,top .55s,box-shadow .3s,filter .3s}
+.ku-bub.show{opacity:1;transform:scale(1)}
+.ku-bub:active{transform:scale(.92)}
+.ku-gl{position:absolute;inset:0;border-radius:50%;animation:kufloat var(--fd,7s) ease-in-out infinite;animation-delay:var(--dl,0s)}
+.ku-shell{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at 28% 22%,rgba(255,255,255,.55),rgba(255,255,255,.15) 20%,transparent 50%),radial-gradient(ellipse at 72% 78%,rgba(255,255,255,.15),transparent 35%),radial-gradient(ellipse at 50% 50%,transparent 40%,rgba(0,0,0,.28) 100%)}
+.ku-rim{position:absolute;inset:0;border-radius:50%;background:radial-gradient(ellipse at 50% 50%,transparent 58%,rgba(255,255,255,.12) 78%,rgba(255,255,255,.05) 88%,transparent 100%)}
+.ku-col{position:absolute;inset:0;border-radius:50%;opacity:.22}
+.ku-shine{position:absolute;top:9%;left:14%;width:32%;height:20%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.85),rgba(255,255,255,.3) 40%,transparent 70%);transform:rotate(-25deg);pointer-events:none}
+.ku-shine2{position:absolute;bottom:14%;right:16%;width:16%;height:10%;border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.35),transparent 70%);pointer-events:none}
+.ku-orbit{position:absolute;inset:-7px;border-radius:50%;border:1px dashed var(--c);opacity:.4;animation:kuspin var(--od,9s) linear infinite;pointer-events:none}
+.ku-odot{position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:6px;height:6px;border-radius:50%;background:var(--c);box-shadow:0 0 10px var(--c),0 0 20px var(--c)}
+.ku-orbit2{position:absolute;inset:-14px;border-radius:50%;border:1px dashed rgba(255,207,60,.3);animation:kuspin 11s linear infinite reverse;pointer-events:none}
+.ku-cont{position:relative;z-index:3;text-align:center;transform:translateZ(24px)}
+.ku-ico{font-size:19px;display:block;line-height:1;filter:drop-shadow(0 0 12px currentColor) drop-shadow(0 0 24px currentColor)}
+.ku-bn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:10px;text-transform:uppercase;color:#fff;display:block;line-height:1;margin-top:2px;text-shadow:0 0 8px var(--c)}
+.ku-bm{font-size:6px;color:rgba(255,255,255,.72);display:block;margin-top:1px;letter-spacing:.5px}
+.ku-bub.hot .ku-orbit{border-color:#ffcf3c;opacity:.75;animation-duration:5s}
+.ku-bub.hot .ku-odot{background:#ffcf3c;box-shadow:0 0 12px #ffcf3c,0 0 24px rgba(255,207,60,.6)}
+.ku-badge{position:absolute;top:-2px;right:-2px;background:#ffcf3c;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:8px;padding:1px 6px;border-radius:50px;z-index:6;box-shadow:0 0 12px rgba(255,207,60,.6)}
+@keyframes kufloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes kuspin{to{transform:rotate(360deg)}}
+.ku-hint{text-align:center;font-size:8.5px;letter-spacing:1px;color:rgba(232,228,217,.3);margin-top:2px;text-transform:uppercase}
+.ku-bk{position:fixed;inset:0;background:rgba(4,4,10,.55);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s;z-index:8000}
+.ku-bk.on{opacity:1;pointer-events:auto}
+.ku-sheet{position:fixed;left:50%;bottom:0;transform:translate(-50%,100%);width:100%;max-width:520px;background:#0a0a12;border-top:1px solid rgba(255,255,255,.1);border-radius:20px 20px 0 0;padding:0 18px 26px;z-index:8001;transition:transform .38s cubic-bezier(.2,.9,.3,1.1)}
+.ku-sheet.on{transform:translate(-50%,0)}
+.ku-tb{height:4px;border-radius:50px;width:100%}
+.ku-hd{display:flex;align-items:center;gap:12px;padding:18px 0 6px}
+.ku-hi{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:23px;flex-shrink:0}
+.ku-ht{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:23px;text-transform:uppercase;line-height:1}
+.ku-hs{font-size:9px;letter-spacing:1px;text-transform:uppercase;margin-top:2px;color:rgba(232,228,217,.5)}
+.ku-live{display:inline-flex;align-items:center;gap:5px;font-size:8px;color:#ffcf3c;letter-spacing:1px;margin-top:6px}
+.ku-live::before{content:'';width:5px;height:5px;border-radius:50%;background:#ffcf3c;animation:kublink 1.3s infinite}
+@keyframes kublink{50%{opacity:.3}}
+.ku-row{display:flex;justify-content:space-between;align-items:center;padding:11px 0;border-top:1px solid rgba(255,255,255,.06);font-size:12px}
+.ku-rx{font-size:9px;color:rgba(232,228,217,.35)}
+.ku-cta{display:block;width:100%;text-align:center;margin-top:16px;padding:13px;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;border:none;cursor:pointer}
+.ku-route{text-align:center;font-size:8px;color:rgba(232,228,217,.3);margin-top:9px;letter-spacing:1px}
+.ku-toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:#c8ff00;color:#04040a;font-family:'DM Mono',monospace;font-size:11px;font-weight:500;padding:10px 18px;border-radius:50px;opacity:0;pointer-events:none;transition:all .3s;z-index:8002;white-space:nowrap;max-width:90vw}
+.ku-toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+
+.ku-chipswrap{position:relative;--fade:1}
+.ku-chipswrap::after{content:'';position:absolute;top:0;right:0;bottom:6px;width:54px;background:linear-gradient(90deg,transparent,#04040a 78%);pointer-events:none;opacity:var(--fade);transition:opacity .25s}
+.ku-more{position:absolute;right:6px;top:calc(50% - 4px);transform:translateY(-50%);color:#ff2d00;font-size:20px;font-weight:700;pointer-events:none;z-index:3;opacity:var(--fade);transition:opacity .25s;text-shadow:0 0 10px #04040a,0 0 6px #ff2d00;animation:kunudge 1.6s ease-in-out infinite}
+@keyframes kunudge{0%,100%{transform:translateY(-50%) translateX(0)}50%{transform:translateY(-50%) translateX(3px)}}
+@media(max-width:560px){.ku-stage{height:400px}.ku-bar{gap:6px}}
 </style>
 </head>
 <body>
@@ -260,35 +332,39 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
     </div>
   </div>
 
-  <!-- QUARTIERE STRIP -->
-  <div class="section">
+  <!-- QUARTIERE · KREIS-UNIVERSUM -->
+  <div class="section" id="quartiere">
     <div class="section-head">
-      <div class="section-eye">DIS VIERTEL</div>
-      <div class="section-title">QUAR<span class="v">TIERE</span></div>
+      <div class="section-eye">DIS VIERTEL · DINI WÄLT</div>
+      <div class="section-title">DIS <span class="v">UNIVERSUM</span> VO DIM KREIS</div>
     </div>
-    <div class="kreis-strip">
-      <a href="quartiere.html?kreis=1" class="kreis-card">
-        <div class="kreis-num">1</div>
-        <div class="kreis-name">ALTSTADT</div>
-        <div class="kreis-desc">Historisch · Museen · Cafés</div>
-      </a>
-      <a href="quartiere.html?kreis=4" class="kreis-card">
-        <div class="kreis-num">4</div>
-        <div class="kreis-name">LANGSTRASSE</div>
-        <div class="kreis-desc">Züris wildeschtes Viertel</div>
-      </a>
-      <a href="quartiere.html?kreis=5" class="kreis-card">
-        <div class="kreis-num">5</div>
-        <div class="kreis-name">INDUSTRIE</div>
-        <div class="kreis-desc">Viadukt · Kreativhub</div>
-      </a>
-      <a href="quartiere.html?kreis=8" class="kreis-card">
-        <div class="kreis-num">8</div>
-        <div class="kreis-name">SEEFELD</div>
-        <div class="kreis-desc">Zürichsee · Bourgeois</div>
-      </a>
+    <div class="ku-bar">
+      <input id="kuq" class="ku-input" placeholder="Frag Stadtpuls — z.B. «Sushi im Kreis 4»" autocomplete="off">
+      <button id="kuGo" class="ku-go" aria-label="Suechi">&#10024;</button>
     </div>
+    <div class="ku-barhint">&#10024; Smart-Suechi · de Z&uuml;ri-Bot mit echter KI folgt</div>
+    <div class="ku-chipswrap"><div class="ku-chips" id="kuChips"></div><span class="ku-more" id="kuMore">&rsaquo;</span></div>
+    <div class="ku-stage" id="kuStage">
+      <div class="ku-galaxy" id="kuGalaxy">
+        <div class="ku-star" id="kuStar">
+          <div class="ku-so"></div>
+          <div class="ku-sk" id="kuStarK">1</div>
+          <div class="ku-snm" id="kuStarNm">ALTSTADT</div>
+          <div class="ku-sact" id="kuStarAct">PULS</div>
+        </div>
+      </div>
+    </div>
+    <div class="ku-hint">&uarr; tipp en Blase &rarr; gang i die Sparte im Kreis</div>
   </div>
+  <div class="ku-bk" id="kuBk"></div>
+  <div class="ku-sheet" id="kuSheet">
+    <div class="ku-tb" id="kuBar"></div>
+    <div class="ku-hd"><div class="ku-hi" id="kuIco"></div><div><div class="ku-ht" id="kuTitle"></div><div class="ku-hs" id="kuSub"></div><div class="ku-live" id="kuLiveTag" style="display:none">AM MEISCHTE LOS IM KREIS</div></div></div>
+    <div id="kuRows"></div>
+    <button class="ku-cta" id="kuCta"></button>
+    <div class="ku-route" id="kuRoute"></div>
+  </div>
+  <div class="ku-toast" id="kuToast"></div>
 
   <!-- COMMUNITY -->
   <div class="section">
@@ -622,6 +698,103 @@ loadTonight();
     });
   };
   document.addEventListener('keydown',function(e){if(e.key==='Escape')bmClose();});
+})();
+</script>
+
+
+<script>
+(function(){
+const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+const KREISE=[["1","ALTSTADT"],["2","ENGE"],["3","WIEDIKON"],["4","LANGSTRASSE"],["5","INDUSTRIE"],["6","UNTERSTRASS"],["7","FLUNTERN"],["8","SEEFELD"],["9","ALTSTETTE"],["10","HÖNGG"],["11","OERLIKON"],["12","SCHWAMENDINGE"]];
+// icon,name,color,page,kategorie(real)|null,unit
+const SP=[["🍽️","GASTRO","#ff2d00","gastro.html","gastro","Lokäl"],["🎶","NACHTLEBE","#9333ea","nachtleben.html","nachtleben","Clubs"],["🛍️","SHOPPING","#00f5ff","shopping.html","shopping","Shops"],["🎉","EVENTS","#c8ff00","events.html",null,"Events"],["💘","DATES","#ff5fa2","dating.html",null,"Lüt"],["📰","NEWS","#3fd2ff","news.html",null,"Storys"]];
+const QN={altstadt:"1",city:"1",enge:"2",wollishofen:"2",wiedikon:"3",idaplatz:"3",langstrasse:"4",aussersihl:"4",industrie:"5",viadukt:"5",unterstrass:"6",oberstrass:"6",fluntern:"7",hottingen:"7",witikon:"7",seefeld:"8",riesbach:"8",altstetten:"9",albisrieden:"9","höngg":"10",hoengg:"10",wipkingen:"10",oerlikon:"11",seebach:"11",affoltern:"11",schwamendingen:"12"};
+const SKW=[["gastro",["ässe","esse","restaurant","sushi","food","znacht","zmittag","gastro","beiz","brunch","pizza","kaffee","café","cafe","trinke","burger"]],["nachtleben",["club","usgah","tanze","party","bar","nachtleben","dj","techno","feiere","drink","apéro","apero"]],["shopping",["shop","shoppe","laden","kaufe","shopping","mode","vintage","sale","boutique"]],["events",["event","konzert","festival","ausstellig","kino","show","märit","markt"]],["dates",["date","lüt","people","verliebe","single","match","kennelerne"]],["news",["news","story","storys","gschicht","blog"]]];
+let current="1", counts={};
+function hex(h,a){const n=parseInt(h.slice(1),16);return"rgba("+(n>>16&255)+","+(n>>8&255)+","+(n&255)+","+a+")"}
+
+const chips=document.getElementById("kuChips");
+KREISE.forEach(([k,nm])=>{const c=document.createElement("div");c.className="ku-chip"+(k===current?" on":"");c.innerHTML='<span class="kn">'+k+'</span><small>'+nm+'</small>';c.onclick=()=>setKreis(k);chips.appendChild(c)});
+function setKreis(k){current=k;document.querySelectorAll(".ku-chip").forEach((c,i)=>c.classList.toggle("on",KREISE[i][0]===k));render()}
+
+const stage=document.getElementById("kuStage"),galaxy=document.getElementById("kuGalaxy");
+function maxReal(){let m=1;for(const k in counts)for(const kat in counts[k])m=Math.max(m,counts[k][kat]);return m}
+function size(c){const m=maxReal();return Math.round(48+Math.min(1,c/m)*42)}
+function render(){
+  galaxy.querySelectorAll(".ku-bub").forEach(b=>b.remove());
+  const[k,nm]=KREISE.find(x=>x[0]===current);
+  document.getElementById("kuStarK").textContent=k;document.getElementById("kuStarNm").textContent=nm;
+  const ck=counts[k]||{};const realVals=["gastro","nachtleben","shopping"].map(x=>ck[x]||0);const top=Math.max(...realVals);
+  document.getElementById("kuStarAct").textContent=(realVals.reduce((a,b)=>a+b,0))+" ORT";
+  const W=stage.clientWidth,H=stage.clientHeight,cx=W/2,cy=H/2,Rx=Math.min(W*0.40,158),Ry=H*0.37;
+  SP.forEach((sp,i)=>{
+    const kat=sp[4],hasC=kat&&(kat in ck),cnt=hasC?ck[kat]:null,col=sp[2];
+    const d=hasC?size(cnt):58,hot=hasC&&cnt>0&&cnt===top;
+    const ang=(-90+i*60)*Math.PI/180,x=cx+Rx*Math.cos(ang),y=cy+Ry*Math.sin(ang);
+    const b=document.createElement("div");b.className="ku-bub"+(hot?" hot":"");
+    b.style.width=b.style.height=d+"px";b.style.left=(x-d/2)+"px";b.style.top=(y-d/2)+"px";b.style.color=col;
+    b.style.setProperty("--c",col);b.style.setProperty("--fd",(6+Math.random()*4).toFixed(1)+"s");b.style.setProperty("--dl",(Math.random()*-5).toFixed(1)+"s");b.style.setProperty("--od",(8+i*1.3).toFixed(1)+"s");
+    b.style.border="1.5px solid "+hex(col,.6);
+    b.style.boxShadow="0 0 "+Math.round(d*0.55)+"px "+hex(col,.30)+",inset 0 0 "+Math.round(d*0.4)+"px "+hex(col,.10)+",0 "+Math.round(d*0.3)+"px "+Math.round(d*0.55)+"px rgba(0,0,0,.55)";
+    const meta=hasC?(cnt+" "+sp[5]):sp[5];
+    b.innerHTML='<div class="ku-gl"><div class="ku-shell"></div><div class="ku-rim"></div><div class="ku-col" style="background:radial-gradient(circle at 50% 50%,'+col+',transparent 70%)"></div><div class="ku-shine"></div><div class="ku-shine2"></div></div><div class="ku-orbit"><div class="ku-odot"></div></div>'+(hot?'<div class="ku-orbit2"></div><span class="ku-badge">top</span>':'')+'<div class="ku-cont"><span class="ku-ico">'+sp[0]+'</span><span class="ku-bn">'+sp[1]+'</span><span class="ku-bm">'+meta+'</span></div>';
+    b.onclick=()=>openSheet(i,cnt,hot);
+    galaxy.appendChild(b);setTimeout(()=>b.classList.add("show"),120+i*60);
+  });
+}
+if(window.matchMedia&&window.matchMedia("(pointer:fine)").matches){
+stage.addEventListener("pointermove",e=>{const r=stage.getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5,py=(e.clientY-r.top)/r.height-.5;galaxy.style.transform="rotateY("+(px*9).toFixed(1)+"deg) rotateX("+(-py*9).toFixed(1)+"deg)"});
+stage.addEventListener("pointerleave",()=>{galaxy.style.transform="rotateY(0deg) rotateX(0deg)"});
+}
+var kuRT;window.addEventListener("resize",function(){clearTimeout(kuRT);kuRT=setTimeout(function(){galaxy.style.transform="";render()},200)});
+
+const bk=document.getElementById("kuBk"),sheet=document.getElementById("kuSheet");
+function openSheet(i,cnt,hot){
+  const sp=SP[i],[k,nm]=KREISE.find(x=>x[0]===current),col=sp[2];
+  document.getElementById("kuBar").style.background=col;
+  const ico=document.getElementById("kuIco");ico.textContent=sp[0];ico.style.background=hex(col,.18);ico.style.boxShadow="0 0 18px "+hex(col,.45);
+  const t=document.getElementById("kuTitle");t.textContent=sp[1]+" · KREIS "+k;t.style.color=col;
+  document.getElementById("kuSub").textContent=(cnt!=null?cnt+" "+sp[5]:sp[5])+" · "+nm;
+  document.getElementById("kuLiveTag").style.display=hot?"inline-flex":"none";
+  const rows=document.getElementById("kuRows");rows.innerHTML="";
+  ["Top im "+nm,"Neu dezue","Em Puls vorus"].forEach((r,j)=>{const el=document.createElement("div");el.className="ku-row";el.innerHTML='<span>'+r+'</span><span class="ku-rx">'+(hot&&j===0?"live":"★ "+(4.9-j*0.2).toFixed(1))+'</span>';rows.appendChild(el)});
+  const route=sp[3]+(sp[4]?"?kreis="+k:"");
+  const cta=document.getElementById("kuCta");cta.textContent=(cnt!=null?"ALLI "+cnt+" "+sp[5]+" ZEIGE →":sp[1]+" ZEIGE →");cta.style.background=col;cta.style.color=(col==="#e8e4d9"||col==="#c8ff00")?"#04040a":"#fff";
+  cta.onclick=()=>{location.href=route};
+  document.getElementById("kuRoute").textContent="→ "+route;
+  bk.classList.add("on");sheet.classList.add("on");
+}
+function closeSheet(){bk.classList.remove("on");sheet.classList.remove("on")}
+bk.onclick=closeSheet;
+const tEl=document.getElementById("kuToast");let tT;
+function toast(m){tEl.textContent=m;tEl.classList.add("on");clearTimeout(tT);tT=setTimeout(()=>tEl.classList.remove("on"),2600)}
+
+// ✨ Smart-Suechi
+function parseIntent(q){q=q.toLowerCase();let kreis=null,sparte=null;let m=q.match(/kreis\s*(\d{1,2})/);if(m&&+m[1]>=1&&+m[1]<=12)kreis=String(+m[1]);for(const n in QN){if(q.includes(n)){kreis=QN[n];break}}for(const[s,ws]of SKW){if(ws.some(w=>q.includes(w))){sparte=s;break}}return{kreis,sparte}}
+function runSearch(){
+  const q=document.getElementById("kuq").value.trim();if(!q){toast("Probier z.B. «Club im Kreis 5»");return}
+  const{kreis,sparte}=parseIntent(q);
+  if(kreis)setKreis(kreis);else render();
+  const[,nm]=KREISE.find(x=>x[0]===current);
+  if(sparte){const idx=SP.findIndex(s=>s[4]===sparte||(sparte==="dates"&&s[1]==="DATES")||(sparte==="news"&&s[1]==="NEWS")||(sparte==="events"&&s[1]==="EVENTS"));if(idx>=0){const ck=counts[current]||{};setTimeout(()=>openSheet(idx,SP[idx][4]?(ck[SP[idx][4]]||0):null,false),300);toast("Kreis "+current+" · "+SP[idx][1]);return}}
+  toast(kreis?("Zeig der Kreis "+current+" · "+nm):"Han kä Kreis gfunde — probier «… im Kreis 4»");
+}
+document.getElementById("kuGo").onclick=runSearch;
+document.getElementById("kuq").addEventListener("keydown",e=>{if(e.key==="Enter")runSearch()});
+
+// echte Pro-Kreis-Counts (eine Query)
+async function loadCounts(){
+  try{
+    const r=await fetch(SU+"/rest/v1/locations?select=kreis,kategorie&aktiv=eq.true",{headers:{apikey:SK,Authorization:"Bearer "+SK}});
+    const rows=await r.json();
+    counts={};
+    for(const row of rows){const k=String(row.kreis),kat=row.kategorie;if(!k||k==="null")continue;(counts[k]=counts[k]||{});counts[k][kat]=(counts[k][kat]||0)+1}
+  }catch(e){}
+  render();
+}
+var kc=document.getElementById("kuChips"),km=document.getElementById("kuMore");function kuFade(){if(!kc)return;var end=kc.scrollLeft+kc.clientWidth>=kc.scrollWidth-8;kc.parentNode.style.setProperty("--fade",end?"0":"1")}if(kc){kc.addEventListener("scroll",kuFade);setTimeout(kuFade,120)}
+render();loadCounts();
 })();
 </script>
 
