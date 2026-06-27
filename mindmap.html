@@ -126,7 +126,7 @@ header{position:fixed;top:0;left:0;right:0;padding:14px 24px;display:flex;align-
       <div class="leg-item"><div class="leg-dot soon"></div>BALD</div>
       <div class="leg-item"><div class="leg-dot future"></div>PHASE 5+</div>
     </div>
-    <div class="phase-tag">1. MAI 2026</div>
+    <div class="phase-tag">27. JUNI 2026</div>
     <button class="logout-btn" onclick="doLogout()">Logout</button>
   </div>
 </header>
@@ -135,7 +135,6 @@ header{position:fixed;top:0;left:0;right:0;padding:14px 24px;display:flex;align-
   <div id="map">
     <svg id="lines" xmlns="http://www.w3.org/2000/svg"></svg>
 
-```
 <!-- ZENTRUM -->
 <div class="node node-center" id="n-center" style="left:1350px;top:950px" data-tip="depuls.ch -- GitHub Pages hosted. Domain via hosttech CHF 4.90/J. HTTPS via Let's Encrypt. ✅ Live seit April 2026.">
   <div class="node-title">STADTPULS</div>
@@ -168,10 +167,10 @@ header{position:fixed;top:0;left:0;right:0;padding:14px 24px;display:flex;align-
   <div class="node-status">LIVE → Supabase ✅</div>
 </div>
 
-<div class="node node-file live" id="n-import" style="left:1580px;top:1200px" data-tip="import.html -- Import Tool v2. ZT API → Supabase. Duplikat-Schutz. PLZ→Kreis auto. 365 Locations. Login geschützt.">
+<div class="node node-file future" id="n-import" style="left:1580px;top:1200px" data-tip="import.html -- altes manuelles Import-Tool. Seit Juni 2026 ersetzt durch den nächtlichen Auto-Sync (GitHub Action). Nur noch als Notfall-Werkzeug.">
   <div class="node-icon">↑</div><div class="node-name">import.html</div>
-  <div class="node-desc">ZT API → Supabase · Login</div>
-  <div class="node-status">LIVE · LOGIN · 365 Loc</div>
+  <div class="node-desc">manuell · archiviert</div>
+  <div class="node-status">ARCHIVIERT</div>
 </div>
 
 <div class="node node-file live" id="n-mindmap" style="left:1150px;top:1280px" data-tip="mindmap.html -- Architektur Mindmap. Interaktiv. Pan/Zoom/Touch. Login geschützt.">
@@ -203,22 +202,22 @@ header{position:fixed;top:0;left:0;right:0;padding:14px 24px;display:flex;align-
   <div class="node-title">SUPABASE</div>
   <div class="node-sub">BACKEND · DATABASE · RLS</div>
   <div class="supa-tables">
-    <div class="supa-table active">locations · 365 ✅</div>
+    <div class="supa-table active">locations · live ✅</div>
     <div class="supa-table active">dating_votes · 10 ✅</div>
     <div class="supa-table active">feedback_submissions ✅</div>
     <div class="supa-table active">kontakt_submissions ✅</div>
     <div class="supa-table active">roadmap ✅</div>
     <div class="supa-table">location_images</div>
-    <div class="supa-table">events · jobs · news</div>
+    <div class="supa-table active">eventfrog_events · live ✅</div>
     <div class="supa-table">users · community_posts</div>
   </div>
 </div>
 
 <!-- DB TABELLEN -->
-<div class="node node-db" id="n-locations" style="left:1080px;top:500px" data-tip="locations -- 365 Einträge. PLZ→Kreis auto. RLS aktiv.">
+<div class="node node-db" id="n-locations" style="left:1080px;top:500px" data-tip="locations -- Live aus Supabase. PLZ→Kreis auto. RLS aktiv. Auto-Sync täglich.">
   <div class="node-icon">📍</div><div class="node-name">locations</div>
   <div class="node-desc">Gastro · Nachtleben · Kultur</div>
-  <div class="node-count">365 <span>einträge</span></div>
+  <div class="node-count"><span id="c-locations">…</span> <span>einträge</span></div>
 </div>
 
 <div class="node node-db" id="n-votes" style="left:1560px;top:480px" data-tip="dating_votes -- People & Dates Voting. 10 JA-Votes.">
@@ -246,10 +245,31 @@ header{position:fixed;top:0;left:0;right:0;padding:14px 24px;display:flex;align-
 </div>
 
 <!-- EXTERNE APIs -->
-<div class="node node-api live" id="n-zt" style="left:1760px;top:1100px" data-tip="ZT API -- Zürich Tourismus. CC BY-SA. 365 Locations importiert.">
+<div class="node node-api live" id="n-zt" style="left:1760px;top:1100px" data-tip="ZT API -- Zürich Tourismus. CC BY-SA. Locations-Quelle. Wird vom Auto-Sync täglich abgefragt.">
   <div class="node-name">ZT API</div>
-  <div class="node-desc">Zürich Tourismus · 365 Locations</div>
-  <div class="node-status live">LIVE → import.html</div>
+  <div class="node-desc">Zürich Tourismus · Locations</div>
+  <div class="node-status live">LIVE → Auto-Sync</div>
+</div>
+
+<!-- NEU: Eventfrog API -->
+<div class="node node-api live" id="n-eventfrog" style="left:1980px;top:1100px" data-tip="Eventfrog API -- Event-Quelle für Zürich. Bearer-Auth. Wird vom Auto-Sync täglich pro PLZ abgefragt.">
+  <div class="node-name">Eventfrog API</div>
+  <div class="node-desc">Events Zürich · Bearer</div>
+  <div class="node-status live">LIVE → Auto-Sync</div>
+</div>
+
+<!-- NEU: Auto-Sync GitHub Action -->
+<div class="node node-api live" id="n-autosync" style="left:1760px;top:920px" data-tip="Auto-Sync -- GitHub Action. Läuft täglich 04:00 + manuell. import_eventfrog.py + import_locations.py. Holt neue Events & Locations, räumt abgelaufene Events auf (service_role).">
+  <div class="node-name">⚙ AUTO-SYNC</div>
+  <div class="node-desc">GitHub Action · täglich 04:00</div>
+  <div class="node-status live">LIVE ✅</div>
+</div>
+
+<!-- NEU: eventfrog_events DB -->
+<div class="node node-db" id="n-events" style="left:1080px;top:340px" data-tip="eventfrog_events -- Live aus Supabase. Quelle Eventfrog. Auto-Sync täglich. Abgelaufene werden aufgeräumt.">
+  <div class="node-icon">☄️</div><div class="node-name">eventfrog_events</div>
+  <div class="node-desc">Events · Pop-Ups · Kategorien</div>
+  <div class="node-count"><span id="c-events">…</span> <span>einträge</span></div>
 </div>
 
 <div class="node node-api soon" id="n-google" style="left:1760px;top:1260px" data-tip="Google Places API -- Phase 4q. Kreis 3/4/5 befüllen.">
@@ -299,7 +319,6 @@ header{position:fixed;top:0;left:0;right:0;padding:14px 24px;display:flex;align-
   <div class="node-desc">Stimmung → Location</div>
   <div class="node-status soon">PHASE 6</div>
 </div>
-```
 
   </div>
 </div>
@@ -314,7 +333,7 @@ header{position:fixed;top:0;left:0;right:0;padding:14px 24px;display:flex;align-
   <button class="zoom-btn" onclick="zoomOut()">−</button>
   <button class="zoom-btn" onclick="resetView()" style="font-size:10px;letter-spacing:1px">↺</button>
 </div>
-<div class="map-date">STADTPULS ARCHITEKTUR · 1. MAI 2026 · v2</div>
+<div class="map-date">STADTPULS ARCHITEKTUR · 27. JUNI 2026 · v3</div>
 
 <script>
 /* LOGIN */
@@ -351,8 +370,8 @@ const connections=[
   {from:'n-supa',to:'n-roadmap',color:'#c8ff00',width:1.5,dash:''},
   {from:'n-feedback',to:'n-fb-table',color:'#c8ff00',width:1.5,dash:''},
   {from:'n-kontakt',to:'n-kt-table',color:'#c8ff00',width:1.5,dash:''},
-  {from:'n-import',to:'n-locations',color:'#9333ea',width:1.5,dash:''},
-  {from:'n-import',to:'n-zt',color:'#9333ea',width:1.5,dash:''},
+  {from:'n-import',to:'n-locations',color:'#333',width:1,dash:'4,4'},
+  {from:'n-import',to:'n-zt',color:'#333',width:1,dash:'4,4'},
   {from:'n-import',to:'n-google',color:'#ff6600',width:1,dash:'4,4'},
   {from:'n-admin',to:'n-locations',color:'#ff2d00',width:1,dash:'4,4'},
   {from:'n-admin',to:'n-votes',color:'#ff2d00',width:1,dash:'4,4'},
@@ -369,6 +388,12 @@ const connections=[
   {from:'n-center',to:'n-mood',color:'#9333ea',width:1,dash:'4,4'},
   {from:'n-index',to:'n-votes',color:'#ff6600',width:1,dash:''},
   {from:'n-index',to:'n-locations',color:'#c8ff00',width:1,dash:'4,4'},
+  {from:'n-zt',to:'n-autosync',color:'#00f5ff',width:1.5,dash:''},
+  {from:'n-eventfrog',to:'n-autosync',color:'#c8ff00',width:1.5,dash:''},
+  {from:'n-autosync',to:'n-locations',color:'#00f5ff',width:1.5,dash:''},
+  {from:'n-autosync',to:'n-events',color:'#c8ff00',width:1.5,dash:''},
+  {from:'n-supa',to:'n-events',color:'#00f5ff',width:1.5,dash:''},
+  {from:'n-center',to:'n-autosync',color:'#555',width:1,dash:''},
 ];
 
 function drawLines(){
@@ -393,6 +418,17 @@ function drawLines(){
     svg.appendChild(path);
   });
 }
+
+/* LIVE COUNTS (Supabase) */
+const SP_SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SP_SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+async function spCount(path){try{const r=await fetch(SP_SU+'/rest/v1/'+path+'&select=id',{headers:{apikey:SP_SK,Authorization:'Bearer '+SP_SK,Prefer:'count=exact',Range:'0-0'}});const cr=r.headers.get('content-range')||'';const t=cr.split('/')[1];return (t&&t!=='*')?parseInt(t,10):null;}catch(e){return null;}}
+async function loadLiveCounts(){
+  const[l,e]=await Promise.all([spCount('locations?aktiv=eq.true'),spCount('eventfrog_events?aktiv=eq.true')]);
+  const el=document.getElementById('c-locations'); if(el) el.textContent=(l!=null?l:'—');
+  const ev=document.getElementById('c-events'); if(ev) ev.textContent=(e!=null?e:'—');
+}
+loadLiveCounts();
 
 /* PAN & ZOOM */
 let scale=0.55,panX=0,panY=0,dragging=false,lastX=0,lastY=0;

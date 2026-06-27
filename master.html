@@ -252,9 +252,11 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
     <strong>Fonts:</strong> Barlow Condensed Italic 900 · DM Mono<br>
     <strong>Copyright:</strong> © 2026 by raimondo* · byraimondo@gmail.com<br>
     <br>
-    <strong>Dateien live:</strong> <span class="hi">index.html · admin.html · feedback.html · kontakt.html · import.html · impressum.html · datenschutz.html · mindmap.html · master.html</span><br>
+    <strong>Dateien live:</strong> <span class="hi">index.html · admin.html · feedback.html · kontakt.html · impressum.html · datenschutz.html · mindmap.html · master.html · events.html · news.html · login.html · onboarding.html · dashboard.html</span><br>
     <br>
-    <strong>Supabase Tabellen:</strong> locations · dating_votes · feedback_submissions · kontakt_submissions · location_images · events · immobilien · inserate · jobs · news_stories · users · user_preferences · community_posts · roadmap · sessions<br>
+    <strong>Daten-Pipeline:</strong> <span class="hi">.github/workflows/stadtpuls-sync.yml · import_eventfrog.py · import_locations.py</span> — täglich 04:00 automatisch · import.html nur noch Notfall-Tool<br>
+    <br>
+    <strong>Supabase Tabellen:</strong> locations · eventfrog_events · dating_votes · feedback_submissions · kontakt_submissions · location_images · immobilien · inserate · jobs · news_stories · users · user_preferences · community_posts · roadmap · sessions<br>
     <br>
     <strong>Wichtige Regeln:</strong><br>
     → Vor jeder Änderung Raw-URL checken<br>
@@ -351,7 +353,7 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
       <div class="arch-node live"><div class="arch-name">admin.html</div><div class="arch-desc">Master Control · Login · Supabase live</div><div class="arch-status">LIVE ✅</div></div>
       <div class="arch-node live"><div class="arch-name">feedback.html</div><div class="arch-desc">Blasen · 7 Typen · → Supabase</div><div class="arch-status">LIVE ✅</div></div>
       <div class="arch-node live"><div class="arch-name">kontakt.html</div><div class="arch-desc">4-Step Flow · → Supabase + mailto</div><div class="arch-status">LIVE ✅</div></div>
-      <div class="arch-node live"><div class="arch-name">import.html</div><div class="arch-desc">ZT API → Supabase · Login</div><div class="arch-status">LIVE · LOGIN</div></div>
+      <div class="arch-node future"><div class="arch-name">import.html</div><div class="arch-desc">manuelles Tool · durch Auto-Sync ersetzt</div><div class="arch-status">ARCHIVIERT</div></div>
       <div class="arch-node live"><div class="arch-name">mindmap.html</div><div class="arch-desc">Architektur · Roadmap live · Login</div><div class="arch-status">LIVE · LOGIN</div></div>
       <div class="arch-node live"><div class="arch-name">master.html</div><div class="arch-desc">KI-Hirn · Sessions live · Login</div><div class="arch-status">LIVE · LOGIN</div></div>
       <div class="arch-node live"><div class="arch-name">impressum.html</div><div class="arch-desc">DSG + DSGVO · by raimondo*</div><div class="arch-status">LIVE</div></div>
@@ -361,7 +363,9 @@ main{max-width:1200px;margin:0 auto;padding:28px;}
   <div class="card">
     <h3>APIs</h3>
     <div class="arch-grid">
-      <div class="arch-node live"><div class="arch-name">ZT API</div><div class="arch-desc">Zürich Tourismus · 365 Locations</div><div class="arch-status">LIVE</div></div>
+      <div class="arch-node live"><div class="arch-name">⚙ Auto-Sync</div><div class="arch-desc">GitHub Action · täglich 04:00 · Eventfrog + ZT → Supabase</div><div class="arch-status">LIVE ✅</div></div>
+      <div class="arch-node live"><div class="arch-name">ZT API</div><div class="arch-desc">Zürich Tourismus · Locations-Quelle</div><div class="arch-status">LIVE</div></div>
+      <div class="arch-node live"><div class="arch-name">Eventfrog API</div><div class="arch-desc">Events Zürich · Events-Quelle</div><div class="arch-status">LIVE</div></div>
       <div class="arch-node live"><div class="arch-name">GitHub Pages</div><div class="arch-desc">Hosting · main · AI Opt-out</div><div class="arch-status">LIVE</div></div>
       <div class="arch-node live"><div class="arch-name">HTTPS / SSL</div><div class="arch-desc">Let's Encrypt · depuls.ch</div><div class="arch-status">LIVE ✅</div></div>
       <div class="arch-node live"><div class="arch-name">Plausible</div><div class="arch-desc">Privacy-first Analytics</div><div class="arch-status">AKTIV</div></div>
@@ -492,6 +496,10 @@ async function sq(path){
   try{const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});return await r.json();}
   catch(e){return[];}
 }
+async function sqCount(path){
+  try{const r=await fetch(SU+'/rest/v1/'+path+(path.includes('?')?'&':'?')+'select=id',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact','Range':'0-0'}});const cr=r.headers.get('content-range')||'';const t=cr.split('/')[1];return (t&&t!=='*')?parseInt(t,10):0;}
+  catch(e){return 0;}
+}
 
 function daysToLaunch(){return Math.ceil((new Date('2026-06-04')-new Date())/864e5);}
 
@@ -505,6 +513,7 @@ async function init(){
   try{
     const locs=await sq('locations?select=id,kategorie,kreis,bild_url&limit=2000');
     const n=Array.isArray(locs)?locs.length:0;
+    const efc=await sqCount('eventfrog_events?aktiv=eq.true');
     document.getElementById('h-loc').textContent=n;
     document.getElementById('kpi-loc').textContent=n;
     if(n>0){
@@ -619,6 +628,7 @@ async function loadSupabase(){
   try{
     const locs=await sq('locations?select=id,kategorie,kreis,bild_url&limit=2000');
     const n=Array.isArray(locs)?locs.length:0;
+    const efc=await sqCount('eventfrog_events?aktiv=eq.true');
     const mb=locs.filter(l=>l.bild_url).length;
     const mk=locs.filter(l=>l.kreis).length;
     const fb=await sq('feedback_submissions?select=id&limit=500');
@@ -636,7 +646,7 @@ async function loadSupabase(){
       <div class="supa-node active"><div class="supa-name">roadmap</div><div class="supa-count">${Array.isArray(rm)?rm.length:0}</div><div class="supa-desc">Alle Phasen</div></div>
       <div class="supa-node active"><div class="supa-name">sessions</div><div class="supa-count">${Array.isArray(ss)?ss.length:0}</div><div class="supa-desc">Session Log</div></div>
       <div class="supa-node"><div class="supa-name">users</div><div class="supa-count">0</div><div class="supa-desc">Phase 5</div></div>
-      <div class="supa-node"><div class="supa-name">events</div><div class="supa-count">0</div><div class="supa-desc">Phase 4s</div></div>`;
+      <div class="supa-node active"><div class="supa-name">eventfrog_events</div><div class="supa-count">${efc}</div><div class="supa-desc">Events · Auto-Sync</div></div>`;
     const cats={};locs.forEach(l=>{if(l.kategorie)cats[l.kategorie]=(cats[l.kategorie]||0)+1;});
     const mc=Math.max(...Object.values(cats),1);
     document.getElementById('supa-cats').innerHTML=Object.entries(cats).sort((a,b)=>b[1]-a[1]).map(([c,v])=>`<div class="bar-row"><div class="bar-nm">${c}</div><div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(v/mc*100)}%;background:${CCOLORS[c]||'#ff2d00'}"></div></div><div class="bar-ct">${v}</div></div>`).join('');
