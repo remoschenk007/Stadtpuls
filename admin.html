@@ -338,7 +338,7 @@ nav{display:none;}
   <div class="nav-section">
     <div class="nav-label">System</div>
     <div class="nav-item" onclick="showPanel('status',this)"><span class="icon">⚡</span> Status <span class="nav-badge green">✓</span></div>
-    <div class="nav-item" onclick="window.open('import.html','_blank')"><span class="icon">↑</span> Import Tool</div>
+    <div class="nav-item" onclick="window.open('https://github.com/remoschenk007/Stadtpuls/actions','_blank')"><span class="icon">⚙</span> Auto-Sync</div>
     <div class="nav-item" onclick="window.open('feedback.html','_blank')"><span class="icon">↗</span> feedback.html</div>
     <div class="nav-item" onclick="window.open('kontakt.html','_blank')"><span class="icon">↗</span> kontakt.html</div>
     <div class="nav-item" onclick="window.open('/','_blank')"><span class="icon">↗</span> depuls.ch</div>
@@ -567,7 +567,7 @@ nav{display:none;}
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
     <div class="panel-title" style="margin-bottom:0">LOCATIONS <span style="color:#c8ff00" id="loc-count">--</span></div>
     <div style="display:flex;gap:8px">
-      <button class="btn btn-outline" onclick="window.open('import.html','_blank')">↑ Import Tool</button>
+      <button class="btn btn-outline" onclick="window.open('https://github.com/remoschenk007/Stadtpuls/actions','_blank')">⚙ Auto-Sync</button>
       <button class="btn btn-red" onclick="loadLocations()">↻ Laden</button>
     </div>
   </div>
@@ -709,13 +709,13 @@ nav{display:none;}
 <div class="panel" id="panel-status">
   <div class="panel-title">SYSTEM STATUS</div>
   <div class="status-item"><div class="status-dot ok"></div><div class="status-info"><div class="status-title">HTTPS -- Live ✅</div><div class="status-meta">SSL-Zertifikat aktiv · Let's Encrypt · depuls.ch sicher</div></div><div class="status-time">30. Apr</div></div>
-  <div class="status-item"><div class="status-dot ok"></div><div class="status-info"><div class="status-title">Supabase -- OK</div><div class="status-meta">333 Locations · RLS aktiv · Insert Policy · Alle Tabellen live</div></div><div class="status-time">live</div></div>
+  <div class="status-item"><div class="status-dot ok"></div><div class="status-info"><div class="status-title">Supabase -- OK</div><div class="status-meta">locations + eventfrog_events · RLS aktiv · Insert Policy · live</div></div><div class="status-time">live</div></div>
   <div class="status-item"><div class="status-dot ok"></div><div class="status-info"><div class="status-title">depuls.ch -- Online</div><div class="status-meta">GitHub Pages · Plausible Analytics · Google Search Console</div></div><div class="status-time">live</div></div>
   <div class="status-item"><div class="status-dot ok"></div><div class="status-info"><div class="status-title">Voting System -- Live</div><div class="status-meta">dating_votes · RLS Read+Insert · Frontend funktioniert</div></div><div class="status-time">live</div></div>
-  <div class="status-item"><div class="status-dot ok"></div><div class="status-info"><div class="status-title">Import Tool v2 -- Live</div><div class="status-meta">depuls.ch/import.html · ZT API · Duplikat-Schutz aktiv</div></div><div class="status-time">live</div></div>
+  <div class="status-item"><div class="status-dot ok"></div><div class="status-info"><div class="status-title">Auto-Sync -- Live</div><div class="status-meta">GitHub Action · täglich 04:00 · Eventfrog + ZT → Supabase</div></div><div class="status-time">live</div></div>
   <div class="status-item"><div class="status-dot ok"></div><div class="status-info"><div class="status-title">Feedback + Kontakt → Supabase ✅</div><div class="status-meta">feedback_submissions · kontakt_submissions · RLS aktiv · Insert live</div></div><div class="status-time">heute</div></div>
   <div class="status-item"><div class="status-dot warn"></div><div class="status-info"><div class="status-title">Plausible verifizieren</div><div class="status-meta">HTTPS aktiv → plausible.io öffnen → Domain verifizieren</div></div><div class="status-time">todo</div></div>
-  <div class="status-item"><div class="status-dot warn"></div><div class="status-info"><div class="status-title">Locations ohne Kreis</div><div class="status-meta">PLZ ausserhalb Zürich · Import Tool → bereinigen</div></div><div class="status-time">Phase 4r</div></div>
+  <div class="status-item"><div class="status-dot warn"></div><div class="status-info"><div class="status-title">Locations ohne Kreis</div><div class="status-meta">Auto-Sync nimmt nur Zürich-PLZ auf</div></div><div class="status-time">Phase 4r</div></div>
   <div class="status-item"><div class="status-dot warn"></div><div class="status-info"><div class="status-title">Livedaten index.html</div><div class="status-meta">Gastro + Nachtleben zeigen noch keine Supabase-Daten</div></div><div class="status-time">Phase 4s</div></div>
 </div>
 
