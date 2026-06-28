@@ -438,6 +438,8 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="sp-track.js"></script>
 <script>
 // Cursor
 const dot=document.getElementById('dot'),ring=document.getElementById('ring');
@@ -544,6 +546,9 @@ async function load(){
     return;
   }
   const l=data[0];
+  _bm={ id:l.id, kreis:l.kreis||null, tags:l.stimmung_tags||null };
+  try{ if(window.spTrack) spTrack('view_profile','location',l.id,{kategorie:'nachtleben',kreis:l.kreis,tags:l.stimmung_tags}); }catch(e){}
+  try{ const _s=document.getElementById('act-save'); if(_s && window.spIsBookmarked) setSaveUI(_s, await spIsBookmarked('location',l.id)); }catch(e){}
   const sk=getSkClass(l);
   const offe=isOffe(l.oeffnungszeiten);
 
@@ -623,6 +628,16 @@ async function loadSimilar(loc){
 document.getElementById('act-share').onclick=()=>{
   if(navigator.share)navigator.share({title:document.title,url:location.href});
   else{navigator.clipboard.writeText(location.href);alert('Link kopiert!');}
+};
+
+// BOOKMARK (echtes Speichern in die bookmarks-Tabelle via sp-track.js)
+let _bm=null;
+function setSaveUI(btn,on){ btn.textContent=on?'❤️':'🤍'; btn.classList.toggle('on',!!on); }
+document.getElementById('act-save').onclick=async()=>{
+  if(!_bm||!window.spBookmarkToggle)return;
+  const r=await spBookmarkToggle('location',_bm.id,{kategorie:'nachtleben',kreis:_bm.kreis,tags:_bm.tags});
+  if(!r.ok){ if(r.reason==='login'){ if(confirm('Zum Merke muesch aagmäldet sii. Jetzt aamälde?')) location.href='login.html'; } return; }
+  setSaveUI(document.getElementById('act-save'),r.bookmarked);
 };
 
 load();
