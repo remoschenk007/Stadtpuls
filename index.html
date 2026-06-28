@@ -500,7 +500,7 @@ async function loadLiveData(){
 
   document.getElementById('ls-locations').textContent=(gastroCount+nachtlebenCount+shoppingCount)||'–';
   document.getElementById('ls-events').textContent=eventsTotal||'–';
-  document.getElementById('ls-today').textContent=Math.round((eventsTotal||0)*0.12)||'–'; // grobe Schätzung "heute" bis echte Datums-Filterung läuft
+  // 'ls-today' (HÜT LIVE) wird in loadTonight() mit echter Anzahl heutiger Events gesetzt
 
   document.getElementById('cnt-gastro').textContent=gastroCount||'–';
   document.getElementById('cnt-nachtleben').textContent=nachtlebenCount||'–';
@@ -525,10 +525,26 @@ async function loadLiveData(){
 }
 
 async function loadTonight(){
-  // Events die heute/sehr bald starten — echte Live-Daten statt Demo-Text
+  // Nur Events AB HEUTE (rollt täglich weiter) — sortiert nach Startdatum
+  const now=new Date();
+  const startToday=new Date(now.getFullYear(),now.getMonth(),now.getDate());      // lokal 00:00
+  const startTomorrow=new Date(startToday.getTime()+864e5);
+
+  // Echte "HÜT LIVE"-Zahl: Events, die HEUTE starten
+  try{
+    const {count}=await sb.from('eventfrog_events')
+      .select('id',{count:'exact',head:true})
+      .eq('aktiv',true)
+      .gte('datum_start',startToday.toISOString())
+      .lt('datum_start',startTomorrow.toISOString());
+    document.getElementById('ls-today').textContent = (count!=null)?count:'–';
+  }catch(e){ document.getElementById('ls-today').textContent='–'; }
+
+  // Liste: die nächsten 3 Events ab heute
   const {data}=await sb.from('eventfrog_events')
     .select('*')
     .eq('aktiv',true)
+    .gte('datum_start',startToday.toISOString())
     .order('datum_start',{ascending:true})
     .limit(3);
 
@@ -538,15 +554,24 @@ async function loadTonight(){
     return;
   }
 
-  list.innerHTML=data.map((e,i)=>`
+  const wt=['So','Mo','Di','Mi','Do','Fr','Sa'];
+  list.innerHTML=data.map((e,i)=>{
+    const d=e.datum_start?new Date(e.datum_start):null;
+    const heute = d && d>=startToday && d<startTomorrow;
+    const datum = d ? (heute?'Hüt':(wt[d.getDay()]+' '+('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+'.')) : '';
+    const zeit = e.uhrzeit_start ? (' · '+String(e.uhrzeit_start).slice(0,5)) : '';
+    const kreis = e.kreis ? (' · Kreis '+e.kreis) : '';
+    const meta = [e.venue_name||'', (datum+zeit).trim()].filter(Boolean).join(' · ')+kreis;
+    return `
     <a href="event-profil.html?id=${e.ef_id||e.id}" class="tonight-item">
       <div class="tonight-num">0${i+1}</div>
       <div class="tonight-body">
         <div class="tonight-title">${e.titel||'Event'}</div>
-        <div class="tonight-meta">${e.venue_name||''} · KREIS ${e.kreis||'?'}</div>
+        <div class="tonight-meta">${meta}</div>
       </div>
       <span class="tonight-arrow">→</span>
-    </a>`).join('');
+    </a>`;
+  }).join('');
 }
 
 loadLiveData();
