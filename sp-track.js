@@ -100,4 +100,14 @@
       }
     } catch (e) { return { ok: false, reason: String(e) }; }
   };
+
+  // Live-Statistik (öffentlich, aggregiert) — braucht die SQL-Funktion stadtpuls_stats
+  window.spStats = async function (ziel_typ, ziel_id) {
+    if (!_sb) return null;
+    try {
+      const { data, error } = await _sb.rpc('stadtpuls_stats', { p_typ: ziel_typ, p_id: String(ziel_id) });
+      if (error) return null;
+      return data; // { merkt: n, views: n }
+    } catch (e) { return null; }
+  };
 })();

@@ -211,6 +211,7 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.08);padding:28px 20p
       <span class="hero-addr-dot"></span>
       <span>ZÜRICH</span>
     </div>
+    <div id="eng-bar" style="margin-top:10px;font-size:11px;color:rgba(232,228,217,.55);letter-spacing:.5px"></div>
   </div>
 </div>
 
@@ -534,12 +535,18 @@ async function load(){
     return;
   }
 
-  // Versuche via slug oder id
+  // Versuche via slug oder id — robust, ohne Kategorie-Falle + Fallback
   let data;
   if(isNaN(slug)){
-    data=await sbGet(`locations?slug=eq.${slug}&kategorie=eq.nachtleben&select=*&limit=1`);
+    data=await sbGet(`locations?slug=eq.${encodeURIComponent(slug)}&select=*&limit=1`);
+    if(!Array.isArray(data)||!data.length){
+      data=await sbGet(`locations?id=eq.${encodeURIComponent(slug)}&select=*&limit=1`);
+    }
   }else{
     data=await sbGet(`locations?id=eq.${slug}&select=*&limit=1`);
+    if(!Array.isArray(data)||!data.length){
+      data=await sbGet(`locations?slug=eq.${encodeURIComponent(slug)}&select=*&limit=1`);
+    }
   }
   if(!Array.isArray(data)||!data.length){
     document.getElementById('hero-name').textContent='LOCATION NOT FOUND';
@@ -548,6 +555,7 @@ async function load(){
   const l=data[0];
   _bm={ id:l.id, kreis:l.kreis||null, tags:l.stimmung_tags||null };
   try{ if(window.spTrack) spTrack('view_profile','location',l.id,{kategorie:'nachtleben',kreis:l.kreis,tags:l.stimmung_tags}); }catch(e){}
+  loadEngagement();
   try{ const _s=document.getElementById('act-save'); if(_s && window.spIsBookmarked) setSaveUI(_s, await spIsBookmarked('location',l.id)); }catch(e){}
   const sk=getSkClass(l);
   const offe=isOffe(l.oeffnungszeiten);
@@ -632,6 +640,13 @@ document.getElementById('act-share').onclick=()=>{
 
 // BOOKMARK (echtes Speichern in die bookmarks-Tabelle via sp-track.js)
 let _bm=null;
+async function loadEngagement(){
+  if(!_bm||!window.spStats)return;
+  try{ const s=await spStats('location',_bm.id); if(!s)return;
+    const el=document.getElementById('eng-bar');
+    if(el) el.innerHTML=`❤️ ${s.merkt||0} gmerkt &nbsp;·&nbsp; 👁 ${s.views||0} die Wuche aagluegt`;
+  }catch(e){}
+}
 function setSaveUI(btn,on){ btn.textContent=on?'❤️':'🤍'; btn.classList.toggle('on',!!on); }
 document.getElementById('act-save').onclick=async()=>{
   if(!_bm||!window.spBookmarkToggle)return;
