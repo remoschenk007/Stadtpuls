@@ -1188,7 +1188,13 @@ async function loadAllLocations(){
     buildGrid();
     buildScoreStrip();
     buildVoltRes();
-    
+
+    // ?kreis= aus URL übernehmen (z.B. von DIS UNIVERSUM auf der Startseite)
+    try{
+      const _k=parseInt(new URLSearchParams(location.search).get('kreis'),10);
+      if(_k>=1&&_k<=12) setKreis(null,_k);
+    }catch(_e){}
+
     document.getElementById('rb-loading').style.display='none';
     
   }catch(e){

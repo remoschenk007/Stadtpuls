@@ -836,7 +836,19 @@ window.openDetail=function(id){
 function closeDetail(){document.getElementById('detail-panel').classList.remove('open');}
 
 // INIT
-load();
+load().then(function(){
+  // ?kreis= aus URL übernehmen (z.B. von DIS UNIVERSUM auf der Startseite)
+  try{
+    const _k=parseInt(new URLSearchParams(location.search).get('kreis'),10);
+    if(_k>=1&&_k<=12){
+      filtKreis=_k;
+      const _cards=document.querySelectorAll('.sk-card');
+      _cards.forEach(c=>c.classList.remove('on'));
+      if(_cards[_k-1])_cards[_k-1].classList.add('on');
+      applyFilter();
+    }
+  }catch(_e){}
+});
 </script>
 </body>
 </html>

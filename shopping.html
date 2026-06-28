@@ -930,6 +930,15 @@ async function loadAllLocations(){
     buildGrid();
     buildVoltList();
 
+    // ?kreis= aus URL übernehmen (z.B. von DIS UNIVERSUM auf der Startseite)
+    try{
+      const _k=parseInt(new URLSearchParams(location.search).get('kreis'),10);
+      if(_k>=1&&_k<=12){
+        const _btn=[...document.querySelectorAll('.kr-btn')].find(b=>(b.getAttribute('onclick')||'').includes('setKreis(this,'+_k+')'));
+        setKreis(_btn||null,_k);
+      }
+    }catch(_e){}
+
     document.getElementById('rb-loading').style.display='none';
 
   }catch(e){
