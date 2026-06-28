@@ -525,18 +525,17 @@ async function loadLiveData(){
 }
 
 async function loadTonight(){
-  // Nur Events AB HEUTE (rollt täglich weiter) — sortiert nach Startdatum
-  const now=new Date();
-  const startToday=new Date(now.getFullYear(),now.getMonth(),now.getDate());      // lokal 00:00
-  const startTomorrow=new Date(startToday.getTime()+864e5);
+  // datum_start ist ein Datums-String 'YYYY-MM-DD' (gleiche Logik wie events.html).
+  // Vergangene Events fallen immer raus, weil wir auf >= heute filtern.
+  const td=new Date().toLocaleDateString('sv-SE',{timeZone:'Europe/Zurich'}); // heute (CH-Zeit) YYYY-MM-DD
+  const DAYS=['So','Mo','Di','Mi','Do','Fr','Sa'];
 
-  // Echte "HÜT LIVE"-Zahl: Events, die HEUTE starten
+  // "HÜT LIVE" = Anzahl Events mit Startdatum = heute
   try{
     const {count}=await sb.from('eventfrog_events')
       .select('id',{count:'exact',head:true})
       .eq('aktiv',true)
-      .gte('datum_start',startToday.toISOString())
-      .lt('datum_start',startTomorrow.toISOString());
+      .eq('datum_start',td);
     document.getElementById('ls-today').textContent = (count!=null)?count:'–';
   }catch(e){ document.getElementById('ls-today').textContent='–'; }
 
@@ -544,8 +543,9 @@ async function loadTonight(){
   const {data}=await sb.from('eventfrog_events')
     .select('*')
     .eq('aktiv',true)
-    .gte('datum_start',startToday.toISOString())
+    .gte('datum_start',td)
     .order('datum_start',{ascending:true})
+    .order('uhrzeit_start',{ascending:true})
     .limit(3);
 
   const list=document.getElementById('tonight-list');
@@ -554,12 +554,12 @@ async function loadTonight(){
     return;
   }
 
-  const wt=['So','Mo','Di','Mi','Do','Fr','Sa'];
   list.innerHTML=data.map((e,i)=>{
-    const d=e.datum_start?new Date(e.datum_start):null;
-    const heute = d && d>=startToday && d<startTomorrow;
-    const datum = d ? (heute?'Hüt':(wt[d.getDay()]+' '+('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+'.')) : '';
-    const zeit = e.uhrzeit_start ? (' · '+String(e.uhrzeit_start).slice(0,5)) : '';
+    const d=e.datum_start?new Date(e.datum_start+'T12:00:00'):null;
+    const heute = e.datum_start===td;
+    const datum = d ? (heute?'Hüt':DAYS[d.getDay()]+' '+('0'+d.getDate()).slice(-2)+'.'+('0'+(d.getMonth()+1)).slice(-2)+'.') : '';
+    const t = e.uhrzeit_start ? String(e.uhrzeit_start).slice(0,5) : '';
+    const zeit = (t && t!=='00:00') ? (' · '+t) : '';
     const kreis = e.kreis ? (' · Kreis '+e.kreis) : '';
     const meta = [e.venue_name||'', (datum+zeit).trim()].filter(Boolean).join(' · ')+kreis;
     return `
