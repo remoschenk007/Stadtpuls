@@ -670,7 +670,7 @@ function renderLocs(locs){
     const placeholder=`<div class="loc-img-placeholder" ${l.bild_url?'style="display:none"':''}>🌙</div>`;
     const desc=l.beschreibung_kurz||l.beschreibung||'';
     const rating=l.rating?`<span class="star">★</span> ${parseFloat(l.rating).toFixed(1)}`:'';
-    return`<div class="loc-card${l.featured?' featured':''}" onclick="openDetail(${l.id})">
+    return`<div class="loc-card${l.featured?' featured':''}" onclick="location.href='nachtleben-profil.html?slug=${encodeURIComponent(l.slug||l.id)}'">
       <div class="loc-card-inner">
         ${img}${placeholder}
         <div class="loc-body">
@@ -688,7 +688,10 @@ function renderLocs(locs){
           ${desc?`<div class="loc-desc">${desc}</div>`:''}
           <div class="loc-bottom">
             <div class="loc-rating">${rating?`<span class="star">★</span>${parseFloat(l.rating||0).toFixed(1)}<span style="color:rgba(232,228,217,0.25);font-size:8px;margin-left:2px">(${l.rating_count||0})</span>`:''}</div>
-            <button class="loc-ticket-btn ${l.website?'':'ghost'}" onclick="event.stopPropagation();${l.website?`window.open('${l.website}','_blank')`:'openDetail('+l.id+')'}">${l.website?'TICKET →':'MEHR →'}</button>
+            <div style="display:flex;gap:6px;align-items:center">
+              <button class="loc-ticket-btn ghost" onclick="event.stopPropagation();location.href='nachtleben-profil.html?slug=${encodeURIComponent(l.slug||l.id)}'">PROFIL →</button>
+              ${l.website?`<button class="loc-ticket-btn" onclick="event.stopPropagation();window.open('${l.website}','_blank')">TICKET →</button>`:''}
+            </div>
           </div>
         </div>
       </div>
