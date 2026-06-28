@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>STADTPULS — Kommandozentrale</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100vh;}
+.bc{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:#1a1a2e;border-radius:4px}
+
+/* LOGIN */
+#login-screen{position:fixed;inset:0;z-index:9999;background:#04040a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;padding:24px;}
+.login-logo{font-size:60px;color:#ff2d00;letter-spacing:4px;text-align:center;line-height:1;}
+.login-logo span{display:block;font-size:11px;letter-spacing:5px;color:#333;font-style:normal;margin-top:8px;font-family:'DM Mono',monospace;font-weight:400;}
+.login-box{background:#0a0a14;border:1px solid #1a1a2e;border-radius:8px;padding:30px;width:340px;max-width:100%;display:flex;flex-direction:column;gap:14px;}
+.login-box h2{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#555;text-align:center;}
+.login-input{background:#04040a;border:1px solid #1a1a2e;color:#e8e4d9;padding:12px 16px;font-family:'DM Mono',monospace;font-size:13px;border-radius:3px;width:100%;outline:none;}
+.login-input:focus{border-color:#ff2d00;}
+.login-btn{background:#ff2d00;color:#04040a;border:none;padding:14px;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;cursor:pointer;border-radius:3px;font-weight:500;}
+.login-btn:hover{background:#ff4422;}
+.login-error{color:#ff2d00;font-size:10px;text-align:center;display:none;}
+.login-hint{color:#333;font-size:9px;text-align:center;letter-spacing:1px;}
+
+/* COCKPIT HEADER */
+header{position:sticky;top:0;z-index:100;background:linear-gradient(180deg,#08020a,#04040a);border-bottom:1px solid #1a1a2e;padding:12px 22px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;}
+.logo{font-size:22px;color:#ff2d00;letter-spacing:2px;line-height:1;}
+.logo span{color:#444;font-size:8px;font-family:'DM Mono',monospace;display:block;font-style:normal;letter-spacing:3px;margin-top:2px;}
+.hdr-mid{display:flex;gap:18px;align-items:center;flex-wrap:wrap;}
+.stat{display:flex;flex-direction:column;line-height:1.2;}
+.stat .v{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;}
+.stat .l{font-size:7px;letter-spacing:2px;color:#444;text-transform:uppercase;}
+.stat.money .v{color:#c8ff00;}.stat.boost .v{color:#00f5ff;}.stat.warn .v{color:#ffcc00;}.stat.red .v{color:#ff2d00;}
+.hdr-right{display:flex;gap:10px;align-items:center;}
+.clock{font-size:10px;color:#555;letter-spacing:1px;text-align:right;line-height:1.4;}
+.clock b{color:#c8ff00;font-weight:500;}
+.logout-btn{background:transparent;border:1px solid #333;color:#555;padding:6px 12px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;cursor:pointer;border-radius:3px;}
+.logout-btn:hover{border-color:#ff2d00;color:#ff2d00;}
+
+/* TABS */
+.tabs{display:flex;border-bottom:1px solid #1a1a2e;background:#04040a;padding:0 14px;overflow-x:auto;position:sticky;top:60px;z-index:90;}
+.tab{padding:13px 16px;font-size:10px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:#444;border-bottom:2px solid transparent;white-space:nowrap;display:flex;align-items:center;gap:7px;}
+.tab:hover{color:#e8e4d9;}
+.tab.active{color:#ff2d00;border-bottom-color:#ff2d00;}
+.tab .cnt{background:#1a1a2e;color:#e8e4d9;font-size:8px;padding:1px 6px;border-radius:10px;min-width:16px;text-align:center;}
+.tab .cnt.alert{background:#ff2d00;color:#04040a;}.tab .cnt.warn{background:#ffcc00;color:#04040a;}.tab .cnt.cyan{background:#00f5ff;color:#04040a;}
+
+main{max-width:1180px;margin:0 auto;padding:24px;}
+.section{display:none;}.section.active{display:block;}
+.section-head{font-size:34px;color:#e8e4d9;margin-bottom:6px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.section-head .badge{font-size:9px;font-family:'DM Mono',monospace;font-style:normal;padding:3px 10px;border-radius:3px;background:#0a1a0a;color:#c8ff00;border:1px solid #c8ff00;letter-spacing:2px;}
+.section-sub{font-size:10px;color:#555;margin-bottom:22px;line-height:1.7;}
+
+.card{background:#0a0a14;border:1px solid #1a1a2e;border-radius:6px;padding:20px;margin-bottom:16px;}
+.card h3{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:8px;}
+.card h3 .mini{color:#333;font-size:8px;}
+.card.red{border-left:3px solid #ff2d00;}.card.green{border-left:3px solid #c8ff00;}.card.cyan{border-left:3px solid #00f5ff;}.card.gold{border-left:3px solid #ffcc00;}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:820px){.g2,.g3{grid-template-columns:1fr;}}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px;}
+.kpi{background:#0a0a14;border:1px solid #1a1a2e;border-radius:6px;padding:16px;position:relative;overflow:hidden;cursor:pointer;transition:border-color .2s;}
+.kpi:hover{border-color:#333;}
+.kpi::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;}
+.kpi.red::after{background:#ff2d00;}.kpi.green::after{background:#c8ff00;}.kpi.cyan::after{background:#00f5ff;}.kpi.purple::after{background:#9333ea;}.kpi.gold::after{background:#ffcc00;}.kpi.orange::after{background:#ff6600;}
+.kpi .label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#444;margin-bottom:6px;}
+.kpi .value{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;line-height:1;}
+.kpi.red .value{color:#ff2d00;}.kpi.green .value{color:#c8ff00;}.kpi.cyan .value{color:#00f5ff;}.kpi.purple .value{color:#9333ea;}.kpi.gold .value{color:#ffcc00;}.kpi.orange .value{color:#ff6600;}
+.kpi .sub{font-size:8px;color:#333;margin-top:5px;}
+
+.filterbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px;align-items:center;}
+.chip{background:#0a0a14;border:1px solid #1a1a2e;color:#666;padding:7px 14px;border-radius:20px;font-size:9px;letter-spacing:1px;cursor:pointer;text-transform:uppercase;}
+.chip.active{border-color:#ff2d00;color:#ff2d00;}
+.spacer{flex:1;}
+
+.btn{border:none;padding:9px 16px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-radius:3px;}
+.btn-ok{background:#c8ff00;color:#04040a;}.btn-ok:hover{background:#d8ff44;}
+.btn-no{background:transparent;border:1px solid #ff660055;color:#ff6600;}.btn-no:hover{border-color:#ff6600;}
+.btn-block{background:transparent;border:1px solid #ff2d0055;color:#ff2d00;}.btn-block:hover{background:#ff2d0011;}
+.btn-ghost{background:transparent;border:1px solid #333;color:#888;}.btn-ghost:hover{border-color:#666;}
+.btn-cyan{background:#00f5ff;color:#04040a;}.btn-cyan:hover{background:#5ffaff;}
+.btn-gold{background:#ffcc00;color:#04040a;}.btn-gold:hover{background:#ffd944;}
+
+/* MOD */
+.mrow{background:#0a0a14;border:1px solid #1a1a2e;border-radius:6px;padding:16px;margin-bottom:10px;border-left:3px solid #1a1a2e;}
+.mrow.v-ok{border-left-color:#c8ff00;}.mrow.v-warn{border-left-color:#ffcc00;}.mrow.v-bad{border-left-color:#ff2d00;}.mrow.v-wait{border-left-color:#333;}
+.mrow-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:10px;flex-wrap:wrap;}
+.mrow-src{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#555;}
+.mrow-meta{font-size:8px;color:#444;margin-top:2px;}
+.mrow-text{font-size:12px;color:#e8e4d9;line-height:1.6;margin:8px 0;word-break:break-word;}
+.kibadge{font-size:8px;letter-spacing:1px;padding:3px 9px;border-radius:3px;text-transform:uppercase;white-space:nowrap;}
+.kibadge.ok{background:#0a1a0a;color:#c8ff00;border:1px solid #c8ff0033;}
+.kibadge.warn{background:#1a1600;color:#ffcc00;border:1px solid #ffcc0033;}
+.kibadge.bad{background:#1a0500;color:#ff2d00;border:1px solid #ff2d0033;}
+.kibadge.wait{background:#0d0d14;color:#555;border:1px solid #1a1a2e;}
+.ki-reason{font-size:9px;color:#666;line-height:1.6;background:#04040a;border:1px solid #1a1a2e;border-radius:4px;padding:8px 10px;margin:8px 0;}
+.ki-reason b{color:#888;}
+.mrow-actions,.anf-actions,.boost-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;}
+
+/* ANFRAGEN */
+.anfrage{background:#0a0a14;border:1px solid #1a1a2e;border-radius:6px;padding:16px;margin-bottom:10px;cursor:pointer;}
+.anfrage:hover{border-color:#333;}
+.anf-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;}
+.anf-typ,.anf-status,.tier-badge,.bstatus{font-size:8px;letter-spacing:1px;padding:3px 9px;border-radius:3px;text-transform:uppercase;}
+.t-platzierung{background:#1a0a00;color:#ff6600;border:1px solid #ff660033;}
+.t-popup{background:#1a0016;color:#ff5fa2;border:1px solid #ff5fa233;}
+.t-event{background:#161a00;color:#c8ff00;border:1px solid #c8ff0033;}
+.t-partnerschaft{background:#0a0016;color:#9333ea;border:1px solid #9333ea44;}
+.t-sonstiges{background:#0d0d14;color:#888;border:1px solid #1a1a2e;}
+.s-neu{background:#0a1a1a;color:#00f5ff;border:1px solid #00f5ff33;}
+.s-in_pruefung{background:#1a1600;color:#ffcc00;border:1px solid #ffcc0033;}
+.s-angenommen{background:#0a1a0a;color:#c8ff00;border:1px solid #c8ff0033;}
+.s-abgelehnt{background:#1a0500;color:#ff2d00;border:1px solid #ff2d0033;}
+.anf-name{font-size:14px;color:#e8e4d9;margin:8px 0 2px;font-weight:500;}
+.anf-line{font-size:9px;color:#555;margin-top:3px;}
+.anf-msg{font-size:11px;color:#999;line-height:1.6;margin-top:8px;border-top:1px solid #1a1a2e;padding-top:8px;display:none;}
+.anfrage.open .anf-msg{display:block;}
+.anf-actions{display:none;}.anfrage.open .anf-actions{display:flex;}
+
+/* BOOSTS */
+.boost{background:#0a0a14;border:1px solid #1a1a2e;border-radius:6px;padding:16px;margin-bottom:10px;}
+.boost.aktiv{border-left:3px solid #c8ff00;}.boost.geplant{border-left:3px solid #00f5ff;}.boost.abgelaufen{border-left:3px solid #333;opacity:.6;}.boost.gestoppt{border-left:3px solid #ff6600;opacity:.7;}
+.boost-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap;}
+.boost-name{font-size:15px;color:#e8e4d9;font-weight:500;}
+.boost-meta{font-size:9px;color:#555;margin-top:3px;}
+.tier-featured{background:#161a00;color:#c8ff00;border:1px solid #c8ff0033;}
+.tier-boost{background:#0a1a1a;color:#00f5ff;border:1px solid #00f5ff33;}
+.tier-premium{background:#1a0500;color:#ff2d00;border:1px solid #ff2d0033;}
+.b-aktiv{background:#0a1a0a;color:#c8ff00;}.b-geplant{background:#0a1a1a;color:#00f5ff;}.b-abgelaufen{background:#0d0d14;color:#555;}.b-gestoppt{background:#1a0a00;color:#ff6600;}
+.cd-wrap{margin:12px 0 8px;}
+.cd-bar{background:#1a1a2e;height:5px;border-radius:3px;overflow:hidden;}
+.cd-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#c8ff00,#00f5ff);}
+.cd-fill.warn{background:linear-gradient(90deg,#ff6600,#ffcc00);}
+.cd-label{font-size:9px;color:#888;margin-top:5px;display:flex;justify-content:space-between;}
+.cd-label .days{color:#c8ff00;font-weight:500;}.cd-label .days.warn{color:#ffcc00;}
+.paybadge{font-size:8px;letter-spacing:1px;padding:2px 7px;border-radius:3px;}
+.pay-yes{background:#0a1a0a;color:#c8ff00;border:1px solid #c8ff0033;}
+.pay-no{background:#1a1600;color:#ffcc00;border:1px solid #ffcc0033;}
+.price-tag{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;color:#c8ff00;}
+
+/* FINANZ */
+.fin-row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #1a1a2e;font-size:10px;}
+.fin-row:last-child{border:none;}
+.fin-name{flex:1;color:#e8e4d9;}
+.fin-tier{font-size:8px;color:#555;}
+.fin-amt{color:#c8ff00;font-weight:500;width:80px;text-align:right;}
+.bar-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid #1a1a2e;}
+.bar-row:last-child{border:none;}
+.bar-nm{width:120px;font-size:9px;color:#e8e4d9;flex-shrink:0;}
+.bar-wrap{flex:1;background:#1a1a2e;height:3px;border-radius:2px;overflow:hidden;}
+.bar-fill{height:100%;border-radius:2px;}
+.bar-ct{width:60px;text-align:right;font-size:9px;color:#c8ff00;}
+
+/* SUPA / USERS / AUDIT */
+.supa-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;}
+.supa-node{background:#04040a;border:1px solid #00f5ff22;border-radius:4px;padding:12px;}
+.supa-node.active{border-color:#c8ff0044;}.supa-node.missing{border-color:#ff2d0033;}
+.supa-name{font-size:10px;color:#00f5ff;margin-bottom:4px;}
+.supa-node.active .supa-name{color:#c8ff00;}.supa-node.missing .supa-name{color:#ff6600;}
+.supa-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;color:#00f5ff;}
+.supa-node.active .supa-count{color:#c8ff00;}
+.supa-desc{font-size:8px;color:#333;margin-top:2px;}
+.urow{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #1a1a2e;font-size:10px;}
+.urow:last-child{border:none;}
+.uava{width:28px;height:28px;border-radius:50%;background:#1a1a2e;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;color:#888;}
+.uinfo{flex:1;}.uname{color:#e8e4d9;}.umeta{font-size:8px;color:#444;}
+.arow{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #1a1a2e;font-size:9px;align-items:baseline;}
+.arow:last-child{border:none;}
+.atime{color:#444;width:60px;flex-shrink:0;}
+.aakt{color:#00f5ff;width:90px;flex-shrink:0;text-transform:uppercase;letter-spacing:1px;font-size:8px;}
+.adet{color:#999;flex:1;}
+
+.ki-block{background:#0a0a14;border:1px solid #00f5ff22;border-radius:6px;padding:20px;margin-bottom:16px;font-size:10px;line-height:1.9;color:#777;}
+.ki-block .kt{color:#00f5ff;font-size:9px;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px;}
+.ki-block strong{color:#e8e4d9;}.ki-block .hi{color:#c8ff00;}
+.ki-rule{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #1a1a2e;}
+.ki-rule:last-child{border:none;}
+.ki-rule .dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px;}
+.empty{text-align:center;color:#333;font-size:10px;padding:36px 0;letter-spacing:1px;}
+.loading{color:#444;font-size:10px;letter-spacing:1px;padding:20px 0;text-align:center;}
+.setup{background:#04040a;border:1px solid #ffcc0033;border-radius:6px;padding:16px;margin-bottom:16px;}
+.setup .st{font-size:9px;letter-spacing:2px;color:#ffcc00;text-transform:uppercase;margin-bottom:8px;}
+.setup p{font-size:10px;color:#777;line-height:1.7;margin-bottom:6px;}
+.setup .hi{color:#c8ff00;}
+
+/* MODAL */
+#modal{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center;padding:20px;}
+#modal.on{display:flex;}
+.modal-box{background:#0a0a14;border:1px solid #1a1a2e;border-radius:8px;padding:26px;width:460px;max-width:100%;max-height:90vh;overflow-y:auto;}
+.modal-box h2{font-size:22px;color:#ff2d00;margin-bottom:18px;}
+.fld{margin-bottom:14px;}
+.fld label{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#555;display:block;margin-bottom:6px;}
+.fld input,.fld select,.fld textarea{width:100%;background:#04040a;border:1px solid #1a1a2e;color:#e8e4d9;padding:10px 12px;font-family:'DM Mono',monospace;font-size:12px;border-radius:3px;outline:none;}
+.fld input:focus,.fld select:focus{border-color:#00f5ff;}
+.seg{display:flex;gap:6px;flex-wrap:wrap;}
+.seg .opt{flex:1;min-width:90px;text-align:center;padding:10px;border:1px solid #1a1a2e;border-radius:4px;font-size:9px;letter-spacing:1px;cursor:pointer;color:#666;text-transform:uppercase;}
+.seg .opt.active{border-color:#c8ff00;color:#c8ff00;background:#0a1a0a;}
+.search-res{background:#04040a;border:1px solid #1a1a2e;border-radius:4px;margin-top:4px;max-height:150px;overflow-y:auto;display:none;}
+.search-res.on{display:block;}
+.sres{padding:8px 12px;font-size:10px;color:#999;cursor:pointer;border-bottom:1px solid #1a1a2e;}
+.sres:hover{background:#0a0a14;color:#e8e4d9;}
+.modal-summary{background:#04040a;border:1px solid #c8ff0033;border-radius:4px;padding:14px;margin:14px 0;font-size:11px;color:#888;line-height:1.8;}
+.modal-summary b{color:#c8ff00;}
+.modal-actions{display:flex;gap:10px;margin-top:8px;}
+
+#toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#ff2d00;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1px;text-transform:uppercase;padding:11px 26px;border-radius:6px;z-index:500;opacity:0;transition:all .3s;pointer-events:none;}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+#toast.ok{background:#c8ff00;}#toast.cyan{background:#00f5ff;}
+</style>
+</head>
+<body>
+
+<div id="login-screen">
+  <div class="login-logo bc">STADTPULS<span>KOMMANDOZENTRALE</span></div>
+  <div class="login-box">
+    <h2>Zugang</h2>
+    <input type="password" class="login-input" id="pw-input" placeholder="Passwort" onkeydown="if(event.key==='Enter')doLogin()">
+    <button class="login-btn" onclick="doLogin()">Eintreten</button>
+    <div class="login-error" id="login-error">Falsches Passwort</div>
+    <div class="login-hint">Erstes Mal? Passwort frei wählen — wird lokal gesetzt.</div>
+  </div>
+</div>
+
+<header>
+  <div class="logo bc">STADTPULS <span>⚡ COMMAND</span></div>
+  <div class="hdr-mid">
+    <div class="stat money"><div class="v" id="hs-month">–</div><div class="l">Umsatz / Monat</div></div>
+    <div class="stat boost"><div class="v" id="hs-boost">–</div><div class="l">Aktive Boosts</div></div>
+    <div class="stat warn"><div class="v" id="hs-exp">–</div><div class="l">Läuft bald ab</div></div>
+    <div class="stat red"><div class="v" id="hs-mod">–</div><div class="l">Moderation</div></div>
+  </div>
+  <div class="hdr-right">
+    <div class="clock" id="clock">–</div>
+    <button class="logout-btn" onclick="doLogout()">Logout</button>
+  </div>
+</header>
+
+<div class="tabs" id="tabs">
+  <div class="tab active" data-s="ov" onclick="tab('ov',this)">Übersicht</div>
+  <div class="tab" data-s="mod" onclick="tab('mod',this)">Moderation <span class="cnt" id="t-mod">0</span></div>
+  <div class="tab" data-s="anf" onclick="tab('anf',this)">Anfragen <span class="cnt" id="t-anf">0</span></div>
+  <div class="tab" data-s="verk" onclick="tab('verk',this)">Verkauf <span class="cnt" id="t-verk">0</span></div>
+  <div class="tab" data-s="boost" onclick="tab('boost',this)">💰 Boosts <span class="cnt" id="t-boost">0</span></div>
+  <div class="tab" data-s="fin" onclick="tab('fin',this)">Finanzen</div>
+  <div class="tab" data-s="usr" onclick="tab('usr',this)">Users</div>
+  <div class="tab" data-s="inh" onclick="tab('inh',this)">Inhalte</div>
+  <div class="tab" data-s="sys" onclick="tab('sys',this)">System</div>
+  <div class="tab" data-s="ki" onclick="tab('ki',this)">KI</div>
+  <div class="tab" data-s="aud" onclick="tab('aud',this)">Audit</div>
+</div>
+
+<main>
+  <!-- ÜBERSICHT -->
+  <div class="section active" id="s-ov">
+    <div class="section-head bc">ÜBERSICHT</div>
+    <div class="section-sub">Der ganze Puls auf einen Blick. Klick eine Kachel → direkt zum Bereich.</div>
+    <div class="kpi-grid" id="ov-kpis"><div class="loading">Lade Live-Daten…</div></div>
+    <div class="g2">
+      <div class="card red"><h3>Braucht dich jetzt</h3><div id="ov-attention"><div class="loading">…</div></div></div>
+      <div class="card green"><h3>Geld <span class="mini">diesen Monat</span></h3><div id="ov-money"><div class="loading">…</div></div></div>
+    </div>
+    <div class="card cyan"><h3>Letzte Aktivität</h3><div id="ov-activity"><div class="loading">…</div></div></div>
+  </div>
+
+  <!-- MODERATION -->
+  <div class="section" id="s-mod">
+    <div class="section-head bc">MODERATION <span class="badge" id="mod-mode-badge">manuell</span></div>
+    <div class="section-sub">Kommentare, eingereichte News & Inserate. KI schlägt vor — du entscheidest. Bei klaren Übergriffen sperrt die KI selbst.</div>
+    <div class="filterbar" id="mod-filter">
+      <div class="chip active" data-f="all" onclick="modFilter('all',this)">Alle</div>
+      <div class="chip" data-f="bad" onclick="modFilter('bad',this)">⛔ Schwer</div>
+      <div class="chip" data-f="warn" onclick="modFilter('warn',this)">⚠ Prüfen</div>
+      <div class="chip" data-f="wait" onclick="modFilter('wait',this)">◷ Wartet</div>
+    </div>
+    <div id="mod-list"><div class="loading">Lade…</div></div>
+  </div>
+
+  <!-- ANFRAGEN -->
+  <div class="section" id="s-anf">
+    <div class="section-head bc">ANFRAGEN <span class="badge">Leads</span></div>
+    <div class="section-sub">Lokale, Pop-ups, Events & Partner, die rein wollen. Annehmen → direkt <b>Boost erstellen</b> = bezahlte Platzierung.</div>
+    <div class="filterbar" id="anf-filter">
+      <div class="chip active" data-f="offen" onclick="anfFilter('offen',this)">Offen</div>
+      <div class="chip" data-f="all" onclick="anfFilter('all',this)">Alle</div>
+      <div class="chip" data-f="platzierung" onclick="anfFilter('platzierung',this)">Platzierung</div>
+      <div class="chip" data-f="popup" onclick="anfFilter('popup',this)">Pop-up</div>
+      <div class="chip" data-f="event" onclick="anfFilter('event',this)">Event</div>
+      <div class="chip" data-f="partnerschaft" onclick="anfFilter('partnerschaft',this)">Partner</div>
+    </div>
+    <div id="anf-list"><div class="loading">Lade…</div></div>
+  </div>
+
+  <!-- VERKAUF / CLAIMS -->
+  <div class="section" id="s-verk">
+    <div class="section-head bc">VERKAUF <span class="badge">Platzierungs-Anfragen</span></div>
+    <div class="section-sub">Inhaber, die übers Lokal-Profil eine bessere Platzierung wollen (von platzierung.html). Prüfen → „Verifiziert &amp; Freischalten" erstellt den Boost und setzt das Lokal nach oben.</div>
+    <div class="filterbar" id="verk-filter">
+      <div class="chip active" data-f="offen" onclick="verkFilter('offen',this)">Offen</div>
+      <div class="chip" data-f="bezahlt" onclick="verkFilter('bezahlt',this)">Bezahlt</div>
+      <div class="chip" data-f="freigeschaltet" onclick="verkFilter('freigeschaltet',this)">Freigeschaltet</div>
+      <div class="chip" data-f="all" onclick="verkFilter('all',this)">Alle</div>
+    </div>
+    <div id="verk-list"><div class="loading">Lade…</div></div>
+  </div>
+
+  <!-- BOOSTS -->
+  <div class="section" id="s-boost">
+    <div class="section-head bc">BOOSTS <span class="badge">bezahlte Platzierung</span></div>
+    <div class="section-sub">Lokale/Events nach oben — auf Zeit. Tier wählen, Dauer setzen, Preis & Ablauf automatisch. Läuft die Zeit ab, fällt der Eintrag von selbst zurück.</div>
+    <div class="filterbar">
+      <button class="btn btn-ok" onclick="openBoost()">+ Neuer Boost</button>
+      <div class="spacer"></div>
+      <div class="chip active" data-f="aktiv" onclick="boostFilter('aktiv',this)">Aktiv</div>
+      <div class="chip" data-f="geplant" onclick="boostFilter('geplant',this)">Geplant</div>
+      <div class="chip" data-f="abgelaufen" onclick="boostFilter('abgelaufen',this)">Abgelaufen</div>
+      <div class="chip" data-f="all" onclick="boostFilter('all',this)">Alle</div>
+    </div>
+    <div id="boost-list"><div class="loading">Lade…</div></div>
+  </div>
+
+  <!-- FINANZEN -->
+  <div class="section" id="s-fin">
+    <div class="section-head bc">FINANZEN</div>
+    <div class="section-sub">Was Stadtpuls einbringt. Zahlung markierst du hier manuell (offen → bezahlt).</div>
+    <div class="kpi-grid" id="fin-kpis"><div class="loading">…</div></div>
+    <div class="g2">
+      <div class="card green"><h3>Umsatz nach Tier <span class="mini">aktiv</span></h3><div id="fin-tier"><div class="loading">…</div></div></div>
+      <div class="card gold"><h3>Offen / unbezahlt</h3><div id="fin-open"><div class="loading">…</div></div></div>
+    </div>
+    <div class="card"><h3>Alle Transaktionen <span class="mini">Boosts</span></h3><div id="fin-list"><div class="loading">…</div></div></div>
+  </div>
+
+  <!-- USERS -->
+  <div class="section" id="s-usr">
+    <div class="section-head bc">USERS</div>
+    <div class="section-sub">Wer dabei ist — und wer gesperrt wurde.</div>
+    <div class="g2">
+      <div class="card cyan"><h3>Neueste Users</h3><div id="usr-list"><div class="loading">…</div></div></div>
+      <div class="card red"><h3>Gesperrt / gewarnt</h3><div id="usr-blocked"><div class="loading">…</div></div></div>
+    </div>
+  </div>
+
+  <!-- INHALTE -->
+  <div class="section" id="s-inh">
+    <div class="section-head bc">INHALTE</div>
+    <div class="section-sub">Was drinsteckt — und was du nach vorne stellst.</div>
+    <div class="g2">
+      <div class="card"><h3>Locations pro Kategorie</h3><div id="inh-cats"><div class="loading">…</div></div></div>
+      <div class="card"><h3>Locations pro Kreis</h3><div id="inh-kreis"><div class="loading">…</div></div></div>
+    </div>
+    <div class="card green"><h3>★ Featured / geboostet</h3><div id="inh-featured"><div class="loading">…</div></div></div>
+  </div>
+
+  <!-- SYSTEM -->
+  <div class="section" id="s-sys">
+    <div class="section-head bc">SYSTEM</div>
+    <div class="section-sub">Technik, Pipeline, Datenbank.</div>
+    <div class="card cyan">
+      <h3>Daten-Pipeline <span class="mini">Auto-Sync</span></h3>
+      <div class="ki-rule"><div class="dot" style="background:#c8ff00"></div><div><strong>Auto-Sync täglich 04:00</strong> · Eventfrog + Zürich Tourismus → Supabase. Neue Daten automatisch, abgelaufene Events aufgeräumt.</div></div>
+      <div class="mrow-actions" style="margin-top:14px">
+        <button class="btn btn-ghost" onclick="window.open('https://github.com/remoschenk007/Stadtpuls/actions','_blank')">▶ Auto-Sync</button>
+        <button class="btn btn-ghost" onclick="window.open('https://supabase.com/dashboard/project/pnynkzrqnfoshojqfqxn','_blank')">▶ Supabase</button>
+        <button class="btn btn-ghost" onclick="window.open('https://depuls.ch','_blank')">▶ Live-Seite</button>
+      </div>
+    </div>
+    <div class="card"><h3>Supabase Tabellen <span class="mini">live</span></h3><div class="supa-grid" id="sys-tables"><div class="loading">…</div></div></div>
+  </div>
+
+  <!-- KI -->
+  <div class="section" id="s-ki">
+    <div class="section-head bc">KI-COCKPIT</div>
+    <div class="section-sub">Wie die automatische Moderation entscheidet — und ob sie scharf ist.</div>
+    <div class="card" id="ki-status-card"><h3>Status</h3><div id="ki-status"><div class="loading">…</div></div></div>
+    <div class="ki-block">
+      <div class="kt">Entscheidungs-Logik</div>
+      <div class="ki-rule"><div class="dot" style="background:#c8ff00"></div><div><strong>Sicher & harmlos</strong> → KI schaltet <span class="hi">automatisch frei</span> (Konfidenz ≥ 80%).</div></div>
+      <div class="ki-rule"><div class="dot" style="background:#ffcc00"></div><div><strong>Unsicher</strong> → bleibt liegen, <span class="hi">du prüfst</span>.</div></div>
+      <div class="ki-rule"><div class="dot" style="background:#ff2d00"></div><div><strong>Sexuell / Mobbing / Hass</strong> → <span class="hi">abgelehnt, User gesperrt + informiert</span>.</div></div>
+      <div class="ki-rule"><div class="dot" style="background:#9333ea"></div><div><strong>Spam</strong> → abgelehnt, User gewarnt.</div></div>
+    </div>
+    <div class="card"><h3>Letzte KI-Urteile</h3><div id="ki-log"><div class="loading">…</div></div></div>
+    <div id="ki-setup"></div>
+  </div>
+
+  <!-- AUDIT -->
+  <div class="section" id="s-aud">
+    <div class="section-head bc">AUDIT-LOG</div>
+    <div class="section-sub">Jede Aktion protokolliert — damit du immer weisst, wer was wann gemacht hat.</div>
+    <div class="card"><h3>Letzte Aktionen</h3><div id="aud-list"><div class="loading">…</div></div></div>
+  </div>
+</main>
+
+<!-- BOOST MODAL -->
+<div id="modal">
+  <div class="modal-box">
+    <h2 class="bc" id="modal-title">NEUER BOOST</h2>
+    <div class="fld">
+      <label>Ziel suchen (Location-Name)</label>
+      <input id="b-search" placeholder="z.B. Trattoria Rossi" oninput="boostSearch()" autocomplete="off">
+      <div class="search-res" id="b-results"></div>
+    </div>
+    <div class="fld">
+      <label>Gewähltes Ziel</label>
+      <input id="b-target" placeholder="noch nichts gewählt" readonly>
+    </div>
+    <div class="fld">
+      <label>Tier</label>
+      <div class="seg" id="b-tier">
+        <div class="opt active" data-t="featured" onclick="pickTier('featured',this)">Featured<br><span style="color:#444">20/Wo</span></div>
+        <div class="opt" data-t="boost" onclick="pickTier('boost',this)">Boost<br><span style="color:#444">50/Wo</span></div>
+        <div class="opt" data-t="premium" onclick="pickTier('premium',this)">Premium<br><span style="color:#444">100/Wo</span></div>
+      </div>
+    </div>
+    <div class="fld">
+      <label>Dauer</label>
+      <div class="seg" id="b-dur">
+        <div class="opt active" data-d="7" onclick="pickDur(7,this)">1 Woche</div>
+        <div class="opt" data-d="14" onclick="pickDur(14,this)">2 Wochen</div>
+        <div class="opt" data-d="28" onclick="pickDur(28,this)">4 Wochen</div>
+      </div>
+    </div>
+    <div class="fld">
+      <label>Bezahlt?</label>
+      <div class="seg" id="b-paid">
+        <div class="opt" data-p="0" onclick="pickPaid(0,this)">Offen</div>
+        <div class="opt active" data-p="1" onclick="pickPaid(1,this)">Bezahlt</div>
+      </div>
+    </div>
+    <div class="modal-summary" id="b-summary">…</div>
+    <div class="modal-actions">
+      <button class="btn btn-ok" style="flex:1" onclick="saveBoost()">Boost starten</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Abbrechen</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+const H={'apikey':SK,'Authorization':'Bearer '+SK};
+const TIERS={featured:{label:'Featured',wo:20,col:'#c8ff00'},boost:{label:'Boost',wo:50,col:'#00f5ff'},premium:{label:'Premium',wo:100,col:'#ff2d00'}};
+
+/* LOGIN */
+function doLogin(){const pw=document.getElementById('pw-input').value.trim();if(!pw)return;const s=localStorage.getItem('sp_pw');
+  if(!s){localStorage.setItem('sp_pw',btoa(pw));localStorage.setItem('sp_kz_auth','1');enter();}
+  else if(btoa(pw)===s){localStorage.setItem('sp_kz_auth','1');enter();}
+  else{document.getElementById('login-error').style.display='block';document.getElementById('pw-input').value='';}}
+function enter(){document.getElementById('login-screen').style.display='none';boot();}
+function doLogout(){localStorage.removeItem('sp_kz_auth');location.reload();}
+window.addEventListener('DOMContentLoaded',()=>{if(localStorage.getItem('sp_kz_auth')==='1')enter();tickClock();setInterval(tickClock,1000);});
+
+/* HELPERS */
+async function sget(p){const r=await fetch(SU+'/rest/v1/'+p,{headers:H});if(!r.ok){const e=new Error('http '+r.status);e.status=r.status;throw e;}return r.json();}
+async function scount(p){try{const r=await fetch(SU+'/rest/v1/'+p+(p.includes('?')?'&':'?')+'select=id',{headers:{...H,'Prefer':'count=exact','Range':'0-0'}});const cr=r.headers.get('content-range')||'';const t=cr.split('/')[1];return(t&&t!=='*')?parseInt(t,10):0;}catch(e){return null;}}
+async function spatch(t,id,b){const r=await fetch(SU+'/rest/v1/'+t+'?id=eq.'+id,{method:'PATCH',headers:{...H,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(b)});return r.ok;}
+async function spost(t,b){const r=await fetch(SU+'/rest/v1/'+t,{method:'POST',headers:{...H,'Content-Type':'application/json','Prefer':'return=minimal'},body:JSON.stringify(b)});return r.ok;}
+function toast(m,k){const t=document.getElementById('toast');t.textContent=m;t.className=(k||'')+' show';setTimeout(()=>t.className=t.className.replace('show',''),2200);}
+function esc(s){return(s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+function ago(ts){if(!ts)return'';const d=(Date.now()-new Date(ts).getTime())/1000;if(d<60)return'gerade';if(d<3600)return Math.floor(d/60)+' min';if(d<86400)return Math.floor(d/3600)+' h';return Math.floor(d/86400)+' d';}
+function chf(n){return 'CHF '+(Math.round(n||0)).toLocaleString('de-CH');}
+function daysLeft(ende){return Math.ceil((new Date(ende)-Date.now())/864e5);}
+async function audit(aktion,objekt_typ,objekt_id,detail){try{await spost('audit_log',{aktion,objekt_typ,objekt_id,detail,akteur:'operator'});}catch(e){}}
+const CCOL={gastro:'#ff2d00',nachtleben:'#9333ea',shopping:'#00f5ff',kultur:'#ffcc00',sport:'#c8ff00',wellness:'#ff6600'};
+
+function tickClock(){const d=new Date();const D=d.toLocaleDateString('de-CH',{weekday:'short',day:'2-digit',month:'2-digit'});const T=d.toLocaleTimeString('de-CH',{hour:'2-digit',minute:'2-digit',second:'2-digit'});document.getElementById('clock').innerHTML=D+'<br><b>'+T+'</b>';}
+
+/* TABS */
+function tab(s,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById('s-'+s).classList.add('active');
+  if(s==='fin')loadFinanzen();if(s==='usr')loadUsers();if(s==='inh')loadInhalte();if(s==='sys')loadSystem();if(s==='ki')loadKI();if(s==='aud')loadAudit();if(s==='boost')renderBoost();if(s==='verk')loadVerkauf();}
+
+/* STATE */
+let MOD=[],ANF=[],BOOSTS=[],VERKAUF=[],TBL={};
+let modF='all',anfF='offen',boostF='aktiv',verkF='offen';
+
+/* BOOT */
+async function boot(){await loadBoosts();loadOverview();loadModeration();loadAnfragen();loadVerkauf();}
+
+/* OVERVIEW */
+async function loadOverview(){
+  const [loc,ev,usr,votes]=await Promise.all([scount('locations?aktiv=eq.true'),scount('eventfrog_events?aktiv=eq.true'),scount('users'),scount('dating_votes')]);
+  const monat=monthRevenue(),aktiv=BOOSTS.filter(b=>b.status==='aktiv'),exp=aktiv.filter(b=>daysLeft(b.ende)<=3).length;
+  document.getElementById('hs-month').textContent=chf(monat);
+  document.getElementById('hs-boost').textContent=aktiv.length;
+  document.getElementById('hs-exp').textContent=exp;
+  const K=[
+    ['Umsatz/Monat',chf(monat),'green','bezahlt','fin'],
+    ['Aktive Boosts',aktiv.length,'cyan','laufend','boost'],
+    ['Läuft ab','≤3d: '+exp,'gold','verlängern?','boost'],
+    ['Moderation',MOD.length,'red','offen','mod'],
+    ['Anfragen',ANF.filter(a=>a.status==='neu'||a.status==='in_pruefung').length,'orange','Leads','anf'],
+    ['Locations',loc==null?'–':loc,'purple','aktiv','inh'],
+    ['Events',ev==null?'–':ev,'cyan','live','sys'],
+    ['Users',usr==null?'–':usr,'green','registriert','usr']
+  ];
+  const el=document.getElementById('ov-kpis');
+  el.innerHTML=K.map(k=>`<div class="kpi ${k[2]}"><div class="label">${k[0]}</div><div class="value">${k[1]}</div><div class="sub">${k[3]}</div></div>`).join('');
+  el.querySelectorAll('.kpi').forEach((x,i)=>x.onclick=()=>jump(K[i][4]));
+  renderAttention();renderMoney();renderActivity();
+}
+function jump(s){document.querySelector('.tab[data-s="'+s+'"]').click();}
+function renderAttention(){
+  const bad=MOD.filter(m=>m.verdict==='bad').length,warn=MOD.filter(m=>m.verdict==='warn').length,wait=MOD.filter(m=>m.verdict==='wait').length;
+  const anf=ANF.filter(a=>a.status==='neu'||a.status==='in_pruefung').length;
+  const exp=BOOSTS.filter(b=>b.status==='aktiv'&&daysLeft(b.ende)<=3);
+  const unpaid=BOOSTS.filter(b=>!b.bezahlt&&b.status!=='abgelaufen').length;
+  const r=[];
+  if(bad)r.push(['#ff2d00','⛔ '+bad+' schwerwiegende Meldung'+(bad>1?'en':'')+' — User gesperrt','mod']);
+  if(exp.length)r.push(['#ffcc00','⏳ '+exp.length+' Boost'+(exp.length>1?'s':'')+' läuft bald ab — verlängern?','boost']);
+  if(unpaid)r.push(['#ff6600','💸 '+unpaid+' Boost'+(unpaid>1?'s':'')+' noch unbezahlt','fin']);
+  const paidWait=(VERKAUF||[]).filter(x=>x.status==='bezahlt').length;
+  if(paidWait)r.push(['#c8ff00','💰 '+paidWait+' bezahlte Platzierung wartet auf Freischaltung','verk']);
+  if(warn)r.push(['#ffcc00','⚠ '+warn+' Beitrag zur Prüfung','mod']);
+  if(anf)r.push(['#00f5ff','✉ '+anf+' offene Anfrage'+(anf>1?'n':''),'anf']);
+  if(wait)r.push(['#888','◷ '+wait+' wartet auf KI/manuell','mod']);
+  const el=document.getElementById('ov-attention');
+  el.innerHTML=r.length?r.map(x=>`<div class="ki-rule" style="cursor:pointer" onclick="jump('${x[2]}')"><div class="dot" style="background:${x[0]}"></div><div style="font-size:11px;color:#ccc">${x[1]}</div></div>`).join(''):`<div class="empty">Alles ruhig. 🟢</div>`;
+}
+function renderMoney(){
+  const aktiv=BOOSTS.filter(b=>b.status==='aktiv');
+  const monat=monthRevenue(),aktivSum=aktiv.reduce((s,b)=>s+(+b.preis_chf||0),0),offen=BOOSTS.filter(b=>!b.bezahlt&&b.status!=='abgelaufen').reduce((s,b)=>s+(+b.preis_chf||0),0);
+  document.getElementById('ov-money').innerHTML=`
+    <div class="ki-rule"><div class="dot" style="background:#c8ff00"></div><div style="font-size:11px;color:#ccc">Bezahlt diesen Monat: <b style="color:#c8ff00">${chf(monat)}</b></div></div>
+    <div class="ki-rule"><div class="dot" style="background:#00f5ff"></div><div style="font-size:11px;color:#ccc">Aktiver Umsatz (laufende Boosts): <b style="color:#00f5ff">${chf(aktivSum)}</b></div></div>
+    <div class="ki-rule"><div class="dot" style="background:#ffcc00"></div><div style="font-size:11px;color:#ccc">Noch offen / unbezahlt: <b style="color:#ffcc00">${chf(offen)}</b></div></div>
+    <div style="margin-top:12px"><button class="btn btn-ok" onclick="jump('boost')">+ Boost verkaufen</button></div>`;
+}
+function renderActivity(){
+  const items=[...MOD].sort((a,b)=>new Date(b.created_at)-new Date(a.created_at)).slice(0,6);
+  document.getElementById('ov-activity').innerHTML=items.length?items.map(m=>`<div class="ki-rule"><div class="dot" style="background:${vColor(m.verdict)}"></div><div style="font-size:10px;color:#888"><span style="color:#555">${m.srcLabel} · ${ago(m.created_at)}</span><br>${esc((m.text||'').slice(0,80))}</div></div>`).join(''):`<div class="empty">Noch keine Aktivität.</div>`;
+}
+function vColor(v){return v==='bad'?'#ff2d00':v==='warn'?'#ffcc00':v==='ok'?'#c8ff00':'#555';}
+
+/* MODERATION */
+async function loadModeration(){
+  MOD=[];const src=[
+    {tbl:'comments',q:'comments?status=eq.neu&order=created_at.desc&limit=100',map:r=>({id:r.id,table:'comments',srcLabel:'KOMMENTAR',src:'comment',text:r.text,autor:r.autor_name||r.user_id,user_id:r.user_id,created_at:r.created_at,ki_urteil:r.ki_urteil,ki_konf:r.ki_konfidenz,ki_grund:r.ki_grund})},
+    {tbl:'news_stories',q:'news_stories?status=eq.pending&order=created_at.desc&limit=100',map:r=>({id:r.id,table:'news_stories',srcLabel:'NEWS',src:'news',text:(r.titel?('»'+r.titel+'« '):'')+(r.inhalt||''),autor:r.user_id,user_id:r.user_id,created_at:r.created_at,ki_urteil:r.ki_urteil,ki_konf:r.ki_konfidenz,ki_grund:r.ki_grund})},
+    {tbl:'inserate',q:'inserate?status=eq.pending&order=created_at.desc&limit=100',map:r=>({id:r.id,table:'inserate',srcLabel:'INSERAT',src:'inserat',text:(r.titel?('»'+r.titel+'« '):'')+(r.beschreibung||''),autor:r.user_id,user_id:r.user_id,created_at:r.created_at,ki_urteil:r.ki_urteil,ki_konf:r.ki_konfidenz,ki_grund:r.ki_grund})}
+  ];
+  let anyKI=false;
+  for(const s of src){try{const rows=await sget(s.q);TBL[s.tbl]=true;rows.forEach(r=>{const m=s.map(r);m.verdict=verdictOf(m);if(m.ki_urteil)anyKI=true;MOD.push(m);});}catch(e){TBL[s.tbl]=false;}}
+  const ord={bad:0,warn:1,wait:2,ok:3};MOD.sort((a,b)=>(ord[a.verdict]-ord[b.verdict])||(new Date(b.created_at)-new Date(a.created_at)));
+  const badge=document.getElementById('mod-mode-badge');badge.textContent=anyKI?'KI aktiv':'manuell';badge.style.cssText=anyKI?'background:#0a1a0a;color:#c8ff00;border-color:#c8ff00':'background:#1a1600;color:#ffcc00;border-color:#ffcc00';
+  setCnt('t-mod',MOD.length,MOD.some(m=>m.verdict==='bad')?'alert':MOD.some(m=>m.verdict==='warn')?'warn':'');
+  document.getElementById('hs-mod').textContent=MOD.length;
+  renderMod();
+}
+function verdictOf(m){const u=(m.ki_urteil||'').toLowerCase();if(u==='schwerwiegend'||u==='ablehnen')return'bad';if(u==='pruefen'||(m.ki_konf!=null&&m.ki_konf<0.8))return'warn';if(u==='approve')return'ok';return'wait';}
+function modFilter(f,el){modF=f;document.querySelectorAll('#mod-filter .chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderMod();}
+function renderMod(){
+  const list=MOD.filter(m=>modF==='all'||m.verdict===modF),el=document.getElementById('mod-list');
+  if(!MOD.length){el.innerHTML=`<div class="empty">Keine offenen Beiträge. 🟢</div>`+setupHintMod();return;}
+  if(!list.length){el.innerHTML=`<div class="empty">Nichts in diesem Filter.</div>`;return;}
+  el.innerHTML=list.map(m=>{const v=m.verdict;
+    const badge=v==='bad'?'<span class="kibadge bad">⛔ Schwerwiegend</span>':v==='warn'?'<span class="kibadge warn">⚠ Prüfen'+(m.ki_konf!=null?(' '+Math.round(m.ki_konf*100)+'%'):'')+'</span>':v==='ok'?'<span class="kibadge ok">✓ KI sicher'+(m.ki_konf!=null?(' '+Math.round(m.ki_konf*100)+'%'):'')+'</span>':'<span class="kibadge wait">◷ Wartet auf KI</span>';
+    return `<div class="mrow v-${v}"><div class="mrow-top"><div><div class="mrow-src">${m.srcLabel}</div><div class="mrow-meta">${esc((m.autor||'anonym')+'')} · ${ago(m.created_at)}</div></div>${badge}</div>
+      <div class="mrow-text">${esc(m.text||'(kein Text)')}</div>${m.ki_grund?`<div class="ki-reason"><b>KI:</b> ${esc(m.ki_grund)}</div>`:''}
+      <div class="mrow-actions"><button class="btn btn-ok" onclick="modAct('${m.table}','${m.id}','frei')">✓ Freischalten</button><button class="btn btn-no" onclick="modAct('${m.table}','${m.id}','ab')">Ablehnen</button><button class="btn btn-block" onclick="modBlock('${m.table}','${m.id}','${esc(m.user_id||'')}','${esc((m.autor||'')+'')}','${m.src}')">⛔ User sperren</button></div></div>`;
+  }).join('');
+}
+const apV=t=>t==='comments'?'freigeschaltet':'approved',reV=t=>t==='comments'?'abgelehnt':'rejected';
+async function modAct(t,id,w){const ok=await spatch(t,id,{status:w==='frei'?apV(t):reV(t)});if(ok){toast(w==='frei'?'Freigeschaltet':'Abgelehnt',w==='frei'?'ok':'');audit(w==='frei'?'freigeschaltet':'abgelehnt',t,id,'');rmMod(id);}else toast('Fehler — RLS?');}
+async function modBlock(t,id,uid,autor,src){if(!confirm('User sperren? Beitrag wird abgelehnt, User informiert.'))return;await spatch(t,id,{status:reV(t)});const ok=await spost('user_sperren',{user_id:uid||null,autor_name:autor||null,grund:'manuell',aktion:'gesperrt',quelle_typ:src,quelle_id:id,erstellt_von:'operator'});if(uid)await spost('notifications',{user_id:uid,typ:'sperre',titel:'Konto gesperrt',text:'Dein Beitrag verstösst gegen die Stadtpuls-Regeln. Dein Konto wurde gesperrt.'});audit('user gesperrt',src,id,autor);toast(ok?'User gesperrt':'user_sperren fehlt');rmMod(id);}
+function rmMod(id){MOD=MOD.filter(m=>m.id!=id);setCnt('t-mod',MOD.length);document.getElementById('hs-mod').textContent=MOD.length;renderMod();renderAttention();}
+function setupHintMod(){const miss=['comments','news_stories','inserate'].filter(t=>TBL[t]===false);return miss.length?`<div class="setup"><div class="st">Hinweis</div><p>Quell-Tabellen fehlen: <b>${miss.join(', ')}</b>. Lege sie via setup.sql an.</p></div>`:'';}
+
+/* ANFRAGEN */
+async function loadAnfragen(){try{ANF=await sget('partner_anfragen?order=created_at.desc&limit=200');TBL['partner_anfragen']=true;}catch(e){ANF=[];TBL['partner_anfragen']=false;}
+  setCnt('t-anf',ANF.filter(a=>a.status==='neu'||a.status==='in_pruefung').length,'warn');renderAnf();renderAttention();}
+function anfFilter(f,el){anfF=f;document.querySelectorAll('#anf-filter .chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderAnf();}
+function renderAnf(){const el=document.getElementById('anf-list');
+  if(TBL['partner_anfragen']===false){el.innerHTML=`<div class="setup"><div class="st">Tabelle fehlt</div><p>Lege <b>partner_anfragen</b> via setup.sql an. Beispiel-Daten sind dabei.</p></div>`;return;}
+  let list=ANF.slice();if(anfF==='offen')list=list.filter(a=>a.status==='neu'||a.status==='in_pruefung');else if(anfF!=='all')list=list.filter(a=>a.typ===anfF);
+  if(!list.length){el.innerHTML=`<div class="empty">Keine Anfragen hier.</div>`;return;}
+  el.innerHTML=list.map(a=>`<div class="anfrage" id="anf-${a.id}" onclick="toggleAnf('${a.id}')">
+    <div class="anf-top"><span class="anf-typ t-${a.typ||'sonstiges'}">${anfTyp(a.typ)}</span><span class="anf-status s-${a.status||'neu'}">${(a.status||'neu').replace('_',' ')}</span></div>
+    <div class="anf-name">${esc(a.lokal_name||a.name||'—')}</div>
+    <div class="anf-line">${esc(a.name||'')}${a.email?(' · '+esc(a.email)):''}${a.kreis?(' · Kreis '+a.kreis):''}${a.budget?(' · Budget '+esc(a.budget)):''} · ${ago(a.created_at)}</div>
+    <div class="anf-msg">${esc(a.nachricht||'(keine Nachricht)')}</div>
+    <div class="anf-actions" onclick="event.stopPropagation()">
+      <button class="btn btn-ok" onclick="anfStatus('${a.id}','angenommen')">✓ Annehmen</button>
+      <button class="btn btn-cyan" onclick="openBoost('${esc(a.lokal_name||a.name||'')}','${esc(a.location_id||'')}')">💰 Boost erstellen</button>
+      <button class="btn btn-ghost" onclick="anfStatus('${a.id}','in_pruefung')">In Prüfung</button>
+      <button class="btn btn-no" onclick="anfStatus('${a.id}','abgelehnt')">Ablehnen</button>
+      ${a.email?`<button class="btn btn-ghost" onclick="window.location.href='mailto:${esc(a.email)}'">✉ Antworten</button>`:''}
+    </div></div>`).join('');
+}
+function anfTyp(t){return({platzierung:'Platzierung',popup:'Pop-up',event:'Event',partnerschaft:'Partner'}[t])||'Sonstiges';}
+function toggleAnf(id){document.getElementById('anf-'+id).classList.toggle('open');}
+async function anfStatus(id,st){const ok=await spatch('partner_anfragen',id,{status:st});if(ok){toast('Anfrage → '+st.replace('_',' '),st==='angenommen'?'ok':'');audit('anfrage '+st,'partner_anfragen',id,'');const a=ANF.find(x=>x.id==id);if(a)a.status=st;loadAnfragen();}else toast('Fehler — RLS?');}
+
+/* VERKAUF / CLAIMS (boost_requests von platzierung.html) */
+async function loadVerkauf(){
+  try{VERKAUF=await sget('boost_requests?order=created_at.desc&limit=200');TBL['boost_requests']=true;}
+  catch(e){VERKAUF=[];TBL['boost_requests']=false;}
+  const offen=VERKAUF.filter(r=>r.status==='neu'||r.status==='bezahlt').length;
+  setCnt('t-verk',offen, VERKAUF.some(r=>r.status==='bezahlt')?'cyan':'warn');
+  renderVerkauf();renderAttention();
+}
+function verkFilter(f,el){verkF=f;document.querySelectorAll('#verk-filter .chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderVerkauf();}
+function rolleLabel(r){return({inhaber:'Inhaber',gf:'Geschäftsführer',mitarbeiter:'Mitarbeiter',auftrag:'Im Auftrag'}[r])||r||'—';}
+function renderVerkauf(){
+  const el=document.getElementById('verk-list');
+  if(TBL['boost_requests']===false){el.innerHTML=`<div class="setup"><div class="st">Tabelle fehlt</div><p>Lege <b>boost_requests</b> via setup.sql an. Dann landen Inhaber-Anfragen von <b>platzierung.html</b> hier.</p></div>`;return;}
+  let list=VERKAUF.slice();
+  if(verkF==='offen')list=list.filter(r=>r.status==='neu'||r.status==='bezahlt');else if(verkF!=='all')list=list.filter(r=>r.status===verkF);
+  if(!list.length){el.innerHTML=`<div class="empty">Keine Anfragen hier.</div>`;return;}
+  el.innerHTML=list.map(r=>{const tier=TIERS[r.tier]||{label:r.tier,col:'#888'};
+    const sCls=r.status==='freigeschaltet'?'angenommen':r.status==='abgelehnt'?'abgelehnt':r.status==='bezahlt'?'in_pruefung':'neu';
+    return `<div class="anfrage open">
+      <div class="anf-top"><span class="tier-badge tier-${r.tier}">${tier.label} · ${r.tage} Tage</span>
+        <span style="display:flex;gap:6px;align-items:center"><span class="paybadge ${r.bezahlt?'pay-yes':'pay-no'}">${r.bezahlt?'bezahlt':'offen'}</span><span class="anf-status s-${sCls}">${r.status}</span></span></div>
+      <div class="anf-name">${esc(r.listing_name||'—')} <span class="price-tag" style="font-size:16px">${chf(r.preis_chf)}</span></div>
+      <div class="anf-line">${esc(rolleLabel(r.rolle))} · ${esc(r.name||'')}${r.email?(' · '+esc(r.email)):''}${r.telefon?(' · '+esc(r.telefon)):''}${r.kreis?(' · Kreis '+r.kreis):''} · ${ago(r.created_at)}${r.listing_id?'':' · <span style="color:#ff6600">⚠ kei listing_id</span>'}</div>
+      ${r.nachricht?`<div class="anf-msg" style="display:block">${esc(r.nachricht)}</div>`:''}
+      <div class="anf-actions" style="display:flex">
+        ${r.status!=='freigeschaltet'?`<button class="btn btn-ok" onclick="freischaltenRequest('${r.id}')">✓ Verifiziert &amp; Freischalten</button>`:''}
+        ${!r.bezahlt?`<button class="btn btn-gold" onclick="requestPaid('${r.id}')">Als bezahlt markieren</button>`:''}
+        ${r.email?`<button class="btn btn-ghost" onclick="window.location.href='mailto:${esc(r.email)}'">✉ Nachfragen</button>`:''}
+        ${(r.status!=='abgelehnt'&&r.status!=='freigeschaltet')?`<button class="btn btn-no" onclick="requestReject('${r.id}')">Ablehnen</button>`:''}
+      </div></div>`;
+  }).join('');
+}
+async function freischaltenRequest(id){
+  const r=VERKAUF.find(x=>x.id==id);if(!r)return;
+  if(!r.bezahlt && !confirm('Achtung: noch NICHT als bezahlt markiert. Trotzdem freischalten?'))return;
+  if(!confirm('»'+r.listing_name+'« als berechtigt bestätigt & Platzierung freischalten?'))return;
+  const start=new Date(),ende=new Date(Date.now()+(r.tage||7)*864e5);
+  const ok=await spost('boosts',{ziel_typ:r.listing_typ||'location',ziel_id:r.listing_id||null,ziel_name:r.listing_name,tier:r.tier,tier_label:(TIERS[r.tier]?.label||r.tier),dauer_tage:r.tage,start:start.toISOString(),ende:ende.toISOString(),preis_chf:r.preis_chf,bezahlt:!!r.bezahlt,status:'aktiv'});
+  if(r.listing_id&&(r.listing_typ||'location')==='location')await spatch('locations',r.listing_id,{featured:true,boost_until:ende.toISOString(),boost_tier:r.tier});
+  await spatch('boost_requests',id,{status:'freigeschaltet'});
+  audit('platzierung freigeschaltet','boost_requests',id,r.listing_name+' '+r.tier);
+  toast(ok?('Live: '+r.listing_name):'Boost-Fehler',ok?'ok':'');
+  await loadBoosts();await loadVerkauf();loadOverview();
+}
+async function requestPaid(id){const ok=await spatch('boost_requests',id,{bezahlt:true,status:'bezahlt'});if(ok){const r=VERKAUF.find(x=>x.id==id);if(r){r.bezahlt=true;r.status='bezahlt';}toast('Als bezahlt markiert','ok');audit('platzierung bezahlt','boost_requests',id,r?.listing_name);loadVerkauf();}else toast('Fehler — RLS?');}
+async function requestReject(id){if(!confirm('Anfrage ablehnen?'))return;const ok=await spatch('boost_requests',id,{status:'abgelehnt'});if(ok){const r=VERKAUF.find(x=>x.id==id);if(r)r.status='abgelehnt';toast('Abgelehnt');audit('platzierung abgelehnt','boost_requests',id,r?.listing_name);renderVerkauf();}else toast('Fehler — RLS?');}
+
+/* BOOSTS */
+async function loadBoosts(){try{BOOSTS=await sget('boosts?order=created_at.desc&limit=300');TBL['boosts']=true;await reconcileBoosts();}catch(e){BOOSTS=[];TBL['boosts']=false;}
+  const aktiv=BOOSTS.filter(b=>b.status==='aktiv').length;setCnt('t-boost',aktiv,'cyan');document.getElementById('hs-boost').textContent=aktiv;
+  const exp=BOOSTS.filter(b=>b.status==='aktiv'&&daysLeft(b.ende)<=3).length;document.getElementById('hs-exp').textContent=exp;}
+async function reconcileBoosts(){ // auto-expire abgelaufene
+  const now=Date.now();
+  for(const b of BOOSTS){if(b.status==='aktiv'&&new Date(b.ende)<now){await spatch('boosts',b.id,{status:'abgelaufen'});if(b.ziel_typ==='location'&&b.ziel_id){await spatch('locations',b.ziel_id,{featured:false,boost_until:null,boost_tier:null});}b.status='abgelaufen';audit('boost abgelaufen','boosts',b.id,b.ziel_name);}
+    else if(b.status==='geplant'&&new Date(b.start)<=now&&new Date(b.ende)>now){await spatch('boosts',b.id,{status:'aktiv'});b.status='aktiv';}}
+}
+function monthRevenue(){const n=new Date(),m=n.getMonth(),y=n.getFullYear();return BOOSTS.filter(b=>b.bezahlt&&b.start&&new Date(b.start).getMonth()===m&&new Date(b.start).getFullYear()===y).reduce((s,b)=>s+(+b.preis_chf||0),0);}
+function boostFilter(f,el){boostF=f;document.querySelectorAll('#s-boost .chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderBoost();}
+function renderBoost(){const el=document.getElementById('boost-list');
+  if(TBL['boosts']===false){el.innerHTML=`<div class="setup"><div class="st">Tabelle fehlt</div><p>Lege <b>boosts</b> via setup.sql an, dann kannst du bezahlte Platzierungen verkaufen.</p></div>`;return;}
+  let list=BOOSTS.slice();if(boostF!=='all')list=list.filter(b=>b.status===boostF);
+  if(!list.length){el.innerHTML=`<div class="empty">Keine Boosts ${boostF==='all'?'':'('+boostF+')'}. ${boostF==='aktiv'?'Verkauf einen über „+ Neuer Boost".':''}</div>`;return;}
+  el.innerHTML=list.map(b=>{
+    const dl=daysLeft(b.ende),total=Math.max(1,Math.ceil((new Date(b.ende)-new Date(b.start))/864e5)),pct=Math.max(0,Math.min(100,Math.round(dl/total*100))),warn=dl<=3;
+    const tier=TIERS[b.tier]||{label:b.tier,col:'#888'};
+    return `<div class="boost ${b.status}">
+      <div class="boost-top"><div><div class="boost-name">${esc(b.ziel_name||'—')}</div><div class="boost-meta">${esc(b.ziel_typ||'')} · gestartet ${ago(b.start)} · ${esc(b.tier_label||tier.label)}</div></div>
+        <div style="text-align:right"><div class="price-tag">${chf(b.preis_chf)}</div><span class="paybadge ${b.bezahlt?'pay-yes':'pay-no'}">${b.bezahlt?'bezahlt':'offen'}</span></div></div>
+      <div style="display:flex;gap:6px;margin-top:8px"><span class="tier-badge tier-${b.tier}">${tier.label}</span><span class="bstatus b-${b.status}">${b.status}</span></div>
+      ${b.status==='aktiv'?`<div class="cd-wrap"><div class="cd-bar"><div class="cd-fill ${warn?'warn':''}" style="width:${pct}%"></div></div><div class="cd-label"><span>${new Date(b.start).toLocaleDateString('de-CH')} → ${new Date(b.ende).toLocaleDateString('de-CH')}</span><span class="days ${warn?'warn':''}">${dl>0?('noch '+dl+' Tag'+(dl>1?'e':'')):'läuft heute aus'}</span></div></div>`:''}
+      <div class="boost-actions">
+        ${b.status==='aktiv'?`<button class="btn btn-cyan" onclick="extendBoost('${b.id}',7)">+1 Woche</button><button class="btn btn-ghost" onclick="extendBoost('${b.id}',14)">+2 Wochen</button><button class="btn btn-no" onclick="stopBoost('${b.id}')">Stoppen</button>`:''}
+        ${!b.bezahlt?`<button class="btn btn-gold" onclick="markPaid('${b.id}')">Als bezahlt markieren</button>`:''}
+        ${b.status==='abgelaufen'?`<button class="btn btn-ok" onclick="renewBoost('${b.id}')">Erneut starten</button>`:''}
+      </div></div>`;
+  }).join('');
+}
+async function extendBoost(id,tage){const b=BOOSTS.find(x=>x.id==id);if(!b)return;const ende=new Date(new Date(b.ende).getTime()+tage*864e5);const preis=(+b.preis_chf||0)+Math.round((TIERS[b.tier]?.wo||0)*tage/7);const ok=await spatch('boosts',id,{ende:ende.toISOString(),preis_chf:preis});if(b.ziel_typ==='location'&&b.ziel_id)await spatch('locations',b.ziel_id,{boost_until:ende.toISOString()});if(ok){toast('+'+tage+' Tage verlängert','cyan');audit('boost verlängert','boosts',id,b.ziel_name+' +'+tage+'d');loadBoosts().then(renderBoost);loadOverview();}}
+async function stopBoost(id){if(!confirm('Boost jetzt stoppen? Eintrag fällt sofort zurück.'))return;const b=BOOSTS.find(x=>x.id==id);const ok=await spatch('boosts',id,{status:'gestoppt'});if(b&&b.ziel_typ==='location'&&b.ziel_id)await spatch('locations',b.ziel_id,{featured:false,boost_until:null,boost_tier:null});if(ok){toast('Boost gestoppt');audit('boost gestoppt','boosts',id,b?.ziel_name);loadBoosts().then(renderBoost);loadOverview();}}
+async function markPaid(id){const ok=await spatch('boosts',id,{bezahlt:true});if(ok){const b=BOOSTS.find(x=>x.id==id);if(b)b.bezahlt=true;toast('Als bezahlt markiert','ok');audit('boost bezahlt','boosts',id,b?.ziel_name);renderBoost();loadOverview();}}
+async function renewBoost(id){const b=BOOSTS.find(x=>x.id==id);if(!b)return;preBoost={ziel_name:b.ziel_name,ziel_id:b.ziel_id,ziel_typ:b.ziel_typ};openBoost(b.ziel_name,b.ziel_id);}
+
+/* BOOST MODAL */
+let bSel={tier:'featured',dur:7,paid:1,target_name:'',target_id:'',target_typ:'location'};
+function openBoost(name,locId){bSel={tier:'featured',dur:7,paid:1,target_name:name||'',target_id:locId||'',target_typ:'location'};
+  document.getElementById('b-search').value='';document.getElementById('b-results').classList.remove('on');
+  document.getElementById('b-target').value=name||'';
+  document.querySelectorAll('#b-tier .opt').forEach(o=>o.classList.toggle('active',o.dataset.t==='featured'));
+  document.querySelectorAll('#b-dur .opt').forEach(o=>o.classList.toggle('active',o.dataset.d==='7'));
+  document.querySelectorAll('#b-paid .opt').forEach(o=>o.classList.toggle('active',o.dataset.p==='1'));
+  updSummary();document.getElementById('modal').classList.add('on');}
+function closeModal(){document.getElementById('modal').classList.remove('on');}
+let bSearchT;
+function boostSearch(){clearTimeout(bSearchT);const q=document.getElementById('b-search').value.trim();const box=document.getElementById('b-results');if(q.length<2){box.classList.remove('on');return;}
+  bSearchT=setTimeout(async()=>{try{const rows=await sget('locations?select=id,name,kategorie,kreis&name=ilike.*'+encodeURIComponent(q)+'*&limit=8');box.innerHTML=rows.map(r=>`<div class="sres" onclick="pickTarget('${r.id}','${esc(r.name)}')">${esc(r.name)} <span style="color:#444">· ${esc(r.kategorie||'')}${r.kreis?(' · K'+r.kreis):''}</span></div>`).join('')||'<div class="sres" style="color:#444">nichts gefunden</div>';box.classList.add('on');}catch(e){box.innerHTML='<div class="sres" style="color:#ff6600">Suche-Fehler</div>';box.classList.add('on');}},250);}
+function pickTarget(id,name){bSel.target_id=id;bSel.target_name=name;document.getElementById('b-target').value=name;document.getElementById('b-search').value=name;document.getElementById('b-results').classList.remove('on');updSummary();}
+function pickTier(t,el){bSel.tier=t;document.querySelectorAll('#b-tier .opt').forEach(o=>o.classList.remove('active'));el.classList.add('active');updSummary();}
+function pickDur(d,el){bSel.dur=d;document.querySelectorAll('#b-dur .opt').forEach(o=>o.classList.remove('active'));el.classList.add('active');updSummary();}
+function pickPaid(p,el){bSel.paid=p;document.querySelectorAll('#b-paid .opt').forEach(o=>o.classList.remove('active'));el.classList.add('active');updSummary();}
+function boostPreis(){return Math.round((TIERS[bSel.tier]?.wo||0)*bSel.dur/7);}
+function updSummary(){const ende=new Date(Date.now()+bSel.dur*864e5);document.getElementById('b-summary').innerHTML=`<b>${TIERS[bSel.tier].label}</b> · ${bSel.dur} Tage · läuft bis <b>${ende.toLocaleDateString('de-CH')}</b><br>Preis: <b>${chf(boostPreis())}</b> · ${bSel.paid?'bezahlt':'offen'}${bSel.target_name?'':'<br><span style="color:#ff6600">⚠ Noch kein Ziel gewählt</span>'}`;}
+async function saveBoost(){
+  if(!bSel.target_name){toast('Erst ein Ziel wählen');return;}
+  const start=new Date(),ende=new Date(Date.now()+bSel.dur*864e5),preis=boostPreis();
+  const row={ziel_typ:bSel.target_typ,ziel_id:bSel.target_id||null,ziel_name:bSel.target_name,tier:bSel.tier,tier_label:TIERS[bSel.tier].label,dauer_tage:bSel.dur,start:start.toISOString(),ende:ende.toISOString(),preis_chf:preis,bezahlt:!!bSel.paid,status:'aktiv'};
+  const ok=await spost('boosts',row);
+  if(ok){ if(bSel.target_id){await spatch('locations',bSel.target_id,{featured:true,boost_until:ende.toISOString(),boost_tier:bSel.tier});}
+    toast('Boost gestartet: '+bSel.target_name,'ok');audit('boost gestartet','boosts',bSel.target_id||'',bSel.target_name+' '+bSel.tier+' '+chf(preis));closeModal();await loadBoosts();renderBoost();loadOverview();}
+  else toast('Fehler — Tabelle boosts da? RLS?');
+}
+
+/* FINANZEN */
+function loadFinanzen(){
+  const aktiv=BOOSTS.filter(b=>b.status==='aktiv');
+  const monat=monthRevenue(),aktivSum=aktiv.reduce((s,b)=>s+(+b.preis_chf||0),0),offen=BOOSTS.filter(b=>!b.bezahlt&&b.status!=='abgelaufen').reduce((s,b)=>s+(+b.preis_chf||0),0),total=BOOSTS.filter(b=>b.bezahlt).reduce((s,b)=>s+(+b.preis_chf||0),0);
+  document.getElementById('fin-kpis').innerHTML=[['Diesen Monat',chf(monat),'green'],['Aktiver Umsatz',chf(aktivSum),'cyan'],['Offen',chf(offen),'gold'],['All-Time bezahlt',chf(total),'purple']].map(k=>`<div class="kpi ${k[2]}"><div class="label">${k[0]}</div><div class="value" style="font-size:24px">${k[1]}</div></div>`).join('');
+  const byTier={};aktiv.forEach(b=>{byTier[b.tier]=(byTier[b.tier]||0)+(+b.preis_chf||0);});
+  const mx=Math.max(...Object.values(byTier),1);
+  document.getElementById('fin-tier').innerHTML=Object.keys(TIERS).map(t=>byTier[t]?`<div class="bar-row"><div class="bar-nm">${TIERS[t].label}</div><div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(byTier[t]/mx*100)}%;background:${TIERS[t].col}"></div></div><div class="bar-ct">${chf(byTier[t])}</div></div>`:'').join('')||'<div class="empty">Keine aktiven Boosts.</div>';
+  const unpaid=BOOSTS.filter(b=>!b.bezahlt&&b.status!=='abgelaufen');
+  document.getElementById('fin-open').innerHTML=unpaid.length?unpaid.map(b=>`<div class="fin-row"><div class="fin-name">${esc(b.ziel_name)}<div class="fin-tier">${TIERS[b.tier]?.label||b.tier} · ${b.status}</div></div><div class="fin-amt">${chf(b.preis_chf)}</div><button class="btn btn-gold" onclick="markPaid('${b.id}')">bezahlt</button></div>`).join(''):'<div class="empty">Nichts offen. 🟢</div>';
+  document.getElementById('fin-list').innerHTML=BOOSTS.length?BOOSTS.map(b=>`<div class="fin-row"><div class="fin-name">${esc(b.ziel_name)}<div class="fin-tier">${TIERS[b.tier]?.label||b.tier} · ${new Date(b.start).toLocaleDateString('de-CH')} · ${b.status}</div></div><span class="paybadge ${b.bezahlt?'pay-yes':'pay-no'}">${b.bezahlt?'bezahlt':'offen'}</span><div class="fin-amt">${chf(b.preis_chf)}</div></div>`).join(''):'<div class="empty">Noch keine Boosts.</div>';
+}
+
+/* USERS */
+let usrLoaded=false;
+async function loadUsers(){if(usrLoaded)return;usrLoaded=true;
+  try{const u=await sget('users?select=id,nickname,created_at&order=created_at.desc&limit=30');document.getElementById('usr-list').innerHTML=u.length?u.map(x=>`<div class="urow"><div class="uava">${esc((x.nickname||'?')[0]||'?').toUpperCase()}</div><div class="uinfo"><div class="uname">${esc(x.nickname||x.id)}</div><div class="umeta">${ago(x.created_at)}</div></div></div>`).join(''):'<div class="empty">Keine Users.</div>';}
+  catch(e){document.getElementById('usr-list').innerHTML='<div class="empty">Tabelle users fehlt / kein Zugriff.</div>';}
+  try{const s=await sget('user_sperren?order=created_at.desc&limit=40');document.getElementById('usr-blocked').innerHTML=s.length?s.map(x=>`<div class="urow"><div class="uava" style="color:${x.aktion==='gesperrt'?'#ff2d00':'#ff6600'}">${x.aktion==='gesperrt'?'⛔':'⚠'}</div><div class="uinfo"><div class="uname">${esc(x.autor_name||x.user_id||'anonym')}</div><div class="umeta">${esc(x.grund)} · ${esc(x.aktion)} · ${esc(x.erstellt_von)} · ${ago(x.created_at)}</div></div>${x.aktion==='gesperrt'?`<button class="btn btn-ghost" onclick="unblock('${x.id}')">entsperren</button>`:''}</div>`).join(''):'<div class="empty">Niemand gesperrt. 🟢</div>';}
+  catch(e){document.getElementById('usr-blocked').innerHTML='<div class="setup"><div class="st">Tabelle fehlt</div><p>user_sperren via setup.sql anlegen.</p></div>';}
+}
+async function unblock(id){if(!confirm('User entsperren (Eintrag entfernen)?'))return;const r=await fetch(SU+'/rest/v1/user_sperren?id=eq.'+id,{method:'DELETE',headers:H});if(r.ok){toast('Entsperrt','ok');audit('user entsperrt','user_sperren',id,'');usrLoaded=false;loadUsers();}else toast('Fehler — RLS (delete)?');}
+
+/* INHALTE */
+let inhLoaded=false;
+async function loadInhalte(){if(inhLoaded)return;inhLoaded=true;
+  try{const locs=await sget('locations?select=id,name,kategorie,kreis,featured,boost_tier&aktiv=eq.true&limit=2000');const cats={},kr={};locs.forEach(l=>{if(l.kategorie)cats[l.kategorie]=(cats[l.kategorie]||0)+1;if(l.kreis)kr[l.kreis]=(kr[l.kreis]||0)+1;});
+    document.getElementById('inh-cats').innerHTML=bars(cats,c=>CCOL[c]||'#ff2d00');document.getElementById('inh-kreis').innerHTML=bars(kr,()=>'#ff2d00',true);
+    const feat=locs.filter(l=>l.featured);document.getElementById('inh-featured').innerHTML=feat.length?feat.map(l=>`<div class="ki-rule"><div class="dot" style="background:#c8ff00"></div><div style="font-size:11px;color:#ccc">${esc(l.name)} <span style="color:#555">· ${esc(l.kategorie||'')}${l.boost_tier?(' · '+(TIERS[l.boost_tier]?.label||l.boost_tier)):''}</span></div></div>`).join(''):`<div class="empty">Noch nichts geboostet. Verkauf einen Boost!</div>`;}
+  catch(e){document.getElementById('inh-cats').innerHTML='<div class="empty">Fehler.</div>';}
+}
+function bars(o,col,kreis){const e=Object.entries(o);if(!e.length)return'<div class="empty">—</div>';e.sort(kreis?(a,b)=>parseInt(a[0])-parseInt(b[0]):(a,b)=>b[1]-a[1]);const mx=Math.max(...e.map(x=>x[1]),1);return e.map(([k,v])=>`<div class="bar-row"><div class="bar-nm">${kreis?('Kreis '+k):esc(k)}</div><div class="bar-wrap"><div class="bar-fill" style="width:${Math.round(v/mx*100)}%;background:${col(k)}"></div></div><div class="bar-ct">${v}</div></div>`).join('');}
+
+/* SYSTEM */
+let sysLoaded=false;
+async function loadSystem(){if(sysLoaded)return;sysLoaded=true;
+  const t=[['locations','locations?aktiv=eq.true'],['eventfrog_events','eventfrog_events?aktiv=eq.true'],['users','users'],['dating_votes','dating_votes'],['feedback_submissions','feedback_submissions'],['kontakt_submissions','kontakt_submissions'],['comments','comments'],['partner_anfragen','partner_anfragen'],['boosts','boosts'],['user_sperren','user_sperren'],['audit_log','audit_log'],['news_stories','news_stories'],['inserate','inserate']];
+  const res=await Promise.all(t.map(x=>scount(x[1])));
+  document.getElementById('sys-tables').innerHTML=t.map((x,i)=>{const n=res[i],miss=(n===null);return `<div class="supa-node ${miss?'missing':'active'}"><div class="supa-name">${x[0]}</div><div class="supa-count">${miss?'fehlt':n}</div><div class="supa-desc">${miss?'nicht angelegt':'live'}</div></div>`;}).join('');
+}
+
+/* KI */
+let kiLoaded=false;
+async function loadKI(){if(kiLoaded)return;kiLoaded=true;let active=false;
+  try{const r=await sget('comments?select=id,ki_urteil&ki_urteil=not.is.null&limit=1');active=r.length>0;}catch(e){}
+  document.getElementById('ki-status').innerHTML=active?`<div class="ki-rule"><div class="dot" style="background:#c8ff00"></div><div style="font-size:11px;color:#ccc"><strong style="color:#c8ff00">KI aktiv</strong> — Function <span class="hi">moderate</span> trifft Urteile.</div></div>`:`<div class="ki-rule"><div class="dot" style="background:#ffcc00"></div><div style="font-size:11px;color:#ccc"><strong style="color:#ffcc00">Manuell-Modus</strong> — KI-Function noch nicht deployt. Anleitung unten.</div></div>`;
+  try{const r=await sget('comments?select=text,ki_urteil,ki_konfidenz,ki_grund,created_at&ki_urteil=not.is.null&order=created_at.desc&limit=15');document.getElementById('ki-log').innerHTML=r.length?r.map(x=>{const v=verdictOf({ki_urteil:x.ki_urteil,ki_konf:x.ki_konfidenz});return `<div class="mrow v-${v}" style="margin-bottom:8px"><div class="mrow-top"><div class="mrow-meta">${ago(x.created_at)}</div><span class="kibadge ${v==='ok'?'ok':v==='bad'?'bad':v==='warn'?'warn':'wait'}">${esc(x.ki_urteil)}${x.ki_konfidenz!=null?(' '+Math.round(x.ki_konfidenz*100)+'%'):''}</span></div><div class="mrow-text" style="font-size:11px">${esc((x.text||'').slice(0,120))}</div>${x.ki_grund?`<div class="ki-reason">${esc(x.ki_grund)}</div>`:''}</div>`;}).join(''):`<div class="empty">Noch keine KI-Urteile.</div>`;}catch(e){document.getElementById('ki-log').innerHTML=`<div class="empty">Tabelle comments fehlt.</div>`;}
+  if(!active)document.getElementById('ki-setup').innerHTML=`<div class="setup"><div class="st">KI scharf schalten — 3 Schritte</div><p><b>1.</b> <span class="hi">setup.sql</span> im Supabase SQL-Editor ausführen.</p><p><b>2.</b> Edge Function <span class="hi">moderate</span> deployen + Secret <span class="hi">ANTHROPIC_API_KEY</span> setzen.</p><p><b>3.</b> Cron (pg_cron) aktivieren — ruft moderate alle paar Minuten. SQL in setup.sql.</p></div>`;
+}
+
+/* AUDIT */
+let audLoaded=false;
+async function loadAudit(){if(audLoaded)return;audLoaded=true;
+  try{const r=await sget('audit_log?order=created_at.desc&limit=80');document.getElementById('aud-list').innerHTML=r.length?r.map(x=>`<div class="arow"><div class="atime">${ago(x.created_at)}</div><div class="aakt">${esc(x.aktion)}</div><div class="adet">${esc(x.detail||'')} <span style="color:#444">${esc(x.objekt_typ||'')}</span></div></div>`).join(''):'<div class="empty">Noch keine Aktionen protokolliert.</div>';}
+  catch(e){document.getElementById('aud-list').innerHTML='<div class="setup"><div class="st">Tabelle fehlt</div><p>audit_log via setup.sql anlegen — dann wird jede Aktion protokolliert.</p></div>';}
+}
+
+function setCnt(id,n,cls){const e=document.getElementById(id);if(!e)return;e.textContent=n;e.className='cnt'+(n&&cls?(' '+cls):'');}
+setInterval(()=>{if(localStorage.getItem('sp_kz_auth')==='1'){loadBoosts().then(()=>{loadOverview();renderBoost();});loadModeration();loadAnfragen();loadVerkauf();}},120000);
+</script>
+</body>
+</html>
