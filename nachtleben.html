@@ -268,7 +268,136 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
 .footer-logo .ldot{width:5px;height:5px}
 
 .page-wrap{padding-bottom:80px}
+/* ═══════════ CREATIVE DIRECTOR — MOBILE + POLISH ═══════════ */
+.loc-name{font-size:clamp(17px,5.2vw,22px)}
+.loc-card:active{transform:scale(.992)}
+.typ-card:active,.gc:active,.qc:active,.sort-btn:active,.loc-ticket-btn:active{transform:scale(.95)}
+a:focus-visible,button:focus-visible,.loc-card:focus-visible{outline:2px solid #00f5ff;outline-offset:2px;border-radius:4px}
+.offe-badge.open{animation:offeGlow 2.4s ease-in-out infinite}
+@keyframes offeGlow{0%,100%{box-shadow:0 0 0 rgba(200,255,0,0)}50%{box-shadow:0 0 11px rgba(200,255,0,.45)}}
+@media(max-width:768px){
+  .nav-logo{padding:12px 14px}
+  .nav-link{padding:12px 11px;letter-spacing:2px}
+  .nav-cta{padding:9px 13px;margin:7px 10px;font-size:12px;letter-spacing:1px}
+  .typ-card{padding:12px 6px}
+  .loc-img,.loc-img-placeholder{width:80px;min-width:80px;height:80px}
+  .loc-body{padding:11px 13px}
+}
+@media(max-width:480px){
+  .section-pad{padding:0 16px}
+  .typ-cards{gap:6px}
+  .typ-card{padding:10px 4px}
+  .loc-img,.loc-img-placeholder{width:68px;min-width:68px;height:68px}
+  .loc-meta{flex-wrap:wrap}
+  .sort-row{flex-wrap:wrap}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
 .section-pad{padding:0 24px}
+
+/* ═══════════════════════════════════════════════════════
+   DESIGN UPGRADE v2 · Creative-Director-Pass
+   (überschreibt frühere Regeln via Cascade)
+   ═══════════════════════════════════════════════════════ */
+/* Touch/Mobile: echten Cursor zurück, Custom-Cursor weg */
+@media (hover:none),(pointer:coarse){
+  html,body{cursor:auto!important}
+  #dot,#ring{display:none!important}
+}
+a,button,.loc-card,.typ-card,.gc,.qc,.sort-btn,.nav-link,.nav-cta{cursor:pointer}
+
+/* HERO — mehr Wucht + Glow */
+.hero{padding:40px 24px 4px}
+.hero::before{content:'';position:absolute;top:-18%;left:50%;width:72%;height:340px;transform:translateX(-50%);background:radial-gradient(ellipse at center,rgba(147,51,234,0.18),rgba(255,45,0,0.06) 45%,transparent 70%);filter:blur(34px);pointer-events:none;z-index:0}
+.hero-eye,.hero-title,.hero-sub{position:relative;z-index:2}
+.hero-title{font-size:84px;letter-spacing:-2px;text-shadow:0 0 40px rgba(255,45,0,0.12)}
+
+/* CATEGORY CARDS (ALLES / CLUBS / BARS) — Präsenz */
+.typ-card{padding:20px 10px;border-radius:8px;background:linear-gradient(160deg,rgba(255,255,255,0.05),rgba(255,255,255,0.01));overflow:hidden}
+.typ-card::after{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(255,45,0,0.13),transparent 65%);opacity:0;transition:opacity .25s;pointer-events:none}
+.typ-card.on::after{opacity:1}
+.typ-card.on{border-color:#ff2d00;box-shadow:0 0 26px rgba(255,45,0,0.18),inset 0 0 22px rgba(255,45,0,0.05)}
+.typ-card-icon{font-size:28px;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(0,0,0,0.5))}
+.typ-card-name{font-size:19px}
+.typ-card.on .typ-card-name{color:#fff}
+
+/* LOCATION CARDS — editorial, mit Tiefe */
+.locations-grid{gap:12px}
+.loc-card{background:linear-gradient(150deg,rgba(255,255,255,0.055),rgba(255,255,255,0.015));border:1px solid rgba(255,255,255,0.08);border-radius:12px;box-shadow:0 2px 14px rgba(0,0,0,0.35)}
+.loc-card:hover{border-color:rgba(255,45,0,0.55);background:linear-gradient(150deg,rgba(255,45,0,0.06),rgba(255,255,255,0.02));transform:translateY(-2px);box-shadow:0 12px 32px rgba(255,45,0,0.10),0 2px 14px rgba(0,0,0,0.4)}
+.loc-card:active{transform:scale(.996)}
+.loc-card.featured{border-color:rgba(200,255,0,0.35);box-shadow:0 0 22px rgba(200,255,0,0.08),0 2px 14px rgba(0,0,0,0.4)}
+.loc-card.featured::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,#c8ff00,rgba(200,255,0,0.2));z-index:2}
+.loc-card.featured:hover{border-color:#c8ff00;box-shadow:0 12px 32px rgba(200,255,0,0.14)}
+.loc-img,.loc-img-placeholder{width:118px;min-width:118px;height:118px}
+.loc-img{filter:brightness(.92) contrast(1.05)}
+.loc-name{font-size:24px}
+.loc-body{padding:14px 16px}
+.offe-badge{padding:4px 9px;font-size:7.5px}
+.offe-badge.open{box-shadow:0 0 12px rgba(200,255,0,0.35)}
+.loc-ticket-btn{padding:9px 15px;border-radius:4px;font-size:13px}
+.loc-ticket-btn.ghost{border-color:rgba(255,45,0,0.4);color:#ff2d00}
+.loc-ticket-btn.ghost:hover{background:rgba(255,45,0,0.1);border-color:#ff2d00;color:#ff2d00}
+
+/* FILTER CHIPS — etwas tappbarer */
+.gc,.qc{padding:9px 15px;font-size:9.5px}
+
+/* ═══ MENÜ (Hamburger + Full-Screen) ═══ */
+.nav-cta{border-radius:4px;box-shadow:0 0 16px rgba(255,45,0,0.22);letter-spacing:2px}
+.nav-cta:hover{box-shadow:0 0 26px rgba(255,45,0,0.5)}
+.nav-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:48px;height:48px;background:transparent;border:none;cursor:pointer;margin-right:6px;flex-shrink:0}
+.nav-burger span{display:block;width:22px;height:2px;background:#e8e4d9;border-radius:2px;transition:.28s;margin:0 auto}
+.nav-menu{position:fixed;inset:0;background:rgba(4,4,10,0.98);backdrop-filter:blur(22px);z-index:9997;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.nav-menu::before{content:'';position:absolute;top:-10%;left:50%;width:80%;height:340px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(255,45,0,0.12),transparent 70%);filter:blur(40px);pointer-events:none}
+.nav-menu.open{opacity:1;pointer-events:auto}
+.nav-menu-close{position:absolute;top:18px;right:24px;background:transparent;border:none;color:#e8e4d9;font-size:26px;cursor:pointer;line-height:1}
+.nav-menu-inner{display:flex;flex-direction:column;gap:4px;text-align:center;position:relative;z-index:1}
+.nav-menu-link{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:46px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,0.45);text-decoration:none;transition:.2s;line-height:1.12}
+.nav-menu-link:hover,.nav-menu-link.active{color:#ff2d00;transform:translateX(4px)}
+.nav-menu-cta{margin-top:26px;padding:16px 44px;background:#ff2d00;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-radius:4px;box-shadow:0 0 24px rgba(255,45,0,0.35)}
+
+/* ═══ FILTER als Control-Deck ═══ */
+.filter-section{margin:0 16px 22px!important;padding:16px 16px 14px!important;background:linear-gradient(180deg,rgba(147,51,234,0.045),rgba(255,255,255,0.012));border:1px solid rgba(255,255,255,0.06);border-radius:16px;position:relative}
+.filter-section::before{content:'◈ FILTER';display:block;font-size:8px;letter-spacing:5px;color:rgba(255,45,0,0.55);text-transform:uppercase;margin-bottom:14px;font-family:'DM Mono',monospace}
+.genre-label{margin-top:2px}
+
+/* ═══ 🎲 ÜBERRASCH-MI Button ═══ */
+.sort-btn.dice{margin-left:auto;color:#c8ff00;border-color:rgba(200,255,0,0.4);background:rgba(200,255,0,0.06);font-size:8px;padding:6px 12px}
+.sort-btn.dice:hover{background:rgba(200,255,0,0.16);border-color:#c8ff00;color:#c8ff00;box-shadow:0 0 14px rgba(200,255,0,0.25)}
+.sort-row{flex-wrap:wrap;align-items:center}
+
+/* ═══ MOBILE ═══ */
+@media(max-width:768px){
+  .nav-links{display:none}
+  .nav-cta{display:none}
+  .nav-burger{display:flex}
+  .filter-section{margin:0 12px 20px!important;padding:14px 13px 12px!important}
+  .sort-btn.dice{margin-left:0}
+  .hero{padding:26px 18px 4px}
+  .hero-title{font-size:clamp(52px,15vw,72px);letter-spacing:-1px}
+  .hero-bg-txt{font-size:130px}
+  .typ-card{padding:16px 6px}
+  .typ-card-icon{font-size:24px}
+  .typ-card-name{font-size:16px}
+  .loc-img,.loc-img-placeholder{width:100px;min-width:100px;height:100px}
+  .loc-name{font-size:21px}
+  .loc-body{padding:12px 13px}
+  .genre-chips,.quer-chips{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:4px}
+  .genre-chips::-webkit-scrollbar,.quer-chips::-webkit-scrollbar{display:none}
+  .gc,.qc{flex-shrink:0}
+  .loc-ticket-btn{min-height:42px;display:inline-flex;align-items:center}
+  .sort-btn{min-height:36px;display:inline-flex;align-items:center}
+}
+@media(max-width:480px){
+  .hero-title{font-size:clamp(44px,14vw,60px)}
+  .typ-cards{grid-template-columns:repeat(3,1fr);gap:6px}
+  .typ-card{padding:13px 4px}
+  .typ-card-icon{font-size:21px;margin-bottom:5px}
+  .typ-card-name{font-size:14px}
+  .loc-img,.loc-img-placeholder{width:88px;min-width:88px;height:100px}
+  .loc-name{font-size:19px}
+  .stats-bar{flex-wrap:wrap}
+  .stat{min-width:33%}
+}
 </style>
 </head>
 <body>
@@ -287,7 +416,19 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
     <a href="dating.html" class="nav-link">DATES</a>
   </div>
   <a href="login.html" class="nav-cta">MITMACHE</a>
+  <button class="nav-burger" onclick="toggleMenu()" aria-label="Menü"><span></span><span></span><span></span></button>
 </nav>
+<div class="nav-menu" id="navMenu">
+  <button class="nav-menu-close" onclick="toggleMenu()" aria-label="Schliesse">✕</button>
+  <div class="nav-menu-inner">
+    <a href="gastro.html" class="nav-menu-link">Gastro</a>
+    <a href="nachtleben.html" class="nav-menu-link active">Nachtlebe</a>
+    <a href="events.html" class="nav-menu-link">Events</a>
+    <a href="shopping.html" class="nav-menu-link">Shopping</a>
+    <a href="dating.html" class="nav-menu-link">Dates</a>
+    <a href="login.html" class="nav-menu-cta">MITMACHE →</a>
+  </div>
+</div>
 
 <!-- PULSE MOMENT BANNER -->
 <div class="pulse-banner">
@@ -394,6 +535,7 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
       <button class="sort-btn on" onclick="setSort(this,'score')">SCORE</button>
       <button class="sort-btn" onclick="setSort(this,'distanz')">DISTANZ</button>
       <button class="sort-btn" onclick="setSort(this,'neu')">NEU</button>
+      <button class="sort-btn dice" onclick="goRandom()">🎲 ÜBERRASCH MI</button>
     </div>
   </div>
 
@@ -513,7 +655,7 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 </div><!-- end page-wrap -->
 
 <!-- FAB -->
-<button class="fab" onclick="openSheet()" aria-label="Filter">🎚️</button>
+<button class="fab" onclick="openSheet()" aria-label="Filter"><svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="#04040a" stroke-width="2.3" stroke-linecap="round"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/><circle cx="8" cy="7" r="2.6" fill="#04040a"/><circle cx="15" cy="12" r="2.6" fill="#04040a"/><circle cx="10" cy="17" r="2.6" fill="#04040a"/></svg></button>
 
 <!-- BOTTOM SHEET -->
 <div class="sheet-bg" id="sheet-bg" onclick="if(event.target===this)closeSheet()">
@@ -839,6 +981,16 @@ window.openDetail=function(id){
 function closeDetail(){document.getElementById('detail-panel').classList.remove('open');}
 
 // INIT
+// Menü (Mobile Full-Screen)
+function toggleMenu(){ document.getElementById('navMenu').classList.toggle('open'); }
+
+// 🎲 Überrasch mi — zufälliges Lokal aus den AKTUELL gefilterten Resultaten öffnen
+function goRandom(){
+  const cards=document.querySelectorAll('.loc-card');
+  if(!cards.length){ return; }
+  cards[Math.floor(Math.random()*cards.length)].click();
+}
+
 load().then(function(){
   // ?kreis= aus URL übernehmen (z.B. von DIS UNIVERSUM auf der Startseite)
   try{
