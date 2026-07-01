@@ -175,6 +175,69 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.08);padding:28px 20p
 .footer-links{display:flex;gap:12px}
 .footer-links a{font-size:7px;color:rgba(232,228,217,0.25);text-decoration:none;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
 .footer-links a:hover{color:#ff2d00}
+/* ═══════════ CREATIVE DIRECTOR — MOBILE + POLISH ═══════════ */
+.hero-name{font-size:clamp(30px,9vw,52px)}
+.sec-title{font-size:clamp(20px,5.5vw,26px)}
+.act-btn:active,.sk-pill:active{transform:scale(.97)}
+a:focus-visible,button:focus-visible{outline:2px solid #00f5ff;outline-offset:2px;border-radius:3px}
+.offe-pill.open{animation:offeGlow 2.4s ease-in-out infinite}
+@keyframes offeGlow{0%,100%{box-shadow:0 0 0 rgba(200,255,0,0)}50%{box-shadow:0 0 16px rgba(200,255,0,.4)}}
+@media(max-width:768px){
+  .hero{height:54vh;min-height:300px}
+  .hero-score-n{font-size:24px}
+  .action-bar{padding:9px 14px;gap:6px}
+  .act-btn{font-size:13px;padding:12px 6px}
+  .content{padding:0 16px}
+  .meta-strip{margin:0 -16px 18px}
+}
+@media(max-width:480px){
+  #act-save,#act-share{flex:0 0 48px;font-size:16px}
+  .act-btn.primary{flex:2}
+  .similar-grid{grid-template-columns:1fr}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
+
+/* ═══════════════════════════════════════════════════════
+   DESIGN UPGRADE v2 · Profil · Creative-Director-Pass
+   ═══════════════════════════════════════════════════════ */
+@media (hover:none),(pointer:coarse){
+  html,body{cursor:auto!important}
+  #dot,#ring{display:none!important}
+}
+a,button,.act-btn,.sk-pill,.sim-card,.kr-btn{cursor:pointer}
+
+/* HERO — filmischer */
+.hero{height:68vh;min-height:380px}
+.hero-overlay{background:linear-gradient(0deg,#04040a 0%,rgba(4,4,10,0.78) 30%,rgba(4,4,10,0.18) 60%,rgba(147,51,234,0.10) 100%)}
+.hero-name{font-size:58px;text-shadow:0 4px 30px rgba(0,0,0,0.6)}
+.offe-pill{backdrop-filter:blur(8px)}
+.offe-pill.open{box-shadow:0 0 22px rgba(200,255,0,0.35)}
+.hero-score{border-color:rgba(255,45,0,0.35);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
+#eng-bar{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-weight:500}
+
+/* ACTION BAR — griffiger */
+.act-btn{border-radius:6px}
+.act-btn.primary{box-shadow:0 0 22px rgba(255,45,0,0.28)}
+.act-btn.ghost{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1)}
+#act-save.on{background:rgba(255,45,0,0.14);border-color:rgba(255,45,0,0.5);color:#ff2d00}
+
+/* SIMILAR — Micro-Interaktion */
+.sim-card{transition:transform .2s,border-color .2s}
+.sim-card:hover{transform:translateY(-2px)}
+
+/* ═══ MOBILE ═══ */
+@media(max-width:768px){
+  .hero{height:58vh;min-height:320px}
+  .hero-name{font-size:clamp(32px,10vw,52px)}
+  .action-bar{padding:10px 14px;gap:6px}
+  .act-btn{min-height:46px;font-size:13px}
+  #eng-bar{gap:10px;font-size:10px}
+}
+@media(max-width:480px){
+  .hero-name{font-size:clamp(28px,9vw,44px)}
+  #act-save,#act-share{flex:0 0 50px;min-height:48px;font-size:18px}
+  .act-btn.primary{flex:2}
+}
 </style>
 </head>
 <body>
@@ -195,7 +258,7 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.08);padding:28px 20p
   <div class="hero-status">
     <div class="offe-pill closed" id="offe-pill">
       <div class="offe-dot"></div>
-      <span id="offe-txt">LÄDT...</span>
+      <span id="offe-txt">LADED...</span>
     </div>
   </div>
 
@@ -206,7 +269,7 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.08);padding:28px 20p
 
   <div class="hero-content">
     <div class="hero-sk" id="hero-sk"></div>
-    <div class="hero-name" id="hero-name">LÄDT...</div>
+    <div class="hero-name" id="hero-name">LADED...</div>
     <div class="hero-addr" id="hero-addr">
       <span class="hero-addr-dot"></span>
       <span>ZÜRICH</span>
@@ -217,7 +280,7 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.08);padding:28px 20p
 
 <!-- ACTION BAR -->
 <div class="action-bar">
-  <button class="act-btn primary" id="act-ticket">🎫 TICKET / EINTRITT</button>
+  <button class="act-btn primary" id="act-ticket">🎫 TICKET</button>
   <button class="act-btn ghost" onclick="document.getElementById('map').scrollIntoView({behavior:'smooth'})">📍 KARTE</button>
   <button class="act-btn ghost" id="act-save">❤️</button>
   <button class="act-btn ghost" id="act-share">↗</button>
@@ -243,7 +306,7 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.08);padding:28px 20p
   <div class="sec">
     <div class="sec-title">ÖFFNIGSZITTE</div>
     <div class="oz-grid" id="oz-grid">
-      <div style="padding:16px;color:rgba(232,228,217,0.3);font-size:10px;letter-spacing:2px;text-align:center;text-transform:uppercase">LÄDT...</div>
+      <div style="padding:16px;color:rgba(232,228,217,0.3);font-size:10px;letter-spacing:2px;text-align:center;text-transform:uppercase">LADED...</div>
     </div>
   </div>
 
@@ -268,7 +331,7 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.08);padding:28px 20p
     </div>
     <div class="radar-info">
       <div class="radar-count">47</div>
-      <div class="radar-sub">USER AKTIV HEUTE NACHT · PHASE 5 LIVE</div>
+      <div class="radar-sub">USER AKTIV HÜT NACHT · PHASE 5 LIVE</div>
     </div>
   </div>
 
@@ -481,7 +544,7 @@ function buildOzGrid(oz){
     const nowOpen=isToday&&m&&(new Date().getHours()>=parseInt(m[1]))&&(new Date().getHours()<parseInt(m[3]));
     return`<div class="oz-row${isToday?' today':''}">
       <div class="oz-day">${d}${isToday?' ◀':''}</div>
-      ${m?`<div class="oz-time">${m[1]}:${m[2]} – ${m[3]}:${m[4]}</div>`:`<div class="oz-time oz-closed">GESCHLOSSEN</div>`}
+      ${m?`<div class="oz-time">${m[1]}:${m[2]} – ${m[3]}:${m[4]}</div>`:`<div class="oz-time oz-closed">ZUE</div>`}
       ${nowOpen?'<div class="oz-now">JETZT OFFE</div>':''}
     </div>`;
   }).join('');
@@ -531,7 +594,7 @@ function initMap(lat,lng,name){
 // LOAD
 async function load(){
   if(!slug){
-    document.getElementById('hero-name').textContent='LOCATION NOT FOUND';
+    document.getElementById('hero-name').textContent='LOKAL NÖD GFUNDE';
     return;
   }
 
@@ -549,7 +612,7 @@ async function load(){
     }
   }
   if(!Array.isArray(data)||!data.length){
-    document.getElementById('hero-name').textContent='LOCATION NOT FOUND';
+    document.getElementById('hero-name').textContent='LOKAL NÖD GFUNDE';
     return;
   }
   const l=data[0];
@@ -577,7 +640,7 @@ async function load(){
   // OFFE BADGE
   const pill=document.getElementById('offe-pill');
   pill.className=`offe-pill ${offe?'open':'closed'}`;
-  document.getElementById('offe-txt').textContent=offe?'JETZT OFFE':'GESCHLOSSEN';
+  document.getElementById('offe-txt').textContent=offe?'JETZT OFFE':'ZUE';
 
   // RATING
   document.getElementById('hero-rating').textContent=l.rating?parseFloat(l.rating).toFixed(1):'–';
@@ -596,7 +659,7 @@ async function load(){
   document.getElementById('desc-box').textContent=l.beschreibung||l.beschreibung_kurz||'Kei Beschreibig vorhande.';
 
   // OZ
-  document.getElementById('oz-grid').innerHTML=l.oeffnungszeiten&&l.oeffnungszeiten.length?buildOzGrid(l.oeffnungszeiten):`<div style="padding:16px;color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:2px;text-align:center;text-transform:uppercase">KEINE ÖFFNUNGSZEITEN VORHANDEN</div>`;
+  document.getElementById('oz-grid').innerHTML=l.oeffnungszeiten&&l.oeffnungszeiten.length?buildOzGrid(l.oeffnungszeiten):`<div style="padding:16px;color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:2px;text-align:center;text-transform:uppercase">KEI ÖFFNIGSZIITE VORHANDE</div>`;
 
   // TICKET BTN
   const ticketBtn=document.getElementById('act-ticket');

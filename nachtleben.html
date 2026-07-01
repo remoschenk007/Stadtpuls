@@ -544,7 +544,7 @@ a,button,.loc-card,.typ-card,.gc,.qc,.sort-btn,.nav-link,.nav-cta{cursor:pointer
 <!-- LOCATIONS -->
 <div class="section-pad">
   <div class="locations-grid" id="locations-grid">
-    <div style="text-align:center;padding:40px;color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:2px">LÄDT...</div>
+    <div style="text-align:center;padding:40px;color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:2px">LADED...</div>
   </div>
 </div>
 
@@ -801,7 +801,7 @@ function getSkTag(loc){
 function renderLocs(locs){
   const grid=document.getElementById('locations-grid');
   if(!locs.length){
-    grid.innerHTML=`<div class="empty"><div class="empty-big">NÜÜT GFUNDE</div><div class="empty-txt">VERSUCH ANDERI FILTER</div><button onclick="resetFilter()" style="background:#ff2d00;border:none;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:2px;text-transform:uppercase;color:#fff;cursor:pointer;border-radius:2px;margin-top:12px">FILTER ZURÜCKSETZE</button></div>`;
+    grid.innerHTML=`<div class="empty"><div class="empty-big">NÜÜT GFUNDE</div><div class="empty-txt">VERSUCH ANDERI FILTER</div><button onclick="resetFilter()" style="background:#ff2d00;border:none;padding:12px 24px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:2px;text-transform:uppercase;color:#fff;cursor:pointer;border-radius:2px;margin-top:12px">FILTER ZRUGGSETZE</button></div>`;
     return;
   }
   document.getElementById('dyn-count').textContent=locs.length;
@@ -819,7 +819,7 @@ function renderLocs(locs){
           <div class="loc-top">
             <div class="loc-name">${l.name}</div>
             <div class="loc-badges">
-              <div class="offe-badge ${offe?'open':'closed'}">${offe?'OFFE':'GESCHLOSSEN'}</div>
+              <div class="offe-badge ${offe?'open':'closed'}">${offe?'OFFE':'ZUE'}</div>
               ${l.featured?'<div class="top-pick">⚡ TOP</div>':''}
             </div>
           </div>
@@ -959,7 +959,7 @@ window.openDetail=function(id){
         <div class="dp-meta">${l.adresse||''} · KREIS ${l.kreis||'–'}</div>
         <div class="dp-tags">
           <span class="sk-tag ${sk.cls}">${sk.lbl}</span>
-          <span class="offe-badge ${offe?'open':'closed'}" style="font-size:8px">${offe?'JETZT OFFE':'GESCHLOSSEN'}</span>
+          <span class="offe-badge ${offe?'open':'closed'}" style="font-size:8px">${offe?'JETZT OFFE':'ZUE'}</span>
           ${l.featured?'<span class="top-pick">⚡ TOP</span>':''}
         </div>
       </div>

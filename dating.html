@@ -243,11 +243,26 @@ nav{padding:0 16px;height:48px}.nav-links{display:none}
   <div class="nav-links">
     <a class="nl" href="gastro.html">GASTRO</a>
     <a class="nl" href="nachtleben.html">NACHTLEBE</a>
+    <a class="nl" href="events.html">EVENTS</a>
     <a class="nl" href="shopping.html">SHOPPING</a>
+    <a class="nl" href="news.html">NEWS</a>
     <span class="nl on">DATES</span>
   </div>
-  <a class="btn-mm" href="index.html?page=login">MITMACHE</a>
+  <a class="btn-mm" href="login.html">MITMACHE</a>
+  <button class="sp-burger" onclick="spToggleMenu()" aria-label="Menü"><span></span><span></span><span></span></button>
 </nav>
+<div class="sp-menu" id="spMenu">
+  <button class="sp-menu-close" onclick="spToggleMenu()" aria-label="Schliesse">✕</button>
+  <div class="sp-menu-inner">
+    <a href="gastro.html" class="sp-menu-link">Gastro</a>
+    <a href="nachtleben.html" class="sp-menu-link">Nachtlebe</a>
+    <a href="events.html" class="sp-menu-link">Events</a>
+    <a href="shopping.html" class="sp-menu-link">Shopping</a>
+    <a href="news.html" class="sp-menu-link">News</a>
+    <a href="dating.html" class="sp-menu-link active">Dates</a>
+    <a href="login.html" class="sp-menu-cta">MITMACHE →</a>
+  </div>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -427,6 +442,24 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 .fc li a:hover{color:#e8e4d9}
 .fbot{max-width:1320px;margin:0 auto;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.05)}
 .fbot p{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;margin:0}
+
+/* ═══ SP-MENÜ + TOUCH-FIX (einheitlich, Sweep-Pass) ═══ */
+@media (hover:none),(pointer:coarse){
+  html,body{cursor:auto!important}
+  #dot,#ring,.cursor-dot,.cursor-ring{display:none!important}
+}
+a,button{cursor:pointer}
+.sp-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:48px;height:48px;background:transparent;border:none;cursor:pointer;flex-shrink:0;margin-left:auto}
+.sp-burger span{display:block;width:22px;height:2px;background:#e8e4d9;border-radius:2px;margin:0 auto}
+.sp-menu{position:fixed;inset:0;background:rgba(4,4,10,0.98);backdrop-filter:blur(22px);z-index:9997;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.sp-menu::before{content:'';position:absolute;top:-10%;left:50%;width:80%;height:340px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(255,45,0,0.12),transparent 70%);filter:blur(40px);pointer-events:none}
+.sp-menu.open{opacity:1;pointer-events:auto}
+.sp-menu-close{position:absolute;top:18px;right:24px;background:transparent;border:none;color:#e8e4d9;font-size:26px;cursor:pointer;line-height:1}
+.sp-menu-inner{display:flex;flex-direction:column;gap:4px;text-align:center;position:relative;z-index:1}
+.sp-menu-link{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:44px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,0.45);text-decoration:none;transition:.2s;line-height:1.12}
+.sp-menu-link:hover,.sp-menu-link.active{color:#ff2d00}
+.sp-menu-cta{margin-top:24px;padding:15px 42px;background:#ff2d00;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:19px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-radius:4px;box-shadow:0 0 24px rgba(255,45,0,0.35)}
+@media(max-width:768px){.sp-burger{display:flex}.nav-links,.nav-cta,.btn-mm{display:none!important}}
 </style>
 
 <footer>
@@ -619,7 +652,7 @@ async function loadVoteCount(){
 }
 
 // ── TICKER ─────────────────────────────────
-const TI=['ZÜRI FLIRTET','PEOPLE & DATES','KEIN TINDER','100\'000 JA','KREIS-BASIERT','AB 18'];
+const TI=['ZÜRI FLIRTET','PEOPLE & DATES','KEI TINDER','100\'000 JA','KREIS-BASIERT','AB 18'];
 const TIG=['STADTPULS','K4 DOMINIERT','ZÜRI GSCHTED','ANONYM FIRST','4. JUNI 2026','BY RAIMONDO*'];
 ['ta','tb','tc','td'].forEach((id,i)=>{
   const el=document.getElementById(id);if(!el)return;
@@ -635,5 +668,6 @@ buildBattle();
 buildRadar();
 loadVoteCount();
 </script>
+<script>function spToggleMenu(){document.getElementById("spMenu").classList.toggle("open")}</script>
 </body>
 </html>

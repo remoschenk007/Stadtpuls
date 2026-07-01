@@ -422,16 +422,30 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 
 <!-- NAV -->
 <nav>
-  <div class="logo"><div class="ldot"></div>STADTPULS</div>
+  <a class="logo" href="index.html" style="text-decoration:none"><div class="ldot"></div>STADTPULS</a>
   <div class="nav-links">
-    <a class="nl" href="index.html">HOME</a>
     <a class="nl" href="gastro.html">GASTRO</a>
-    <a class="nl" href="index.html?page=nachtleben">NACHTLEBE</a>
+    <a class="nl" href="nachtleben.html">NACHTLEBE</a>
+    <a class="nl" href="events.html">EVENTS</a>
     <span class="nl on">SHOPPING</span>
-    <a class="nl" href="index.html?page=events">EVENTS</a>
+    <a class="nl" href="news.html">NEWS</a>
+    <a class="nl" href="dating.html">DATES</a>
   </div>
-  <button class="btn-mm" onclick="location.href='index.html?page=login'">MITMACHE</button>
+  <button class="btn-mm" onclick="location.href='login.html'">MITMACHE</button>
+  <button class="sp-burger" onclick="spToggleMenu()" aria-label="Menü"><span></span><span></span><span></span></button>
 </nav>
+<div class="sp-menu" id="spMenu">
+  <button class="sp-menu-close" onclick="spToggleMenu()" aria-label="Schliesse">✕</button>
+  <div class="sp-menu-inner">
+    <a href="gastro.html" class="sp-menu-link">Gastro</a>
+    <a href="nachtleben.html" class="sp-menu-link">Nachtlebe</a>
+    <a href="events.html" class="sp-menu-link">Events</a>
+    <a href="shopping.html" class="sp-menu-link active">Shopping</a>
+    <a href="news.html" class="sp-menu-link">News</a>
+    <a href="dating.html" class="sp-menu-link">Dates</a>
+    <a href="login.html" class="sp-menu-cta">MITMACHE →</a>
+  </div>
+</div>
 
 <!-- GPS STRIP -->
 <div class="gps-strip">
@@ -512,7 +526,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 </div>
 
 <!-- MOBILE FAB -->
-<button class="mobile-fab" onclick="openSheet()">🔍</button>
+<button class="mobile-fab" onclick="openSheet()" aria-label="Filter"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#04040a" stroke-width="2.3" stroke-linecap="round"><line x1="3" y1="7" x2="21" y2="7"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="17" x2="21" y2="17"/><circle cx="8" cy="7" r="2.6" fill="#04040a"/><circle cx="15" cy="12" r="2.6" fill="#04040a"/><circle cx="10" cy="17" r="2.6" fill="#04040a"/></svg></button>
 
 <!-- BOTTOM SHEET -->
 <div class="sheet-overlay" id="sh-ov" onclick="closeSheet()"></div>
@@ -548,7 +562,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
     <div class="kreis-grid" id="sheet-kreis"></div>
   </div>
   <div class="sheet-actions">
-    <button class="sheet-reset" onclick="resetAll();closeSheet()">ZURÜCKSETZE</button>
+    <button class="sheet-reset" onclick="resetAll();closeSheet()">ZRUGGSETZE</button>
     <button class="sheet-apply" onclick="closeSheet()">ZEIGE <span id="sheet-count">—</span> SHOPS →</button>
   </div>
 </div>
@@ -559,7 +573,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
     <div class="hero-eye">ZÜRI DRIPPED · STADTPULS · SHOPPING</div>
     <div class="hero-hl">DIS ZÜRI.<br>DIN<br>STYLE.</div>
     <div class="hero-sub-hl" id="hero-sub">— SHOPS</div>
-    <div class="dynamic-hl" id="dynamic-hl">LÄDT DATEN...</div>
+    <div class="dynamic-hl" id="dynamic-hl">LADED DATE...</div>
     <div class="hero-desc">Von Bahnhofstrasse bis Langstrasse. Mode, Vintage, Design, Swiss Made — nur echti Züri Shops. Kei Bullshit.</div>
     <div class="bot">
       <div class="bot-top">
@@ -625,7 +639,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 <!-- GRID -->
 <div class="sh">
   <div class="sh-t">ALLE SHOPS</div>
-  <div class="sh-r" id="sh-r">LÄDT...</div>
+  <div class="sh-r" id="sh-r">LADED...</div>
 </div>
 <div class="mgrid" id="mgrid">
   <div class="loading-state">
@@ -642,7 +656,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
     <div class="vb-sub">Unabhängige Shops. Echte Züri Brands. Kei Amazon.</div>
   </div>
   <div class="vb-r" id="vb-list">
-    <div style="padding:20px;font-size:10px;color:#333">Lädt...</div>
+    <div style="padding:20px;font-size:10px;color:#333">Laded...</div>
   </div>
 </div>
 
@@ -715,6 +729,24 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 .fc li a:hover{color:#e8e4d9}
 .fbot{max-width:1320px;margin:0 auto;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.05)}
 .fbot p{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;margin:0}
+
+/* ═══ SP-MENÜ + TOUCH-FIX (einheitlich, Sweep-Pass) ═══ */
+@media (hover:none),(pointer:coarse){
+  html,body{cursor:auto!important}
+  #dot,#ring,.cursor-dot,.cursor-ring{display:none!important}
+}
+a,button{cursor:pointer}
+.sp-burger{display:none;flex-direction:column;justify-content:center;gap:5px;width:48px;height:48px;background:transparent;border:none;cursor:pointer;flex-shrink:0;margin-left:auto}
+.sp-burger span{display:block;width:22px;height:2px;background:#e8e4d9;border-radius:2px;margin:0 auto}
+.sp-menu{position:fixed;inset:0;background:rgba(4,4,10,0.98);backdrop-filter:blur(22px);z-index:9997;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.sp-menu::before{content:'';position:absolute;top:-10%;left:50%;width:80%;height:340px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(255,45,0,0.12),transparent 70%);filter:blur(40px);pointer-events:none}
+.sp-menu.open{opacity:1;pointer-events:auto}
+.sp-menu-close{position:absolute;top:18px;right:24px;background:transparent;border:none;color:#e8e4d9;font-size:26px;cursor:pointer;line-height:1}
+.sp-menu-inner{display:flex;flex-direction:column;gap:4px;text-align:center;position:relative;z-index:1}
+.sp-menu-link{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:44px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,0.45);text-decoration:none;transition:.2s;line-height:1.12}
+.sp-menu-link:hover,.sp-menu-link.active{color:#ff2d00}
+.sp-menu-cta{margin-top:24px;padding:15px 42px;background:#ff2d00;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:19px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;border-radius:4px;box-shadow:0 0 24px rgba(255,45,0,0.35)}
+@media(max-width:768px){.sp-burger{display:flex}.nav-links,.nav-cta,.btn-mm{display:none!important}}
 </style>
 
 <footer>
@@ -943,7 +975,7 @@ async function loadAllLocations(){
 
   }catch(e){
     console.error('Load error:',e);
-    document.getElementById('mgrid').innerHTML='<div class="loading-state"><div class="loading-txt" style="color:#ff2d00">Fehler beim Laden — bitte Seite neu laden</div></div>';
+    document.getElementById('mgrid').innerHTML='<div class="loading-state"><div class="loading-txt" style="color:#ff2d00">Fehler bim Lade — bitte Site neu lade</div></div>';
     document.getElementById('rb-loading').style.display='none';
   }
 }
@@ -1011,7 +1043,7 @@ function buildGrid(){
 
   g.innerHTML='';
   if(!data.length){
-    g.innerHTML=`<div class="empty-state"><div class="es-title">NÜÜT GFUNDE</div><div class="es-sub">Probier andere Filter</div><div class="es-reset" onclick="resetAll()">ALLE ZURÜCKSETZE</div></div>`;
+    g.innerHTML=`<div class="empty-state"><div class="es-title">NÜÜT GFUNDE</div><div class="es-sub">Probier anderi Filter</div><div class="es-reset" onclick="resetAll()">ALLES ZRUGGSETZE</div></div>`;
     return;
   }
 
@@ -1140,7 +1172,7 @@ function buildHM(){
   // Pokal
   const leader=kreisData[0];
   document.getElementById('pokal-title').textContent='🏆 KREIS '+leader.k+' DOMINIERT!';
-  document.getElementById('pokal-sub').textContent=(kreisNamen[leader.k]||'Kreis '+leader.k)+' · '+leader.n+' Shops · Nummer 1 diese Woche';
+  document.getElementById('pokal-sub').textContent=(kreisNamen[leader.k]||'Kreis '+leader.k)+' · '+leader.n+' Shops · Nummer 1 die Wuche';
 
   // Grid
   hm.innerHTML=kreisData.map((d,i)=>`
@@ -1430,5 +1462,6 @@ document.addEventListener('mousemove',e=>{
 // ═══════════════════════════════════════════
 loadAllLocations();
 </script>
+<script>function spToggleMenu(){document.getElementById("spMenu").classList.toggle("open")}</script>
 </body>
 </html>
