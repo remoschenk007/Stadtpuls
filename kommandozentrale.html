@@ -242,6 +242,7 @@ main{max-width:1180px;margin:0 auto;padding:24px;}
 <div class="tabs" id="tabs">
   <div class="tab active" data-s="ov" onclick="tab('ov',this)">Übersicht</div>
   <div class="tab" data-s="mod" onclick="tab('mod',this)">Moderation <span class="cnt" id="t-mod">0</span></div>
+  <div class="tab" data-s="inbox" onclick="tab('inbox',this)">📥 Inbox <span class="cnt" id="t-inbox">0</span></div>
   <div class="tab" data-s="anf" onclick="tab('anf',this)">Anfragen <span class="cnt" id="t-anf">0</span></div>
   <div class="tab" data-s="verk" onclick="tab('verk',this)">Verkauf <span class="cnt" id="t-verk">0</span></div>
   <div class="tab" data-s="boost" onclick="tab('boost',this)">💰 Boosts <span class="cnt" id="t-boost">0</span></div>
@@ -277,9 +278,16 @@ main{max-width:1180px;margin:0 auto;padding:24px;}
       <div class="chip" data-f="wait" onclick="modFilter('wait',this)">◷ Wartet</div>
     </div>
     <div id="mod-list"><div class="loading">Lade…</div></div>
+    <div id="momaent-live" style="margin-top:22px"></div>
   </div>
 
   <!-- ANFRAGEN -->
+  <div class="section" id="s-inbox">
+    <div class="section-head bc">📥 INBOX <span class="badge">Nachrichten</span></div>
+    <div class="section-sub">Alles, was Lüt dir schicked: <b>Kontaktformular</b> (kontakt.html) + <b>Feedback-Blasen</b> (Idee, Design, Bug, Dampf, Lob, Anderes). Momänt laufen über MODERATION. „Gelese" = erledigt.</div>
+    <div id="inbox-list"><div class="loading">Lade…</div></div>
+  </div>
+
   <div class="section" id="s-anf">
     <div class="section-head bc">ANFRAGEN <span class="badge">Leads</span></div>
     <div class="section-sub">Lokale, Pop-ups, Events & Partner, die rein wollen. Annehmen → direkt <b>Boost erstellen</b> = bezahlte Platzierung.</div>
@@ -473,14 +481,14 @@ function tickClock(){const d=new Date();const D=d.toLocaleDateString('de-CH',{we
 
 /* TABS */
 function tab(s,el){document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');document.querySelectorAll('.section').forEach(x=>x.classList.remove('active'));document.getElementById('s-'+s).classList.add('active');
-  if(s==='fin')loadFinanzen();if(s==='usr')loadUsers();if(s==='inh')loadInhalte();if(s==='sys')loadSystem();if(s==='ki')loadKI();if(s==='aud')loadAudit();if(s==='boost')renderBoost();if(s==='verk')loadVerkauf();}
+  if(s==='inbox')loadInbox();if(s==='fin')loadFinanzen();if(s==='usr')loadUsers();if(s==='inh')loadInhalte();if(s==='sys')loadSystem();if(s==='ki')loadKI();if(s==='aud')loadAudit();if(s==='boost')renderBoost();if(s==='verk')loadVerkauf();}
 
 /* STATE */
 let MOD=[],ANF=[],BOOSTS=[],VERKAUF=[],TBL={};
 let modF='all',anfF='offen',boostF='aktiv',verkF='offen';
 
 /* BOOT */
-async function boot(){await loadBoosts();loadOverview();loadModeration();loadAnfragen();loadVerkauf();}
+async function boot(){await loadBoosts();loadOverview();loadModeration();loadAnfragen();loadVerkauf();loadMomaentLive();loadInbox();}
 
 /* OVERVIEW */
 async function loadOverview(){
@@ -542,7 +550,8 @@ async function loadModeration(){
   MOD=[];const src=[
     {tbl:'comments',q:'comments?status=eq.neu&order=created_at.desc&limit=100',map:r=>({id:r.id,table:'comments',srcLabel:'KOMMENTAR',src:'comment',text:r.text,autor:r.autor_name||r.user_id,user_id:r.user_id,created_at:r.created_at,ki_urteil:r.ki_urteil,ki_konf:r.ki_konfidenz,ki_grund:r.ki_grund})},
     {tbl:'news_stories',q:'news_stories?status=eq.pending&order=created_at.desc&limit=100',map:r=>({id:r.id,table:'news_stories',srcLabel:'NEWS',src:'news',text:(r.titel?('»'+r.titel+'« '):'')+(r.inhalt||''),autor:r.user_id,user_id:r.user_id,created_at:r.created_at,ki_urteil:r.ki_urteil,ki_konf:r.ki_konfidenz,ki_grund:r.ki_grund})},
-    {tbl:'inserate',q:'inserate?status=eq.pending&order=created_at.desc&limit=100',map:r=>({id:r.id,table:'inserate',srcLabel:'INSERAT',src:'inserat',text:(r.titel?('»'+r.titel+'« '):'')+(r.beschreibung||''),autor:r.user_id,user_id:r.user_id,created_at:r.created_at,ki_urteil:r.ki_urteil,ki_konf:r.ki_konfidenz,ki_grund:r.ki_grund})}
+    {tbl:'inserate',q:'inserate?status=eq.pending&order=created_at.desc&limit=100',map:r=>({id:r.id,table:'inserate',srcLabel:'INSERAT',src:'inserat',text:(r.titel?('»'+r.titel+'« '):'')+(r.beschreibung||''),autor:r.user_id,user_id:r.user_id,created_at:r.created_at,ki_urteil:r.ki_urteil,ki_konf:r.ki_konfidenz,ki_grund:r.ki_grund})},
+    {tbl:'feedback',q:'feedback?typ=eq.moment&status=eq.neu&order=created_at.desc&limit=100',map:r=>({id:r.id,table:'feedback',srcLabel:'◉ ZÜRI MOMÄNT',src:'moment',text:r.text,autor:'anonym',user_id:null,created_at:r.created_at,ki_urteil:r.ki_urteil,ki_konf:r.ki_konfidenz,ki_grund:r.ki_grund})}
   ];
   let anyKI=false;
   for(const s of src){try{const rows=await sget(s.q);TBL[s.tbl]=true;rows.forEach(r=>{const m=s.map(r);m.verdict=verdictOf(m);if(m.ki_urteil)anyKI=true;MOD.push(m);});}catch(e){TBL[s.tbl]=false;}}
@@ -562,13 +571,53 @@ function renderMod(){
     const badge=v==='bad'?'<span class="kibadge bad">⛔ Schwerwiegend</span>':v==='warn'?'<span class="kibadge warn">⚠ Prüfen'+(m.ki_konf!=null?(' '+Math.round(m.ki_konf*100)+'%'):'')+'</span>':v==='ok'?'<span class="kibadge ok">✓ KI sicher'+(m.ki_konf!=null?(' '+Math.round(m.ki_konf*100)+'%'):'')+'</span>':'<span class="kibadge wait">◷ Wartet auf KI</span>';
     return `<div class="mrow v-${v}"><div class="mrow-top"><div><div class="mrow-src">${m.srcLabel}</div><div class="mrow-meta">${esc((m.autor||'anonym')+'')} · ${ago(m.created_at)}</div></div>${badge}</div>
       <div class="mrow-text">${esc(m.text||'(kein Text)')}</div>${m.ki_grund?`<div class="ki-reason"><b>KI:</b> ${esc(m.ki_grund)}</div>`:''}
-      <div class="mrow-actions"><button class="btn btn-ok" onclick="modAct('${m.table}','${m.id}','frei')">✓ Freischalten</button><button class="btn btn-no" onclick="modAct('${m.table}','${m.id}','ab')">Ablehnen</button><button class="btn btn-block" onclick="modBlock('${m.table}','${m.id}','${esc(m.user_id||'')}','${esc((m.autor||'')+'')}','${m.src}')">⛔ User sperren</button></div></div>`;
+      <div class="mrow-actions"><button class="btn btn-ok" onclick="modAct('${m.table}','${m.id}','frei')">${m.table==='feedback'?'◉ Uf d Startsite':'✓ Freischalten'}</button><button class="btn btn-no" onclick="modAct('${m.table}','${m.id}','ab')">Ablehnen</button>${m.user_id?`<button class="btn btn-block" onclick="modBlock('${m.table}','${m.id}','${esc(m.user_id||'')}','${esc((m.autor||'')+'')}','${m.src}')">⛔ User sperren</button>`:''}</div></div>`;
   }).join('');
 }
 const apV=t=>t==='comments'?'freigeschaltet':'approved',reV=t=>t==='comments'?'abgelehnt':'rejected';
-async function modAct(t,id,w){const ok=await spatch(t,id,{status:w==='frei'?apV(t):reV(t)});if(ok){toast(w==='frei'?'Freigeschaltet':'Abgelehnt',w==='frei'?'ok':'');audit(w==='frei'?'freigeschaltet':'abgelehnt',t,id,'');rmMod(id);}else toast('Fehler — RLS?');}
+async function modAct(t,id,w){const ok=await spatch(t,id,{status:w==='frei'?apV(t):reV(t)});if(ok){toast(w==='frei'?'Freigeschaltet':'Abgelehnt',w==='frei'?'ok':'');audit(w==='frei'?'freigeschaltet':'abgelehnt',t,id,'');rmMod(id);if(t==='feedback')loadMomaentLive();}else toast('Fehler — RLS?');}
 async function modBlock(t,id,uid,autor,src){if(!confirm('User sperren? Beitrag wird abgelehnt, User informiert.'))return;await spatch(t,id,{status:reV(t)});const ok=await spost('user_sperren',{user_id:uid||null,autor_name:autor||null,grund:'manuell',aktion:'gesperrt',quelle_typ:src,quelle_id:id,erstellt_von:'operator'});if(uid)await spost('notifications',{user_id:uid,typ:'sperre',titel:'Konto gesperrt',text:'Dein Beitrag verstösst gegen die Stadtpuls-Regeln. Dein Konto wurde gesperrt.'});audit('user gesperrt',src,id,autor);toast(ok?'User gesperrt':'user_sperren fehlt');rmMod(id);}
 function rmMod(id){MOD=MOD.filter(m=>m.id!=id);setCnt('t-mod',MOD.length);document.getElementById('hs-mod').textContent=MOD.length;renderMod();renderAttention();}
+
+/* ◉ ZÜRI MOMÄNT — live uf de Startsite (zrugziehbar) */
+async function loadMomaentLive(){
+  const el=document.getElementById('momaent-live');if(!el)return;
+  try{
+    const rows=await sget('feedback?typ=eq.moment&status=eq.approved&order=created_at.desc&limit=20');
+    if(!rows.length){el.innerHTML='';return;}
+    el.innerHTML=`<div class="section-sub" style="color:#ffd93d;margin-bottom:10px">◉ LIVE UF DE STARTSITE (${rows.length}) — die 3 nöisten erschiined ude</div>`+
+      rows.map(r=>`<div class="mrow" style="border-left:3px solid #ffd93d"><div class="mrow-top"><div><div class="mrow-src" style="color:#ffd93d">◉ ZÜRI MOMÄNT · LIVE</div><div class="mrow-meta">${ago(r.created_at)}</div></div></div>
+        <div class="mrow-text">${esc(r.text||'')}</div>
+        <div class="mrow-actions"><button class="btn btn-no" onclick="momaentZrugg('${r.id}')">↩ Vo de Startsite näh</button></div></div>`).join('');
+  }catch(e){el.innerHTML='';}
+}
+async function momaentZrugg(id){const ok=await spatch('feedback',id,{status:'neu'});if(ok){toast('Vo de Startsite gnoh');audit('momänt zruggzoge','feedback',id,'');loadModeration();loadMomaentLive();}else toast('Fehler — RLS?');}
+
+/* 📥 INBOX — Kontaktformular + Feedback-Blasen (ohne Momänt) */
+const FBTYP={idea:['✦ IDEE','#00f5ff'],design:['◈ DESIGN','#c8ff00'],bug:['⚡ BUG','#ff2d00'],dampf:['💢 DAMPF','#ff6b00'],lob:['▲ LOB','#c8ff00'],other:['○ ANDERES','#9333ea']};
+let INBOX=[];
+async function loadInbox(){
+  INBOX=[];
+  try{const ks=await sget('kontakt_submissions?status=eq.neu&order=created_at.desc&limit=100');
+    ks.forEach(r=>INBOX.push({tbl:'kontakt_submissions',id:r.id,lbl:'📥 KONTAKT',col:'#00f5ff',head:(r.wer||'')+(r.was?(' · '+r.was):''),text:r.nachricht||'',email:r.email||'',created_at:r.created_at}));
+  }catch(e){}
+  try{const fb=await sget('feedback?typ=neq.moment&status=eq.neu&order=created_at.desc&limit=100');
+    fb.forEach(r=>{const m=FBTYP[r.typ]||['FEEDBACK','#9333ea'];INBOX.push({tbl:'feedback',id:r.id,lbl:m[0],col:m[1],head:'Feedback-Blase',text:r.text||'',email:'',created_at:r.created_at});});
+  }catch(e){}
+  INBOX.sort((a,b)=>new Date(b.created_at)-new Date(a.created_at));
+  setCnt('t-inbox',INBOX.length,INBOX.length?'warn':'');
+  renderInbox();
+}
+function renderInbox(){
+  const el=document.getElementById('inbox-list');if(!el)return;
+  if(!INBOX.length){el.innerHTML=`<div class="empty">Kei neui Nachrichte. 🟢</div>`;return;}
+  el.innerHTML=INBOX.map(m=>`<div class="mrow" style="border-left:3px solid ${m.col}">
+    <div class="mrow-top"><div><div class="mrow-src" style="color:${m.col}">${m.lbl}</div><div class="mrow-meta">${esc(m.head||'')}${m.email?(' · '+esc(m.email)):''} · ${ago(m.created_at)}</div></div></div>
+    <div class="mrow-text">${esc(m.text||'(kein Text)')}</div>
+    <div class="mrow-actions">${m.email?`<a class="btn" style="text-decoration:none" href="mailto:${esc(m.email)}?subject=${encodeURIComponent('Re: Dini Nachricht a Stadtpuls')}">↩ Antworte</a>`:''}<button class="btn btn-ok" onclick="inboxDone('${m.tbl}','${m.id}')">✓ Gelese</button></div></div>`).join('');
+}
+async function inboxDone(tbl,id){const ok=await spatch(tbl,id,{status:'gelesen'});if(ok){toast('Als gelese markiert','ok');audit('gelesen',tbl,id,'');INBOX=INBOX.filter(m=>m.id!=id);setCnt('t-inbox',INBOX.length,INBOX.length?'warn':'');renderInbox();}else toast('Fehler — Tabelle/Spalte fehlt? setup_inbox.sql!');}
+
 function setupHintMod(){const miss=['comments','news_stories','inserate'].filter(t=>TBL[t]===false);return miss.length?`<div class="setup"><div class="st">Hinweis</div><p>Quell-Tabellen fehlen: <b>${miss.join(', ')}</b>. Lege sie via setup.sql an.</p></div>`:'';}
 
 /* ANFRAGEN */
