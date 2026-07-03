@@ -527,7 +527,8 @@ footer.spacer{height:60px}
 
     <div class="danger">
       <div class="danger-title">⚠ DANGER ZONE</div>
-      <button class="danger-btn" onclick="notif('ACCOUNT LÖSCHE — KONTAKTIER SUPPORT')">ACCOUNT LÖSCHE</button>
+      <div style="font-size:10px;color:rgba(232,228,217,0.35);margin-bottom:10px;line-height:1.6">Löscht ALLES unwiderruflich: Profil, Bookmarks, Aktivität, Login. Dini E-Mail wird frei für e Neuregistrierig.</div>
+      <button class="danger-btn" onclick="deleteAccount()">ACCOUNT ENDGÜLTIG LÖSCHE</button>
     </div>
   </div>
 
@@ -1148,6 +1149,18 @@ window.changePw=async function(){
 document.getElementById('nav-out').onclick=async()=>{
   await sb.auth.signOut();
   window.location.href='login.html';
+};
+
+// ═══ ACCOUNT ENDGÜLTIG LÖSCHE (doppelt bestätigt, via delete_my_account RPC) ═══
+window.deleteAccount=async function(){
+  if(!confirm('Bisch sicher? Das löscht dis GANZE Profil, alli Bookmarks und din Login — UNWIDERRUFLICH.'))return;
+  const tippt=prompt('Zur Sicherheit: Tipp gross "LÖSCHE" ii:');
+  if(tippt!=='LÖSCHE'){notif('ABBROCHE — nüt glöscht.');return;}
+  const {error}=await sb.rpc('delete_my_account');
+  if(error){notif('FEHLER: '+error.message);return;}
+  await sb.auth.signOut();
+  alert('Din Account isch glöscht. Merci und uf Wiederluege — d Türe stoht immer offe. 🔴');
+  window.location.href='index.html';
 };
 
 loadDashboard();
