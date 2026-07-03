@@ -148,12 +148,36 @@ html,body{height:100%;background:#04040a;color:#e8e4d9;font-family:'DM Mono',mon
           <button class="pw-eye" onclick="togglePw('l-pw',this)" type="button">👁</button>
         </div>
         <button class="BTN red" id="l-btn" onclick="doLogin()">EINLOGGE →</button>
-        <span class="forgot" onclick="doForgot()">PASSWORT VERGESSE?</span>
+        <span class="forgot" onclick="showForgot()">PASSWORT VERGESSE?</span>
         <div class="divr"><div class="dl"></div><div class="dt">ODER DIREKT MIT</div><div class="dl"></div></div>
         <div class="soc">
           <div class="sb" onclick="doApple()">🍎 &nbsp;MIT APPLE</div>
           <div class="sb" onclick="doGoogle()">G &nbsp;MIT GOOGLE</div>
         </div>
+      </div>
+
+      <!-- PASSWORT-VERGESSE VIEW (nur E-Mail!) -->
+      <div class="form" id="ff">
+        <div class="eye">KEI STRESS</div>
+        <div class="BH">PASSWORT<br><span class="r">VERGESSE?</span></div>
+        <div class="stxt">gib dini E-Mail aa — mir schicked dir en Reset-Link</div>
+        <div id="f-msg" class="msg"></div>
+        <div class="inp-wrap"><input class="inp" id="f-email" placeholder="E-Mail" type="email" autocomplete="email"/></div>
+        <button class="BTN red" id="f-btn" onclick="doForgot()">RESET-LINK SCHICKE →</button>
+        <span class="forgot" onclick="backToLogin()">← ZRUGG ZUM LOGIN</span>
+      </div>
+
+      <!-- NÖIS-PASSWORT VIEW (nach Mail-Klick, automatisch) -->
+      <div class="form" id="nf">
+        <div class="eye">FASCHT GSCHAFFT</div>
+        <div class="BH">NÖIS<br><span class="r">PASSWORT.</span></div>
+        <div class="stxt">wähl es nöis Passwort für din Account</div>
+        <div id="n-msg" class="msg"></div>
+        <div class="pw-toggle">
+          <input class="inp" id="n-pw" placeholder="Nöis Passwort (min. 6 Zeiche)" type="password" autocomplete="new-password"/>
+          <button class="pw-eye" onclick="togglePw('n-pw',this)" type="button">👁</button>
+        </div>
+        <button class="BTN red" id="n-btn" onclick="doNewPw()">PASSWORT SPEICHERE →</button>
       </div>
 
       <!-- REGISTER FORM -->
@@ -302,13 +326,38 @@ window.doRegister = async function(){
   }
 };
 
-window.doForgot = async function(){
-  const email=document.getElementById('l-email').value.trim();
-  if(!email){showMsg('l-msg','err','GIB ZERSCHT DI E-MAIL AA');return;}
-  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+'/login.html'});
-  if(error){showMsg('l-msg','err',error.message);}
-  else{showMsg('l-msg','ok','RESET-MAIL ISCH UNDERWEGS!');}
+function allForms(on){
+  ['lf','rf','ff','nf'].forEach(id=>document.getElementById(id).classList.toggle('on',id===on));
+  document.querySelector('.tabs').style.display=(on==='lf'||on==='rf')?'':'none';
+}
+window.showForgot = function(){
+  document.getElementById('f-email').value=document.getElementById('l-email').value.trim();
+  allForms('ff');
 };
+window.backToLogin = function(){ allForms('lf'); swTab(0); };
+
+window.doForgot = async function(){
+  const email=document.getElementById('f-email').value.trim();
+  if(!email){showMsg('f-msg','err','GIB DINI E-MAIL AA');return;}
+  const btn=document.getElementById('f-btn');btn.disabled=true;btn.textContent='SCHICKE...';
+  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:window.location.origin+'/login.html'});
+  btn.disabled=false;
+  if(error){btn.textContent='RESET-LINK SCHICKE →';showMsg('f-msg','err',error.message);}
+  else{btn.textContent='✉ MAIL VERSCHICKT';showMsg('f-msg','ok','RESET-MAIL ISCH UNDERWEGS — öffne dis Postfach und klick de rot Knopf.');}
+};
+
+// Nach em Mail-Klick: Supabase setzt d Session (type=recovery) -> nöis Passwort abfrage
+window.doNewPw = async function(){
+  const pw=document.getElementById('n-pw').value;
+  if(!pw||pw.length<6){showMsg('n-msg','err','MIN. 6 ZEICHE');return;}
+  const btn=document.getElementById('n-btn');btn.disabled=true;btn.textContent='SPEICHERE...';
+  const {error}=await sb.auth.updateUser({password:pw});
+  if(error){btn.disabled=false;btn.textContent='PASSWORT SPEICHERE →';showMsg('n-msg','err',error.message);return;}
+  showMsg('n-msg','ok','PASSWORT GSETZT! AB IS DASHBOARD...');
+  setTimeout(()=>window.location.href='dashboard.html',1000);
+};
+sb.auth.onAuthStateChange((event)=>{ if(event==='PASSWORD_RECOVERY') allForms('nf'); });
+if(window.location.hash.includes('type=recovery')) allForms('nf');
 
 window.doApple = async function(){
   await sb.auth.signInWithOAuth({provider:'apple',options:{redirectTo:window.location.origin+'/dashboard.html'}});
@@ -318,7 +367,7 @@ window.doGoogle = async function(){
 };
 
 const {data:{session}}=await sb.auth.getSession();
-if(session)window.location.href='dashboard.html';
+if(session && !window.location.hash.includes('type=recovery')) window.location.href='dashboard.html';
 </script>
 </body>
 </html>
