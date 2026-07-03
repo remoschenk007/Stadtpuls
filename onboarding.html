@@ -352,6 +352,17 @@ const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
 const sb=createClient(SU,SK);
 
+// ═══ AUTH-GUARD: ohni Session kei Onboarding (kei Geischter-Durchlauf me) ═══
+// Nach em E-Mail-Bestätigungs-Link setzt supabase-js d Session async -> churz warte + retry.
+(async function guard(){
+  for(let i=0;i<6;i++){
+    const {data:{session}}=await sb.auth.getSession();
+    if(session) return; // aagmäldet -> Onboarding normal
+    await new Promise(r=>setTimeout(r,500));
+  }
+  document.body.innerHTML='<div style="min-height:100vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;background:#04040a;color:#e8e4d9;font-family:\'DM Mono\',monospace;text-align:center;padding:24px"><div style="font-size:34px">🔐</div><div style="font-size:13px;letter-spacing:1px;line-height:1.6">DU BISCH NÖD AAGMÄLDET.<br>Bitte zerscht iilogge — oder de Bestätigungs-Link i dinere E-Mail aaklicke.</div><a href="login.html" style="margin-top:6px;padding:14px 34px;background:#ff2d00;color:#04040a;font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:17px;letter-spacing:2px;text-decoration:none;border-radius:4px">ZUM LOGIN →</a></div>';
+})();
+
 const dot=document.getElementById('dot'),ring=document.getElementById('ring');
 document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';});
 

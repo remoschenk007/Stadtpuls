@@ -270,7 +270,10 @@ window.doRegister = async function(){
 
   const {data,error}=await sb.auth.signUp({
     email,password:pw,
-    options:{data:{nickname}}
+    options:{
+      data:{nickname},
+      emailRedirectTo: window.location.origin+'/onboarding.html'
+    }
   });
 
   if(error){
@@ -279,18 +282,24 @@ window.doRegister = async function(){
     return;
   }
 
-  // users Tabelle: auth_id verknüpft mit Supabase Auth — id ist eigene UUID
-  if(data.user){
-    await sb.from('users').insert({
-      auth_id: data.user.id,
-      nickname: nickname,
-      role: 'user',
-      aktiv: true
-    });
+  // Supabase verschleiert Doppel-Registrierige: user kommt zurück, aber ohni identities
+  if(data.user && Array.isArray(data.user.identities) && data.user.identities.length===0){
+    showMsg('r-msg','err','E-MAIL BEREITS REGISTRIERT — bitte aamälde');
+    btn.disabled=false;btn.textContent='ACCOUNT ERSTELLE →';
+    return;
   }
 
-  showMsg('r-msg','ok','ACCOUNT ERSTELLT! AB ZUM ONBOARDING...');
-  setTimeout(()=>window.location.href='onboarding.html',1100);
+  // users-Profil legt de DB-Trigger automatisch aa (fix_auth.sql) — kei Client-Insert nötig.
+
+  if(data.session){
+    // E-Mail-Bestätigung isch us -> direkt is Onboarding
+    showMsg('r-msg','ok','ACCOUNT ERSTELLT! AB ZUM ONBOARDING...');
+    setTimeout(()=>window.location.href='onboarding.html',1100);
+  }else{
+    // E-Mail-Bestätigung isch aa -> zerscht Mail bestätige (Link füehrt is Onboarding)
+    btn.textContent='✉ MAIL VERSCHICKT';
+    showMsg('r-msg','ok','FAST GSCHAFFT! ÖFFNE DIS POSTFACH UND BESTÄTIG DINI E-MAIL — de Link bringt di direkt is Onboarding.');
+  }
 };
 
 window.doForgot = async function(){
