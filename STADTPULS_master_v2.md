@@ -1,7 +1,7 @@
 # STADTPULS — MASTERPLAN v2
 
-> **Kanonisches Session-Continuity-Dokument.** Stand: 26.06.2026 · Live-Commit `31f96e0`
-> Dieses Doc wurde in dieser Session vollständig neu zusammengeführt (alter Master war via API/raw nicht erreichbar — Rate-Limit). **Bitte prüfen, ob der kanonische Dateiname stimmt; ggf. umbenennen oder mergen.**
+> **Kanonisches Session-Continuity-Dokument.** Stand: 01.07.2026
+> Schwester-Dokument: **`STADTPULS_KI_HERZ_BLUEPRINT.md`** (Personalisierung + Monetarisierung im Detail). Neue Chats lesen BEIDE.
 
 ---
 
@@ -75,13 +75,16 @@ Zürcher Lifestyle-/City-Guide-Plattform. Vision: das beste Stadtportal der Welt
 - `login.html` — Supabase Auth
 - `onboarding.html` — 5-Step-Duolingo-Flow, Zürideutsch, Under-18-Detection
 - `dashboard.html`, `admin.html`, `feedback.html`, `kontakt.html`, `master.html`
+- `kommandozentrale.html` — Operator-Cockpit (Login-gated): Moderation (Kommentare/News/Inserate/**Momänt**), Verkauf, Boosts, Finanzen, Users, Audit
+- `platzierung.html` — öffentlicher „Das isch mis Lokal"-Claim-/Zahlungs-Flow (Tier + Tage → boost_requests; PAYMODE manual, Stripe-Functions bereit)
+- `import.html` — **GELÖSCHT** (ersetzt durch Auto-Sync, GitHub Action `stadtpuls-sync.yml` täglich 04:00: Eventfrog + Zürich Tourismus → Supabase)
 
 ### Footer-Status
 - **Kanonischer Footer:** inline `<footer>` (`.ftk` Ticker + `.fg` Grid + `.fbot` + `.footer-brand`/`.fbl`/`.fbdot`) mit eigenem `<style>`-Block `/* ═══ ORIGINAL STADTPULS FOOTER ═══ */`. **Quelle der Wahrheit = gastro.html.**
 - **Gefixter Root-Cause-Bug:** Legacy-Regel `footer{…display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr…}` (+ Mobile-Variante) quetschte den Footer in 4-Spalten-Grid → entfernt. Jetzt `footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}` überall.
 - **13 Seiten** haben den identischen Footer ✓.
 - **Ohne Footer:** login, dashboard, feedback, kontakt, admin, master.
-  - **TODO (Remos Entscheid):** feedback + kontakt sollten Footer bekommen (sind aus dem Bubble-Menü verlinkt). login/dashboard/admin/master sind funktionale Screens — optional.
+  - **ENTSCHIEDEN (28.06., Remo): feedback.html bekommt BEWUSST KEINEN Footer** (eigenes Blasen-Universum). kontakt optional offen. login/dashboard/admin/master funktional — ohne.
 - **Optional:** Rainbow-`.deco`-Linie (`linear-gradient(90deg,#ff2d00,#c8ff00,#00f5ff,#ff2d00)`) auf alle Seiten ausrollen.
 - ⚠️ Im Explorer lag ein `footer_fehlend.zip` — noch zu prüfen, wo ggf. ein Footer fehlt.
 
@@ -112,6 +115,29 @@ Kombiniertes Design (altes „geileres" Design + Live-Daten-Skeleton). Reihenfol
 7. **Footer** (kanonisch)
 
 *Bewusst weggelassen:* die alte Emoji-„DAS KOMPLETTE PORTAL"-Grid (Footer deckt das ab). Ein Double-Ticker-Experiment wurde von Remo verworfen.
+
+**Neu seit 01.07. (zwischen Universum und Community-CTA):**
+8. **◉ ZÜRI MOMÄNT** (gold) — die 3 neuesten **freigeschalteten** Community-Momänt als Zitat-Karten. Unsichtbar, wenn nichts freigeschaltet.
+9. **NEWS & STORIES Teaser** — die 3 neuesten `approved`-Stories (Bild + Titel), Link auf news.html. Unsichtbar wenn leer.
+
+---
+
+## 5.5 ZÜRI-MOMÄNT-FLOW (Community → Kuration → Startseite)
+
+**Der gedachte Kreislauf** (Kuration durch Remo, nie automatisch):
+
+```
+feedback.html (Blase „MOMENT")  →  Tabelle feedback (typ='moment', status='neu')
+        ↓
+kommandozentrale.html → Tab MODERATION: erscheint als „◉ ZÜRI MOMÄNT"
+        ↓  Klick „◉ Uf d Startsite"  (status='approved')
+index.html → Sektion „ZÜRI MOMÄNT" zeigt die 3 neuesten automatisch
+        ↺  „↩ Vo de Startsite näh" im Panel „LIVE UF DE STARTSITE" (status='neu')
+```
+
+- **Freischalten passiert AUSSCHLIESSLICH in der Kommandozentrale** (nicht per SQL). Jede Aktion landet im Audit-Log.
+- **Setup einmalig:** `setup_momente.sql` (legt `feedback.status` an, Default `'neu'`).
+- **News & Stories** laufen analog über die bestehende Moderation (`news_stories.status='approved'`) und erscheinen zusätzlich als Startseiten-Teaser.
 
 ---
 
@@ -160,22 +186,37 @@ Alle Klassen `ku-`-prefixed (Kollisionsschutz). Ersetzt die alte `kreis-strip`-S
 
 ## 7. REVENUE-MODELL
 
-BASIC (gratis) → FEATURED (CHF 20/Woche) → BOOST (CHF 50–100/Woche). Soft-Launch-Ziel war 04.06.2026 (Remos Geburtstag).
+BASIC (gratis) → FEATURED (CHF 20/Wo) → BOOST (CHF 50/Wo) → PREMIUM (CHF 100/Wo), Laufzeiten 1/2/4 Wochen mit Auto-Ablauf.
+**Gebaut (28.06.):** Kommandozentrale (Verkauf/Boosts/Finanzen/Audit) + `platzierung.html`-Claim-Flow („Das isch mis Lokal": verifizieren → zahlen → Remo schaltet frei). Zahlung: Start **manuell**, Stripe+TWINT-Functions liegen bereit. Ziel ~CHF 3'000/Mt; grösster Hebel künftig **Pro-Abo** (Statistiken aus `interactions`). Details: KI-Herz-Blueprint §8.
 
 ---
 
 ## 8. OFFENE PRIORITÄTEN / NEXT STEPS
 
-1. **`quartiere.html` bauen** — das Kreis-Detail/Ziel (Chips + Galaxie verlinken bereits `?kreis=N`). Top-Priorität.
-2. **Fehlende Seiten** (§4): immobilien, jobs, musik, mobilitaet, community, gps, partners.
-3. **Footer** auf feedback + kontakt (+ optional login/dashboard/admin/master); `footer_fehlend.zip` prüfen; optional Rainbow-`.deco`-Rollout.
-4. **Echter LLM Züri-Bot** als Backend für „Frag Stadtpuls" (Supabase Edge Function).
-5. **Pro-Kreis-Daten für Events** (Geo→Kreis-Mapping), damit Events/Dates/News auch echte Counts kriegen.
-6. **Pop-up/Event-Daten-Pipeline** + personalisiertes Matching-System.
+1. **`quartiere.html` bauen** — Kreis-Detail (Chips + Galaxie verlinken `?kreis=N`). Top-Priorität.
+2. **Fehlende Seiten** (§4): immobilien, jobs, musik, mobilitaet, community, gps, partners (Footer-Links sind teils 404!).
+3. **Money-Loop schliessen:** Listen nach `featured`/`boost_tier` sortieren + „Das isch mis Lokal"-Button auf die Profilseiten (→ platzierung.html?id=…).
+4. **KI-Herz Schritt 1 fertig verdrahten:** Herz-Button + spTrack in gastro/shopping + Listen. Dann Schritt 2 (taste-build / Geschmacks-DNA). → Blueprint §6.
+5. **Echter LLM Züri-Bot** für „Frag Stadtpuls" (deterministische Engine zuerst — Blueprint §0).
+6. **Pro-Kreis-Daten für Events** (Geo→Kreis-Mapping) — Events/Dates/News echte Counts.
+7. ~~Pop-up/Event-Daten-Pipeline + Matching-Fundament~~ ✅ **ERLEDIGT** (Auto-Sync 27.06. + KI-Herz Schritt 1 am 28.06.).
 
 ---
 
-## 9. CHANGELOG — Session 26.06.2026
+## 9. CHANGELOG
+
+### Sessions 27.06.–01.07.2026 (kompakt)
+- **Auto-Sync-Pipeline** (27.06.): GitHub Action `stadtpuls-sync.yml` täglich 04:00 — Eventfrog (~5'000+ Events) + ZT → Supabase. `import.html` gelöscht. `SUPABASE_SERVICE_KEY`-Secret gesetzt → nächtliches Aufräumen alter Events.
+- **Kommandozentrale v3 + Monetarisierung** (28.06.): Operator-Cockpit (11 Tabs) + `platzierung.html` + setup.sql (boosts, boost_requests, comments, audit_log …). Optional KI-Moderation via Edge Function `moderate`.
+- **KI-Herz Schritt 1** (28.06.): `STADTPULS_KI_HERZ_BLUEPRINT.md` (kanonisch, inkl. §2.5 Content-Verticals) + `setup_ki.sql` (bookmarks/interactions/taste_profiles) + `sp-track.js` (spTrack/spBookmarkToggle/spStats).
+- **Daten-Frische-Fixes** (28.06.): „Hüt Abig" filtert ab heute (**Schweizer Datum**, `Europe/Zurich`), echte HÜT-LIVE-Zahl; events.html ebenfalls auf CH-Datum; `?kreis=` aus URL wird in gastro/shopping/nachtleben übernommen (Universum→gefilterte Liste).
+- **Profile scharf** (28.06.): event-/nachtleben-profil mit echtem Bookmark (bookmarks-Tabelle), View-Tracking, ⏳ Countdown, 📅 .ics-Kalender, ❤️/👁-Live-Zähler (`setup_stats.sql`, RPC `stadtpuls_stats`). Nachtleben-Profil-Lade-Bug (Kategorie-Falle) gefixt; Liste verlinkt Karte+PROFIL-Button aufs Profil.
+- **Design v2 + Menü-System** (28.06.): Nachtleben Hero-Glow, editoriale Cards, Filter-„Control-Deck", 🎲 ÜBERRASCH MI (zufälliges Lokal aus gefilterten Resultaten), Full-Screen-Hamburger-Menü, Touch-Cursor-Fix (`cursor:none` neutralisiert auf Touch), SVG statt Emoji in Funktions-Buttons.
+- **Kompletter Seiten-Sweep** (01.07.): Einheitliche Nav + Hamburger auf gastro/events/shopping/dating/news; **tote `index.html?page=…`-Links entfernt**; NEWS überall in Nav. **Züridütsch-Pass, 47 Korrekturen** (ZUE, LADED, ZRUGGSETZE, HÜT/MORN, LOKAL NÖD GFUNDE …). Meta-Descriptions bewusst Hochdeutsch (SEO).
+- **Momänt & Stories auf der Startseite** (01.07.): §5.5-Flow gebaut — Sektionen „◉ ZÜRI MOMÄNT" + „NEWS & STORIES", Freischalten/Zurückziehen in der Kommandozentrale (Tab Moderation), `setup_momente.sql`.
+- **Entschieden:** feedback.html bewusst ohne Footer.
+
+### Session 26.06.2026
 
 - **Footer-Konsistenz:** index/news/nachtleben/nachtleben-profil korrigiert; Legacy-`footer{display:grid}`-Bug entfernt (gastro, gastro-profil, shopping, shopping-profil, dating). Alle 13 Footer-Seiten jetzt identisch. (Commits bis `48f2754`)
 - **Kreis-Universum** in index.html integriert: Galaxie + „Frag Stadtpuls"-Suechi + 12 Kreis-Chips.
