@@ -1,6 +1,6 @@
 # STADTPULS — MASTERPLAN v2
 
-> **Kanonisches Session-Continuity-Dokument.** Stand: 01.07.2026
+> **Kanonisches Session-Continuity-Dokument.** Stand: 04.07.2026
 > Schwester-Dokument: **`STADTPULS_KI_HERZ_BLUEPRINT.md`** (Personalisierung + Monetarisierung im Detail). Neue Chats lesen BEIDE.
 
 ---
@@ -138,6 +138,19 @@ index.html → Sektion „ZÜRI MOMÄNT" zeigt die 3 neuesten automatisch
 - **Freischalten passiert AUSSCHLIESSLICH in der Kommandozentrale** (nicht per SQL). Jede Aktion landet im Audit-Log.
 - **Setup einmalig:** `setup_momente.sql` (legt `feedback.status` an, Default `'neu'`).
 - **News & Stories** laufen analog über die bestehende Moderation (`news_stories.status='approved'`) und erscheinen zusätzlich als Startseiten-Teaser.
+- **📥 INBOX-Tab** (Zentrale): Kontaktformular (`kontakt_submissions`) + alle übrigen Feedback-Blasen (Idee/Design/Bug/Dampf/Lob) landen dort; „✓ Gelese" = status='gelesen', bei Kontakt „↩ Antworte"-mailto.
+- **STATUS 04.07.: Kette LIVE GETESTET ✅** (Blase → Zentrale → Freischalten → Startseite in Gold).
+
+---
+
+## 5.6 AUTH-SYSTEM (komplett, Stand 04.07. — LIVE GETESTET)
+
+**Flow:** Registrieren (login.html) → „✉ Öffne dis Postfach" → Stadtpuls-Mail → Link führt via `emailRedirectTo` ins **Onboarding** (Auth-Guard: ohne Session kein Geister-Durchlauf) → Dashboard mit eigenem Nickname.
+- **Auto-Profil:** DB-Trigger `handle_new_user` auf `auth.users` legt für JEDEN neuen User (E-Mail/Google/Apple) das `users`-Profil an. `users.auth_id` UNIQUE = **1 User, 1 Account**; Doppel-Registrierung zeigt „E-Mail bereits registriert".
+- **Passwort vergessen:** eigener Screen (NUR E-Mail) → 🔐-Mail → Link zurück auf login.html → automatischer „NÖIS PASSWORT."-Screen (`updateUser`); Auto-Redirect lässt `type=recovery` durch.
+- **Account löschen (revDSG):** Dashboard → Iistellige → ⚠ Danger Zone → doppelt bestätigt („LÖSCHE" tippen) → RPC `delete_my_account` (security definer, NUR eigener Account): löscht bookmarks/interactions/taste_profiles/notifications/comments/users **+ auth.users** → E-Mail sofort wieder frei.
+- **Supabase-Konfig:** Site URL `https://depuls.ch`; Redirect-URLs: onboarding.html, dashboard.html, login.html. **E-Mail-Templates** (Confirm + Reset) im Stadtpuls-Look (Züridütsch, roter CTA). ⚠ Offen: **Custom SMTP** (Hosttech `no-reply@depuls.ch`) — Absender ist noch Supabase, eingebauter Versand hat Rate-Limits (vor Launch nötig!). Dark-Mode-Meta für Mails optional (Apple Mail invertiert sonst).
+- **RLS-Formular-Policies (fix_formulare_rls.sql):** feedback, kontakt_submissions, boost_requests (je select/insert/update für anon+authenticated) + boosts/locations/audit_log — damit funktionieren Einsenden, Zentrale-Anzeige und Freischalten mit dem anon-Key.
 
 ---
 
@@ -197,13 +210,23 @@ BASIC (gratis) → FEATURED (CHF 20/Wo) → BOOST (CHF 50/Wo) → PREMIUM (CHF 1
 2. **Fehlende Seiten** (§4): immobilien, jobs, musik, mobilitaet, community, gps, partners (Footer-Links sind teils 404!).
 3. **Money-Loop schliessen:** Listen nach `featured`/`boost_tier` sortieren + „Das isch mis Lokal"-Button auf die Profilseiten (→ platzierung.html?id=…).
 4. **KI-Herz Schritt 1 fertig verdrahten:** Herz-Button + spTrack in gastro/shopping + Listen. Dann Schritt 2 (taste-build / Geschmacks-DNA). → Blueprint §6.
-5. **Echter LLM Züri-Bot** für „Frag Stadtpuls" (deterministische Engine zuerst — Blueprint §0).
-6. **Pro-Kreis-Daten für Events** (Geo→Kreis-Mapping) — Events/Dates/News echte Counts.
-7. ~~Pop-up/Event-Daten-Pipeline + Matching-Fundament~~ ✅ **ERLEDIGT** (Auto-Sync 27.06. + KI-Herz Schritt 1 am 28.06.).
+5. **Custom SMTP** (Hosttech no-reply@depuls.ch) — Pflicht vor Launch (Rate-Limits!).
+6. **Echter LLM Züri-Bot** für „Frag Stadtpuls" (deterministische Engine zuerst — Blueprint §0).
+7. **Pro-Kreis-Daten für Events** (Geo→Kreis-Mapping) — Events/Dates/News echte Counts.
+8. ~~Pop-up/Event-Daten-Pipeline + Matching-Fundament~~ ✅ **ERLEDIGT** (Auto-Sync 27.06. + KI-Herz Schritt 1 am 28.06.).
 
 ---
 
 ## 9. CHANGELOG
+
+### Sessions 02.–04.07.2026 (Auth-Umbau + Formulare live)
+- **Auth komplett** (03.07.): fix_auth.sql (Trigger `handle_new_user`, `users.auth_id` UNIQUE, Dedupe, Backfill — Kontrolle 3/3/0), login.html (emailRedirectTo, Doppel-Account-Sperre, ehrlicher „Postfach öffne"-Flow), onboarding-Guard. Redirect-URLs + Site URL gesetzt. **Stadtpuls-E-Mail-Templates** (Confirm ⚡ / Reset 🔐).
+- **Passwort-Reset-Flow neu** (03.07.): eigener Nur-E-Mail-Screen + „NÖIS PASSWORT."-Screen nach Mail-Klick (`updateUser`, PASSWORD_RECOVERY-Handler, Recovery-sicherer Auto-Redirect).
+- **Account löschen** (03.07.): Danger Zone echt — RPC `delete_my_account` (nur eigener Account, revDSG), doppelt bestätigt, E-Mail wird frei.
+- **Formular-Rechte-Fix** (04.07.): RLS-Policies für feedback/kontakt_submissions/boost_requests (+boosts/locations/audit_log) — Einsenden, Zentrale-Sicht & Freischalten laufen. **Momänt-Kette live getestet ✅.**
+- **Startseite: Duo-Sektion** (04.07.): 💘 People-&-Dates-Teaser (Live-Vote-Zähler, Herzschlag-Animation) + 🎲 ÜBERRASCH MI (zufälliges Lokal aus 640 → direkt aufs Profil, KI-Herz-Signal).
+- **Deploy-Learnings:** GitHub-Pages-Deploy kann hängen (Fail-Mail!) → `git commit --allow-empty -m redeploy` bzw. Actions Re-run; Tests immer mit `?v=2` gegen Cache. Downloads-Ordner ist Minenfeld → Beweis-grep vor jedem Commit.
+
 
 ### Sessions 27.06.–01.07.2026 (kompakt)
 - **Auto-Sync-Pipeline** (27.06.): GitHub Action `stadtpuls-sync.yml` täglich 04:00 — Eventfrog (~5'000+ Events) + ZT → Supabase. `import.html` gelöscht. `SUPABASE_SERVICE_KEY`-Secret gesetzt → nächtliches Aufräumen alter Events.
