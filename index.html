@@ -233,6 +233,23 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
 .ku-more{position:absolute;right:6px;top:calc(50% - 4px);transform:translateY(-50%);color:#ff2d00;font-size:20px;font-weight:700;pointer-events:none;z-index:3;opacity:var(--fade);transition:opacity .25s;text-shadow:0 0 10px #04040a,0 0 6px #ff2d00;animation:kunudge 1.6s ease-in-out infinite}
 @keyframes kunudge{0%,100%{transform:translateY(-50%) translateX(0)}50%{transform:translateY(-50%) translateX(3px)}}
 @media(max-width:560px){.ku-stage{height:400px}.ku-bar{gap:6px}}
+
+/* ═══ DUO: DATES + WÜRFEL ═══ */
+.duo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.duo-card{position:relative;display:block;border-radius:14px;padding:22px 20px;text-decoration:none;cursor:pointer;overflow:hidden;transition:transform .2s,box-shadow .2s;border:1px solid rgba(255,255,255,0.08)}
+.duo-card:hover{transform:translateY(-2px)}
+.duo-dates{background:linear-gradient(150deg,rgba(236,72,153,0.10),rgba(147,51,234,0.05))}
+.duo-dates:hover{border-color:rgba(236,72,153,0.5);box-shadow:0 10px 30px rgba(236,72,153,0.12)}
+.duo-dates::after{content:'💘';position:absolute;right:-6px;bottom:-14px;font-size:74px;opacity:.10;transform:rotate(-12deg);pointer-events:none;animation:heartbeat 2.2s infinite}
+@keyframes heartbeat{0%,100%{transform:rotate(-12deg) scale(1)}12%{transform:rotate(-12deg) scale(1.12)}24%{transform:rotate(-12deg) scale(1)}}
+.duo-dice{background:linear-gradient(150deg,rgba(200,255,0,0.08),rgba(0,245,255,0.04))}
+.duo-dice:hover{border-color:rgba(200,255,0,0.5);box-shadow:0 10px 30px rgba(200,255,0,0.10)}
+.duo-dice::after{content:'🎲';position:absolute;right:-4px;bottom:-12px;font-size:70px;opacity:.10;transform:rotate(14deg);pointer-events:none}
+.duo-eye{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
+.duo-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:30px;text-transform:uppercase;color:#e8e4d9;line-height:.95}
+.duo-sub{font-family:'DM Mono',monospace;font-size:10px;line-height:1.6;color:rgba(232,228,217,0.45);margin-top:10px;min-height:32px}
+.duo-cta{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:2px;margin-top:12px}
+@media(max-width:640px){.duo-grid{grid-template-columns:1fr}.duo-sub{min-height:0}}
 </style>
 </head>
 <body>
@@ -385,6 +402,24 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
     </div>
     <div id="newsteaser-list" style="display:grid;gap:10px;margin-top:14px"></div>
     <a href="news.html" style="display:inline-block;margin-top:14px;font-size:9px;letter-spacing:2px;color:rgba(255,45,0,.75);text-decoration:none;text-transform:uppercase">Alli Stories läse →</a>
+  </div>
+
+  <!-- DUO: PEOPLE & DATES + ÜBERRASCH MI -->
+  <div class="section">
+    <div class="duo-grid">
+      <a href="dating.html" class="duo-card duo-dates">
+        <div class="duo-eye" style="color:#ec4899">💘 18+ · KEI TINDER</div>
+        <div class="duo-title">PEOPLE &<br><span style="color:#ec4899">DATES</span></div>
+        <div class="duo-sub">Real-Life-Dates i de Stadt. Swipe dur Züri — <span id="dates-count" style="color:#ec4899;font-weight:700"></span></div>
+        <div class="duo-cta" style="color:#ec4899">ZU DE DATES →</div>
+      </a>
+      <div class="duo-card duo-dice" onclick="goRandomHome()" role="button" tabindex="0">
+        <div class="duo-eye" style="color:#c8ff00">🎲 ZUEFALL</div>
+        <div class="duo-title">ÜBERRASCH<br><span style="color:#c8ff00">MI!</span></div>
+        <div class="duo-sub">La di vom Puls packe — es zuefälligs Lokal us 640, direkt ufs Profil.</div>
+        <div class="duo-cta" style="color:#c8ff00" id="dice-cta">WÜRFLE →</div>
+      </div>
+    </div>
   </div>
 
   <div class="section">
@@ -631,6 +666,36 @@ async function loadNewsTeaser(){
 }
 loadMomaent();
 loadNewsTeaser();
+// ═══ DUO: Dates-Zähler + Überrasch-mi ═══
+async function loadDatesTeaser(){
+  try{
+    const {count}=await sb.from('dating_votes').select('id',{count:'exact',head:true});
+    if(count!=null&&count>0)document.getElementById('dates-count').textContent=count+' Votes sind scho gfalle.';
+    else document.getElementById('dates-count').textContent='wer weiss, wer dir begegnet.';
+  }catch(e){document.getElementById('dates-count').textContent='wer weiss, wer dir begegnet.';}
+}
+window.goRandomHome=async function(){
+  const cta=document.getElementById('dice-cta');
+  try{
+    cta.textContent='WÜRFLET...';
+    const {count}=await sb.from('locations').select('id',{count:'exact',head:true})
+      .eq('aktiv',true).in('kategorie',['gastro','nachtleben','shopping']);
+    if(!count){cta.textContent='WÜRFLE →';return;}
+    const off=Math.floor(Math.random()*count);
+    const {data}=await sb.from('locations').select('id,slug,kategorie')
+      .eq('aktiv',true).in('kategorie',['gastro','nachtleben','shopping'])
+      .range(off,off);
+    if(!data||!data.length){cta.textContent='WÜRFLE →';return;}
+    const l=data[0];
+    const url = l.kategorie==='nachtleben' ? ('nachtleben-profil.html?slug='+encodeURIComponent(l.slug||l.id))
+              : l.kategorie==='shopping'   ? ('shopping-profil.html?id='+l.id)
+              : ('gastro-profil.html?id='+l.id);
+    if(window.spTrack)try{spTrack('click','location',l.id,{meta:{via:'wuerfel_home'}});}catch(e){}
+    location.href=url;
+  }catch(e){cta.textContent='WÜRFLE →';}
+};
+loadDatesTeaser();
+
 </script>
 
 <!-- ═══ BUBBLE-MENÜ / Roter Puls-Punkt (aus Backup) ═══ -->
