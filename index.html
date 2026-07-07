@@ -251,6 +251,29 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
 .duo-cta{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:2px;margin-top:12px}
 @media(max-width:640px){.duo-grid{grid-template-columns:1fr}.duo-sub{min-height:0}}
 </style>
+<!-- SP_BOOST v1 · Money-Loop: Tier-Badges + Glow -->
+<style>
+.mcb.sp-boost{background:rgba(200,255,0,.14);color:#c8ff00;border:1px solid rgba(200,255,0,.7);box-shadow:0 0 10px rgba(200,255,0,.3)}
+.mcb.sp-prem{background:rgba(236,72,153,.14);color:#ec4899;border:1px solid rgba(236,72,153,.7);box-shadow:0 0 10px rgba(236,72,153,.3)}
+.mcard.sp-t2{border-color:rgba(200,255,0,.45)!important;box-shadow:0 0 18px rgba(200,255,0,.10)}
+.mcard.sp-t3{border-color:rgba(236,72,153,.5)!important;box-shadow:0 0 18px rgba(236,72,153,.14)}
+.top-pick.sp-boost{color:#c8ff00;border-color:#c8ff00;text-shadow:0 0 8px rgba(200,255,0,.5)}
+.top-pick.sp-prem{color:#ec4899;border-color:#ec4899;text-shadow:0 0 8px rgba(236,72,153,.5)}
+.loc-card.sp-t2{border-color:rgba(200,255,0,.5)!important;box-shadow:0 0 24px rgba(200,255,0,.12)}
+.loc-card.sp-t3{border-color:rgba(236,72,153,.5)!important;box-shadow:0 0 24px rgba(236,72,153,.14)}
+.ec.sp-feat{border:1px solid rgba(200,255,0,.6);color:#c8ff00}
+.ec.sp-boost{border:1px solid #c8ff00;color:#c8ff00;box-shadow:0 0 8px rgba(200,255,0,.3)}
+.ec.sp-prem{border:1px solid #ec4899;color:#ec4899;box-shadow:0 0 8px rgba(236,72,153,.3)}
+.ev-card.sp-t2{border-color:rgba(200,255,0,.5)}
+.ev-card.sp-t3{border-color:rgba(236,72,153,.5)}
+</style>
+<script>
+/* SP_BOOST v1: aktivi Boosts (boost_until >= jetzt) — Ablauf-Check direkt im Client */
+function spTier(l){if(!l||!l.boost_tier||!l.boost_until)return 0;if(new Date(l.boost_until)<new Date())return 0;return({premium:3,boost:2,featured:1})[l.boost_tier]||0;}
+function spBadge(l){const t=spTier(l);if(t===3)return'<span class="mcb sp-prem">PREMIUM</span>';if(t===2)return'<span class="mcb sp-boost">BOOST</span>';if(t===1)return'<span class="mcb volt">FEATURED</span>';return(l&&l.featured)?'<span class="mcb volt">TOP</span>':'';}
+function spBadgeN(l){const t=spTier(l);if(t===3)return'<div class="top-pick sp-prem">PREMIUM</div>';if(t===2)return'<div class="top-pick sp-boost">BOOST</div>';if(t===1)return'<div class="top-pick">FEATURED</div>';return(l&&l.featured)?'<div class="top-pick">⚡ TOP</div>':'';}
+function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">PREMIUM</span>';if(t===2)return'<span class="ec sp-boost">BOOST</span>';if(t===1)return'<span class="ec sp-feat">FEATURED</span>';return'';}
+</script>
 </head>
 <body>
 <div id="dot"></div><div id="ring"></div>
@@ -307,6 +330,16 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
         <div style="text-align:center;padding:20px;color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:2px">LADED...</div>
       </div>
     </div>
+  </div>
+
+
+  <!-- SP_BOOST v1: GRAD ANGSAGT — Premium-Slots (bezahlt, dezent gekennzeichnet) -->
+  <div class="section" id="angsagt-sec" style="display:none">
+    <div class="section-head">
+      <div class="section-eye" style="color:#ec4899">PARTNER · BEZAHLTI PLATZIERIG</div>
+      <div class="section-title">GRAD <span style="color:#ec4899">ANGSAGT</span></div>
+    </div>
+    <div id="angsagt-list" style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:16px"></div>
   </div>
 
   <!-- KATEGORIEN — BENTO -->
@@ -943,5 +976,27 @@ render();loadCounts();
 })();
 </script>
 
+<script>
+/* SP_BOOST v1: GRAD ANGSAGT — Premium-Slots laden (fail-silent) */
+(async()=>{try{
+  const U='https://pnynkzrqnfoshojqfqxn.supabase.co';
+  const K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+  const now=new Date().toISOString();
+  const r=await fetch(U+'/rest/v1/locations?select=id,name,slug,kategorie,kreis,bild_url,beschreibung_kurz,subkategorie,boost_tier,boost_until&boost_tier=eq.premium&boost_until=gte.'+encodeURIComponent(now)+'&aktiv=eq.true&order=boost_until.asc&limit=3',{headers:{'apikey':K,'Authorization':'Bearer '+K}});
+  if(!r.ok)return;const rows=await r.json();if(!Array.isArray(rows)||!rows.length)return;
+  const P={gastro:l=>'gastro-profil.html?id='+l.id,nachtleben:l=>'nachtleben-profil.html?slug='+encodeURIComponent(l.slug||l.id),shopping:l=>'shopping-profil.html?id='+l.id};
+  const esc=s=>String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
+  document.getElementById('angsagt-list').innerHTML=rows.map(l=>{
+    const href=(P[l.kategorie]||P.gastro)(l);
+    const img=l.bild_url?'<div style="height:120px;overflow:hidden"><img src="'+esc(l.bild_url)+'" style="width:100%;height:100%;object-fit:cover" loading="lazy" alt="'+esc(l.name)+'"></div>':'';
+    return '<a href="'+href+'" style="display:block;text-decoration:none;border:1px solid rgba(236,72,153,.4);background:#07070f;box-shadow:0 0 20px rgba(236,72,153,.08)">'+img+
+      '<div style="padding:12px 14px"><div style="font-family:\'DM Mono\',monospace;font-size:8px;letter-spacing:2px;color:#ec4899">PREMIUM · '+esc((l.kategorie||'').toUpperCase())+' · K'+esc(l.kreis||'?')+'</div>'+
+      '<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:20px;color:#e8e4d9;margin-top:4px">'+esc(l.name)+'</div>'+
+      (l.beschreibung_kurz?'<div style="font-size:11px;color:#888;margin-top:5px;line-height:1.5">'+esc(l.beschreibung_kurz).slice(0,90)+'</div>':'')+
+      '</div></a>';
+  }).join('');
+  document.getElementById('angsagt-sec').style.display='';
+}catch(e){}})();
+</script>
 </body>
 </html>

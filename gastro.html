@@ -518,6 +518,29 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
   .sheet,.sheet-overlay,.mobile-fab{display:none!important}
 }
 </style>
+<!-- SP_BOOST v1 · Money-Loop: Tier-Badges + Glow -->
+<style>
+.mcb.sp-boost{background:rgba(200,255,0,.14);color:#c8ff00;border:1px solid rgba(200,255,0,.7);box-shadow:0 0 10px rgba(200,255,0,.3)}
+.mcb.sp-prem{background:rgba(236,72,153,.14);color:#ec4899;border:1px solid rgba(236,72,153,.7);box-shadow:0 0 10px rgba(236,72,153,.3)}
+.mcard.sp-t2{border-color:rgba(200,255,0,.45)!important;box-shadow:0 0 18px rgba(200,255,0,.10)}
+.mcard.sp-t3{border-color:rgba(236,72,153,.5)!important;box-shadow:0 0 18px rgba(236,72,153,.14)}
+.top-pick.sp-boost{color:#c8ff00;border-color:#c8ff00;text-shadow:0 0 8px rgba(200,255,0,.5)}
+.top-pick.sp-prem{color:#ec4899;border-color:#ec4899;text-shadow:0 0 8px rgba(236,72,153,.5)}
+.loc-card.sp-t2{border-color:rgba(200,255,0,.5)!important;box-shadow:0 0 24px rgba(200,255,0,.12)}
+.loc-card.sp-t3{border-color:rgba(236,72,153,.5)!important;box-shadow:0 0 24px rgba(236,72,153,.14)}
+.ec.sp-feat{border:1px solid rgba(200,255,0,.6);color:#c8ff00}
+.ec.sp-boost{border:1px solid #c8ff00;color:#c8ff00;box-shadow:0 0 8px rgba(200,255,0,.3)}
+.ec.sp-prem{border:1px solid #ec4899;color:#ec4899;box-shadow:0 0 8px rgba(236,72,153,.3)}
+.ev-card.sp-t2{border-color:rgba(200,255,0,.5)}
+.ev-card.sp-t3{border-color:rgba(236,72,153,.5)}
+</style>
+<script>
+/* SP_BOOST v1: aktivi Boosts (boost_until >= jetzt) — Ablauf-Check direkt im Client */
+function spTier(l){if(!l||!l.boost_tier||!l.boost_until)return 0;if(new Date(l.boost_until)<new Date())return 0;return({premium:3,boost:2,featured:1})[l.boost_tier]||0;}
+function spBadge(l){const t=spTier(l);if(t===3)return'<span class="mcb sp-prem">PREMIUM</span>';if(t===2)return'<span class="mcb sp-boost">BOOST</span>';if(t===1)return'<span class="mcb volt">FEATURED</span>';return(l&&l.featured)?'<span class="mcb volt">TOP</span>':'';}
+function spBadgeN(l){const t=spTier(l);if(t===3)return'<div class="top-pick sp-prem">PREMIUM</div>';if(t===2)return'<div class="top-pick sp-boost">BOOST</div>';if(t===1)return'<div class="top-pick">FEATURED</div>';return(l&&l.featured)?'<div class="top-pick">⚡ TOP</div>':'';}
+function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">PREMIUM</span>';if(t===2)return'<span class="ec sp-boost">BOOST</span>';if(t===1)return'<span class="ec sp-feat">FEATURED</span>';return'';}
+</script>
 </head>
 <body>
 <div id="cur"></div><div id="cur2"></div>
@@ -1153,13 +1176,13 @@ async function loadAllLocations(){
     
     // Gastro Locations laden
     const gastroData=await sbGet(
-      'locations?select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,plz,bild_url,beschreibung,beschreibung_kurz,website,telefon,oeffnungszeiten,hat_reservation,reservation_url,rating,rating_count,featured,aktiv,stimmung_tags'+
+      'locations?select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,plz,bild_url,beschreibung,beschreibung_kurz,website,telefon,oeffnungszeiten,hat_reservation,reservation_url,rating,rating_count,featured,boost_tier,boost_until,aktiv,stimmung_tags'+
       '&kategorie=eq.gastro&aktiv=eq.true&limit=500&order=featured.desc,id.asc'
     );
 
     // Bars aus Nachtleben auch laden
     const barData=await sbGet(
-      'locations?select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,plz,bild_url,beschreibung,beschreibung_kurz,website,telefon,oeffnungszeiten,hat_reservation,reservation_url,rating,rating_count,featured,aktiv,stimmung_tags'+
+      'locations?select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,plz,bild_url,beschreibung,beschreibung_kurz,website,telefon,oeffnungszeiten,hat_reservation,reservation_url,rating,rating_count,featured,boost_tier,boost_until,aktiv,stimmung_tags'+
       '&kategorie=eq.nachtleben&aktiv=eq.true&limit=500&order=featured.desc,id.asc'
     );
     
@@ -1293,6 +1316,7 @@ function buildGrid(){
   if(S.sort==='score')data.sort((a,b)=>(b.featured?1:0)-(a.featured?1:0)||(b.rating||0)-(a.rating||0));
   else if(S.sort==='dist')data.sort((a,b)=>(a.kreis||99)-(b.kreis||99));
   else data=data.slice().reverse();
+  data.sort((a,b)=>spTier(b)-spTier(a)); // SP_BOOST: aktivi Boosts ganz obe
   
   const cnt=data.length;
   const rbEl=document.getElementById('rb-count');
@@ -1311,7 +1335,7 @@ function buildGrid(){
     const sid=l.zt_subkategorie_id;
     const sub=SUBKAT[sid]||{e:'🍽️',n:l.subkategorie?.toUpperCase()||'GASTRO',typ:'restaurant'};
     const c=document.createElement('div');
-    c.className='mcard';
+    c.className='mcard'+(spTier(l)>1?' sp-t'+spTier(l):'');
     c.style.animation=`fadeUp .22s ease ${Math.min(i,.15)*0.04}s both`;
     
     const imgHtml=l.bild_url
@@ -1322,7 +1346,7 @@ function buildGrid(){
       ${imgHtml}
       <div class="mc-body">
         <div class="mc-badges">
-          ${l.featured?'<span class="mcb volt">TOP</span>':''}
+          ${spBadge(l)}
           ${l.hat_reservation?'<span class="mcb gold">🍽️ RES</span>':''}
           <span class="mcb ghost">K${l.kreis||'?'}</span>
         </div>
@@ -1634,7 +1658,7 @@ function openDet(l){
   document.getElementById('p-desc').textContent=l.beschreibung_kurz||l.beschreibung||'Zürich Tourismus Daten · zuerich.com';
   document.getElementById('p-tags').innerHTML=`
     <span class="mcb ghost" style="padding:2px 7px;font-size:7px">KREIS ${l.kreis||'?'}</span>
-    ${l.featured?'<span class="mcb volt" style="padding:2px 7px;font-size:7px">TOP</span>':''}
+    ${spBadge(l)}
     ${l.hat_reservation?'<span class="mcb gold" style="padding:2px 7px;font-size:7px">🍽️ RESERVIERBAR</span>':''}
   `;
   

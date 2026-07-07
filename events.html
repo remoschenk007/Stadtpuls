@@ -390,6 +390,29 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
   .ks-count{font-size:7px}
 }
 </style>
+<!-- SP_BOOST v1 · Money-Loop: Tier-Badges + Glow -->
+<style>
+.mcb.sp-boost{background:rgba(200,255,0,.14);color:#c8ff00;border:1px solid rgba(200,255,0,.7);box-shadow:0 0 10px rgba(200,255,0,.3)}
+.mcb.sp-prem{background:rgba(236,72,153,.14);color:#ec4899;border:1px solid rgba(236,72,153,.7);box-shadow:0 0 10px rgba(236,72,153,.3)}
+.mcard.sp-t2{border-color:rgba(200,255,0,.45)!important;box-shadow:0 0 18px rgba(200,255,0,.10)}
+.mcard.sp-t3{border-color:rgba(236,72,153,.5)!important;box-shadow:0 0 18px rgba(236,72,153,.14)}
+.top-pick.sp-boost{color:#c8ff00;border-color:#c8ff00;text-shadow:0 0 8px rgba(200,255,0,.5)}
+.top-pick.sp-prem{color:#ec4899;border-color:#ec4899;text-shadow:0 0 8px rgba(236,72,153,.5)}
+.loc-card.sp-t2{border-color:rgba(200,255,0,.5)!important;box-shadow:0 0 24px rgba(200,255,0,.12)}
+.loc-card.sp-t3{border-color:rgba(236,72,153,.5)!important;box-shadow:0 0 24px rgba(236,72,153,.14)}
+.ec.sp-feat{border:1px solid rgba(200,255,0,.6);color:#c8ff00}
+.ec.sp-boost{border:1px solid #c8ff00;color:#c8ff00;box-shadow:0 0 8px rgba(200,255,0,.3)}
+.ec.sp-prem{border:1px solid #ec4899;color:#ec4899;box-shadow:0 0 8px rgba(236,72,153,.3)}
+.ev-card.sp-t2{border-color:rgba(200,255,0,.5)}
+.ev-card.sp-t3{border-color:rgba(236,72,153,.5)}
+</style>
+<script>
+/* SP_BOOST v1: aktivi Boosts (boost_until >= jetzt) — Ablauf-Check direkt im Client */
+function spTier(l){if(!l||!l.boost_tier||!l.boost_until)return 0;if(new Date(l.boost_until)<new Date())return 0;return({premium:3,boost:2,featured:1})[l.boost_tier]||0;}
+function spBadge(l){const t=spTier(l);if(t===3)return'<span class="mcb sp-prem">PREMIUM</span>';if(t===2)return'<span class="mcb sp-boost">BOOST</span>';if(t===1)return'<span class="mcb volt">FEATURED</span>';return(l&&l.featured)?'<span class="mcb volt">TOP</span>':'';}
+function spBadgeN(l){const t=spTier(l);if(t===3)return'<div class="top-pick sp-prem">PREMIUM</div>';if(t===2)return'<div class="top-pick sp-boost">BOOST</div>';if(t===1)return'<div class="top-pick">FEATURED</div>';return(l&&l.featured)?'<div class="top-pick">⚡ TOP</div>':'';}
+function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">PREMIUM</span>';if(t===2)return'<span class="ec sp-boost">BOOST</span>';if(t===1)return'<span class="ec sp-feat">FEATURED</span>';return'';}
+</script>
 </head>
 <body>
 <div id="cur"></div><div id="cur2"></div>
@@ -668,6 +691,7 @@ async function load(){
   try{
     const r=await fetch(SU+'/rest/v1/eventfrog_events?aktiv=eq.true&datum_start=gte.'+td()+'&order=datum_start.asc,uhrzeit_start.asc&limit=2500',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Range-Unit':'items','Range':'0-2499','Prefer':'count=none'}});
     A=(await r.json()).map(e=>({...e,_k:gk(e)}));
+    A.sort((a,b)=>spTier(b)-spTier(a)||String(a.datum_start||'').localeCompare(String(b.datum_start||''))||String(a.uhrzeit_start||'').localeCompare(String(b.uhrzeit_start||''))); // SP_BOOST
     bStats();bTicker();bKreis();buildDateTabs();render();
   }catch(e){
     document.getElementById('timeline-body').innerHTML='<div class="ev-empty"><div class="ev-empty-big">OOPS</div><div class="ev-empty-s">Verbindung prüfen</div></div>';
@@ -796,12 +820,12 @@ function evCard(ev,isPast){
   const isSel=sEv&&sEv.id===ev.id;const em=KE[k];
   const isKi=Math.random()<.08;
   const showDates=isDatesEvent(ev);
-  return`<div class="ev-card${isSel?' sel':''}${isKi?' ki-pick':''}" onclick="selEv(${JSON.stringify(ev).replace(/"/g,'&quot;')})" style="${isPast?'opacity:.35':''}">
+  return`<div class="ev-card${isSel?' sel':''}${isKi?' ki-pick':''}${spTier(ev)>1?' sp-t'+spTier(ev):''}" onclick="selEv(${JSON.stringify(ev).replace(/"/g,'&quot;')})" style="${isPast?'opacity:.35':''}">
     <div class="ki-badge">⚡ KI TIPP</div>
     <div class="p5-mini"><button class="p5-mini-btn" onclick="event.stopPropagation();alert('Phase 5 — Login kommt!')">♥ ICH GEH</button></div>
     <div class="ev-card-body">
       <div class="ev-chips">
-        <span class="ec ${KC[k]}">${KN[k]}</span>
+        ${spBadgeE(ev)}<span class="ec ${KC[k]}">${KN[k]}</span>
         ${isG?'<span class="ec egr">Gratis</span>':''}
         ${ev.popup?'<span class="ec epo">Pop-Up</span>':''}
         ${showDates?'<span class="ec" style="border:1px solid rgba(236,72,153,.5);color:#ec4899">💘 DATES</span>':''}
@@ -915,7 +939,7 @@ function showDetail(ev){
       :`<div class="dp-iph">${em}</div>`}
     <div class="dp-top">
       <div class="dp-chips">
-        <span class="ec ${KC[k]}">${KN[k]}</span>
+        ${spBadgeE(ev)}<span class="ec ${KC[k]}">${KN[k]}</span>
         ${isG?'<span class="ec egr">Gratis</span>':''}
         ${ev.popup?'<span class="ec epo">Pop-Up</span>':''}
       </div>

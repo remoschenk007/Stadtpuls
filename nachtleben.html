@@ -399,6 +399,29 @@ a,button,.loc-card,.typ-card,.gc,.qc,.sort-btn,.nav-link,.nav-cta{cursor:pointer
   .stat{min-width:33%}
 }
 </style>
+<!-- SP_BOOST v1 · Money-Loop: Tier-Badges + Glow -->
+<style>
+.mcb.sp-boost{background:rgba(200,255,0,.14);color:#c8ff00;border:1px solid rgba(200,255,0,.7);box-shadow:0 0 10px rgba(200,255,0,.3)}
+.mcb.sp-prem{background:rgba(236,72,153,.14);color:#ec4899;border:1px solid rgba(236,72,153,.7);box-shadow:0 0 10px rgba(236,72,153,.3)}
+.mcard.sp-t2{border-color:rgba(200,255,0,.45)!important;box-shadow:0 0 18px rgba(200,255,0,.10)}
+.mcard.sp-t3{border-color:rgba(236,72,153,.5)!important;box-shadow:0 0 18px rgba(236,72,153,.14)}
+.top-pick.sp-boost{color:#c8ff00;border-color:#c8ff00;text-shadow:0 0 8px rgba(200,255,0,.5)}
+.top-pick.sp-prem{color:#ec4899;border-color:#ec4899;text-shadow:0 0 8px rgba(236,72,153,.5)}
+.loc-card.sp-t2{border-color:rgba(200,255,0,.5)!important;box-shadow:0 0 24px rgba(200,255,0,.12)}
+.loc-card.sp-t3{border-color:rgba(236,72,153,.5)!important;box-shadow:0 0 24px rgba(236,72,153,.14)}
+.ec.sp-feat{border:1px solid rgba(200,255,0,.6);color:#c8ff00}
+.ec.sp-boost{border:1px solid #c8ff00;color:#c8ff00;box-shadow:0 0 8px rgba(200,255,0,.3)}
+.ec.sp-prem{border:1px solid #ec4899;color:#ec4899;box-shadow:0 0 8px rgba(236,72,153,.3)}
+.ev-card.sp-t2{border-color:rgba(200,255,0,.5)}
+.ev-card.sp-t3{border-color:rgba(236,72,153,.5)}
+</style>
+<script>
+/* SP_BOOST v1: aktivi Boosts (boost_until >= jetzt) — Ablauf-Check direkt im Client */
+function spTier(l){if(!l||!l.boost_tier||!l.boost_until)return 0;if(new Date(l.boost_until)<new Date())return 0;return({premium:3,boost:2,featured:1})[l.boost_tier]||0;}
+function spBadge(l){const t=spTier(l);if(t===3)return'<span class="mcb sp-prem">PREMIUM</span>';if(t===2)return'<span class="mcb sp-boost">BOOST</span>';if(t===1)return'<span class="mcb volt">FEATURED</span>';return(l&&l.featured)?'<span class="mcb volt">TOP</span>':'';}
+function spBadgeN(l){const t=spTier(l);if(t===3)return'<div class="top-pick sp-prem">PREMIUM</div>';if(t===2)return'<div class="top-pick sp-boost">BOOST</div>';if(t===1)return'<div class="top-pick">FEATURED</div>';return(l&&l.featured)?'<div class="top-pick">⚡ TOP</div>':'';}
+function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">PREMIUM</span>';if(t===2)return'<span class="ec sp-boost">BOOST</span>';if(t===1)return'<span class="ec sp-feat">FEATURED</span>';return'';}
+</script>
 </head>
 <body>
 <div id="dot"></div><div id="ring"></div>
@@ -718,12 +741,13 @@ async function sbGet(path){
 
 // LOAD
 async function load(){
-  const data=await sbGet('locations?kategorie=eq.nachtleben&aktiv=eq.true&select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,bild_url,beschreibung,beschreibung_kurz,oeffnungszeiten,rating,featured,website&order=featured.desc,rating.desc.nullslast&limit=200');
+  const data=await sbGet('locations?kategorie=eq.nachtleben&aktiv=eq.true&select=id,name,slug,subkategorie,zt_subkategorie_id,kreis,adresse,bild_url,beschreibung,beschreibung_kurz,oeffnungszeiten,rating,featured,boost_tier,boost_until,website&order=featured.desc,rating.desc.nullslast&limit=200');
   if(!Array.isArray(data)||data.error){
     document.getElementById('locations-grid').innerHTML=`<div class="empty"><div class="empty-big">OFFLINE</div><div class="empty-txt">SUPABASE VERBINDIG FEHLT</div></div>`;
     return;
   }
   allLocs=data;
+  allLocs.sort((a,b)=>spTier(b)-spTier(a)); // SP_BOOST: aktivi Boosts ganz obe
   updateStats(data);
   buildRivalitaet(data);
   renderLocs(data);
@@ -812,7 +836,7 @@ function renderLocs(locs){
     const placeholder=`<div class="loc-img-placeholder" ${l.bild_url?'style="display:none"':''}>🌙</div>`;
     const desc=l.beschreibung_kurz||l.beschreibung||'';
     const rating=l.rating?`<span class="star">★</span> ${parseFloat(l.rating).toFixed(1)}`:'';
-    return`<div class="loc-card${l.featured?' featured':''}" onclick="location.href='nachtleben-profil.html?slug=${encodeURIComponent(l.slug||l.id)}'">
+    return`<div class="loc-card${l.featured?' featured':''}${spTier(l)>1?' sp-t'+spTier(l):''}" onclick="location.href='nachtleben-profil.html?slug=${encodeURIComponent(l.slug||l.id)}'">
       <div class="loc-card-inner">
         ${img}${placeholder}
         <div class="loc-body">
@@ -820,7 +844,7 @@ function renderLocs(locs){
             <div class="loc-name">${l.name}</div>
             <div class="loc-badges">
               <div class="offe-badge ${offe?'open':'closed'}">${offe?'OFFE':'ZUE'}</div>
-              ${l.featured?'<div class="top-pick">⚡ TOP</div>':''}
+              ${spBadgeN(l)}
             </div>
           </div>
           <div class="loc-meta">
@@ -960,7 +984,7 @@ window.openDetail=function(id){
         <div class="dp-tags">
           <span class="sk-tag ${sk.cls}">${sk.lbl}</span>
           <span class="offe-badge ${offe?'open':'closed'}" style="font-size:8px">${offe?'JETZT OFFE':'ZUE'}</span>
-          ${l.featured?'<span class="top-pick">⚡ TOP</span>':''}
+          ${spBadgeN(l)}
         </div>
       </div>
     </div>

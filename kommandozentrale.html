@@ -211,6 +211,7 @@ main{max-width:1180px;margin:0 auto;padding:24px;}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 #toast.ok{background:#c8ff00;}#toast.cyan{background:#00f5ff;}
 </style>
+<script>/* SP_BOOST v1 */function spBoostTable(t){return t==='event'?'eventfrog_events':'locations';}</script>
 </head>
 <body>
 
@@ -683,7 +684,7 @@ async function freischaltenRequest(id){
   if(!confirm('»'+r.listing_name+'« als berechtigt bestätigt & Platzierung freischalten?'))return;
   const start=new Date(),ende=new Date(Date.now()+(r.tage||7)*864e5);
   const ok=await spost('boosts',{ziel_typ:r.listing_typ||'location',ziel_id:r.listing_id||null,ziel_name:r.listing_name,tier:r.tier,tier_label:(TIERS[r.tier]?.label||r.tier),dauer_tage:r.tage,start:start.toISOString(),ende:ende.toISOString(),preis_chf:r.preis_chf,bezahlt:!!r.bezahlt,status:'aktiv'});
-  if(r.listing_id&&(r.listing_typ||'location')==='location')await spatch('locations',r.listing_id,{featured:true,boost_until:ende.toISOString(),boost_tier:r.tier});
+  if(r.listing_id)await spatch(spBoostTable(r.listing_typ),r.listing_id,{featured:true,boost_until:ende.toISOString(),boost_tier:r.tier});
   await spatch('boost_requests',id,{status:'freigeschaltet'});
   audit('platzierung freigeschaltet','boost_requests',id,r.listing_name+' '+r.tier);
   toast(ok?('Live: '+r.listing_name):'Boost-Fehler',ok?'ok':'');
@@ -698,7 +699,7 @@ async function loadBoosts(){try{BOOSTS=await sget('boosts?order=created_at.desc&
   const exp=BOOSTS.filter(b=>b.status==='aktiv'&&daysLeft(b.ende)<=3).length;document.getElementById('hs-exp').textContent=exp;}
 async function reconcileBoosts(){ // auto-expire abgelaufene
   const now=Date.now();
-  for(const b of BOOSTS){if(b.status==='aktiv'&&new Date(b.ende)<now){await spatch('boosts',b.id,{status:'abgelaufen'});if(b.ziel_typ==='location'&&b.ziel_id){await spatch('locations',b.ziel_id,{featured:false,boost_until:null,boost_tier:null});}b.status='abgelaufen';audit('boost abgelaufen','boosts',b.id,b.ziel_name);}
+  for(const b of BOOSTS){if(b.status==='aktiv'&&new Date(b.ende)<now){await spatch('boosts',b.id,{status:'abgelaufen'});if(b.ziel_id){await spatch(spBoostTable(b.ziel_typ),b.ziel_id,{featured:false,boost_until:null,boost_tier:null});}b.status='abgelaufen';audit('boost abgelaufen','boosts',b.id,b.ziel_name);}
     else if(b.status==='geplant'&&new Date(b.start)<=now&&new Date(b.ende)>now){await spatch('boosts',b.id,{status:'aktiv'});b.status='aktiv';}}
 }
 function monthRevenue(){const n=new Date(),m=n.getMonth(),y=n.getFullYear();return BOOSTS.filter(b=>b.bezahlt&&b.start&&new Date(b.start).getMonth()===m&&new Date(b.start).getFullYear()===y).reduce((s,b)=>s+(+b.preis_chf||0),0);}
@@ -723,7 +724,7 @@ function renderBoost(){const el=document.getElementById('boost-list');
   }).join('');
 }
 async function extendBoost(id,tage){const b=BOOSTS.find(x=>x.id==id);if(!b)return;const ende=new Date(new Date(b.ende).getTime()+tage*864e5);const preis=(+b.preis_chf||0)+Math.round((TIERS[b.tier]?.wo||0)*tage/7);const ok=await spatch('boosts',id,{ende:ende.toISOString(),preis_chf:preis});if(b.ziel_typ==='location'&&b.ziel_id)await spatch('locations',b.ziel_id,{boost_until:ende.toISOString()});if(ok){toast('+'+tage+' Tage verlängert','cyan');audit('boost verlängert','boosts',id,b.ziel_name+' +'+tage+'d');loadBoosts().then(renderBoost);loadOverview();}}
-async function stopBoost(id){if(!confirm('Boost jetzt stoppen? Eintrag fällt sofort zurück.'))return;const b=BOOSTS.find(x=>x.id==id);const ok=await spatch('boosts',id,{status:'gestoppt'});if(b&&b.ziel_typ==='location'&&b.ziel_id)await spatch('locations',b.ziel_id,{featured:false,boost_until:null,boost_tier:null});if(ok){toast('Boost gestoppt');audit('boost gestoppt','boosts',id,b?.ziel_name);loadBoosts().then(renderBoost);loadOverview();}}
+async function stopBoost(id){if(!confirm('Boost jetzt stoppen? Eintrag fällt sofort zurück.'))return;const b=BOOSTS.find(x=>x.id==id);const ok=await spatch('boosts',id,{status:'gestoppt'});if(b&&b.ziel_id)await spatch(spBoostTable(b.ziel_typ),b.ziel_id,{featured:false,boost_until:null,boost_tier:null});if(ok){toast('Boost gestoppt');audit('boost gestoppt','boosts',id,b?.ziel_name);loadBoosts().then(renderBoost);loadOverview();}}
 async function markPaid(id){const ok=await spatch('boosts',id,{bezahlt:true});if(ok){const b=BOOSTS.find(x=>x.id==id);if(b)b.bezahlt=true;toast('Als bezahlt markiert','ok');audit('boost bezahlt','boosts',id,b?.ziel_name);renderBoost();loadOverview();}}
 async function renewBoost(id){const b=BOOSTS.find(x=>x.id==id);if(!b)return;preBoost={ziel_name:b.ziel_name,ziel_id:b.ziel_id,ziel_typ:b.ziel_typ};openBoost(b.ziel_name,b.ziel_id);}
 
@@ -751,7 +752,7 @@ async function saveBoost(){
   const start=new Date(),ende=new Date(Date.now()+bSel.dur*864e5),preis=boostPreis();
   const row={ziel_typ:bSel.target_typ,ziel_id:bSel.target_id||null,ziel_name:bSel.target_name,tier:bSel.tier,tier_label:TIERS[bSel.tier].label,dauer_tage:bSel.dur,start:start.toISOString(),ende:ende.toISOString(),preis_chf:preis,bezahlt:!!bSel.paid,status:'aktiv'};
   const ok=await spost('boosts',row);
-  if(ok){ if(bSel.target_id){await spatch('locations',bSel.target_id,{featured:true,boost_until:ende.toISOString(),boost_tier:bSel.tier});}
+  if(ok){ if(bSel.target_id){await spatch(spBoostTable(bSel.target_typ),bSel.target_id,{featured:true,boost_until:ende.toISOString(),boost_tier:bSel.tier});}
     toast('Boost gestartet: '+bSel.target_name,'ok');audit('boost gestartet','boosts',bSel.target_id||'',bSel.target_name+' '+bSel.tier+' '+chf(preis));closeModal();await loadBoosts();renderBoost();loadOverview();}
   else toast('Fehler — Tabelle boosts da? RLS?');
 }

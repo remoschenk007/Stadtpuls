@@ -1,0 +1,71 @@
+STADTPULS — KOMMANDOZENTRALE v3 + BEZAHLTE PLATZIERUNG  (28. Juni 2026)
+======================================================================
+Inhaber zahlt -> du verifizierst & schaltest frei -> Lokal steht oben.
+
+IM ZIP
+  kommandozentrale.html                         -> dein Cockpit (Repo-Root)
+  platzierung.html                              -> öffentl. Claim-/Bezahlseite (Repo-Root)
+  setup.sql                                     -> ALLE Tabellen + RLS + Beispieldaten
+  supabase/functions/moderate/index.ts          -> KI-Moderation
+  supabase/functions/create-checkout/index.ts   -> Stripe Checkout (TWINT+Karte)  [optional]
+  supabase/functions/stripe-webhook/index.ts    -> markiert Zahlung als bezahlt    [optional]
+
+=================== EMPFEHLUNG (du hast "empfiehl mir" gewählt) ===================
+ZAHLUNG: Stripe mit TWINT + Karte.
+  - TWINT ist in der CH Pflicht; Stripe aktiviert es ohne Extra-Vertrag im Dashboard.
+  - Du startest SOFORT im Manuell-Modus (PAYMODE='manual' in platzierung.html):
+    Inhaber sendet Anfrage -> landet im "Verkauf"-Tab -> du klärst Zahlung (TWINT) ->
+    "Als bezahlt markieren" -> "Verifiziert & Freischalten".
+  - Wenn du Stripe-Konto hast: PAYMODE='stripe' setzen + die 2 Stripe-Functions
+    deployen -> Zahlung läuft online, "bezahlt" wird automatisch gesetzt. Freischalten
+    machst weiterhin DU (so wolltest du's).
+
+=================== DER ABLAUF ===================
+1) Beim Lokal-Profil ein Button "Das isch mis Lokal" -> öffnet:
+   platzierung.html?id=<LOCATION_ID>&typ=location&name=<NAME>&kreis=<KREIS>
+2) Inhaber wählt Rolle + Kontakt + Tier (Featured/Boost/Premium) + Tage -> Preis steht.
+3) MANUELL: Anfrage gespeichert, "wir melden uns".  STRIPE: zahlt direkt (TWINT/Karte).
+4) Kommandozentrale > Tab "Verkauf": Anfrage mit Profil, Rolle, Kontakt, Preis, bezahlt-Status.
+5) Du prüfst, ob's wirklich der Inhaber ist -> "Verifiziert & Freischalten":
+   -> erstellt den Boost (mit Ablaufdatum), setzt das Lokal featured + boost_until.
+   -> läuft die Zeit ab, fällt es automatisch zurück (Boosts-Logik + Cron).
+
+PREISE (fix im Code, leicht änderbar): Featured 20 / Boost 50 / Premium 100 pro Woche.
+Dauer 1/2/4 Wochen -> Preis & Ablauf rechnen sich selbst.
+
+=================== BUTTON FÜRS LOKAL-PROFIL ===================
+In gastro-profil.html / shopping-profil.html / event-profil.html diesen Link einbauen
+(ID/Name dynamisch aus dem geladenen Profil setzen):
+
+  <a class="claim-btn"
+     href="platzierung.html?id=${loc.id}&typ=location&name=${encodeURIComponent(loc.name)}&kreis=${loc.kreis||''}">
+     ⭐ Das isch mis Lokal · bessери Platzierig
+  </a>
+
+Sag Bescheid, dann baue ich den Button direkt in die Profilseiten ein (eigener Schritt).
+
+=================== SETUP-REIHENFOLGE ===================
+1) Push (HTML):
+   cd /Users/alessandrachristen/stadtpuls
+   unzip -o ~/Downloads/files.zip kommandozentrale.html platzierung.html -d .
+   git add kommandozentrale.html platzierung.html
+   git commit -m "Kommandozentrale v3 + bezahlte Platzierung (Claim + Verkauf-Tab)"
+   git pull --rebase origin main
+   git push origin main
+2) setup.sql im Supabase SQL-Editor ausführen (legt boost_requests + alles an,
+   inkl. Beispiel-Anfrage im Verkauf-Tab).
+3) Testen: depuls.ch/platzierung.html?name=Test%20Lokal&typ=location
+   -> Anfrage senden -> erscheint im Cockpit unter "Verkauf".
+
+=================== STRIPE EINSCHALTEN (wenn bereit) ===================
+1) Stripe-Konto, TWINT im Dashboard aktivieren (Settings > Payment methods > Bank redirects).
+2) supabase functions deploy create-checkout --no-verify-jwt
+   supabase functions deploy stripe-webhook --no-verify-jwt
+3) supabase secrets set STRIPE_SECRET_KEY=sk_live_...  SITE_URL=https://depuls.ch
+4) Stripe Dashboard > Webhooks: Endpoint auf .../functions/v1/stripe-webhook,
+   Event "checkout.session.completed" -> Signing secret kopieren ->
+   supabase secrets set STRIPE_WEBHOOK_SECRET=whsec_...
+5) In platzierung.html: const PAYMODE='stripe'  (statt 'manual'), neu pushen.
+
+Günstigere CH-Alternative (später): Payrexx/wallee (~1.35-1.65% statt 2.9%).
+Lässt sich analog anbinden — sag Bescheid.
