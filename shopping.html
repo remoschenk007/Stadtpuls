@@ -1322,7 +1322,7 @@ function spBotPick(mood){ // deterministisch us de Date — kei Halluzination
     design:l=>{const sid=parseInt(l.zt_subkategorie_id)||0;return (TYP_IDS.design||[]).includes(sid);},
   };
   const f=rules[mood];if(!f)return[];
-  return allLocs.filter(f).sort((a,b)=>spTier(b)-spTier(a)||(b.rating||0)-(a.rating||0)).slice(0,4);
+  return allLocs.filter(l=>f(l)&&!(l.rating&&l.rating<3.2)).sort((a,b)=>spTier(b)-spTier(a)||(b.rating||0)-(a.rating||0)||(b.rating_count||0)-(a.rating_count||0)).slice(0,4);
 }
 function setMood(btn,mood){
   document.querySelectorAll('.bchip').forEach(b=>b.classList.remove('on'));

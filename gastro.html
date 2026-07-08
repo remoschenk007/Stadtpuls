@@ -1780,7 +1780,7 @@ function spBotPickG(m){ // deterministisch: stimmung_tags zuerst, susch Subkateg
   if(!tag)return[];
   const fb={ruhig:[102,184,191,192],romantisch:[194,191,187,184],schnell:[188,189,193,102],vegisch:[197,409,102],budget:[102,192,189,188],besonders:[194,184,187,191]}[tag]||[];
   const hit=l=>(l.stimmung_tags&&l.stimmung_tags.length)?l.stimmung_tags.includes(tag):fb.includes(parseInt(l.zt_subkategorie_id)||0);
-  return allLocs.filter(hit).sort((a,b)=>spTier(b)-spTier(a)||(b.rating||0)-(a.rating||0)).slice(0,4);
+  return allLocs.filter(l=>hit(l)&&!(l.rating&&l.rating<3.2)).sort((a,b)=>spTier(b)-spTier(a)||(b.rating||0)-(a.rating||0)||(b.rating_count||0)-(a.rating_count||0)).slice(0,4);
 }
 function setMood(el,m){
   document.querySelectorAll('.bchip').forEach(c=>c.classList.remove('on'));

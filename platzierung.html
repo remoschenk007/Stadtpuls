@@ -4,7 +4,7 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>STADTPULS — Bessери Platzierig</title>
+<title>STADTPULS — Besseri Platzierig</title>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -54,12 +54,12 @@ header{padding:18px 22px;border-bottom:1px solid #1a1a2e;display:flex;align-item
 </style>
 </head>
 <body>
-<header><div class="ldot"></div><div class="brand bc">STADTPULS</div></header>
+<header style="justify-content:space-between"><div style="display:flex;align-items:center;gap:8px"><div class="ldot"></div><div class="brand bc">STADTPULS</div></div><button class="sp-nav-burger" onclick="spNavToggle()" aria-label="Menü"><span></span><span></span><span></span></button></header>
 
 <div class="wrap">
   <div id="formwrap">
-    <div class="hero bc">BESSери PLATZIERIG</div>
-    <div class="sub">Du bisch Inhaber, Gschäftsführer oder schaffsch i dem Lokal, Club, dä Galerie odeر am Event? Hol dis Profil uf Stadtpuls wiiter noche obe — sichtbar für mehr Lüt.</div>
+    <div class="hero bc">BESSERI PLATZIERIG</div>
+    <div class="sub">Du bisch Inhaber, Gschäftsführer oder schaffsch i dem Lokal, Club, dä Galerie oder am Event? Hol dis Profil uf Stadtpuls wiiter noche obe — sichtbar für mehr Lüt.</div>
 
     <div class="target">
       <div class="lbl">Dis Profil</div>
@@ -142,7 +142,7 @@ function upd(){
   document.getElementById('tierdesc').textContent=TIERS[sel.tier].desc;
   document.getElementById('cta').textContent = PAYMODE==='stripe' ? ('Zahle: CHF '+preis()+' →') : 'Aafrog absände →';
   document.getElementById('paynote').textContent = PAYMODE==='stripe'
-    ? 'Sichери Zahlig mit TWINT oder Karte über Stripe. Du wirsch erscht freigschalte, wenn mir dis Profil bestätigt händ.'
+    ? 'Sicheri Zahlig mit TWINT oder Karte über Stripe. Du wirsch erscht freigschalte, wenn mir dis Profil bestätigt händ.'
     : 'Mir prüefed dini Aafrog und mälded üs für d\'Zahlig (TWINT). Erscht denn wirsch freigschalte.';
 }
 
@@ -193,5 +193,28 @@ function showDone(paid){
 // Rückkehr von Stripe: ?bezahlt=1
 if(p.get('bezahlt')==='1'){document.getElementById('formwrap').classList.add('hide');document.getElementById('done').classList.add('on');document.getElementById('done-txt').innerHTML='Dini Zahlig isch aacho. Mir bestätiged dis Profil und schalted d\'Platzierig denn frei.';}
 </script>
+<!-- SP_NAV v1: einheitlichs Fullscreen-Menu -->
+<style>
+.sp-nav-burger{background:none;border:1px solid rgba(232,228,217,.15);width:40px;height:34px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;cursor:pointer;z-index:1001}
+.sp-nav-burger span{display:block;width:16px;height:2px;background:#e8e4d9}
+.sp-nav-ov{position:fixed;inset:0;background:rgba(4,4,10,.97);z-index:1000;display:none;flex-direction:column;justify-content:center;padding:40px}
+.sp-nav-ov.open{display:flex}
+.sp-nav-ov a{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;letter-spacing:1px;color:#e8e4d9;text-decoration:none;padding:9px 0;border-bottom:1px solid rgba(232,228,217,.06)}
+.sp-nav-ov a:hover{color:#ff2d00}
+.sp-nav-ov .sp-nav-cta{color:#c8ff00}
+.sp-nav-x{position:absolute;top:22px;right:22px;background:none;border:none;color:#e8e4d9;font-size:26px;cursor:pointer;font-family:'DM Mono',monospace}
+</style>
+<div class="sp-nav-ov" id="sp-nav-ov">
+  <button class="sp-nav-x" onclick="spNavToggle()" aria-label="Schliesse">×</button>
+  <a href="index.html">ZUE</a>
+  <a href="gastro.html">GASTRO</a>
+  <a href="nachtleben.html">NACHTLEBE</a>
+  <a href="events.html">EVENTS</a>
+  <a href="shopping.html">SHOPPING</a>
+  <a href="news.html">NEWS</a>
+  <a href="dating.html">DATES</a>
+  <a href="login.html" class="sp-nav-cta">MITMACHE →</a>
+</div>
+<script>function spNavToggle(){document.getElementById('sp-nav-ov').classList.toggle('open');}</script>
 </body>
 </html>
