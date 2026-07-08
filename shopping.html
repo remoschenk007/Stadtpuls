@@ -604,6 +604,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
         <div class="bot-model">Claude · Powered by Anthropic</div>
       </div>
       <div class="bot-msg" id="bot-msg">«<strong>Samschtig Nachmittag</strong> — <em>Vintage Stores Langstrasse</em> oder <em>Bahnhofstrasse</em> für Neues?»</div>
+      <div id="bot-recs" style="margin-top:8px"></div>
       <div class="bot-chips">
         <div class="bchip on" onclick="setMood(this,'stöbere')">🕶️ STÖBERE</div>
         <div class="bchip" onclick="setMood(this,'lokal')">🏪 LOKAL</div>
@@ -1307,10 +1308,31 @@ function setSort(btn,val){
   document.querySelectorAll('.sort-btn').forEach(b=>b.classList.toggle('on',b===btn));
   buildGrid();
 }
+function spOpenById(id){const x=allLocs.find(v=>String(v.id)===String(id));if(x)openDet(x);} // SP_BOOST fix
+function spBotPick(mood){ // deterministisch us de Date — kei Halluzination
+  const has=(l,re)=>re.test(((l.name||'')+' '+(l.subkategorie||'')).toLowerCase());
+  const inK=(l,ks)=>ks.includes(parseInt(l.kreis));
+  const vint=l=>{const sid=parseInt(l.zt_subkategorie_id)||0;const all=[...(TYP_IDS.mode||[]),...(TYP_IDS.design||[]),...(TYP_IDS.markt||[])];return !all.includes(sid);};
+  const rules={
+    'stöbere':l=>vint(l)||has(l,/vintage|second|brocki|brockenhaus/),
+    lokal:l=>inK(l,[4,5]),
+    sale:l=>inK(l,[1]),
+    geschenk:l=>has(l,/delikat|schoggi|schokolade|swiss|uhr|geschenk|papeterie|blueme|blumen/),
+    nachhaltig:l=>has(l,/second|vintage|brocki|nachhaltig|fair/)||vint(l)&&inK(l,[4,5]),
+    design:l=>{const sid=parseInt(l.zt_subkategorie_id)||0;return (TYP_IDS.design||[]).includes(sid);},
+  };
+  const f=rules[mood];if(!f)return[];
+  return allLocs.filter(f).sort((a,b)=>spTier(b)-spTier(a)||(b.rating||0)-(a.rating||0)).slice(0,4);
+}
 function setMood(btn,mood){
   document.querySelectorAll('.bchip').forEach(b=>b.classList.remove('on'));
   btn.classList.add('on');
-  document.getElementById('bot-msg').innerHTML='«'+botMap[mood]+'»';
+  document.getElementById('bot-msg').innerHTML=botMap[mood];
+  const recs=spBotPick(mood);
+  const box=document.getElementById('bot-recs');
+  if(box){box.innerHTML=recs.map(l=>
+    '<div class="str-rec" onclick="spOpenById('+l.id+')" style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(232,228,217,.05);cursor:none"><div style="font-size:11px;color:#e8e4d9">'+(l.name||'')+' <span style="color:rgba(232,228,217,.35);font-size:9px">· K'+(l.kreis||'?')+'</span></div><div style="color:rgba(200,255,0,.5);font-size:10px">→</div></div>'
+  ).join('')||'<div style="font-size:10px;color:rgba(232,228,217,.25);padding:6px 0">Nüüt passends gfunde — probier en andere Vibe</div>';}
 }
 
 // Sheet Sync

@@ -1726,6 +1726,7 @@ function openSheet(){document.getElementById('sheet').classList.add('open');docu
 function closeSheet(){document.getElementById('sheet').classList.remove('open');document.getElementById('sh-ov').classList.remove('on');}
 
 // STIMMUNG — filtert echte Daten mit Fallback
+function spOpenById(id){const x=allLocs.find(v=>String(v.id)===String(id));if(x)openDet(x);} // SP_BOOST fix
 function stimmung(el,m){
   document.querySelectorAll('.stchip').forEach(c=>c.classList.remove('on'));
 
@@ -1765,7 +1766,7 @@ function stimmung(el,m){
   document.getElementById('str-recs').innerHTML=filtered.slice(0,4).map(l=>{
     const sub=SUBKAT[parseInt(l.zt_subkategorie_id)]||{e:'🍽️',n:''};
     const hasTag=l.stimmung_tags&&l.stimmung_tags.includes(S.stimmung);
-    return`<div class="str-rec" onclick="openDet(l)" style="cursor:none">
+    return`<div class="str-rec" onclick="spOpenById(${l.id})" style="cursor:none">
       <div>${sub.e} <strong style="color:#e8e4d9">${l.name}</strong> · K${l.kreis||'?'}${hasTag?' <span style="color:#c8ff00;font-size:8px">✓ GETAGGT</span>':''}</div>
       <div style="color:rgba(255,45,0,.4);font-size:10px">→</div>
     </div>`;
@@ -1776,7 +1777,7 @@ function stimmung(el,m){
 function setMood(el,m){
   document.querySelectorAll('.bchip').forEach(c=>c.classList.remove('on'));
   el.classList.add('on');
-  document.getElementById('bot-msg').innerHTML=`«${botMap[m]}»`;
+  document.getElementById('bot-msg').innerHTML=botMap[m];
 }
 
 // CURSOR
