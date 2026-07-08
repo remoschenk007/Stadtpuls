@@ -715,9 +715,9 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
     <div class="bot">
       <div class="bot-top">
         <div class="bot-badge">🤖 ZÜRI-BOT · KI</div>
-        <div class="bot-model">Claude · Powered by Anthropic</div>
+        <div class="bot-model">Regelbasiert · us de Stadtpuls-Date</div>
       </div>
-      <div class="bot-msg" id="bot-msg">«<strong>Kreis 4, Dienstig Abend</strong> — <em>Pho Saigon Express</em> isch frei, 4 Plätze, 8 Min z Fuess.»</div>
+      <div class="bot-msg" id="bot-msg">«Wähl en Vibe — ich zeig dir passendi Lokal, direkt us de Stadtpuls-Date.»</div>
       <div class="bot-chips">
         <div class="bchip on" onclick="setMood(this,'casual')">😎 CASUAL</div>
         <div class="bchip" onclick="setMood(this,'romantisch')">💫 ROMANTISCH</div>
@@ -726,7 +726,8 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
         <div class="bchip" onclick="setMood(this,'budget')">💰 BUDGET</div>
         <div class="bchip" onclick="setMood(this,'besonders')">🔥 BESONDERS</div>
       </div>
-      <div class="bot-typing"><div class="bot-dots"><div class="bot-dot"></div><div class="bot-dot"></div><div class="bot-dot"></div></div>ZÜRI-BOT ANALYSIERT...</div>
+      <div class="bot-typing" id="bot-typing" style="display:none"><div class="bot-dots"><div class="bot-dot"></div><div class="bot-dot"></div><div class="bot-dot"></div></div>ZÜRI-BOT SUECHT...</div>
+      <div id="bot-recs" style="margin-top:10px"></div>
     </div>
   </div>
   <div>
@@ -1774,10 +1775,27 @@ function stimmung(el,m){
   
   document.getElementById('st-res').classList.add('show');
 }
+function spBotPickG(m){ // deterministisch: stimmung_tags zuerst, susch Subkategorie-Fallback
+  const tag={casual:'ruhig',romantisch:'romantisch',schnell:'schnell',vegisch:'vegisch',budget:'budget',besonders:'besonders'}[m];
+  if(!tag)return[];
+  const fb={ruhig:[102,184,191,192],romantisch:[194,191,187,184],schnell:[188,189,193,102],vegisch:[197,409,102],budget:[102,192,189,188],besonders:[194,184,187,191]}[tag]||[];
+  const hit=l=>(l.stimmung_tags&&l.stimmung_tags.length)?l.stimmung_tags.includes(tag):fb.includes(parseInt(l.zt_subkategorie_id)||0);
+  return allLocs.filter(hit).sort((a,b)=>spTier(b)-spTier(a)||(b.rating||0)-(a.rating||0)).slice(0,4);
+}
 function setMood(el,m){
   document.querySelectorAll('.bchip').forEach(c=>c.classList.remove('on'));
   el.classList.add('on');
   document.getElementById('bot-msg').innerHTML=botMap[m];
+  const t=document.getElementById('bot-typing'),box=document.getElementById('bot-recs');
+  if(box)box.innerHTML='';
+  if(t)t.style.display='flex';
+  setTimeout(()=>{
+    if(t)t.style.display='none';
+    const recs=spBotPickG(m);
+    if(box)box.innerHTML=recs.map(l=>
+      '<div class="str-rec" onclick="spOpenById('+l.id+')" style="display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid rgba(232,228,217,.05);cursor:none"><div style="font-size:11px;color:#e8e4d9">'+(l.name||'')+' <span style="color:rgba(232,228,217,.35);font-size:9px">· K'+(l.kreis||'?')+'</span></div><div style="color:rgba(200,255,0,.5);font-size:10px">→</div></div>'
+    ).join('')||'<div style="font-size:10px;color:rgba(232,228,217,.25);padding:6px 0">Nüüt passends gfunde — probier en andere Vibe</div>';
+  },450);
 }
 
 // CURSOR
