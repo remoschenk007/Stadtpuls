@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="gsw">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="robots" content="noindex,follow">
+<title>STADTPULS — PARTNERS · Im Bau</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden;
+ background-image:linear-gradient(rgba(232,228,217,.022) 1px,transparent 1px),linear-gradient(90deg,rgba(232,228,217,.022) 1px,transparent 1px);
+ background-size:56px 56px}
+a{color:inherit}
+header{padding:18px 22px;border-bottom:1px solid #14141f;display:flex;align-items:center;justify-content:space-between}
+.hleft{display:flex;align-items:center;gap:9px;text-decoration:none}
+.ldot{width:9px;height:9px;background:#ff2d00;border-radius:50%;animation:pls 1.6s infinite}
+@keyframes pls{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,.5)}55%{box-shadow:0 0 0 9px rgba(255,45,0,0)}}
+.brand{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;letter-spacing:1px}
+main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:64px 22px;max-width:880px;margin:0 auto;width:100%}
+.eye{font-size:9px;letter-spacing:3px;color:#ff2d00;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.eye::before{content:'';display:block;width:26px;height:1px;background:#ff2d00}
+h1{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(58px,13vw,124px);line-height:.9;text-transform:uppercase;letter-spacing:1px}
+h1 .a{color:#ff2d00}
+h1 .b{color:#e8e4d9;display:block;font-size:.42em;letter-spacing:2px;-webkit-text-stroke:0;color:transparent;-webkit-text-stroke:1px rgba(232,228,217,.35)}
+.teaser{margin-top:26px;font-size:12px;line-height:1.9;color:#8a8778;max-width:520px}
+.status{margin-top:34px;font-size:10px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase}
+.status::after{content:'▮';animation:blk 1s steps(1) infinite;margin-left:3px}
+@keyframes blk{50%{opacity:0}}
+.bar{margin-top:12px;width:min(360px,100%);height:3px;background:#14141f;position:relative;overflow:hidden}
+.bar::after{content:'';position:absolute;inset:0;width:38%;background:#c8ff00;animation:run 2.4s ease-in-out infinite}
+@keyframes run{0%{transform:translateX(-100%)}100%{transform:translateX(280%)}}
+.ctas{margin-top:46px;display:flex;gap:14px;flex-wrap:wrap}
+.cta{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;padding:13px 24px;text-decoration:none;text-transform:uppercase}
+.cta.solid{background:#ff2d00;color:#04040a}
+.cta.solid:hover{background:#e8e4d9}
+.cta.ghost{border:1px solid rgba(232,228,217,.2);color:#e8e4d9}
+.cta.ghost:hover{border-color:#c8ff00;color:#c8ff00}
+footer{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spacing:2px;color:#3a3a48;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.sp-nav-burger{background:none;border:1px solid rgba(232,228,217,.15);width:40px;height:34px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;cursor:pointer;z-index:1001}
+.sp-nav-burger span{display:block;width:16px;height:2px;background:#e8e4d9}
+.sp-nav-ov{position:fixed;inset:0;background:rgba(4,4,10,.97);z-index:1000;display:none;flex-direction:column;justify-content:center;padding:40px}
+.sp-nav-ov.open{display:flex}
+.sp-nav-ov a{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;letter-spacing:1px;color:#e8e4d9;text-decoration:none;padding:9px 0;border-bottom:1px solid rgba(232,228,217,.06)}
+.sp-nav-ov a:hover{color:#ff2d00}
+.sp-nav-ov .sp-nav-cta{color:#c8ff00}
+.sp-nav-x{position:absolute;top:22px;right:22px;background:none;border:none;color:#e8e4d9;font-size:26px;cursor:pointer;font-family:'DM Mono',monospace}
+</style>
+</head>
+<body>
+<!-- SP_SOON v1 · Seite im Bau -->
+<header>
+  <a class="hleft" href="index.html"><div class="ldot"></div><div class="brand">STADTPULS</div></a>
+  <button class="sp-nav-burger" onclick="spNavToggle()" aria-label="Menü"><span></span><span></span><span></span></button>
+</header>
+<main>
+  <div class="eye">Siite im Bau · Bald uf em Puls</div>
+  <h1><span class="a">PARTNERS</span><span class="b">FÜR LOKAL</span></h1>
+  <div class="teaser">Für Lokal, Clubs, Läde und Brands — werd Partner und bring dis Business uf de Puls.</div>
+  <div class="status">Status: Mir bueued dra</div>
+  <div class="bar"></div>
+  <div class="ctas">
+    <a class="cta solid" href="index.html">Zrugg zum Puls</a>
+    <a class="cta ghost" href="feedback.html">S&auml;g &ouml;is dini Idee</a>
+  </div>
+</main>
+<footer>
+  <span>STADTPULS — De Puls vo Z&uuml;ri</span>
+  <span>Kei Algorithmus-Bullshit. Handgmacht.</span>
+</footer>
+<div class="sp-nav-ov" id="sp-nav-ov">
+  <button class="sp-nav-x" onclick="spNavToggle()" aria-label="Schliesse">&times;</button>
+  <a href="index.html">ZUE</a>
+  <a href="gastro.html">GASTRO</a>
+  <a href="nachtleben.html">NACHTLEBE</a>
+  <a href="events.html">EVENTS</a>
+  <a href="shopping.html">SHOPPING</a>
+  <a href="news.html">NEWS</a>
+  <a href="dating.html">DATES</a>
+  <a href="login.html" class="sp-nav-cta">MITMACHE &rarr;</a>
+</div>
+<script>function spNavToggle(){document.getElementById('sp-nav-ov').classList.toggle('open');}</script>
+</body>
+</html>
