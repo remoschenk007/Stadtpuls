@@ -433,6 +433,8 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Nachtleben Zürich — Clubs, Bars & Late-Night | Stadtpuls">
 <script type="application/ld+json">[{"@context": "https://schema.org", "@type": "CollectionPage", "name": "Nachtleben Zürich", "url": "https://depuls.ch/nachtleben.html", "description": "Clubs, Bars und Late-Night-Spots in Zürich mit Live-Öffnungsstatus.", "inLanguage": "de-CH"}, {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Stadtpuls", "item": "https://depuls.ch/"}, {"@type": "ListItem", "position": 2, "name": "Nachtleben", "item": "https://depuls.ch/nachtleben.html"}]}]</script>
+<meta property="og:image" content="https://depuls.ch/og-image.png">
+<meta name="twitter:image" content="https://depuls.ch/og-image.png">
 </head>
 <body>
 <div id="dot"></div><div id="ring"></div>
@@ -645,6 +647,18 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
   <details><summary>Kreis 4 oder Kreis 5 — wo isch meh los?</summary><div>Beidi bränned: K4 isch rauher (Langstrass), K5 industrieller (Hardbrugg). D Kreisrivalität-Heatmap zeigt, wo de Puls grad höcher schlaht.</div></details>
 </section>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Welche sind die besten Clubs an der Langstrasse Zürich?", "acceptedAnswer": {"@type": "Answer", "text": "Auf Stadtpuls den Kreis-4-Filter setzen und nach Bewertung sortieren — mit Live-Status, welche Clubs aktuell geöffnet sind."}}, {"@type": "Question", "name": "Was läuft heute Nacht in Zürich?", "acceptedAnswer": {"@type": "Answer", "text": "Die Stadtpuls Event-Seite zeigt das Programm für heute und die nächsten 7 Tage — jede Nacht automatisch aktualisiert."}}, {"@type": "Question", "name": "Kreis 4 oder Kreis 5 — wo ist in Zürich mehr los?", "acceptedAnswer": {"@type": "Answer", "text": "Beide Kreise sind das Zentrum des Nachtlebens: Kreis 4 rauer (Langstrasse), Kreis 5 industrieller (Hardbrücke). Die Stadtpuls-Heatmap zeigt die aktuelle Aktivität."}}]}</script>
+<section class="sp-faq" id="sp-kreis-guide" style="display:none;margin-top:8px">
+  <div class="sp-faq-eye">Quartier-Guides</div>
+  <div id="sp-kreis-links" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px"></div>
+</section>
+<script src="/kreis-links.js"></script>
+<script>
+(function(){try{
+  var kat='nachtleben';var ks=(window.SP_KREIS_LINKS||{})[kat]||[];if(!ks.length)return;
+  document.getElementById('sp-kreis-links').innerHTML=ks.map(function(n){return '<a href="/'+kat+'/kreis-'+n+'/" style="border:1px solid #14141f;padding:10px;text-align:center;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:1px;text-decoration:none;color:#e8e4d9">KREIS '+n+'</a>';}).join('');
+  document.getElementById('sp-kreis-guide').style.display='';
+}catch(e){}})();
+</script>
 <footer>
   <div class="ftk">
     <div class="fti">

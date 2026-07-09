@@ -54,6 +54,8 @@ TPL = """<!DOCTYPE html>
 <meta property="og:locale" content="de_CH">
 <meta property="og:site_name" content="Stadtpuls">
 <meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="{D}/og-image.png">
+<meta name="twitter:image" content="{D}/og-image.png">
 <script type="application/ld+json">{LD}</script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -160,4 +162,13 @@ for kat, K in KATEGORIEN.items():
     open(f"{K['pfad']}/kreis-{n}/index.html", 'w', encoding='utf-8').write(out)
     total += 1
     print(f"OK {K['pfad']}/kreis-{n}/index.html \u2014 {len(locs)} Lokal")
+import json as _j
+_links={k:[] for k in KATEGORIEN}
+import glob as _g2
+for p in _g2.glob('*/kreis-*/index.html'):
+    kat,kr=p.split('/')[0], int(p.split('kreis-')[1].split('/')[0])
+    if kat in _links: _links[kat].append(kr)
+for k in _links: _links[k].sort()
+open('kreis-links.js','w',encoding='utf-8').write('window.SP_KREIS_LINKS='+_j.dumps(_links)+';')
+print('OK kreis-links.js:', {k:len(v) for k,v in _links.items()})
 print(f"FERTIG: {total} Kreis-Seiten (gastro+nachtleben+shopping). Jetzt generate_sitemap.py erneut ausf\u00fchren!")
