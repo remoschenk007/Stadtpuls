@@ -3,8 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<meta name="robots" content="noindex,follow">
-<title>STADTPULS — MARKTPLATZ · Im Bau</title>
+<title>STADTPULS — MARKTPLATZ Zürich · S Tuusche</title>
+<meta name="description" content="Der Stadtpuls Marktplatz für Zürich: kaufen, verkaufen und tauschen von Zürchern für Zürcher. Im Aufbau — der Shopping-Radar ist bereits live.">
+<link rel="canonical" href="https://depuls.ch/marktplatz.html">
+<meta property="og:title" content="STADTPULS — MARKTPLATZ Zürich">
+<meta property="og:description" content="Der Stadtpuls Marktplatz für Zürich: kaufen, verkaufen und tauschen von Zürchern für Zürcher. Im Aufbau — der Shopping-Radar ist bereits live.">
+<meta property="og:url" content="https://depuls.ch/marktplatz.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Stadtpuls">
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "@id": "https://depuls.ch/marktplatz.html", "url": "https://depuls.ch/marktplatz.html", "name": "Stadtpuls — MARKTPLATZ Zürich", "description": "Der Stadtpuls Marktplatz für Zürich: kaufen, verkaufen und tauschen von Zürchern für Zürcher. Im Aufbau — der Shopping-Radar ist bereits live.", "inLanguage": "gsw", "isPartOf": {"@type": "WebSite", "name": "Stadtpuls", "url": "https://depuls.ch", "description": "Der unabhängige City Guide für Zürich: Gastronomie, Nachtleben, Events und Shopping — kuratiert, kreisgenau, ohne Algorithmus-Müll."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Was macht de Marktplatz anders als anderi Portal?", "acceptedAnswer": {"@type": "Answer", "text": "Kreis-genau, kuratiert und a d Community bunde — kei anonymi Wegwerf-Accounts. Bis zum Start findsch de Shopping-Radar mit de beste Läde vo Züri scho live."}}, {"@type": "Question", "name": "Chan ich als Lade mitmache?", "acceptedAnswer": {"@type": "Answer", "text": "Ja — Läde chönd sich scho hüt über d Platzierig sichtbar mache und sind bim Marktplatz-Start vorne dbii."}}]}]}</script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -17,20 +24,32 @@ header{padding:18px 22px;border-bottom:1px solid #14141f;display:flex;align-item
 .ldot{width:9px;height:9px;background:#ff2d00;border-radius:50%;animation:pls 1.6s infinite}
 @keyframes pls{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,.5)}55%{box-shadow:0 0 0 9px rgba(255,45,0,0)}}
 .brand{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;letter-spacing:1px}
-main{flex:1;display:flex;flex-direction:column;justify-content:center;padding:64px 22px;max-width:880px;margin:0 auto;width:100%}
+main{flex:1;padding:64px 22px 40px;max-width:880px;margin:0 auto;width:100%}
 .eye{font-size:9px;letter-spacing:3px;color:#ff2d00;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
 .eye::before{content:'';display:block;width:26px;height:1px;background:#ff2d00}
-h1{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(58px,13vw,124px);line-height:.9;text-transform:uppercase;letter-spacing:1px}
+h1{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(54px,12vw,116px);line-height:.9;text-transform:uppercase;letter-spacing:1px}
 h1 .a{color:#ff2d00}
-h1 .b{color:#e8e4d9;display:block;font-size:.42em;letter-spacing:2px;-webkit-text-stroke:0;color:transparent;-webkit-text-stroke:1px rgba(232,228,217,.35)}
-.teaser{margin-top:26px;font-size:12px;line-height:1.9;color:#8a8778;max-width:520px}
-.status{margin-top:34px;font-size:10px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase}
+h1 .b{display:block;font-size:.42em;letter-spacing:2px;color:transparent;-webkit-text-stroke:1px rgba(232,228,217,.35)}
+.teaser{margin-top:24px;font-size:12px;line-height:1.9;color:#8a8778;max-width:560px}
+.status{margin-top:26px;font-size:10px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase}
 .status::after{content:'▮';animation:blk 1s steps(1) infinite;margin-left:3px}
 @keyframes blk{50%{opacity:0}}
 .bar{margin-top:12px;width:min(360px,100%);height:3px;background:#14141f;position:relative;overflow:hidden}
 .bar::after{content:'';position:absolute;inset:0;width:38%;background:#c8ff00;animation:run 2.4s ease-in-out infinite}
 @keyframes run{0%{transform:translateX(-100%)}100%{transform:translateX(280%)}}
-.ctas{margin-top:46px;display:flex;gap:14px;flex-wrap:wrap}
+h2{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;letter-spacing:1.5px;text-transform:uppercase;margin:54px 0 18px}
+h2 .v{color:#c8ff00}
+h2 .r{color:#ff2d00}
+.cards{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+.card{border:1px solid #14141f;padding:16px;background:rgba(232,228,217,.014)}
+.card h3{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;letter-spacing:1px;text-transform:uppercase;color:#e8e4d9;margin-bottom:8px}
+.card p{font-size:10.5px;line-height:1.8;color:#8a8778}
+.live .card{border-left:2px solid #c8ff00}
+.live .card a{color:#c8ff00;text-decoration:none;font-size:10px;letter-spacing:1px;text-transform:uppercase}
+.live .card a:hover{color:#e8e4d9}
+.faq .card{border-left:2px solid #ff2d00}
+.faq .card h3{font-size:13px;font-family:'DM Mono',monospace;font-style:normal;font-weight:500;text-transform:none;letter-spacing:0;color:#e8e4d9}
+.ctas{margin-top:52px;display:flex;gap:14px;flex-wrap:wrap}
 .cta{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;padding:13px 24px;text-decoration:none;text-transform:uppercase}
 .cta.solid{background:#ff2d00;color:#04040a}
 .cta.solid:hover{background:#e8e4d9}
@@ -48,7 +67,7 @@ footer{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spaci
 </style>
 </head>
 <body>
-<!-- SP_SOON v1 · Seite im Bau -->
+<!-- SP_SOON v2 · Vision-Siite mit Inhalt -->
 <header>
   <a class="hleft" href="index.html"><div class="ldot"></div><div class="brand">STADTPULS</div></a>
   <button class="sp-nav-burger" onclick="spNavToggle()" aria-label="Menü"><span></span><span></span><span></span></button>
@@ -56,16 +75,34 @@ footer{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spaci
 <main>
   <div class="eye">Siite im Bau · Bald uf em Puls</div>
   <h1><span class="a">MARKTPLATZ</span><span class="b">S TUUSCHE</span></h1>
-  <div class="teaser">Kaufe, verkaufe, tuusche — vo Zürcher für Zürcher. Kei Anonym-Müll, nur echti Lüt.</div>
+  <p class="teaser">Kaufe, verkaufe, tuusche — vo Zürcher für Zürcher. Kei Anonym-Müll, nur echti Lüt.</p>
   <div class="status">Status: Mir bueued dra</div>
   <div class="bar"></div>
+  <h2>Was <span class="r">chunnt</span></h2>
+  <div class="cards">
+    <div class="card"><h3>Lokal-Marktplatz</h3><p>Inserat us dim Kreis — abhole statt verschicke, Gsichter statt Anonymität.</p></div>
+    <div class="card"><h3>Kurations-Filter</h3><p>Vintage, Design, Handwärk — de Puls-Gschmack statt Massewahr.</p></div>
+    <div class="card"><h3>Member-Trust</h3><p>Verknüpft mit dim Stadtpuls-Konto — weniger Fake, meh Vertraue.</p></div>
+  </div>
+  <h2>Scho hüt <span class="v">uf em Puls</span></h2>
+  <div class="cards live">
+    <div class="card"><h3>Shopping-Radar</h3><p>Läde vo Vintage bis Design, sortiert nach Kreis und Vibe.</p><p style="margin-top:8px"><a href="shopping.html">Zur Siite &rarr;</a></p></div>
+    <div class="card"><h3>Züri Momänt</h3><p>Echti Community-Stimme uf de Startsiite — moderiert, kei Bot-Müll.</p><p style="margin-top:8px"><a href="index.html">Zur Siite &rarr;</a></p></div>
+    <div class="card"><h3>Partner-Platzierige</h3><p>Lokal chönd sich sichtbar mache — transparent gchennzeichnet.</p><p style="margin-top:8px"><a href="platzierung.html">Zur Siite &rarr;</a></p></div>
+  </div>
+  <h2>Frage &amp; <span class="r">Antworte</span></h2>
+  <div class="cards faq" style="grid-template-columns:1fr">
+    <div class="card"><h3>Was macht de Marktplatz anders als anderi Portal?</h3><p>Kreis-genau, kuratiert und a d Community bunde — kei anonymi Wegwerf-Accounts. Bis zum Start findsch de Shopping-Radar mit de beste Läde vo Züri scho live.</p></div>
+    <div class="card"><h3>Chan ich als Lade mitmache?</h3><p>Ja — Läde chönd sich scho hüt über d Platzierig sichtbar mache und sind bim Marktplatz-Start vorne dbii.</p></div>
+  </div>
   <div class="ctas">
     <a class="cta solid" href="index.html">Zrugg zum Puls</a>
     <a class="cta ghost" href="feedback.html">S&auml;g &ouml;is dini Idee</a>
   </div>
+
 </main>
 <footer>
-  <span>STADTPULS — De Puls vo Z&uuml;ri</span>
+  <span>STADTPULS — De Puls vo Züri</span>
   <span>Kei Algorithmus-Bullshit. Handgmacht.</span>
 </footer>
 <div class="sp-nav-ov" id="sp-nav-ov">
