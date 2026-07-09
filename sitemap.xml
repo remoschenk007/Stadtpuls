@@ -1,24 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://depuls.ch/index.html</loc><lastmod>2026-07-08</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>
-  <url><loc>https://depuls.ch/gastro.html</loc><lastmod>2026-07-08</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://depuls.ch/nachtleben.html</loc><lastmod>2026-07-08</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://depuls.ch/events.html</loc><lastmod>2026-07-08</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://depuls.ch/shopping.html</loc><lastmod>2026-07-08</lastmod><changefreq>daily</changefreq><priority>0.9</priority></url>
-  <url><loc>https://depuls.ch/news.html</loc><lastmod>2026-07-08</lastmod><changefreq>daily</changefreq><priority>0.8</priority></url>
-  <url><loc>https://depuls.ch/dating.html</loc><lastmod>2026-07-08</lastmod><changefreq>weekly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://depuls.ch/platzierung.html</loc><lastmod>2026-07-08</lastmod><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://depuls.ch/feedback.html</loc><lastmod>2026-07-08</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://depuls.ch/kontakt.html</loc><lastmod>2026-07-08</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://depuls.ch/impressum.html</loc><lastmod>2026-07-08</lastmod><changefreq>yearly</changefreq><priority>0.2</priority></url>
-  <url><loc>https://depuls.ch/datenschutz.html</loc><lastmod>2026-07-08</lastmod><changefreq>yearly</changefreq><priority>0.2</priority></url>
-  <url><loc>https://depuls.ch/quartiere.html</loc><lastmod>2026-07-08</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://depuls.ch/musik.html</loc><lastmod>2026-07-08</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://depuls.ch/jobs.html</loc><lastmod>2026-07-08</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://depuls.ch/immobilien.html</loc><lastmod>2026-07-08</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://depuls.ch/mobilitaet.html</loc><lastmod>2026-07-08</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://depuls.ch/community.html</loc><lastmod>2026-07-08</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://depuls.ch/gps.html</loc><lastmod>2026-07-08</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://depuls.ch/partners.html</loc><lastmod>2026-07-08</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://depuls.ch/marktplatz.html</loc><lastmod>2026-07-08</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>
-</urlset>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <sitemap><loc>https://depuls.ch/sitemap-pages.xml</loc><lastmod>2026-07-09</lastmod></sitemap>
+  <sitemap><loc>https://depuls.ch/sitemap-locations.xml</loc><lastmod>2026-07-09</lastmod></sitemap>
+  <sitemap><loc>https://depuls.ch/sitemap-events.xml</loc><lastmod>2026-07-09</lastmod></sitemap>
+</sitemapindex>

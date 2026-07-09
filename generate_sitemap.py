@@ -1,0 +1,56 @@
+#!/usr/bin/env python3
+# STADTPULS · generate_sitemap.py — dynamische Sitemap für ALLE Profile.
+# Holt Lokale + Events aus Supabase und schreibt:
+#   sitemap-pages.xml (statische Seiten) · sitemap-locations.xml · sitemap-events.xml
+#   sitemap.xml (Index auf die drei)
+# Nur Python-Standardbibliothek. Lokal ausführen, committen — später in die tägliche GitHub Action.
+import json, urllib.request, datetime, sys
+
+SU = "https://pnynkzrqnfoshojqfqxn.supabase.co"
+SK = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ"
+BASE = "https://depuls.ch/"
+TODAY = datetime.date.today().isoformat()
+
+def fetch(path):
+    req = urllib.request.Request(SU + path, headers={"apikey": SK, "Authorization": "Bearer " + SK})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.loads(r.read().decode())
+
+def urlset(urls):
+    out = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    for loc, lastmod in urls:
+        out += f"  <url><loc>{loc}</loc><lastmod>{lastmod}</lastmod></url>\n"
+    return out + "</urlset>\n"
+
+# 1) Statische Seiten
+PAGES = ['','index.html','gastro.html','nachtleben.html','events.html','shopping.html','news.html','dating.html',
+ 'feedback.html','kontakt.html','platzierung.html','impressum.html','datenschutz.html',
+ 'quartiere.html','musik.html','jobs.html','immobilien.html','mobilitaet.html','community.html','gps.html','partners.html','marktplatz.html']
+open('sitemap-pages.xml','w',encoding='utf-8').write(urlset([(BASE+p, TODAY) for p in PAGES]))
+print(f"sitemap-pages.xml: {len(PAGES)} URLs")
+
+# 2) Alle aktiven Lokale (Profil-URL je Kategorie)
+PROFIL = {'gastro':'gastro-profil.html?id={id}','shopping':'shopping-profil.html?id={id}',
+          'nachtleben':'nachtleben-profil.html?slug={slug}'}
+locs = fetch("/rest/v1/locations?select=id,slug,kategorie,aktiv&aktiv=eq.true&order=id.asc&limit=3000")
+lurls = []
+for l in locs:
+    tpl = PROFIL.get(l.get('kategorie'))
+    if not tpl: continue
+    lurls.append((BASE + tpl.format(id=l['id'], slug=l.get('slug') or l['id']), TODAY))
+open('sitemap-locations.xml','w',encoding='utf-8').write(urlset(lurls))
+print(f"sitemap-locations.xml: {len(lurls)} URLs")
+
+# 3) Kommende Events (vergangene bringen kein SEO)
+evs = fetch(f"/rest/v1/eventfrog_events?select=id,datum_start&datum_start=gte.{TODAY}&order=datum_start.asc&limit=3000")
+eurls = [(BASE + f"event-profil.html?id={e['id']}", TODAY) for e in evs]
+open('sitemap-events.xml','w',encoding='utf-8').write(urlset(eurls))
+print(f"sitemap-events.xml: {len(eurls)} URLs")
+
+# 4) Sitemap-Index
+idx = '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+for f in ['sitemap-pages.xml','sitemap-locations.xml','sitemap-events.xml']:
+    idx += f"  <sitemap><loc>{BASE}{f}</loc><lastmod>{TODAY}</lastmod></sitemap>\n"
+idx += "</sitemapindex>\n"
+open('sitemap.xml','w',encoding='utf-8').write(idx)
+print(f"sitemap.xml: Index auf 3 Sitemaps · Total {len(PAGES)+len(lurls)+len(eurls)} URLs")
