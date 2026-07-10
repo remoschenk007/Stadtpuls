@@ -1066,7 +1066,7 @@ a,button{cursor:pointer}
     </div>
   </div>
   <div class="fbot">
-    <p>© 2026 Stadtpuls.ch — by raimondo* — Zürich</p>
+    <p>© 2026 depuls.ch — by raimondo* — Zürich</p>
     <p style="display:flex;gap:14px"><span>AGB</span> · <a href="datenschutz.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Datenschutz</a> · <a href="impressum.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Impressum</a></p>
   </div>
 </footer>
@@ -1248,12 +1248,7 @@ async function loadAllLocations(){
     const leader=kreisData[0];
     if(leader){
       const kreisNamen={1:'ALTSTADT',2:'ENGE',3:'HARD',4:'LANGSTRASSE',5:'INDUSTRIE',6:'ZÜRICHBERG',7:'FLUNTERN',8:'RIESBACH',9:'ALBISRIEDEN',10:'HÖNGG',11:'AFFOLTERN',12:'SCHWAMENDINGEN'};
-      const pulseVerbs=['DOMINIERT','EXPLODIERT','ROCKT','BRENNT','GEWINNT'];
-      const verb=pulseVerbs[leader.k%pulseVerbs.length];
-      document.getElementById('pulse-eye').textContent='LIVE · KREIS '+leader.k+' · GERADE JETZT';
-      document.getElementById('pulse-title').innerHTML='KREIS '+leader.k+'<br>'+verb+'<br>GRAD';
-      document.getElementById('pulse-sub').textContent=(kreisNamen[leader.k]||'Kreis '+leader.k)+' — meischt Lokale in Zürich';
-      document.getElementById('pm-n').textContent=leader.n;
+      spGradBox(leader,kreisNamen); // SP_PULS: echti Signal statt Bestand
     }
     document.getElementById('pm-open').textContent=data.filter(l=>l.oeffnungszeiten&&l.oeffnungszeiten.length>0).length;
     document.getElementById('pm-res').textContent=data.filter(l=>l.hat_reservation).length;
@@ -1464,6 +1459,25 @@ function renderKuechen(){
 
 
 /* ── SP_PULS v1: De Battle misst Mensche (Herze+Klicks+Events), nöd Bestand ── */
+function spGradBox(fallbackLeader,kreisNamen){try{
+  const kn=kreisNamen||{1:'ALTSTADT',2:'ENGE',3:'HARD',4:'LANGSTRASSE',5:'INDUSTRIE',6:'ZÜRICHBERG',7:'FLUNTERN',8:'RIESBACH',9:'ALBISRIEDEN',10:'HÖNGG',11:'AFFOLTERN',12:'SCHWAMENDINGEN'};
+  const E=id=>document.getElementById(id);
+  if(!E('pulse-title'))return;
+  const rows=window.SP_PULS_ROWS;
+  if(rows&&rows.length&&rows[0].score>0){
+    const L=rows[0];
+    const verbs=['PULSIERT','BRENNT','ROCKT','LÄBT'];
+    E('pulse-eye').textContent='LIVE · KREIS '+L.kreis+' · LETSCHTI 7 TÄG';
+    E('pulse-title').innerHTML='KREIS '+L.kreis+'<br>'+verbs[L.kreis%verbs.length]+'<br>GRAD';
+    E('pulse-sub').textContent=(kn[L.kreis]||'Kreis '+L.kreis)+' — '+L.herzen+' Herze, '+L.klicks+' Klicks, '+L.events_hut+' Events hüt';
+    if(E('pm-n'))E('pm-n').textContent=Math.round(L.score);
+  }else if(fallbackLeader){
+    E('pulse-eye').textContent='RADAR · KREIS '+fallbackLeader.k;
+    E('pulse-title').innerHTML='KREIS '+fallbackLeader.k+'<br>UF EM<br>RADAR';
+    E('pulse-sub').textContent=(kn[fallbackLeader.k]||'Kreis '+fallbackLeader.k)+' — '+fallbackLeader.n+' Lokal erfasst';
+    if(E('pm-n'))E('pm-n').textContent=fallbackLeader.n;
+  }
+}catch(e){}}
 async function spPulsUpgrade(){try{
   const U='https://pnynkzrqnfoshojqfqxn.supabase.co';
   const K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
@@ -1482,7 +1496,7 @@ async function spPulsUpgrade(){try{
     window.SP_PULS_POKAL={t:'\u26a1 DE BATTLE STARTET GRAD',s:'H\u00fct '+evTot+' Events \u2014 am meischte im Kreis '+L.kreis+'. De Puls misst Herze & Klicks vo echte L\u00fct.'};
   }else{return;}
   window.SP_PULS_DATA.sort((a,b)=>b.n-a.n);
-  kreisData=window.SP_PULS_DATA;buildHM();
+  kreisData=window.SP_PULS_DATA;buildHM();spGradBox();
 }catch(e){}}
 
 // ═══════════════════════════════════════════
@@ -1566,6 +1580,7 @@ function buildHM(){
 // SCORE STRIP
 // ═══════════════════════════════════════════
 function buildScoreStrip(){
+  if(!document.getElementById('score-rows'))return; // SP_HOTFIX: Sektion existiert nöd meh
   const top=allLocs.filter(l=>l.featured||l.rating>4).slice(0,5);
   if(!top.length)return;
   document.getElementById('score-rows').innerHTML=top.map((l,i)=>{
