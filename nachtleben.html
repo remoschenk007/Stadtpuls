@@ -703,7 +703,7 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
     </div>
   </div>
   <div class="fbot">
-    <p>© 2026 depuls.ch — by raimondo* — Zürich</p>
+    <p>© 2026 Stadtpuls.ch — by raimondo* — Zürich</p>
     <p style="display:flex;gap:14px"><span>AGB</span> · <a href="datenschutz.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Datenschutz</a> · <a href="impressum.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Impressum</a></p>
   </div>
 </footer>
@@ -822,10 +822,44 @@ function isOffe(oz){
 }
 
 // KREISRIVALITÄT
+
+/* ── SP_PULS v1: De Battle misst Mensche (Herze+Klicks+Events), nöd Bestand ── */
+async function spPulsUpgrade(){try{
+  const U='https://pnynkzrqnfoshojqfqxn.supabase.co';
+  const K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+  const r=await fetch(U+'/rest/v1/rpc/stadtpuls_kreis_puls',{method:'POST',headers:{'apikey':K,'Authorization':'Bearer '+K,'Content-Type':'application/json'},body:'{}'});
+  if(!r.ok)return;const rows=await r.json();if(!Array.isArray(rows)||!rows.length)return;
+  const sig=rows.reduce((a,x)=>a+3*(x.herzen||0)+(x.klicks||0)+2*(x.events_hut||0),0);
+  const evTot=rows.reduce((a,x)=>a+(x.events_hut||0),0);
+  window.SP_PULS_ROWS=rows;
+  if(sig>=30){
+    window.SP_PULS_DATA=rows.filter(x=>x.score>0).map(x=>({k:x.kreis,n:Math.max(1,Math.round(x.score))}));
+    const L=rows[0];
+    window.SP_PULS_POKAL={t:'\ud83c\udfc6 KREIS '+L.kreis+' PULSIERT!',s:L.herzen+' Herze \u00b7 '+L.klicks+' Klicks \u00b7 '+L.events_hut+' Events h\u00fct \u2014 letschti 7 T\u00e4g, us echte Signal'};
+  }else if(evTot>0){
+    window.SP_PULS_DATA=rows.filter(x=>x.events_hut>0).map(x=>({k:x.kreis,n:x.events_hut}));
+    const L=[...rows].sort((a,b)=>b.events_hut-a.events_hut)[0];
+    window.SP_PULS_POKAL={t:'\u26a1 DE BATTLE STARTET GRAD',s:'H\u00fct '+evTot+' Events \u2014 am meischte im Kreis '+L.kreis+'. De Puls misst Herze & Klicks vo echte L\u00fct.'};
+  }else{return;}
+  window.SP_PULS_DATA.sort((a,b)=>b.n-a.n);
+  spRivRender();
+}catch(e){}}
+
+function spRivRender(){
+  const rows=(window.SP_PULS_DATA||[]).slice(0,4).map(d=>[String(d.k),d.n]);
+  if(rows.length)renderRivBars(rows);
+  const t=document.querySelector('.riv-title');
+  if(t&&window.SP_PULS_POKAL)t.textContent='🏆 KREISRIVALITÄT — '+window.SP_PULS_POKAL.t.replace(/^[^A-ZÄÖÜK]*/,'');
+}
 function buildRivalitaet(locs){
+  spPulsUpgrade(); // SP_PULS: echti Mensche-Signal lade
+  if(window.SP_PULS_DATA){spRivRender();return;}
   const counts={};
   locs.forEach(l=>{if(l.kreis)counts[l.kreis]=(counts[l.kreis]||0)+1;});
   const top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,4);
+  renderRivBars(top);
+}
+function renderRivBars(top){
   const max=top[0]?top[0][1]:1;
   const el=document.getElementById('riv-bars');
   el.innerHTML='';
