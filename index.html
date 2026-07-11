@@ -351,6 +351,35 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
     <div id="angsagt-list" style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:16px"></div>
   </div>
 
+
+  <!-- SP_TUUSCHE v1: Startsiite-Teaser -->
+  <div class="section" id="tuusche-teaser">
+    <div style="border:1px solid rgba(255,45,0,.35);background:linear-gradient(150deg,rgba(255,45,0,.06),rgba(200,255,0,.03));padding:28px 22px;position:relative;overflow:hidden">
+      <div style="position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,45,0,.16),transparent 70%)"></div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:3px;color:#ff2d00;text-transform:uppercase;display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+        <span style="width:8px;height:8px;background:#ff2d00;border-radius:50%;display:inline-block"></span>
+        NEU · S TUUSCHE: WOHNIG · PILOT
+        <span id="tt-live" style="margin-left:auto;color:#c8ff00;display:none"><b id="tt-count" style="font-size:13px">0</b> SIND SCHO DRIN</span>
+      </div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(30px,6vw,52px);line-height:.94;text-transform:uppercase;margin-top:12px">
+        TUUSCH DINI WOHNIG.<br><span style="color:#ff2d00">BEVOR SIE UF EM MARKT ISCH.</span>
+      </div>
+      <div style="font-family:'DM Mono',monospace;font-size:11px;line-height:1.8;color:#8a8778;margin-top:12px;max-width:540px">
+        Anonym, gratis, vo Zürcher für Zürcher — mir matched au über Dreiecks-Tüüsch. Jä früener du dich itreisch, desto besser dini Chance.
+      </div>
+      <a href="immobilien.html#tuusche" style="display:inline-block;margin-top:18px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:1.5px;text-transform:uppercase;background:#ff2d00;color:#04040a;padding:13px 26px;text-decoration:none">Uf d Warteliste →</a>
+    </div>
+  </div>
+  <script>
+  (function(){try{
+    var K='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+    fetch('https://pnynkzrqnfoshojqfqxn.supabase.co/rest/v1/rpc/stadtpuls_tuusche_count',{method:'POST',headers:{'apikey':K,'Authorization':'Bearer '+K,'Content-Type':'application/json'},body:'{}'})
+     .then(function(r){return r.ok?r.json():null})
+     .then(function(n){if(typeof n==='number'&&n>1){document.getElementById('tt-count').textContent=n;document.getElementById('tt-live').style.display='';}})
+     .catch(function(){});
+  }catch(e){}})();
+  </script>
+
   <!-- KATEGORIEN — BENTO -->
   <div class="section" id="kategorien">
     <div class="section-head">
