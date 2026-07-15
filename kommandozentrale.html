@@ -212,6 +212,38 @@ main{max-width:1180px;margin:0 auto;padding:24px;}
 #toast.ok{background:#c8ff00;}#toast.cyan{background:#00f5ff;}
 </style>
 <script>/* SP_BOOST v1 */function spBoostTable(t){return t==='event'?'eventfrog_events':'locations';}</script>
+<script>/* SP_TUUSCHE Zentrale */
+let _tuuscheLoaded=false;
+async function spTuuscheLoad(){
+  if(_tuuscheLoaded)return;_tuuscheLoaded=true;
+  try{
+    const H={'apikey':SK,'Authorization':'Bearer '+SK,'Content-Type':'application/json'};
+    const r=await fetch(SU+'/rest/v1/rpc/stadtpuls_tuusche_feed',{method:'POST',headers:H,body:'{}'});
+    if(!r.ok){document.getElementById('tuusche-list').innerHTML='<div style="color:#ff2d00;padding:14px 0">Feed-RPC fählt — setup_tuusche_v2.sql usführe.</div>';_tuuscheLoaded=false;return;}
+    const rows=await r.json();
+    document.getElementById('t-tuusche').textContent=rows.length;
+    if(!rows.length){document.getElementById('tuusche-list').innerHTML='<div style="color:#555;padding:14px 0">No kei Iiträg — verzell\u2019s wiiter.</div>';return;}
+    const week=rows.filter(x=>Date.now()-new Date(x.erfasst).getTime()<7*864e5).length;
+    const top=(k)=>{const c={};rows.forEach(x=>{const v=x[k];if(v!=null)c[v]=(c[v]||0)+1;});const e=Object.entries(c).sort((a,b)=>b[1]-a[1])[0];return e?((e[0]==='0'?'EGAL':'K'+e[0])+' ('+e[1]+'\u00d7)'):'\u2014';};
+    document.getElementById('tuusche-stats').innerHTML=
+      '<span><b style="color:#c8ff00;font-size:16px">'+rows.length+'</b> TOTAL</span>'+
+      '<span><b style="color:#e8e4d9;font-size:16px">'+week+'</b> LETSCHTI 7 T\u00c4G</span>'+
+      '<span>TOP BIETE: <b style="color:#ff2d00">'+top('biete_kreis')+'</b></span>'+
+      '<span>TOP SUECHT: <b style="color:#c8ff00">'+top('suche_kreis')+'</b></span>';
+    document.getElementById('tuusche-list').innerHTML=rows.map(x=>
+      '<div style="display:flex;gap:14px;flex-wrap:wrap;align-items:baseline;padding:10px 0;border-bottom:1px solid rgba(232,228,217,.06)">'+
+      '<span style="color:#ff2d00">BIETET K'+(x.biete_kreis||'?')+' \u00b7 '+(x.biete_zimmer||'?')+' Zi \u00b7 ~CHF '+(x.miete_ca||'?')+'</span>'+
+      '<span style="color:#555">\u2192</span>'+
+      '<span style="color:#c8ff00">SUECHT '+(x.suche_kreis===0?'EGAL':'K'+(x.suche_kreis||'?'))+' \u00b7 '+(x.suche_zimmer||'?')+' Zi</span>'+
+      '<span style="color:#555;margin-left:auto">'+(x.mail_maskiert||'')+' \u00b7 '+new Date(x.erfasst).toLocaleDateString('de-CH')+'</span></div>').join('');
+  }catch(e){_tuuscheLoaded=false;}
+}
+// Zähler im Tab beim Start
+document.addEventListener('DOMContentLoaded',function(){try{
+  fetch(SU+'/rest/v1/rpc/stadtpuls_tuusche_count',{method:'POST',headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Content-Type':'application/json'},body:'{}'})
+   .then(r=>r.ok?r.json():null).then(n=>{if(typeof n==='number')document.getElementById('t-tuusche').textContent=n;}).catch(()=>{});
+}catch(e){}});
+</script>
 </head>
 <body>
 
@@ -247,6 +279,7 @@ main{max-width:1180px;margin:0 auto;padding:24px;}
   <div class="tab" data-s="anf" onclick="tab('anf',this)">Anfragen <span class="cnt" id="t-anf">0</span></div>
   <div class="tab" data-s="verk" onclick="tab('verk',this)">Verkauf <span class="cnt" id="t-verk">0</span></div>
   <div class="tab" data-s="boost" onclick="tab('boost',this)">💰 Boosts <span class="cnt" id="t-boost">0</span></div>
+  <div class="tab" data-s="tuusche" onclick="tab('tuusche',this);spTuuscheLoad()">🏠 Tuusche <span class="cnt" id="t-tuusche">0</span></div>
   <div class="tab" data-s="fin" onclick="tab('fin',this)">Finanzen</div>
   <div class="tab" data-s="usr" onclick="tab('usr',this)">Users</div>
   <div class="tab" data-s="inh" onclick="tab('inh',this)">Inhalte</div>
@@ -317,6 +350,12 @@ main{max-width:1180px;margin:0 auto;padding:24px;}
   </div>
 
   <!-- BOOSTS -->
+  <div class="section" id="s-tuusche">
+    <div class="section-head bc">TUUSCHE <span class="badge">Wohnig-Warteliste · Pilot</span></div>
+    <div class="section-sub">Anonymi Iiträg vo de Tausch-Guerilla (Mail maskiert, Miete grob grundet). Volli Date: Supabase → Table Editor → wohnig_tuusche. Match-Motor chunnt ab ~200 Iiträg.</div>
+    <div id="tuusche-stats" style="display:flex;gap:22px;flex-wrap:wrap;margin:14px 0;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;color:#8a8778"></div>
+    <div id="tuusche-list" style="font-family:'DM Mono',monospace;font-size:11px"></div>
+  </div>
   <div class="section" id="s-boost">
     <div class="section-head bc">BOOSTS <span class="badge">bezahlte Platzierung</span></div>
     <div class="section-sub">Lokale/Events nach oben — auf Zeit. Tier wählen, Dauer setzen, Preis & Ablauf automatisch. Läuft die Zeit ab, fällt der Eintrag von selbst zurück.</div>

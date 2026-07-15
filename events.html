@@ -690,7 +690,10 @@ function fd(ds){
 /* ── LOAD ── */
 async function load(){
   try{
-    const r=await fetch(SU+'/rest/v1/eventfrog_events?aktiv=eq.true&datum_start=gte.'+td()+'&order=datum_start.asc,uhrzeit_start.asc&limit=2500',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Range-Unit':'items','Range':'0-2499','Prefer':'count=none'}});
+    // SP_PERF v1: schlanki Spalte + 28-Täg-Fänschter (statt alles) — Fallback uf die alti Query
+    const _end=(function(){const d=new Date(Date.now()+28*864e5);return d.toISOString().slice(0,10);})();
+    let r=await fetch(SU+'/rest/v1/eventfrog_events?select=id,ef_id,titel,beschreibung,datum_start,uhrzeit_start,kreis,venue_name,adresse,eintritt_typ,ticket_url,bild_url,sold_out,little_tickets_left,aktiv,featured,boost_tier,boost_until&aktiv=eq.true&datum_start=gte.'+td()+'&datum_start=lte.'+_end+'&order=datum_start.asc,uhrzeit_start.asc&limit=1500',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=none'}});
+    if(!r.ok)r=await fetch(SU+'/rest/v1/eventfrog_events?aktiv=eq.true&datum_start=gte.'+td()+'&order=datum_start.asc,uhrzeit_start.asc&limit=2500',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Range-Unit':'items','Range':'0-2499','Prefer':'count=none'}});
     A=(await r.json()).map(e=>({...e,_k:gk(e)}));
     A.sort((a,b)=>spTier(b)-spTier(a)||String(a.datum_start||'').localeCompare(String(b.datum_start||''))||String(a.uhrzeit_start||'').localeCompare(String(b.uhrzeit_start||''))); // SP_BOOST
     bStats();bTicker();bKreis();buildDateTabs();render();
