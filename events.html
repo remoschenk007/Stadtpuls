@@ -843,7 +843,7 @@ function evCard(ev,isPast){
     </div>
     <div class="ev-img">
       ${ev.bild_url
-        ?`<img src="${ev.bild_url}" alt="${ev.titel}" loading="lazy" onerror="this.parentElement.innerHTML='<div class=ev-ph>${em}</div>'">`
+        ?`<img src="${ev.bild_url}" alt="${ev.titel}" loading="lazy" decoding="async" onerror="this.parentElement.innerHTML='<div class=ev-ph>${em}</div>'">`
         :`<div class="ev-ph">${em}</div>`}
       ${isG?'<div class="badge-g">GRATIS</div>':ev.sold_out?'<div class="badge-sold">AUSVERKAUFT</div>':ev.little_tickets_left?'<div class="badge-few">FAST WEG!</div>':ev.ticket_url?'<div class="badge-t">TICKET</div>':''}
     </div>
@@ -880,7 +880,7 @@ function showMobilePreview(ev){
     <div style="position:absolute;bottom:0;left:0;right:0;background:#04040a;border-top:1px solid #1a1a2e;border-radius:16px 16px 0 0;max-height:80vh;overflow-y:auto">
       <div style="width:36px;height:3px;background:#333;border-radius:2px;margin:12px auto 0"></div>
 
-      ${ev.bild_url?`<img src="${ev.bild_url}" alt="${ev.titel}" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:grayscale(10%);margin-top:12px" onerror="this.style.display='none'">`:''}
+      ${ev.bild_url?`<img src="${ev.bild_url}" alt="${ev.titel}" loading="lazy" decoding="async" style="width:100%;aspect-ratio:16/9;object-fit:cover;display:block;filter:grayscale(10%);margin-top:12px" onerror="this.style.display='none'">`:''}
 
       <div style="padding:20px">
         <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
@@ -939,7 +939,7 @@ function showDetail(ev){
 
   document.getElementById('dp').innerHTML=`
     ${ev.bild_url
-      ?`<img class="dp-img" src="${ev.bild_url}" alt="${ev.titel}" onerror="this.outerHTML='<div class=dp-iph>${em}</div>'">`
+      ?`<img class="dp-img" src="${ev.bild_url}" alt="${ev.titel}" loading="lazy" decoding="async" onerror="this.outerHTML='<div class=dp-iph>${em}</div>'">`
       :`<div class="dp-iph">${em}</div>`}
     <div class="dp-top">
       <div class="dp-chips">
