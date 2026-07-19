@@ -8,6 +8,7 @@
 <!-- SEO — wird dynamisch via JS überschrieben wenn Event geladen -->
 <title>Event Zürich | Stadtpuls</title>
 <meta name="description" content="Event in Zürich — Details, Tickets, Karte und Bewertungen auf Stadtpuls.">
+<link id="canonical" rel="canonical" href="https://depuls.ch/event-profil.html">
 <meta name="robots" content="index, follow">
 <meta name="author" content="Stadtpuls — by raimondo*">
 
@@ -257,11 +258,15 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 
 <div id="page"></div>
 
+<script src="/event-links.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="sp-track.js"></script>
 <script>
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+// SP_PRETTY v1 — huebsche URLs aus event-links.js (wird naechtlich generiert)
+function spEventPath(id){return (window.SP_EVENT_LINKS&&window.SP_EVENT_LINKS[id])||('/event-profil.html?id='+id);}
+function spEventUrl(id){return 'https://depuls.ch'+spEventPath(id);}
 
 const c1=document.getElementById('cur'),c2=document.getElementById('cur2');
 document.addEventListener('mousemove',e=>{c1.style.left=e.clientX+'px';c1.style.top=e.clientY+'px';setTimeout(()=>{c2.style.left=e.clientX+'px';c2.style.top=e.clientY+'px'},80);});
@@ -303,7 +308,7 @@ async function load(){
   document.getElementById('page').innerHTML=`<div class="load-page"><div class="load-big">⚡</div><div style="font-size:8px;letter-spacing:3px;color:#111;text-transform:uppercase">Event wird geladen...</div></div>`;
 
   const params=new URLSearchParams(window.location.search);
-  const id=params.get('id')||params.get('slug');
+  const id=document.body.dataset.eventId||params.get('id')||params.get('slug');
   if(!id){return showErr('Kei Event aagäh');}
 
   try{
@@ -315,6 +320,9 @@ async function load(){
     }
     if(!data.length)return showErr('Event nöd gfunde');
     const ev=data[0];ev._k=gk(ev);
+    if(!document.body.dataset.eventId && window.SP_EVENT_LINKS && window.SP_EVENT_LINKS[ev.id]){
+      location.replace(window.SP_EVENT_LINKS[ev.id]); return; // SP_PRETTY v1 — alte URL -> huebsche URL
+    }
     spClaim(ev.id,'event',ev.titel,ev.kreis); // SP_BOOST Claim
 
     // Ähnliche Events — gleiche Kategorie
@@ -409,7 +417,7 @@ function render(ev,similar,venueEvs=[]){
   document.title=ev.titel+' — Event Zürich | Stadtpuls';
 
   // DYNAMIC SEO
-  const evUrl='https://depuls.ch/event-profil.html?id='+(ev.ef_id||ev.id);
+  const evUrl=spEventUrl(ev.ef_id||ev.id);
   const evDesc=(ev.beschreibung||'').substring(0,160)||`${ev.titel} — ${dateStr} in Zürich. Tickets und Details auf Stadtpuls.`;
 
   document.querySelector('meta[name="description"]').content=evDesc;
@@ -417,6 +425,7 @@ function render(ev,similar,venueEvs=[]){
   document.getElementById('og-title').content=ev.titel+' | Stadtpuls Zürich';
   document.getElementById('og-desc').content=evDesc;
   document.getElementById('og-url').content=evUrl;
+  if(!document.body.dataset.eventId){ const c=document.getElementById('canonical'); if(c) c.href=evUrl; }
   document.getElementById('tw-title').content=ev.titel+' | Stadtpuls';
   document.getElementById('tw-desc').content=evDesc;
   if(ev.bild_url){
@@ -590,7 +599,7 @@ function render(ev,similar,venueEvs=[]){
         <div class="sim-grid">
           ${similar.map(s=>{
             const sk=gk(s);const sh=uhr(s.uhrzeit_start);const sd=new Date(s.datum_start+'T12:00:00');
-            return`<a href="event-profil.html?id=${s.ef_id||s.id}" class="sim-card">
+            return`<a href="${spEventPath(s.ef_id||s.id)}" class="sim-card">
               <div class="sim-time"><div class="sim-th">${sh.split(':')[0]}</div><div class="sim-tm">${sh.split(':')[1]}</div></div>
               <div class="sim-body">
                 <div class="sim-title">${s.titel}</div>
@@ -611,7 +620,7 @@ function render(ev,similar,venueEvs=[]){
           ${venueEvs.map(s=>{
             const sk=gk(s);const sh=uhr(s.uhrzeit_start);const sd=new Date(s.datum_start+'T12:00:00');
             const isG2=s.eintritt_typ==='kostenlos';
-            return`<a href="event-profil.html?id=${s.ef_id||s.id}" class="sim-card" style="border-color:#333">
+            return`<a href="${spEventPath(s.ef_id||s.id)}" class="sim-card" style="border-color:#333">
               <div class="sim-time" style="border-right-color:#aaa">
                 <div class="sim-th">${sh.split(':')[0]}</div>
                 <div class="sim-tm">${sh.split(':')[1]}</div>
@@ -646,7 +655,7 @@ function render(ev,similar,venueEvs=[]){
         ${ev.ticket_url&&!isG
           ?`<a href="${ev.ticket_url}" target="_blank" class="side-ticket">🎟 TICKET KAUFE</a>`
           :isG?'<div class="side-ticket gr">✓ GRATIS EINTRITT</div>':''}
-        <a href="event-profil.html?id=${eid}" class="side-sec">📄 VOLLSTÄNDIGES PROFIL</a>
+        <a href="${spEventPath(eid)}" class="side-sec">📄 VOLLSTÄNDIGES PROFIL</a>
         <button class="side-sec" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(ev.adresse||ev.venue_name||'Zürich')}','_blank')">📍 AUF KARTE</button>
         <button class="side-sec" onclick="navigator.share?navigator.share({title:'${ev.titel.replace(/'/g,'').substring(0,40)}',url:location.href}):navigator.clipboard&&navigator.clipboard.writeText(location.href)">↗ TEILE</button>
         <button class="side-sec" onclick="downloadICS()">📅 IN KALENDER</button>

@@ -5,6 +5,9 @@ on:
     - cron: '0 4 * * *'      # täglich 04:00 UTC (~06:00 Zürich)
   workflow_dispatch: {}       # + manuell im Actions-Tab auslösbar
 
+permissions:
+  contents: write            # damit der Bot Seiten/Sitemap zurueck ins Repo committen darf
+
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -21,3 +24,16 @@ jobs:
         run: python import_locations.py
         env:
           SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+      - name: Event-Seiten generieren (SP_PRETTY v1 — huebsche URLs)
+        run: python generate_event_pages.py
+      - name: Kreis-Landingpages generieren
+        run: python generate_kreis_pages.py
+      - name: Sitemap generieren
+        run: python generate_sitemap.py
+      - name: Änderungen committen & pushen
+        run: |
+          git config user.name "Stadtpuls Bot"
+          git config user.email "bot@depuls.ch"
+          git add -A
+          git diff --staged --quiet || git commit -m "Auto: Event-Seiten, Kreis-Seiten, Sitemap aktualisiert [skip ci]"
+          git push

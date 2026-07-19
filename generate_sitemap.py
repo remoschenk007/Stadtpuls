@@ -43,9 +43,22 @@ for l in locs:
 open('sitemap-locations.xml','w',encoding='utf-8').write(urlset(lurls))
 print(f"sitemap-locations.xml: {len(lurls)} URLs")
 
-# 3) Kommende Events (vergangene bringen kein SEO)
-evs = fetch(f"/rest/v1/eventfrog_events?select=id,datum_start&datum_start=gte.{TODAY}&order=datum_start.asc&limit=3000")
-eurls = [(BASE + f"event-profil.html?id={e['id']}", TODAY) for e in evs]
+# 3) Kommende Events -- SP_PRETTY v1: liest die huebschen URLs, die
+#    generate_event_pages.py im selben Lauf zuvor geschrieben hat
+#    (event-links.json). Reihenfolge im nightly Job: erst
+#    generate_event_pages.py, DANN dieses Skript.
+import json as _json
+try:
+    _links = _json.load(open('event-links.json', encoding='utf-8'))
+    _seen = set()
+    eurls = []
+    for _url in _links.values():
+        if _url in _seen: continue
+        _seen.add(_url)
+        eurls.append((BASE.rstrip('/') + _url, TODAY))
+except FileNotFoundError:
+    print("WARNUNG: event-links.json fehlt -- generate_event_pages.py zuerst laufen lassen. Sitemap-Events bleibt leer.")
+    eurls = []
 open('sitemap-events.xml','w',encoding='utf-8').write(urlset(eurls))
 print(f"sitemap-events.xml: {len(eurls)} URLs")
 

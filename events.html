@@ -415,6 +415,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
 </script>
 </head>
 <body>
+<script src="/event-links.js"></script>
 <div id="cur"></div><div id="cur2"></div>
 <div class="scan"></div>
 
@@ -564,6 +565,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
 <script>
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+function spEventPath(id){return (window.SP_EVENT_LINKS&&window.SP_EVENT_LINKS[id])||('/event-profil.html?id='+id);}
 
 /* ── CURSOR ── */
 const c1=document.getElementById('cur'),c2=document.getElementById('cur2');
@@ -922,7 +924,7 @@ function showMobilePreview(ev){
         <div style="display:flex;flex-direction:column;gap:8px;padding-bottom:24px">
           ${ev.ticket_url&&!isG?`<a href="${ev.ticket_url}" target="_blank" style="background:#ff2d00;color:#fff;height:56px;line-height:56px;text-align:center;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;display:block">🎟 TICKET KAUFE</a>`:''}
           ${isG?`<div style="background:#c8ff00;color:#000;height:56px;line-height:56px;text-align:center;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase">✓ GRATIS EINTRITT</div>`:''}
-          <a href="event-profil.html?id=${eid}" style="background:transparent;color:#e8e4d9;border:1px solid #333;height:52px;line-height:52px;text-align:center;font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:block">📄 VOLLSTÄNDIGES PROFIL →</a>
+          <a href="${spEventPath(eid)}" style="background:transparent;color:#e8e4d9;border:1px solid #333;height:52px;line-height:52px;text-align:center;font-family:\'DM Mono\',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;text-decoration:none;display:block">📄 VOLLSTÄNDIGES PROFIL →</a>
           <button onclick="closeMobilePreview()" style="background:transparent;color:#aaa;border:1px solid #1a1a2e;height:44px;font-family:\'DM Mono\',monospace;font-size:8px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;width:100%">✕ SCHLIESSE</button>
         </div>
       </div>
@@ -968,9 +970,9 @@ function showDetail(ev){
     <div class="dp-acts">
       ${ev.ticket_url&&!isG?`<a href="${ev.ticket_url}" target="_blank" class="dp-main">🎟 TICKET KAUFE</a>`:''}
       ${isG?'<div class="dp-main gr">✓ GRATIS EINTRITT</div>':''}
-      <a href="event-profil.html?id=${eid}" class="dp-s" style="display:block;text-decoration:none;text-align:center;line-height:48px;cursor:pointer" onclick="window.location.href='event-profil.html?id=${eid}'">📄 VOLLSTÄNDIGES PROFIL</a>
+      <a href="${spEventPath(eid)}" class="dp-s" style="display:block;text-decoration:none;text-align:center;line-height:48px;cursor:pointer" onclick="window.location.href='${spEventPath(eid)}'">📄 VOLLSTÄNDIGES PROFIL</a>
       <button class="dp-s" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(ev.adresse||ev.venue_name||'Zürich')}','_blank')">📍 AUF KARTE</button>
-      <button class="dp-s" onclick="navigator.share?navigator.share({title:'${(ev.titel||'').replace(/'/g,'').substring(0,40)}',url:location.origin+'/event-profil.html?id=${eid}'}):navigator.clipboard&&navigator.clipboard.writeText(location.origin+'/event-profil.html?id=${eid}')">↗ TEILE</button>
+      <button class="dp-s" onclick="navigator.share?navigator.share({title:'${(ev.titel||'').replace(/'/g,'').substring(0,40)}',url:location.origin+spEventPath(eid)}):navigator.clipboard&&navigator.clipboard.writeText(location.origin+spEventPath(eid))">↗ TEILE</button>
     </div>
 
     <div class="dp-p5">
