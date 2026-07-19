@@ -126,7 +126,6 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 }
 </style>
 <!-- SP_SEO v1 -->
-<title>Laden-Profil — Shopping Zürich | Stadtpuls</title>
 <meta property="og:title" content="Laden-Profil — Shopping Zürich | Stadtpuls">
 <meta property="og:description" content="Laden-Profile aus Zürich: Öffnungszeiten, Kreis und Charakter — handkuratiert auf Stadtpuls.">
 <meta property="og:url" content="https://depuls.ch/shopping-profil.html">
@@ -278,12 +277,6 @@ const KREIS_CHAR={
   9:'ALTSTETTEN',10:'HÖNGG',11:'OERLIKON',12:'SCHWAMENDINGEN'
 };
 
-const REVIEWS=[
-  {user:'@zuri_style',stars:5,text:'Absolut empfehlenswert — einzigartiges Sortiment, top Beratung.'},
-  {user:'@langstrasse_shopper',stars:4,text:'Geiler Laden, gute Qualität. Komm immer wieder.'},
-  {user:'@stadtpuls_user',stars:5,text:'Genau so ein Shop braucht Zürich. Authentisch, kein Mainstream.'},
-];
-
 const ROUTE=[
   {num:1,name:'Flohmarkt Kanzlei',meta:'08:00 · Gratis · K3',here:false},
   {num:2,name:'',meta:'· K1',here:true},
@@ -408,11 +401,6 @@ function renderProfil(l,similar){
       +'<div class="sim-sub">'+ssub.e+' '+ssub.n+'</div></a>';
   }).join('');
 
-  // REVIEWS
-  const reviewsHTML=REVIEWS.map(function(r){
-    return '<div class="rev-item"><div class="rev-top"><div class="rev-user">'+r.user+'</div><div class="rev-stars">'+'★'.repeat(r.stars)+'</div></div><div class="rev-text">'+r.text+'</div></div>';
-  }).join('');
-
   document.getElementById('main-content').innerHTML=
     offeBanner+
 
@@ -507,12 +495,6 @@ function renderProfil(l,similar){
     +'Quelle: Zürich Tourismus · zuerich.com · CC BY-SA'
     +'</div>'
 
-    // REVIEWS
-    +'<div class="reviews-wrap">'
-    +'<div class="section-title">REVIEWS</div>'
-    +'<div class="rev-count">COMMUNITY BEWERTUNGE · PHASE 5 LIVE</div>'
-    +reviewsHTML
-    +'</div>'
     +'</div>'
 
     // RIGHT — DETAILS BOX
