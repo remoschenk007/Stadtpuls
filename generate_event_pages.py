@@ -67,7 +67,8 @@ def render_page(template, ev):
         f'<title>{full_title}</title>', 1)
 
     out = out.replace(
-        '<meta name="description" content="Event in Zürich — Details, Tickets, Karte und Bewertungen auf Stadtpuls.">',
+        '<meta name="description" content="Event in Zürich — Details, Tickets, Karte und Bewertungen auf Stadtpuls.">\n'
+        '<link id="canonical" rel="canonical" href="https://depuls.ch/event-profil.html">',
         f'<meta name="description" content="{desc_esc}">\n<link id="canonical" rel="canonical" href="{canonical}">', 1)
 
     out = out.replace('content="https://depuls.ch/og-events.jpg"', f'content="{bild}"')
@@ -131,7 +132,10 @@ def render_page(template, ev):
         '<script src="/event-links.js"></script>\n<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>', 1)
 
     for name in ['index.html', 'gastro.html', 'nachtleben.html', 'events.html', 'shopping.html',
-                 'dating.html', 'sp-track.js', 'favicon.svg']:
+                 'dating.html', 'community.html', 'datenschutz.html', 'gps.html', 'immobilien.html',
+                 'impressum.html', 'jobs.html', 'kontakt.html', 'login.html', 'mobilitaet.html',
+                 'musik.html', 'news.html', 'partners.html', 'platzierung.html', 'quartiere.html',
+                 'sp-track.js', 'favicon.svg']:
         out = out.replace(f'href="{name}"', f'href="/{name}"')
         out = out.replace(f'src="{name}"', f'src="/{name}"')
 
