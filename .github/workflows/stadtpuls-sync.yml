@@ -26,6 +26,8 @@ jobs:
           SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
       - name: Event-Seiten generieren (SP_PRETTY v1 — huebsche URLs)
         run: python generate_event_pages.py
+      - name: Lokal-Seiten generieren (SP_PRETTY_LOC v1 — Gastro + Shopping)
+        run: python generate_location_pages.py
       - name: Kreis-Landingpages generieren
         run: python generate_kreis_pages.py
       - name: Sitemap generieren

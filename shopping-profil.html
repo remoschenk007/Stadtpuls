@@ -259,9 +259,13 @@ function spClaim(id,typ,name,kreis){try{
 </footer>
 
 
+<script src="/location-links.js"></script>
 <script>
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+// SP_PRETTY_LOC v1 -- huebsche URLs aus location-links.js (naechtlich generiert)
+function spLocPath(id){return (window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[id])||('/shopping-profil.html?id='+id);}
+function spLocUrl(id){return 'https://depuls.ch'+spLocPath(id);}
 
 const SUBKAT={
   127:{e:'👗',n:'MODE'},128:{e:'🇨🇭',n:'SWISS MADE'},129:{e:'⌚',n:'UHREN'},
@@ -296,6 +300,7 @@ async function sbGet(path){
 }
 
 function getIdFromUrl(){
+  if(document.body.dataset.locationId)return document.body.dataset.locationId;
   const p=new URLSearchParams(window.location.search);
   return p.get('id')||null;
 }
@@ -320,6 +325,12 @@ function updateSEO(l,sub){
   const title=l.name+' — '+sub.n+' Kreis '+(l.kreis||'?')+' | Stadtpuls Zürich';
   document.title=title;
   document.getElementById('page-title').textContent=title;
+  if(!document.body.dataset.locationId){
+    const c=document.getElementById('page-canonical'); if(c) c.href=spLocUrl(l.id);
+    const ogt=document.getElementById('og-title'); if(ogt) ogt.content=title;
+    const ogu=document.getElementById('og-url'); if(ogu) ogu.content=spLocUrl(l.id);
+    const twt=document.getElementById('tw-title'); if(twt) twt.content=title;
+  }
   document.getElementById('page-desc').content=l.beschreibung_kurz||l.beschreibung||l.name+' Shop in Zürich';
   const schema={
     "@context":"https://schema.org",
@@ -545,6 +556,9 @@ async function loadProfil(){
       return;
     }
     const l=data[0];
+    if(!document.body.dataset.locationId && window.SP_LOCATION_LINKS && window.SP_LOCATION_LINKS[l.id]){
+      location.replace(window.SP_LOCATION_LINKS[l.id]); return; // SP_PRETTY_LOC v1
+    }
     spClaim(l.id,'location',l.name,l.kreis); // SP_BOOST Claim
     let similar=[];
     try{

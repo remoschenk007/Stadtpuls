@@ -543,6 +543,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
 </script>
 </head>
 <body>
+<script src="/location-links.js"></script>
 <div id="cur"></div><div id="cur2"></div>
 
 <!-- TICKER TOP -->
@@ -1745,7 +1746,7 @@ function openDet(l){
   // VOLLSTÄNDIGES PROFIL BUTTON
   const profilBtn=document.getElementById('p-profil-btn');
   if(profilBtn){
-    profilBtn.onclick=()=>window.location.href='gastro-profil.html?id='+l.id;
+    profilBtn.onclick=()=>window.location.href=(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])||('gastro-profil.html?id='+l.id);
   }
   
   document.getElementById('panel').classList.add('open');

@@ -437,6 +437,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
 <meta name="twitter:image" content="https://depuls.ch/og-image.png">
 </head>
 <body>
+<script src="/location-links.js"></script>
 <div id="cur"></div><div id="cur2"></div>
 
 <!-- TICKER TOP -->
@@ -1519,7 +1520,7 @@ function openDet(l){
   // Profil Button
   const profilBtn=document.getElementById('p-profil-btn');
   if(profilBtn){
-    profilBtn.onclick=()=>{window.location.href='shopping-profil.html?id='+l.id;};
+    profilBtn.onclick=()=>{window.location.href=(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])||('shopping-profil.html?id='+l.id);};
   }
 
   document.getElementById('ov').classList.add('on');

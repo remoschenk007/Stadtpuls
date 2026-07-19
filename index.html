@@ -284,6 +284,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
 <meta name="twitter:image" content="https://depuls.ch/og-image.png">
 </head>
 <body>
+<script src="/location-links.js"></script>
 <div id="dot"></div><div id="ring"></div>
 <div class="scan"></div><div class="gridl"></div>
 <div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
@@ -759,6 +760,7 @@ window.goRandomHome=async function(){
     if(!data||!data.length){cta.textContent='WÜRFLE →';return;}
     const l=data[0];
     const url = l.kategorie==='nachtleben' ? ('nachtleben-profil.html?slug='+encodeURIComponent(l.slug||l.id))
+              : (window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id]) ? window.SP_LOCATION_LINKS[l.id]
               : l.kategorie==='shopping'   ? ('shopping-profil.html?id='+l.id)
               : ('gastro-profil.html?id='+l.id);
     if(window.spTrack)try{spTrack('click','location',l.id,{meta:{via:'wuerfel_home'}});}catch(e){}
@@ -1022,7 +1024,7 @@ render();loadCounts();
   const now=new Date().toISOString();
   const r=await fetch(U+'/rest/v1/locations?select=id,name,slug,kategorie,kreis,bild_url,beschreibung_kurz,subkategorie,boost_tier,boost_until&boost_tier=eq.premium&boost_until=gte.'+encodeURIComponent(now)+'&aktiv=eq.true&order=boost_until.asc&limit=3',{headers:{'apikey':K,'Authorization':'Bearer '+K}});
   if(!r.ok)return;const rows=await r.json();if(!Array.isArray(rows)||!rows.length)return;
-  const P={gastro:l=>'gastro-profil.html?id='+l.id,nachtleben:l=>'nachtleben-profil.html?slug='+encodeURIComponent(l.slug||l.id),shopping:l=>'shopping-profil.html?id='+l.id};
+  const P={gastro:l=>(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])||('gastro-profil.html?id='+l.id),nachtleben:l=>'nachtleben-profil.html?slug='+encodeURIComponent(l.slug||l.id),shopping:l=>(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])||('shopping-profil.html?id='+l.id)};
   const esc=s=>String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
   document.getElementById('angsagt-list').innerHTML=rows.map(l=>{
     const href=(P[l.kategorie]||P.gastro)(l);

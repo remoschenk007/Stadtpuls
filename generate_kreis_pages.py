@@ -25,14 +25,20 @@ KREIS = {
 }
 
 KATEGORIEN = {
- 'gastro':     dict(pfad='gastro',     h1='ESSE IM',   wort='Restaurants, Caf\u00e9s und Bars', titel='Restaurants', profil=lambda l: f"/gastro-profil.html?id={l['id']}",
+ 'gastro':     dict(pfad='gastro',     h1='ESSE IM',   wort='Restaurants, Caf\u00e9s und Bars', titel='Restaurants', profil=lambda l: _LOC_LINKS.get(l['id']) or f"/gastro-profil.html?id={l['id']}",
                     faqv='isst me', faqv_de='isst man'),
  'nachtleben': dict(pfad='nachtleben', h1='USGAH IM',  wort='Clubs, Bars und Late-Night-Spots', titel='Nachtleben', profil=lambda l: f"/nachtleben-profil.html?slug={l.get('slug') or l['id']}",
                     faqv='gaht me us', faqv_de='geht man aus'),
- 'shopping':   dict(pfad='shopping',   h1='SHOPPE IM', wort='L\u00e4den, Boutiquen und Brockis', titel='Shopping', profil=lambda l: f"/shopping-profil.html?id={l['id']}",
+ 'shopping':   dict(pfad='shopping',   h1='SHOPPE IM', wort='L\u00e4den, Boutiquen und Brockis', titel='Shopping', profil=lambda l: _LOC_LINKS.get(l['id']) or f"/shopping-profil.html?id={l['id']}",
                     faqv='shoppt me', faqv_de='kauft man ein'),
 }
 MIN_LOKALE = 3  # unter 3 Lokal: kei Siite (Thin-Content-Schutz)
+
+# SP_PRETTY_LOC v1 -- huebsche Location-URLs, von generate_location_pages.py geschrieben
+try:
+    _LOC_LINKS = json.load(open('location-links.json', encoding='utf-8'))
+except FileNotFoundError:
+    _LOC_LINKS = {}
 
 def fetch(path):
     req = urllib.request.Request(SU + path, headers={"apikey": SK, "Authorization": "Bearer " + SK})
