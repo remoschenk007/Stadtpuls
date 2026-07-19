@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+<head>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title id="page-title">Ziegel oh Lac — restaurant Kreis 2 | Stadtpuls Zürich</title>
+<meta name="description" id="page-desc" content="Direkt am See mit Sicht auf die Stadt und – manchmal sogar die Alpen – befindet sich das zur Roten Fabrik gehörende «Ziegel oh Lac».">
+<link rel="canonical" id="page-canonical" href="https://depuls.ch/gastro/ziegel-oh-lac-83e9cc40/">
+<script type="application/ld+json" id="schema-ld">{"@context": "https://schema.org", "@type": "Restaurant", "name": "Ziegel oh Lac", "description": "Direkt am See mit Sicht auf die Stadt und – manchmal sogar die Alpen – befindet sich das zur Roten Fabrik gehörende «Ziegel oh Lac».", "url": "https://depuls.ch/gastro/ziegel-oh-lac-83e9cc40/", "address": {"@type": "PostalAddress", "streetAddress": "Seestrasse 407", "postalCode": "8038", "addressLocality": "Zürich", "addressCountry": "CH"}, "telephone": "+41 44 481 62 42 ", "image": "https://www.zuerich.com/sites/default/files/keyvisual/web_zurich_ziegelohlac_01.jpg", "servesCuisine": "restaurant", "priceRange": "CHF"}</script>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px);pointer-events:none;z-index:9997}
+#cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(255,45,0,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0s,top 0s}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid rgba(255,45,0,.1);position:sticky;top:0;background:#04040a;z-index:300}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px;text-decoration:none}
+.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
+.nav-links{display:flex;gap:28px}
+.nl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);text-decoration:none;transition:.15s}
+.nl:hover{color:#e8e4d9}
+.nl.on{color:#ff2d00}
+.btn-mm{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none;text-decoration:none}
+.breadcrumb{padding:14px 40px;border-bottom:1px solid rgba(255,45,0,.06);display:flex;align-items:center;gap:8px}
+.bc-link{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.25);text-decoration:none;transition:.15s;cursor:none}
+.bc-link:hover{color:#ff2d00}
+.bc-sep{font-size:9px;color:rgba(232,228,217,.1)}
+.bc-current{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.5)}
+.hero-img{width:100%;height:420px;object-fit:cover;display:block}
+.hero-wrap{position:relative;overflow:hidden}
+.hero-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,#04040a,transparent);pointer-events:none}
+.hero-placeholder{width:100%;height:420px;background:linear-gradient(135deg,#07070f,#0a0a18);display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.3}
+.profil-header{padding:28px 40px 0}
+.ph-top{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.stars{color:#c8ff00;font-size:14px;letter-spacing:2px}
+.typ-badge{font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;background:#ff2d00;color:#e8e4d9}
+.typ-badge.volt{background:#c8ff00;color:#04040a}
+.typ-badge.cyan{background:#00f5ff;color:#04040a}
+.ph-addr{font-size:10px;color:rgba(232,228,217,.3);letter-spacing:1px}
+.profil-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(60px,10vw,120px);line-height:.85;text-transform:uppercase;color:#e8e4d9;margin-bottom:8px}
+.profil-subname{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(28px,5vw,48px);line-height:.9;text-transform:uppercase;color:#ff2d00;margin-bottom:20px}
+.content-grid{display:grid;grid-template-columns:1fr 380px;gap:40px;padding:28px 40px 0;align-items:start}
+.profil-desc{font-size:13px;color:rgba(232,228,217,.55);line-height:2;margin-bottom:28px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase;color:#e8e4d9;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-title::before{content:'—';color:#ff2d00}
+.section-body{font-size:12px;color:rgba(232,228,217,.4);line-height:1.9;margin-bottom:28px}
+.res-box{border:1px solid rgba(200,255,0,.2);background:rgba(200,255,0,.03);padding:22px;margin-bottom:28px}
+.rb-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.rb-badge{font-size:7px;letter-spacing:2px;text-transform:uppercase;background:#c8ff00;color:#04040a;padding:3px 8px}
+.rb-title{font-size:11px;color:#c8ff00;letter-spacing:1px}
+.rb-sub{font-size:10px;color:rgba(200,255,0,.4);margin-bottom:16px}
+.btn-res{display:block;width:100%;background:#c8ff00;color:#04040a;border:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:16px;text-align:center;cursor:none;transition:opacity .2s;margin-bottom:8px}
+.btn-res:hover{opacity:.85}
+.reviews-wrap{margin-bottom:40px}
+.rev-count{font-size:9px;letter-spacing:2px;color:rgba(232,228,217,.2);margin-bottom:14px}
+.rev-item{border:1px solid rgba(255,45,0,.07);padding:16px 18px;margin-bottom:6px;background:#07070f;transition:.15s}
+.rev-item:hover{background:#0a0a14;border-color:rgba(255,45,0,.15)}
+.rev-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.rev-user{font-size:9px;color:#ff2d00;letter-spacing:1px}
+.rev-stars{color:#c8ff00;font-size:11px;letter-spacing:2px}
+.rev-text{font-size:11px;color:rgba(232,228,217,.35);line-height:1.8}
+.details-box{border:1px solid rgba(255,45,0,.1);background:#07070f;position:sticky;top:70px}
+.db-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;padding:16px 20px;border-bottom:1px solid rgba(255,45,0,.08)}
+.db-row{display:flex;align-items:flex-start;justify-content:space-between;padding:12px 20px;border-bottom:1px solid rgba(255,45,0,.05);gap:12px}
+.db-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);flex-shrink:0;padding-top:1px}
+.db-val{font-size:10px;color:#e8e4d9;text-align:right;line-height:1.6}
+.db-val a{color:#00f5ff;text-decoration:none}
+.db-val a:hover{color:#e8e4d9}
+.db-actions{padding:16px 20px;border-top:1px solid rgba(255,45,0,.08)}
+.btn-back{display:block;border:1px solid rgba(232,228,217,.08);color:rgba(232,228,217,.3);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:12px;text-align:center;cursor:none;transition:.15s;text-decoration:none;margin-top:8px}
+.btn-back:hover{border-color:rgba(255,45,0,.3);color:#ff2d00}
+.score-box{padding:16px 20px;border-bottom:1px solid rgba(255,45,0,.08);background:rgba(255,45,0,.03)}
+.sb-score{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:#ff2d00;line-height:1}
+.sb-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-top:2px}
+.sb-stars{color:#c8ff00;font-size:12px;letter-spacing:2px;margin-top:4px}
+.featured-strip{background:#c8ff00;padding:8px 20px;display:flex;align-items:center;gap:8px}
+.fs-text{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#04040a;font-weight:bold}
+/* ACTION BUTTONS APPLE 44px */
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 20px 20px}
+.act-btn{min-height:44px;padding:12px 8px;border:1px solid rgba(255,45,0,.12);color:rgba(232,228,217,.5);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;text-align:center;cursor:none;transition:.15s;background:#0a0a14;display:flex;align-items:center;justify-content:center;gap:6px}
+.act-btn:hover{color:#e8e4d9;border-color:rgba(255,45,0,.4);background:#0f0f1a}
+.similar-section{padding:40px 40px;border-top:1px solid rgba(255,45,0,.06)}
+.similar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:16px}
+.sim-card{border:1px solid rgba(255,45,0,.07);border-top:none;border-left:none;padding:18px;cursor:none;transition:.15s;text-decoration:none;display:block}
+.sim-card:nth-child(3n+1){border-left:1px solid rgba(255,45,0,.07)}
+.sim-card:first-child,.sim-card:nth-child(2),.sim-card:nth-child(3){border-top:1px solid rgba(255,45,0,.07)}
+.sim-card:hover{background:#06060e}
+.sim-img{width:100%;height:100px;object-fit:cover;margin-bottom:10px;opacity:.7}
+.sim-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:4px}
+.sim-sub{font-size:9px;color:#ff2d00;text-transform:uppercase;letter-spacing:.5px}
+.sim-kreis{font-size:8px;color:rgba(232,228,217,.2);margin-top:4px;letter-spacing:1px}
+.ticker-wrap{border-top:1px solid rgba(255,45,0,.07);overflow:hidden}
+.ticker-row{padding:6px 0;overflow:hidden;border-bottom:1px solid rgba(255,45,0,.04)}
+.tick{display:flex;white-space:nowrap}
+.tick.l{animation:tL 28s linear infinite}
+.ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(255,45,0,.28)}
+.ti b{color:#ff2d00;font-weight:400}
+
+.fc-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:12px}
+.fc-link{display:block;font-size:10px;color:rgba(232,228,217,.22);margin-bottom:8px;letter-spacing:.3px;transition:.15s;text-decoration:none;cursor:none}
+.fc-link:hover{color:#e8e4d9}
+.fc-desc{font-size:10px;color:rgba(232,228,217,.18);line-height:1.9;margin-top:8px}
+.fc-copy{font-size:8px;color:rgba(232,228,217,.1);margin-top:16px;letter-spacing:.5px}
+.loading-wrap{min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.loading-dots{display:flex;gap:8px}
+.loading-dot{width:8px;height:8px;border-radius:50%;background:#ff2d00;animation:bounce 1.2s infinite}
+.loading-dot:nth-child(2){animation-delay:.2s}
+.loading-dot:nth-child(3){animation-delay:.4s}
+.loading-txt{font-size:10px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase}
+.error-wrap{min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;padding:40px}
+.error-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:rgba(232,228,217,.1);text-transform:uppercase}
+.error-sub{font-size:10px;color:rgba(232,228,217,.2);letter-spacing:1px}
+.error-back{display:inline-block;margin-top:16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:10px 20px;text-decoration:none;cursor:none}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+@keyframes tL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
+@media(max-width:768px){
+  #cur,#cur2{display:none}
+  body{cursor:auto}
+  nav{padding:0 16px;height:48px}
+  .nav-links{display:none}
+  .breadcrumb{padding:10px 16px}
+  .hero-img,.hero-placeholder{height:260px}
+  .profil-header{padding:20px 16px 0}
+  .profil-name{font-size:clamp(48px,14vw,80px)}
+  .profil-subname{font-size:clamp(22px,6vw,36px)}
+  .content-grid{grid-template-columns:1fr;padding:16px 16px 0}
+  .details-box{position:static;margin-bottom:24px;order:-1}
+  .action-grid{gap:10px;padding:0 16px 20px}
+  .act-btn{min-height:52px;font-size:12px}
+  .similar-section{padding:24px 16px}
+  .similar-grid{grid-template-columns:1fr 1fr}
+  .sim-card:nth-child(3n+1){border-left:none}
+  .sim-card:nth-child(2n+1){border-left:1px solid rgba(255,45,0,.07)}
+  
+}
+</style>
+<!-- SP_SEO v1 -->
+<title>Lokal-Profil — Gastro Zürich | Stadtpuls</title>
+<meta id="og-title" property="og:title" content="Ziegel oh Lac — restaurant Kreis 2 | Stadtpuls Zürich">
+<meta id="og-desc" property="og:description" content="Direkt am See mit Sicht auf die Stadt und – manchmal sogar die Alpen – befindet sich das zur Roten Fabrik gehörende «Ziegel oh Lac».">
+<meta id="og-url" property="og:url" content="https://depuls.ch/gastro/ziegel-oh-lac-83e9cc40/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_CH">
+<meta property="og:site_name" content="Stadtpuls">
+<meta name="twitter:card" content="summary_large_image">
+<meta id="tw-title" name="twitter:title" content="Ziegel oh Lac — restaurant Kreis 2 | Stadtpuls Zürich">
+<meta property="og:image" content="https://www.zuerich.com/sites/default/files/keyvisual/web_zurich_ziegelohlac_01.jpg">
+<meta name="twitter:image" content="https://www.zuerich.com/sites/default/files/keyvisual/web_zurich_ziegelohlac_01.jpg">
+</head>
+<body data-location-id="83e9cc40-bc44-4fe5-a5f1-bb3fd61de4a5">
+<div id="cur"></div><div id="cur2"></div>
+
+<nav>
+  <a class="logo" href="/index.html"><div class="ldot"></div>STADTPULS</a>
+  <div class="nav-links">
+    <a class="nl on" href="/gastro.html">GASTRO</a>
+    <a class="nl" href="index.html?page=nachtleben">NACHTLEBE</a>
+    <a class="nl" href="/shopping.html">SHOPPING</a>
+    <a class="nl" href="index.html?page=events">EVENTS</a>
+  </div>
+  <a class="btn-mm" href="index.html?page=login">MITMACHE</a>
+</nav>
+
+<div class="breadcrumb">
+  <a class="bc-link" href="/index.html">HOME</a>
+  <span class="bc-sep">›</span>
+  <a class="bc-link" href="/gastro.html">GASTRO</a>
+  <span class="bc-sep">›</span>
+  <span class="bc-current" id="bc-name">—</span>
+</div>
+
+<div id="main-content"><div class="ssr-fallback" style="max-width:640px;margin:30px auto;padding:0 20px;font-family:'DM Mono',monospace;color:#e8e4d9"><h1 style="font-size:22px;margin-bottom:8px">Ziegel oh Lac</h1><p style="color:#999;font-size:12px;margin-bottom:14px">restaurant · Kreis 2 · Seestrasse 407</p><p style="font-size:13px;line-height:1.6">Direkt am See mit Sicht auf die Stadt und – manchmal sogar die Alpen – befindet sich das zur Roten Fabrik gehörende «Ziegel oh Lac».</p></div></div>
+
+<div class="ticker-wrap">
+  <div class="ticker-row"><div class="tick l" id="ticker"></div></div>
+</div>
+
+<style>
+/* ═══ ORIGINAL STADTPULS FOOTER ═══ */
+footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
+.ftk{background:rgba(255,45,0,.06);padding:.4rem 0;overflow:hidden;white-space:nowrap;border-bottom:1px solid rgba(255,45,0,.1)}
+.fti{display:inline-block;animation:tkr 22s linear infinite}
+.fti span{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;color:rgba(255,45,0,.45);text-transform:uppercase;margin:0 2rem}
+@keyframes tkr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;max-width:1320px;margin:0 auto;padding:2.5rem 1.5rem 2rem}
+@media(max-width:768px){.fg{grid-template-columns:1fr 1fr;padding:2rem 1.5rem}.footer-brand{grid-column:span 2}}
+.fbl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:1.6rem;letter-spacing:.1em;display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;color:#e8e4d9}
+.fbdot{width:8px;height:8px;background:#ff2d00;border-radius:50%;box-shadow:0 0 8px #ff2d00;flex-shrink:0}
+.footer-brand p{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(232,228,217,0.4);line-height:1.9;max-width:280px}
+.fc h5{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:#ff2d00;margin-bottom:1rem;font-weight:500}
+.fc ul{list-style:none;margin:0;padding:0}
+.fc li{font-family:'DM Mono',monospace;font-size:.75rem;margin-bottom:.6rem}
+.fc li a{color:rgba(232,228,217,0.45);text-decoration:none;cursor:pointer;transition:color .2s}
+.fc li a:hover{color:#e8e4d9}
+.fbot{max-width:1320px;margin:0 auto;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.05)}
+.fbot p{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;margin:0}
+</style>
+
+<!-- SP_BOOST v1: CLAIM — "Das isch mis Lokal" (Verkaufseinstieg) -->
+<style>
+.sp-claim{max-width:1100px;margin:28px auto;padding:16px 18px;border:1px dashed rgba(200,255,0,.35);display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.sp-claim-txt{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;color:#888;text-transform:uppercase;line-height:1.7}
+.sp-claim-btn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;color:#04040a;background:#c8ff00;padding:10px 20px;text-decoration:none;white-space:nowrap;transition:background .15s}
+.sp-claim-btn:hover{background:#e8e4d9}
+</style>
+<div class="sp-claim" id="sp-claim" style="display:none">
+  <div class="sp-claim-txt">Bisch du de Inhaber? Hol dir dini Platzierig — ganz obe i dinere Kategorie.</div>
+  <a class="sp-claim-btn" id="sp-claim-link" href="/platzierung.html">DAS ISCH MIS LOKAL →</a>
+</div>
+<script>
+function spClaim(id,typ,name,kreis){try{
+  const a=document.getElementById('sp-claim-link');
+  a.href='platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
+  document.getElementById('sp-claim').style.display='flex';
+}catch(e){}}
+</script>
+<footer>
+  <div class="ftk">
+    <div class="fti">
+      <span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span><span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span>
+    </div>
+  </div>
+  <div class="fg">
+    <div class="footer-brand"><div class="fbl"><div class="fbdot"></div>STADTPULS</div><p>dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.<br><br>© 2026 by raimondo* — Zürich</p></div>
+    <div class="fc">
+      <h5>Entdecken</h5>
+      <ul>
+        <li><a href="/gastro.html">Gastro & Bars</a></li>
+        <li><a href="/nachtleben.html">Nachtleben</a></li>
+        <li><a href="/shopping.html">Shopping</a></li>
+        <li><a href="/events.html">Events</a></li>
+        <li><a href="/quartiere.html">Quartiere</a></li>
+        <li><a href="/musik.html">Musik & Sound</a></li>
+        <li><a href="/mobilitaet.html">Mobilität</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h5>Community</h5>
+      <ul>
+        <li><a href="/community.html">Feed & Posts</a></li>
+        <li><a href="/dating.html">People & Dates</a></li>
+        <li><a href="/jobs.html">Jobs Züri</a></li>
+        <li><a href="/news.html">News & Stories</a></li>
+        <li><a href="/gps.html">GPS — Wo bisch du?</a></li>
+        <li><a href="/partners.html">Kooperatione</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h5>Mitmache</h5>
+      <ul>
+        <li><a href="/login.html">Einlogge</a></li>
+        <li><a href="/login.html">Profil aalege</a></li>
+        <li><a href="/community.html">Blogger werde</a></li>
+        <li><a href="/immobilien.html">Inserat schalte</a></li>
+        <li><a href="/partners.html">Partner werde</a></li>
+        <li><a href="/kontakt.html">Kontakt</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <p>© 2026 depuls.ch — by raimondo* — Zürich</p>
+    <p style="display:flex;gap:14px"><span>AGB</span> · <a href="/datenschutz.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Datenschutz</a> · <a href="/impressum.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Impressum</a></p>
+  </div>
+</footer>
+
+
+<script src="/location-links.js"></script>
+<script>
+const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+// SP_PRETTY_LOC v1 -- huebsche URLs aus location-links.js (naechtlich generiert)
+function spLocPath(id){return (window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[id])||('/gastro-profil.html?id='+id);}
+function spLocUrl(id){return 'https://depuls.ch'+spLocPath(id);}
+
+const SUBKAT={
+  102:{e:'☕',n:'CAFÉ'},184:{e:'🧀',n:'SCHWEIZER'},185:{e:'🍕',n:'ITALIAN'},
+  186:{e:'🥘',n:'SPANISCH'},187:{e:'🥐',n:'FRANÇAIS'},188:{e:'🍜',n:'ASIATISCH'},
+  189:{e:'🧆',n:'NAHOST'},190:{e:'🌮',n:'MEXIKANISCH'},191:{e:'🫒',n:'MEDITERRAN'},
+  192:{e:'🥖',n:'BISTRO'},193:{e:'🍔',n:'AMERICAN'},194:{e:'⭐',n:'GOURMET'},
+  195:{e:'🔥',n:'GRILL'},196:{e:'🐟',n:'FISCH'},197:{e:'🌿',n:'VEGISCH'},
+  409:{e:'🌱',n:'VEGAN'},415:{e:'🌍',n:'WORLD'},101:{e:'🍴',n:'RESTAURANT'},
+  103:{e:'🍸',n:'BAR'},1438:{e:'🍹',n:'COCKTAIL'},1441:{e:'🎵',n:'MUSIC BAR'},
+  1444:{e:'🍺',n:'PUB'},1459:{e:'💼',n:'AFTER WORK'},1462:{e:'🌿',n:'OUTDOOR'},
+  1465:{e:'🍷',n:'WEINBAR'},1468:{e:'🏘️',n:'QUARTIERBAR'},
+};
+
+const REVIEWS=[
+  {user:'@zuri_insider',stars:5,text:'Absolut empfehlenswert — eines der besten Lokale in diesem Kreis.'},
+  {user:'@langstrasse_fan',stars:4,text:'Super Atmosphäre, gutes Essen. Reservierung empfohlen am Wochenende.'},
+  {user:'@stadtpuls_user',stars:5,text:'Genau so ein Lokal braucht Zürich. Authentisch, keine Touristenfalle.'},
+];
+
+async function sbGet(path){
+  const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return r.json();
+}
+
+function getIdFromUrl(){return document.body.dataset.locationId||new URLSearchParams(window.location.search).get('id');}
+
+function isOffe(oeffnungszeiten){
+  if(!oeffnungszeiten||!oeffnungszeiten.length)return null;
+  const now=new Date();
+  const h=now.getHours();
+  const days=['So','Mo','Di','Mi','Do','Fr','Sa'];
+  const day=days[now.getDay()];
+  const todayStr=Array.isArray(oeffnungszeiten)?oeffnungszeiten.find(function(o){return o&&(o.includes('Mo,Tu')||o.includes(day));}):null;
+  if(!todayStr)return null;
+  const match=todayStr.match(/(\d{2}):(\d{2})(?::\d{2})?-(\d{2}):(\d{2})(?::\d{2})?/);
+  if(!match)return null;
+  return h>=parseInt(match[1])&&h<parseInt(match[3]);
+}
+
+function updateSEO(l,sub){
+  const title=l.name+' — '+sub.n+' Kreis '+(l.kreis||'?')+' | Stadtpuls Zürich';
+  document.title=title;
+  if(!document.body.dataset.locationId){
+    const c=document.getElementById('page-canonical'); if(c) c.href=spLocUrl(l.id);
+    const ogt=document.getElementById('og-title'); if(ogt) ogt.content=title;
+    const ogu=document.getElementById('og-url'); if(ogu) ogu.content=spLocUrl(l.id);
+    const twt=document.getElementById('tw-title'); if(twt) twt.content=title;
+  }
+  document.getElementById('page-desc').content=l.beschreibung_kurz||l.beschreibung||l.name+' in Zürich';
+  // SCHEMA — alle double quotes, kein Encoding-Bug
+  const schema={
+    "@context": "https://schema.org",
+    "@type": "Restaurant",
+    "name": l.name||"",
+    "description": l.beschreibung||"",
+    "url": "https://depuls.ch/gastro-profil.html?id="+l.id,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": l.adresse||"",
+      "postalCode": l.plz||"",
+      "addressLocality": "Zürich",
+      "addressCountry": "CH"
+    },
+    "telephone": l.telefon||"",
+    "servesCuisine": sub.n||"",
+    "priceRange": "CHF",
+    "image": l.bild_url||""
+  };
+  document.getElementById('schema-ld').textContent=JSON.stringify(schema);
+}
+
+function renderProfil(l,similar){
+  const sid=parseInt(l.zt_subkategorie_id)||0;
+  const sub=SUBKAT[sid]||{e:'🍽️',n:l.subkategorie?l.subkategorie.toUpperCase():'RESTAURANT'};
+  const score=l.featured?'TOP':l.rating?Math.round(l.rating*20):'NEU';
+  const scoreColor=l.featured?'#c8ff00':l.rating?'#ff2d00':'rgba(232,228,217,.3)';
+  const stars=l.rating?'★'.repeat(Math.min(5,Math.round(l.rating)))+'☆'.repeat(5-Math.min(5,Math.round(l.rating))):'· · · · ·';
+  const offeStatus=isOffe(l.oeffnungszeiten);
+
+  document.getElementById('bc-name').textContent=l.name;
+  updateSEO(l,sub);
+
+  // OFFE/GESCHLOSSEN BANNER
+  const offeBanner='<div style="padding:12px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,45,0,.08);background:rgba(255,45,0,.02)">'
+    +'<div style="display:flex;align-items:center;gap:10px">'
+    +'<div style="width:8px;height:8px;border-radius:50%;background:'+(offeStatus===true?'#c8ff00':'#ff2d00')+';animation:blink 2s infinite;flex-shrink:0"></div>'
+    +'<div>'
+    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:18px;color:'+(offeStatus===true?'#c8ff00':offeStatus===false?'rgba(255,45,0,.6)':'rgba(232,228,217,.3)')+';text-transform:uppercase">'
+    +'KREIS '+(l.kreis||'?')+' · '+(l.adresse||'')+' · '+sub.n
+    +'</div>'
+    +'<div style="font-size:9px;color:rgba(232,228,217,.25);letter-spacing:1px;margin-top:2px">Kreis '+(l.kreis||'?')+' · '+sub.e+' '+sub.n+'</div>'
+    +'</div></div>'
+    +'<div style="display:flex;gap:6px;flex-wrap:wrap">'
+    +(offeStatus===true?'<div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(200,255,0,.3);color:#c8ff00;background:rgba(200,255,0,.05)">● JETZT OFFE</div>':'')
+    +(offeStatus===false?'<div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,45,0,.3);color:rgba(255,45,0,.6)">● GESCHLOSSEN</div>':'')
+    +(l.featured?'<div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">⭐ TOP PICK</div>':'')
+    +'</div></div>';
+
+  let oeffnig='—';
+  if(l.oeffnungszeiten){
+    if(Array.isArray(l.oeffnungszeiten))oeffnig=l.oeffnungszeiten.slice(0,2).join('<br>');
+    else oeffnig=String(l.oeffnungszeiten);
+  }
+
+  const adresseVoll=l.adresse&&l.plz?l.adresse+', '+l.plz+' Zürich':l.adresse?l.adresse+', Zürich':'—';
+  const mapQuery=encodeURIComponent((l.adresse||l.name)+' Zürich');
+  const resUrl=l.reservation_url||'';
+  const resOnclick=resUrl?"window.open('"+resUrl+"','_blank')":'alert("Reservation kommt bald!")';
+
+  const simCards=similar.slice(0,3).map(function(s){
+    const ssub=SUBKAT[parseInt(s.zt_subkategorie_id)]||{e:'🍽️',n:'RESTAURANT'};
+    return '<a class="sim-card" href="gastro-profil.html?id='+s.id+'">'
+      +(s.bild_url?'<img class="sim-img" src="'+s.bild_url+'" alt="'+s.name+'" loading="lazy" onerror="this.style.display=\'none\'">':'')
+      +'<div class="sim-name">'+s.name+'</div>'
+      +'<div class="sim-sub">'+ssub.e+' '+ssub.n+'</div>'
+      +'<div class="sim-kreis">KREIS '+(s.kreis||'?')+'</div></a>';
+  }).join('');
+
+  const reviewsHTML=REVIEWS.map(function(r){
+    return '<div class="rev-item"><div class="rev-top"><div class="rev-user">'+r.user+'</div><div class="rev-stars">'+'★'.repeat(r.stars)+'</div></div><div class="rev-text">'+r.text+'</div></div>';
+  }).join('');
+
+  const featuredBanner=l.featured?'<div class="featured-strip"><span class="fs-text">⭐ STADTPULS TOP PICK — EMPFOHLEN</span></div>':'';
+
+  const resBox=l.hat_reservation?'<div class="res-box"><div class="rb-top"><span class="rb-badge">SPONTAN</span><span class="rb-title">RESERVATION — SOFORT</span></div><div class="rb-sub">Plätze verfügbar — jetzt buche</div><button class="btn-res" onclick="'+resOnclick+'">🍽️ TISCH RESERVIERE →</button></div>':'';
+
+  document.getElementById('main-content').innerHTML=
+    featuredBanner+
+    offeBanner+
+
+    // HERO
+    '<div class="hero-wrap">'
+    +(l.bild_url?'<img class="hero-img" src="'+l.bild_url+'" alt="'+l.name+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">':'')
+    +'<div class="hero-placeholder" style="'+(l.bild_url?'display:none':'')+'">'+sub.e+'</div>'
+    +'</div>'
+
+    // HEADER
+    +'<div class="profil-header">'
+    +'<div class="ph-top">'
+    +'<div class="stars">'+stars+'</div>'
+    +'<div class="typ-badge">'+sub.e+' '+sub.n+'</div>'
+    +(l.featured?'<div class="typ-badge volt">TOP PICK</div>':'')
+    +'<div class="ph-addr">Kreis '+(l.kreis||'?')+' · '+(l.adresse||'')+'</div>'
+    +'</div>'
+    +'<div class="profil-name">'+l.name+'</div>'
+    +'<div class="profil-subname">'+sub.n+'</div>'
+    +'</div>'
+
+    // CONTENT GRID
+    +'<div class="content-grid">'
+
+    // LEFT
+    +'<div>'
+    +'<p class="profil-desc">'+(l.beschreibung||l.beschreibung_kurz||'Dieses Lokal ist Teil des Stadtpuls City Guide Zürich. Echte Bewertungen kommen in Phase 5.')+'</p>'
+
+    // SCORE LIVE
+    +'<div style="border:1px solid rgba(255,45,0,.15);background:rgba(255,45,0,.03);padding:18px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">'
+    +'<div>'
+    +'<div style="font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.4);margin-bottom:4px;display:flex;align-items:center;gap:5px"><span style="width:5px;height:5px;border-radius:50%;background:#ff2d00;display:inline-block;animation:blink 1s infinite"></span>LIVE · KREIS '+(l.kreis||'?')+'</div>'
+    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;color:#ff2d00">STADTPULS SCORE</div>'
+    +'<div style="font-size:10px;color:rgba(232,228,217,.3);margin-top:4px">'+(l.featured?'Top Pick · Empfohlen von Stadtpuls':'Verifiziertes Lokal · Zürich Tourismus')+'</div>'
+    +'</div>'
+    +'<div style="display:flex;gap:16px">'
+    +'<div style="text-align:center"><div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:36px;color:'+scoreColor+';line-height:1">'+score+'</div><div style="font-size:7px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase;margin-top:2px">SCORE</div></div>'
+    +'<div style="text-align:center"><div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:36px;color:#c8ff00;line-height:1">'+(l.kreis||'?')+'</div><div style="font-size:7px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase;margin-top:2px">KREIS</div></div>'
+    +'</div></div>'
+
+    // MAP — kein ÖFFNE Button
+    +(l.adresse?
+    '<div style="margin-bottom:24px">'
+    +'<div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:10px;display:flex;align-items:center;gap:6px">— STANDORT · '+adresseVoll+'</div>'
+    +'<div style="border:1px solid rgba(0,245,255,.1);overflow:hidden;position:relative;background:#07070f">'
+    +'<iframe src="https://www.google.com/maps?q='+mapQuery+'&output=embed&z=16&hl=de" width="100%" height="260" style="border:0;display:block;filter:invert(90%) hue-rotate(180deg);" loading="lazy" allowfullscreen></iframe>'
+    +'<div style="position:absolute;bottom:10px;right:10px">'
+    +'<div onclick="if(navigator.share){navigator.share({title:\''+l.name+' — Stadtpuls\',url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);alert(\'Link kopiert!\')}" style="min-height:44px;padding:0 16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#ff2d00;color:#e8e4d9;font-family:\'DM Mono\',monospace;cursor:pointer;display:flex;align-items:center;gap:6px">📤 TEILE</div>'
+    +'</div></div></div>'
+    :'')
+
+    +resBox
+
+    // KI FEATURES
+    +'<div style="border:1px solid rgba(200,255,0,.1);background:#07070f;padding:22px;margin-bottom:24px">'
+    +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">'
+    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase">🤖 ZÜRI-BOT · KI FEATURES</div>'
+    +'<div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;border:1px solid rgba(200,255,0,.2);padding:3px 8px;display:flex;align-items:center;gap:4px"><span style="width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite;display:inline-block"></span>PHASE 5-6</div>'
+    +'</div>'
+    +'<div style="border:1px solid rgba(0,245,255,.1);background:rgba(0,245,255,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">📍</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">GPS DISTANZ</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Kreis '+(l.kreis||'?')+' · Standort wird in Phase 5 live berechnet</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.2);color:#00f5ff;display:flex;align-items:center;white-space:nowrap">GPS AN</div></div>'
+    +'<div style="border:1px solid rgba(0,245,255,.08);background:rgba(0,245,255,.01);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">🚋</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">ZVV ANBINDUNG</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Nächste Haltestelle · Echtzeit-Abfahrten · Phase 5</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.15);color:rgba(0,245,255,.4);display:flex;align-items:center;white-space:nowrap">BALD</div></div>'
+    +'<div style="border:1px solid rgba(255,204,0,.1);background:rgba(255,204,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">❤️</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ffcc00;margin-bottom:4px">BOOKMARK</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Spar dieses Lokal — KI lernt was du magst</div></div><div onclick="alert(\'Login nötig — kommt in Phase 5!\')" style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,204,0,.3);color:#ffcc00;display:flex;align-items:center;white-space:nowrap;cursor:pointer">❤️ SPARE</div></div>'
+    +'<div style="border:1px solid rgba(200,255,0,.1);background:rgba(200,255,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">⚡</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:4px">KI EMPFEHLUNG</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Basierend auf deiner Stimmung und deinem Kreis</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(200,255,0,.2);color:#c8ff00;display:flex;align-items:center;white-space:nowrap">AKTIV</div></div>'
+    +'<div style="border:1px solid rgba(255,45,0,.1);background:rgba(255,45,0,.02);padding:14px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">🎯</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;margin-bottom:4px">SPONTAN-MODUS</div><div style="font-size:11px;color:rgba(232,228,217,.4)">«Kreis '+(l.kreis||'?')+' · 2h · zu zweit» — KI plant deinen Abend</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,45,0,.2);color:rgba(255,45,0,.5);display:flex;align-items:center;white-space:nowrap">PHASE 6</div></div>'
+    +'</div>'
+
+    // INFO
+    +'<div class="section-body">'
+    +(l.adresse?'<strong style="color:#e8e4d9">Adresse</strong><br>'+l.adresse+', '+(l.plz||'')+' Zürich<br><br>':'')
+    +(oeffnig!=='—'?'<strong style="color:#e8e4d9">Öffnungszeiten</strong><br>'+oeffnig+'<br><br>':'')
+    +(l.website?'<strong style="color:#e8e4d9">Website</strong><br><a href="'+l.website+'" target="_blank" style="color:#00f5ff">'+l.website.replace(/^https?:\/\//,'').split('/')[0]+'</a><br><br>':'')
+    +(l.telefon?'<strong style="color:#e8e4d9">Telefon</strong><br>'+l.telefon+'<br><br>':'')
+    +'Quelle: Zürich Tourismus · zuerich.com · CC BY-SA'
+    +'</div>'
+
+    // REVIEWS
+    +'<div class="reviews-wrap">'
+    +'<div class="section-title">REVIEWS</div>'
+    +'<div class="rev-count">COMMUNITY BEWERTUNGE · PHASE 5 LIVE</div>'
+    +reviewsHTML
+    +'</div>'
+    +'</div>'
+
+    // RIGHT — DETAILS BOX
+    +'<div><div class="details-box">'
+    +(l.featured?'<div class="featured-strip"><span class="fs-text">⭐ TOP PICK</span></div>':'')
+    +'<div class="score-box"><div class="sb-score" style="color:'+scoreColor+'">'+score+'</div><div class="sb-lbl">STADTPULS SCORE</div><div class="sb-stars">'+stars+'</div></div>'
+    +'<div class="db-title">DETAILS</div>'
+    +'<div class="db-row"><div class="db-lbl">ADRESSE</div><div class="db-val">'+adresseVoll+'</div></div>'
+    +'<div class="db-row"><div class="db-lbl">QUARTIER</div><div class="db-val">Kreis '+(l.kreis||'?')+' · Zürich</div></div>'
+    +'<div class="db-row"><div class="db-lbl">TYP</div><div class="db-val">'+sub.e+' '+sub.n+'</div></div>'
+    +'<div class="db-row"><div class="db-lbl">ÖFFNIG</div><div class="db-val">'+oeffnig+'</div></div>'
+    +(l.website?'<div class="db-row"><div class="db-lbl">WEBSITE</div><div class="db-val"><a href="'+l.website+'" target="_blank">'+l.website.replace(/^https?:\/\//,'').split('/')[0]+' →</a></div></div>':'')
+    +(l.telefon?'<div class="db-row"><div class="db-lbl">TEL</div><div class="db-val">'+l.telefon+'</div></div>':'')
+    +(l.rating?'<div class="db-row"><div class="db-lbl">RATING</div><div class="db-val">'+stars+'<br><span style="font-size:8px;color:rgba(232,228,217,.3)">'+(l.rating_count||'?')+' Bewertunge</span></div></div>':'')
+    +(l.hat_reservation?'<div class="db-actions"><button class="btn-res" onclick="'+resOnclick+'">🍽️ TISCH RESERVIERE →</button><a class="btn-back" href="/gastro.html">← ALLE LOKALE IN ZÜRICH</a></div>':'<div class="db-actions"><a class="btn-back" href="/gastro.html" style="border-color:rgba(255,45,0,.2);color:rgba(255,45,0,.5)">← ALLE LOKALE IN ZÜRICH</a></div>')
+    // ACTION BUTTONS 44px
+    +'<div class="action-grid">'
+    +'<div class="act-btn" onclick="window.open(\'https://maps.google.com?q='+mapQuery+'\',\'_blank\')">🗺️ KARTE</div>'
+    +'<div class="act-btn" onclick="alert(\'Bookmark — Phase 5!\')">❤️ SPARE</div>'
+    +'<div class="act-btn" onclick="alert(\'Bewertung — Phase 5!\')">⭐ BEWERTE</div>'
+    +'<div class="act-btn" onclick="if(navigator.share){navigator.share({title:\''+l.name+'\',url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);alert(\'Link kopiert!\')}">📤 TEILE</div>'
+    +'</div>'
+    +'</div></div>'
+    +'</div>'
+
+    // ÄHNLICHE
+    +(simCards?'<div class="similar-section"><div class="section-title">ÄHNLICHI LOKALE</div><div class="similar-grid">'+simCards+'</div></div>':'');
+}
+
+async function loadProfil(){
+  const id=getIdFromUrl();
+  if(!id){
+    document.getElementById('main-content').innerHTML='<div class="error-wrap"><div class="error-title">KÄ LOKAL GFUNDE</div><a class="error-back" href="/gastro.html">← ZURÜCK ZU GASTRO</a></div>';
+    return;
+  }
+  try{
+    const data=await sbGet('locations?select=*&id=eq.'+id+'&limit=1');
+    if(!data||!data.length){
+      document.getElementById('main-content').innerHTML='<div class="error-wrap"><div class="error-title">LOKAL NÖD GFUNDE</div><a class="error-back" href="/gastro.html">← ZURÜCK ZU GASTRO</a></div>';
+      return;
+    }
+    const l=data[0];
+    if(!document.body.dataset.locationId && window.SP_LOCATION_LINKS && window.SP_LOCATION_LINKS[l.id]){
+      location.replace(window.SP_LOCATION_LINKS[l.id]); return; // SP_PRETTY_LOC v1
+    }
+    spClaim(l.id,'location',l.name,l.kreis); // SP_BOOST Claim
+    let similar=[];
+    try{
+      const s1=await sbGet('locations?select=id,name,bild_url,zt_subkategorie_id,kreis,adresse&kategorie=eq.gastro&aktiv=eq.true&zt_subkategorie_id=eq.'+l.zt_subkategorie_id+'&id=neq.'+l.id+'&limit=3');
+      similar=s1||[];
+      if(similar.length<3){
+        const s2=await sbGet('locations?select=id,name,bild_url,zt_subkategorie_id,kreis,adresse&kategorie=eq.gastro&aktiv=eq.true&kreis=eq.'+l.kreis+'&id=neq.'+l.id+'&limit=3');
+        similar=[...similar,...(s2||[])].slice(0,3);
+      }
+    }catch(e){}
+    renderProfil(l,similar);
+  }catch(e){
+    document.getElementById('main-content').innerHTML='<div class="error-wrap"><div class="error-title">FEHLER</div><div class="error-sub">Verbindung fehlgeschlagen.</div><a class="error-back" href="/gastro.html">← ZURÜCK</a></div>';
+  }
+}
+
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+document.addEventListener('mousemove',function(e){
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';
+});
+
+const T=['GASTRO ZÜRICH','ZÜRI ISST GUET','DÄ PULS VO DÄ STADT','TISCH RESERVIERE','KI EMPFEHLUNGE','4. JUNI 2026'];
+document.getElementById('ticker').innerHTML=[...T,...T].map(function(i){return '<span class="ti"><b>●</b> '+i+'</span>';}).join('');
+
+loadProfil();
+</script>
+</body>
+</html>
