@@ -227,7 +227,10 @@ async function sbGet(path){
   return r.json();
 }
 
-function getIdFromUrl(){return new URLSearchParams(window.location.search).get('id');}
+function getIdFromUrl(){
+  if(document.body.dataset.locationId)return document.body.dataset.locationId;
+  return new URLSearchParams(window.location.search).get('id');
+} // SP_ID_FIX v1: Pretty-URL-Siite hei kei ?id= im Link, nume s data-location-id am body
 
 function isOffe(oeffnungszeiten){
   if(!oeffnungszeiten||!oeffnungszeiten.length)return null;

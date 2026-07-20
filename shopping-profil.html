@@ -300,7 +300,8 @@ function buildOzGrid(oz){
 
 async function loadProfil(){
   const p=new URLSearchParams(window.location.search);
-  const id=p.get('id'),slug=p.get('slug');
+  // SP_ID_FIX v1: Pretty-URL-Siite hei kei ?id= im Link, nume s data-location-id am body
+  const id=document.body.dataset.locationId||p.get('id'),slug=p.get('slug');
   if(!id&&!slug){showError('Kein Shop angegeben');return;}
   try{
     const q='locations?select=*&limit=1&aktiv=eq.true'+(id?`&id=eq.${id}`:`&slug=eq.${slug}`);
