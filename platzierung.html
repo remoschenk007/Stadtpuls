@@ -8,7 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100vh;padding:0 0 60px;}
+body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100vh;padding:0 0 60px;overflow-x:hidden;}
 .bc{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;}
 ::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:#1a1a2e;border-radius:4px}
 header{padding:18px 22px;border-bottom:1px solid #1a1a2e;display:flex;align-items:center;gap:8px;}
@@ -209,7 +209,7 @@ if(p.get('bezahlt')==='1'){document.getElementById('formwrap').classList.add('hi
 </script>
 <!-- SP_NAV v1: einheitlichs Fullscreen-Menu -->
 <style>
-.sp-nav-burger{background:none;border:1px solid rgba(232,228,217,.15);width:40px;height:34px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;cursor:pointer;z-index:1001}
+.sp-nav-burger{background:none;border:1px solid rgba(232,228,217,.15);width:48px;height:48px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;cursor:pointer;z-index:1001}
 .sp-nav-burger span{display:block;width:16px;height:2px;background:#e8e4d9}
 .sp-nav-ov{position:fixed;inset:0;background:rgba(4,4,10,.97);z-index:1000;display:none;flex-direction:column;justify-content:center;padding:40px}
 .sp-nav-ov.open{display:flex}

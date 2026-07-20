@@ -384,7 +384,7 @@ function renderProfil(l,similar){
 
   const simCards=similar.slice(0,3).map(function(s){
     const ssub=SUBKAT[parseInt(s.zt_subkategorie_id)]||{e:'🍽️',n:'RESTAURANT'};
-    return '<a class="sim-card" href="gastro-profil.html?id='+s.id+'">'
+    return '<a class="sim-card" href="'+spLocPath(s.id)+'">'
       +(s.bild_url?'<img class="sim-img" src="'+s.bild_url+'" alt="'+s.name+'" loading="lazy" onerror="this.style.display=\'none\'">':'')
       +'<div class="sim-name">'+s.name+'</div>'
       +'<div class="sim-sub">'+ssub.e+' '+ssub.n+'</div>'
