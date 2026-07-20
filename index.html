@@ -394,6 +394,11 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
         <div class="bt-over"></div>
         <div class="bt-c"><span class="bt-ico">🍽️</span><div class="bt-name">Gastro</div><div class="bt-n"><span class="n" id="cnt-gastro">–</span> Lokale · Ehrlichi Tipps</div></div>
       </a>
+      <a href="kultur.html" class="bt" data-sp-kultur-bento="1">
+        <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1554907984-15263bfd63bd?w=600&q=80')"></div>
+        <div class="bt-over"></div>
+        <div class="bt-c"><span class="bt-ico">🎭</span><div class="bt-name">Kultur</div><div class="bt-n"><span class="n" id="cnt-kultur">–</span> Museen, Theater & Musig</div></div>
+      </a>
       <a href="nachtleben.html" class="bt">
         <div class="bt-bg" style="background-image:url('https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80')"></div>
         <div class="bt-over"></div>
@@ -620,11 +625,12 @@ async function sbCount(path){
 }
 
 async function loadLiveData(){
-  const [gastroCount, nachtlebenCount, eventsTotal, shoppingCount] = await Promise.all([
+  const [gastroCount, nachtlebenCount, eventsTotal, shoppingCount, kulturCount] = await Promise.all([
     sbCount('locations?kategorie=eq.gastro&aktiv=eq.true'),
     sbCount('locations?kategorie=eq.nachtleben&aktiv=eq.true'),
     sbCount('eventfrog_events?aktiv=eq.true'),
-    sbCount('locations?kategorie=eq.shopping&aktiv=eq.true')
+    sbCount('locations?kategorie=eq.shopping&aktiv=eq.true'),
+    sbCount('locations?kategorie=eq.kultur&aktiv=eq.true')
   ]);
 
   document.getElementById('ls-locations').textContent=(gastroCount+nachtlebenCount+shoppingCount)||'–';
@@ -635,6 +641,7 @@ async function loadLiveData(){
   document.getElementById('cnt-nachtleben').textContent=nachtlebenCount||'–';
   document.getElementById('cnt-events').textContent=eventsTotal||'–';
   document.getElementById('cnt-shopping').textContent=shoppingCount||'–';
+  document.getElementById('cnt-kultur').textContent=kulturCount||'–';
 
   // Ticker mit echten Zahlen befüllen
   const tickerItems=[
