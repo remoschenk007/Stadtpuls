@@ -233,13 +233,30 @@ function isOffe(oeffnungszeiten){
   if(!oeffnungszeiten||!oeffnungszeiten.length)return null;
   const now=new Date();
   const h=now.getHours();
-  const days=['So','Mo','Di','Mi','Do','Fr','Sa'];
-  const day=days[now.getDay()];
-  const todayStr=Array.isArray(oeffnungszeiten)?oeffnungszeiten.find(function(o){return o&&(o.includes('Mo,Tu')||o.includes(day));}):null;
+  const daysDe=['So','Mo','Di','Mi','Do','Fr','Sa'];
+  const daysEn=['Su','Mo','Tu','We','Th','Fr','Sa'];
+  const dayDe=daysDe[now.getDay()];
+  const dayEn=daysEn[now.getDay()];
+  const list=Array.isArray(oeffnungszeiten)?oeffnungszeiten:[String(oeffnungszeiten)];
+  // SP_OFFE_FIX v1: Tag-Teil VOR de Ziit trenne (au bi Komma-Liste wie "Mo,Tu,We,Th 08:00-18:00")
+  // und exakt met Tag-Token vergliiche, nid nume als Teilstring -- suscht hät "Mo,Tu..." immer
+  // zerscht gmatcht, egal wele Tag hüt wirklich isch.
+  const todayStr=list.find(function(o){
+    if(!o)return false;
+    const dayPart=(String(o).split(/\s+/)[0]||'');
+    const tokens=dayPart.split(',').map(function(t){return t.trim();});
+    return tokens.indexOf(dayDe)>=0||tokens.indexOf(dayEn)>=0;
+  });
   if(!todayStr)return null;
-  const match=todayStr.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/);
+  if(/geschlossen|closed|ruhetag/i.test(todayStr))return false;
+  const match=todayStr.match(/(\d{2}):(\d{2})(?::\d{2})?\s*-\s*(\d{2}):(\d{2})(?::\d{2})?/);
   if(!match)return null;
-  return h>=parseInt(match[1])&&h<parseInt(match[3]);
+  const openH=parseInt(match[1],10);
+  let closeH=parseInt(match[3],10);
+  // SP_OFFE_FIX v1: "00:00" als Schliesszit heisst Mitternacht (Änd vom Tag), nid "schliesst
+  // scho um Stund null" -- suscht isch h<0 nie wahr und's Lokal zeigt IMMER als gschlosse.
+  if(closeH===0)closeH=24;
+  return h>=openH&&h<closeH;
 }
 
 function updateSEO(l,sub){

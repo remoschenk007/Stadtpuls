@@ -262,14 +262,27 @@ const VIBES=[
   '«Einmalig in Züri — kei Kette, kei Bullshit.»',
 ];
 
+const DAYS_EN=['Su','Mo','Tu','We','Th','Fr','Sa'];
 function isOffe(oz){
   if(!oz||!Array.isArray(oz)||!oz.length)return null;
   const now=new Date();const h=now.getHours();
-  const day=DAYS[now.getDay()];
-  const s=oz.find(o=>o&&o.includes(day));if(!s)return false;
-  const m=s.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/);
+  const dayDe=DAYS[now.getDay()];
+  const dayEn=DAYS_EN[now.getDay()];
+  // SP_OFFE_FIX v1: Tag-Teil vor de Ziit trenne + exakt vergliiche (au Komma-Liste + Englischi Tag-Kürzel)
+  const s=oz.find(function(o){
+    if(!o)return false;
+    const dayPart=(String(o).split(/\s+/)[0]||'');
+    const tokens=dayPart.split(',').map(function(t){return t.trim();});
+    return tokens.indexOf(dayDe)>=0||tokens.indexOf(dayEn)>=0;
+  });
+  if(!s)return false;
+  if(/geschlossen|closed|ruhetag/i.test(s))return false;
+  const m=s.match(/(\d{2}):(\d{2})(?::\d{2})?\s*-\s*(\d{2}):(\d{2})(?::\d{2})?/);
   if(!m)return false;
-  return h>=parseInt(m[1])&&h<parseInt(m[3]);
+  const openH=parseInt(m[1],10);
+  let closeH=parseInt(m[3],10);
+  if(closeH===0)closeH=24; // Mitternacht = Änd vom Tag, nid Stund null
+  return h>=openH&&h<closeH;
 }
 
 // OZ Grid — exakt wie gastro-profil

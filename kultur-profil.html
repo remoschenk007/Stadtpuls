@@ -361,7 +361,10 @@ function isOffe(oz){
   if(/geschlossen|closed|ruhetag/i.test(s))return false;
   const m=s.match(/(\d{2}):(\d{2})(?::\d{2})?\s*-\s*(\d{2}):(\d{2})(?::\d{2})?/);
   if(!m)return null;
-  return h>=parseInt(m[1])&&h<parseInt(m[3]);
+  const openH=parseInt(m[1],10);
+  let closeH=parseInt(m[3],10);
+  if(closeH===0)closeH=24; // SP_OFFE_FIX v1: Mitternacht = Änd vom Tag, nid Stund null
+  return h>=openH&&h<closeH;
 }
 
 function updateSEO(l,sub){
