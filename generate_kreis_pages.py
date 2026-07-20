@@ -25,12 +25,14 @@ KREIS = {
 }
 
 KATEGORIEN = {
- 'gastro':     dict(pfad='gastro',     h1='ESSE IM',   wort='Restaurants, Caf\u00e9s und Bars', titel='Restaurants', profil=lambda l: _LOC_LINKS.get(l['id']) or f"/gastro-profil.html?id={l['id']}",
+ 'gastro':     dict(pfad='gastro',     h1='ESSE IM',   wort='Restaurants, Cafés und Bars', titel='Restaurants', profil=lambda l: _LOC_LINKS.get(l['id']) or f"/gastro-profil.html?id={l['id']}",
                     faqv='isst me', faqv_de='isst man'),
  'nachtleben': dict(pfad='nachtleben', h1='USGAH IM',  wort='Clubs, Bars und Late-Night-Spots', titel='Nachtleben', profil=lambda l: _LOC_LINKS.get(l['id']) or f"/nachtleben-profil.html?slug={l.get('slug') or l['id']}",
                     faqv='gaht me us', faqv_de='geht man aus'),
- 'shopping':   dict(pfad='shopping',   h1='SHOPPE IM', wort='L\u00e4den, Boutiquen und Brockis', titel='Shopping', profil=lambda l: _LOC_LINKS.get(l['id']) or f"/shopping-profil.html?id={l['id']}",
+ 'shopping':   dict(pfad='shopping',   h1='SHOPPE IM', wort='Läden, Boutiquen und Brockis', titel='Shopping', profil=lambda l: _LOC_LINKS.get(l['id']) or f"/shopping-profil.html?id={l['id']}",
                     faqv='shoppt me', faqv_de='kauft man ein'),
+ 'kultur':     dict(pfad='kultur',     h1='ERLÄBE IM', wort='Museen, Galerie, Theater und Konzert', titel='Kultur', profil=lambda l: _LOC_LINKS.get(l['id']) or f"/kultur-profil.html?id={l['id']}",
+                    faqv='findt me Kultur', faqv_de='findet man Kultur'),
 }
 MIN_LOKALE = 3  # unter 3 Lokal: kei Siite (Thin-Content-Schutz)
 
@@ -50,10 +52,10 @@ TPL = """<!DOCTYPE html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Restaurants Kreis {N} Z\u00fcrich — {QNAME} | Stadtpuls</title>
-<meta name="description" content="Die besten Restaurants, Caf\u00e9s und Bars im Z\u00fcrcher Kreis {N} ({QNAME_DE}): handkuratiert, mit Live-\u00d6ffnungsstatus und echten Bewertungen — ohne bezahlte Rankings.">
+<title>Restaurants Kreis {N} Zürich — {QNAME} | Stadtpuls</title>
+<meta name="description" content="Die besten Restaurants, Cafés und Bars im Zürcher Kreis {N} ({QNAME_DE}): handkuratiert, mit Live-Öffnungsstatus und echten Bewertungen — ohne bezahlte Rankings.">
 <link rel="canonical" href="{D}/gastro/kreis-{N}/">
-<meta property="og:title" content="Restaurants Kreis {N} Z\u00fcrich — {QNAME}">
+<meta property="og:title" content="Restaurants Kreis {N} Zürich — {QNAME}">
 <meta property="og:description" content="Die besten Lokale im Kreis {N}: handkuratiert auf Stadtpuls, mit Live-Status und echten Bewertungen.">
 <meta property="og:url" content="{D}/gastro/kreis-{N}/">
 <meta property="og:type" content="website">
@@ -88,7 +90,7 @@ h2{{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;
 details{{border:1px solid #14141f;margin-bottom:8px}}
 summary{{cursor:pointer;padding:14px 16px;font-size:11px;color:#e8e4d9;list-style:none;display:flex;justify-content:space-between;gap:10px}}
 summary::after{{content:'+';color:#ff2d00}}
-details[open] summary::after{{content:'\u2013'}}
+details[open] summary::after{{content:'–'}}
 details div{{padding:0 16px 14px;font-size:10.5px;line-height:1.8;color:#8a8778}}
 .grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-top:14px}}
 .grid a{{border:1px solid #14141f;padding:10px;text-align:center;font-size:10px;letter-spacing:1px;text-decoration:none}}
@@ -100,13 +102,13 @@ footer{{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spac
 <!-- SP_KREIS v1 -->
 <header>
   <a class="hleft" href="/index.html"><div class="ldot"></div><div class="brand">STADTPULS</div></a>
-  <a href="/gastro.html" style="font-size:9px;letter-spacing:2px;text-decoration:none;color:#8a8778">ALLI LOKAL \u2192</a>
+  <a href="/gastro.html" style="font-size:9px;letter-spacing:2px;text-decoration:none;color:#8a8778">ALLI LOKAL →</a>
 </header>
 <main>
-  <div class="eye">Gastro \u00b7 Kreis {N} \u00b7 {QNAME}</div>
+  <div class="eye">Gastro · Kreis {N} · {QNAME}</div>
   <h1>ESSE IM <span>KREIS {N}</span></h1>
-  <p class="intro">{INTRO} Alli Lokal handkuratiert, mit Live-\u00d6ffnigsstatus und echte Bewertige \u2014 kei bezahlti Rankings ohni Kennzeichnig.</p>
-  <a class="cta" href="/gastro.html?kreis={N}">Live-Liste Kreis {N} \u2192</a>
+  <p class="intro">{INTRO} Alli Lokal handkuratiert, mit Live-Öffnigsstatus und echte Bewertige — kei bezahlti Rankings ohni Kennzeichnig.</p>
+  <a class="cta" href="/gastro.html?kreis={N}">Live-Liste Kreis {N} →</a>
   <h2>Top-Lokal im Kreis {N}</h2>
 {LOCS}
   <h2>Frage &amp; Antworte</h2>
@@ -116,14 +118,14 @@ footer{{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spac
 {GRID}
   </div>
 </main>
-<footer>STADTPULS \u2014 De Puls vo Z\u00fcri \u00b7 Handgmacht, kei Algorithmus-Bullshit</footer>
+<footer>STADTPULS — De Puls vo Züri · Handgmacht, kei Algorithmus-Bullshit</footer>
 </body>
 </html>
 """
 
 TODAY = datetime.date.today().isoformat()
 total = 0
-qde_map = {1:'Altstadt und City',2:'Enge und Wollishofen',3:'Wiedikon',4:'Langstrasse',5:'Industriequartier',6:'Unterstrass und Oberstrass',7:'Hottingen und Fluntern',8:'Seefeld',9:'Altstetten und Albisrieden',10:'H\u00f6ngg und Wipkingen',11:'Oerlikon und Affoltern',12:'Schwamendingen'}
+qde_map = {1:'Altstadt und City',2:'Enge und Wollishofen',3:'Wiedikon',4:'Langstrasse',5:'Industriequartier',6:'Unterstrass und Oberstrass',7:'Hottingen und Fluntern',8:'Seefeld',9:'Altstetten und Albisrieden',10:'Höngg und Wipkingen',11:'Oerlikon und Affoltern',12:'Schwamendingen'}
 for kat, K in KATEGORIEN.items():
   for n, (qname, intro) in KREIS.items():
     locs = fetch(f"/rest/v1/locations?select=id,slug,name,subkategorie,rating,rating_count&kategorie=eq.{kat}&aktiv=eq.true&kreis=eq.{n}&order=rating.desc.nullslast,rating_count.desc.nullslast&limit=10")
@@ -135,19 +137,19 @@ for kat, K in KATEGORIEN.items():
         name = esc(l.get('name') or '')
         sub = esc(l.get('subkategorie') or 'Lokal')
         r = l.get('rating')
-        rtxt = f"\u2605 {r:.1f}" if r else "\u2014"
+        rtxt = f"★ {r:.1f}" if r else "—"
         href = K['profil'](l)
         rows.append(f'  <a class="loc" href="{href}"><span><b>{name}</b><br><span class="sub">{sub}</span></span><span class="r">{rtxt}</span></a>')
         items.append({"@type":"ListItem","position":i+1,"name":l.get('name') or '',"url":D+href})
     qde = qde_map[n]
     faq_pairs = [
-      (f"Wo {K['faqv']} am beste im Kreis {n}?", f"Di Top-Adresse vom Kreis {n} st\u00f6nd grad obe uf dere Siite \u2014 sortiert nach echte Bewertige. F\u00fcr alli mit Filter: d Live-Liste.",
-       f"Wo {K['faqv_de']} am besten in Z\u00fcrich Kreis {n}?", f"Die Top-Adressen im Kreis {n} ({qde}) sind auf dieser Seite nach echten Bewertungen sortiert. Die vollst\u00e4ndige, filterbare Liste gibt es auf depuls.ch/{K['pfad']}.html."),
-      (f"Was h\u00e4t im Kreis {n} jetzt offe?", "D Live-Liste zeigt de OFFE-Status in Echtzeit \u2014 berechnet uf Z\u00fcri-Zit.",
-       f"Was hat im Kreis {n} jetzt ge\u00f6ffnet?", "Die Live-Liste auf Stadtpuls zeigt den \u00d6ffnungsstatus in Echtzeit, berechnet auf Z\u00fcrcher Zeit.")]
+      (f"Wo {K['faqv']} am beste im Kreis {n}?", f"Di Top-Adresse vom Kreis {n} stönd grad obe uf dere Siite — sortiert nach echte Bewertige. Für alli mit Filter: d Live-Liste.",
+       f"Wo {K['faqv_de']} am besten in Zürich Kreis {n}?", f"Die Top-Adressen im Kreis {n} ({qde}) sind auf dieser Seite nach echten Bewertungen sortiert. Die vollständige, filterbare Liste gibt es auf depuls.ch/{K['pfad']}.html."),
+      (f"Was hät im Kreis {n} jetzt offe?", "D Live-Liste zeigt de OFFE-Status in Echtzeit — berechnet uf Züri-Zit.",
+       f"Was hat im Kreis {n} jetzt geöffnet?", "Die Live-Liste auf Stadtpuls zeigt den Öffnungsstatus in Echtzeit, berechnet auf Zürcher Zeit.")]
     faq_html = '\n'.join(f'  <details><summary>{esc(q)}</summary><div>{esc(a)}</div></details>' for q,a,_,_ in faq_pairs)
     ld = [
-      {"@context":"https://schema.org","@type":"CollectionPage","name":f"{K['titel']} Kreis {n} Z\u00fcrich","url":f"{D}/{K['pfad']}/kreis-{n}/","inLanguage":"de-CH",
+      {"@context":"https://schema.org","@type":"CollectionPage","name":f"{K['titel']} Kreis {n} Zürich","url":f"{D}/{K['pfad']}/kreis-{n}/","inLanguage":"de-CH",
        "mainEntity":{"@type":"ItemList","itemListElement":items}},
       {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":qd,"acceptedAnswer":{"@type":"Answer","text":ad}} for _,_,qd,ad in faq_pairs]},
       {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
@@ -160,14 +162,14 @@ for kat, K in KATEGORIEN.items():
                      LD=json.dumps(ld, ensure_ascii=False), LOCS='\n'.join(rows),
                      FAQ=faq_html, GRID=grid)
     out = out.replace('ESSE IM <span>', K['h1'] + ' <span>')
-    out = out.replace('Restaurants Kreis', f"{K['titel']} Kreis").replace('Restaurants, Caf\u00e9s und Bars', K['wort'])
+    out = out.replace('Restaurants Kreis', f"{K['titel']} Kreis").replace('Restaurants, Cafés und Bars', K['wort'])
     out = out.replace('/gastro.html?kreis=', f"/{K['pfad']}.html?kreis=").replace('href="/gastro.html"', f'href="/{K["pfad"]}.html"')
     out = out.replace('/gastro/kreis-', f"/{K['pfad']}/kreis-")
-    out = out.replace('Gastro \u00b7 Kreis', f"{K['titel']} \u00b7 Kreis")
+    out = out.replace('Gastro · Kreis', f"{K['titel']} · Kreis")
     os.makedirs(f"{K['pfad']}/kreis-{n}", exist_ok=True)
     open(f"{K['pfad']}/kreis-{n}/index.html", 'w', encoding='utf-8').write(out)
     total += 1
-    print(f"OK {K['pfad']}/kreis-{n}/index.html \u2014 {len(locs)} Lokal")
+    print(f"OK {K['pfad']}/kreis-{n}/index.html — {len(locs)} Lokal")
 import json as _j
 _links={k:[] for k in KATEGORIEN}
 import glob as _g2
@@ -177,4 +179,4 @@ for p in _g2.glob('*/kreis-*/index.html'):
 for k in _links: _links[k].sort()
 open('kreis-links.js','w',encoding='utf-8').write('window.SP_KREIS_LINKS='+_j.dumps(_links)+';')
 print('OK kreis-links.js:', {k:len(v) for k,v in _links.items()})
-print(f"FERTIG: {total} Kreis-Seiten (gastro+nachtleben+shopping). Jetzt generate_sitemap.py erneut ausf\u00fchren!")
+print(f"FERTIG: {total} Kreis-Seiten (gastro+nachtleben+shopping+kultur). Jetzt generate_sitemap.py erneut ausführen!")

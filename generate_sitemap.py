@@ -23,7 +23,7 @@ def urlset(urls):
     return out + "</urlset>\n"
 
 # 1) Statische Seiten
-PAGES = ['','index.html','gastro.html','nachtleben.html','events.html','shopping.html','news.html','dating.html',
+PAGES = ['','index.html','gastro.html','nachtleben.html','events.html','shopping.html','kultur.html','news.html','dating.html',
  'feedback.html','kontakt.html','platzierung.html','impressum.html','datenschutz.html',
  'quartiere.html','musik.html','jobs.html','immobilien.html','mobilitaet.html','community.html','gps.html','partners.html','marktplatz.html']
 import glob as _g
@@ -32,8 +32,8 @@ open('sitemap-pages.xml','w',encoding='utf-8').write(urlset([(BASE+p, TODAY) for
 print(f"sitemap-pages.xml: {len(PAGES)} URLs")
 
 # 2) Alle aktiven Lokale (Profil-URL je Kategorie)
-# SP_PRETTY_LOC v1 -- gastro/shopping/nachtleben nutzen die huebschen URLs aus
-# location-links.json (von generate_location_pages.py im selben Lauf zuvor
+# SP_PRETTY_LOC v1 -- gastro/shopping/nachtleben/kultur nutzen die huebschen URLs
+# aus location-links.json (von generate_location_pages.py im selben Lauf zuvor
 # geschrieben).
 import json as _json2
 try:
@@ -43,11 +43,11 @@ except FileNotFoundError:
     _LOC_LINKS = {}
 
 PROFIL = {'gastro':'gastro-profil.html?id={id}','shopping':'shopping-profil.html?id={id}',
-          'nachtleben':'nachtleben-profil.html?slug={slug}'}
+          'nachtleben':'nachtleben-profil.html?slug={slug}','kultur':'kultur-profil.html?id={id}'}
 locs = fetch("/rest/v1/locations?select=id,slug,kategorie,aktiv&aktiv=eq.true&order=id.asc&limit=3000")
 lurls = []
 for l in locs:
-    if l.get('kategorie') in ('gastro', 'shopping', 'nachtleben') and l['id'] in _LOC_LINKS:
+    if l.get('kategorie') in ('gastro', 'shopping', 'nachtleben', 'kultur') and l['id'] in _LOC_LINKS:
         lurls.append((BASE.rstrip('/') + _LOC_LINKS[l['id']], TODAY))
         continue
     tpl = PROFIL.get(l.get('kategorie'))

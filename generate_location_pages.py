@@ -36,13 +36,43 @@ CATEGORIES = {
         og_url_old='https://depuls.ch/nachtleben-profil.html',
         title_suffix=' | Stadtpuls Zürich',
     ),
+    'kultur': dict(
+        template_file='kultur-profil.html', out_dir='kultur', schema_type='TouristAttraction',
+        og_title='Kultur-Ort Profil — Kultur Zürich | Stadtpuls',
+        og_desc='Museen, Galerien, Theater, Oper, Film und Musik in Zürich: handkuratiert auf Stadtpuls.',
+        og_url_old='https://depuls.ch/kultur-profil.html',
+        title_suffix=' | Stadtpuls Zürich',
+    ),
 }
 
-ROOTIFY = ['index.html', 'gastro.html', 'nachtleben.html', 'events.html', 'shopping.html',
+ROOTIFY = ['index.html', 'gastro.html', 'nachtleben.html', 'events.html', 'shopping.html', 'kultur.html',
            'dating.html', 'community.html', 'datenschutz.html', 'gps.html', 'immobilien.html',
            'impressum.html', 'jobs.html', 'kontakt.html', 'login.html', 'mobilitaet.html',
            'musik.html', 'news.html', 'partners.html', 'platzierung.html', 'quartiere.html',
            'sp-track.js', 'favicon.svg']
+
+# SP_KULTUR v1 -- selbi Klassifizierig wie in kultur.html/kultur-profil.html (JS
+# KULTUR_DEFS), hier fuer den statischen SEO/Crawler-Schema-Typ pro einzelnem Ort.
+KULTUR_SCHEMA_DEFS = [
+    ('museum',  'Museum',                    ['museum', 'sammlung', 'ausstellungshaus', 'kunsthaus']),
+    ('galerie', 'ArtGallery',                ['galerie', 'kunstraum', 'artspace', 'atelier', 'skulptur']),
+    ('theater', 'PerformingArtsTheater',     ['theater', 'bühne', 'schauspiel', 'kabarett']),
+    ('buehne',  'PerformingArtsTheater',     ['oper', 'ballett', 'tanzhaus', 'tanz', 'philharmonie', 'orchester']),
+    ('film',    'MovieTheater',              ['kino', 'film', 'lichtspiel']),
+    ('musik',   'MusicVenue',                ['konzert', 'musiksaal', 'tonhalle', 'jazz', 'livemusik']),
+]
+
+
+def kultur_schema_type(loc):
+    sk = (loc.get('subkategorie') or '').lower()
+    for sub_id, schema, words in KULTUR_SCHEMA_DEFS:
+        if sk == sub_id:
+            return schema
+    text = ((loc.get('name') or '') + ' ' + (loc.get('beschreibung') or '') + ' ' + (loc.get('beschreibung_kurz') or '')).lower()
+    for sub_id, schema, words in KULTUR_SCHEMA_DEFS:
+        if any(w in text for w in words):
+            return schema
+    return 'TouristAttraction'
 
 
 def fetch(path):
@@ -80,7 +110,7 @@ def render_page(template, loc, cat_key, cfg):
     name = loc.get('name') or 'Lokal'
     name_esc = _html.escape(name)
     kreis = loc.get('kreis') or '?'
-    sub_defaults = {'gastro': 'Restaurant', 'shopping': 'Laden', 'nachtleben': 'Club'}
+    sub_defaults = {'gastro': 'Restaurant', 'shopping': 'Laden', 'nachtleben': 'Club', 'kultur': 'Kultur-Ort'}
     sub = loc.get('subkategorie') or sub_defaults.get(cat_key, 'Lokal')
     sub_esc = _html.escape(sub)
     title = f"{name_esc} — {sub_esc} Kreis {kreis}{cfg['title_suffix']}"
@@ -120,8 +150,9 @@ def render_page(template, loc, cat_key, cfg):
     out = out.replace('content="https://depuls.ch/og-image.png">', f'content="{bild}">')
 
     # JSON-LD id="schema-ld" (leeres <script> in der Vorlage -> befuellt)
+    schema_type = kultur_schema_type(loc) if cat_key == 'kultur' else cfg['schema_type']
     schema = {
-        "@context": "https://schema.org", "@type": cfg['schema_type'],
+        "@context": "https://schema.org", "@type": schema_type,
         "name": name, "description": desc_short, "url": canonical,
         "address": {"@type": "PostalAddress", "streetAddress": adresse,
                      "postalCode": loc.get('plz') or '', "addressLocality": "Zürich", "addressCountry": "CH"},
