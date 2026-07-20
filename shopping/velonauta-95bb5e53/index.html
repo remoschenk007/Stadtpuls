@@ -1,139 +1,203 @@
 <!DOCTYPE html>
 <html lang="de-CH">
 <head>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title id="page-title">Velonauta — shopping Kreis 5 | Stadtpuls Zürich</title>
 <meta name="description" id="page-desc" content="Das persönliche und individuelle Fahrrad kauft man sich in Zürich bei «Velonauta» im Viadukt in Zürich-West.">
 <link rel="canonical" id="page-canonical" href="https://depuls.ch/shopping/velonauta-95bb5e53/">
 <script type="application/ld+json" id="schema-ld">{"@context": "https://schema.org", "@type": "Store", "name": "Velonauta", "description": "Das persönliche und individuelle Fahrrad kauft man sich in Zürich bei «Velonauta» im Viadukt in Zürich-West.", "url": "https://depuls.ch/shopping/velonauta-95bb5e53/", "address": {"@type": "PostalAddress", "streetAddress": "Viaduktstrasse 87, Bogen A", "postalCode": "8005", "addressLocality": "Zürich", "addressCountry": "CH"}, "telephone": "+41 44 559 43 03", "image": "https://www.zuerich.com/sites/default/files/keyvisual/web_zurich_tours_zurich-west_03.jpg"}</script>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
-body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px);pointer-events:none;z-index:9997}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.04) 3px,rgba(0,0,0,.04) 4px);pointer-events:none;z-index:9997}
 #cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
 #cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(255,45,0,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0s,top 0s}
+
 nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid rgba(255,45,0,.1);position:sticky;top:0;background:#04040a;z-index:300}
 .logo{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px;text-decoration:none}
 .ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
 .nav-links{display:flex;gap:28px}
 .nl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);text-decoration:none;transition:.15s}
-.nl:hover{color:#e8e4d9}
-.nl.on{color:#ff2d00}
+.nl:hover{color:#e8e4d9}.nl.on{color:#ff2d00}
 .btn-mm{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none;text-decoration:none}
-.breadcrumb{padding:14px 40px;border-bottom:1px solid rgba(255,45,0,.06);display:flex;align-items:center;gap:8px}
-.bc-link{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.25);text-decoration:none;transition:.15s;cursor:none}
-.bc-link:hover{color:#ff2d00}
-.bc-sep{font-size:9px;color:rgba(232,228,217,.1)}
-.bc-current{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.5)}
-.hero-img{width:100%;height:420px;object-fit:cover;display:block}
-.hero-wrap{position:relative;overflow:hidden}
-.hero-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,#04040a,transparent);pointer-events:none}
-.hero-placeholder{width:100%;height:420px;background:linear-gradient(135deg,#07070f,#0a0a18);display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.3}
-.profil-header{padding:28px 40px 0}
-.ph-top{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-.typ-badge{font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;background:#c8ff00;color:#04040a}
-.typ-badge.red{background:#ff2d00;color:#e8e4d9}
-.ph-addr{font-size:10px;color:rgba(232,228,217,.3);letter-spacing:1px}
-.profil-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(60px,10vw,120px);line-height:.85;text-transform:uppercase;color:#e8e4d9;margin-bottom:8px}
-.profil-subname{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(28px,5vw,48px);line-height:.9;text-transform:uppercase;color:#c8ff00;margin-bottom:20px}
-.content-grid{display:grid;grid-template-columns:1fr 380px;gap:40px;padding:28px 40px 0;align-items:start}
-.profil-desc{font-size:13px;color:rgba(232,228,217,.55);line-height:2;margin-bottom:28px}
-.section-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase;color:#e8e4d9;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.section-title::before{content:'—';color:#ff2d00}
-.section-body{font-size:12px;color:rgba(232,228,217,.4);line-height:1.9;margin-bottom:28px}
-.reviews-wrap{margin-bottom:40px}
-.rev-count{font-size:9px;letter-spacing:2px;color:rgba(232,228,217,.2);margin-bottom:14px}
-.rev-item{border:1px solid rgba(255,45,0,.07);padding:16px 18px;margin-bottom:6px;background:#07070f;transition:.15s}
-.rev-item:hover{background:#0a0a14;border-color:rgba(255,45,0,.15)}
-.rev-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.rev-user{font-size:9px;color:#c8ff00;letter-spacing:1px}
-.rev-stars{color:#c8ff00;font-size:11px;letter-spacing:2px}
-.rev-text{font-size:11px;color:rgba(232,228,217,.35);line-height:1.8}
-.details-box{border:1px solid rgba(255,45,0,.1);background:#07070f;position:sticky;top:70px}
-.db-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;padding:16px 20px;border-bottom:1px solid rgba(255,45,0,.08)}
-.db-row{display:flex;align-items:flex-start;justify-content:space-between;padding:12px 20px;border-bottom:1px solid rgba(255,45,0,.05);gap:12px}
-.db-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);flex-shrink:0;padding-top:1px}
-.db-val{font-size:10px;color:#e8e4d9;text-align:right;line-height:1.6}
-.db-val a{color:#00f5ff;text-decoration:none}
-.db-val a:hover{color:#e8e4d9}
-.db-actions{padding:16px 20px;border-top:1px solid rgba(255,45,0,.08)}
-.btn-back{display:block;border:1px solid rgba(232,228,217,.08);color:rgba(232,228,217,.3);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:12px;text-align:center;cursor:none;transition:.15s;text-decoration:none;margin-top:8px;min-height:44px;display:flex;align-items:center;justify-content:center}
-.btn-back:hover{border-color:rgba(255,45,0,.3);color:#ff2d00}
-.score-box{padding:16px 20px;border-bottom:1px solid rgba(255,45,0,.08);background:rgba(255,45,0,.03)}
-.sb-score{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:#ff2d00;line-height:1}
-.sb-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-top:2px}
-.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 20px 20px}
-.act-btn{min-height:52px;padding:12px 8px;border:1px solid rgba(255,45,0,.12);color:rgba(232,228,217,.5);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;text-align:center;cursor:none;transition:.15s;background:#0a0a14;display:flex;align-items:center;justify-content:center;gap:6px}
-.act-btn:hover{color:#e8e4d9;border-color:rgba(255,45,0,.4);background:#0f0f1a}
-.similar-section{padding:40px 40px;border-top:1px solid rgba(255,45,0,.06)}
-.similar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:16px}
-.sim-card{border:1px solid rgba(255,45,0,.07);border-top:none;border-left:none;padding:0;cursor:none;transition:.15s;text-decoration:none;display:block;overflow:hidden}
-.sim-card:nth-child(3n+1){border-left:1px solid rgba(255,45,0,.07)}
-.sim-card:first-child,.sim-card:nth-child(2),.sim-card:nth-child(3){border-top:1px solid rgba(255,45,0,.07)}
-.sim-card:hover{background:#06060e}
-.sim-img{width:100%;height:100px;object-fit:cover;opacity:.7;display:block}
-.sim-img-ph{width:100%;height:80px;display:flex;align-items:center;justify-content:center;font-size:24px;background:#07070f;opacity:.3}
-.sim-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;padding:10px 14px 4px}
-.sim-sub{font-size:9px;color:#c8ff00;text-transform:uppercase;letter-spacing:.5px;padding:0 14px 10px}
-.ticker-wrap{border-top:1px solid rgba(255,45,0,.07);overflow:hidden}
-.ticker-row{padding:6px 0;overflow:hidden;border-bottom:1px solid rgba(255,45,0,.04)}
-.tick{display:flex;white-space:nowrap}
-.tick.l{animation:tL 28s linear infinite}
-.tick.r{animation:tR 28s linear infinite}
-.ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(255,45,0,.28)}
-.ti b{color:#ff2d00;font-weight:400}
 
+.breadcrumb{padding:10px 40px;border-bottom:1px solid rgba(255,45,0,.06);display:flex;align-items:center;gap:6px;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.2)}
+.breadcrumb a{color:rgba(232,228,217,.2);text-decoration:none;cursor:none;transition:.15s}
+.breadcrumb a:hover{color:#ff2d00}
+.breadcrumb span{color:rgba(232,228,217,.1)}
+
+#main-content{min-height:60vh}
+
+/* HERO IMG */
+.hero-wrap{position:relative;overflow:hidden}
+.hero-img{width:100%;height:400px;object-fit:cover;display:block;filter:brightness(.75) saturate(.8)}
+.hero-gradient{position:absolute;bottom:0;left:0;right:0;height:220px;background:linear-gradient(to top,#04040a,transparent);pointer-events:none}
+
+/* OFFE/ZU BANNER — links blinkend wie Shopping */
+.offe-banner{padding:12px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,45,0,.08);background:rgba(255,45,0,.02)}
+.ob-left{display:flex;align-items:center;gap:10px}
+.ob-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.ob-dot.offe{background:#c8ff00;animation:blink 2s infinite;box-shadow:0 0 8px rgba(200,255,0,.6)}
+.ob-dot.zu{background:#ff2d00;animation:blink 2s infinite}
+.ob-meta{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase}
+.ob-right{}
+.ob-badge{font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid;display:flex;align-items:center;gap:5px}
+.ob-badge.offe{border-color:rgba(200,255,0,.3);color:#c8ff00;background:rgba(200,255,0,.05)}
+.ob-badge.zu{border-color:rgba(255,45,0,.3);color:rgba(255,45,0,.6)}
+
+/* PROFIL GRID */
+.profil-wrap{display:grid;grid-template-columns:1fr 340px;gap:0;padding:0 40px;margin-top:32px}
+
+/* LINKS */
+.pl-head{margin-bottom:24px;padding-bottom:24px;border-bottom:1px solid rgba(255,45,0,.07)}
+.pl-badges{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.badge{font-size:7px;letter-spacing:1.5px;text-transform:uppercase;padding:3px 9px;font-family:'DM Mono',monospace}
+.badge.red{background:#ff2d00;color:#e8e4d9}
+.badge.volt{background:#c8ff00;color:#04040a}
+.badge.ghost{border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.25)}
+.badge.offe-b{background:#c8ff00;color:#04040a;display:flex;align-items:center;gap:4px}
+.badge-dot{width:4px;height:4px;border-radius:50%;background:#04040a;animation:blink 1s infinite}
+.pl-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(42px,6vw,76px);text-transform:uppercase;line-height:.86;color:#e8e4d9;margin-bottom:8px}
+.pl-sub{font-size:12px;color:#ff2d00;letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.pl-adresse{font-size:10px;color:rgba(232,228,217,.3);line-height:1.7}
+
+/* BESCHREIBUNG */
+.section{margin-bottom:28px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;display:flex;align-items:center;gap:8px;margin-bottom:14px;color:#e8e4d9}
+.section-title::before{content:'—';color:#ff2d00}
+.section-desc{font-size:11px;color:rgba(232,228,217,.4);line-height:1.9}
+
+/* ÖFFNUNGSZEITEN — exakt wie gastro-profil */
+.oz-grid{display:flex;flex-direction:column;margin-bottom:28px}
+.oz-row{display:grid;grid-template-columns:72px 1fr;padding:8px 0;border-bottom:1px solid rgba(255,45,0,.05)}
+.oz-row:last-child{border-bottom:none}
+.oz-row.today{background:rgba(255,45,0,.04);padding:8px 10px;margin:0 -10px;border-left:2px solid #ff2d00;border-bottom:none}
+.oz-day{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.25)}
+.oz-row.today .oz-day{color:#ff2d00}
+.oz-time{font-size:10px;color:rgba(232,228,217,.5)}
+.oz-row.today .oz-time{color:#e8e4d9;font-weight:bold}
+.oz-closed{color:rgba(232,228,217,.18)!important}
+
+/* KI PRED */
+.ki-pred{border-left:2px solid #ff2d00;padding:12px 16px;margin-bottom:24px;background:rgba(255,45,0,.03)}
+.ki-pred-head{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.ki-pred-icon{font-size:16px}
+.ki-pred-label{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00}
+.ki-pred-txt{font-size:10px;color:rgba(255,100,80,.6);line-height:1.8}
+.ki-pred-txt strong{color:#ff2d00}
+
+/* ÄHNLICHE */
+.ae-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,45,0,.06)}
+.ae-card{background:#04040a;padding:14px;transition:.15s;cursor:none}
+.ae-card:hover{background:#07070f}
+.ae-img{width:100%;height:70px;object-fit:cover;display:block;filter:brightness(.65) saturate(.7);margin-bottom:8px}
+.ae-img-ph{width:100%;height:50px;display:flex;align-items:center;justify-content:center;font-size:20px;background:#07070f;margin-bottom:8px;opacity:.3}
+.ae-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;text-transform:uppercase;color:#e8e4d9;line-height:1;margin-bottom:2px}
+.ae-sub{font-size:7px;color:#ff2d00;letter-spacing:.5px;text-transform:uppercase;margin-bottom:2px}
+.ae-kr{font-size:7px;color:rgba(232,228,217,.2);letter-spacing:1px}
+
+/* SIDEBAR */
+.profil-right{padding-left:32px;border-left:1px solid rgba(255,45,0,.07)}
+
+/* VOLT BUTTON GROSS */
+.btn-volt{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:18px;background:#c8ff00;color:#04040a;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;cursor:none;margin-bottom:10px;transition:.2s;min-height:56px}
+.btn-volt:hover{background:#d4ff33;box-shadow:0 0 24px rgba(200,255,0,.3)}
+
+/* PRIMARY BTN */
+.btn-primary{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:16px;background:#ff2d00;color:#e8e4d9;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;text-decoration:none;cursor:none;margin-bottom:10px;transition:.2s;border:none;min-height:54px;box-shadow:0 0 20px rgba(255,45,0,.2)}
+.btn-primary:hover{background:#ff4422;box-shadow:0 0 30px rgba(255,45,0,.4)}
+
+/* GHOST BUTTONS */
+.btn-ghost{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:14px;background:transparent;color:rgba(232,228,217,.3);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;cursor:none;margin-bottom:8px;transition:.2s;border:1px solid rgba(232,228,217,.1);text-decoration:none;min-height:48px}
+.btn-ghost:hover{color:#e8e4d9;border-color:rgba(255,45,0,.3)}
+
+/* 4 ACTION BUTTONS */
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.act-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 8px;background:transparent;border:1px solid rgba(255,45,0,.07);color:rgba(232,228,217,.22);font-family:'DM Mono',monospace;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;cursor:none;transition:.15s;min-height:52px}
+.act-btn:hover{color:#e8e4d9;border-color:rgba(255,45,0,.25);background:rgba(255,45,0,.03)}
+
+/* INFO CARD */
+.info-card{border:1px solid rgba(255,45,0,.1);padding:18px;margin-bottom:14px;background:#07070f;position:relative;overflow:hidden}
+.info-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,#ff2d00,transparent)}
+.ic-title{font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.5);margin-bottom:12px;display:flex;align-items:center;gap:5px}
+.ic-title::before{content:'';width:3px;height:3px;border-radius:50%;background:#ff2d00}
+.ir{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:7px 0;border-bottom:1px solid rgba(255,45,0,.04)}
+.ir:last-child{border-bottom:none}
+.ir-l{font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,217,.18);min-width:60px;flex-shrink:0}
+.ir-r{font-size:10px;color:#e8e4d9;text-align:right}
+.ir-r a{color:#ff2d00;text-decoration:none}
+.ir-r.volt{color:#c8ff00}.ir-r.red{color:#ff2d00}
+
+/* WIE CHUM ICH HI — SP_JNY v1 */
+.jny-card-wrap{border:1px solid rgba(0,245,255,.15);background:#07070f;padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
+.jny-card-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,#00f5ff,transparent)}
+.jny-head{display:flex;align-items:center;gap:12px}
+.jny-head-txt{flex:1}
+.jny-head-lbl{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:#00f5ff;margin-bottom:3px}
+.jny-head-sub{font-size:10px;color:rgba(232,228,217,.35)}
+.jny-go{min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.3);color:#00f5ff;display:flex;align-items:center;white-space:nowrap;cursor:pointer;flex-shrink:0}
+.jny-status{margin-top:10px;font-size:10px;color:rgba(232,228,217,.35);line-height:1.7}
+.jny-card{position:relative;border:1px solid rgba(0,245,255,.18);background:linear-gradient(135deg,rgba(0,245,255,.035),rgba(200,255,0,.015));padding:14px 16px;margin-top:10px;overflow:hidden}
+.jny-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.jny-dur{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:#00f5ff;line-height:1}
+.jny-dur span{font-size:.32em;letter-spacing:1px;margin-left:5px;color:rgba(232,228,217,.3);font-style:normal}
+.jny-clock{font-size:10px;color:#e8e4d9;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.jny-arrow{color:rgba(232,228,217,.15)}
+.jny-soon{background:rgba(255,45,0,.15);color:#ff2d00;font-size:7.5px;letter-spacing:1px;padding:2px 5px;text-transform:uppercase}
+.jny-legs{display:flex;align-items:center;gap:0;margin-top:12px;flex-wrap:wrap}
+.jny-leg{display:flex;align-items:center;gap:5px}
+.jny-ico{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;background:rgba(232,228,217,.06);flex-shrink:0}
+.jny-leg.tr .jny-ico{background:rgba(0,245,255,.14);border:1px solid rgba(0,245,255,.35)}
+.jny-lbl{font-size:8.5px;letter-spacing:.5px;color:#00f5ff;white-space:nowrap}
+.jny-sep{width:14px;height:1px;background:repeating-linear-gradient(90deg,rgba(232,228,217,.15) 0 3px,transparent 3px 6px);margin:0 4px;flex-shrink:0}
+.jny-meta{margin-top:10px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,217,.3)}
+.jny-walk-hero{display:flex;align-items:center;gap:12px}
+
+/* LOADING */
+.loading-wrap{padding:80px 40px;text-align:center}
+.loading-dots{display:flex;justify-content:center;gap:8px;margin-bottom:20px}
+.loading-dot{width:10px;height:10px;border-radius:50%;background:#ff2d00;animation:bounce 1.2s infinite;box-shadow:0 0 8px rgba(255,45,0,.4)}
+.loading-dot:nth-child(2){animation-delay:.2s}.loading-dot:nth-child(3){animation-delay:.4s}
+.loading-txt{font-size:10px;letter-spacing:3px;color:rgba(255,45,0,.3);text-transform:uppercase}
+
+/* TICKER + FOOTER */
+.btw{border-top:1px solid rgba(255,45,0,.07);margin-top:56px;overflow:hidden}
+.tr{padding:6px 0;overflow:hidden;border-bottom:1px solid rgba(255,45,0,.04)}
+.tick{display:flex;white-space:nowrap}
+.tick.l{animation:tL 24s linear infinite}.tick.r{animation:tR 24s linear infinite}
+.ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(255,45,0,.25)}.ti b{color:#ff2d00;font-weight:400}
+footer{padding:44px 40px 32px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px;border-top:1px solid rgba(255,45,0,.08)}
 .fc-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:12px}
-.fc-link{display:block;font-size:10px;color:rgba(232,228,217,.22);margin-bottom:8px;letter-spacing:.3px;transition:.15s;text-decoration:none;cursor:none}
+.fc-link{display:block;font-size:10px;color:rgba(232,228,217,.22);margin-bottom:8px;transition:.15s;text-decoration:none;cursor:none}
 .fc-link:hover{color:#e8e4d9}
 .fc-desc{font-size:10px;color:rgba(232,228,217,.18);line-height:1.9;margin-top:8px}
-.fc-copy{font-size:8px;color:rgba(232,228,217,.1);margin-top:16px;letter-spacing:.5px}
-.loading-wrap{min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
-.loading-dots{display:flex;gap:8px}
-.loading-dot{width:8px;height:8px;border-radius:50%;background:#ff2d00;animation:bounce 1.2s infinite}
-.loading-dot:nth-child(2){animation-delay:.2s}
-.loading-dot:nth-child(3){animation-delay:.4s}
-.loading-txt{font-size:10px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase}
-.error-wrap{min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;padding:40px}
-.error-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:rgba(232,228,217,.1);text-transform:uppercase}
-.error-back{display:inline-block;margin-top:16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:10px 20px;text-decoration:none;cursor:none}
+.fc-copy{font-size:8px;color:rgba(232,228,217,.1);margin-top:16px}
+
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
 @keyframes tL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes tR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
-@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-5px)}}
+
 @media(max-width:768px){
-  #cur,#cur2{display:none}
-  body{cursor:auto}
-  nav{padding:0 16px;height:48px}
-  .nav-links{display:none}
-  .breadcrumb{padding:10px 16px}
-  .hero-img,.hero-placeholder{height:260px}
-  .profil-header{padding:20px 16px 0}
-  .profil-name{font-size:clamp(48px,14vw,80px)}
-  .profil-subname{font-size:clamp(22px,6vw,36px)}
-  .content-grid{grid-template-columns:1fr;padding:16px 16px 0}
-  .details-box{position:static;margin-bottom:24px;order:-1}
-  .action-grid{gap:10px;padding:0 16px 20px}
-  .act-btn{min-height:52px;font-size:12px}
-  .similar-section{padding:24px 16px}
-  .similar-grid{grid-template-columns:1fr 1fr}
-  
-}
+#cur,#cur2{display:none}body{cursor:auto}
+nav{padding:0 16px;height:48px}.nav-links{display:none}
+.breadcrumb{padding:8px 16px}
+.hero-img{height:260px}
+.offe-banner{padding:10px 16px}
+.profil-wrap{grid-template-columns:1fr;padding:0 16px;margin-top:20px}
+.pl-name{font-size:clamp(38px,9vw,56px)}
+.profil-right{padding-left:0;border-left:none;border-top:1px solid rgba(255,45,0,.07);padding-top:24px;margin-top:24px}
+.btn-volt{min-height:60px;font-size:12px;padding:20px}
+.btn-primary{min-height:58px;font-size:11px}
+.btn-ghost{min-height:52px;font-size:10px}
+.act-btn{min-height:52px;font-size:9px}
+.ae-grid{grid-template-columns:1fr 1fr}
+footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:14px}
+.oz-row{grid-template-columns:70px 1fr}}
 </style>
-<!-- SP_SEO v1 -->
-<meta property="og:title" content="Laden-Profil — Shopping Zürich | Stadtpuls">
-<meta property="og:description" content="Laden-Profile aus Zürich: Öffnungszeiten, Kreis und Charakter — handkuratiert auf Stadtpuls.">
-<meta property="og:url" content="https://depuls.ch/shopping-profil.html">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="de_CH">
-<meta property="og:site_name" content="Stadtpuls">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Laden-Profil — Shopping Zürich | Stadtpuls">
-<meta property="og:image" content="https://www.zuerich.com/sites/default/files/keyvisual/web_zurich_tours_zurich-west_03.jpg">
-<meta name="twitter:image" content="https://www.zuerich.com/sites/default/files/keyvisual/web_zurich_tours_zurich-west_03.jpg">
 </head>
 <body data-location-id="95bb5e53-d17c-4968-a815-8a6604b60098">
 <div id="cur"></div><div id="cur2"></div>
@@ -142,428 +206,382 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
   <a class="logo" href="/index.html"><div class="ldot"></div>STADTPULS</a>
   <div class="nav-links">
     <a class="nl" href="/gastro.html">GASTRO</a>
-    <a class="nl" href="/kultur.html">KULTUR</a>
     <a class="nl" href="/nachtleben.html">NACHTLEBE</a>
     <a class="nl on" href="/shopping.html">SHOPPING</a>
     <a class="nl" href="/dating.html">DATES</a>
   </div>
-  <a class="btn-mm" href="/login.html">MITMACHE</a>
+  <a class="btn-mm" href="index.html?page=login">MITMACHE</a>
 </nav>
 
 <div class="breadcrumb">
-  <a class="bc-link" href="/index.html">HOME</a>
-  <span class="bc-sep">›</span>
-  <a class="bc-link" href="/shopping.html">SHOPPING</a>
-  <span class="bc-sep">›</span>
-  <span class="bc-current" id="bc-name">—</span>
+  <a href="/index.html">HOME</a>
+  <span>›</span>
+  <a href="/shopping.html">SHOPPING</a>
+  <span>›</span>
+  <span id="bc-name">—</span>
 </div>
 
 <div id="main-content"><div class="ssr-fallback" style="max-width:640px;margin:30px auto;padding:0 20px;font-family:'DM Mono',monospace;color:#e8e4d9"><h1 style="font-size:22px;margin-bottom:8px">Velonauta</h1><p style="color:#999;font-size:12px;margin-bottom:14px">shopping · Kreis 5 · Viaduktstrasse 87, Bogen A</p><p style="font-size:13px;line-height:1.6">Das persönliche und individuelle Fahrrad kauft man sich in Zürich bei «Velonauta» im Viadukt in Zürich-West.</p></div></div>
 
-<div class="ticker-wrap">
-  <div class="ticker-row"><div class="tick l" id="ticker-a"></div></div>
-  <div class="ticker-row"><div class="tick r" id="ticker-b"></div></div>
+<div class="btw">
+  <div class="tr"><div class="tick l" id="ta"></div></div>
+  <div class="tr"><div class="tick r" id="tb"></div></div>
 </div>
 
-<style>
-/* ═══ ORIGINAL STADTPULS FOOTER ═══ */
-footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
-.ftk{background:rgba(255,45,0,.06);padding:.4rem 0;overflow:hidden;white-space:nowrap;border-bottom:1px solid rgba(255,45,0,.1)}
-.fti{display:inline-block;animation:tkr 22s linear infinite}
-.fti span{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;color:rgba(255,45,0,.45);text-transform:uppercase;margin:0 2rem}
-@keyframes tkr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;max-width:1320px;margin:0 auto;padding:2.5rem 1.5rem 2rem}
-@media(max-width:768px){.fg{grid-template-columns:1fr 1fr;padding:2rem 1.5rem}.footer-brand{grid-column:span 2}}
-.fbl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:1.6rem;letter-spacing:.1em;display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;color:#e8e4d9}
-.fbdot{width:8px;height:8px;background:#ff2d00;border-radius:50%;box-shadow:0 0 8px #ff2d00;flex-shrink:0}
-.footer-brand p{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(232,228,217,0.4);line-height:1.9;max-width:280px}
-.fc h5{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:#ff2d00;margin-bottom:1rem;font-weight:500}
-.fc ul{list-style:none;margin:0;padding:0}
-.fc li{font-family:'DM Mono',monospace;font-size:.75rem;margin-bottom:.6rem}
-.fc li a{color:rgba(232,228,217,0.45);text-decoration:none;cursor:pointer;transition:color .2s}
-.fc li a:hover{color:#e8e4d9}
-.fbot{max-width:1320px;margin:0 auto;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.05)}
-.fbot p{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;margin:0}
-</style>
-
-<!-- SP_BOOST v1: CLAIM — "Das isch mis Lokal" (Verkaufseinstieg) -->
-<style>
-.sp-claim{max-width:1100px;margin:28px auto;padding:16px 18px;border:1px dashed rgba(200,255,0,.35);display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.sp-claim-txt{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;color:#888;text-transform:uppercase;line-height:1.7}
-.sp-claim-btn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;color:#04040a;background:#c8ff00;padding:10px 20px;text-decoration:none;white-space:nowrap;transition:background .15s}
-.sp-claim-btn:hover{background:#e8e4d9}
-</style>
-<div class="sp-claim" id="sp-claim" style="display:none">
-  <div class="sp-claim-txt">Bisch du de Inhaber? Hol dir dini Platzierig — ganz obe i dinere Kategorie.</div>
-  <a class="sp-claim-btn" id="sp-claim-link" href="/platzierung.html">DAS ISCH MIS LOKAL →</a>
-</div>
-<script>
-function spClaim(id,typ,name,kreis){try{
-  const a=document.getElementById('sp-claim-link');
-  a.href='/platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
-  document.getElementById('sp-claim').style.display='flex';
-}catch(e){}}
-</script>
 <footer>
-  <div class="ftk">
-    <div class="fti">
-      <span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span><span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span>
-    </div>
-  </div>
-  <div class="fg">
-    <div class="footer-brand"><div class="fbl"><div class="fbdot"></div>STADTPULS</div><p>dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.<br><br>© 2026 by raimondo* — Zürich</p></div>
-    <div class="fc">
-      <h5>Entdecken</h5>
-      <ul>
-        <li><a href="/gastro.html">Gastro & Bars</a></li>
-        <li><a href="/nachtleben.html">Nachtleben</a></li>
-        <li><a href="/shopping.html">Shopping</a></li>
-        <li><a href="/events.html">Events</a></li>
-        <li><a href="/quartiere.html">Quartiere</a></li>
-        <li><a href="/musik.html">Musik & Sound</a></li>
-        <li><a href="/mobilitaet.html">Mobilität</a></li>
-        <li><a href="/kultur.html">Kultur</a></li>
-      </ul>
-    </div>
-    <div class="fc">
-      <h5>Community</h5>
-      <ul>
-        <li><a href="/community.html">Feed & Posts</a></li>
-        <li><a href="/dating.html">People & Dates</a></li>
-        <li><a href="/jobs.html">Jobs Züri</a></li>
-        <li><a href="/news.html">News & Stories</a></li>
-        <li><a href="/gps.html">GPS — Wo bisch du?</a></li>
-        <li><a href="/partners.html">Kooperatione</a></li>
-      </ul>
-    </div>
-    <div class="fc">
-      <h5>Mitmache</h5>
-      <ul>
-        <li><a href="/login.html">Einlogge</a></li>
-        <li><a href="/login.html">Profil aalege</a></li>
-        <li><a href="/community.html">Blogger werde</a></li>
-        <li><a href="/immobilien.html">Inserat schalte</a></li>
-        <li><a href="/partners.html">Partner werde</a></li>
-        <li><a href="/kontakt.html">Kontakt</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="fbot">
-    <p>© 2026 depuls.ch — by raimondo* — Zürich</p>
-    <p style="display:flex;gap:14px"><span>AGB</span> · <a href="/datenschutz.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Datenschutz</a> · <a href="/impressum.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Impressum</a></p>
-  </div>
+  <div><div class="logo" style="margin-bottom:8px"><div class="ldot"></div>STADTPULS</div><div class="fc-desc">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich.</div><div class="fc-copy">© 2026 by raimondo* — Zürich</div></div>
+  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link" href="/gastro.html">Gastro & Bars</a><a class="fc-link" href="/nachtleben.html">Nachtleben</a><a class="fc-link" href="/shopping.html">Shopping</a></div>
+  <div><div class="fc-title">COMMUNITY</div><a class="fc-link" href="/dating.html">People & Dates</a><a class="fc-link" href="feedback.html">Feedback</a></div>
+  <div><div class="fc-title">MITMACHE</div><a class="fc-link" href="index.html?page=login">Einlogge</a><a class="fc-link" href="/impressum.html">Impressum</a></div>
 </footer>
 
-
-<script src="/location-links.js"></script>
 <script>
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
-// SP_PRETTY_LOC v1 -- huebsche URLs aus location-links.js (naechtlich generiert)
-function spLocPath(id){return (window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[id])||('/shopping-profil.html?id='+id);}
-function spLocUrl(id){return 'https://depuls.ch'+spLocPath(id);}
 
+const DAYS=['So','Mo','Di','Mi','Do','Fr','Sa'];
+
+// Shopping Subkategorien — aus Supabase Masterplan
 const SUBKAT={
-  127:{e:'👗',n:'MODE'},128:{e:'🇨🇭',n:'SWISS MADE'},129:{e:'⌚',n:'UHREN'},
-  130:{e:'🎁',n:'SOUVENIRS'},131:{e:'🍫',n:'FOOD'},132:{e:'🛒',n:'MARKT'},
-  416:{e:'🏬',n:'WARENHAUS'},417:{e:'🛍️',n:'MALL'},418:{e:'🎄',n:'WEIHNACHTSMARKT'},
-  1090:{e:'🚲',n:'VELO'},95:{e:'🛍️',n:'SHOPPING'},
+  104:{e:'👗',n:'FASHION'},105:{e:'👟',n:'SCHUHE'},106:{e:'💄',n:'BEAUTY'},
+  107:{e:'💍',n:'SCHMUCK'},108:{e:'📚',n:'BÜCHER'},109:{e:'🎵',n:'MUSIK'},
+  110:{e:'🖼️',n:'KUNST'},111:{e:'🏠',n:'WOHNEN'},112:{e:'🌿',n:'NATUR & BIO'},
+  113:{e:'🎨',n:'DESIGN'},114:{e:'⌚',n:'UHREN'},115:{e:'🧴',n:'KOSMETIK'},
+  164:{e:'🛍️',n:'SHOPPING'},165:{e:'👔',n:'HERRENMODE'},166:{e:'👒',n:'ACCESSOIRES'},
+  167:{e:'🎁',n:'GESCHENKE'},168:{e:'🏪',n:'CONCEPT STORE'},
 };
 
-const KREIS_CHAR={
-  1:'BAHNHOFSTRASSE',2:'WOLLISHOFEN',3:'WIEDIKON',4:'LANGSTRASSE',
-  5:'ZÜRICH WEST',6:'UNTERSTRASS',7:'WITIKON',8:'SEEFELD',
-  9:'ALTSTETTEN',10:'HÖNGG',11:'OERLIKON',12:'SCHWAMENDINGEN'
-};
-
-const ROUTE=[
-  {num:1,name:'Flohmarkt Kanzlei',meta:'08:00 · Gratis · K3',here:false},
-  {num:2,name:'',meta:'· K1',here:true},
-  {num:3,name:'Kafi Pause Viadukt',meta:'Zmittag · K5',here:false},
-  {num:4,name:'Freitag Store',meta:'Swiss Original · K5',here:false},
+const VIBES=[
+  '«Genau das richtige Stück für dich — garantiert.»',
+  '«Züri Shopping at its finest — nur echti Labels.»',
+  '«Langstrasse Style trifft Bahnhofstrasse Qualität.»',
+  '«Dini Kreditkarte isch ready — loss go.»',
+  '«Einmalig in Züri — kei Kette, kei Bullshit.»',
 ];
 
-async function sbGet(path){
-  const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
-  if(!r.ok)throw new Error('HTTP '+r.status);
-  return r.json();
-}
-
-function getIdFromUrl(){
-  if(document.body.dataset.locationId)return document.body.dataset.locationId;
-  const p=new URLSearchParams(window.location.search);
-  return p.get('id')||null;
-}
-function getSlugFromUrl(){
-  const p=new URLSearchParams(window.location.search);
-  return p.get('slug')||null;
-}
-
+const DAYS_EN=['Su','Mo','Tu','We','Th','Fr','Sa'];
 function isOffe(oz){
   if(!oz||!Array.isArray(oz)||!oz.length)return null;
   const now=new Date();const h=now.getHours();
-  const days=['So','Mo','Di','Mi','Do','Fr','Sa'];
-  const day=days[now.getDay()];
-  const dayEn=["Su","Mo","Tu","We","Th","Fr","Sa"][now.getDay()];const s=oz.find(function(o){return o&&(o.includes(day)||o.includes(dayEn));});
-  if(!s)return null;
-  const m=s.match(/(\d{2}):(\d{2})(?::\d{2})?-(\d{2}):(\d{2})(?::\d{2})?/);
-  if(!m)return null;
-  return h>=parseInt(m[1])&&h<parseInt(m[3]);
+  const dayDe=DAYS[now.getDay()];
+  const dayEn=DAYS_EN[now.getDay()];
+  // SP_OFFE_FIX v1: Tag-Teil vor de Ziit trenne + exakt vergliiche (au Komma-Liste + Englischi Tag-Kürzel)
+  const s=oz.find(function(o){
+    if(!o)return false;
+    const dayPart=(String(o).split(/\s+/)[0]||'');
+    const tokens=dayPart.split(',').map(function(t){return t.trim();});
+    return tokens.indexOf(dayDe)>=0||tokens.indexOf(dayEn)>=0;
+  });
+  if(!s)return false;
+  if(/geschlossen|closed|ruhetag/i.test(s))return false;
+  const m=s.match(/(\d{2}):(\d{2})(?::\d{2})?\s*-\s*(\d{2}):(\d{2})(?::\d{2})?/);
+  if(!m)return false;
+  const openH=parseInt(m[1],10);
+  let closeH=parseInt(m[3],10);
+  if(closeH===0)closeH=24; // Mitternacht = Änd vom Tag, nid Stund null
+  return h>=openH&&h<closeH;
 }
 
-function updateSEO(l,sub){
-  const title=l.name+' — '+sub.n+' Kreis '+(l.kreis||'?')+' | Stadtpuls Zürich';
-  document.title=title;
-  document.getElementById('page-title').textContent=title;
-  if(!document.body.dataset.locationId){
-    const c=document.getElementById('page-canonical'); if(c) c.href=spLocUrl(l.id);
-    const ogt=document.getElementById('og-title'); if(ogt) ogt.content=title;
-    const ogu=document.getElementById('og-url'); if(ogu) ogu.content=spLocUrl(l.id);
-    const twt=document.getElementById('tw-title'); if(twt) twt.content=title;
-  }
-  document.getElementById('page-desc').content=l.beschreibung_kurz||l.beschreibung||l.name+' Shop in Zürich';
-  const schema={
-    "@context":"https://schema.org",
-    "@type":"Store",
-    "name":l.name||"",
-    "description":l.beschreibung||"",
-    "url":"https://depuls.ch/shopping-profil.html?id="+l.id,
-    "address":{"@type":"PostalAddress","streetAddress":l.adresse||"","postalCode":l.plz||"","addressLocality":"Zürich","addressCountry":"CH"},
-    "telephone":l.telefon||"",
-    "image":l.bild_url||""
-  };
-  document.getElementById('schema-ld').textContent=JSON.stringify(schema);
-}
-
-function renderProfil(l,similar){
-  const sid=parseInt(l.zt_subkategorie_id)||95;
-  const sub=SUBKAT[sid]||{e:'🛍️',n:l.subkategorie?l.subkategorie.toUpperCase():'SHOP'};
-  const score=l.featured?'TOP':l.rating?Math.round(l.rating*20):'NEU';
-  const scoreColor=l.featured?'#c8ff00':l.rating?'#ff2d00':'rgba(232,228,217,.3)';
-  const offeStatus=isOffe(l.oeffnungszeiten);
-  const kreis=parseInt(l.kreis)||1;
-  const kreisChar=KREIS_CHAR[kreis]||'ZÜRICH';
-
-  document.getElementById('bc-name').textContent=l.name;
-  updateSEO(l,sub);
-
-  // OFFE BANNER
-  const offeBanner='<div style="padding:12px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,45,0,.08);background:rgba(255,45,0,.02)">'
-    +'<div style="display:flex;align-items:center;gap:10px">'
-    +'<div style="width:8px;height:8px;border-radius:50%;background:'+(offeStatus===true?'#c8ff00':'#ff2d00')+';animation:blink 2s infinite;flex-shrink:0;'+(offeStatus===true?'box-shadow:0 0 8px rgba(200,255,0,.6)':'')+'"></div>'
-    +'<div>'
-    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:18px;color:'+(offeStatus===true?'#c8ff00':offeStatus===false?'rgba(255,45,0,.6)':'rgba(232,228,217,.3)')+';text-transform:uppercase">'
-    +'KREIS '+kreis+' · '+(l.adresse||'')+' · '+sub.n
-    +'</div>'
-    +'<div style="font-size:9px;color:rgba(232,228,217,.25);letter-spacing:1px;margin-top:2px">'+sub.e+' '+sub.n+' · Kreis '+kreis+' · '+kreisChar+'</div>'
-    +'</div></div>'
-    +'<div style="display:flex;gap:6px;flex-wrap:wrap">'
-    +(offeStatus===true?'<div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(200,255,0,.3);color:#c8ff00;background:rgba(200,255,0,.05);display:flex;align-items:center;gap:5px"><span style="width:5px;height:5px;border-radius:50%;background:#c8ff00;display:inline-block;animation:blink 1s infinite"></span>JETZT OFFE</div>':'')
-    +(offeStatus===false?'<div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,45,0,.3);color:rgba(255,45,0,.6)">● GESCHLOSSEN</div>':'')
-    +(l.featured?'<div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">⭐ TOP PICK</div>':'')
-    +'</div></div>';
-
-  let oeffnig='—';
-  if(l.oeffnungszeiten){
-    if(Array.isArray(l.oeffnungszeiten))oeffnig=l.oeffnungszeiten.slice(0,2).join('<br>');
-    else oeffnig=String(l.oeffnungszeiten);
-  }
-
-  const adresseVoll=l.adresse&&l.plz?l.adresse+', '+l.plz+' Zürich':l.adresse?l.adresse+', Zürich':'—';
-  const mapQuery=encodeURIComponent((l.adresse||l.name)+' Zürich');
-
-  // ROUTE mit aktuellem Shop als #2
-  const routeHTML='<div style="border:1px solid rgba(255,45,0,.08);background:#07070f;margin-bottom:28px">'
-    +ROUTE.map(function(r){
-      const name=r.here?l.name:r.name;
-      const meta=r.here?(sub.e+' · K'+kreis):r.meta;
-      return '<div style="display:flex;align-items:center;padding:14px 18px;border-bottom:1px solid rgba(255,45,0,.05);gap:14px">'
-        +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:22px;color:'+(r.here?'#ff2d00':'rgba(232,228,217,.2)')+';width:20px;flex-shrink:0">'+r.num+'</div>'
-        +'<div style="flex:1"><div style="font-size:13px;color:#e8e4d9">'+(r.here?'<strong>'+name+'</strong>':name)+'</div><div style="font-size:10px;color:rgba(232,228,217,.3);margin-top:2px">'+meta+'</div></div>'
-        +(r.here?'<div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;background:#c8ff00;color:#04040a;padding:3px 8px;font-family:\'DM Mono\',monospace;white-space:nowrap">DU BISCH DA</div>':'')
-        +'</div>';
-    }).join('')
-    +'</div>';
-
-  // STYLE TAGS Outfit-Matcher
-  const styleTags=['😎 CASUAL','💼 BUSINESS','🏙 URBAN','🌿 NACHHALTIG','⚡ SPORT','💎 LUXUS'];
-  const outfitHTML='<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px">'
-    +styleTags.map(function(t){return '<div style="background:transparent;border:1px solid rgba(232,228,217,.1);color:rgba(232,228,217,.4);font-size:11px;letter-spacing:.08em;padding:8px 14px;font-family:\'DM Mono\',monospace;cursor:pointer;min-height:40px;display:flex;align-items:center;gap:6px;transition:.15s" onmouseover="this.style.borderColor=\'#ff2d00\';this.style.color=\'#e8e4d9\'" onmouseout="this.style.borderColor=\'rgba(232,228,217,.1)\';this.style.color=\'rgba(232,228,217,.4)\'">'+t+'</div>';}).join('')
-    +'</div>';
-
-  // SIMILAR
-  const simCards=similar.slice(0,3).map(function(s){
-    const ssub=SUBKAT[parseInt(s.zt_subkategorie_id)]||{e:'🛍️',n:'SHOP'};
-    return '<a class="sim-card" href="'+spLocPath(s.id)+'">'
-      +(s.bild_url?'<img class="sim-img" src="'+s.bild_url+'" alt="'+s.name+'" loading="lazy" onerror="this.style.display=\'none\'">':'<div class="sim-img-ph">'+ssub.e+'</div>')
-      +'<div class="sim-name">'+s.name+'</div>'
-      +'<div class="sim-sub">'+ssub.e+' '+ssub.n+'</div></a>';
-  }).join('');
-
-  document.getElementById('main-content').innerHTML=
-    offeBanner+
-
-    // HERO
-    '<div class="hero-wrap">'
-    +(l.bild_url?'<img class="hero-img" src="'+l.bild_url+'" alt="'+l.name+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">':'')
-    +'<div class="hero-placeholder" style="'+(l.bild_url?'display:none':'')+'">'+sub.e+'</div>'
-    +'</div>'
-
-    // HEADER
-    +'<div class="profil-header">'
-    +'<div class="ph-top">'
-    +'<div class="typ-badge">'+sub.e+' '+sub.n+'</div>'
-    +(l.featured?'<div class="typ-badge red">TOP PICK</div>':'')
-    +'<div class="ph-addr">Kreis '+kreis+' · '+(l.adresse||'')+'</div>'
-    +'</div>'
-    +'<div class="profil-name">'+l.name+'</div>'
-    +'<div class="profil-subname">'+sub.n+'</div>'
-    +'</div>'
-
-    // CONTENT GRID
-    +'<div class="content-grid">'
-
-    // LEFT
-    +'<div>'
-    +'<p class="profil-desc">'+(l.beschreibung||l.beschreibung_kurz||'Dieses Geschäft ist Teil des Stadtpuls City Guide Zürich.')+'</p>'
-
-    // SCORE BOX
-    +'<div style="border:1px solid rgba(255,45,0,.15);background:rgba(255,45,0,.03);padding:18px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">'
-    +'<div>'
-    +'<div style="font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.4);margin-bottom:4px;display:flex;align-items:center;gap:5px"><span style="width:5px;height:5px;border-radius:50%;background:#ff2d00;display:inline-block;animation:blink 1s infinite"></span>LIVE · KREIS '+kreis+'</div>'
-    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;color:#ff2d00">STADTPULS SCORE</div>'
-    +'<div style="font-size:10px;color:rgba(232,228,217,.3);margin-top:4px">'+(l.featured?'Top Pick · Empfohlen von Stadtpuls':'Verifizierter Shop · Zürich Tourismus')+'</div>'
-    +'</div>'
-    +'<div style="display:flex;gap:16px">'
-    +'<div style="text-align:center"><div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:36px;color:'+scoreColor+';line-height:1">'+score+'</div><div style="font-size:7px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase;margin-top:2px">SCORE</div></div>'
-    +'<div style="text-align:center"><div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:36px;color:#c8ff00;line-height:1">'+kreis+'</div><div style="font-size:7px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase;margin-top:2px">KREIS</div></div>'
-    +'</div></div>'
-
-    // MAP
-    +(l.adresse?
-    '<div style="margin-bottom:24px">'
-    +'<div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:10px">— STANDORT · '+adresseVoll.toUpperCase()+'</div>'
-    +'<div style="border:1px solid rgba(0,245,255,.1);overflow:hidden;position:relative;background:#07070f">'
-    +'<div style="position:absolute;top:10px;left:10px;z-index:10">'
-    +'<a href="https://www.google.com/maps/search/?api=1&query='+mapQuery+'" target="_blank" style="display:flex;align-items:center;gap:6px;background:#fff;color:#000;font-family:\'DM Mono\',monospace;font-size:10px;padding:6px 12px;text-decoration:none;cursor:pointer">In Maps öffnen ↗</a>'
-    +'</div>'
-    +'<div style="position:absolute;bottom:10px;right:10px;z-index:10">'
-    +'<div onclick="if(navigator.share){navigator.share({title:\''+l.name+' — Stadtpuls\',url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);alert(\'Link kopiert!\')}" style="min-height:44px;padding:0 16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#ff2d00;color:#e8e4d9;font-family:\'DM Mono\',monospace;cursor:pointer;display:flex;align-items:center;gap:6px">📤 TEILE</div>'
-    +'</div>'
-    +'<iframe src="https://www.google.com/maps?q='+mapQuery+'&output=embed&z=16&hl=de" width="100%" height="280" style="border:0;display:block;filter:invert(90%) hue-rotate(180deg);" loading="lazy"></iframe>'
-    +'</div></div>'
-    :'')
-
-    // DROP ALERT
-    +'<div style="border:1px solid rgba(255,45,0,.15);background:rgba(255,45,0,.03);padding:20px;margin-bottom:24px">'
-    +'<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">'
-    +'<div style="background:#ff2d00;color:#e8e4d9;font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:3px 8px;font-family:\'DM Mono\',monospace">✦ DROP ALERT</div>'
-    +'<div style="font-size:12px;color:#e8e4d9;letter-spacing:.05em;font-weight:500">INFORMIER MICH</div>'
-    +'</div>'
-    +'<div style="font-size:11px;color:rgba(232,228,217,.35);margin-bottom:14px">Neui Kollektion · Sale · Pop-Up — du bisch als Erschti informiert.</div>'
-    +'<div onclick="alert(\'Alert aktiviert — kommt in Phase 5!\')" style="width:100%;background:#ff2d00;color:#e8e4d9;font-family:\'DM Mono\',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:16px;text-align:center;cursor:pointer;min-height:52px;display:flex;align-items:center;justify-content:center;gap:8px">🔔 ALERT AKTIVIERE →</div>'
-    +'</div>'
-
-    // SHOPPING ROUTE
-    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:24px;text-transform:uppercase;color:#e8e4d9;margin-bottom:4px;display:flex;align-items:center;gap:8px"><span style="color:#ff2d00">—</span>🗺 SAMSCHTIG-ROUTE ZÜRI</div>'
-    +'<div style="font-size:11px;color:rgba(232,228,217,.3);margin-bottom:12px">Kuratierte Shopping-Route — du bisch grad hier:</div>'
-    +routeHTML
-
-    // OUTFIT MATCHER
-    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:24px;text-transform:uppercase;color:#e8e4d9;margin-bottom:4px;display:flex;align-items:center;gap:8px"><span style="color:#ff2d00">—</span>👗 OUTFIT-MATCHER</div>'
-    +'<div style="font-size:11px;color:rgba(232,228,217,.3);margin-bottom:12px">KI findet passende Shops für deinen kompletten Look</div>'
-    +outfitHTML
-
-    // KI FEATURES
-    +'<div style="border:1px solid rgba(200,255,0,.1);background:#07070f;padding:22px;margin-bottom:24px">'
-    +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">'
-    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase">🤖 ZÜRI-BOT · KI FEATURES</div>'
-    +'<div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;border:1px solid rgba(200,255,0,.2);padding:3px 8px;display:flex;align-items:center;gap:4px"><span style="width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite;display:inline-block"></span>PHASE 5-6</div>'
-    +'</div>'
-    +'<div style="border:1px solid rgba(0,245,255,.1);background:rgba(0,245,255,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">📍</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">GPS DISTANZ</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Kreis '+kreis+' · Schritt-Distanz wird in Phase 5 live berechnet</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.2);color:#00f5ff;display:flex;align-items:center;white-space:nowrap;cursor:pointer">GPS AN</div></div>'
-    +'<div style="border:1px solid rgba(0,245,255,.08);background:rgba(0,245,255,.01);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">🚋</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">ZVV ANBINDUNG</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Nächste Haltestelle · Echtzeit-Abfahrten · Phase 5</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.15);color:rgba(0,245,255,.4);display:flex;align-items:center;white-space:nowrap">BALD</div></div>'
-    +'<div style="border:1px solid rgba(255,204,0,.1);background:rgba(255,204,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">❤️</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ffcc00;margin-bottom:4px">WUNSCHLISTE</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Spar diesen Shop — KI lernt dinen Style automatisch</div></div><div onclick="alert(\'Login nötig — kommt in Phase 5!\')" style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,204,0,.3);color:#ffcc00;display:flex;align-items:center;white-space:nowrap;cursor:pointer">♥ SPARE</div></div>'
-    +'<div style="border:1px solid rgba(200,255,0,.1);background:rgba(200,255,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">👗</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:4px">OUTFIT-MATCHING</div><div style="font-size:11px;color:rgba(232,228,217,.4)">KI findet passende Shops für deinen kompletten Look</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(200,255,0,.2);color:#c8ff00;display:flex;align-items:center;white-space:nowrap">AKTIV</div></div>'
-    +'<div style="border:1px solid rgba(255,45,0,.1);background:rgba(255,45,0,.02);padding:14px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">💥</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;margin-bottom:4px">DROP ALERT</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Push bi neuer Kollektion oder Sale — FOMO by design</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,45,0,.2);color:rgba(255,45,0,.5);display:flex;align-items:center;white-space:nowrap">PHASE 5</div></div>'
-    +'</div>'
-
-    // INFO / QUELLE
-    +'<div class="section-body">'
-    +(l.adresse?'<strong style="color:#e8e4d9">Adresse</strong><br>'+adresseVoll+'<br><br>':'')
-    +(l.telefon?'<strong style="color:#e8e4d9">Telefon</strong><br>'+l.telefon+'<br><br>':'')
-    +'Quelle: Zürich Tourismus · zuerich.com · CC BY-SA'
-    +'</div>'
-
-    +'</div>'
-
-    // RIGHT — DETAILS BOX
-    +'<div><div class="details-box">'
-    +'<div class="score-box"><div class="sb-score" style="color:'+scoreColor+'">'+score+'</div><div class="sb-lbl">STADTPULS SCORE</div></div>'
-    +'<div class="db-title">DETAILS</div>'
-    +'<div class="db-row"><div class="db-lbl">ADRESSE</div><div class="db-val">'+adresseVoll+'</div></div>'
-    +'<div class="db-row"><div class="db-lbl">QUARTIER</div><div class="db-val">Kreis '+kreis+' · '+kreisChar+'</div></div>'
-    +'<div class="db-row"><div class="db-lbl">TYP</div><div class="db-val">'+sub.e+' '+sub.n+'</div></div>'
-    +'<div class="db-row"><div class="db-lbl">ÖFFNIG</div><div class="db-val">'+oeffnig+'</div></div>'
-    +(l.website?'<div class="db-row"><div class="db-lbl">WEBSITE</div><div class="db-val"><a href="'+l.website+'" target="_blank">'+l.website.replace(/^https?:\/\//,'').split('/')[0]+' →</a></div></div>':'')
-    +(l.telefon?'<div class="db-row"><div class="db-lbl">TEL</div><div class="db-val">'+l.telefon+'</div></div>':'')
-    +'<div class="db-actions"><a class="btn-back" href="/shopping.html">← ALLE SHOPS IN ZÜRICH</a></div>'
-    +'<div class="action-grid">'
-    +'<div class="act-btn" onclick="window.open(\'https://maps.google.com?q='+mapQuery+'\',\'_blank\')">🗺️ KARTE</div>'
-    +'<div class="act-btn" onclick="alert(\'Spare — Phase 5!\')">❤️ SPARE</div>'
-    +'<div class="act-btn" onclick="alert(\'Bewertung — Phase 5!\')">⭐ BEWERTE</div>'
-    +'<div class="act-btn" onclick="if(navigator.share){navigator.share({title:\''+l.name+'\',url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);alert(\'Link kopiert!\')}">📤 TEILE</div>'
-    +'</div>'
-    +'</div></div>'
-    +'</div>'
-
-    // ÄHNLICHE
-    +(simCards?'<div class="similar-section"><div class="section-title">ÄHNLICHI SHOPS</div><div class="similar-grid">'+simCards+'</div></div>':'');
+// OZ Grid — exakt wie gastro-profil
+function buildOzGrid(oz){
+  const today=new Date().getDay();
+  return '<div class="oz-grid">'+DAYS.map((d,i)=>{
+    const s=(oz||[]).find(o=>o&&o.includes(d));
+    const m=s?s.match(/(\d{2}):(\d{2}):00-(\d{2}):(\d{2}):00/):null;
+    const isToday=i===today;
+    return`<div class="oz-row${isToday?' today':''}"><div class="oz-day">${d}${isToday?' ◀':''}</div><div class="oz-time${!m?' oz-closed':''}\">${m?m[1]+':'+m[2]+' – '+m[3]+':'+m[4]:'GESCHLOSSEN'}</div></div>`;
+  }).join('')+'</div>';
 }
 
 async function loadProfil(){
-  const id=getIdFromUrl();
-  const slug=getSlugFromUrl();
-  if(!id&&!slug){
-    document.getElementById('main-content').innerHTML='<div class="error-wrap"><div class="error-title">KÄ SHOP GFUNDE</div><a class="error-back" href="/shopping.html">← ZURÜCK ZU SHOPPING</a></div>';
+  const p=new URLSearchParams(window.location.search);
+  const id=p.get('id'),slug=p.get('slug');
+  if(!id&&!slug){showError('Kein Shop angegeben');return;}
+  try{
+    const q='locations?select=*&limit=1&aktiv=eq.true'+(id?`&id=eq.${id}`:`&slug=eq.${slug}`);
+    const r=await fetch(SU+'/rest/v1/'+q,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+    const data=await r.json();
+    if(!data?.length){showError('Shop nöd gfunde');return;}
+    const l=data[0];
+    renderProfil(l);
+    // Ähnliche laden
+    const sid=parseInt(l.zt_subkategorie_id)||164;
+    const sr=await fetch(SU+`/rest/v1/locations?select=id,name,slug,zt_subkategorie_id,kreis,bild_url&aktiv=eq.true&zt_subkategorie_id=eq.${sid}&id=neq.${l.id}&limit=6`,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+    renderSimilar(await sr.json(),sid);
+  }catch(e){showError('Verbindungsfehler');}
+}
+
+function renderProfil(l){
+  const sid=parseInt(l.zt_subkategorie_id)||164;
+  const sub=SUBKAT[sid]||{e:'🛍️',n:'SHOPPING'};
+  const offeStatus=isOffe(l.oeffnungszeiten);
+  const rating=l.rating||4.3;
+  const jnyLatArg=(typeof l.lat==='number')?l.lat:'null';
+  const jnyLngArg=(typeof l.lng==='number')?l.lng:'null';
+  const jnyOnclick=`jnyStart('${l.id}',${jnyLatArg},${jnyLngArg})`;
+
+  document.title=`${l.name} — Shopping Zürich | Stadtpuls`;
+  document.getElementById('bc-name').textContent=l.name;
+
+  // OFFE Banner
+  const offeBanner=`<div class="offe-banner">
+    <div class="ob-left">
+      <div class="ob-dot ${offeStatus===true?'offe':'zu'}"></div>
+      <div class="ob-meta" style="color:${offeStatus===true?'#c8ff00':offeStatus===false?'rgba(255,45,0,.6)':'rgba(232,228,217,.3)'}">
+        KREIS ${l.kreis||'?'} · ${l.adresse||''} · ${sub.n}
+      </div>
+    </div>
+    <div class="ob-right">
+      ${offeStatus===true?'<div class="ob-badge offe"><div style="width:5px;height:5px;border-radius:50%;background:#c8ff00;animation:blink 1s infinite"></div> JETZT OFFE</div>':''}
+      ${offeStatus===false?'<div class="ob-badge zu">● GESCHLOSSEN</div>':''}
+    </div>
+  </div>`;
+
+  // OZ Grid
+  const ozGrid=buildOzGrid(l.oeffnungszeiten);
+
+  document.getElementById('main-content').innerHTML=`
+    <div class="hero-wrap">
+      ${l.bild_url
+        ?`<img class="hero-img" src="${l.bild_url}" alt="${l.name}">`
+        :`<div style="height:280px;background:#07070f;display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.1">${sub.e}</div>`}
+      <div class="hero-gradient"></div>
+    </div>
+
+    ${offeBanner}
+
+    <div class="profil-wrap">
+      <!-- LINKS -->
+      <div class="profil-left">
+        <div class="pl-head">
+          <div class="pl-badges">
+            ${l.featured?'<span class="badge volt">TOP</span>':''}
+            <span class="badge red">${sub.e} ${sub.n}</span>
+            <span class="badge ghost">KREIS ${l.kreis||'?'}</span>
+            ${offeStatus===true?'<span class="badge offe-b"><div class="badge-dot"></div>OFFE</span>':''}
+          </div>
+          <div class="pl-name">${l.name}</div>
+          <div class="pl-sub">${sub.n} · KREIS ${l.kreis||'?'}</div>
+          <div class="pl-adresse">${l.adresse||''}${l.plz?' · '+l.plz+' Zürich':''}</div>
+        </div>
+
+        <div class="ki-pred">
+          <div class="ki-pred-head"><span class="ki-pred-icon">🤖</span><span class="ki-pred-label">ZÜRI-BOT SAIT</span></div>
+          <div class="ki-pred-txt">⚡ «${VIBES[Math.floor(Math.random()*VIBES.length)]}»</div>
+        </div>
+
+        <div class="jny-card-wrap">
+          <div class="jny-head">
+            <div style="font-size:22px;flex-shrink:0">🧭</div>
+            <div class="jny-head-txt">
+              <div class="jny-head-lbl">WIE CHUM ICH HI?</div>
+              <div class="jny-head-sub">Live Fussweg + ÖV-Verbindig ab dim Standort</div>
+            </div>
+            <div class="jny-go" id="jnyGoBtn" onclick="${jnyOnclick}">📍 GPS AN</div>
+          </div>
+          <div id="jnyResult"></div>
+        </div>
+
+        ${l.beschreibung||l.beschreibung_kurz?`
+        <div class="section">
+          <div class="section-title">ÜBER DE SHOP</div>
+          <div class="section-desc">${l.beschreibung||l.beschreibung_kurz}</div>
+        </div>`:''}
+
+        <div class="section">
+          <div class="section-title">ÖFFNIGSZITE</div>
+          ${ozGrid}
+        </div>
+
+        <div class="section" id="similar-section">
+          <div class="section-title">ÄHNLICHI SHOPS</div>
+          <div class="ae-grid" id="similar-grid">
+            <div style="grid-column:1/-1;padding:20px;text-align:center;font-size:9px;color:rgba(232,228,217,.15)">LÄDT...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIDEBAR RECHTS -->
+      <div class="profil-right">
+
+        <!-- VOLT BTN -->
+        <a class="btn-volt" href="${l.website||'#'}" target="_blank">
+          🛍️ JETZT SHOPPE →
+        </a>
+
+        ${l.website?`<a class="btn-primary" href="${l.website}" target="_blank">🌐 WEBSITE ÖFFNE →</a>`:''}
+
+        <a class="btn-ghost" href="/shopping.html">← ZURÜCK ZUM SHOPPING</a>
+
+        <!-- INFO CARD -->
+        <div class="info-card">
+          <div class="ic-title">INFOS</div>
+          ${l.adresse?`<div class="ir"><div class="ir-l">ADRESSE</div><div class="ir-r">${l.adresse}</div></div>`:''}
+          <div class="ir"><div class="ir-l">KREIS</div><div class="ir-r red">Kreis ${l.kreis||'?'}</div></div>
+          <div class="ir"><div class="ir-l">KATEGORIE</div><div class="ir-r">${sub.e} ${sub.n}</div></div>
+          <div class="ir"><div class="ir-l">STATUS</div><div class="ir-r ${offeStatus===true?'volt':''}">${offeStatus===true?'● JETZT OFFE':offeStatus===false?'● GESCHLOSSEN':'—'}</div></div>
+          <div class="ir"><div class="ir-l">RATING</div><div class="ir-r red">${rating.toFixed(1)} ★</div></div>
+          ${l.website?`<div class="ir"><div class="ir-l">WEBSITE</div><div class="ir-r"><a href="${l.website}" target="_blank">ÖFFNE →</a></div></div>`:''}
+          ${l.telefon?`<div class="ir"><div class="ir-l">TEL</div><div class="ir-r">${l.telefon}</div></div>`:''}
+        </div>
+
+        <!-- 4 ACTION BUTTONS Apple-Grösse -->
+        <div class="action-grid">
+          <div class="act-btn">🗺️ KARTE</div>
+          <div class="act-btn">❤️ SPEICHERE</div>
+          <div class="act-btn">⭐ BEWERTE</div>
+          <div class="act-btn">📤 TEILE</div>
+        </div>
+      </div>
+    </div>`;
+}
+
+function renderSimilar(locs,sid){
+  const g=document.getElementById('similar-grid');if(!g)return;
+  const sub=SUBKAT[sid]||{e:'🛍️',n:'SHOPPING'};
+  if(!locs?.length){g.innerHTML='<div style="grid-column:1/-1;padding:20px;text-align:center;font-size:9px;color:rgba(232,228,217,.12)">NÜÜT GFUNDE</div>';return;}
+  g.innerHTML=locs.slice(0,6).map(l=>`
+    <div class="ae-card" onclick="window.location='shopping-profil.html?id=${l.id}'">
+      ${l.bild_url?`<img class="ae-img" src="${l.bild_url}" loading="lazy" alt="${l.name}">`:`<div class="ae-img-ph">${sub.e}</div>`}
+      <div class="ae-name">${l.name}</div>
+      <div class="ae-sub">${sub.n}</div>
+      <div class="ae-kr">K${l.kreis||'?'}</div>
+    </div>`).join('');
+}
+
+function showError(msg){
+  document.getElementById('main-content').innerHTML=`<div class="loading-wrap"><div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:56px;color:rgba(255,45,0,.15);text-transform:uppercase;margin-bottom:10px">FEHLER</div><div style="font-size:10px;color:rgba(232,228,217,.2)">${msg}</div><a href="/shopping.html" style="display:inline-block;margin-top:20px;font-size:9px;letter-spacing:2px;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:10px 18px;text-decoration:none">← SHOPPING</a></div>`;
+}
+
+// SP_JNY v1 — "Wie chum ich hi?" Live Fussweg + OeV-Verbindig
+function haversine(lat1,lng1,lat2,lng2){
+  var R=6371000;
+  var toRad=function(d){return d*Math.PI/180;};
+  var dLat=toRad(lat2-lat1), dLng=toRad(lng2-lng1);
+  var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)*Math.sin(dLng/2);
+  var c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  return R*c;
+}
+var JNY_TR='https://transport.opendata.ch/v1';
+function jnyGet(path){
+  return fetch(JNY_TR+path).then(function(r){ if(!r.ok) throw new Error('http'+r.status); return r.json(); });
+}
+function jnyFmtZeit(iso){
+  if(!iso) return '–';
+  var d=new Date(iso);
+  var hh=('0'+d.getHours()).slice(-2), mm=('0'+d.getMinutes()).slice(-2);
+  return hh+':'+mm;
+}
+function jnyTotalMin(dur){
+  var m=(dur||'').match(/(\d+)d(\d+):(\d+):(\d+)/);
+  if(!m) return null;
+  return parseInt(m[1],10)*1440+parseInt(m[2],10)*60+parseInt(m[3],10);
+}
+var JNY_KAT_CODE={T:'Tram',B:'Bus',S:'S-Bahn',IR:'IR',IC:'IC',RE:'RE',NFB:'Nachtbus',NFT:'Nachttram',BAT:'Schiff',FUN:'Standseilbahn',PB:'Seilbahn',TGV:'TGV',EC:'EC'};
+var JNY_KAT_ICON={T:'🚋',B:'🚌',S:'🚆',IR:'🚆',IC:'🚆',RE:'🚆',NFB:'🌙',NFT:'🌙',BAT:'⛴',FUN:'🚟',PB:'🚡',TGV:'🚄',EC:'🚄'};
+function jnyFmtKat(cat,num){ var label=JNY_KAT_CODE[cat]||cat||''; return (label+' '+(num||'')).replace(/\s+$/,''); }
+function jnyLegIcon(cat){ return JNY_KAT_ICON[cat]||'🚏'; }
+
+function jnyStart(locId,lat,lng){
+  var btn=document.getElementById('jnyGoBtn');
+  var result=document.getElementById('jnyResult');
+  if(!navigator.geolocation){
+    result.innerHTML='<div class="jny-status">Standort wird vo dim Browser nid unterstützt.</div>';
     return;
   }
-  try{
-    const q=id?'locations?select=*&id=eq.'+id+'&limit=1':'locations?select=*&slug=eq.'+slug+'&limit=1';
-    const data=await sbGet(q);
-    if(!data||!data.length){
-      document.getElementById('main-content').innerHTML='<div class="error-wrap"><div class="error-title">SHOP NÖD GFUNDE</div><a class="error-back" href="/shopping.html">← ZURÜCK ZU SHOPPING</a></div>';
+  if(lat==null||lng==null||isNaN(lat)||isNaN(lng)){
+    result.innerHTML='<div class="jny-status">Standort für dä Shop isch (no) nid hinterlegt.</div>';
+    return;
+  }
+  btn.textContent='… sueched Standort';
+  navigator.geolocation.getCurrentPosition(function(pos){
+    jnyResolve(pos.coords.latitude,pos.coords.longitude,lat,lng,btn,result);
+  }, function(err){
+    btn.textContent='📍 GPS AN';
+    if(err&&err.code===1){ result.innerHTML='<div class="jny-status">Standort-Zugriff verweigeret.</div>'; }
+    else { result.innerHTML='<div class="jny-status">Standort hät nid klappt.</div>'; }
+  }, {enableHighAccuracy:true, timeout:12000, maximumAge:60000});
+}
+
+function jnyResolve(uLat,uLng,dLat,dLng,btn,result){
+  var dist=haversine(uLat,uLng,dLat,dLng);
+  if(dist<400){
+    btn.textContent='📍 GPS AN';
+    var walkMin=Math.max(1,Math.round(dist/75));
+    result.innerHTML='<div class="jny-card"><div class="jny-walk-hero"><div style="font-size:24px">🚶</div><div><div class="jny-dur">'+walkMin+'<span>MIN Z FUESS</span></div><div class="jny-clock">'+Math.round(dist)+' m Luftlinie</div></div></div></div>';
+    return;
+  }
+  btn.textContent='… berechnet Route';
+  Promise.all([
+    jnyGet('/locations?x='+uLat+'&y='+uLng+'&type=station'),
+    jnyGet('/locations?x='+dLat+'&y='+dLng+'&type=station')
+  ]).then(function(res){
+    var fromStations=(res[0]&&res[0].stations)||[];
+    var toStations=(res[1]&&res[1].stations)||[];
+    var fromSt=null,toSt=null;
+    for(var i=0;i<fromStations.length;i++){ if(fromStations[i]&&fromStations[i].id){ fromSt=fromStations[i]; break; } }
+    for(var j=0;j<toStations.length;j++){ if(toStations[j]&&toStations[j].id){ toSt=toStations[j]; break; } }
+    btn.textContent='📍 GPS AN';
+    if(!fromSt||!toSt){
+      result.innerHTML='<div class="jny-status">Kei Haltestell i dr Nöchi gfunde.</div>';
       return;
     }
-    const l=data[0];
-    if(!document.body.dataset.locationId && window.SP_LOCATION_LINKS && window.SP_LOCATION_LINKS[l.id]){
-      location.replace(window.SP_LOCATION_LINKS[l.id]); return; // SP_PRETTY_LOC v1
+    if(fromSt.id===toSt.id){
+      var walkMin2=Math.max(1,Math.round(dist/75));
+      result.innerHTML='<div class="jny-card"><div class="jny-walk-hero"><div style="font-size:24px">🚶</div><div><div class="jny-dur">'+walkMin2+'<span>MIN Z FUESS</span></div><div class="jny-clock">'+Math.round(dist)+' m Luftlinie · gliichi Haltestell</div></div></div></div>';
+      return;
     }
-    spClaim(l.id,'location',l.name,l.kreis); // SP_BOOST Claim
-    let similar=[];
-    try{
-      const s1=await sbGet('locations?select=id,name,bild_url,zt_subkategorie_id,kreis&kategorie=eq.shopping&aktiv=eq.true&zt_subkategorie_id=eq.'+l.zt_subkategorie_id+'&id=neq.'+l.id+'&limit=3');
-      similar=s1||[];
-      if(similar.length<3){
-        const s2=await sbGet('locations?select=id,name,bild_url,zt_subkategorie_id,kreis&kategorie=eq.shopping&aktiv=eq.true&kreis=eq.'+l.kreis+'&id=neq.'+l.id+'&limit=3');
-        similar=[...similar,...(s2||[])].slice(0,3);
+    return jnyGet('/connections?from='+encodeURIComponent(fromSt.name)+'&to='+encodeURIComponent(toSt.name)+'&limit=1').then(function(cdata){
+      var conns=(cdata&&cdata.connections)||[];
+      if(!conns.length){
+        result.innerHTML='<div class="jny-status">Kei ÖV-Verbindig gfunde grad. Versuechs später nomal.</div>';
+        return;
       }
-    }catch(e){}
-    renderProfil(l,similar);
-  }catch(e){
-    document.getElementById('main-content').innerHTML='<div class="error-wrap"><div class="error-title">FEHLER</div><div class="error-sub">Verbindung fehlgeschlagen.</div><a class="error-back" href="/shopping.html">← ZURÜCK</a></div>';
-  }
+      var c=conns[0];
+      var depIso=c.from&&c.from.departure;
+      var dep=jnyFmtZeit(depIso);
+      var arr=jnyFmtZeit(c.to&&c.to.arrival);
+      var transitMin=jnyTotalMin(c.duration)||0;
+      var walk1=Math.max(1,Math.round((fromSt.distance||0)/75));
+      var walk2=Math.max(1,Math.round((toSt.distance||0)/75));
+      var heroTotal=walk1+transitMin+walk2;
+      var transfers=c.transfers||0;
+      var sections=(c.sections||[]).filter(function(s){ return s&&(s.journey||s.walk); });
+      var legsHtml='<div class="jny-leg"><div class="jny-ico">🚶</div><div class="jny-lbl">'+Math.round(fromSt.distance||0)+' m</div></div>';
+      for(var k=0;k<sections.length;k++){
+        legsHtml+='<div class="jny-sep"></div>';
+        var s=sections[k];
+        if(s.journey){
+          legsHtml+='<div class="jny-leg tr"><div class="jny-ico">'+jnyLegIcon(s.journey.category)+'</div><div class="jny-lbl">'+jnyFmtKat(s.journey.category,s.journey.number)+'</div></div>';
+        } else {
+          legsHtml+='<div class="jny-leg"><div class="jny-ico">🚶</div></div>';
+        }
+      }
+      legsHtml+='<div class="jny-sep"></div><div class="jny-leg"><div class="jny-ico">🚶</div><div class="jny-lbl">'+Math.round(toSt.distance||0)+' m</div></div>';
+      var soonHtml='';
+      if(depIso){
+        var diffMin=Math.round((new Date(depIso).getTime()-Date.now())/60000);
+        if(diffMin>=0&&diffMin<=90){ soonHtml='<span class="jny-soon">IN '+diffMin+' MIN</span>'; }
+      }
+      result.innerHTML='<div class="jny-card">'
+        +'<div class="jny-top"><div class="jny-dur">'+heroTotal+'<span>MIN GSAMT</span></div>'
+        +'<div class="jny-clock">Ab '+fromSt.name+' '+dep+'<span class="jny-arrow">&rarr;</span>'+arr+' i '+toSt.name+soonHtml+'</div></div>'
+        +'<div class="jny-legs">'+legsHtml+'</div>'
+        +'<div class="jny-meta">'+transfers+' Umstieg'+(transfers===1?'':'e')+' · '+fromSt.name+' → '+toSt.name+'</div>'
+        +'</div>';
+    });
+  }).catch(function(){
+    btn.textContent='📍 GPS AN';
+    result.innerHTML='<div class="jny-status">Route-Berechnig hät grad nid klappt — versuechs nomal.</div>';
+  });
 }
 
 const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
-document.addEventListener('mousemove',function(e){
-  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
-  cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';
-});
+document.addEventListener('mousemove',e=>{cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';});
 
-const T=['ZÜRI SHOPPT','BAHNHOFSTRASSE','LANGSTRASSE STYLE','CONCEPT STORES','4. JUNI 2026','DÄ PULS VO DÄ STADT'];
-const TB=['FASHION ZÜRI','DESIGN OBJECTS','VINTAGE ZÜRICH','BY RAIMONDO*','STADTPULS','SWISS MADE'];
-document.getElementById('ticker-a').innerHTML=[...T,...T].map(function(i){return '<span class="ti"><b>●</b> '+i+'</span>';}).join('');
-document.getElementById('ticker-b').innerHTML=[...TB,...TB].map(function(i){return '<span class="ti"><b>●</b> '+i+'</span>';}).join('');
+const TI=['ZÜRI SHOPPT','BAHNHOFSTRASSE','LANGSTRASSE STYLE','CONCEPT STORES','KREIS 4 FINDS','4. JUNI 2026'];
+const TIG=['FASHION ZÜRI','DESIGN OBJECTS','VINTAGE ZÜRICH','BY RAIMONDO*','STADTPULS'];
+['ta','tb'].forEach((id,i)=>{const t=document.getElementById(id);if(!t)return;const items=i===0?TI:TIG;t.innerHTML=[...items,...items].map(x=>`<span class="ti"><b>●</b> ${x}</span>`).join('');});
 
 loadProfil();
 </script>

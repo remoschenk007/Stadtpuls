@@ -97,7 +97,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 .tick.l{animation:tL 28s linear infinite}
 .ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(255,45,0,.28)}
 .ti b{color:#ff2d00;font-weight:400}
-
+footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1fr;gap:40px;border-top:1px solid rgba(255,45,0,.08)}
 .fc-title{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#ff2d00;margin-bottom:12px}
 .fc-link{display:block;font-size:10px;color:rgba(232,228,217,.22);margin-bottom:8px;letter-spacing:.3px;transition:.15s;text-decoration:none;cursor:none}
 .fc-link:hover{color:#e8e4d9}
@@ -113,6 +113,23 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 .error-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:rgba(232,228,217,.1);text-transform:uppercase}
 .error-sub{font-size:10px;color:rgba(232,228,217,.2);letter-spacing:1px}
 .error-back{display:inline-block;margin-top:16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:10px 20px;text-decoration:none;cursor:none}
+.jny-status{margin-top:10px;font-size:10px;color:rgba(232,228,217,.35);line-height:1.7}
+.jny-card{position:relative;border:1px solid rgba(0,245,255,.18);background:linear-gradient(135deg,rgba(0,245,255,.035),rgba(200,255,0,.015));padding:16px 18px;margin-top:10px;overflow:hidden}
+.jny-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00f5ff,transparent);opacity:.55}
+.jny-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.jny-dur{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;color:#00f5ff;line-height:1}
+.jny-dur span{font-size:.32em;letter-spacing:1px;margin-left:5px;color:rgba(232,228,217,.3);font-style:normal}
+.jny-clock{font-size:11px;color:#e8e4d9;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.jny-arrow{color:rgba(232,228,217,.15)}
+.jny-soon{background:rgba(255,45,0,.15);color:#ff2d00;font-size:8px;letter-spacing:1px;padding:3px 6px;text-transform:uppercase}
+.jny-legs{display:flex;align-items:center;gap:0;margin-top:14px;flex-wrap:wrap}
+.jny-leg{display:flex;align-items:center;gap:6px}
+.jny-ico{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;background:rgba(232,228,217,.06);flex-shrink:0}
+.jny-leg.tr .jny-ico{background:rgba(0,245,255,.14);border:1px solid rgba(0,245,255,.35)}
+.jny-lbl{font-size:9px;letter-spacing:.5px;color:#00f5ff;white-space:nowrap}
+.jny-sep{width:16px;height:1px;background:repeating-linear-gradient(90deg,rgba(232,228,217,.15) 0 3px,transparent 3px 6px);margin:0 5px;flex-shrink:0}
+.jny-meta{margin-top:12px;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,217,.3)}
+.jny-walk-hero{display:flex;align-items:center;gap:14px}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
 @keyframes tL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
@@ -134,20 +151,9 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
   .similar-grid{grid-template-columns:1fr 1fr}
   .sim-card:nth-child(3n+1){border-left:none}
   .sim-card:nth-child(2n+1){border-left:1px solid rgba(255,45,0,.07)}
-  
+  footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:16px}
 }
 </style>
-<!-- SP_SEO v1 -->
-<meta id="og-title" property="og:title" content="Palestine Grill — nahost Kreis 4 | Stadtpuls Zürich">
-<meta id="og-desc" property="og:description" content="Der Imbiss mitten auf der Langstrasse lockt hungrige Mäuler mit Spezialitäten aus Palästina und wummernden Hip-Hop und Reggae-Klängen.">
-<meta id="og-url" property="og:url" content="https://depuls.ch/gastro/palestine-grill-cd6d9555/">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="de_CH">
-<meta property="og:site_name" content="Stadtpuls">
-<meta name="twitter:card" content="summary_large_image">
-<meta id="tw-title" name="twitter:title" content="Palestine Grill — nahost Kreis 4 | Stadtpuls Zürich">
-<meta property="og:image" content="https://www.zuerich.com/sites/default/files/keyvisual/web_zurich_restaurant_palestinegrill_01_copyright.jpg">
-<meta name="twitter:image" content="https://www.zuerich.com/sites/default/files/keyvisual/web_zurich_restaurant_palestinegrill_01_copyright.jpg">
 </head>
 <body data-location-id="cd6d9555-d8c3-4e64-902c-262a6468209d">
 <div id="cur"></div><div id="cur2"></div>
@@ -156,12 +162,11 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
   <a class="logo" href="/index.html"><div class="ldot"></div>STADTPULS</a>
   <div class="nav-links">
     <a class="nl on" href="/gastro.html">GASTRO</a>
-    <a class="nl" href="/kultur.html">KULTUR</a>
-    <a class="nl" href="/nachtleben.html">NACHTLEBE</a>
+    <a class="nl" href="index.html?page=nachtleben">NACHTLEBE</a>
     <a class="nl" href="/shopping.html">SHOPPING</a>
-    <a class="nl" href="/events.html">EVENTS</a>
+    <a class="nl" href="index.html?page=events">EVENTS</a>
   </div>
-  <a class="btn-mm" href="/login.html">MITMACHE</a>
+  <a class="btn-mm" href="index.html?page=login">MITMACHE</a>
 </nav>
 
 <div class="breadcrumb">
@@ -178,103 +183,20 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
   <div class="ticker-row"><div class="tick l" id="ticker"></div></div>
 </div>
 
-<style>
-/* ═══ ORIGINAL STADTPULS FOOTER ═══ */
-footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
-.ftk{background:rgba(255,45,0,.06);padding:.4rem 0;overflow:hidden;white-space:nowrap;border-bottom:1px solid rgba(255,45,0,.1)}
-.fti{display:inline-block;animation:tkr 22s linear infinite}
-.fti span{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;color:rgba(255,45,0,.45);text-transform:uppercase;margin:0 2rem}
-@keyframes tkr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;max-width:1320px;margin:0 auto;padding:2.5rem 1.5rem 2rem}
-@media(max-width:768px){.fg{grid-template-columns:1fr 1fr;padding:2rem 1.5rem}.footer-brand{grid-column:span 2}}
-.fbl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:1.6rem;letter-spacing:.1em;display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;color:#e8e4d9}
-.fbdot{width:8px;height:8px;background:#ff2d00;border-radius:50%;box-shadow:0 0 8px #ff2d00;flex-shrink:0}
-.footer-brand p{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(232,228,217,0.4);line-height:1.9;max-width:280px}
-.fc h5{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:#ff2d00;margin-bottom:1rem;font-weight:500}
-.fc ul{list-style:none;margin:0;padding:0}
-.fc li{font-family:'DM Mono',monospace;font-size:.75rem;margin-bottom:.6rem}
-.fc li a{color:rgba(232,228,217,0.45);text-decoration:none;cursor:pointer;transition:color .2s}
-.fc li a:hover{color:#e8e4d9}
-.fbot{max-width:1320px;margin:0 auto;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.05)}
-.fbot p{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;margin:0}
-</style>
-
-<!-- SP_BOOST v1: CLAIM — "Das isch mis Lokal" (Verkaufseinstieg) -->
-<style>
-.sp-claim{max-width:1100px;margin:28px auto;padding:16px 18px;border:1px dashed rgba(200,255,0,.35);display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.sp-claim-txt{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;color:#888;text-transform:uppercase;line-height:1.7}
-.sp-claim-btn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;color:#04040a;background:#c8ff00;padding:10px 20px;text-decoration:none;white-space:nowrap;transition:background .15s}
-.sp-claim-btn:hover{background:#e8e4d9}
-</style>
-<div class="sp-claim" id="sp-claim" style="display:none">
-  <div class="sp-claim-txt">Bisch du de Inhaber? Hol dir dini Platzierig — ganz obe i dinere Kategorie.</div>
-  <a class="sp-claim-btn" id="sp-claim-link" href="/platzierung.html">DAS ISCH MIS LOKAL →</a>
-</div>
-<script>
-function spClaim(id,typ,name,kreis){try{
-  const a=document.getElementById('sp-claim-link');
-  a.href='/platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
-  document.getElementById('sp-claim').style.display='flex';
-}catch(e){}}
-</script>
 <footer>
-  <div class="ftk">
-    <div class="fti">
-      <span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span><span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span>
-    </div>
+  <div>
+    <div class="logo" style="margin-bottom:8px"><div class="ldot"></div>STADTPULS</div>
+    <div class="fc-desc">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich.</div>
+    <div class="fc-copy">© 2026 by raimondo* — Zürich</div>
   </div>
-  <div class="fg">
-    <div class="footer-brand"><div class="fbl"><div class="fbdot"></div>STADTPULS</div><p>dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.<br><br>© 2026 by raimondo* — Zürich</p></div>
-    <div class="fc">
-      <h5>Entdecken</h5>
-      <ul>
-        <li><a href="/gastro.html">Gastro & Bars</a></li>
-        <li><a href="/nachtleben.html">Nachtleben</a></li>
-        <li><a href="/shopping.html">Shopping</a></li>
-        <li><a href="/events.html">Events</a></li>
-        <li><a href="/quartiere.html">Quartiere</a></li>
-        <li><a href="/musik.html">Musik & Sound</a></li>
-        <li><a href="/mobilitaet.html">Mobilität</a></li>
-        <li><a href="/kultur.html">Kultur</a></li>
-      </ul>
-    </div>
-    <div class="fc">
-      <h5>Community</h5>
-      <ul>
-        <li><a href="/community.html">Feed & Posts</a></li>
-        <li><a href="/dating.html">People & Dates</a></li>
-        <li><a href="/jobs.html">Jobs Züri</a></li>
-        <li><a href="/news.html">News & Stories</a></li>
-        <li><a href="/gps.html">GPS — Wo bisch du?</a></li>
-        <li><a href="/partners.html">Kooperatione</a></li>
-      </ul>
-    </div>
-    <div class="fc">
-      <h5>Mitmache</h5>
-      <ul>
-        <li><a href="/login.html">Einlogge</a></li>
-        <li><a href="/login.html">Profil aalege</a></li>
-        <li><a href="/community.html">Blogger werde</a></li>
-        <li><a href="/immobilien.html">Inserat schalte</a></li>
-        <li><a href="/partners.html">Partner werde</a></li>
-        <li><a href="/kontakt.html">Kontakt</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="fbot">
-    <p>© 2026 depuls.ch — by raimondo* — Zürich</p>
-    <p style="display:flex;gap:14px"><span>AGB</span> · <a href="/datenschutz.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Datenschutz</a> · <a href="/impressum.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Impressum</a></p>
-  </div>
+  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link" href="/gastro.html">Gastro & Bars</a><a class="fc-link" href="index.html?page=nachtleben">Nachtleben</a><a class="fc-link" href="/shopping.html">Shopping</a><a class="fc-link" href="index.html?page=events">Events</a></div>
+  <div><div class="fc-title">COMMUNITY</div><a class="fc-link" href="index.html?page=community">Feed & Posts</a><a class="fc-link" href="index.html?page=dating">People & Dates</a><a class="fc-link" href="index.html?page=jobs">Jobs Züri</a></div>
+  <div><div class="fc-title">MITMACHE</div><a class="fc-link" href="index.html?page=login">Einlogge</a><a class="fc-link" href="feedback.html">Feedback</a><a class="fc-link" href="/kontakt.html">Partner werde</a><a class="fc-link" href="/impressum.html">Impressum</a></div>
 </footer>
 
-
-<script src="/location-links.js"></script>
 <script>
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
-// SP_PRETTY_LOC v1 -- huebsche URLs aus location-links.js (naechtlich generiert)
-function spLocPath(id){return (window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[id])||('/gastro-profil.html?id='+id);}
-function spLocUrl(id){return 'https://depuls.ch'+spLocPath(id);}
 
 const SUBKAT={
   102:{e:'☕',n:'CAFÉ'},184:{e:'🧀',n:'SCHWEIZER'},185:{e:'🍕',n:'ITALIAN'},
@@ -288,36 +210,53 @@ const SUBKAT={
   1465:{e:'🍷',n:'WEINBAR'},1468:{e:'🏘️',n:'QUARTIERBAR'},
 };
 
+const REVIEWS=[
+  {user:'@zuri_insider',stars:5,text:'Absolut empfehlenswert — eines der besten Lokale in diesem Kreis.'},
+  {user:'@langstrasse_fan',stars:4,text:'Super Atmosphäre, gutes Essen. Reservierung empfohlen am Wochenende.'},
+  {user:'@stadtpuls_user',stars:5,text:'Genau so ein Lokal braucht Zürich. Authentisch, keine Touristenfalle.'},
+];
+
 async function sbGet(path){
   const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
   if(!r.ok)throw new Error('HTTP '+r.status);
   return r.json();
 }
 
-function getIdFromUrl(){return document.body.dataset.locationId||new URLSearchParams(window.location.search).get('id');}
+function getIdFromUrl(){return new URLSearchParams(window.location.search).get('id');}
 
 function isOffe(oeffnungszeiten){
   if(!oeffnungszeiten||!oeffnungszeiten.length)return null;
   const now=new Date();
   const h=now.getHours();
-  const days=['So','Mo','Di','Mi','Do','Fr','Sa'];
-  const day=days[now.getDay()];
-  const todayStr=Array.isArray(oeffnungszeiten)?oeffnungszeiten.find(function(o){return o&&(o.includes('Mo,Tu')||o.includes(day));}):null;
+  const daysDe=['So','Mo','Di','Mi','Do','Fr','Sa'];
+  const daysEn=['Su','Mo','Tu','We','Th','Fr','Sa'];
+  const dayDe=daysDe[now.getDay()];
+  const dayEn=daysEn[now.getDay()];
+  const list=Array.isArray(oeffnungszeiten)?oeffnungszeiten:[String(oeffnungszeiten)];
+  // SP_OFFE_FIX v1: Tag-Teil VOR de Ziit trenne (au bi Komma-Liste wie "Mo,Tu,We,Th 08:00-18:00")
+  // und exakt met Tag-Token vergliiche, nid nume als Teilstring -- suscht hät "Mo,Tu..." immer
+  // zerscht gmatcht, egal wele Tag hüt wirklich isch.
+  const todayStr=list.find(function(o){
+    if(!o)return false;
+    const dayPart=(String(o).split(/\s+/)[0]||'');
+    const tokens=dayPart.split(',').map(function(t){return t.trim();});
+    return tokens.indexOf(dayDe)>=0||tokens.indexOf(dayEn)>=0;
+  });
   if(!todayStr)return null;
-  const match=todayStr.match(/(\d{2}):(\d{2})(?::\d{2})?-(\d{2}):(\d{2})(?::\d{2})?/);
+  if(/geschlossen|closed|ruhetag/i.test(todayStr))return false;
+  const match=todayStr.match(/(\d{2}):(\d{2})(?::\d{2})?\s*-\s*(\d{2}):(\d{2})(?::\d{2})?/);
   if(!match)return null;
-  return h>=parseInt(match[1])&&h<parseInt(match[3]);
+  const openH=parseInt(match[1],10);
+  let closeH=parseInt(match[3],10);
+  // SP_OFFE_FIX v1: "00:00" als Schliesszit heisst Mitternacht (Änd vom Tag), nid "schliesst
+  // scho um Stund null" -- suscht isch h<0 nie wahr und's Lokal zeigt IMMER als gschlosse.
+  if(closeH===0)closeH=24;
+  return h>=openH&&h<closeH;
 }
 
 function updateSEO(l,sub){
   const title=l.name+' — '+sub.n+' Kreis '+(l.kreis||'?')+' | Stadtpuls Zürich';
   document.title=title;
-  if(!document.body.dataset.locationId){
-    const c=document.getElementById('page-canonical'); if(c) c.href=spLocUrl(l.id);
-    const ogt=document.getElementById('og-title'); if(ogt) ogt.content=title;
-    const ogu=document.getElementById('og-url'); if(ogu) ogu.content=spLocUrl(l.id);
-    const twt=document.getElementById('tw-title'); if(twt) twt.content=title;
-  }
   document.getElementById('page-desc').content=l.beschreibung_kurz||l.beschreibung||l.name+' in Zürich';
   // SCHEMA — alle double quotes, kein Encoding-Bug
   const schema={
@@ -378,14 +317,21 @@ function renderProfil(l,similar){
   const mapQuery=encodeURIComponent((l.adresse||l.name)+' Zürich');
   const resUrl=l.reservation_url||'';
   const resOnclick=resUrl?"window.open('"+resUrl+"','_blank')":'alert("Reservation kommt bald!")';
+  const jnyLatArg=(typeof l.lat==='number')?l.lat:'null';
+  const jnyLngArg=(typeof l.lng==='number')?l.lng:'null';
+  const jnyOnclick="jnyStart('"+l.id+"',"+jnyLatArg+","+jnyLngArg+")";
 
   const simCards=similar.slice(0,3).map(function(s){
     const ssub=SUBKAT[parseInt(s.zt_subkategorie_id)]||{e:'🍽️',n:'RESTAURANT'};
-    return '<a class="sim-card" href="'+spLocPath(s.id)+'">'
+    return '<a class="sim-card" href="gastro-profil.html?id='+s.id+'">'
       +(s.bild_url?'<img class="sim-img" src="'+s.bild_url+'" alt="'+s.name+'" loading="lazy" onerror="this.style.display=\'none\'">':'')
       +'<div class="sim-name">'+s.name+'</div>'
       +'<div class="sim-sub">'+ssub.e+' '+ssub.n+'</div>'
       +'<div class="sim-kreis">KREIS '+(s.kreis||'?')+'</div></a>';
+  }).join('');
+
+  const reviewsHTML=REVIEWS.map(function(r){
+    return '<div class="rev-item"><div class="rev-top"><div class="rev-user">'+r.user+'</div><div class="rev-stars">'+'★'.repeat(r.stars)+'</div></div><div class="rev-text">'+r.text+'</div></div>';
   }).join('');
 
   const featuredBanner=l.featured?'<div class="featured-strip"><span class="fs-text">⭐ STADTPULS TOP PICK — EMPFOHLEN</span></div>':'';
@@ -452,8 +398,6 @@ function renderProfil(l,similar){
     +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase">🤖 ZÜRI-BOT · KI FEATURES</div>'
     +'<div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;border:1px solid rgba(200,255,0,.2);padding:3px 8px;display:flex;align-items:center;gap:4px"><span style="width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite;display:inline-block"></span>PHASE 5-6</div>'
     +'</div>'
-    +'<div style="border:1px solid rgba(0,245,255,.1);background:rgba(0,245,255,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">📍</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">GPS DISTANZ</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Kreis '+(l.kreis||'?')+' · Standort wird in Phase 5 live berechnet</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.2);color:#00f5ff;display:flex;align-items:center;white-space:nowrap">GPS AN</div></div>'
-    +'<div style="border:1px solid rgba(0,245,255,.08);background:rgba(0,245,255,.01);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">🚋</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">ZVV ANBINDUNG</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Nächste Haltestelle · Echtzeit-Abfahrten · Phase 5</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.15);color:rgba(0,245,255,.4);display:flex;align-items:center;white-space:nowrap">BALD</div></div>'
     +'<div style="border:1px solid rgba(255,204,0,.1);background:rgba(255,204,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">❤️</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ffcc00;margin-bottom:4px">BOOKMARK</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Spar dieses Lokal — KI lernt was du magst</div></div><div onclick="alert(\'Login nötig — kommt in Phase 5!\')" style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,204,0,.3);color:#ffcc00;display:flex;align-items:center;white-space:nowrap;cursor:pointer">❤️ SPARE</div></div>'
     +'<div style="border:1px solid rgba(200,255,0,.1);background:rgba(200,255,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">⚡</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:4px">KI EMPFEHLUNG</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Basierend auf deiner Stimmung und deinem Kreis</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(200,255,0,.2);color:#c8ff00;display:flex;align-items:center;white-space:nowrap">AKTIV</div></div>'
     +'<div style="border:1px solid rgba(255,45,0,.1);background:rgba(255,45,0,.02);padding:14px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">🎯</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;margin-bottom:4px">SPONTAN-MODUS</div><div style="font-size:11px;color:rgba(232,228,217,.4)">«Kreis '+(l.kreis||'?')+' · 2h · zu zweit» — KI plant deinen Abend</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,45,0,.2);color:rgba(255,45,0,.5);display:flex;align-items:center;white-space:nowrap">PHASE 6</div></div>'
@@ -468,10 +412,17 @@ function renderProfil(l,similar){
     +'Quelle: Zürich Tourismus · zuerich.com · CC BY-SA'
     +'</div>'
 
+    // REVIEWS
+    +'<div class="reviews-wrap">'
+    +'<div class="section-title">REVIEWS</div>'
+    +'<div class="rev-count">COMMUNITY BEWERTUNGE · PHASE 5 LIVE</div>'
+    +reviewsHTML
+    +'</div>'
     +'</div>'
 
     // RIGHT — DETAILS BOX
     +'<div><div class="details-box">'
+    +'<div style="border-bottom:1px solid rgba(255,45,0,.08);padding:16px 20px;background:rgba(0,245,255,.02)"><div style="display:flex;align-items:center;gap:10px"><div style="font-size:20px;flex-shrink:0">🧭</div><div style="flex:1"><div style="font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:#00f5ff;margin-bottom:2px">WIE CHUM ICH HI?</div><div style="font-size:9px;color:rgba(232,228,217,.35)">Live Fussweg + ÖV ab dim Standort</div></div></div><div id="jnyGoBtn" onclick="'+jnyOnclick+'" style="margin-top:10px;min-height:44px;padding:0 14px;font-size:9px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.3);color:#00f5ff;display:flex;align-items:center;justify-content:center;white-space:nowrap;cursor:pointer">📍 GPS AKTIVIERE</div><div id="jnyResult"></div></div>'
     +(l.featured?'<div class="featured-strip"><span class="fs-text">⭐ TOP PICK</span></div>':'')
     +'<div class="score-box"><div class="sb-score" style="color:'+scoreColor+'">'+score+'</div><div class="sb-lbl">STADTPULS SCORE</div><div class="sb-stars">'+stars+'</div></div>'
     +'<div class="db-title">DETAILS</div>'
@@ -510,10 +461,6 @@ async function loadProfil(){
       return;
     }
     const l=data[0];
-    if(!document.body.dataset.locationId && window.SP_LOCATION_LINKS && window.SP_LOCATION_LINKS[l.id]){
-      location.replace(window.SP_LOCATION_LINKS[l.id]); return; // SP_PRETTY_LOC v1
-    }
-    spClaim(l.id,'location',l.name,l.kreis); // SP_BOOST Claim
     let similar=[];
     try{
       const s1=await sbGet('locations?select=id,name,bild_url,zt_subkategorie_id,kreis,adresse&kategorie=eq.gastro&aktiv=eq.true&zt_subkategorie_id=eq.'+l.zt_subkategorie_id+'&id=neq.'+l.id+'&limit=3');
@@ -527,6 +474,129 @@ async function loadProfil(){
   }catch(e){
     document.getElementById('main-content').innerHTML='<div class="error-wrap"><div class="error-title">FEHLER</div><div class="error-sub">Verbindung fehlgeschlagen.</div><a class="error-back" href="/gastro.html">← ZURÜCK</a></div>';
   }
+}
+
+// SP_JNY v1 — "Wie chum ich hi?" Live Fussweg + OeV-Verbindig
+function haversine(lat1,lng1,lat2,lng2){
+  var R=6371000;
+  var toRad=function(d){return d*Math.PI/180;};
+  var dLat=toRad(lat2-lat1), dLng=toRad(lng2-lng1);
+  var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)*Math.sin(dLng/2);
+  var c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  return R*c;
+}
+var JNY_TR='https://transport.opendata.ch/v1';
+function jnyGet(path){
+  return fetch(JNY_TR+path).then(function(r){ if(!r.ok) throw new Error('http'+r.status); return r.json(); });
+}
+function jnyFmtZeit(iso){
+  if(!iso) return '–';
+  var d=new Date(iso);
+  var hh=('0'+d.getHours()).slice(-2), mm=('0'+d.getMinutes()).slice(-2);
+  return hh+':'+mm;
+}
+function jnyTotalMin(dur){
+  var m=(dur||'').match(/(\d+)d(\d+):(\d+):(\d+)/);
+  if(!m) return null;
+  return parseInt(m[1],10)*1440+parseInt(m[2],10)*60+parseInt(m[3],10);
+}
+var JNY_KAT_CODE={T:'Tram',B:'Bus',S:'S-Bahn',IR:'IR',IC:'IC',RE:'RE',NFB:'Nachtbus',NFT:'Nachttram',BAT:'Schiff',FUN:'Standseilbahn',PB:'Seilbahn',TGV:'TGV',EC:'EC'};
+var JNY_KAT_ICON={T:'🚋',B:'🚌',S:'🚆',IR:'🚆',IC:'🚆',RE:'🚆',NFB:'🌙',NFT:'🌙',BAT:'⛴',FUN:'🚟',PB:'🚡',TGV:'🚄',EC:'🚄'};
+function jnyFmtKat(cat,num){ var label=JNY_KAT_CODE[cat]||cat||''; return (label+' '+(num||'')).replace(/\s+$/,''); }
+function jnyLegIcon(cat){ return JNY_KAT_ICON[cat]||'🚏'; }
+
+function jnyStart(locId,lat,lng){
+  var btn=document.getElementById('jnyGoBtn');
+  var result=document.getElementById('jnyResult');
+  if(!navigator.geolocation){
+    result.innerHTML='<div class="jny-status">Standort wird vo dim Browser nid unterstützt.</div>';
+    return;
+  }
+  if(lat==null||lng==null||isNaN(lat)||isNaN(lng)){
+    result.innerHTML='<div class="jny-status">Standort für das Lokal isch (no) nid hinterlegt.</div>';
+    return;
+  }
+  btn.textContent='… sueched Standort';
+  navigator.geolocation.getCurrentPosition(function(pos){
+    jnyResolve(pos.coords.latitude,pos.coords.longitude,lat,lng,btn,result);
+  }, function(err){
+    btn.textContent='📍 GPS AN';
+    if(err&&err.code===1){ result.innerHTML='<div class="jny-status">Standort-Zugriff verweigeret.</div>'; }
+    else { result.innerHTML='<div class="jny-status">Standort hät nid klappt.</div>'; }
+  }, {enableHighAccuracy:true, timeout:12000, maximumAge:60000});
+}
+
+function jnyResolve(uLat,uLng,dLat,dLng,btn,result){
+  var dist=haversine(uLat,uLng,dLat,dLng);
+  if(dist<400){
+    btn.textContent='📍 GPS AN';
+    var walkMin=Math.max(1,Math.round(dist/75));
+    result.innerHTML='<div class="jny-card"><div class="jny-walk-hero"><div style="font-size:26px">🚶</div><div><div class="jny-dur">'+walkMin+'<span>MIN Z FUESS</span></div><div class="jny-clock">'+Math.round(dist)+' m Luftlinie</div></div></div></div>';
+    return;
+  }
+  btn.textContent='… berechnet Route';
+  Promise.all([
+    jnyGet('/locations?x='+uLat+'&y='+uLng+'&type=station'),
+    jnyGet('/locations?x='+dLat+'&y='+dLng+'&type=station')
+  ]).then(function(res){
+    var fromStations=(res[0]&&res[0].stations)||[];
+    var toStations=(res[1]&&res[1].stations)||[];
+    var fromSt=null,toSt=null;
+    for(var i=0;i<fromStations.length;i++){ if(fromStations[i]&&fromStations[i].id){ fromSt=fromStations[i]; break; } }
+    for(var j=0;j<toStations.length;j++){ if(toStations[j]&&toStations[j].id){ toSt=toStations[j]; break; } }
+    btn.textContent='📍 GPS AN';
+    if(!fromSt||!toSt){
+      result.innerHTML='<div class="jny-status">Kei Haltestell i dr Nöchi gfunde.</div>';
+      return;
+    }
+    if(fromSt.id===toSt.id){
+      var walkMin2=Math.max(1,Math.round(dist/75));
+      result.innerHTML='<div class="jny-card"><div class="jny-walk-hero"><div style="font-size:26px">🚶</div><div><div class="jny-dur">'+walkMin2+'<span>MIN Z FUESS</span></div><div class="jny-clock">'+Math.round(dist)+' m Luftlinie · gliichi Haltestell</div></div></div></div>';
+      return;
+    }
+    return jnyGet('/connections?from='+encodeURIComponent(fromSt.name)+'&to='+encodeURIComponent(toSt.name)+'&limit=1').then(function(cdata){
+      var conns=(cdata&&cdata.connections)||[];
+      if(!conns.length){
+        result.innerHTML='<div class="jny-status">Kei ÖV-Verbindig gfunde grad. Versuechs später nomal.</div>';
+        return;
+      }
+      var c=conns[0];
+      var depIso=c.from&&c.from.departure;
+      var dep=jnyFmtZeit(depIso);
+      var arr=jnyFmtZeit(c.to&&c.to.arrival);
+      var transitMin=jnyTotalMin(c.duration)||0;
+      var walk1=Math.max(1,Math.round((fromSt.distance||0)/75));
+      var walk2=Math.max(1,Math.round((toSt.distance||0)/75));
+      var heroTotal=walk1+transitMin+walk2;
+      var transfers=c.transfers||0;
+      var sections=(c.sections||[]).filter(function(s){ return s&&(s.journey||s.walk); });
+      var legsHtml='<div class="jny-leg"><div class="jny-ico">🚶</div><div class="jny-lbl">'+Math.round(fromSt.distance||0)+' m</div></div>';
+      for(var k=0;k<sections.length;k++){
+        legsHtml+='<div class="jny-sep"></div>';
+        var s=sections[k];
+        if(s.journey){
+          legsHtml+='<div class="jny-leg tr"><div class="jny-ico">'+jnyLegIcon(s.journey.category)+'</div><div class="jny-lbl">'+jnyFmtKat(s.journey.category,s.journey.number)+'</div></div>';
+        } else {
+          legsHtml+='<div class="jny-leg"><div class="jny-ico">🚶</div></div>';
+        }
+      }
+      legsHtml+='<div class="jny-sep"></div><div class="jny-leg"><div class="jny-ico">🚶</div><div class="jny-lbl">'+Math.round(toSt.distance||0)+' m</div></div>';
+      var soonHtml='';
+      if(depIso){
+        var diffMin=Math.round((new Date(depIso).getTime()-Date.now())/60000);
+        if(diffMin>=0&&diffMin<=90){ soonHtml='<span class="jny-soon">IN '+diffMin+' MIN</span>'; }
+      }
+      result.innerHTML='<div class="jny-card">'
+        +'<div class="jny-top"><div class="jny-dur">'+heroTotal+'<span>MIN GSAMT</span></div>'
+        +'<div class="jny-clock">Ab '+fromSt.name+' '+dep+'<span class="jny-arrow">&rarr;</span>'+arr+' i '+toSt.name+soonHtml+'</div></div>'
+        +'<div class="jny-legs">'+legsHtml+'</div>'
+        +'<div class="jny-meta">'+transfers+' Umstieg'+(transfers===1?'':'e')+' · '+fromSt.name+' → '+toSt.name+'</div>'
+        +'</div>';
+    });
+  }).catch(function(){
+    btn.textContent='📍 GPS AN';
+    result.innerHTML='<div class="jny-status">Route-Berechnig hät grad nid klappt — versuechs nomal.</div>';
+  });
 }
 
 const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
