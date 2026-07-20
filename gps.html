@@ -73,6 +73,16 @@ h1 .b{display:block;font-size:.42em;letter-spacing:2px;color:transparent;-webkit
 .rc-dist{flex-shrink:0;text-align:right;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;color:#c8ff00;white-space:nowrap}
 .rc-dist span{display:block;font-family:'DM Mono',monospace;font-style:normal;font-weight:400;font-size:7px;letter-spacing:1.5px;color:rgba(232,228,217,.2);margin-top:1px}
 
+/* ZVV ROUTE */
+.rcard-wrap{border-bottom:1px solid rgba(232,228,217,.06)}
+.rcard-wrap .rcard{border-bottom:none}
+.rc-route-btn{display:block;width:100%;text-align:left;background:none;border:none;padding:0 4px 12px 44px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,245,255,.5);cursor:pointer}
+.rc-route-btn:hover{color:#00f5ff}
+.rc-route-panel{display:none;margin:0 4px 12px 44px;padding:12px 14px;border-left:2px solid #00f5ff;background:rgba(0,245,255,.04);font-size:10.5px;line-height:1.9;color:rgba(232,228,217,.6)}
+.rc-route-panel.show{display:block}
+.rc-route-line{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;color:#00f5ff;text-transform:uppercase}
+.rc-route-meta{font-size:9px;letter-spacing:1px;color:rgba(232,228,217,.3);text-transform:uppercase;margin-top:2px}
+
 h2{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;letter-spacing:1.5px;text-transform:uppercase;margin:54px 0 18px}
 h2 .v{color:#c8ff00}
 h2 .r{color:#ff2d00}
@@ -137,14 +147,14 @@ footer{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spaci
   <h2>Was <span class="r">chunnt</span></h2>
   <div class="cards">
     <div class="card"><h3>Push, wos zellt</h3><p>Bevors jede weiss: Benachrichtigung wenn öppis Nöis i dim Kreis passiert. Phase 6.</p></div>
-    <div class="card"><h3>ZVV-Aabindung</h3><p>Nächschti Abfahrt direkt bim Ort agzeigt. Phase 5.</p></div>
+    <div class="card"><h3>Live-Abfahrtstafle</h3><p>Nid nur d nächscht Verbindig, sondern alli Abfahrte a dr Haltestell live. Phase 5.</p></div>
     <div class="card"><h3>Events im Radar</h3><p>Sobald Eventfrog-Standortdate vollständig sind, chömed Events mit i Radar. Grad in Abklärung.</p></div>
   </div>
 
   <h2>Frage &amp; <span class="v">Antworte</span></h2>
   <div class="cards faq" style="grid-template-columns:1fr">
     <div class="card"><h3>Bruucht de GPS-Radar min Standort?</h3><p>Ja — aber nur wenn du en aktiv teilsch, und nur für d Empfehlige. Kei Tracking im Hintergrund, kei Verkauf vo Date. Dis Standort wird nie gspeicheret.</p></div>
-    <div class="card"><h3>Was gaht scho hüt?</h3><p>De Live-Radar zeigt dir Gastro, Kultur, Shopping, Nachtlebe, Sport, Wellness und Sightseeing im Umkreis vo 200m bis 2km, sortiert nach Distanz und mit Live-Öffnigsstatus.</p></div>
+    <div class="card"><h3>Was gaht scho hüt?</h3><p>De Live-Radar zeigt dir Gastro, Kultur, Shopping, Nachtlebe, Sport, Wellness und Sightseeing im Umkreis vo 200m bis 2km, sortiert nach Distanz und mit Live-Öffnigsstatus. Pro Ort chasch dir mit "WIE CHUM ICH HIN?" die nächscht ÖV-Verbindig (oder de Fussweg) live azeige lah.</p></div>
     <div class="card"><h3>Firum gseh ich Events nid im Radar?</h3><p>Öisi Event-Date hei momentan no kei Standort-Koordinate hinterlegt. Sobald das globöst isch, chömed Events automatisch dazue.</p></div>
   </div>
 
@@ -239,7 +249,77 @@ function isOffe(oz){
   return h>=parseInt(m[1])&&h<parseInt(m[3]);
 }
 
-let CUR_LAT=null,CUR_LNG=null,CUR_RADIUS=200;
+let CUR_LAT=null,CUR_LNG=null,CUR_RADIUS=200,LAST_LIST=[];
+
+// SP_ZVV v1 -- Live-ÖV-Verbindig via transport.opendata.ch (kostenlos, kein API-Key,
+// CORS aktiviert). Deckt ZVV/VBZ und ganz ÖV Schweiz ab.
+const TR='https://transport.opendata.ch/v1';
+const KAT_CODE={T:'🚋 Tram',B:'🚌 Bus',S:'🚆 S-Bahn',IR:'🚄 IR',IC:'🚄 IC',RE:'🚆 RE',BAT:'⛴️ Schiff',PB:'🚡 Seilbahn',FUN:'🚡 Standseilbahn'};
+function fmtKat(cat,num){const k=KAT_CODE[cat]||('🚏 '+(cat||''));return k+(num?' '+num:'');}
+function fmtZeit(iso){if(!iso)return '—';const d=new Date(iso);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+function fmtDauer(dur){
+  // transport.opendata.ch Format: "00d00:12:00" (Täg d Std:Min:Sek)
+  const m=(dur||'').match(/(\d+)d(\d+):(\d+):(\d+)/);
+  if(!m)return dur||'';
+  const days=parseInt(m[1]),hrs=parseInt(m[2]),mins=parseInt(m[3]);
+  if(days>0)return days+' Tag'+(days>1?'':'')+' '+hrs+'h';
+  if(hrs>0)return hrs+'h '+mins+'min';
+  return mins+' Min';
+}
+
+async function trGet(path){
+  const r=await fetch(TR+path);
+  if(!r.ok)throw new Error('HTTP '+r.status);
+  return r.json();
+}
+
+async function naechschtiHaltestell(lat,lng){
+  const data=await trGet('/locations?type=station&x='+lat+'&y='+lng);
+  const st=(data.stations||[]).find(function(s){return s&&s.id;});
+  return st||null;
+}
+
+async function spShowRoute(ev,idx){
+  ev.preventDefault();ev.stopPropagation();
+  const l=LAST_LIST[idx];
+  if(!l)return;
+  const panel=document.getElementById('route-'+idx);
+  const btn=ev.currentTarget;
+  panel.classList.add('show');
+
+  const distToTarget=haversine(CUR_LAT,CUR_LNG,l.lat,l.lng);
+  if(distToTarget<400){
+    const minWalk=Math.max(1,Math.round(distToTarget/75)); // ~4.5km/h Fuessgänger-Tempo
+    panel.innerHTML='<div class="rc-route-line">🚶 '+minWalk+' MIN Z FUESS</div><div class="rc-route-meta">so nach, do lohnt sich kei ÖV</div>';
+    return;
+  }
+
+  panel.innerHTML='<div class="rc-route-meta">SUECHE VERBINDIG...</div>';
+  try{
+    const [vonHst,zuHst]=await Promise.all([
+      naechschtiHaltestell(CUR_LAT,CUR_LNG),
+      naechschtiHaltestell(l.lat,l.lng)
+    ]);
+    if(!vonHst||!zuHst){
+      panel.innerHTML='<div class="rc-route-meta">Kei Haltestell i dr Nöchi gfunde.</div>';
+      return;
+    }
+    const conn=await trGet('/connections?from='+encodeURIComponent(vonHst.id)+'&to='+encodeURIComponent(zuHst.id)+'&limit=1');
+    const c=conn.connections&&conn.connections[0];
+    if(!c){
+      panel.innerHTML='<div class="rc-route-meta">Kei Verbindig gfunde zwüsched '+vonHst.name+' und '+zuHst.name+'.</div>';
+      return;
+    }
+    const firstLeg=(c.sections||[]).find(function(s){return s.journey;});
+    const kat=firstLeg?fmtKat(firstLeg.journey.category,firstLeg.journey.number):'ÖV';
+    const dur=fmtDauer(c.duration);
+    panel.innerHTML=
+      '<div class="rc-route-line">'+kat+' → '+(c.to.station.name||'')+'</div>'
+      +'<div class="rc-route-meta">Ab '+vonHst.name+' '+fmtZeit(c.from.departure)+' Uhr · aa '+fmtZeit(c.to.arrival)+' Uhr · '+dur+' · '+(c.transfers===0?'ohni Umstiege':c.transfers+' Umstieg'+(c.transfers>1?'e':''))+'</div>';
+  }catch(e){
+    panel.innerHTML='<div class="rc-route-meta">Verbindig grad nid abrufbar. Später nomal probiere.</div>';
+  }
+}
 
 async function sbGet(path){
   const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
@@ -290,19 +370,24 @@ function renderRadar(list){
   }
   emptyEl.classList.remove('show');
   listEl.classList.add('show');
-  listEl.innerHTML=list.map(function(l){
+  LAST_LIST=list;
+  listEl.innerHTML=list.map(function(l,i){
     const kd=katDef(l.kategorie);
     const link=spRadarLink(l);
     const offe=isOffe(l.oeffnungszeiten);
     const offeHtml=offe===true?'<span class="rc-offe">● JETZT OFFE</span>':offe===false?'<span class="rc-zu">● GESCHLOSSEN</span>':'';
-    return '<a class="rcard" href="'+link.href+'"'+(link.ext?' target="_blank" rel="noopener"':'')+'>'
-      +'<div class="rc-ico">'+kd.e+'</div>'
-      +'<div class="rc-mid">'
-        +'<div class="rc-name">'+(l.name||'')+'</div>'
-        +'<div class="rc-meta"><span>'+kd.n+'</span><span>KREIS '+(l.kreis||'?')+'</span>'+offeHtml+(l.featured?'<span class="rc-badge">TOP</span>':'')+'</div>'
-      +'</div>'
-      +'<div class="rc-dist">'+fmtDist(l.dist)+'<span>ENTFERNIG</span></div>'
-    +'</a>';
+    return '<div class="rcard-wrap">'
+      +'<a class="rcard" href="'+link.href+'"'+(link.ext?' target="_blank" rel="noopener"':'')+'>'
+        +'<div class="rc-ico">'+kd.e+'</div>'
+        +'<div class="rc-mid">'
+          +'<div class="rc-name">'+(l.name||'')+'</div>'
+          +'<div class="rc-meta"><span>'+kd.n+'</span><span>KREIS '+(l.kreis||'?')+'</span>'+offeHtml+(l.featured?'<span class="rc-badge">TOP</span>':'')+'</div>'
+        +'</div>'
+        +'<div class="rc-dist">'+fmtDist(l.dist)+'<span>ENTFERNIG</span></div>'
+      +'</a>'
+      +'<button class="rc-route-btn" onclick="spShowRoute(event,'+i+')">🚋 WIE CHUM ICH HIN?</button>'
+      +'<div class="rc-route-panel" id="route-'+i+'"></div>'
+    +'</div>';
   }).join('');
 }
 
