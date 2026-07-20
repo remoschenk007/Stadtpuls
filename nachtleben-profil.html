@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Stadtpuls — Nachtlebe Profil</title>
+<title id="page-title">Stadtpuls — Nachtlebe Profil</title>
+<meta name="description" id="page-desc" content="Club & Bar Profil — Stadtpuls City Guide Zürich">
+<link rel="canonical" id="page-canonical" href="https://depuls.ch/nachtleben-profil.html">
+<script type="application/ld+json" id="schema-ld"></script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
@@ -241,14 +244,14 @@ a,button,.act-btn,.sk-pill,.sim-card,.kr-btn{cursor:pointer}
 </style>
 <!-- SP_SEO v1 -->
 <meta name="description" content="Club- und Bar-Profile aus Zürich: Öffnungszeiten, Events und Vibe — der ehrliche Nightlife-Guide.">
-<meta property="og:title" content="Club & Bar Profil — Nachtleben Zürich | Stadtpuls">
-<meta property="og:description" content="Club- und Bar-Profile aus Zürich: Öffnungszeiten, Events und Vibe — der ehrliche Nightlife-Guide.">
-<meta property="og:url" content="https://depuls.ch/nachtleben-profil.html">
+<meta id="og-title" property="og:title" content="Club & Bar Profil — Nachtleben Zürich | Stadtpuls">
+<meta id="og-desc" property="og:description" content="Club- und Bar-Profile aus Zürich: Öffnungszeiten, Events und Vibe — der ehrliche Nightlife-Guide.">
+<meta id="og-url" property="og:url" content="https://depuls.ch/nachtleben-profil.html">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="de_CH">
 <meta property="og:site_name" content="Stadtpuls">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Club & Bar Profil — Nachtleben Zürich | Stadtpuls">
+<meta id="tw-title" name="twitter:title" content="Club & Bar Profil — Nachtleben Zürich | Stadtpuls">
 <meta property="og:image" content="https://depuls.ch/og-image.png">
 <meta name="twitter:image" content="https://depuls.ch/og-image.png">
 </head>
@@ -534,6 +537,7 @@ function spClaim(id,typ,name,kreis){try{
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="sp-track.js"></script>
+<script src="/location-links.js"></script>
 <script>
 // Cursor
 const dot=document.getElementById('dot'),ring=document.getElementById('ring');
@@ -541,6 +545,10 @@ document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.styl
 
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+
+// SP_PRETTY_LOC v1 -- huebsche URLs aus location-links.js (naechtlich generiert)
+function spLocPath(id){return (window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[id])||('/nachtleben-profil.html?slug='+id);}
+function spLocUrl(id){return 'https://depuls.ch'+spLocPath(id);}
 
 // URL PARAMS
 const params=new URLSearchParams(location.search);
@@ -646,6 +654,9 @@ async function load(){
     return;
   }
   const l=data[0];
+  if(!document.body.dataset.locationId && window.SP_LOCATION_LINKS && window.SP_LOCATION_LINKS[l.id]){
+    location.replace(window.SP_LOCATION_LINKS[l.id]); return; // SP_PRETTY_LOC v1
+  }
   spClaim(l.id,'location',l.name,l.kreis); // SP_BOOST Claim
   _bm={ id:l.id, kreis:l.kreis||null, tags:l.stimmung_tags||null };
   try{ if(window.spTrack) spTrack('view_profile','location',l.id,{kategorie:'nachtleben',kreis:l.kreis,tags:l.stimmung_tags}); }catch(e){}
@@ -717,7 +728,7 @@ async function loadSimilar(loc){
   const similar=await sbGet(`locations?kategorie=eq.nachtleben&aktiv=eq.true&zt_subkategorie_id=eq.${loc.zt_subkategorie_id||162}&id=neq.${loc.id}&select=id,name,slug,subkategorie,kreis,bild_url&limit=4`);
   if(!Array.isArray(similar)||!similar.length)return;
   document.getElementById('similar-grid').innerHTML=similar.slice(0,4).map(s=>`
-    <div class="sim-card" onclick="window.location.href='nachtleben-profil.html?id=${s.id}'">
+    <div class="sim-card" onclick="window.location.href='${spLocPath(s.id)}'">
       ${s.bild_url?`<img class="sim-img" src="${s.bild_url}" alt="${s.name}" style="height:70px;object-fit:cover;width:100%">`:`<div class="sim-img">🌙</div>`}
       <div class="sim-body">
         <div class="sim-name">${s.name}</div>

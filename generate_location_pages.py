@@ -29,6 +29,13 @@ CATEGORIES = {
         og_url_old='https://depuls.ch/shopping-profil.html',
         title_suffix=' | Stadtpuls Zürich',
     ),
+    'nachtleben': dict(
+        template_file='nachtleben-profil.html', out_dir='nachtleben', schema_type='NightClub',
+        og_title='Club & Bar Profil — Nachtleben Zürich | Stadtpuls',
+        og_desc='Club- und Bar-Profile aus Zürich: Öffnungszeiten, Events und Vibe — der ehrliche Nightlife-Guide.',
+        og_url_old='https://depuls.ch/nachtleben-profil.html',
+        title_suffix=' | Stadtpuls Zürich',
+    ),
 }
 
 ROOTIFY = ['index.html', 'gastro.html', 'nachtleben.html', 'events.html', 'shopping.html',
@@ -54,20 +61,27 @@ def slugify(text):
     return text
 
 
-def loc_slug(loc):
+def loc_slug(loc, cat_key=None):
+    # Nachtleben hat schon eindeutige, handgepflegte Slugs im Umlauf (?slug=...)
+    # -- die wiederverwenden statt neu zu erfinden, damit nichts bricht.
+    if cat_key == 'nachtleben' and loc.get('slug'):
+        s = slugify(loc['slug'])
+        if s:
+            return s
     base = slugify(loc.get('name') or 'lokal')
     short = (loc.get('id') or '')[:8]
     return f"{base}-{short}" if base else short
 
 
 def render_page(template, loc, cat_key, cfg):
-    slug = loc_slug(loc)
+    slug = loc_slug(loc, cat_key)
     url_path = f"/{cfg['out_dir']}/{slug}/"
     canonical = f"https://depuls.ch{url_path}"
     name = loc.get('name') or 'Lokal'
     name_esc = _html.escape(name)
     kreis = loc.get('kreis') or '?'
-    sub = loc.get('subkategorie') or ('Restaurant' if cat_key == 'gastro' else 'Laden')
+    sub_defaults = {'gastro': 'Restaurant', 'shopping': 'Laden', 'nachtleben': 'Club'}
+    sub = loc.get('subkategorie') or sub_defaults.get(cat_key, 'Lokal')
     sub_esc = _html.escape(sub)
     title = f"{name_esc} — {sub_esc} Kreis {kreis}{cfg['title_suffix']}"
     beschreibung_raw = (loc.get('beschreibung_kurz') or loc.get('beschreibung') or '').strip()
@@ -124,27 +138,45 @@ def render_page(template, loc, cat_key, cfg):
     # <body> -> data-location-id
     out = out.replace('<body>', f'<body data-location-id="{loc["id"]}">', 1)
 
-    # statischer Fallback-Inhalt in #main-content (wird von JS ueberschrieben, sobald geladen)
-    fallback = (
-        f'<div class="ssr-fallback" style="max-width:640px;margin:30px auto;padding:0 20px;'
-        f'font-family:\'DM Mono\',monospace;color:#e8e4d9">'
-        f'<h1 style="font-size:22px;margin-bottom:8px">{name_esc}</h1>'
-        f'<p style="color:#999;font-size:12px;margin-bottom:14px">'
-        f'{sub_esc} · Kreis {kreis}{(" · " + adresse_esc) if adresse else ""}</p>'
-        f'<p style="font-size:13px;line-height:1.6">{desc_esc}</p>'
-        f'</div>'
-    )
-    loading_block = (
-        '<div id="main-content">\n'
-        '  <div class="loading-wrap">\n'
-        '    <div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>\n'
-        '    <div class="loading-txt">LÄDT PROFIL...</div>\n'
-        '  </div>\n'
-        '</div>'
-    )
-    if out.count(loading_block) != 1:
-        raise RuntimeError(f"main-content Platzhalter nicht eindeutig gefunden ({out.count(loading_block)}x) fuer {loc.get('id')}")
-    out = out.replace(loading_block, f'<div id="main-content">{fallback}</div>', 1)
+    # statischer Fallback-Inhalt fuers SEO/Social-Crawling (wird von JS ueberschrieben,
+    # sobald geladen -- exakt dieselben Werte, also fuer echte Besucher unsichtbar).
+    if cat_key == 'nachtleben':
+        # Nachtleben-Template hat keinen #main-content-Block, sondern feste IDs
+        # (hero-name/hero-addr/desc-box), die die JS load()-Funktion per
+        # textContent/innerHTML befuellt -- hier dieselben Werte vorab reinschreiben.
+        repls_nl = [
+            ('<div class="hero-name" id="hero-name">LADED...</div>',
+             f'<div class="hero-name" id="hero-name">{name_esc}</div>'),
+            ('<div class="hero-addr" id="hero-addr">\n      <span class="hero-addr-dot"></span>\n      <span>ZÜRICH</span>\n    </div>',
+             f'<div class="hero-addr" id="hero-addr"><span class="hero-addr-dot"></span><span>{adresse_esc or "Zürich"}</span><span class="hero-addr-dot"></span><span>KREIS {kreis}</span></div>'),
+            ('<div class="desc-box" id="desc-box">Informationen werden geladen...</div>',
+             f'<div class="desc-box" id="desc-box">{desc_esc}</div>'),
+        ]
+        for old_s, new_s in repls_nl:
+            if out.count(old_s) != 1:
+                raise RuntimeError(f"SSR-Platzhalter nicht eindeutig gefunden ({out.count(old_s)}x): {old_s[:60]!r} fuer {loc.get('id')}")
+            out = out.replace(old_s, new_s, 1)
+    else:
+        fallback = (
+            f'<div class="ssr-fallback" style="max-width:640px;margin:30px auto;padding:0 20px;'
+            f'font-family:\'DM Mono\',monospace;color:#e8e4d9">'
+            f'<h1 style="font-size:22px;margin-bottom:8px">{name_esc}</h1>'
+            f'<p style="color:#999;font-size:12px;margin-bottom:14px">'
+            f'{sub_esc} · Kreis {kreis}{(" · " + adresse_esc) if adresse else ""}</p>'
+            f'<p style="font-size:13px;line-height:1.6">{desc_esc}</p>'
+            f'</div>'
+        )
+        loading_block = (
+            '<div id="main-content">\n'
+            '  <div class="loading-wrap">\n'
+            '    <div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>\n'
+            '    <div class="loading-txt">LÄDT PROFIL...</div>\n'
+            '  </div>\n'
+            '</div>'
+        )
+        if out.count(loading_block) != 1:
+            raise RuntimeError(f"main-content Platzhalter nicht eindeutig gefunden ({out.count(loading_block)}x) fuer {loc.get('id')}")
+        out = out.replace(loading_block, f'<div id="main-content">{fallback}</div>', 1)
 
     # location-links.js einbinden -- schon im Vorlagen-Patch als <script src=...> vor SU/SK
     # eingefuegt; hier nichts weiter zu tun.

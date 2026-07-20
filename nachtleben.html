@@ -652,6 +652,7 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
   <div id="sp-kreis-links" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px"></div>
 </section>
 <script src="/kreis-links.js"></script>
+<script src="/location-links.js"></script>
 <script>
 (function(){try{
   var kat='nachtleben';var ks=(window.SP_KREIS_LINKS||{})[kat]||[];if(!ks.length)return;
@@ -903,7 +904,7 @@ function renderLocs(locs){
     const placeholder=`<div class="loc-img-placeholder" ${l.bild_url?'style="display:none"':''}>🌙</div>`;
     const desc=l.beschreibung_kurz||l.beschreibung||'';
     const rating=l.rating?`<span class="star">★</span> ${parseFloat(l.rating).toFixed(1)}`:'';
-    return`<div class="loc-card${l.featured?' featured':''}${spTier(l)>1?' sp-t'+spTier(l):''}" onclick="location.href='nachtleben-profil.html?slug=${encodeURIComponent(l.slug||l.id)}'">
+    return`<div class="loc-card${l.featured?' featured':''}${spTier(l)>1?' sp-t'+spTier(l):''}" onclick="location.href='${(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])||('nachtleben-profil.html?slug='+encodeURIComponent(l.slug||l.id))}'">
       <div class="loc-card-inner">
         ${img}${placeholder}
         <div class="loc-body">
@@ -922,7 +923,7 @@ function renderLocs(locs){
           <div class="loc-bottom">
             <div class="loc-rating">${rating?`<span class="star">★</span>${parseFloat(l.rating||0).toFixed(1)}<span style="color:rgba(232,228,217,0.25);font-size:8px;margin-left:2px">(${l.rating_count||0})</span>`:''}</div>
             <div style="display:flex;gap:6px;align-items:center">
-              <button class="loc-ticket-btn ghost" onclick="event.stopPropagation();location.href='nachtleben-profil.html?slug=${encodeURIComponent(l.slug||l.id)}'">PROFIL →</button>
+              <button class="loc-ticket-btn ghost" onclick="event.stopPropagation();location.href='${(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])||('nachtleben-profil.html?slug='+encodeURIComponent(l.slug||l.id))}'">PROFIL →</button>
               ${l.website?`<button class="loc-ticket-btn" onclick="event.stopPropagation();window.open('${l.website}','_blank')">TICKET →</button>`:''}
             </div>
           </div>
@@ -1058,7 +1059,7 @@ window.openDetail=function(id){
     ${l.beschreibung?`<div class="dp-desc">${l.beschreibung.substring(0,200)}${l.beschreibung.length>200?'...':''}</div>`:''}
     <div class="dp-actions">
       <button class="dp-btn ticket" onclick="window.open('${l.website||'#'}','_blank')">TICKET →</button>
-      <button class="dp-btn profil" onclick="window.location.href='nachtleben-profil.html?slug=${l.slug||l.id}'">VOLLSTÄNDIGS PROFIL</button>
+      <button class="dp-btn profil" onclick="window.location.href='${(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])||('nachtleben-profil.html?slug='+encodeURIComponent(l.slug||l.id))}'">VOLLSTÄNDIGS PROFIL</button>
     </div>
     <div class="dp-btn-row">
       <button class="dp-icon-btn" onclick="closeDetail()">📍 KARTE</button>

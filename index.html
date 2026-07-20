@@ -759,8 +759,8 @@ window.goRandomHome=async function(){
       .range(off,off);
     if(!data||!data.length){cta.textContent='WÜRFLE →';return;}
     const l=data[0];
-    const url = l.kategorie==='nachtleben' ? ('nachtleben-profil.html?slug='+encodeURIComponent(l.slug||l.id))
-              : (window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id]) ? window.SP_LOCATION_LINKS[l.id]
+    const url = (window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id]) ? window.SP_LOCATION_LINKS[l.id]
+              : l.kategorie==='nachtleben' ? ('nachtleben-profil.html?slug='+encodeURIComponent(l.slug||l.id))
               : l.kategorie==='shopping'   ? ('shopping-profil.html?id='+l.id)
               : ('gastro-profil.html?id='+l.id);
     if(window.spTrack)try{spTrack('click','location',l.id,{meta:{via:'wuerfel_home'}});}catch(e){}
@@ -1024,7 +1024,7 @@ render();loadCounts();
   const now=new Date().toISOString();
   const r=await fetch(U+'/rest/v1/locations?select=id,name,slug,kategorie,kreis,bild_url,beschreibung_kurz,subkategorie,boost_tier,boost_until&boost_tier=eq.premium&boost_until=gte.'+encodeURIComponent(now)+'&aktiv=eq.true&order=boost_until.asc&limit=3',{headers:{'apikey':K,'Authorization':'Bearer '+K}});
   if(!r.ok)return;const rows=await r.json();if(!Array.isArray(rows)||!rows.length)return;
-  const P={gastro:l=>(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])||('gastro-profil.html?id='+l.id),nachtleben:l=>'nachtleben-profil.html?slug='+encodeURIComponent(l.slug||l.id),shopping:l=>(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])||('shopping-profil.html?id='+l.id)};
+  const P={gastro:l=>(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])||('gastro-profil.html?id='+l.id),nachtleben:l=>(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])||('nachtleben-profil.html?slug='+encodeURIComponent(l.slug||l.id)),shopping:l=>(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])||('shopping-profil.html?id='+l.id)};
   const esc=s=>String(s||'').replace(/[<>&"]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;'}[c]));
   document.getElementById('angsagt-list').innerHTML=rows.map(l=>{
     const href=(P[l.kategorie]||P.gastro)(l);
