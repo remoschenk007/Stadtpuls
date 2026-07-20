@@ -314,10 +314,35 @@ function isOffe(oz){
   if(!oz||!Array.isArray(oz)||!oz.length)return null;
   const now=new Date();const h=now.getHours();
   const days=['So','Mo','Di','Mi','Do','Fr','Sa'];
+  const dayEnArr=["Su","Mo","Tu","We","Th","Fr","Sa"];
   const day=days[now.getDay()];
-  const dayEn=["Su","Mo","Tu","We","Th","Fr","Sa"][now.getDay()];const s=oz.find(function(o){return o&&(o.includes(day)||o.includes(dayEn));});
+  const dayE=dayEnArr[now.getDay()];
+  const wk=['Mo','Di','Mi','Do','Fr','Sa','So'];
+  const wkEn=['Mo','Tu','We','Th','Fr','Sa','Su'];
+  const todayIdx=now.getDay()===0?6:now.getDay()-1;
+
+  // 1) Zerscht Einzeltag-Zile probiere (z.B. "Mo: 09:00-18:00")
+  let s=oz.find(function(o){return o&&(o.includes(day)||o.includes(dayE));});
+
+  // 2) Falls nüt gfunde: Tages-Bereich probiere (z.B. "Di-So: 10:00-17:00")
+  //    -- vill Museen/Theater gee ihri Zite so a, statt pro Tag ei eigeni Zile.
+  if(!s){
+    const rangePat=/(Mo|Di|Mi|Do|Fr|Sa|So|Tu|We|Th|Su)\s*-\s*(Mo|Di|Mi|Do|Fr|Sa|So|Tu|We|Th|Su)/;
+    s=oz.find(function(o){
+      if(!o)return false;
+      const m=o.match(rangePat);
+      if(!m)return false;
+      const idx=function(x){var i=wk.indexOf(x);if(i>=0)return i;return wkEn.indexOf(x);};
+      const startIdx=idx(m[1]),endIdx=idx(m[2]);
+      if(startIdx<0||endIdx<0)return false;
+      if(startIdx<=endIdx)return todayIdx>=startIdx&&todayIdx<=endIdx;
+      return todayIdx>=startIdx||todayIdx<=endIdx; // Bereich gaht übers Wuchenend (z.B. Fr-Mo)
+    });
+  }
+
   if(!s)return null;
-  const m=s.match(/(\d{2}):(\d{2})(?::\d{2})?-(\d{2}):(\d{2})(?::\d{2})?/);
+  if(/geschlossen|closed|ruhetag/i.test(s))return false;
+  const m=s.match(/(\d{2}):(\d{2})(?::\d{2})?\s*-\s*(\d{2}):(\d{2})(?::\d{2})?/);
   if(!m)return null;
   return h>=parseInt(m[1])&&h<parseInt(m[3]);
 }
