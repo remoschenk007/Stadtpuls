@@ -58,25 +58,53 @@ footer{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spaci
 .sp-nav-ov a:hover{color:#ff2d00}
 .sp-nav-ov .sp-nav-cta{color:#c8ff00}
 .sp-nav-x{position:absolute;top:22px;right:22px;background:none;border:none;color:#e8e4d9;font-size:26px;cursor:pointer;font-family:'DM Mono',monospace}
-.zvv-box{border:1px solid #14141f;background:rgba(232,228,217,.014);border-left:2px solid #c8ff00;padding:20px;max-width:640px}
-.zvv-row{display:flex;gap:14px;flex-wrap:wrap;align-items:flex-end}
-.zvv-field{flex:1;min-width:200px}
-.zvv-field label{display:block;font-size:9px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase;margin-bottom:6px}
-.zvv-field input{width:100%;background:#04040a;border:1px solid #14141f;color:#e8e4d9;font-family:'DM Mono',monospace;font-size:12px;padding:11px 12px}
+.live-dot{display:inline-block;width:7px;height:7px;background:#c8ff00;border-radius:50%;margin-right:9px;vertical-align:middle;animation:lvp 1.6s infinite}
+@keyframes lvp{0%,100%{box-shadow:0 0 0 0 rgba(200,255,0,.5)}55%{box-shadow:0 0 0 7px rgba(200,255,0,0)}}
+.zvv-frame{position:relative;max-width:660px}
+.zvv-frame::before{content:'';position:absolute;inset:-50px;background:radial-gradient(circle at 15% 0%,rgba(200,255,0,.09),transparent 60%),radial-gradient(circle at 100% 100%,rgba(255,45,0,.07),transparent 55%);pointer-events:none;z-index:0}
+.zvv-corner{position:absolute;width:16px;height:16px;border-color:#c8ff00;z-index:2;opacity:.8}
+.zvv-corner.tl{top:-1px;left:-1px;border-top:2px solid;border-left:2px solid}
+.zvv-corner.tr{top:-1px;right:-1px;border-top:2px solid;border-right:2px solid}
+.zvv-corner.bl{bottom:-1px;left:-1px;border-bottom:2px solid;border-left:2px solid}
+.zvv-corner.br{bottom:-1px;right:-1px;border-bottom:2px solid;border-right:2px solid}
+.zvv-box{position:relative;z-index:1;border:1px solid #14141f;background:rgba(9,10,16,.9);backdrop-filter:blur(2px);padding:26px 24px}
+.zvv-row{display:flex;gap:10px;align-items:flex-end}
+.zvv-field{flex:1;min-width:0}
+.zvv-field label{display:block;font-size:9px;letter-spacing:3px;color:#c8ff00;text-transform:uppercase;margin-bottom:7px}
+.zvv-field label::before{content:'// '}
+.zvv-field input{width:100%;background:#04040a;border:1px solid #1c1c2a;color:#e8e4d9;font-family:'DM Mono',monospace;font-size:12px;padding:12px 13px;transition:border-color .15s}
 .zvv-field input:focus{outline:none;border-color:#c8ff00}
+.zvv-field input::placeholder{color:#3a3a48}
 .zvv-gps{margin-top:8px;background:none;border:1px solid rgba(232,228,217,.15);color:#8a8778;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1px;text-transform:uppercase;padding:8px 10px;cursor:pointer}
 .zvv-gps:hover{border-color:#c8ff00;color:#c8ff00}
-.zvv-go{margin-top:16px;width:100%;background:#c8ff00;color:#04040a;border:none;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:1.5px;text-transform:uppercase;padding:14px;cursor:pointer}
+.zvv-connector{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding-bottom:38px;flex-shrink:0;width:24px}
+.zc-dot{width:6px;height:6px;border-radius:50%;background:#c8ff00;flex-shrink:0}
+.zc-dot.b{background:#ff2d00}
+.zc-line{width:1px;flex:1;min-height:22px;background:repeating-linear-gradient(180deg,#2a2a38 0 4px,transparent 4px 8px)}
+@media(max-width:640px){.zvv-row{flex-direction:column;align-items:stretch}.zvv-connector{flex-direction:row;width:100%;padding:6px 0 6px 4px}.zc-line{width:22px;height:1px;min-height:0;background:repeating-linear-gradient(90deg,#2a2a38 0 4px,transparent 4px 8px)}}
+.zvv-go{margin-top:20px;width:100%;background:#c8ff00;color:#04040a;border:none;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:1.5px;text-transform:uppercase;padding:15px;cursor:pointer;position:relative;overflow:hidden}
 .zvv-go:hover{background:#e8e4d9}
-.zvv-go:disabled{opacity:.5;cursor:default}
+.zvv-go:disabled{opacity:.65;cursor:default}
+.zvv-go.scanning::after{content:'';position:absolute;top:0;left:-45%;width:45%;height:100%;background:linear-gradient(90deg,transparent,rgba(4,4,10,.4),transparent);animation:sweep 1s linear infinite}
+@keyframes sweep{0%{left:-45%}100%{left:100%}}
 #zvvStatus{margin-top:12px;font-size:10.5px;color:#8a8778;min-height:14px}
-#zvvResults{margin-top:8px;display:flex;flex-direction:column;gap:8px}
-.zvv-conn{border:1px solid #14141f;padding:12px 14px}
-.zvv-conn-time{font-size:13px;color:#e8e4d9}
-.zvv-conn-dauer{color:#8a8778;font-size:10.5px}
-.zvv-conn-line{margin-top:6px;font-size:10.5px;color:#c8ff00;letter-spacing:.5px}
-.zvv-conn-meta{margin-top:4px;font-size:9.5px;color:#8a8778;letter-spacing:1px;text-transform:uppercase}
-.zvv-note{margin-top:12px;font-size:9.5px;line-height:1.7;color:#3a3a48}
+#zvvResults{margin-top:6px;display:flex;flex-direction:column;gap:10px}
+.zvv-journey{position:relative;border:1px solid rgba(200,255,0,.18);background:linear-gradient(135deg,rgba(200,255,0,.035),rgba(255,45,0,.02));padding:16px 18px;overflow:hidden}
+.zvv-journey::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#c8ff00,transparent);opacity:.55}
+.zvv-j-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.zvv-j-dur{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;color:#c8ff00;line-height:1}
+.zvv-j-dur span{font-size:.32em;letter-spacing:1px;margin-left:5px;color:#8a8778;font-style:normal}
+.zvv-j-clock{font-size:11px;color:#e8e4d9;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.zvv-j-arrow{color:#3a3a48}
+.zvv-j-soon{background:rgba(255,45,0,.15);color:#ff2d00;font-size:8.5px;letter-spacing:1px;padding:3px 6px;text-transform:uppercase}
+.zvv-j-legs{display:flex;align-items:center;gap:0;margin-top:15px;flex-wrap:wrap}
+.zvv-j-leg{display:flex;align-items:center;gap:6px}
+.zvv-j-ico{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;background:rgba(232,228,217,.06);flex-shrink:0}
+.zvv-j-leg.tr .zvv-j-ico{background:rgba(200,255,0,.14);border:1px solid rgba(200,255,0,.35)}
+.zvv-j-lbl{font-size:9.5px;letter-spacing:.5px;color:#c8ff00;white-space:nowrap}
+.zvv-j-sep{width:18px;height:1px;background:repeating-linear-gradient(90deg,#3a3a48 0 3px,transparent 3px 6px);margin:0 5px;flex-shrink:0}
+.zvv-j-meta{margin-top:13px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#8a8778}
+.zvv-note{margin-top:14px;font-size:9.5px;line-height:1.7;color:#3a3a48}
 </style>
 <meta property="og:image" content="https://depuls.ch/og-image.png">
 <meta name="twitter:image" content="https://depuls.ch/og-image.png">
@@ -92,23 +120,27 @@ footer{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spaci
   <h1><span class="a">MOBILITÄT</span><span class="b">S UNDERWÄGS</span></h1>
   <p class="teaser">Velo, Tram, Nachtbus, E-Scooter — wie du durd Stadt chunnsch, au am 4i znacht. D ÖV-Verbindigssuech isch scho live, de Rescht chunnt Schritt für Schritt dezue.</p>
 
-  <h2>ÖV-Verbindig <span class="v">sueche</span></h2>
-  <div class="zvv-box">
-    <div class="zvv-row">
-      <div class="zvv-field">
-        <label>Vo</label>
-        <input id="zvvFrom" placeholder="z.B. Zürich HB, Bellevue, dini Adrässe">
-        <button class="zvv-gps" id="zvvGpsBtn" onclick="zvvUseGps()" type="button">📍 Aktuelle Position</button>
+  <h2><span class="live-dot"></span>ÖV-Verbindig <span class="v">sueche</span></h2>
+  <div class="zvv-frame">
+    <div class="zvv-corner tl"></div><div class="zvv-corner tr"></div><div class="zvv-corner bl"></div><div class="zvv-corner br"></div>
+    <div class="zvv-box">
+      <div class="zvv-row">
+        <div class="zvv-field">
+          <label>Vo</label>
+          <input id="zvvFrom" placeholder="z.B. Zürich HB, Bellevue, dini Adrässe">
+          <button class="zvv-gps" id="zvvGpsBtn" onclick="zvvUseGps()" type="button">📍 Aktuelle Position</button>
+        </div>
+        <div class="zvv-connector"><span class="zc-dot a"></span><span class="zc-line"></span><span class="zc-dot b"></span></div>
+        <div class="zvv-field">
+          <label>Aa</label>
+          <input id="zvvTo" placeholder="z.B. Kaufleuten, Kreis 4, Ziel-Adrässe">
+        </div>
       </div>
-      <div class="zvv-field">
-        <label>Aa</label>
-        <input id="zvvTo" placeholder="z.B. Kaufleuten, Kreis 4, Ziel-Adrässe">
-      </div>
+      <button class="zvv-go" id="zvvSearchBtn" onclick="zvvSearch()" type="button"><span id="zvvGoLabel">Route berechne</span></button>
+      <div id="zvvStatus"></div>
+      <div id="zvvResults"></div>
+      <div class="zvv-note">Date live vo transport.opendata.ch — deckt ganz ÖV Schwiiz ab, inkl. ZVV/VBZ und Nachtnetz. Dis Standort wird nume im Browser bruucht, nie gspeicheret.</div>
     </div>
-    <button class="zvv-go" id="zvvSearchBtn" onclick="zvvSearch()" type="button">Verbindig sueche</button>
-    <div id="zvvStatus"></div>
-    <div id="zvvResults"></div>
-    <div class="zvv-note">Date live vo transport.opendata.ch — deckt ganz ÖV Schwiiz ab, inkl. ZVV/VBZ und Nachtnetz. Dis Standort wird nume im Browser bruucht, nie gspeicheret.</div>
   </div>
 
   <h2>Was <span class="r">chunnt</span></h2>
@@ -183,6 +215,13 @@ function fmtKat(cat,num){
   var label=KAT_CODE[cat]||cat||'';
   return (label+' '+(num||'')).replace(/\s+$/,'');
 }
+var KAT_ICON={T:'🚋',B:'🚌',S:'🚆',IR:'🚆',IC:'🚆',RE:'🚆',NFB:'🌙',NFT:'🌙',BAT:'⛴',FUN:'🚟',PB:'🚡',TGV:'🚄',EC:'🚄'};
+function legIcon(cat){ return KAT_ICON[cat]||'🚏'; }
+function totalMinutes(dur){
+  var m=(dur||'').match(/(\d+)d(\d+):(\d+):(\d+)/);
+  if(!m) return null;
+  return parseInt(m[1],10)*1440+parseInt(m[2],10)*60+parseInt(m[3],10);
+}
 
 function zvvUseGps(){
   var btn=document.getElementById('zvvGpsBtn');
@@ -222,13 +261,16 @@ function zvvSearch(){
   var status=document.getElementById('zvvStatus');
   var results=document.getElementById('zvvResults');
   var btn=document.getElementById('zvvSearchBtn');
+  var lbl=document.getElementById('zvvGoLabel');
   results.innerHTML='';
   if(!from||!to){
     status.textContent='Bitte VO und AA yge.';
     return;
   }
-  status.textContent='… sueche Verbindig';
+  status.textContent='';
   btn.disabled=true;
+  btn.classList.add('scanning');
+  lbl.textContent='… Route wird berechnet';
   trGet('/connections?from='+encodeURIComponent(from)+'&to='+encodeURIComponent(to)+'&limit=3').then(function(data){
     var conns=(data&&data.connections)||[];
     if(!conns.length){
@@ -236,24 +278,48 @@ function zvvSearch(){
       return;
     }
     status.textContent='';
+    var now=Date.now();
     var html='';
     for(var i=0;i<conns.length;i++){
       var c=conns[i];
-      var dep=fmtZeit(c.from&&c.from.departure);
+      var depIso=c.from&&c.from.departure;
+      var dep=fmtZeit(depIso);
       var arr=fmtZeit(c.to&&c.to.arrival);
-      var dauer=fmtDauer(c.duration);
+      var totMin=totalMinutes(c.duration);
       var transfers=c.transfers||0;
-      var sections=(c.sections||[]).filter(function(s){ return s&&s.journey; });
-      var lines=sections.map(function(s){ return fmtKat(s.journey.category,s.journey.number); }).join(' → ');
-      html+='<div class="zvv-conn"><div class="zvv-conn-time">'+dep+' &rarr; '+arr+' <span class="zvv-conn-dauer">('+dauer+')</span></div>'
-        +'<div class="zvv-conn-line">'+(lines||'Z Fuess / Direktverbindig')+'</div>'
-        +'<div class="zvv-conn-meta">'+transfers+' Umstieg'+(transfers===1?'':'e')+'</div></div>';
+      var sections=(c.sections||[]).filter(function(s){ return s&&(s.journey||s.walk); });
+      var legsHtml='';
+      for(var j=0;j<sections.length;j++){
+        var s=sections[j];
+        if(j>0) legsHtml+='<div class="zvv-j-sep"></div>';
+        if(s.journey){
+          legsHtml+='<div class="zvv-j-leg tr"><div class="zvv-j-ico">'+legIcon(s.journey.category)+'</div><div class="zvv-j-lbl">'+fmtKat(s.journey.category,s.journey.number)+'</div></div>';
+        } else {
+          legsHtml+='<div class="zvv-j-leg"><div class="zvv-j-ico">🚶</div></div>';
+        }
+      }
+      if(!legsHtml) legsHtml='<div class="zvv-j-leg"><div class="zvv-j-ico">🚶</div></div>';
+      var soonHtml='';
+      if(depIso){
+        var diffMin=Math.round((new Date(depIso).getTime()-now)/60000);
+        if(diffMin>=0 && diffMin<=90){ soonHtml='<span class="zvv-j-soon">IN '+diffMin+' MIN</span>'; }
+      }
+      html+='<div class="zvv-journey">'
+        +'<div class="zvv-j-top">'
+          +'<div class="zvv-j-dur">'+(totMin!=null?totMin:'–')+'<span>MIN</span></div>'
+          +'<div class="zvv-j-clock">'+dep+'<span class="zvv-j-arrow">&rarr;</span>'+arr+soonHtml+'</div>'
+        +'</div>'
+        +'<div class="zvv-j-legs">'+legsHtml+'</div>'
+        +'<div class="zvv-j-meta">'+transfers+' Umstieg'+(transfers===1?'':'e')+'</div>'
+        +'</div>';
     }
     results.innerHTML=html;
   }).catch(function(){
     status.textContent='Verbindigssuech hät grad nid klappt — versuechs nomal.';
   }).then(function(){
     btn.disabled=false;
+    btn.classList.remove('scanning');
+    lbl.textContent='Route berechne';
   });
 }
 </script>
