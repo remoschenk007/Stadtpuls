@@ -552,7 +552,10 @@ function spLocUrl(id){return 'https://depuls.ch'+spLocPath(id);}
 
 // URL PARAMS
 const params=new URLSearchParams(location.search);
-const slug=params.get('slug')||params.get('id');
+// SP_PRETTY_LOC v1 -- auf vorgebauten Pretty-URL-Seiten steht die ID im
+// body[data-location-id], NICHT im Query-String (der ist bei /nachtleben/<slug>/ leer!).
+// Vorrang: data-location-id -> ?slug= -> ?id= (alte URLs).
+const slug=document.body.dataset.locationId||params.get('slug')||params.get('id');
 
 async function sbGet(path){
   const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
