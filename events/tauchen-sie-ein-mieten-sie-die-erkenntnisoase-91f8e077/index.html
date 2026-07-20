@@ -216,7 +216,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 <script>
 function spClaim(id,typ,name,kreis){try{
   const a=document.getElementById('sp-claim-link');
-  a.href='platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'event')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
+  a.href='/platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'event')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
   document.getElementById('sp-claim').style.display='flex';
 }catch(e){}}
 </script>
