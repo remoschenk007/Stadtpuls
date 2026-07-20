@@ -100,6 +100,23 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 .error-wrap{min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;padding:40px}
 .error-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:rgba(232,228,217,.1);text-transform:uppercase}
 .error-back{display:inline-block;margin-top:16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:10px 20px;text-decoration:none;cursor:none}
+.jny-status{margin-top:10px;font-size:10px;color:rgba(232,228,217,.35);line-height:1.7}
+.jny-card{position:relative;border:1px solid rgba(0,245,255,.18);background:linear-gradient(135deg,rgba(0,245,255,.035),rgba(200,255,0,.015));padding:16px 18px;margin-top:10px;overflow:hidden}
+.jny-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00f5ff,transparent);opacity:.55}
+.jny-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.jny-dur{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;color:#00f5ff;line-height:1}
+.jny-dur span{font-size:.32em;letter-spacing:1px;margin-left:5px;color:rgba(232,228,217,.3);font-style:normal}
+.jny-clock{font-size:11px;color:#e8e4d9;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.jny-arrow{color:rgba(232,228,217,.15)}
+.jny-soon{background:rgba(255,45,0,.15);color:#ff2d00;font-size:8px;letter-spacing:1px;padding:3px 6px;text-transform:uppercase}
+.jny-legs{display:flex;align-items:center;gap:0;margin-top:14px;flex-wrap:wrap}
+.jny-leg{display:flex;align-items:center;gap:6px}
+.jny-ico{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;background:rgba(232,228,217,.06);flex-shrink:0}
+.jny-leg.tr .jny-ico{background:rgba(0,245,255,.14);border:1px solid rgba(0,245,255,.35)}
+.jny-lbl{font-size:9px;letter-spacing:.5px;color:#00f5ff;white-space:nowrap}
+.jny-sep{width:16px;height:1px;background:repeating-linear-gradient(90deg,rgba(232,228,217,.15) 0 3px,transparent 3px 6px);margin:0 5px;flex-shrink:0}
+.jny-meta{margin-top:12px;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,217,.3)}
+.jny-walk-hero{display:flex;align-items:center;gap:14px}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
 @keyframes tL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @keyframes tR{from{transform:translateX(-50%)}to{transform:translateX(0)}}
@@ -407,6 +424,9 @@ function renderProfil(l,similar,venueEvents){
 
   const adresseVoll=l.adresse&&l.plz?l.adresse+', '+l.plz+' Zürich':l.adresse?l.adresse+', Zürich':'—';
   const mapQuery=encodeURIComponent((l.adresse||l.name)+' Zürich');
+  const jnyLatArg=(typeof l.lat==='number')?l.lat:'null';
+  const jnyLngArg=(typeof l.lng==='number')?l.lng:'null';
+  const jnyOnclick="jnyStart('"+l.id+"',"+jnyLatArg+","+jnyLngArg+")";
 
   // GRAD DIS ZIT DA — echti Vorstellige/Usstellige us Eventfrog, kein Fake
   const now2=new Date();
@@ -513,8 +533,7 @@ function renderProfil(l,similar,venueEvents){
     +'<div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;border:1px solid rgba(200,255,0,.2);padding:3px 8px;display:flex;align-items:center;gap:4px"><span style="width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite;display:inline-block"></span>PHASE 5-6</div>'
     +'</div>'
     +'<div style="border:1px solid rgba(200,255,0,.1);background:rgba(200,255,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">🎭</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:4px">GRAD DIS ZIT DA</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Aktuelli Vorstellige direkt us Eventfrog — kei Zwöitiswerch</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(200,255,0,.2);color:#c8ff00;display:flex;align-items:center;white-space:nowrap">LIVE ✓</div></div>'
-    +'<div style="border:1px solid rgba(0,245,255,.1);background:rgba(0,245,255,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">📍</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">GPS DISTANZ</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Kreis '+kreis+' · Schritt-Distanz wird in Phase 5 live berechnet</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.2);color:#00f5ff;display:flex;align-items:center;white-space:nowrap;cursor:pointer">GPS AN</div></div>'
-    +'<div style="border:1px solid rgba(0,245,255,.08);background:rgba(0,245,255,.01);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">🚋</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">ZVV ANBINDUNG</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Nächste Haltestelle · Echtzeit-Abfahrten · Phase 5</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.15);color:rgba(0,245,255,.4);display:flex;align-items:center;white-space:nowrap">BALD</div></div>'
+    +'<div style="border:1px solid rgba(0,245,255,.15);background:rgba(0,245,255,.02);padding:14px;margin-bottom:8px"><div style="display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">🧭</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#00f5ff;margin-bottom:4px">WIE CHUM ICH HI?</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Live Fussweg + ÖV-Verbindig ab dim Standort</div></div><div id="jnyGoBtn" onclick="'+jnyOnclick+'" style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.3);color:#00f5ff;display:flex;align-items:center;white-space:nowrap;cursor:pointer;flex-shrink:0">📍 GPS AN</div></div><div id="jnyResult"></div></div>'
     +'<div style="border:1px solid rgba(255,204,0,.1);background:rgba(255,204,0,.02);padding:14px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">❤️</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ffcc00;margin-bottom:4px">MERKLISTE</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Ort spare — KI lernt dinen Kunst-Gschmack automatisch</div></div><div onclick="alert(\'Login nötig — kommt in Phase 5!\')" style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,204,0,.3);color:#ffcc00;display:flex;align-items:center;white-space:nowrap;cursor:pointer">♥ SPARE</div></div>'
     +'</div>'
 
@@ -594,6 +613,129 @@ async function loadProfil(){
   }catch(e){
     document.getElementById('main-content').innerHTML='<div class="error-wrap"><div class="error-title">FEHLER</div><div class="error-sub">Verbindung fehlgeschlagen.</div><a class="error-back" href="/kultur.html">← ZURÜCK</a></div>';
   }
+}
+
+// SP_JNY v1 — "Wie chum ich hi?" Live Fussweg + OeV-Verbindig
+function haversine(lat1,lng1,lat2,lng2){
+  var R=6371000;
+  var toRad=function(d){return d*Math.PI/180;};
+  var dLat=toRad(lat2-lat1), dLng=toRad(lng2-lng1);
+  var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)*Math.sin(dLng/2);
+  var c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  return R*c;
+}
+var JNY_TR='https://transport.opendata.ch/v1';
+function jnyGet(path){
+  return fetch(JNY_TR+path).then(function(r){ if(!r.ok) throw new Error('http'+r.status); return r.json(); });
+}
+function jnyFmtZeit(iso){
+  if(!iso) return '–';
+  var d=new Date(iso);
+  var hh=('0'+d.getHours()).slice(-2), mm=('0'+d.getMinutes()).slice(-2);
+  return hh+':'+mm;
+}
+function jnyTotalMin(dur){
+  var m=(dur||'').match(/(\d+)d(\d+):(\d+):(\d+)/);
+  if(!m) return null;
+  return parseInt(m[1],10)*1440+parseInt(m[2],10)*60+parseInt(m[3],10);
+}
+var JNY_KAT_CODE={T:'Tram',B:'Bus',S:'S-Bahn',IR:'IR',IC:'IC',RE:'RE',NFB:'Nachtbus',NFT:'Nachttram',BAT:'Schiff',FUN:'Standseilbahn',PB:'Seilbahn',TGV:'TGV',EC:'EC'};
+var JNY_KAT_ICON={T:'🚋',B:'🚌',S:'🚆',IR:'🚆',IC:'🚆',RE:'🚆',NFB:'🌙',NFT:'🌙',BAT:'⛴',FUN:'🚟',PB:'🚡',TGV:'🚄',EC:'🚄'};
+function jnyFmtKat(cat,num){ var label=JNY_KAT_CODE[cat]||cat||''; return (label+' '+(num||'')).replace(/\s+$/,''); }
+function jnyLegIcon(cat){ return JNY_KAT_ICON[cat]||'🚏'; }
+
+function jnyStart(locId,lat,lng){
+  var btn=document.getElementById('jnyGoBtn');
+  var result=document.getElementById('jnyResult');
+  if(!navigator.geolocation){
+    result.innerHTML='<div class="jny-status">Standort wird vo dim Browser nid unterstützt.</div>';
+    return;
+  }
+  if(lat==null||lng==null||isNaN(lat)||isNaN(lng)){
+    result.innerHTML='<div class="jny-status">Standort für dä Ort isch (no) nid hinterlegt.</div>';
+    return;
+  }
+  btn.textContent='… sueched Standort';
+  navigator.geolocation.getCurrentPosition(function(pos){
+    jnyResolve(pos.coords.latitude,pos.coords.longitude,lat,lng,btn,result);
+  }, function(err){
+    btn.textContent='📍 GPS AN';
+    if(err&&err.code===1){ result.innerHTML='<div class="jny-status">Standort-Zugriff verweigeret.</div>'; }
+    else { result.innerHTML='<div class="jny-status">Standort hät nid klappt.</div>'; }
+  }, {enableHighAccuracy:true, timeout:12000, maximumAge:60000});
+}
+
+function jnyResolve(uLat,uLng,dLat,dLng,btn,result){
+  var dist=haversine(uLat,uLng,dLat,dLng);
+  if(dist<400){
+    btn.textContent='📍 GPS AN';
+    var walkMin=Math.max(1,Math.round(dist/75));
+    result.innerHTML='<div class="jny-card"><div class="jny-walk-hero"><div style="font-size:26px">🚶</div><div><div class="jny-dur">'+walkMin+'<span>MIN Z FUESS</span></div><div class="jny-clock">'+Math.round(dist)+' m Luftlinie</div></div></div></div>';
+    return;
+  }
+  btn.textContent='… berechnet Route';
+  Promise.all([
+    jnyGet('/locations?x='+uLat+'&y='+uLng+'&type=station'),
+    jnyGet('/locations?x='+dLat+'&y='+dLng+'&type=station')
+  ]).then(function(res){
+    var fromStations=(res[0]&&res[0].stations)||[];
+    var toStations=(res[1]&&res[1].stations)||[];
+    var fromSt=null,toSt=null;
+    for(var i=0;i<fromStations.length;i++){ if(fromStations[i]&&fromStations[i].id){ fromSt=fromStations[i]; break; } }
+    for(var j=0;j<toStations.length;j++){ if(toStations[j]&&toStations[j].id){ toSt=toStations[j]; break; } }
+    btn.textContent='📍 GPS AN';
+    if(!fromSt||!toSt){
+      result.innerHTML='<div class="jny-status">Kei Haltestell i dr Nöchi gfunde.</div>';
+      return;
+    }
+    if(fromSt.id===toSt.id){
+      var walkMin2=Math.max(1,Math.round(dist/75));
+      result.innerHTML='<div class="jny-card"><div class="jny-walk-hero"><div style="font-size:26px">🚶</div><div><div class="jny-dur">'+walkMin2+'<span>MIN Z FUESS</span></div><div class="jny-clock">'+Math.round(dist)+' m Luftlinie · gliichi Haltestell</div></div></div></div>';
+      return;
+    }
+    return jnyGet('/connections?from='+encodeURIComponent(fromSt.name)+'&to='+encodeURIComponent(toSt.name)+'&limit=1').then(function(cdata){
+      var conns=(cdata&&cdata.connections)||[];
+      if(!conns.length){
+        result.innerHTML='<div class="jny-status">Kei ÖV-Verbindig gfunde grad. Versuechs später nomal.</div>';
+        return;
+      }
+      var c=conns[0];
+      var depIso=c.from&&c.from.departure;
+      var dep=jnyFmtZeit(depIso);
+      var arr=jnyFmtZeit(c.to&&c.to.arrival);
+      var transitMin=jnyTotalMin(c.duration)||0;
+      var walk1=Math.max(1,Math.round((fromSt.distance||0)/75));
+      var walk2=Math.max(1,Math.round((toSt.distance||0)/75));
+      var heroTotal=walk1+transitMin+walk2;
+      var transfers=c.transfers||0;
+      var sections=(c.sections||[]).filter(function(s){ return s&&(s.journey||s.walk); });
+      var legsHtml='<div class="jny-leg"><div class="jny-ico">🚶</div><div class="jny-lbl">'+Math.round(fromSt.distance||0)+' m</div></div>';
+      for(var k=0;k<sections.length;k++){
+        legsHtml+='<div class="jny-sep"></div>';
+        var s=sections[k];
+        if(s.journey){
+          legsHtml+='<div class="jny-leg tr"><div class="jny-ico">'+jnyLegIcon(s.journey.category)+'</div><div class="jny-lbl">'+jnyFmtKat(s.journey.category,s.journey.number)+'</div></div>';
+        } else {
+          legsHtml+='<div class="jny-leg"><div class="jny-ico">🚶</div></div>';
+        }
+      }
+      legsHtml+='<div class="jny-sep"></div><div class="jny-leg"><div class="jny-ico">🚶</div><div class="jny-lbl">'+Math.round(toSt.distance||0)+' m</div></div>';
+      var soonHtml='';
+      if(depIso){
+        var diffMin=Math.round((new Date(depIso).getTime()-Date.now())/60000);
+        if(diffMin>=0&&diffMin<=90){ soonHtml='<span class="jny-soon">IN '+diffMin+' MIN</span>'; }
+      }
+      result.innerHTML='<div class="jny-card">'
+        +'<div class="jny-top"><div class="jny-dur">'+heroTotal+'<span>MIN GSAMT</span></div>'
+        +'<div class="jny-clock">Ab '+fromSt.name+' '+dep+'<span class="jny-arrow">&rarr;</span>'+arr+' i '+toSt.name+soonHtml+'</div></div>'
+        +'<div class="jny-legs">'+legsHtml+'</div>'
+        +'<div class="jny-meta">'+transfers+' Umstieg'+(transfers===1?'':'e')+' · '+fromSt.name+' → '+toSt.name+'</div>'
+        +'</div>';
+    });
+  }).catch(function(){
+    btn.textContent='📍 GPS AN';
+    result.innerHTML='<div class="jny-status">Route-Berechnig hät grad nid klappt — versuechs nomal.</div>';
+  });
 }
 
 const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
