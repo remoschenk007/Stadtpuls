@@ -217,7 +217,7 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 <script>
 function spClaim(id,typ,name,kreis){try{
   const a=document.getElementById('sp-claim-link');
-  a.href='platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
+  a.href='/platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
   document.getElementById('sp-claim').style.display='flex';
 }catch(e){}}
 </script>
