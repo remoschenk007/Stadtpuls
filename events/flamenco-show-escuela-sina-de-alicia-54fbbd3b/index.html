@@ -243,6 +243,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 @keyframes ping{0%,100%{opacity:1}50%{opacity:.3}}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.1}}
 
+@media(max-width:768px){.nav-cat{display:none}}
 @media(max-width:960px){
   .layout{grid-template-columns:1fr}
   .side-col{position:static;height:auto}
@@ -266,7 +267,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 
 <nav>
   <a href="/index.html" class="logo"><div class="ldot"></div>STADTPULS</a>
-  <div style="display:flex;gap:24px;align-items:center">
+  <div class="nav-cat" style="display:flex;gap:24px;align-items:center">
     <a href="/gastro.html" style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#888;text-decoration:none;transition:color .2s">GASTRO</a>
     <a href="/nachtleben.html" style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#888;text-decoration:none;transition:color .2s">NACHTLEBE</a>
     <a href="/events.html" style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;text-decoration:none">EVENTS</a>
