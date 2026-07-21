@@ -265,6 +265,24 @@ nav{padding:0 16px;height:48px}.nav-links{display:none}.sp-burger{display:flex}
   <div class="tr"><div class="tick r" id="tb"></div></div>
 </div>
 
+<!-- SP_BOOST v1: CLAIM — "Das isch mis Lokal" (Verkaufseinstieg) -->
+<style>
+.sp-claim{max-width:1100px;margin:28px auto;padding:16px 18px;border:1px dashed rgba(200,255,0,.35);display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.sp-claim-txt{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;color:#888;text-transform:uppercase;line-height:1.7}
+.sp-claim-btn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;color:#04040a;background:#c8ff00;padding:10px 20px;text-decoration:none;white-space:nowrap;transition:background .15s}
+.sp-claim-btn:hover{background:#e8e4d9}
+</style>
+<div class="sp-claim" id="sp-claim" style="display:none">
+  <div class="sp-claim-txt">Bisch du de Inhaber? Hol dir dini Platzierig — ganz obe i dinere Kategorie.</div>
+  <a class="sp-claim-btn" id="sp-claim-link" href="platzierung.html">DAS ISCH MIS LOKAL →</a>
+</div>
+<script>
+function spClaim(id,typ,name,kreis){try{
+  const a=document.getElementById('sp-claim-link');
+  a.href='platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
+  document.getElementById('sp-claim').style.display='flex';
+}catch(e){}}
+</script>
 <footer>
   <div class="ftk">
     <div class="fti">
@@ -408,6 +426,7 @@ function renderProfil(l){
 
   document.title=`${l.name} — Shopping Zürich | Stadtpuls`;
   document.getElementById('bc-name').textContent=l.name;
+  spClaim(l.id,'location',l.name,l.kreis); // SP_BOOST Claim
 
   // OFFE Banner
   const offeBanner=`<div class="offe-banner">
