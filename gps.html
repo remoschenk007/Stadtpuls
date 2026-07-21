@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>STADTPULS — GPS RADAR Zürich · Um Dich Ume</title>
-<meta name="description" content="Der Live-Radar für Zürich: was läuft gerade in deiner Nähe? Standort aktivieren und Gastro, Kultur, Shopping, Nachtleben und mehr im Umkreis entdecken.">
+<meta name="description" content="Der Live-Radar für Zürich: Was läuft gerade in deiner Nähe? Standortbasierte Empfehlungen von Stadtpuls sind im Aufbau.">
 <link rel="canonical" href="https://depuls.ch/gps.html">
 <meta property="og:title" content="STADTPULS — GPS RADAR Zürich">
-<meta property="og:description" content="Der Live-Radar für Zürich: was läuft gerade in deiner Nähe? Standort aktivieren und entdecken.">
+<meta property="og:description" content="Der Live-Radar für Zürich: Was läuft gerade in deiner Nähe? Standortbasierte Empfehlungen von Stadtpuls sind im Aufbau.">
 <meta property="og:url" content="https://depuls.ch/gps.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Stadtpuls">
-<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "@id": "https://depuls.ch/gps.html", "url": "https://depuls.ch/gps.html", "name": "Stadtpuls — GPS RADAR Zürich", "description": "Der Live-Radar für Zürich: was läuft gerade in deiner Nähe?", "inLanguage": "gsw", "isPartOf": {"@type": "WebSite", "name": "Stadtpuls", "url": "https://depuls.ch", "description": "Der unabhängige City Guide für Zürich: Gastronomie, Kultur, Nachtleben, Events und Shopping — kuratiert, kreisgenau, ohne Algorithmus-Müll."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Bruucht de GPS-Radar min Standort?", "acceptedAnswer": {"@type": "Answer", "text": "Ja — aber nur wenn du en aktiv teilsch, und nur für d Empfehlige. Kei Tracking im Hintergrund, kei Verkauf vo Date. Dis Standort wird nie gspeichert."}}, {"@type": "Question", "name": "Was gaht scho hüt?", "acceptedAnswer": {"@type": "Answer", "text": "De Live-Radar zeigt dir Gastro, Kultur, Shopping, Nachtlebe, Sport, Wellness und Sightseeing im Umkreis vo 200m bis 2km, sortiert nach Distanz und mit Live-Öffnigsstatus."}}]}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@graph": [{"@type": "WebPage", "@id": "https://depuls.ch/gps.html", "url": "https://depuls.ch/gps.html", "name": "Stadtpuls — GPS RADAR Zürich", "description": "Der Live-Radar für Zürich: Was läuft gerade in deiner Nähe? Standortbasierte Empfehlungen von Stadtpuls sind im Aufbau.", "inLanguage": "gsw", "isPartOf": {"@type": "WebSite", "name": "Stadtpuls", "url": "https://depuls.ch", "description": "Der unabhängige City Guide für Zürich: Gastronomie, Nachtleben, Events und Shopping — kuratiert, kreisgenau, ohne Algorithmus-Müll."}}, {"@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Bruucht de GPS-Radar min Standort?", "acceptedAnswer": {"@type": "Answer", "text": "Ja — aber nur wenn du en aktiv teilsch, und nur für d Empfehlige. Kei Tracking im Hintergrund, kei Verkauf vo Date. revDSG-konform."}}, {"@type": "Question", "name": "Was gaht scho hüt?", "acceptedAnswer": {"@type": "Answer", "text": "Öffnigsziite und Kreis-Filter sind scho live — de ZÜRI-BOT empfiehlt dir Lokal nach Vibe, direkt us de Datebank."}}]}]}</script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -31,58 +31,12 @@ h1{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;f
 h1 .a{color:#ff2d00}
 h1 .b{display:block;font-size:.42em;letter-spacing:2px;color:transparent;-webkit-text-stroke:1px rgba(232,228,217,.35)}
 .teaser{margin-top:24px;font-size:12px;line-height:1.9;color:#8a8778;max-width:560px}
-
-/* CTA / STATUS */
-.gps-cta{margin-top:32px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.btn-gps{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:1.5px;padding:16px 26px;background:#ff2d00;color:#04040a;text-transform:uppercase;border:none;cursor:pointer;min-height:52px}
-.btn-gps:hover{background:#e8e4d9}
-.btn-gps:disabled{opacity:.5;cursor:default}
-.gps-status{font-size:10px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase;display:none}
-.gps-status.show{display:flex;align-items:center;gap:8px}
-.gps-status::before{content:'';width:7px;height:7px;border-radius:50%;background:#c8ff00;animation:blink 1s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
-.gps-err{margin-top:20px;padding:14px 18px;border-left:2px solid #ff2d00;background:rgba(255,45,0,.04);font-size:11px;line-height:1.8;color:rgba(232,228,217,.6);display:none;max-width:560px}
-.gps-err.show{display:block}
-.privacy-note{margin-top:14px;font-size:9px;letter-spacing:.5px;color:rgba(232,228,217,.22);max-width:520px;line-height:1.7}
-
-/* RADIUS CHIPS */
-.radius-row{margin-top:28px;display:flex;gap:8px;flex-wrap:wrap;display:none}
-.radius-row.show{display:flex}
-.rchip{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;padding:8px 16px;border:1px solid rgba(232,228,217,.15);color:rgba(232,228,217,.4);cursor:pointer;background:none;font-family:'DM Mono',monospace}
-.rchip.on{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,.06)}
-
-/* RESULT LIST */
-.radar-head{margin-top:30px;display:none;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.radar-head.show{display:flex}
-.radar-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase}
-.radar-count .n{color:#ff2d00}
-.radar-sub{font-size:9px;letter-spacing:1.5px;color:rgba(232,228,217,.25);text-transform:uppercase}
-.radar-list{margin-top:14px;display:none}
-.radar-list.show{display:block}
-.radar-empty{display:none;margin-top:14px;padding:26px;text-align:center;border:1px solid rgba(232,228,217,.08);font-size:11px;color:rgba(232,228,217,.3)}
-.radar-empty.show{display:block}
-.rcard{display:flex;align-items:center;gap:14px;padding:14px 4px;border-bottom:1px solid rgba(232,228,217,.06);text-decoration:none;color:inherit;cursor:pointer}
-.rcard:hover{background:rgba(232,228,217,.02)}
-.rc-ico{font-size:22px;flex-shrink:0;width:30px;text-align:center}
-.rc-mid{flex:1;min-width:0}
-.rc-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;text-transform:uppercase;color:#e8e4d9;line-height:1.1}
-.rc-meta{font-size:9px;letter-spacing:1px;color:rgba(232,228,217,.3);text-transform:uppercase;margin-top:3px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
-.rc-offe{color:#c8ff00}
-.rc-zu{color:rgba(255,45,0,.55)}
-.rc-badge{font-size:7px;letter-spacing:1.5px;padding:2px 7px;background:#c8ff00;color:#04040a;text-transform:uppercase}
-.rc-dist{flex-shrink:0;text-align:right;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;color:#c8ff00;white-space:nowrap}
-.rc-dist span{display:block;font-family:'DM Mono',monospace;font-style:normal;font-weight:400;font-size:7px;letter-spacing:1.5px;color:rgba(232,228,217,.2);margin-top:1px}
-
-/* ZVV ROUTE */
-.rcard-wrap{border-bottom:1px solid rgba(232,228,217,.06)}
-.rcard-wrap .rcard{border-bottom:none}
-.rc-route-btn{display:block;width:100%;text-align:left;background:none;border:none;padding:0 4px 12px 44px;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(0,245,255,.5);cursor:pointer}
-.rc-route-btn:hover{color:#00f5ff}
-.rc-route-panel{display:none;margin:0 4px 12px 44px;padding:12px 14px;border-left:2px solid #00f5ff;background:rgba(0,245,255,.04);font-size:10.5px;line-height:1.9;color:rgba(232,228,217,.6)}
-.rc-route-panel.show{display:block}
-.rc-route-line{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;color:#00f5ff;text-transform:uppercase}
-.rc-route-meta{font-size:9px;letter-spacing:1px;color:rgba(232,228,217,.3);text-transform:uppercase;margin-top:2px}
-
+.status{margin-top:26px;font-size:10px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase}
+.status::after{content:'▮';animation:blk 1s steps(1) infinite;margin-left:3px}
+@keyframes blk{50%{opacity:0}}
+.bar{margin-top:12px;width:min(360px,100%);height:3px;background:#14141f;position:relative;overflow:hidden}
+.bar::after{content:'';position:absolute;inset:0;width:38%;background:#c8ff00;animation:run 2.4s ease-in-out infinite}
+@keyframes run{0%{transform:translateX(-100%)}100%{transform:translateX(280%)}}
 h2{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;letter-spacing:1.5px;text-transform:uppercase;margin:54px 0 18px}
 h2 .v{color:#c8ff00}
 h2 .r{color:#ff2d00}
@@ -90,13 +44,16 @@ h2 .r{color:#ff2d00}
 .card{border:1px solid #14141f;padding:16px;background:rgba(232,228,217,.014)}
 .card h3{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;letter-spacing:1px;text-transform:uppercase;color:#e8e4d9;margin-bottom:8px}
 .card p{font-size:10.5px;line-height:1.8;color:#8a8778}
+.live .card{border-left:2px solid #c8ff00}
+.live .card a{color:#c8ff00;text-decoration:none;font-size:10px;letter-spacing:1px;text-transform:uppercase}
+.live .card a:hover{color:#e8e4d9}
 .faq .card{border-left:2px solid #ff2d00}
 .faq .card h3{font-size:13px;font-family:'DM Mono',monospace;font-style:normal;font-weight:500;text-transform:none;letter-spacing:0;color:#e8e4d9}
 .ctas{margin-top:52px;display:flex;gap:14px;flex-wrap:wrap}
 .cta{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;padding:13px 24px;text-decoration:none;text-transform:uppercase}
 .cta.solid{background:#ff2d00;color:#04040a}
 .cta.solid:hover{background:#e8e4d9}
-.cta.ghost{border:1px solid rgba(232,228,217,.2);color:#e8e4d9}
+.cta.ghost{border:1px solid rgba(232,228,217,0.2);color:#e8e4d9}
 .cta.ghost:hover{border-color:#c8ff00;color:#c8ff00}
 footer{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spacing:2px;color:#3a3a48;text-transform:uppercase;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .sp-nav-burger{background:none;border:1px solid rgba(232,228,217,.15);width:48px;height:48px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px;cursor:pointer;z-index:1001}
@@ -107,60 +64,82 @@ footer{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spaci
 .sp-nav-ov a:hover{color:#ff2d00}
 .sp-nav-ov .sp-nav-cta{color:#c8ff00}
 .sp-nav-x{position:absolute;top:22px;right:22px;background:none;border:none;color:#e8e4d9;font-size:26px;cursor:pointer;font-family:'DM Mono',monospace}
-@media(max-width:600px){.rc-name{font-size:14px}.rc-ico{font-size:19px}}
+/* SP_JNY_SHOWCASE v1 -- Beispiel-Grafik "Wie chum ich hi?" */
+.jny-demo{position:relative;border:1px solid rgba(200,255,0,.18);border-radius:14px;padding:22px 20px 20px;margin-top:8px;background:linear-gradient(135deg,rgba(200,255,0,.035),rgba(255,45,0,.02));max-width:640px}
+.jny-demo-tag{position:absolute;top:-10px;left:18px;background:#c8ff00;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:10px;letter-spacing:1.5px;padding:3px 12px;border-radius:20px;text-transform:uppercase}
+.jny-demo-phone{max-width:320px;margin:12px 0 16px;border:1px solid rgba(232,228,217,.1);border-radius:12px;padding:16px;background:rgba(4,4,10,.55)}
+.jny-demo-top{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.jny-demo-dur{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:#c8ff00;line-height:1}
+.jny-demo-dur span{font-size:.35em;letter-spacing:1px;margin-left:4px;color:#8a8778;font-style:normal}
+.jny-demo-clock{font-size:10px;color:rgba(232,228,217,.5)}
+.jny-demo-legs{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+.jny-demo-leg{display:flex;align-items:center;gap:6px}
+.jny-demo-ico{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;background:rgba(232,228,217,.06);flex-shrink:0}
+.jny-demo-leg.tr .jny-demo-ico{background:rgba(200,255,0,.14);border:1px solid rgba(200,255,0,.35)}
+.jny-demo-lbl{font-size:9px;letter-spacing:.5px;color:#c8ff00;white-space:nowrap}
+.jny-demo-sep{width:16px;height:1px;background:repeating-linear-gradient(90deg,rgba(232,228,217,.15) 0 3px,transparent 3px 6px);margin:0 5px;flex-shrink:0}
+.jny-demo-meta{margin-top:12px;font-size:8px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.3)}
+.jny-demo-txt{font-size:11px;line-height:1.85;color:rgba(232,228,217,.5);max-width:520px;margin-bottom:16px}
+.cta-jny{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:13px;letter-spacing:1.5px;padding:11px 20px;background:#c8ff00;color:#04040a;text-decoration:none;text-transform:uppercase}
+.cta-jny:hover{background:#e8e4d9}
 </style>
 <meta property="og:image" content="https://depuls.ch/og-image.png">
 <meta name="twitter:image" content="https://depuls.ch/og-image.png">
 </head>
 <body>
-<!-- SP_GPS_RADAR v1 -->
+<!-- SP_SOON v2 · Vision-Siite mit Inhalt -->
 <header>
   <a class="hleft" href="/index.html"><div class="ldot"></div><div class="brand">STADTPULS</div></a>
   <button class="sp-nav-burger" onclick="spNavToggle()" aria-label="Menü"><span></span><span></span><span></span></button>
 </header>
 <main>
-  <div class="eye">Live · Standortbasiert</div>
+  <div class="eye">Siite im Bau · Bald uf em Puls</div>
   <h1><span class="a">GPS RADAR</span><span class="b">UM DICH UME</span></h1>
-  <p class="teaser">Aktivier dis Standort und gseh live, was grad i dinere Nöchi lauft — Gastro, Kultur, Shopping, Nachtlebe, Sport, Wellness und Sightseeing, sortiert nach Distanz.</p>
+  <p class="teaser">Was lauft grad i dinere Nöchi — de Live-Radar für Züri. Standort aa, Stadt entdecke.</p>
+  <div class="status">Status: Mir bueued dra</div>
+  <div class="bar"></div>
 
-  <div class="gps-cta">
-    <button class="btn-gps" id="btnGps" onclick="spStartGps()">📍 STANDORT AKTIVIERE</button>
-    <div class="gps-status" id="gpsStatus">SUECHE DINI POSITION...</div>
+  <h2>Scho <span class="v">live</span> — «Wie chum ich hi?»</h2>
+  <div class="jny-demo">
+    <div class="jny-demo-tag">Beispiel</div>
+    <div class="jny-demo-phone">
+      <div class="jny-demo-top">
+        <span class="jny-demo-dur">18<span>MIN</span></span>
+        <span class="jny-demo-clock">18:24 → 18:42</span>
+      </div>
+      <div class="jny-demo-legs">
+        <div class="jny-demo-leg"><div class="jny-demo-ico">🚶</div><div class="jny-demo-lbl">200 M</div></div>
+        <div class="jny-demo-sep"></div>
+        <div class="jny-demo-leg tr"><div class="jny-demo-ico">🚋</div><div class="jny-demo-lbl">TRAM 7</div></div>
+        <div class="jny-demo-sep"></div>
+        <div class="jny-demo-leg"><div class="jny-demo-ico">🚶</div><div class="jny-demo-lbl">80 M</div></div>
+      </div>
+      <div class="jny-demo-meta">Vo dim Standort direkt zum Lokal</div>
+    </div>
+    <p class="jny-demo-txt">Das isch e Beispiel-Route, nid dini echti — aber genau das passiert würklich: uf jedere Gastro-, Shopping- und Kultur-Siite chasch GPS aktiviere, und Stadtpuls zeigt dir dr Fussweg + ÖV-Verbindig dorthin, mit echte Meter und Ziite, live vo transport.opendata.ch. Kei Fake-Date, kei Demo — bereits im Ufbau, wo du jetzt bisch.</p>
+    <a href="/gastro.html" class="cta-jny">Sölber uf-mene-Lokal teste →</a>
   </div>
-  <div class="gps-err" id="gpsErr"></div>
-  <div class="privacy-note">Dis Standort wird nume im Browser bruucht für die Berechnung und nie a öis gschickt oder gspeicheret. Kei Tracking im Hintergrund.</div>
-
-  <div class="radius-row" id="radiusRow">
-    <button class="rchip on" data-r="200" onclick="spSetRadius(200)">200 M</button>
-    <button class="rchip" data-r="500" onclick="spSetRadius(500)">500 M</button>
-    <button class="rchip" data-r="1000" onclick="spSetRadius(1000)">1 KM</button>
-    <button class="rchip" data-r="2000" onclick="spSetRadius(2000)">2 KM</button>
-  </div>
-
-  <div class="radar-head" id="radarHead">
-    <div class="radar-count"><span class="n" id="radarN">0</span> ORT<span id="radarPl">E</span> GFUNDE</div>
-    <div class="radar-sub" id="radarSub"></div>
-  </div>
-  <div class="radar-empty" id="radarEmpty">Nüüt gfunde i dere Nöchi. Probier en grösseren Radius.</div>
-  <div class="radar-list" id="radarList"></div>
 
   <h2>Was <span class="r">chunnt</span></h2>
   <div class="cards">
-    <div class="card"><h3>Push, wos zellt</h3><p>Bevors jede weiss: Benachrichtigung wenn öppis Nöis i dim Kreis passiert. Phase 6.</p></div>
-    <div class="card"><h3>Live-Abfahrtstafle</h3><p>Nid nur d nächscht Verbindig, sondern alli Abfahrte a dr Haltestell live. Phase 5.</p></div>
-    <div class="card"><h3>Events im Radar</h3><p>Sobald Eventfrog-Standortdate vollständig sind, chömed Events mit i Radar. Grad in Abklärung.</p></div>
+    <div class="card"><h3>Live-Nöchi</h3><p>Standort aa — lueg was i 5 Minute z Fuess offe het und läuft.</p></div>
+    <div class="card"><h3>Jetzt-offe-Filter</h3><p>Kombiniert mit de echte Öffnigsziite us de Datebank.</p></div>
+    <div class="card"><h3>Push, wos zellt</h3><p>Bevors jede weiss: Benachrichtigung wenn öppis i dim Kreis passiert.</p></div>
   </div>
-
-  <h2>Frage &amp; <span class="v">Antworte</span></h2>
+  <h2>Scho hüt <span class="v">uf em Puls</span></h2>
+  <div class="cards live">
+    <div class="card"><h3>Über 400 Gastro-Lokal</h3><p>Restaurants, Cafés und Bars — mit Öffnigsziite, Kreis-Filter und em ZÜRI-BOT.</p><p style="margin-top:8px"><a href="/gastro.html">Zur Siite &rarr;</a></p></div>
+    <div class="card"><h3>Events, täglich frisch</h3><p>Jede Nacht um 04:00 synct öisi Pipeline automatisch di nöiste Events.</p><p style="margin-top:8px"><a href="/events.html">Zur Siite &rarr;</a></p></div>
+    <div class="card"><h3>ZÜRI-BOT</h3><p>Regelbasierte Empfehlige direkt us de Datebank — kei Halluzination.</p><p style="margin-top:8px"><a href="/gastro.html">Zur Siite &rarr;</a></p></div>
+  </div>
+  <h2>Frage &amp; <span class="r">Antworte</span></h2>
   <div class="cards faq" style="grid-template-columns:1fr">
-    <div class="card"><h3>Bruucht de GPS-Radar min Standort?</h3><p>Ja — aber nur wenn du en aktiv teilsch, und nur für d Empfehlige. Kei Tracking im Hintergrund, kei Verkauf vo Date. Dis Standort wird nie gspeicheret.</p></div>
-    <div class="card"><h3>Was gaht scho hüt?</h3><p>De Live-Radar zeigt dir Gastro, Kultur, Shopping, Nachtlebe, Sport, Wellness und Sightseeing im Umkreis vo 200m bis 2km, sortiert nach Distanz und mit Live-Öffnigsstatus. Pro Ort chasch dir mit "WIE CHUM ICH HIN?" die nächscht ÖV-Verbindig (oder de Fussweg) live azeige lah.</p></div>
-    <div class="card"><h3>Firum gseh ich Events nid im Radar?</h3><p>Öisi Event-Date hei momentan no kei Standort-Koordinate hinterlegt. Sobald das globöst isch, chömed Events automatisch dazue.</p></div>
+    <div class="card"><h3>Bruucht de GPS-Radar min Standort?</h3><p>Ja — aber nur wenn du en aktiv teilsch, und nur für d Empfehlige. Kei Tracking im Hintergrund, kei Verkauf vo Date. revDSG-konform.</p></div>
+    <div class="card"><h3>Was gaht scho hüt?</h3><p>Öffnigsziite und Kreis-Filter sind scho live — de ZÜRI-BOT empfiehlt dir Lokal nach Vibe, direkt us de Datebank.</p></div>
   </div>
-
   <div class="ctas">
     <a class="cta solid" href="/index.html">Zrugg zum Puls</a>
-    <a class="cta ghost" href="/feedback.html">Säg öis dini Idee</a>
+    <a class="cta ghost" href="/feedback.html">S&auml;g &ouml;is dini Idee</a>
   </div>
 
 </main>
@@ -172,258 +151,14 @@ footer{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spaci
   <button class="sp-nav-x" onclick="spNavToggle()" aria-label="Schliesse">&times;</button>
   <a href="/index.html">ZUE</a>
   <a href="/gastro.html">GASTRO</a>
-  <a href="/kultur.html">KULTUR</a>
   <a href="/nachtleben.html">NACHTLEBE</a>
   <a href="/events.html">EVENTS</a>
   <a href="/shopping.html">SHOPPING</a>
+  <a href="/kultur.html">KULTUR</a>
   <a href="/news.html">NEWS</a>
   <a href="/dating.html">DATES</a>
   <a href="/login.html" class="sp-nav-cta">MITMACHE &rarr;</a>
 </div>
 <script>function spNavToggle(){document.getElementById('sp-nav-ov').classList.toggle('open');}</script>
-<script src="/location-links.js"></script>
-<script>
-const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
-const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
-
-// SP_GPS_RADAR v1 -- kategorie->emoji/label + welli Kategorie e eigeni Profil-Vorlag hei
-const KAT_DEFS={
-  gastro:      {e:'🍽️', n:'GASTRO',      profil:'gastro-profil.html'},
-  kultur:      {e:'🎭', n:'KULTUR',      profil:'kultur-profil.html'},
-  shopping:    {e:'🛍️', n:'SHOPPING',    profil:'shopping-profil.html'},
-  nachtleben:  {e:'🎶', n:'NACHTLEBE',   profil:null},
-  sport:       {e:'⚽', n:'SPORT',       profil:null},
-  wellness:    {e:'🧖', n:'WELLNESS',    profil:null},
-  recreation:  {e:'🌳', n:'FRIZIT',      profil:null},
-  sightseeing: {e:'📸', n:'SIGHTSEEING', profil:null},
-};
-function katDef(k){return KAT_DEFS[k]||{e:'📍',n:(k||'ORT').toUpperCase(),profil:null};}
-
-// spLocPath -- gliiche Pattern wie uf de Profil-Siite: hübschi URL falls vorhande,
-// susch Fallback zu de bekannte -profil.html Date. Kategorie ohni eigeni Profil-Siite
-// (Sport/Wellness/Frizit/Sightseeing) verlinke stattdesse extern zu Google Maps.
-function spRadarLink(l){
-  if(window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[l.id])return {href:window.SP_LOCATION_LINKS[l.id],ext:false};
-  const kd=katDef(l.kategorie);
-  if(kd.profil)return {href:'/'+kd.profil+'?id='+l.id,ext:false};
-  const q=encodeURIComponent((l.adresse||l.name)+' Zürich');
-  return {href:'https://www.google.com/maps/search/?api=1&query='+q,ext:true};
-}
-
-function haversine(lat1,lng1,lat2,lng2){
-  const R=6371000,toRad=function(d){return d*Math.PI/180;};
-  const dLat=toRad(lat2-lat1),dLng=toRad(lng2-lng1);
-  const a=Math.sin(dLat/2)**2+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)**2;
-  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-}
-
-// isOffe -- selbi robuscht Logik wie kultur-profil.html (Einzeltag + Tages-Bereich + geschlosse-Text)
-function isOffe(oz){
-  if(!oz||!Array.isArray(oz)||!oz.length)return null;
-  const now=new Date();const h=now.getHours();
-  const days=['So','Mo','Di','Mi','Do','Fr','Sa'];
-  const dayEnArr=["Su","Mo","Tu","We","Th","Fr","Sa"];
-  const day=days[now.getDay()];
-  const dayE=dayEnArr[now.getDay()];
-  const wk=['Mo','Di','Mi','Do','Fr','Sa','So'];
-  const wkEn=['Mo','Tu','We','Th','Fr','Sa','Su'];
-  const todayIdx=now.getDay()===0?6:now.getDay()-1;
-  let s=oz.find(function(o){return o&&(o.includes(day)||o.includes(dayE));});
-  if(!s){
-    const rangePat=/(Mo|Di|Mi|Do|Fr|Sa|So|Tu|We|Th|Su)\s*-\s*(Mo|Di|Mi|Do|Fr|Sa|So|Tu|We|Th|Su)/;
-    s=oz.find(function(o){
-      if(!o)return false;
-      const m=o.match(rangePat);
-      if(!m)return false;
-      const idx=function(x){var i=wk.indexOf(x);if(i>=0)return i;return wkEn.indexOf(x);};
-      const startIdx=idx(m[1]),endIdx=idx(m[2]);
-      if(startIdx<0||endIdx<0)return false;
-      if(startIdx<=endIdx)return todayIdx>=startIdx&&todayIdx<=endIdx;
-      return todayIdx>=startIdx||todayIdx<=endIdx;
-    });
-  }
-  if(!s)return null;
-  if(/geschlossen|closed|ruhetag/i.test(s))return false;
-  const m=s.match(/(\d{2}):(\d{2})(?::\d{2})?\s*-\s*(\d{2}):(\d{2})(?::\d{2})?/);
-  if(!m)return null;
-  return h>=parseInt(m[1])&&h<parseInt(m[3]);
-}
-
-let CUR_LAT=null,CUR_LNG=null,CUR_RADIUS=200,LAST_LIST=[];
-
-// SP_ZVV v1 -- Live-ÖV-Verbindig via transport.opendata.ch (kostenlos, kein API-Key,
-// CORS aktiviert). Deckt ZVV/VBZ und ganz ÖV Schweiz ab.
-const TR='https://transport.opendata.ch/v1';
-const KAT_CODE={T:'🚋 Tram',B:'🚌 Bus',S:'🚆 S-Bahn',IR:'🚄 IR',IC:'🚄 IC',RE:'🚆 RE',BAT:'⛴️ Schiff',PB:'🚡 Seilbahn',FUN:'🚡 Standseilbahn'};
-function fmtKat(cat,num){const k=KAT_CODE[cat]||('🚏 '+(cat||''));return k+(num?' '+num:'');}
-function fmtZeit(iso){if(!iso)return '—';const d=new Date(iso);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
-function fmtDauer(dur){
-  // transport.opendata.ch Format: "00d00:12:00" (Täg d Std:Min:Sek)
-  const m=(dur||'').match(/(\d+)d(\d+):(\d+):(\d+)/);
-  if(!m)return dur||'';
-  const days=parseInt(m[1]),hrs=parseInt(m[2]),mins=parseInt(m[3]);
-  if(days>0)return days+' Tag'+(days>1?'':'')+' '+hrs+'h';
-  if(hrs>0)return hrs+'h '+mins+'min';
-  return mins+' Min';
-}
-
-async function trGet(path){
-  const r=await fetch(TR+path);
-  if(!r.ok)throw new Error('HTTP '+r.status);
-  return r.json();
-}
-
-async function naechschtiHaltestell(lat,lng){
-  const data=await trGet('/locations?type=station&x='+lat+'&y='+lng);
-  const st=(data.stations||[]).find(function(s){return s&&s.id;});
-  return st||null;
-}
-
-async function spShowRoute(ev,idx){
-  ev.preventDefault();ev.stopPropagation();
-  const l=LAST_LIST[idx];
-  if(!l)return;
-  const panel=document.getElementById('route-'+idx);
-  const btn=ev.currentTarget;
-  panel.classList.add('show');
-
-  const distToTarget=haversine(CUR_LAT,CUR_LNG,l.lat,l.lng);
-  if(distToTarget<400){
-    const minWalk=Math.max(1,Math.round(distToTarget/75)); // ~4.5km/h Fuessgänger-Tempo
-    panel.innerHTML='<div class="rc-route-line">🚶 '+minWalk+' MIN Z FUESS</div><div class="rc-route-meta">so nach, do lohnt sich kei ÖV</div>';
-    return;
-  }
-
-  panel.innerHTML='<div class="rc-route-meta">SUECHE VERBINDIG...</div>';
-  try{
-    const [vonHst,zuHst]=await Promise.all([
-      naechschtiHaltestell(CUR_LAT,CUR_LNG),
-      naechschtiHaltestell(l.lat,l.lng)
-    ]);
-    if(!vonHst||!zuHst){
-      panel.innerHTML='<div class="rc-route-meta">Kei Haltestell i dr Nöchi gfunde.</div>';
-      return;
-    }
-    const conn=await trGet('/connections?from='+encodeURIComponent(vonHst.id)+'&to='+encodeURIComponent(zuHst.id)+'&limit=1');
-    const c=conn.connections&&conn.connections[0];
-    if(!c){
-      panel.innerHTML='<div class="rc-route-meta">Kei Verbindig gfunde zwüsched '+vonHst.name+' und '+zuHst.name+'.</div>';
-      return;
-    }
-    const firstLeg=(c.sections||[]).find(function(s){return s.journey;});
-    const kat=firstLeg?fmtKat(firstLeg.journey.category,firstLeg.journey.number):'ÖV';
-    const dur=fmtDauer(c.duration);
-    panel.innerHTML=
-      '<div class="rc-route-line">'+kat+' → '+(c.to.station.name||'')+'</div>'
-      +'<div class="rc-route-meta">Ab '+vonHst.name+' '+fmtZeit(c.from.departure)+' Uhr · aa '+fmtZeit(c.to.arrival)+' Uhr · '+dur+' · '+(c.transfers===0?'ohni Umstiege':c.transfers+' Umstieg'+(c.transfers>1?'e':''))+'</div>';
-  }catch(e){
-    panel.innerHTML='<div class="rc-route-meta">Verbindig grad nid abrufbar. Später nomal probiere.</div>';
-  }
-}
-
-async function sbGet(path){
-  const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
-  if(!r.ok)throw new Error('HTTP '+r.status);
-  return r.json();
-}
-
-function metersToDeg(m,lat){
-  const latDelta=m/111320;
-  const lngDelta=m/(111320*Math.cos(lat*Math.PI/180));
-  return {latDelta:latDelta,lngDelta:lngDelta};
-}
-
-async function loadRadar(){
-  const btn=document.getElementById('btnGps');
-  const {latDelta,lngDelta}=metersToDeg(CUR_RADIUS,CUR_LAT);
-  const minLat=CUR_LAT-latDelta,maxLat=CUR_LAT+latDelta;
-  const minLng=CUR_LNG-lngDelta,maxLng=CUR_LNG+lngDelta;
-  let rows=[];
-  try{
-    rows=await sbGet('locations?select=id,name,kategorie,subkategorie,kreis,lat,lng,bild_url,rating,featured,adresse,oeffnungszeiten&aktiv=eq.true&lat=gte.'+minLat+'&lat=lte.'+maxLat+'&lng=gte.'+minLng+'&lng=lte.'+maxLng+'&limit=200');
-  }catch(e){rows=[];}
-
-  const withDist=rows.map(function(l){
-    return Object.assign({},l,{dist:haversine(CUR_LAT,CUR_LNG,l.lat,l.lng)});
-  }).filter(function(l){return l.dist<=CUR_RADIUS;}).sort(function(a,b){return a.dist-b.dist;});
-
-  renderRadar(withDist);
-}
-
-function fmtDist(m){
-  if(m<1000)return Math.round(m/10)*10+' M';
-  return (m/1000).toFixed(1)+' KM';
-}
-
-function renderRadar(list){
-  document.getElementById('radarHead').classList.add('show');
-  document.getElementById('radarN').textContent=list.length;
-  document.getElementById('radarPl').textContent=list.length===1?'':'E';
-  document.getElementById('radarSub').textContent='IM UMKREIS VO '+(CUR_RADIUS<1000?CUR_RADIUS+' M':(CUR_RADIUS/1000)+' KM');
-
-  const emptyEl=document.getElementById('radarEmpty'),listEl=document.getElementById('radarList');
-  if(!list.length){
-    emptyEl.classList.add('show');
-    listEl.classList.remove('show');
-    listEl.innerHTML='';
-    return;
-  }
-  emptyEl.classList.remove('show');
-  listEl.classList.add('show');
-  LAST_LIST=list;
-  listEl.innerHTML=list.map(function(l,i){
-    const kd=katDef(l.kategorie);
-    const link=spRadarLink(l);
-    const offe=isOffe(l.oeffnungszeiten);
-    const offeHtml=offe===true?'<span class="rc-offe">● JETZT OFFE</span>':offe===false?'<span class="rc-zu">● GESCHLOSSEN</span>':'';
-    return '<div class="rcard-wrap">'
-      +'<a class="rcard" href="'+link.href+'"'+(link.ext?' target="_blank" rel="noopener"':'')+'>'
-        +'<div class="rc-ico">'+kd.e+'</div>'
-        +'<div class="rc-mid">'
-          +'<div class="rc-name">'+(l.name||'')+'</div>'
-          +'<div class="rc-meta"><span>'+kd.n+'</span><span>KREIS '+(l.kreis||'?')+'</span>'+offeHtml+(l.featured?'<span class="rc-badge">TOP</span>':'')+'</div>'
-        +'</div>'
-        +'<div class="rc-dist">'+fmtDist(l.dist)+'<span>ENTFERNIG</span></div>'
-      +'</a>'
-      +'<button class="rc-route-btn" onclick="spShowRoute(event,'+i+')">🚋 WIE CHUM ICH HIN?</button>'
-      +'<div class="rc-route-panel" id="route-'+i+'"></div>'
-    +'</div>';
-  }).join('');
-}
-
-function spSetRadius(r){
-  CUR_RADIUS=r;
-  document.querySelectorAll('.rchip').forEach(function(c){c.classList.toggle('on',parseInt(c.dataset.r)===r);});
-  if(CUR_LAT!==null)loadRadar();
-}
-
-function spStartGps(){
-  const btn=document.getElementById('btnGps'),status=document.getElementById('gpsStatus'),err=document.getElementById('gpsErr');
-  err.classList.remove('show');
-  if(!('geolocation' in navigator)){
-    err.textContent='Dis Gerät oder Browser unterstützt kei Standort-Abfrag.';
-    err.classList.add('show');
-    return;
-  }
-  btn.disabled=true;
-  status.classList.add('show');
-  navigator.geolocation.getCurrentPosition(function(pos){
-    CUR_LAT=pos.coords.latitude;
-    CUR_LNG=pos.coords.longitude;
-    status.classList.remove('show');
-    btn.textContent='📍 STANDORT AKTIV';
-    document.getElementById('radiusRow').classList.add('show');
-    loadRadar();
-  },function(geoErr){
-    status.classList.remove('show');
-    btn.disabled=false;
-    let msg='Standort-Abfrag hät nid funktioniert. Probiers nomal.';
-    if(geoErr.code===1)msg='Standort-Zugriff isch verweigeret worde. Los en i dine Browser-Iistellige zue, falls du das möchtisch.';
-    if(geoErr.code===3)msg='Standort-Abfrag hät z lang dauert. Probiers nomal.';
-    err.textContent=msg;
-    err.classList.add('show');
-  },{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
-}
-</script>
 </body>
 </html>
