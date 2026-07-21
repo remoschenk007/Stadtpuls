@@ -7,6 +7,7 @@
 <meta name="description" id="page-desc" content="Britischer Street Style trifft auf Vintage-Klassiker im Herzen der Zürcher Altstadt.">
 <link rel="canonical" id="page-canonical" href="https://depuls.ch/shopping/booster-boutique-8bb0ba75/">
 <script type="application/ld+json" id="schema-ld">{"@context": "https://schema.org", "@type": "Store", "name": "BOOSTER Boutique", "description": "Britischer Street Style trifft auf Vintage-Klassiker im Herzen der Zürcher Altstadt.", "url": "https://depuls.ch/shopping/booster-boutique-8bb0ba75/", "address": {"@type": "PostalAddress", "streetAddress": "Stüssihofstatt 6", "postalCode": "8001", "addressLocality": "Zürich", "addressCountry": "CH"}, "telephone": "+41 44 252 73 79", "image": "https://www.zuerich.com/sites/default/files/image/2024/web_zuerich_shopping_booster_boutique_1280x960_54601.jpg"}</script>
+<script src="/location-links.js"></script>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
@@ -23,6 +24,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 .nl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);text-decoration:none;transition:.15s}
 .nl:hover{color:#e8e4d9}.nl.on{color:#ff2d00}
 .btn-mm{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none;text-decoration:none}
+.sp-burger{display:none;background:none;border:1px solid rgba(232,228,217,.15);width:48px;height:48px;flex-direction:column;justify-content:center;align-items:center;gap:4px;cursor:pointer;z-index:1001}
+.sp-burger span{display:block;width:16px;height:2px;background:#e8e4d9}
+.sp-nav-ov{position:fixed;inset:0;background:rgba(4,4,10,.98);z-index:1000;display:none;flex-direction:column;justify-content:center;padding:40px;gap:2px}
+.sp-nav-ov.open{display:flex}
+.sp-nav-ov a{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;letter-spacing:1px;color:#e8e4d9;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(232,228,217,.06);cursor:pointer}
+.sp-nav-ov a:hover{color:#ff2d00}
+.sp-nav-ov .sp-nav-cta{color:#ff2d00}
+.sp-nav-x{position:absolute;top:22px;right:22px;background:none;border:none;color:#e8e4d9;font-size:26px;cursor:pointer;font-family:'DM Mono',monospace}
 
 .breadcrumb{padding:10px 40px;border-bottom:1px solid rgba(255,45,0,.06);display:flex;align-items:center;gap:6px;font-size:9px;letter-spacing:1px;text-transform:uppercase;color:rgba(232,228,217,.2)}
 .breadcrumb a{color:rgba(232,228,217,.2);text-decoration:none;cursor:none;transition:.15s}
@@ -183,7 +192,7 @@ footer{padding:44px 40px 32px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
 
 @media(max-width:768px){
 #cur,#cur2{display:none}body{cursor:auto}
-nav{padding:0 16px;height:48px}.nav-links{display:none}
+nav{padding:0 16px;height:48px}.nav-links{display:none}.sp-burger{display:flex}
 .breadcrumb{padding:8px 16px}
 .hero-img{height:260px}
 .offe-banner{padding:10px 16px}
@@ -204,14 +213,27 @@ footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:14px}
 
 <nav>
   <a class="logo" href="/index.html"><div class="ldot"></div>STADTPULS</a>
+  <button class="sp-burger" onclick="spNavToggle()" aria-label="Menü"><span></span><span></span><span></span></button>
   <div class="nav-links">
     <a class="nl" href="/gastro.html">GASTRO</a>
     <a class="nl" href="/nachtleben.html">NACHTLEBE</a>
+    <a class="nl" href="/events.html">EVENTS</a>
     <a class="nl on" href="/shopping.html">SHOPPING</a>
+    <a class="nl" href="/kultur.html">KULTUR</a>
     <a class="nl" href="/dating.html">DATES</a>
   </div>
-  <a class="btn-mm" href="index.html?page=login">MITMACHE</a>
+  <a class="btn-mm" href="/login.html">MITMACHE</a>
 </nav>
+<div class="sp-nav-ov" id="spNavOv">
+  <button class="sp-nav-x" onclick="spNavToggle()" aria-label="Schließe">✕</button>
+  <a href="/gastro.html">GASTRO</a>
+  <a href="/nachtleben.html">NACHTLEBE</a>
+  <a href="/events.html">EVENTS</a>
+  <a href="/shopping.html">SHOPPING</a>
+  <a href="/kultur.html">KULTUR</a>
+  <a href="/dating.html">DATES</a>
+  <a href="/login.html" class="sp-nav-cta">MITMACHE →</a>
+</div>
 
 <div class="breadcrumb">
   <a href="/index.html">HOME</a>
@@ -230,9 +252,9 @@ footer{padding:24px 16px;grid-template-columns:1fr 1fr;gap:14px}
 
 <footer>
   <div><div class="logo" style="margin-bottom:8px"><div class="ldot"></div>STADTPULS</div><div class="fc-desc">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich.</div><div class="fc-copy">© 2026 by raimondo* — Zürich</div></div>
-  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link" href="/gastro.html">Gastro & Bars</a><a class="fc-link" href="/nachtleben.html">Nachtleben</a><a class="fc-link" href="/shopping.html">Shopping</a></div>
+  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link" href="/gastro.html">Gastro & Bars</a><a class="fc-link" href="/nachtleben.html">Nachtleben</a><a class="fc-link" href="/shopping.html">Shopping</a><a class="fc-link" href="/kultur.html">Kultur</a><a class="fc-link" href="/events.html">Events</a></div>
   <div><div class="fc-title">COMMUNITY</div><a class="fc-link" href="/dating.html">People & Dates</a><a class="fc-link" href="feedback.html">Feedback</a></div>
-  <div><div class="fc-title">MITMACHE</div><a class="fc-link" href="index.html?page=login">Einlogge</a><a class="fc-link" href="/impressum.html">Impressum</a></div>
+  <div><div class="fc-title">MITMACHE</div><a class="fc-link" href="/login.html">Einlogge</a><a class="fc-link" href="/impressum.html">Impressum</a></div>
 </footer>
 
 <script>
@@ -240,6 +262,11 @@ const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
 
 const DAYS=['So','Mo','Di','Mi','Do','Fr','Sa'];
+
+function spNavToggle(){document.getElementById('spNavOv').classList.toggle('open');} // SP_NAV_FIX v1
+
+// SP_PRETTY_LOC v1 -- huebsche URLs aus location-links.js (naechtlich generiert)
+function spLocPath(id){return (window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[id])||('/shopping-profil.html?id='+id);}
 
 // Shopping Subkategorien — aus Supabase Masterplan
 const SUBKAT={
@@ -442,7 +469,7 @@ function renderSimilar(locs,sid){
   const sub=SUBKAT[sid]||{e:'🛍️',n:'SHOPPING'};
   if(!locs?.length){g.innerHTML='<div style="grid-column:1/-1;padding:20px;text-align:center;font-size:9px;color:rgba(232,228,217,.12)">NÜÜT GFUNDE</div>';return;}
   g.innerHTML=locs.slice(0,6).map(l=>`
-    <div class="ae-card" onclick="window.location='shopping-profil.html?id=${l.id}'">
+    <div class="ae-card" onclick="window.location=spLocPath('${l.id}')">
       ${l.bild_url?`<img class="ae-img" src="${l.bild_url}" loading="lazy" alt="${l.name}">`:`<div class="ae-img-ph">${sub.e}</div>`}
       <div class="ae-name">${l.name}</div>
       <div class="ae-sub">${sub.n}</div>
