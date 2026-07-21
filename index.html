@@ -557,6 +557,44 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 .fbot p{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;margin:0}
 </style>
 
+<!-- SP_GPS_TEASER v1: GPS-Radar Showcase auf Startseite -->
+<style>
+.gps-teaser-wrap{max-width:1320px;margin:0 auto;padding:60px 24px;border-top:1px solid rgba(255,45,0,.08)}
+.gps-teaser-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.gps-teaser-radar{position:relative;aspect-ratio:1;max-width:320px;margin:0 auto;width:100%}
+@media(max-width:768px){
+  .gps-teaser-wrap{padding:40px 16px}
+  .gps-teaser-grid{grid-template-columns:1fr;gap:28px}
+  .gps-teaser-radar{max-width:220px}
+}
+</style>
+<section class="gps-teaser-wrap">
+  <div class="gps-teaser-grid">
+    <div>
+      <div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:#00f5ff;margin-bottom:10px;display:flex;align-items:center;gap:6px">
+        <span style="width:5px;height:5px;border-radius:50%;background:#00f5ff;display:inline-block;box-shadow:0 0 6px #00f5ff"></span>
+        LIVE &middot; STANDORTBASIERT
+      </div>
+      <h2 style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(32px,5vw,52px);text-transform:uppercase;line-height:.95;margin-bottom:16px;color:#e8e4d9">
+        GPS-RADAR<br><span style="color:#00f5ff">UM DICH UME</span>
+      </h2>
+      <p style="font-size:12px;color:rgba(232,228,217,.5);line-height:1.9;margin-bottom:24px;max-width:420px">
+        Aktivier dis Standort und gseh live, was grad i dinere N&ouml;chi lauft &mdash; Gastro, Kultur, Shopping, Nachtlebe und meh, sortiert nach Distanz. Plus &laquo;Wie chum ich hin&raquo; mit echte Fussweg- und &Ouml;V-Zite.
+      </p>
+      <a href="gps.html" style="display:inline-flex;align-items:center;gap:8px;padding:14px 24px;background:#00f5ff;color:#04040a;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;text-decoration:none">&#128205; RADAR AKTIVIERE &rarr;</a>
+    </div>
+    <div class="gps-teaser-radar">
+      <div style="position:absolute;inset:0;border:1px solid rgba(0,245,255,.15);border-radius:50%"></div>
+      <div style="position:absolute;inset:15%;border:1px solid rgba(0,245,255,.2);border-radius:50%"></div>
+      <div style="position:absolute;inset:32%;border:1px solid rgba(0,245,255,.25);border-radius:50%"></div>
+      <div style="position:absolute;top:50%;left:50%;width:10px;height:10px;background:#ff2d00;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 10px #ff2d00;animation:blink 2s infinite"></div>
+      <div style="position:absolute;top:20%;left:65%;font-size:20px">&#127860;</div>
+      <div style="position:absolute;top:65%;left:75%;font-size:18px">&#127881;</div>
+      <div style="position:absolute;top:70%;left:25%;font-size:18px">&#128717;</div>
+      <div style="position:absolute;top:25%;left:22%;font-size:18px">&#127917;</div>
+    </div>
+  </div>
+</section>
 <footer>
   <div class="ftk">
     <div class="fti">
