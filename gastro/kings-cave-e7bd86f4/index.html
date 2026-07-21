@@ -8,6 +8,7 @@
 <meta name="description" id="page-desc" content="In diesem Grillrestaurant mit Bar direkt beim Central tafeln Gäste wie Könige.">
 <link rel="canonical" id="page-canonical" href="https://depuls.ch/gastro/kings-cave-e7bd86f4/">
 <script type="application/ld+json" id="schema-ld">{"@context": "https://schema.org", "@type": "Restaurant", "name": "King’s Cave", "description": "In diesem Grillrestaurant mit Bar direkt beim Central tafeln Gäste wie Könige.", "url": "https://depuls.ch/gastro/kings-cave-e7bd86f4/", "address": {"@type": "PostalAddress", "streetAddress": "Central 1", "postalCode": "8001", "addressLocality": "Zürich", "addressCountry": "CH"}, "telephone": "+41 44 256 55 55", "image": "https://www.zuerich.com/sites/default/files/web_zuerich_kings_cave_1280x960_20670.jpg", "servesCuisine": "restaurant", "priceRange": "CHF"}</script>
+<script src="/location-links.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -23,6 +24,14 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 .nl:hover{color:#e8e4d9}
 .nl.on{color:#ff2d00}
 .btn-mm{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none;text-decoration:none}
+.sp-burger{display:none;background:none;border:1px solid rgba(232,228,217,.15);width:48px;height:48px;flex-direction:column;justify-content:center;align-items:center;gap:4px;cursor:pointer;z-index:1001}
+.sp-burger span{display:block;width:16px;height:2px;background:#e8e4d9}
+.sp-nav-ov{position:fixed;inset:0;background:rgba(4,4,10,.98);z-index:1000;display:none;flex-direction:column;justify-content:center;padding:40px;gap:2px}
+.sp-nav-ov.open{display:flex}
+.sp-nav-ov a{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;letter-spacing:1px;color:#e8e4d9;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(232,228,217,.06);cursor:pointer}
+.sp-nav-ov a:hover{color:#ff2d00}
+.sp-nav-ov .sp-nav-cta{color:#ff2d00}
+.sp-nav-x{position:absolute;top:22px;right:22px;background:none;border:none;color:#e8e4d9;font-size:26px;cursor:pointer;font-family:'DM Mono',monospace}
 .breadcrumb{padding:14px 40px;border-bottom:1px solid rgba(255,45,0,.06);display:flex;align-items:center;gap:8px}
 .bc-link{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.25);text-decoration:none;transition:.15s;cursor:none}
 .bc-link:hover{color:#ff2d00}
@@ -138,6 +147,7 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
   body{cursor:auto}
   nav{padding:0 16px;height:48px}
   .nav-links{display:none}
+  .sp-burger{display:flex}
   .breadcrumb{padding:10px 16px}
   .hero-img,.hero-placeholder{height:260px}
   .profil-header{padding:20px 16px 0}
@@ -160,14 +170,27 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
 
 <nav>
   <a class="logo" href="/index.html"><div class="ldot"></div>STADTPULS</a>
+  <button class="sp-burger" onclick="spNavToggle()" aria-label="Menü"><span></span><span></span><span></span></button>
   <div class="nav-links">
     <a class="nl on" href="/gastro.html">GASTRO</a>
-    <a class="nl" href="index.html?page=nachtleben">NACHTLEBE</a>
+    <a class="nl" href="/nachtleben.html">NACHTLEBE</a>
+    <a class="nl" href="/events.html">EVENTS</a>
     <a class="nl" href="/shopping.html">SHOPPING</a>
-    <a class="nl" href="index.html?page=events">EVENTS</a>
+    <a class="nl" href="/kultur.html">KULTUR</a>
+    <a class="nl" href="/dating.html">DATES</a>
   </div>
-  <a class="btn-mm" href="index.html?page=login">MITMACHE</a>
+  <a class="btn-mm" href="/login.html">MITMACHE</a>
 </nav>
+<div class="sp-nav-ov" id="spNavOv">
+  <button class="sp-nav-x" onclick="spNavToggle()" aria-label="Schließe">✕</button>
+  <a href="/gastro.html">GASTRO</a>
+  <a href="/nachtleben.html">NACHTLEBE</a>
+  <a href="/events.html">EVENTS</a>
+  <a href="/shopping.html">SHOPPING</a>
+  <a href="/kultur.html">KULTUR</a>
+  <a href="/dating.html">DATES</a>
+  <a href="/login.html" class="sp-nav-cta">MITMACHE →</a>
+</div>
 
 <div class="breadcrumb">
   <a class="bc-link" href="/index.html">HOME</a>
@@ -189,9 +212,9 @@ footer{padding:40px 40px 28px;display:grid;grid-template-columns:1.2fr 1fr 1fr 1
     <div class="fc-desc">dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich.</div>
     <div class="fc-copy">© 2026 by raimondo* — Zürich</div>
   </div>
-  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link" href="/gastro.html">Gastro & Bars</a><a class="fc-link" href="index.html?page=nachtleben">Nachtleben</a><a class="fc-link" href="/shopping.html">Shopping</a><a class="fc-link" href="index.html?page=events">Events</a></div>
-  <div><div class="fc-title">COMMUNITY</div><a class="fc-link" href="index.html?page=community">Feed & Posts</a><a class="fc-link" href="index.html?page=dating">People & Dates</a><a class="fc-link" href="index.html?page=jobs">Jobs Züri</a></div>
-  <div><div class="fc-title">MITMACHE</div><a class="fc-link" href="index.html?page=login">Einlogge</a><a class="fc-link" href="feedback.html">Feedback</a><a class="fc-link" href="/kontakt.html">Partner werde</a><a class="fc-link" href="/impressum.html">Impressum</a></div>
+  <div><div class="fc-title">ENTDECKEN</div><a class="fc-link" href="/gastro.html">Gastro & Bars</a><a class="fc-link" href="/nachtleben.html">Nachtleben</a><a class="fc-link" href="/shopping.html">Shopping</a><a class="fc-link" href="/kultur.html">Kultur</a><a class="fc-link" href="/events.html">Events</a></div>
+  <div><div class="fc-title">COMMUNITY</div><a class="fc-link" href="/community.html">Feed & Posts</a><a class="fc-link" href="/dating.html">People & Dates</a><a class="fc-link" href="/jobs.html">Jobs Züri</a></div>
+  <div><div class="fc-title">MITMACHE</div><a class="fc-link" href="/login.html">Einlogge</a><a class="fc-link" href="feedback.html">Feedback</a><a class="fc-link" href="/kontakt.html">Partner werde</a><a class="fc-link" href="/impressum.html">Impressum</a></div>
 </footer>
 
 <script>
@@ -226,6 +249,11 @@ function getIdFromUrl(){
   if(document.body.dataset.locationId)return document.body.dataset.locationId;
   return new URLSearchParams(window.location.search).get('id');
 } // SP_ID_FIX v1: Pretty-URL-Siite hei kei ?id= im Link, nume s data-location-id am body
+
+function spNavToggle(){document.getElementById('spNavOv').classList.toggle('open');} // SP_NAV_FIX v1
+
+// SP_PRETTY_LOC v1 -- huebsche URLs aus location-links.js (naechtlich generiert)
+function spLocPath(id){return (window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[id])||('/gastro-profil.html?id='+id);}
 
 function isOffe(oeffnungszeiten){
   if(!oeffnungszeiten||!oeffnungszeiten.length)return null;
@@ -326,7 +354,7 @@ function renderProfil(l,similar){
 
   const simCards=similar.slice(0,3).map(function(s){
     const ssub=SUBKAT[parseInt(s.zt_subkategorie_id)]||{e:'🍽️',n:'RESTAURANT'};
-    return '<a class="sim-card" href="gastro-profil.html?id='+s.id+'">'
+    return '<a class="sim-card" href="'+spLocPath(s.id)+'">'
       +(s.bild_url?'<img class="sim-img" src="'+s.bild_url+'" alt="'+s.name+'" loading="lazy" onerror="this.style.display=\'none\'">':'')
       +'<div class="sim-name">'+s.name+'</div>'
       +'<div class="sim-sub">'+ssub.e+' '+ssub.n+'</div>'
