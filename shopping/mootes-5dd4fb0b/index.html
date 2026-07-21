@@ -277,7 +277,7 @@ Der stylische Shop im Kreis 5 führt Pflegeprodukte für Männer</p></div></div>
 <script>
 function spClaim(id,typ,name,kreis){try{
   const a=document.getElementById('sp-claim-link');
-  a.href='platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
+  a.href='/platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
   document.getElementById('sp-claim').style.display='flex';
 }catch(e){}}
 </script>
