@@ -274,12 +274,12 @@ nav{padding:0 16px;height:48px}.nav-links{display:none}.sp-burger{display:flex}
 </style>
 <div class="sp-claim" id="sp-claim" style="display:none">
   <div class="sp-claim-txt">Bisch du de Inhaber? Hol dir dini Platzierig — ganz obe i dinere Kategorie.</div>
-  <a class="sp-claim-btn" id="sp-claim-link" href="platzierung.html">DAS ISCH MIS LOKAL →</a>
+  <a class="sp-claim-btn" id="sp-claim-link" href="/platzierung.html">DAS ISCH MIS LOKAL →</a>
 </div>
 <script>
 function spClaim(id,typ,name,kreis){try{
   const a=document.getElementById('sp-claim-link');
-  a.href='platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
+  a.href='/platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
   document.getElementById('sp-claim').style.display='flex';
 }catch(e){}}
 </script>
