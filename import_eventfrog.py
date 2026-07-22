@@ -13,6 +13,11 @@
 #     → bestehende Events werden nie überschrieben (nur neue eingefügt)
 #   • POPUPS zeitlich begrenzt (popup=True bei Dauer < 3 Tagen)
 #
+#  SP_LOC_FIX v1: locationAlias liefert NUR einen Textnamen (kein street/zip/name-Feld!)
+#  Die echte Adresse steckt hinter locationIds -> GET /public/v1/locations?id=<id>
+#  (einzeln getestet, liefert addressLine/zip/city/title). Wird jetzt zusaetzlich
+#  abgefragt und korrekt in adresse/plz/kreis/venue_name eingetragen.
+#
 #  AUFRUFE:
 #   python3 import_eventfrog.py --dry     # holt + zeigt, schreibt NICHTS
 #   python3 import_eventfrog.py           # schreibt neue Events
@@ -22,7 +27,7 @@
 #   SUPABASE_KEY  → service_role-Key nötig zum Löschen alter Events
 #                   (Supabase → Settings → API). Ohne ihn läuft nur Insert.
 # ============================================================
-import urllib.request, urllib.parse, json, re, os, sys
+import urllib.request, urllib.parse, urllib.error, json, re, os, sys, time
 from datetime import datetime
 
 SU = 'https://pnynkzrqnfoshojqfqxn.supabase.co'
@@ -33,9 +38,11 @@ DRY = '--dry' in sys.argv
 
 EF_KEY = '11D282C1-D0CF-4A4E-9060-DF6B5FC4FE4C'
 EF_URL = 'https://api.eventfrog.net/public/v1/events'
+EF_LOC_URL = 'https://api.eventfrog.net/public/v1/locations'
 EF_TABLE = 'eventfrog_events'
 PER_PAGE = 100
 MAX_PAGES = 40
+LOC_CHUNK = 50
 
 PLZ_KREIS = {'8001':1,'8002':2,'8038':2,'8003':3,'8036':3,'8055':3,'8004':4,'8005':5,'8064':5,'8006':6,'8057':6,'8032':7,'8044':7,'8053':7,'8008':8,'8034':8,'8047':9,'8048':9,'8037':10,'8049':10,'8046':11,'8050':11,'8051':11,'8052':12}
 HEUTE = datetime.now().strftime('%Y-%m-%d')
@@ -48,25 +55,76 @@ def slugify(s):
     return re.sub(r'[^a-z0-9]+', '-', s).strip('-')[:80]
 
 
+def ef_get(url, tries=5):
+    """SP_RATE_FIX v1: zentraler GET mit Wartezeit + Retry bei 429 (Too Many Requests),
+       damit die Eventfrog-API uns nicht mehr blockt."""
+    req = urllib.request.Request(url, headers={'Authorization': 'Bearer ' + EF_KEY, 'Accept': 'application/json'})
+    wait = 3
+    for attempt in range(1, tries + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=20) as r:
+                return json.loads(r.read())
+        except urllib.error.HTTPError as e:
+            if e.code == 429 and attempt < tries:
+                print(f'  ⏳ 429 Too Many Requests — warte {wait}s und versuche nochmal ({attempt}/{tries}) …')
+                time.sleep(wait)
+                wait = min(wait * 2, 30)
+                continue
+            raise
+
+
 def ef_fetch_page(page):
     zip_params = '&'.join('zip=' + p for p in PLZ_KREIS.keys())
     url = f'{EF_URL}?{zip_params}&page={page}&perPage={PER_PAGE}'
-    req = urllib.request.Request(url, headers={'Authorization': 'Bearer ' + EF_KEY, 'Accept': 'application/json'})
-    with urllib.request.urlopen(req, timeout=20) as r:
-        d = json.loads(r.read())
+    d = ef_get(url)
     return d.get('events', []), d.get('totalNumberOfResources', 0)
 
 
-def map_item(item):
+def ef_fetch_locations(ids):
+    """Holt echte Location-Details (Adresse, PLZ, Stadt, Name) fuer eine Liste von locationIds.
+       SP_LOC_FIX v1: locationAlias im Event ist NUR ein Textname, keine Adresse.
+       SP_RATE_FIX v1: kleine Pause zwischen Batches, damit wir nicht 429 kriegen."""
+    ids = sorted({str(i) for i in ids if i})
+    out = {}
+    for i in range(0, len(ids), LOC_CHUNK):
+        chunk = ids[i:i + LOC_CHUNK]
+        params = '&'.join('id=' + urllib.parse.quote(x) for x in chunk)
+        url = f'{EF_LOC_URL}?{params}'
+        try:
+            d = ef_get(url)
+            for loc in d.get('locations', []):
+                lid = str(loc.get('id') or '')
+                if lid:
+                    out[lid] = loc
+        except Exception as e:
+            print(f'  ⚠ Location-Batch {i}-{i+LOC_CHUNK} fehlgeschlagen: {e}')
+        time.sleep(0.6)
+    return out
+
+
+def map_item(item, loc_lookup):
     title = item.get('title') or {}
     name = title.get('de') or title.get('en') or title.get('fr') or ''
     if not name:
         return None
     if item.get('cancelled'):
         return None
-    alias = item.get('locationAlias') or {}
-    plz = str(alias.get('zip') or '').strip()
+
+    # SP_LOC_FIX v1: echte Location ueber locationIds nachschlagen statt aus locationAlias raten
+    loc_ids = item.get('locationIds') or []
+    loc = loc_lookup.get(str(loc_ids[0])) if loc_ids else None
+    loc = loc or {}
+    loc_title = loc.get('title') or {}
+
+    alias = item.get('locationAlias') or {}  # Fallback: nur Textname, falls Location-Lookup nichts liefert
+
+    plz = str(loc.get('zip') or '').strip()
     kreis = PLZ_KREIS.get(plz)
+    venue_name = (loc_title.get('de') or loc_title.get('en') or loc_title.get('fr')
+                  or alias.get('de') or alias.get('en') or alias.get('fr') or '')
+    adresse = loc.get('addressLine') or ''
+    plz_stadt = loc.get('city') or ''
+
     begin = item.get('begin') or ''
     end = item.get('end') or begin
     datum_start = begin[:10] if begin else None
@@ -91,20 +149,23 @@ def map_item(item):
     elif rubric in (6, 7):
         kategorie, subkategorie = 'sport', 'sport'
     emblem = item.get('emblemToShow') or {}
+    bild = emblem.get('url')
+    if not isinstance(bild, str):   # SP_LOC_FIX v1: Sicherheitsnetz, falls doch mal kein reiner String kommt
+        bild = None
     return {
         'ef_id': str(item.get('id') or ''),
         'titel': name,
         'slug': slugify(name) + '-' + str(item.get('id') or '')[:8],
         'kategorie': kategorie, 'subkategorie': subkategorie,
         'kreis': kreis,
-        'venue_name': alias.get('name') or '',
-        'adresse': alias.get('street') or '',
+        'venue_name': venue_name,
+        'adresse': adresse,
         'plz': plz or None,
         'datum_start': datum_start, 'datum_ende': datum_ende,
         'uhrzeit_start': begin[11:16] if len(begin) > 10 else None,
         'uhrzeit_ende': end[11:16] if len(end) > 10 else None,
         'beschreibung': ((item.get('shortDescription') or {}).get('de') or (item.get('shortDescription') or {}).get('en') or ''),
-        'bild_url': emblem.get('url'),                 # nur die URL (für <img>), nicht das ganze Objekt
+        'bild_url': bild,               # nur die URL (für <img>), nicht das ganze Objekt
         'ticket_url': item.get('url'),
         'eintritt_typ': 'kostenlos' if item.get('freeOfCharge') else 'kostenpflichtig',
         'popup': is_popup,
@@ -181,9 +242,20 @@ def main():
         print(f'\r  geladen: {len(raw)}' + (f' / {total}' if total else ''), end='')
         if total and len(raw) >= total:
             break
+        time.sleep(0.4)
     print()
 
-    mapped = [m for m in (map_item(it) for it in raw) if m]
+    # SP_LOC_FIX v1: alle eindeutigen locationIds sammeln und einmalig batch-weise aufloesen
+    all_loc_ids = set()
+    for it in raw:
+        for lid in (it.get('locationIds') or []):
+            if lid:
+                all_loc_ids.add(str(lid))
+    print(f'  eindeutige Location-IDs: {len(all_loc_ids)}')
+    loc_lookup = ef_fetch_locations(all_loc_ids)
+    print(f'  Locations aufgelöst: {len(loc_lookup)} / {len(all_loc_ids)}')
+
+    mapped = [m for m in (map_item(it, loc_lookup) for it in raw) if m]
     # nur neue (ef_id noch nicht in DB) + Duplikate innerhalb des Laufs raus
     seen, neu = set(), []
     for r in mapped:
@@ -193,9 +265,10 @@ def main():
         neu.append(r)
 
     popup = sum(1 for r in neu if r['popup'])
-    print(f'  geholt: {len(raw)} · gültig (kommend): {len(mapped)} · davon NEU: {len(neu)} · Popups: {popup}')
+    mit_adresse = sum(1 for r in neu if r['adresse'])
+    print(f'  geholt: {len(raw)} · gültig (kommend): {len(mapped)} · davon NEU: {len(neu)} · Popups: {popup} · mit Adresse: {mit_adresse}/{len(neu)}')
     if neu:
-        print(f'  Beispiel neu: {neu[0]["titel"][:50]} ({neu[0]["datum_start"]})')
+        print(f'  Beispiel neu: {neu[0]["titel"][:50]} ({neu[0]["datum_start"]}) — Adresse: {neu[0]["adresse"] or "(keine)"}')
 
     written = 0
     for i in range(0, len(neu), 200):
