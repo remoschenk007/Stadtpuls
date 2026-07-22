@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+<!-- SEO — wird dynamisch via JS überschrieben wenn Event geladen -->
+<title>Dark Glowing — Event Zürich | Stadtpuls</title>
+<meta name="description" content="Dark Glowing verbindet Konzert und Trapez zu einem kraftvollen Stück über Emotionen und Durchhaltewillen in vier Runden.">
+<link id="canonical" rel="canonical" href="https://depuls.ch/events/dark-glowing-8b21522e/">
+<meta name="robots" content="index, follow">
+<meta name="author" content="Stadtpuls — by raimondo*">
+
+<!-- OPEN GRAPH — dynamisch -->
+<meta property="og:type" content="event">
+<meta property="og:site_name" content="Stadtpuls">
+<meta property="og:locale" content="de_CH">
+<meta property="og:image" content="https://res.eventfrog.net/production_res_public/web-spot-ndc-web-pierre-daendliker-38.webp?_=1783668603000">
+<meta id="og-title" property="og:title" content="Dark Glowing | Stadtpuls Zürich">
+<meta id="og-desc" property="og:description" content="Dark Glowing verbindet Konzert und Trapez zu einem kraftvollen Stück über Emotionen und Durchhaltewillen in vier Runden.">
+<meta id="og-url" property="og:url" content="https://depuls.ch/events/dark-glowing-8b21522e/">
+
+<!-- TWITTER -->
+<meta name="twitter:card" content="summary_large_image">
+<meta id="tw-title" name="twitter:title" content="Dark Glowing | Stadtpuls">
+<meta id="tw-desc" name="twitter:description" content="Dark Glowing verbindet Konzert und Trapez zu einem kraftvollen Stück über Emotionen und Durchhaltewillen in vier Runden.">
+<meta name="twitter:image" content="https://res.eventfrog.net/production_res_public/web-spot-ndc-web-pierre-daendliker-38.webp?_=1783668603000">
+
+<!-- GEO -->
+<meta name="geo.region" content="CH-ZH">
+<meta name="geo.placename" content="Zürich">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px);pointer-events:none;z-index:9997}
+#cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(255,45,0,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0s,top 0s}
+
+/* NAV — identisch zu gastro-profil.html */
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid rgba(255,45,0,.1);position:sticky;top:0;background:#04040a;z-index:300}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px;text-decoration:none}
+.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
+.nav-links{display:flex;gap:28px}
+.nl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);text-decoration:none;transition:.15s}
+.nl:hover{color:#e8e4d9}
+.nl.on{color:#ff2d00}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+
+.breadcrumb{padding:14px 40px;border-bottom:1px solid rgba(255,45,0,.06);display:flex;align-items:center;gap:8px}
+.bc-link{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.25);text-decoration:none;transition:.15s;cursor:none}
+.bc-link:hover{color:#ff2d00}
+.bc-sep{font-size:9px;color:rgba(232,228,217,.1)}
+.bc-current{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.5);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:60vw}
+
+/* HERO */
+.hero-wrap{position:relative;overflow:hidden}
+.hero-img{width:100%;height:420px;object-fit:cover;display:block;filter:brightness(.7)}
+.hero-ph{width:100%;height:420px;background:linear-gradient(135deg,#07070f,#0a0a18);display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.3}
+.hero-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,#04040a,transparent);pointer-events:none}
+.live-badge{position:absolute;top:20px;left:20px;display:flex;align-items:center;gap:8px;background:#ff2d00;padding:8px 14px;z-index:3}
+.live-dot{width:7px;height:7px;border-radius:50%;background:#fff;animation:blink 1s infinite}
+.live-txt{font-size:9px;letter-spacing:2px;color:#fff;font-weight:bold}
+
+.profil-header{padding:28px 40px 0}
+.ph-top{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.typ-badge{font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;background:#ff2d00;color:#e8e4d9}
+.typ-badge.volt{background:#c8ff00;color:#04040a}
+.typ-badge.pink{background:#ec4899;color:#04040a}
+.typ-badge.cyan{background:#00f5ff;color:#04040a}
+.typ-badge.ghost{background:rgba(232,228,217,.08);color:rgba(232,228,217,.6)}
+.ph-cd{font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border:1px solid rgba(200,255,0,.5);color:#c8ff00;background:rgba(200,255,0,.08);font-weight:bold}
+.ph-addr{font-size:10px;color:rgba(232,228,217,.3);letter-spacing:1px}
+.profil-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(44px,8vw,92px);line-height:.9;text-transform:uppercase;color:#e8e4d9;margin-bottom:8px}
+.profil-subname{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(20px,4vw,34px);line-height:.9;text-transform:uppercase;color:#ff2d00;margin-bottom:20px}
+
+.content-grid{display:grid;grid-template-columns:1fr 380px;gap:40px;padding:28px 40px 0;align-items:start}
+.profil-desc{font-size:13px;color:rgba(232,228,217,.55);line-height:2;margin-bottom:28px;white-space:pre-line}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase;color:#e8e4d9;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-title::before{content:'—';color:#ff2d00}
+.section-body{font-size:12px;color:rgba(232,228,217,.4);line-height:1.9;margin-bottom:28px}
+
+/* TICKET BOX */
+.res-box{border:1px solid rgba(200,255,0,.2);background:rgba(200,255,0,.03);padding:22px;margin-bottom:28px}
+.res-box.gratis{border-color:rgba(0,245,255,.2);background:rgba(0,245,255,.03)}
+.rb-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.rb-badge{font-size:7px;letter-spacing:2px;text-transform:uppercase;background:#c8ff00;color:#04040a;padding:3px 8px}
+.res-box.gratis .rb-badge{background:#00f5ff}
+.rb-title{font-size:11px;color:#c8ff00;letter-spacing:1px}
+.res-box.gratis .rb-title{color:#00f5ff}
+.rb-sub{font-size:10px;color:rgba(200,255,0,.4);margin-bottom:16px}
+.res-box.gratis .rb-sub{color:rgba(0,245,255,.4)}
+.btn-res{display:block;width:100%;background:#c8ff00;color:#04040a;border:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:16px;text-align:center;cursor:none;transition:opacity .2s;margin-bottom:8px;text-decoration:none}
+.res-box.gratis .btn-res{background:#00f5ff}
+.btn-res:hover{opacity:.85}
+
+.map-box{border:1px solid rgba(255,45,0,.08);height:260px;position:relative;background:#07070f}
+#map-leaflet{width:100%;height:100%}
+.map-cta{position:absolute;bottom:12px;right:12px;z-index:400;background:#ff2d00;color:#fff;border:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:10px 16px;cursor:none}
+.map-addr{font-size:10px;color:rgba(232,228,217,.3);margin-top:10px;letter-spacing:.5px}
+
+.empty-box{border:1px solid rgba(255,45,0,.07);background:#07070f;padding:24px;text-align:center;margin-bottom:8px}
+.empty-box-txt{font-size:10px;letter-spacing:1.5px;color:rgba(232,228,217,.3);text-transform:uppercase;margin-bottom:4px}
+.empty-box-sub{font-size:9px;color:rgba(232,228,217,.15);letter-spacing:1px}
+.wr-btn{display:block;width:100%;background:transparent;border:1px solid rgba(255,45,0,.3);color:#ff2d00;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:14px;text-align:center;cursor:none;margin-top:10px}
+
+/* SIDEBAR */
+.details-box{border:1px solid rgba(255,45,0,.1);background:#07070f;position:sticky;top:70px}
+.db-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;padding:16px 20px;border-bottom:1px solid rgba(255,45,0,.08)}
+.db-row{display:flex;align-items:flex-start;justify-content:space-between;padding:12px 20px;border-bottom:1px solid rgba(255,45,0,.05);gap:12px}
+.db-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);flex-shrink:0;padding-top:1px}
+.db-val{font-size:10px;color:#e8e4d9;text-align:right;line-height:1.6}
+.db-val.volt{color:#c8ff00}
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:16px 20px 20px}
+.act-btn{min-height:48px;padding:12px 8px;border:1px solid rgba(255,45,0,.12);color:rgba(232,228,217,.5);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;text-align:center;cursor:none;transition:.15s;background:#0a0a14;display:flex;align-items:center;justify-content:center;gap:6px}
+.act-btn:hover{color:#e8e4d9;border-color:rgba(255,45,0,.4);background:#0f0f1a}
+.act-btn.on{color:#ff2d00;border-color:rgba(255,45,0,.4)}
+
+.roadmap-box{border:1px solid rgba(147,51,234,.18);background:rgba(147,51,234,.03);padding:18px 20px;margin-top:16px}
+.roadmap-lab{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#c084fc;margin-bottom:10px}
+.roadmap-item{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;font-size:10px;color:rgba(232,228,217,.4);line-height:1.6}
+.roadmap-item:last-child{margin-bottom:0}
+.roadmap-ico{flex-shrink:0}
+.roadmap-item strong{color:rgba(232,228,217,.7);display:block;font-size:10px;text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px}
+
+.similar-section{padding:40px 40px;border-top:1px solid rgba(255,45,0,.06)}
+.similar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:16px}
+.sim-card{border:1px solid rgba(255,45,0,.07);border-top:none;border-left:none;padding:18px;cursor:none;transition:.15s;text-decoration:none;display:block}
+.sim-card:nth-child(3n+1){border-left:1px solid rgba(255,45,0,.07)}
+.sim-card:first-child,.sim-card:nth-child(2),.sim-card:nth-child(3){border-top:1px solid rgba(255,45,0,.07)}
+.sim-card:hover{background:#06060e}
+.sim-img{width:100%;height:100px;object-fit:cover;margin-bottom:10px;opacity:.7}
+.sim-ph{width:100%;height:100px;background:#0a0a14;display:flex;align-items:center;justify-content:center;font-size:28px;opacity:.4;margin-bottom:10px}
+.sim-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;text-transform:uppercase;color:#e8e4d9;margin-bottom:4px}
+.sim-sub{font-size:9px;color:#ff2d00;text-transform:uppercase;letter-spacing:.5px}
+.sim-kreis{font-size:8px;color:rgba(232,228,217,.2);margin-top:4px;letter-spacing:1px}
+
+.loading-wrap{min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.loading-dots{display:flex;gap:8px}
+.loading-dot{width:8px;height:8px;border-radius:50%;background:#ff2d00;animation:bounce 1.2s infinite}
+.loading-dot:nth-child(2){animation-delay:.2s}
+.loading-dot:nth-child(3){animation-delay:.4s}
+.loading-txt{font-size:10px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase}
+.error-wrap{min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;padding:40px}
+.error-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:64px;color:rgba(232,228,217,.12);text-transform:uppercase}
+.error-sub{font-size:10px;color:rgba(232,228,217,.3);letter-spacing:1px}
+.error-back{display:inline-block;margin-top:16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:10px 20px;text-decoration:none;cursor:none}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
+
+@media(max-width:768px){
+  #cur,#cur2{display:none}
+  body{cursor:auto}
+  nav{padding:0 16px;height:48px}
+  .nav-links{display:none}
+  .breadcrumb{padding:10px 16px}
+  .bc-current{max-width:40vw}
+  .hero-img,.hero-ph{height:260px}
+  .profil-header{padding:20px 16px 0}
+  .profil-name{font-size:clamp(38px,12vw,64px)}
+  .profil-subname{font-size:clamp(18px,5vw,26px)}
+  .content-grid{grid-template-columns:1fr;padding:16px 16px 0}
+  .details-box{position:static;margin-bottom:24px;order:-1}
+  .action-grid{gap:10px}
+  .act-btn{min-height:52px;font-size:11px}
+  .similar-section{padding:24px 16px}
+  .similar-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .similar-grid{grid-template-columns:1fr}
+}
+</style>
+<script id="event-schema" type="application/ld+json">{"@context": "https://schema.org", "@type": "Event", "name": "Dark Glowing", "description": "Dark Glowing verbindet Konzert und Trapez zu einem kraftvollen Stück über Emotionen und Durchhaltewillen in vier Runden.", "url": "https://depuls.ch/events/dark-glowing-8b21522e/", "startDate": "2026-11-14T21:00", "endDate": "2026-11-14", "eventStatus": "https://schema.org/EventScheduled", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "inLanguage": "de-CH", "isAccessibleForFree": false, "location": {"@type": "Place", "name": "Zürich", "address": {"@type": "PostalAddress", "streetAddress": "", "postalCode": "", "addressLocality": "Zürich", "addressCountry": "CH"}}, "organizer": {"@type": "Organization", "name": "Stadtpuls", "url": "https://depuls.ch"}, "image": "https://res.eventfrog.net/production_res_public/web-spot-ndc-web-pierre-daendliker-38.webp?_=1783668603000", "offers": {"@type": "Offer", "price": "", "priceCurrency": "CHF", "availability": "https://schema.org/InStock", "url": "https://eventfrog.ch/de/p/theater-buehne/buehnenveranstaltung/dark-glowing-7481248460789820627.html"}}</script>
+</head>
+<body data-event-id="8b21522e-e1f1-4404-93c6-afffdedb2e90">
+<div id="cur"></div><div id="cur2"></div>
+
+<nav>
+  <a href="/index.html" class="logo"><div class="ldot"></div>STADTPULS</a>
+  <div class="nav-links">
+    <a class="nl" href="/gastro.html">GASTRO</a>
+    <a class="nl" href="/kultur.html">KULTUR</a>
+    <a class="nl" href="/nachtleben.html">NACHTLEBE</a>
+    <a class="nl on" href="/events.html">EVENTS</a>
+    <a class="nl" href="/shopping.html">SHOPPING</a>
+    <a class="nl" href="/dating.html">DATES</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a class="bc-link" href="/index.html">HOME</a><span class="bc-sep">›</span>
+  <a class="bc-link" href="/events.html">EVENTS</a><span class="bc-sep">›</span>
+  <span class="bc-current" id="bc-title">—</span>
+</div>
+
+<div id="page">
+  <div class="loading-wrap">
+    <div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>
+    <div class="loading-txt">EVENT WIRD GELADEN...</div>
+  </div>
+</div>
+
+<!-- SP_BOOST v1: CLAIM — "Das isch mis Event" (Verkaufseinstieg) — SP_CLAIM_ORDER_FIX v1: vor dem Lade-Skript definiert, nicht mehr danach -->
+<style>
+.sp-claim{max-width:1100px;margin:28px auto;padding:16px 18px;border:1px dashed rgba(200,255,0,.35);display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.sp-claim-txt{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;color:#888;text-transform:uppercase;line-height:1.7}
+.sp-claim-btn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;color:#04040a;background:#c8ff00;padding:10px 20px;text-decoration:none;white-space:nowrap;transition:background .15s}
+.sp-claim-btn:hover{background:#e8e4d9}
+</style>
+<div class="sp-claim" id="sp-claim" style="display:none">
+  <div class="sp-claim-txt">Bisch du de Veranstalter? Hol dir dini Platzierig — ganz obe i dinere Kategorie.</div>
+  <a class="sp-claim-btn" id="sp-claim-link" href="/platzierung.html">DAS ISCH MIS EVENT →</a>
+</div>
+<script>
+function spClaim(id,typ,name,kreis){try{
+  const a=document.getElementById('sp-claim-link');
+  a.href='/platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'event')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
+  document.getElementById('sp-claim').style.display='flex';
+}catch(e){}}
+</script>
+
+<script src="/event-links.js"></script>
+<script src="/event-links.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="/sp-track.js"></script>
+<script>
+const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
+const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+// SP_PRETTY v1 — huebsche URLs aus event-links.js (wird naechtlich generiert)
+function spEventPath(id){return (window.SP_EVENT_LINKS&&window.SP_EVENT_LINKS[id])||('/event-profil.html?id='+id);}
+function spEventUrl(id){return 'https://depuls.ch'+spEventPath(id);}
+
+const c1=document.getElementById('cur'),c2=document.getElementById('cur2');
+document.addEventListener('mousemove',e=>{c1.style.left=e.clientX+'px';c1.style.top=e.clientY+'px';setTimeout(()=>{c2.style.left=e.clientX+'px';c2.style.top=e.clientY+'px'},80);});
+
+const DAYS=['So','Mo','Di','Mi','Do','Fr','Sa'];
+const MONTHS=['Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez'];
+const KN={konzert:'Konzert',comedy:'Comedy',party:'Party',workshop:'Workshop',sport:'Sport',markt:'Markt',kultur:'Kultur',event:'Event'};
+const KC={konzert:'',comedy:'ghost',party:'pink',kultur:'cyan',workshop:'ghost',sport:'ghost',markt:'ghost',event:''};
+const KE={konzert:'🎵',comedy:'😂',party:'🎉',workshop:'🎯',sport:'⚡',markt:'🛍',kultur:'🎨',event:'⚡'};
+
+function uhr(s){return s?s.substring(0,5):'--:--';}
+function gk(ev){
+  const t=((ev.titel||'')+(ev.beschreibung||'')).toLowerCase();
+  if(/konzert|band|jazz|orchestra|chor|oper|musical/.test(t))return'konzert';
+  if(/comedy|kabarett|stand.?up/.test(t))return'comedy';
+  if(/party|disco|dj|rave|techno|house/.test(t))return'party';
+  if(/workshop|kurs|vortrag|lesung|führung|yoga/.test(t))return'workshop';
+  if(/sport|lauf|marathon|turnier/.test(t))return'sport';
+  if(/markt|flohmarkt|messe/.test(t))return'markt';
+  if(/museum|galerie|ausstellung|theater|kino|vernissage/.test(t))return'kultur';
+  return'event';
+}
+function isDates(ev){
+  const t=((ev.titel||'')+(ev.beschreibung||'')).toLowerCase();
+  return/single|date|flirt|kennenlernen|speed.?dating|afterwork|apéro|tanzen|salsa|yoga/.test(t);
+}
+
+async function load(){
+  const params=new URLSearchParams(window.location.search);
+  const id=document.body.dataset.eventId||params.get('id')||params.get('slug');
+  if(!id){return showErr('Kei Event aagäh');}
+
+  try{
+    let r=await fetch(SU+'/rest/v1/eventfrog_events?ef_id=eq.'+encodeURIComponent(id)+'&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+    let data=await r.json();
+    if(!data.length){
+      r=await fetch(SU+'/rest/v1/eventfrog_events?id=eq.'+encodeURIComponent(id)+'&limit=1',{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+      data=await r.json();
+    }
+    if(!data.length)return showErr('Event nöd gfunde');
+    const ev=data[0];ev._k=gk(ev);
+    if(!document.body.dataset.eventId && window.SP_EVENT_LINKS && window.SP_EVENT_LINKS[ev.id]){
+      location.replace(window.SP_EVENT_LINKS[ev.id]); return; // SP_PRETTY v1 — alte URL -> huebsche URL
+    }
+    spClaim(ev.id,'event',ev.titel,ev.kreis); // SP_BOOST Claim
+
+    // Ähnliche Events — gleiche Kategorie
+    const simR=await fetch(SU+'/rest/v1/eventfrog_events?aktiv=eq.true&datum_start=gte.'+new Date().toISOString().split('T')[0]+'&limit=6&order=datum_start.asc',{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+    const simData=(await simR.json()).filter(e=>e.id!==ev.id).slice(0,3);
+
+    // Events am gleichen Venue
+    let venueData=[];
+    if(ev.venue_name){
+      const vr=await fetch(SU+'/rest/v1/eventfrog_events?aktiv=eq.true&venue_name=eq.'+encodeURIComponent(ev.venue_name)+'&datum_start=gte.'+new Date().toISOString().split('T')[0]+'&order=datum_start.asc&limit=5',{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+      venueData=(await vr.json()).filter(e=>e.id!==ev.id).slice(0,4);
+    }
+
+    render(ev,simData,venueData);
+    initBookmark(ev);
+  }catch(e){showErr('Verbindig fehlgschlage');}
+}
+
+let _bm=null,_ev=null;
+async function initBookmark(ev){
+  _ev=ev;
+  _bm={ id:(ev.ef_id||ev.id), kreis:ev.kreis||null };
+  try{ if(window.spTrack) spTrack('view_profile','event',_bm.id,{kategorie:'event',kreis:_bm.kreis}); }catch(e){}
+  const btn=document.getElementById('bm-btn');
+  if(btn && window.spIsBookmarked){
+    try{ setBmUI(btn, await spIsBookmarked('event',_bm.id)); }catch(e){}
+  }
+  loadEngagement();
+}
+async function loadEngagement(){
+  if(!_bm||!window.spStats)return;
+  try{
+    const s=await spStats('event',_bm.id); if(!s)return;
+    const el=document.getElementById('eng-bar');
+    if(el) el.innerHTML=`❤️ ${s.merkt||0} gmerkt &nbsp;·&nbsp; 👁 ${s.views||0} die Wuche aagluegt`;
+  }catch(e){}
+}
+function downloadICS(){
+  if(!_ev)return;
+  const ds=_ev.datum_start;
+  const t=(_ev.uhrzeit_start&&/^\d{2}:\d{2}/.test(_ev.uhrzeit_start))?_ev.uhrzeit_start.slice(0,5):'20:00';
+  const start=new Date(ds+'T'+t+':00');
+  const end=new Date(start.getTime()+3*3600*1000);
+  const fmt=dt=>dt.getFullYear()+('0'+(dt.getMonth()+1)).slice(-2)+('0'+dt.getDate()).slice(-2)+'T'+('0'+dt.getHours()).slice(-2)+('0'+dt.getMinutes()).slice(-2)+'00';
+  const esc=s=>String(s||'').replace(/([,;\\])/g,'\\$1').replace(/\n/g,'\\n');
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//Stadtpuls//Zuerich//DE','BEGIN:VEVENT',
+    'UID:'+(_ev.ef_id||_ev.id)+'@depuls.ch','DTSTART:'+fmt(start),'DTEND:'+fmt(end),
+    'SUMMARY:'+esc(_ev.titel),
+    'LOCATION:'+esc((_ev.venue_name||'')+(_ev.adresse?', '+_ev.adresse:'')+' Zürich'),
+    'DESCRIPTION:'+esc((_ev.beschreibung||'').substring(0,300)+' · via Stadtpuls'),
+    'URL:'+location.href,'END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));
+  a.download=(_ev.titel||'event').replace(/[^a-z0-9]/gi,'_').substring(0,40)+'.ics';
+  document.body.appendChild(a);a.click();a.remove();
+  if(window.spTrack)spTrack('calendar_add','event',_bm.id,{kategorie:'event'});
+}
+function setBmUI(btn,on){
+  btn.textContent=on?'❤️ GMERKT':'🤍 MERKE';
+  btn.classList.toggle('on',!!on);
+}
+async function toggleBm(){
+  const btn=document.getElementById('bm-btn'); if(!btn||!_bm)return;
+  if(!window.spBookmarkToggle)return;
+  const r=await spBookmarkToggle('event',_bm.id,{kategorie:'event',kreis:_bm.kreis});
+  if(!r.ok){ if(r.reason==='login'){ if(confirm('Zum Merke muesch aagmäldet sii. Jetzt aamälde?')) location.href='login.html'; } return; }
+  setBmUI(btn,r.bookmarked);
+}
+
+function render(ev,similar,venueEvs=[]){
+  const k=ev._k||'event';
+  const isG=ev.eintritt_typ==='kostenlos';
+  const d=new Date(ev.datum_start+'T12:00:00');
+  const dateStr=DAYS[d.getDay()]+', '+d.getDate()+'. '+MONTHS[d.getMonth()]+' 2026';
+  const h=uhr(ev.uhrzeit_start);
+  const em=KE[k];
+  const eid=ev.ef_id||ev.id;
+  const showDates=isDates(ev);
+
+  const now=new Date();
+  const isLive=ev.datum_start===now.toISOString().split('T')[0]&&
+    h!=='--:--'&&parseInt(h)<=now.getHours()&&now.getHours()<parseInt(h)+4;
+
+  const _td0=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const _ev0=new Date(d.getFullYear(),d.getMonth(),d.getDate());
+  const _diff=Math.round((_ev0-_td0)/864e5);
+  const _cd=_diff<0?'':(_diff===0?'HÜT':(_diff===1?'MORN':'NO '+_diff+' TÄG'));
+
+  document.title=ev.titel+' — Event Zürich | Stadtpuls';
+  document.getElementById('bc-title').textContent=ev.titel;
+
+  // DYNAMIC SEO
+  const evUrl=spEventUrl(eid);
+  const evDesc=(ev.beschreibung||'').substring(0,160)||`${ev.titel} — ${dateStr} in Zürich. Tickets und Details auf Stadtpuls.`;
+
+  document.querySelector('meta[name="description"]').content=evDesc;
+  document.querySelector('meta[name="robots"]').content='index, follow';
+  document.getElementById('og-title').content=ev.titel+' | Stadtpuls Zürich';
+  document.getElementById('og-desc').content=evDesc;
+  document.getElementById('og-url').content=evUrl;
+  if(!document.body.dataset.eventId){ const c=document.getElementById('canonical'); if(c) c.href=evUrl; }
+  document.getElementById('tw-title').content=ev.titel+' | Stadtpuls';
+  document.getElementById('tw-desc').content=evDesc;
+  if(ev.bild_url){
+    document.querySelector('meta[property="og:image"]').content=ev.bild_url;
+    document.querySelector('meta[name="twitter:image"]').content=ev.bild_url;
+  }
+
+  // SCHEMA.ORG — Event
+  const schema={
+    "@context":"https://schema.org","@type":"Event","name":ev.titel,"description":evDesc,"url":evUrl,
+    "startDate":ev.datum_start+(ev.uhrzeit_start?'T'+ev.uhrzeit_start:''),
+    "endDate":ev.datum_ende||ev.datum_start,
+    "eventStatus":"https://schema.org/EventScheduled",
+    "eventAttendanceMode":"https://schema.org/OfflineEventAttendanceMode",
+    "inLanguage":"de-CH","isAccessibleForFree":ev.eintritt_typ==='kostenlos',
+    "location":{"@type":"Place","name":ev.venue_name||'Zürich',
+      "address":{"@type":"PostalAddress","streetAddress":ev.adresse||'','postalCode':ev.plz||'','addressLocality':"Zürich","addressCountry":"CH"}},
+    "organizer":{"@type":"Organization","name":"Stadtpuls","url":"https://depuls.ch"},
+    "image":ev.bild_url||'https://depuls.ch/og-events.jpg',
+    "offers":{"@type":"Offer","price":ev.eintritt_typ==='kostenlos'?'0':'',"priceCurrency":"CHF",
+      "availability":"https://schema.org/InStock","url":ev.ticket_url||evUrl}
+  };
+  let schemaTag=document.getElementById('event-schema');
+  if(!schemaTag){schemaTag=document.createElement('script');schemaTag.id='event-schema';schemaTag.type='application/ld+json';document.head.appendChild(schemaTag);}
+  schemaTag.textContent=JSON.stringify(schema);
+
+  const kc=KC[k]?' '+KC[k]:'';
+  const roadmapBox=`
+    <div class="roadmap-box">
+      <div class="roadmap-lab">🔮 KUNTIG — SCHO IN ARBEIT</div>
+      <div class="roadmap-item"><span class="roadmap-ico">🎯</span><div><strong>Für dich empfohlen</strong>KI lernt dini Vorliebe automatisch</div></div>
+      <div class="roadmap-item"><span class="roadmap-ico">👥</span><div><strong>Wer geit no?</strong>Sieh wer scho gmerkt het, find Kreis-Fründe</div></div>
+      ${showDates?`<div class="roadmap-item"><span class="roadmap-ico">💘</span><div><strong>People & Dates</strong>Fürs Kennelerne <a href="/dating.html" style="color:#c084fc">→ jetzt scho da</a></div></div>`:''}
+    </div>`;
+
+  document.getElementById('page').innerHTML=`
+  <div class="hero-wrap">
+    ${ev.bild_url
+      ?`<img class="hero-img" src="${ev.bild_url}" alt="${ev.titel}" onerror="this.outerHTML='<div class=hero-ph>${em}</div>'">`
+      :`<div class="hero-ph">${em}</div>`}
+    ${isLive?`<div class="live-badge"><div class="live-dot"></div><div class="live-txt">LÄUFT GRAD JETZT</div></div>`:''}
+  </div>
+
+  <div class="profil-header">
+    <div class="ph-top">
+      ${_cd?`<span class="ph-cd">⏳ ${_cd}</span>`:''}
+      <span class="typ-badge${kc}">${em} ${KN[k]}</span>
+      ${isG?'<span class="typ-badge volt">GRATIS</span>':''}
+      ${ev.popup?'<span class="typ-badge ghost">POP-UP</span>':''}
+      ${showDates?'<span class="typ-badge pink">💘 DATES</span>':''}
+      <span class="ph-addr">📅 ${dateStr} · ⏰ ${h} Uhr</span>
+    </div>
+    <div class="profil-name">${ev.titel}</div>
+    ${ev.venue_name?`<div class="profil-subname">${ev.venue_name}</div>`:''}
+    <div class="ph-addr" id="eng-bar" style="margin-top:-8px;margin-bottom:20px"></div>
+  </div>
+
+  <div class="content-grid">
+    <div>
+      ${ev.beschreibung?`
+      <div class="profil-desc">${ev.beschreibung}</div>`:''}
+
+      <div class="section-title">LOCATION</div>
+      <div class="map-box" id="map-wrap">
+        <div id="map-leaflet"></div>
+        <button class="map-cta" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent((ev.adresse||'')+' '+(ev.venue_name||'')+(ev.plz?' '+ev.plz:'')+('+Zürich'))}','_blank')">📍 ROUTE ÖFFNE</button>
+      </div>
+      <div class="map-addr">${ev.venue_name||''}${ev.adresse?' · '+ev.adresse:''}${ev.plz?' · '+ev.plz:''}</div>
+
+      <div class="section-title" style="margin-top:28px">BEWERTIGE</div>
+      <div class="empty-box">
+        <div class="empty-box-txt">No kei Bewertige da</div>
+        <div class="empty-box-sub">Bisch du gsi? Schriib die erschti Bewertig.</div>
+        <button class="wr-btn" onclick="if(!window.spBookmarkToggle||!confirm('Zum Bewerte muesch aagmäldet sii. Jetzt aamälde?'))return;location.href='login.html'">✍️ BEWERTUNG SCHRIIBE — LOGIN NÖTIG</button>
+      </div>
+
+      ${venueEvs.length?`
+      <div class="section-title" style="margin-top:28px;color:#c8ff00">WIITERI EVENTS IM «${ev.venue_name}»</div>
+      <div class="similar-grid" style="margin-bottom:8px">
+        ${venueEvs.map(s=>{
+          const sk=gk(s);const sh=uhr(s.uhrzeit_start);const sd=new Date(s.datum_start+'T12:00:00');
+          return`<a href="${spEventPath(s.ef_id||s.id)}" class="sim-card">
+            ${s.bild_url?`<img class="sim-img" src="${s.bild_url}" alt="${s.titel}" onerror="this.outerHTML='<div class=sim-ph>${KE[sk]}</div>'">`:`<div class="sim-ph">${KE[sk]}</div>`}
+            <div class="sim-name">${s.titel}</div>
+            <div class="sim-sub">${sh} UHR</div>
+            <div class="sim-kreis">${DAYS[sd.getDay()]} · ${sd.getDate()}. ${MONTHS[sd.getMonth()]}</div>
+          </a>`;
+        }).join('')}
+      </div>`:''}
+    </div>
+
+    <div>
+      <div class="details-box">
+        <div class="db-title">DETAILS</div>
+        <div class="db-row"><div class="db-lbl">Datum</div><div class="db-val">${dateStr}</div></div>
+        <div class="db-row"><div class="db-lbl">Uhrzeit</div><div class="db-val">${h} Uhr</div></div>
+        ${ev.venue_name?`<div class="db-row"><div class="db-lbl">Ort</div><div class="db-val">${ev.venue_name}</div></div>`:''}
+        ${ev.adresse?`<div class="db-row"><div class="db-lbl">Adresse</div><div class="db-val">${ev.adresse}</div></div>`:''}
+        ${ev.kreis?`<div class="db-row"><div class="db-lbl">Kreis</div><div class="db-val">Kreis ${ev.kreis}</div></div>`:''}
+        <div class="db-row"><div class="db-lbl">Eintritt</div><div class="db-val${isG?' volt':''}">${isG?'KOSTENLOS':'KOSTENPFLICHTIG'}</div></div>
+
+        <div style="padding:16px 20px 0">
+          ${ev.ticket_url&&!isG
+            ?`<div class="res-box" style="margin-bottom:0"><div class="rb-top"><span class="rb-badge">TICKET</span><span class="rb-title">JETZT SICHERE</span></div><a class="btn-res" href="${ev.ticket_url}" target="_blank">🎟 TICKET KAUFE →</a></div>`
+            :isG?`<div class="res-box gratis" style="margin-bottom:0"><div class="rb-top"><span class="rb-badge">GRATIS</span><span class="rb-title">KEI TICKET NÖTIG</span></div><div class="rb-sub">Eifach cho — kei Aamäldig erforderlich</div></div>`:''}
+        </div>
+
+        <div class="action-grid">
+          <button class="act-btn" id="bm-btn" onclick="toggleBm()">🤍 MERKE</button>
+          <button class="act-btn" onclick="downloadICS()">📅 KALENDER</button>
+          <button class="act-btn" onclick="navigator.share?navigator.share({title:'${ev.titel.replace(/'/g,'').substring(0,40)}',url:location.href}):navigator.clipboard&&navigator.clipboard.writeText(location.href)">↗ TEILE</button>
+          <button class="act-btn" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent(ev.adresse||ev.venue_name||'Zürich')}','_blank')">📍 ROUTE</button>
+        </div>
+
+        ${roadmapBox}
+      </div>
+    </div>
+  </div>
+
+  ${similar.length?`
+  <div class="similar-section">
+    <div class="section-title">ÄHNLICHI EVENTS</div>
+    <div class="similar-grid">
+      ${similar.map(s=>{
+        const sk=gk(s);const sh=uhr(s.uhrzeit_start);const sd=new Date(s.datum_start+'T12:00:00');
+        return`<a href="${spEventPath(s.ef_id||s.id)}" class="sim-card">
+          ${s.bild_url?`<img class="sim-img" src="${s.bild_url}" alt="${s.titel}" onerror="this.outerHTML='<div class=sim-ph>${KE[sk]}</div>'">`:`<div class="sim-ph">${KE[sk]}</div>`}
+          <div class="sim-name">${s.titel}</div>
+          <div class="sim-sub">${KN[sk]}</div>
+          <div class="sim-kreis">${DAYS[sd.getDay()]} · ${sd.getDate()}. ${MONTHS[sd.getMonth()]} · ${sh} Uhr</div>
+        </a>`;
+      }).join('')}
+    </div>
+  </div>`:''}
+  `;
+
+  setTimeout(()=>initMap(ev), 100);
+}
+
+async function initMap(ev){
+  if(!window.L){
+    const s=document.createElement('script');
+    s.src='https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+    document.head.appendChild(s);
+    await new Promise(r=>s.onload=r);
+  }
+
+  const mapEl=document.getElementById('map-leaflet');
+  if(!mapEl||mapEl._leaflet_id)return;
+
+  let lat=47.3769,lng=8.5417,zoom=13;
+  let locationData=null;
+
+  if(ev.venue_name){
+    try{
+      const vname=ev.venue_name.split(' ').slice(0,3).join(' ');
+      const r=await fetch(
+        SU+'/rest/v1/locations?name=ilike.*'+encodeURIComponent(vname)+'*&select=name,lat,lng,adresse,plz,kreis&limit=1',
+        {headers:{'apikey':SK,'Authorization':'Bearer '+SK}}
+      );
+      const data=await r.json();
+      if(data.length&&data[0].lat&&data[0].lng){
+        lat=data[0].lat;lng=data[0].lng;zoom=17;locationData=data[0];
+      }
+    }catch(e){}
+  }
+
+  if(!locationData&&ev.plz){
+    const plzMap={
+      '8001':[47.3741,8.5415],'8002':[47.3658,8.5335],'8003':[47.3742,8.5233],
+      '8004':[47.3793,8.5202],'8005':[47.3883,8.5234],'8006':[47.3863,8.5450],
+      '8008':[47.3577,8.5625],'8032':[47.3530,8.5590],'8044':[47.3695,8.5620],
+      '8047':[47.3705,8.4975],'8048':[47.3838,8.4911],'8050':[47.4068,8.5483],
+      '8051':[47.4030,8.5734],'8052':[47.4099,8.5698],'8053':[47.3456,8.5778],
+      '8055':[47.3629,8.5057],'8057':[47.4007,8.5437],'8064':[47.3965,8.5169]
+    };
+    const coords=plzMap[ev.plz];
+    if(coords){lat=coords[0];lng=coords[1];zoom=15;}
+  }
+
+  if(!locationData&&ev.venue_name&&zoom===13){
+    try{
+      const q=[ev.venue_name,ev.plz,'Zürich'].filter(Boolean).join(', ');
+      const r=await fetch('https://nominatim.openstreetmap.org/search?format=json&limit=1&q='+encodeURIComponent(q));
+      const data=await r.json();
+      if(data.length){lat=parseFloat(data[0].lat);lng=parseFloat(data[0].lon);zoom=16;}
+    }catch(e){}
+  }
+
+  const map=L.map('map-leaflet',{zoomControl:true,scrollWheelZoom:false,attributionControl:false}).setView([lat,lng],zoom);
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{maxZoom:19}).addTo(map);
+
+  const icon=L.divIcon({
+    html:'<div style="width:16px;height:16px;background:#ff2d00;border:3px solid #fff;border-radius:50%;box-shadow:0 0 12px rgba(255,45,0,.7)"></div>',
+    iconSize:[16,16],iconAnchor:[8,8],className:''
+  });
+
+  const addrLine=locationData?.adresse||ev.adresse||'';
+  const plzLine=locationData?.plz||ev.plz||'';
+  const kreisLine=locationData?.kreis?'Kreis '+locationData.kreis:ev.kreis?'Kreis '+ev.kreis:'';
+
+  L.marker([lat,lng],{icon}).addTo(map)
+    .bindPopup(L.popup({className:'dp'}).setContent(
+      `<div style="background:#04040a;border:1px solid #1a1a2e;padding:12px 16px;font-family:'DM Mono',monospace;min-width:180px">
+        <div style="font-size:11px;color:#e8e4d9;margin-bottom:6px">${ev.venue_name||'Zürich'}</div>
+        ${addrLine?`<div style="font-size:8px;color:#999">${addrLine}</div>`:''}
+        ${plzLine?`<div style="font-size:8px;color:#999">${plzLine} Zürich</div>`:''}
+        ${kreisLine?`<div style="font-size:7px;color:#ff2d00;margin-top:4px;letter-spacing:1px">${kreisLine}</div>`:''}
+        ${locationData?'<div style="font-size:6px;color:#999;margin-top:6px;letter-spacing:1px">✓ STADTPULS VERIFIED</div>':'<div style="font-size:6px;color:#999;margin-top:6px;letter-spacing:1px">~ UNGEFÄHRE POSITION</div>'}
+      </div>`
+    ));
+
+  const st=document.createElement('style');
+  st.textContent='.dp .leaflet-popup-content-wrapper{background:#04040a;border:1px solid #1a1a2e;border-radius:0;box-shadow:none;padding:0}.dp .leaflet-popup-tip{background:#04040a}.dp .leaflet-popup-content{margin:0}';
+  document.head.appendChild(st);
+}
+
+function showErr(msg){
+  document.getElementById('page').innerHTML=`
+    <div class="error-wrap">
+      <div class="error-title">404</div>
+      <div class="error-sub">${msg}</div>
+      <a class="error-back" href="/events.html">← ZRUGG ZU DE EVENTS</a>
+    </div>`;
+}
+
+load();
+</script>
+
+
+<!-- FOOTER — EXAKT WIE DEPULS.CH ORIGINAL -->
+<style>
+footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
+.ftk{background:rgba(255,45,0,.06);padding:.4rem 0;overflow:hidden;white-space:nowrap;border-bottom:1px solid rgba(255,45,0,.1)}
+.fti{display:inline-block;animation:tkr 22s linear infinite}
+.fti span{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;color:rgba(255,45,0,.45);text-transform:uppercase;margin:0 2rem}
+@keyframes tkr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;max-width:1320px;margin:0 auto;padding:2.5rem 1.5rem 2rem}
+@media(max-width:768px){.fg{grid-template-columns:1fr 1fr;padding:2rem 1.5rem}.footer-brand{grid-column:span 2}}
+.fbl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:1.6rem;letter-spacing:.1em;display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;color:#e8e4d9}
+.fbdot{width:8px;height:8px;background:#ff2d00;border-radius:50%;box-shadow:0 0 8px #ff2d00;flex-shrink:0}
+.footer-brand p{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(232,228,217,0.4);line-height:1.9;max-width:280px}
+.fc h5{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:#ff2d00;margin-bottom:1rem;font-weight:500}
+.fc ul{list-style:none;margin:0;padding:0}
+.fc li{font-family:'DM Mono',monospace;font-size:.75rem;margin-bottom:.6rem}
+.fc li a{color:rgba(232,228,217,0.45);text-decoration:none;cursor:pointer;transition:color .2s}
+.fc li a:hover{color:#e8e4d9}
+.fbot{max-width:1320px;margin:0 auto;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.05)}
+.fbot p{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;margin:0}
+</style>
+<footer>
+  <div class="ftk">
+    <div class="fti">
+      <span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span><span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span>
+    </div>
+  </div>
+  <div class="fg">
+    <div class="footer-brand"><div class="fbl"><div class="fbdot"></div>STADTPULS</div><p>dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.<br><br>© 2026 by raimondo* — Zürich</p></div>
+    <div class="fc">
+      <h5>Entdecken</h5>
+      <ul>
+        <li><a href="/gastro.html">Gastro & Bars</a></li>
+        <li><a href="/nachtleben.html">Nachtleben</a></li>
+        <li><a href="/shopping.html">Shopping</a></li>
+        <li><a href="/events.html">Events</a></li>
+        <li><a href="/quartiere.html">Quartiere</a></li>
+        <li><a href="/musik.html">Musik & Sound</a></li>
+        <li><a href="/mobilitaet.html">Mobilität</a></li>
+        <li><a href="/kultur.html">Kultur</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h5>Community</h5>
+      <ul>
+        <li><a href="/community.html">Feed & Posts</a></li>
+        <li><a href="/dating.html">People & Dates</a></li>
+        <li><a href="/jobs.html">Jobs Züri</a></li>
+        <li><a href="/news.html">News & Stories</a></li>
+        <li><a href="/gps.html">GPS — Wo bisch du?</a></li>
+        <li><a href="/partners.html">Kooperatione</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h5>Mitmache</h5>
+      <ul>
+        <li><a href="/login.html">Einlogge</a></li>
+        <li><a href="/login.html">Profil aalege</a></li>
+        <li><a href="/community.html">Blogger werde</a></li>
+        <li><a href="/immobilien.html">Inserat schalte</a></li>
+        <li><a href="/partners.html">Partner werde</a></li>
+        <li><a href="/kontakt.html">Kontakt</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <p>© 2026 depuls.ch — by raimondo* — Zürich</p>
+    <p style="display:flex;gap:14px"><span>AGB</span> · <a href="/datenschutz.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Datenschutz</a> · <a href="/impressum.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Impressum</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
