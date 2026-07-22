@@ -592,7 +592,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
     var liveTag=document.getElementById('kuLiveTag');
     if(liveTag)liveTag.style.display=(st.counts[cat.key]||0)>0?'':'none';
     var cta=document.getElementById('kuCta'),route=document.getElementById('kuRoute');
-    if(cta){cta.textContent='ALLI '+(st.counts[cat.key]||0)+' '+cat.label+' AASCHAUE →';cta.style.background=cat.c;cta.style.color='#04040a';cta.onclick=function(){location.href=CATPAGE[cat.key]||'index.html';};}
+    if(cta){cta.textContent='ALLI '+(st.counts[cat.key]||0)+' '+cat.label+' AASCHAUE →';cta.style.background=cat.c;cta.style.color='#04040a';cta.onclick=function(){location.href=(CATPAGE[cat.key]||'index.html')+'?kreis='+st.kreis;}; // SP_KU_CTA_KREIS v1}
     if(route)route.textContent='Kreis '+st.kreis+' · '+kreisName(st.kreis);
     try{
       var url=SU+'/rest/v1/'+cat.table+'?'+cat.flt+'&kreis=eq.'+st.kreis+'&limit=6';
