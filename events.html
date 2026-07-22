@@ -691,6 +691,7 @@ function fd(ds){
 }
 
 /* ── LOAD ── */
+let aK=null; // SP_KREIS_FIX v1: aktiver Kreis-Filter
 async function load(){
   try{
     // SP_PERF v1: schlanki Spalte + 28-Täg-Fänschter (statt alles) — Fallback uf die alti Query
@@ -700,6 +701,15 @@ async function load(){
     A=(await r.json()).map(e=>({...e,_k:gk(e)}));
     A.sort((a,b)=>spTier(b)-spTier(a)||String(a.datum_start||'').localeCompare(String(b.datum_start||''))||String(a.uhrzeit_start||'').localeCompare(String(b.uhrzeit_start||''))); // SP_BOOST
     bStats();bTicker();bKreis();buildDateTabs();render();
+    // SP_KREIS_FIX v1: ?kreis= aus URL uebernehmen (z.B. vom Kreis-Universum auf der Startseite)
+    try{
+      const _k=parseInt(new URLSearchParams(location.search).get('kreis'),10);
+      if(_k>=1&&_k<=12){
+        aK=_k;
+        bKreis();
+        render();
+      }
+    }catch(_e){}
     /* SP_PERF v3: Beschreibige im Hintergrund nachlade (Suech + Detail bruuched sie) */
     (async()=>{try{
       const r3=await fetch(SU+'/rest/v1/eventfrog_events?select=id,beschreibung&aktiv=eq.true&datum_start=gte.'+td()+'&datum_start=lte.'+_end+'&limit=1500',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=none'}});
@@ -729,6 +739,7 @@ function bTicker(){
   document.getElementById('tki').innerHTML=h+h;
 }
 
+/* SP_KREIS_FIX v1: Kreis-Leiste ist jetzt ein echter, klickbarer Filter */
 function bKreis(){
   const kreise=[1,2,3,4,5,6,7,8,9,10,11,12];
   const counts=kreise.map(k=>({k,n:A.filter(e=>e.datum_start===td()&&e.kreis===k).length}));
@@ -738,12 +749,19 @@ function bKreis(){
   strip.innerHTML=counts.map(({k,n})=>{
     const pct=Math.round(n/max*100);
     const isTop=k===topK&&n>0;
-    return`<div class="ks-item${isTop?' top':''}">
+    const isOn=aK===k;
+    return`<div class="ks-item${isTop?' top':''}${isOn?' on':''}" style="cursor:pointer" onclick="setK(${k},this)">
       <span class="ks-label">K${k}</span>
       <div class="ks-bar"><div class="ks-fill" style="width:${pct}%"></div></div>
       <span class="ks-count">${n||''}</span>
     </div>`;
   }).join('');
+}
+function setK(k,el){
+  aK=(aK===k?null:k);
+  document.querySelectorAll('.ks-item').forEach(b=>b.classList.remove('on'));
+  if(aK&&el)el.classList.add('on');
+  render();
 }
 
 function buildDateTabs(){
@@ -780,6 +798,7 @@ function sf(f,el){
 /* ── RENDER TIMELINE ── */
 function render(){
   let evs=A;
+  if(aK)evs=evs.filter(e=>e.kreis===aK); // SP_KREIS_FIX v1
   if(aD)evs=evs.filter(e=>e.datum_start===aD);
   if(aF==='gratis')evs=evs.filter(e=>e.eintritt_typ==='kostenlos');
   else if(aF==='popup')evs=evs.filter(e=>e.popup);

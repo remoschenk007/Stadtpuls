@@ -1065,6 +1065,14 @@ async function loadAllLocations(){
 // ═══════════════════════════════════════════
 // FILTER LOGIC
 // ═══════════════════════════════════════════
+/* SP_KREIS_FIX v1: fehlende setKreis()-Funktion ergaenzt (Buttons + URL-Hook gab es schon) */
+function setKreis(btn,val){
+  S.kreis=val;
+  document.querySelectorAll('.kr-btn').forEach(function(b){b.classList.remove('on');});
+  if(btn)btn.classList.add('on');
+  buildGrid();
+}
+
 function getFiltered(){
   return allLocs.filter(l=>{
     const klass=l._klass||classifyKultur(l);

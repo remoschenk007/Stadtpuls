@@ -1283,6 +1283,27 @@ async function loadAllLocations(){
 // ═══════════════════════════════════════════
 // FILTER LOGIC — KOMPLETT GEFIXT
 // ═══════════════════════════════════════════
+/* SP_KREIS_FIX v1: fehlende setKreis()-Funktion + ?kreis=URL-Uebernahme ergaenzt */
+function setKreis(btn,val){
+  S.kreis=val;
+  document.querySelectorAll('.kr-btn').forEach(function(b){b.classList.remove('on');});
+  if(btn)btn.classList.add('on');
+  buildGrid();
+}
+(function(){
+  var _k=parseInt(new URLSearchParams(location.search).get('kreis'),10);
+  if(!(_k>=1&&_k<=12))return;
+  var tries=0;
+  var iv=setInterval(function(){
+    tries++;
+    if(typeof allLocs!=='undefined'&&allLocs.length>0){
+      clearInterval(iv);
+      var _btn=[].slice.call(document.querySelectorAll('.kr-btn')).find(function(b){return (b.getAttribute('onclick')||'').indexOf('setKreis(this,'+_k+')')!==-1;});
+      setKreis(_btn||null,_k);
+    } else if(tries>40){clearInterval(iv);}
+  },250);
+})();
+
 function getFiltered(){
   return allLocs.filter(l=>{
     const sid=parseInt(l.zt_subkategorie_id)||0;
