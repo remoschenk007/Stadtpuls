@@ -459,7 +459,7 @@ function render(ev,similar,venueEvs=[]){
 
       <div class="section-title">LOCATION</div>
       <div class="map-box" id="map-wrap">
-        <iframe src="https://www.google.com/maps?q=${encodeURIComponent((ev.adresse||ev.venue_name||'Zürich')+(ev.plz?' '+ev.plz:'')+' Zürich')}&output=embed&z=16&hl=de" width="100%" height="260" style="border:0;display:block;opacity:.85;mix-blend-mode:luminosity" loading="lazy" allowfullscreen></iframe>
+        <iframe src="https://www.google.com/maps?q=${encodeURIComponent((ev.adresse||ev.venue_name||'Zürich')+(ev.plz?' '+ev.plz:'')+' Zürich')}&output=embed&z=16&hl=de" width="100%" height="260" style="border:0;display:block" data-sp-map-match="v2" loading="lazy" allowfullscreen></iframe>
         <button class="map-cta" onclick="window.open('https://maps.google.com/?q=${encodeURIComponent((ev.adresse||'')+' '+(ev.venue_name||'')+(ev.plz?' '+ev.plz:'')+('+Zürich'))}','_blank')">📍 ROUTE ÖFFNE</button>
       </div>
       <div class="map-addr">${ev.venue_name||''}${ev.adresse?' · '+ev.adresse:''}${ev.plz?' · '+ev.plz:''}</div>
