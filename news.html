@@ -35,19 +35,23 @@
 <style>
   *{margin:0;padding:0;box-sizing:border-box}
   :root{--bg:#04040a;--rot:#ff2d00;--volt:#c8ff00;--cyan:#00f5ff;--purple:#9333ea;--pink:#ec4899;--cream:#e8e4d9;--amber:#ffb400}
-  body{background:var(--bg);color:var(--cream);font-family:'DM Mono',monospace;overflow-x:hidden;background-image:radial-gradient(circle at 20% 0%,rgba(200,255,0,.06),transparent 40%),radial-gradient(circle at 90% 20%,rgba(255,45,0,.07),transparent 45%)}
+  body{background:var(--bg);color:var(--cream);font-family:'DM Mono',monospace;overflow-x:hidden;padding-top:47px;background-image:radial-gradient(circle at 20% 0%,rgba(200,255,0,.06),transparent 40%),radial-gradient(circle at 90% 20%,rgba(255,45,0,.07),transparent 45%)}
   a{color:inherit}
   .wrap{max-width:1200px;margin:0 auto;padding:0 22px}
   h1,h2,h3,.disp{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;text-transform:uppercase;letter-spacing:-.5px;line-height:.92}
   .mono-label{font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:3px;font-size:11px;color:#8a8a8a}
-  nav{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid rgba(255,255,255,.06);position:sticky;top:0;background:rgba(4,4,10,.82);backdrop-filter:blur(12px);z-index:50}
-  .logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;letter-spacing:1px;color:var(--cream);display:flex;align-items:center;gap:9px;text-decoration:none}
-  .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--rot);box-shadow:0 0 10px var(--rot)}
-  .nav-links{display:flex;gap:24px;font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#9a9a9a}
-  .nav-links a{color:inherit;text-decoration:none;transition:color .2s}
-  .nav-links a:hover{color:var(--cream)} .nav-links a.active{color:var(--volt)}
-  .cta-nav{background:var(--rot);color:#fff;font-family:'Barlow Condensed';font-style:italic;font-weight:900;font-size:15px;letter-spacing:1px;padding:9px 18px;border:none;border-radius:4px;text-transform:uppercase;cursor:pointer;text-decoration:none}
-  @media(max-width:900px){.nav-links{display:none}}
+  /* ── Original Stadtpuls-Nav (1:1 us index.html) ── */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;background:rgba(0,0,0,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,45,0,0.15)}
+  .nav-logo{padding:14px 20px;border-right:1px solid rgba(255,45,0,0.1);display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+  .logo-txt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:4px;font-size:19px;color:#e8e4d9}
+  .ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite;flex-shrink:0}
+  @keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,0.7)}50%{box-shadow:0 0 0 6px rgba(255,45,0,0)}}
+  .nav-links{display:flex;flex:1;overflow-x:auto;scrollbar-width:none}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-link{padding:14px 16px;font-size:9px;letter-spacing:3px;color:rgba(232,228,217,0.3);text-decoration:none;text-transform:uppercase;white-space:nowrap;transition:color .2s;border-right:1px solid rgba(255,45,0,0.06)}
+  .nav-link:hover{color:#e8e4d9}
+  .nav-link.active{color:#ff2d00}
+  .nav-cta{padding:10px 18px;margin:8px 14px;background:#ff2d00;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:2px;text-transform:uppercase;border:none;cursor:pointer;border-radius:2px;white-space:nowrap;flex-shrink:0;text-decoration:none;display:flex;align-items:center}
   header.hero{padding:54px 0 26px}
   .hero .tag{color:var(--volt);letter-spacing:4px;font-size:12px;margin-bottom:14px}
   .hero h1{font-size:clamp(52px,9vw,104px);color:var(--cream)} .hero h1 .g{color:var(--volt)}
@@ -138,25 +142,42 @@
   .writeband p{font-size:13px;color:#b9b6ac;margin-top:8px;max-width:440px;line-height:1.5}
   .writeband a.wb{background:var(--volt);color:#04040a;font-family:'Barlow Condensed';font-style:italic;font-weight:900;font-size:20px;letter-spacing:1px;text-transform:uppercase;border:none;border-radius:8px;padding:16px 30px;cursor:pointer;white-space:nowrap;text-decoration:none}
   .fyi{display:inline-block;font-size:10px;letter-spacing:2px;color:var(--rot);text-transform:uppercase;margin-bottom:10px}
-  footer{border-top:1px solid rgba(255,255,255,.06);padding:44px 0 60px;margin-top:20px}
-  .fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:26px}
-  .fbrand .logo{margin-bottom:12px} .fbrand p{font-size:12px;color:#7a7a7a;line-height:1.6;max-width:280px}
-  footer h4{font-family:'Barlow Condensed';font-style:italic;font-weight:900;font-size:15px;text-transform:uppercase;color:#9a9a9a;letter-spacing:1px;margin-bottom:12px}
-  footer ul{list-style:none} footer li{margin-bottom:7px}
-  footer li a{color:#8a8a8a;text-decoration:none;font-size:12px} footer li a:hover{color:var(--cream)}
-  .fbar{display:flex;justify-content:space-between;align-items:center;margin-top:34px;padding-top:20px;border-top:1px solid rgba(255,255,255,.06);flex-wrap:wrap;gap:10px;font-size:11px;color:#5a5a5a}
-  @media(max-width:820px){.fgrid{grid-template-columns:1fr 1fr}}
+  /* ── Original Stadtpuls-Footer (1:1 us index.html) ── */
+  footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
+  .ftk{background:rgba(255,45,0,.06);padding:.4rem 0;overflow:hidden;white-space:nowrap;border-bottom:1px solid rgba(255,45,0,.1)}
+  .fti{display:inline-block;animation:tkr 22s linear infinite}
+  .fti span{font-family:'DM Mono',monospace;font-size:.58rem;letter-spacing:.14em;color:rgba(255,45,0,.45);text-transform:uppercase;margin:0 2rem}
+  @keyframes tkr{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .fg{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2rem;max-width:1320px;margin:0 auto;padding:2.5rem 1.5rem 2rem}
+  @media(max-width:768px){.fg{grid-template-columns:1fr 1fr;padding:2rem 1.5rem}.footer-brand{grid-column:span 2}}
+  .fbl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:1.6rem;letter-spacing:.1em;display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;color:#e8e4d9}
+  .fbdot{width:8px;height:8px;background:#ff2d00;border-radius:50%;box-shadow:0 0 8px #ff2d00;flex-shrink:0}
+  .footer-brand p{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(232,228,217,0.4);line-height:1.9;max-width:280px}
+  .fc h5{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:#ff2d00;margin-bottom:1rem;font-weight:500}
+  .fc ul{list-style:none;margin:0;padding:0}
+  .fc li{font-family:'DM Mono',monospace;font-size:.75rem;margin-bottom:.6rem}
+  .fc li a{color:rgba(232,228,217,0.45);text-decoration:none;cursor:pointer;transition:color .2s}
+  .fc li a:hover{color:#e8e4d9}
+  .fbot{max-width:1320px;margin:0 auto;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.05)}
+  .fbot p{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;margin:0}
 </style>
 </head>
 <body>
+<script src="/location-links.js"></script>
 
-<nav>
-  <a href="/index.html" class="logo"><span class="dot"></span>STADTPULS</a>
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><div class="ldot"></div><span class="logo-txt">STADTPULS</span></a>
   <div class="nav-links">
-    <a href="/gastro.html">Gastro</a><a href="/kultur.html">Kultur</a><a href="/nachtleben.html">Nachtlebe</a>
-    <a href="/events.html">Events</a><a href="/shopping.html">Shopping</a><a href="/news.html" class="active">News</a><a href="/dating.html">Dates</a>
+    <a href="gastro.html" class="nav-link">GASTRO</a>
+    <a href="/kultur.html" class="nav-link">KULTUR</a>
+    <a href="nachtleben.html" class="nav-link">NACHTLEBE</a>
+    <a href="events.html" class="nav-link">EVENTS</a>
+    <a href="shopping.html" class="nav-link">SHOPPING</a>
+    <a href="news.html" class="nav-link active">NEWS</a>
+    <a href="dating.html" class="nav-link">DATES</a>
   </div>
-  <a href="/login.html" class="cta-nav">Mitmache</a>
+  <a href="login.html" class="nav-cta">MITMACHE</a>
+<button class="sp-nav-burger" onclick="spNavToggle()" aria-label="Menü"><span></span><span></span><span></span></button>
 </nav>
 
 <div class="wrap">
@@ -211,32 +232,52 @@
 </div>
 
 <footer>
-  <div class="wrap">
-    <div class="fgrid">
-      <div class="fbrand">
-        <a href="/index.html" class="logo"><span class="dot"></span>STADTPULS</a>
-        <p>Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Dä Puls vo dä Stadt.<br>© 2026 by raimondo* — Zürich</p>
-      </div>
-      <div><h4>Entdecke</h4><ul>
-        <li><a href="/gastro.html">Gastro & Bars</a></li><li><a href="/nachtleben.html">Nachtleben</a></li>
-        <li><a href="/shopping.html">Shopping</a></li><li><a href="/events.html">Events</a></li>
-        <li><a href="/kultur.html">Kultur</a></li><li><a href="/quartiere.html">Quartiere</a></li>
-      </ul></div>
-      <div><h4>Community</h4><ul>
-        <li><a href="/community.html">Feed & Posts</a></li><li><a href="/dating.html">People & Dates</a></li>
-        <li><a href="/jobs.html">Jobs Züri</a></li><li><a href="/news.html">News & Stories</a></li>
-        <li><a href="/gps.html">GPS-Radar</a></li><li><a href="/partners.html">Kooperatione</a></li>
-      </ul></div>
-      <div><h4>Mitmache</h4><ul>
-        <li><a href="/login.html">Einlogge</a></li><li><a href="/login.html">Profil aalege</a></li>
-        <li><a href="/community.html">Blogger werde</a></li><li><a href="/partners.html">Partner werde</a></li>
-        <li><a href="/kontakt.html">Kontakt</a></li>
-      </ul></div>
+  <div class="ftk">
+    <div class="fti">
+      <span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span><span>STADTPULS 2026</span><span>NEUE ÄRA</span><span>DÄ PULS VO DÄ STADT</span><span>ZÜRICH</span><span>LIFESTYLE & CITY GUIDE</span><span>SOCIAL MEDIA & MARKTPLATTFORM</span><span>DER VIRTUELLE SPIELPLATZ</span><span>by raimondo*</span>
     </div>
-    <div class="fbar">
-      <span>© 2026 depuls.ch — by raimondo* — Zürich</span>
-      <span><a href="/agb.html" style="text-decoration:none;color:inherit">AGB</a> · <a href="/datenschutz.html" style="text-decoration:none;color:inherit">Datenschutz</a> · <a href="/impressum.html" style="text-decoration:none;color:inherit">Impressum</a></span>
+  </div>
+  <div class="fg">
+    <div class="footer-brand"><div class="fbl"><div class="fbdot"></div>STADTPULS</div><p>dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.<br><br>© 2026 by raimondo* — Zürich</p></div>
+    <div class="fc">
+      <h5>Entdecken</h5>
+      <ul>
+        <li><a href="gastro.html">Gastro & Bars</a></li>
+        <li><a href="nachtleben.html">Nachtleben</a></li>
+        <li><a href="shopping.html">Shopping</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="quartiere.html">Quartiere</a></li>
+        <li><a href="musik.html">Musik & Sound</a></li>
+        <li><a href="mobilitaet.html">Mobilität</a></li>
+        <li><a href="/kultur.html">Kultur</a></li>
+      </ul>
     </div>
+    <div class="fc">
+      <h5>Community</h5>
+      <ul>
+        <li><a href="community.html">Feed & Posts</a></li>
+        <li><a href="dating.html">People & Dates</a></li>
+        <li><a href="jobs.html">Jobs Züri</a></li>
+        <li><a href="news.html">News & Stories</a></li>
+        <li><a href="gps.html">GPS — Wo bisch du?</a></li>
+        <li><a href="partners.html">Kooperatione</a></li>
+      </ul>
+    </div>
+    <div class="fc">
+      <h5>Mitmache</h5>
+      <ul>
+        <li><a href="login.html">Einlogge</a></li>
+        <li><a href="login.html">Profil aalege</a></li>
+        <li><a href="community.html">Blogger werde</a></li>
+        <li><a href="immobilien.html">Inserat schalte</a></li>
+        <li><a href="partners.html">Partner werde</a></li>
+        <li><a href="kontakt.html">Kontakt</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <p>© 2026 depuls.ch — by raimondo* — Zürich</p>
+    <p style="display:flex;gap:14px"><span>AGB</span> · <a href="datenschutz.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Datenschutz</a> · <a href="impressum.html" style="color:rgba(232,228,217,0.25);text-decoration:none">Impressum</a></p>
   </div>
 </footer>
 
