@@ -203,7 +203,7 @@
   </div>
 
   <section class="kreise">
-    <div class="sec-head"><h2>WÄHL DIN <span class="g">KREIS</span></h2><div class="mono-label">↓ tipp en Kreis, de Feed filtered sich</div></div>
+    <div class="sec-head"><h2>WÄHL DIN <span class="g">KREIS</span></h2><div class="mono-label">↓ tipp en Kreis → zu dinere Kreis-Syte</div></div>
     <div class="kreisgrid" id="kreisgrid"></div>
   </section>
 
@@ -353,7 +353,7 @@ const imgPlaceholder = s => {const col=(kObj(s.k)||{c:'#c8ff00'}).c;const svg=`<
 function renderKreise(){
   const g=document.getElementById('kreisgrid');
   let html=`<div class="kreis all ${activeKreis===0?'active':''}" style="--kc:var(--volt)" onclick="setKreis(0)"><div class="glow"></div><div class="num">◉</div><div class="nm">Alli Kreis</div><div class="cnt">${STORYS.length} Storys</div></div>`;
-  KREISE.forEach(k=>{const cnt=STORYS.filter(s=>s.k===k.n).length;html+=`<div class="kreis ${activeKreis===k.n?'active':''}" style="--kc:${k.c}" onclick="setKreis(${k.n})"><div class="glow"></div><div class="num">${k.n}</div><div class="nm">${k.name}</div><div class="cnt">${cnt} ${cnt===1?'Story':'Storys'}</div></div>`;});
+  KREISE.forEach(k=>{const cnt=STORYS.filter(s=>s.k===k.n).length;html+=`<a class="kreis" href="/kreis-${k.n}/news/" title="News Kreis ${k.n} Zürich – ${k.name}" style="--kc:${k.c};text-decoration:none;color:inherit"><div class="glow"></div><div class="num">${k.n}</div><div class="nm">${k.name}</div><div class="cnt">${cnt} ${cnt===1?'Story':'Storys'}</div></a>`;});
   g.innerHTML=html;
 }
 function renderCats(){document.getElementById('cats').innerHTML=CATS.map(c=>`<button class="chip ${activeCat===c?'on':''}" onclick="setCat('${c}')">${c}</button>`).join('')+`<span class="now-showing" id="ns"></span>`;}
