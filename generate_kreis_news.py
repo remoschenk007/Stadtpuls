@@ -267,6 +267,14 @@ import datetime
 def iso_date(o):
     v=o.get("published_at") or o.get("created_at") or o.get("datum")
     return str(v) if v else datetime.date.today().isoformat()
+def disp_date(o):
+    v=o.get("published_at") or o.get("created_at") or o.get("datum")
+    if not v:
+        t=datetime.date.today(); return f"{t.day}.{t.month}.{t.year}"
+    try:
+        y,m,d=str(v)[:10].split("-"); return f"{int(d)}.{int(m)}.{y}"
+    except Exception:
+        return str(v)
 
 STORY_HTML = r"""<!DOCTYPE html>
 <html lang="gsw-CH">
@@ -305,6 +313,13 @@ h1.art{font-size:clamp(34px,6vw,62px);color:var(--cream);margin-bottom:16px}
 .art-meta .live{color:var(--volt)}
 .hero-img{width:100%;border-radius:16px;margin-bottom:26px;border:1px solid rgba(255,255,255,.08)}
 .art-body p{font-size:15px;line-height:1.85;color:#cfccc3;margin-bottom:18px}
+.rx{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:26px 0 6px;padding:16px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
+.rx-btn{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#b7b4ab;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:10px 16px;cursor:pointer;transition:.15s}
+.rx-btn svg{width:16px;height:16px}
+button.rx-btn:hover{border-color:var(--kc);color:var(--cream)}
+.rx-like.liked{color:var(--kc);border-color:var(--kc)}
+.rx-like.liked svg{fill:var(--kc)}
+.rx-views{cursor:default}
 .entity-link{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:13px 22px;background:var(--kc);color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;border-radius:7px}
 .back-link{display:inline-block;margin:34px 0 10px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--kc);text-decoration:none;border:1px solid var(--kc);padding:11px 20px;border-radius:22px}
 footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1);margin-top:40px}
@@ -328,11 +343,44 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1);margin-top:40p
     <div class="art-meta"><span class="live">● LIVE</span><span>__KAT__</span><span>__AUTOR__</span><span>__DATE__</span></div>
     __IMG__
     <div class="art-body">__BODY__</div>
+    <div class="rx" data-sid="__SID__">
+      <button class="rx-btn rx-like" type="button" title="Like — nur iglogged"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg><span class="rx-likecount">0</span> Likes</button>
+      <span class="rx-btn rx-views"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg><span class="rx-viewcount">–</span> Views</span>
+      <button class="rx-btn rx-share" type="button" title="Teile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg> Teile</button>
+    </div>
     __LINK__
     <div><a class="back-link" href="/kreis-__K__/news/">← Zrugg zu de News vom Kreis __K__</a></div>
   </article>
 </div>
 <footer><div class="fbot"><span>© 2026 depuls.ch — by raimondo* — Zürich</span><span><a href="datenschutz.html">Datenschutz</a> · <a href="impressum.html">Impressum</a></span></div></footer>
+<script>
+(function(){
+  var SB='https://pnynkzrqnfoshojqfqxn.supabase.co';
+  var KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
+  var box=document.querySelector('.rx'); if(!box) return;
+  var sid=box.getAttribute('data-sid'); if(!sid) return;
+  var H={apikey:KEY,'Content-Type':'application/json'};
+  function sess(){try{for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf('-auth-token')>-1){var v=JSON.parse(localStorage.getItem(k))||{};var s=v.currentSession||v;var at=s.access_token;var uid=s.user&&s.user.id;if(at&&uid)return{token:at,uid:uid};}}}catch(e){}return null;}
+  var S=sess();
+  var likeBtn=box.querySelector('.rx-like'), lc=box.querySelector('.rx-likecount'), vc=box.querySelector('.rx-viewcount');
+  if(!localStorage.getItem('sv-'+sid)){fetch(SB+'/rest/v1/rpc/story_add_view',{method:'POST',headers:H,body:JSON.stringify({sid:sid})}).then(function(){localStorage.setItem('sv-'+sid,'1');}).catch(function(){});}
+  fetch(SB+'/rest/v1/news_stories?id=eq.'+sid+'&select=views',{headers:H}).then(function(r){return r.json();}).then(function(d){if(d&&d[0]!=null)vc.textContent=d[0].views||0;}).catch(function(){});
+  var liked=false;
+  function loadLikes(){fetch(SB+'/rest/v1/story_reactions?story_id=eq.'+sid+'&select=user_id',{headers:H}).then(function(r){return r.json();}).then(function(d){if(!Array.isArray(d))return;lc.textContent=d.length;if(S){liked=d.some(function(x){return x.user_id===S.uid;});likeBtn.classList.toggle('liked',liked);}}).catch(function(){});}
+  loadLikes();
+  likeBtn.addEventListener('click',function(){
+    if(!S){location.href='/login.html';return;}
+    var ah={apikey:KEY,'Content-Type':'application/json',Authorization:'Bearer '+S.token,Prefer:'return=minimal'};
+    if(liked){fetch(SB+'/rest/v1/story_reactions?story_id=eq.'+sid+'&user_id=eq.'+S.uid,{method:'DELETE',headers:ah}).then(loadLikes);}
+    else{fetch(SB+'/rest/v1/story_reactions',{method:'POST',headers:ah,body:JSON.stringify({story_id:sid,user_id:S.uid})}).then(loadLikes);}
+  });
+  box.querySelector('.rx-share').addEventListener('click',function(){
+    var u=location.href,t=document.title,b=this;
+    if(navigator.share){navigator.share({title:t,url:u}).catch(function(){});}
+    else if(navigator.clipboard){navigator.clipboard.writeText(u);var o=b.innerHTML;b.textContent='Link kopiert ✓';setTimeout(function(){b.innerHTML=o;},1800);}
+  });
+})();
+</script>
 </body>
 </html>"""
 
@@ -356,7 +404,7 @@ def story_page(k, o):
     link=""
     if o.get("link_label"):
         link=f'<a class="entity-link" href="{esc(o.get("link_url") or "#")}">{esc(o.get("link_label"))} →</a>'
-    tok={"__K__":str(k),"__NAME__":esc(name),"__COL__":d["c"],"__TITLE__":esc(f"{titel} | News Kreis {k} Zürich | Stadtpuls"),"__H1__":esc(titel),"__META_DESC__":esc((teaser or titel)[:155]),"__CANON__":canon,"__KAT__":esc(kat),"__AUTOR__":esc(autor),"__DATE__":esc(date),"__IMG__":imgtag,"__BODY__":body,"__LINK__":link,"__SCHEMA_NA__":json.dumps(na,ensure_ascii=False),"__SCHEMA_BC__":json.dumps(bc,ensure_ascii=False)}
+    tok={"__K__":str(k),"__NAME__":esc(name),"__COL__":d["c"],"__TITLE__":esc(f"{titel} | News Kreis {k} Zürich | Stadtpuls"),"__H1__":esc(titel),"__META_DESC__":esc((teaser or titel)[:155]),"__CANON__":canon,"__KAT__":esc(kat),"__AUTOR__":esc(autor),"__DATE__":esc(disp_date(o)),"__SID__":esc(o.get("id") or ""),"__IMG__":imgtag,"__BODY__":body,"__LINK__":link,"__SCHEMA_NA__":json.dumps(na,ensure_ascii=False),"__SCHEMA_BC__":json.dumps(bc,ensure_ascii=False)}
     out=STORY_HTML
     for t,v in tok.items(): out=out.replace(t,v)
     return out, slug
