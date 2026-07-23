@@ -275,6 +275,7 @@ document.addEventListener('DOMContentLoaded',function(){try{
 <div class="tabs" id="tabs">
   <div class="tab active" data-s="ov" onclick="tab('ov',this)">Übersicht</div>
   <div class="tab" data-s="mod" onclick="tab('mod',this)">Moderation <span class="cnt" id="t-mod">0</span></div>
+  <div class="tab" data-s="news" onclick="tab('news',this);loadNewsMod()">📰 News & Story <span class="cnt" id="t-news">0</span></div>
   <div class="tab" data-s="inbox" onclick="tab('inbox',this)">📥 Inbox <span class="cnt" id="t-inbox">0</span></div>
   <div class="tab" data-s="anf" onclick="tab('anf',this)">Anfragen <span class="cnt" id="t-anf">0</span></div>
   <div class="tab" data-s="verk" onclick="tab('verk',this)">Verkauf <span class="cnt" id="t-verk">0</span></div>
@@ -313,6 +314,17 @@ document.addEventListener('DOMContentLoaded',function(){try{
     </div>
     <div id="mod-list"><div class="loading">Lade…</div></div>
     <div id="momaent-live" style="margin-top:22px"></div>
+  </div>
+  <!-- NEWS & STORY (eigeni Moderation, getrennt vo Momänt) -->
+  <div class="section" id="s-news">
+    <div class="section-head bc">NEWS &amp; STORY <span class="badge">Community-Beiträg</span></div>
+    <div class="section-sub">Beiträg, wo User über s Dashboard iigriicht händ. Wartend = <b>pruefig</b>. Freischalte → <b>live</b> uf de Kreis-Syte. Ablehne → <b>gsperrt</b>.</div>
+    <div class="filterbar" id="news-filter">
+      <div class="chip active" data-f="pruefig" onclick="newsFilter('pruefig',this)">◷ Wartend</div>
+      <div class="chip" data-f="live" onclick="newsFilter('live',this)">✓ Live</div>
+      <div class="chip" data-f="gsperrt" onclick="newsFilter('gsperrt',this)">⛔ Gsperrt</div>
+    </div>
+    <div id="news-list"><div class="loading">Lade…</div></div>
   </div>
 
   <!-- ANFRAGEN -->
@@ -589,7 +601,6 @@ function vColor(v){return v==='bad'?'#ff2d00':v==='warn'?'#ffcc00':v==='ok'?'#c8
 async function loadModeration(){
   MOD=[];const src=[
     {tbl:'comments',q:'comments?status=eq.neu&order=created_at.desc&limit=100',map:r=>({id:r.id,table:'comments',srcLabel:'KOMMENTAR',src:'comment',text:r.text,autor:r.autor_name||r.user_id,user_id:r.user_id,created_at:r.created_at,ki_urteil:r.ki_urteil,ki_konf:r.ki_konfidenz,ki_grund:r.ki_grund})},
-    {tbl:'news_stories',q:'news_stories?status=eq.pending&order=created_at.desc&limit=100',map:r=>({id:r.id,table:'news_stories',srcLabel:'NEWS',src:'news',text:(r.titel?('»'+r.titel+'« '):'')+(r.inhalt||''),autor:r.user_id,user_id:r.user_id,created_at:r.created_at,ki_urteil:r.ki_urteil,ki_konf:r.ki_konfidenz,ki_grund:r.ki_grund})},
     {tbl:'inserate',q:'inserate?status=eq.pending&order=created_at.desc&limit=100',map:r=>({id:r.id,table:'inserate',srcLabel:'INSERAT',src:'inserat',text:(r.titel?('»'+r.titel+'« '):'')+(r.beschreibung||''),autor:r.user_id,user_id:r.user_id,created_at:r.created_at,ki_urteil:r.ki_urteil,ki_konf:r.ki_konfidenz,ki_grund:r.ki_grund})},
     {tbl:'feedback',q:'feedback?typ=eq.moment&status=eq.neu&order=created_at.desc&limit=100',map:r=>({id:r.id,table:'feedback',srcLabel:'◉ ZÜRI MOMÄNT',src:'moment',text:r.text,autor:'anonym',user_id:null,created_at:r.created_at,ki_urteil:r.ki_urteil,ki_konf:r.ki_konfidenz,ki_grund:r.ki_grund})}
   ];
@@ -614,7 +625,7 @@ function renderMod(){
       <div class="mrow-actions"><button class="btn btn-ok" onclick="modAct('${m.table}','${m.id}','frei')">${m.table==='feedback'?'◉ Uf d Startsite':'✓ Freischalten'}</button><button class="btn btn-no" onclick="modAct('${m.table}','${m.id}','ab')">Ablehnen</button>${m.user_id?`<button class="btn btn-block" onclick="modBlock('${m.table}','${m.id}','${esc(m.user_id||'')}','${esc((m.autor||'')+'')}','${m.src}')">⛔ User sperren</button>`:''}</div></div>`;
   }).join('');
 }
-const apV=t=>t==='comments'?'freigeschaltet':'approved',reV=t=>t==='comments'?'abgelehnt':'rejected';
+const apV=t=>t==='comments'?'freigeschaltet':t==='news_stories'?'live':'approved',reV=t=>t==='comments'?'abgelehnt':t==='news_stories'?'gsperrt':'rejected';
 async function modAct(t,id,w){const ok=await spatch(t,id,{status:w==='frei'?apV(t):reV(t)});if(ok){toast(w==='frei'?'Freigeschaltet':'Abgelehnt',w==='frei'?'ok':'');audit(w==='frei'?'freigeschaltet':'abgelehnt',t,id,'');rmMod(id);if(t==='feedback')loadMomaentLive();}else toast('Fehler — RLS?');}
 async function modBlock(t,id,uid,autor,src){if(!confirm('User sperren? Beitrag wird abgelehnt, User informiert.'))return;await spatch(t,id,{status:reV(t)});const ok=await spost('user_sperren',{user_id:uid||null,autor_name:autor||null,grund:'manuell',aktion:'gesperrt',quelle_typ:src,quelle_id:id,erstellt_von:'operator'});if(uid)await spost('notifications',{user_id:uid,typ:'sperre',titel:'Konto gesperrt',text:'Dein Beitrag verstösst gegen die Stadtpuls-Regeln. Dein Konto wurde gesperrt.'});audit('user gesperrt',src,id,autor);toast(ok?'User gesperrt':'user_sperren fehlt');rmMod(id);}
 function rmMod(id){MOD=MOD.filter(m=>m.id!=id);setCnt('t-mod',MOD.length);document.getElementById('hs-mod').textContent=MOD.length;renderMod();renderAttention();}
@@ -853,6 +864,37 @@ async function loadAudit(){if(audLoaded)return;audLoaded=true;
   catch(e){document.getElementById('aud-list').innerHTML='<div class="setup"><div class="st">Tabelle fehlt</div><p>audit_log via setup.sql anlegen — dann wird jede Aktion protokolliert.</p></div>';}
 }
 
+/* ═══ NEWS & STORY — eigeni Moderation (getrennt vo Momänt) ═══ */
+let NEWS=[],newsF='pruefig';
+async function loadNewsMod(){
+  try{NEWS=await sget('news_stories?order=created_at.desc&limit=300');TBL['news_stories']=true;}
+  catch(e){NEWS=[];TBL['news_stories']=false;}
+  const wait=NEWS.filter(n=>n.status==='pruefig').length;
+  setCnt('t-news',wait,wait?'alert':'');
+  renderNewsMod();
+}
+function newsFilter(f,el){newsF=f;document.querySelectorAll('#news-filter .chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');renderNewsMod();}
+function renderNewsMod(){
+  const el=document.getElementById('news-list');if(!el)return;
+  if(TBL['news_stories']===false){el.innerHTML=`<div class="setup"><div class="st">Tabelle fehlt</div><p>news_stories via news_stories_schema.sql anlegen.</p></div>`;return;}
+  const list=NEWS.filter(n=>n.status===newsF);
+  if(!list.length){el.innerHTML=`<div class="empty">${newsF==='pruefig'?'Kei wartende Beiträg. 🟢':'Nüt in dere Uswahl.'}</div>`;return;}
+  el.innerHTML=list.map(n=>{
+    const v=n.status==='live'?'v-ok':n.status==='gsperrt'?'v-bad':'v-wait';
+    const badge=n.status==='live'?'<span class="kibadge ok">✓ Live</span>':n.status==='gsperrt'?'<span class="kibadge bad">⛔ Gsperrt</span>':'<span class="kibadge wait">◷ Wartend</span>';
+    return `<div class="mrow ${v}"><div class="mrow-top"><div><div class="mrow-src">📰 KREIS ${n.kreis||'?'} · ${esc(n.kategorie||'Quartier')}</div><div class="mrow-meta">${esc(n.autor||n.autor_id||'anonym')} · ${ago(n.created_at)}</div></div>${badge}</div>
+      <div class="mrow-text"><b>${esc(n.titel||'(kein Titel)')}</b><br>${esc(n.teaser||n.inhalt||'')}</div>
+      <div class="mrow-actions">
+        ${n.status!=='live'?`<button class="btn btn-ok" onclick="newsAct('${n.id}','live')">✓ Freischalte</button>`:''}
+        ${n.status!=='gsperrt'?`<button class="btn btn-no" onclick="newsAct('${n.id}','gsperrt')">Ablehne</button>`:''}
+        ${n.status!=='pruefig'?`<button class="btn btn-ghost" onclick="newsAct('${n.id}','pruefig')">↩ Zrugg zu wartend</button>`:''}
+        ${n.autor_id?`<button class="btn btn-block" onclick="newsBlock('${n.id}','${esc(n.autor_id)}','${esc((n.autor||'')+'')}')">⛔ User sperre</button>`:''}
+      </div></div>`;
+  }).join('');
+}
+async function newsAct(id,st){const b={status:st};if(st==='live')b.published_at=new Date().toISOString();const ok=await spatch('news_stories',id,b);if(ok){toast(st==='live'?'Freigschalte — live!':st==='gsperrt'?'Gsperrt':'Zrugg gsetzt',st==='live'?'ok':'');audit('news '+st,'news_stories',id,'');const n=NEWS.find(x=>x.id==id);if(n)n.status=st;loadNewsMod();}else toast('Fehler — news_operator_update-Policy fehlt (SQL)?');}
+async function newsBlock(id,uid,autor){if(!confirm('User sperre? Beitrag wird gsperrt, User informiert.'))return;await spatch('news_stories',id,{status:'gsperrt'});const ok=await spost('user_sperren',{user_id:uid||null,autor_name:autor||null,grund:'news-moderation',aktion:'gesperrt',quelle_typ:'news',quelle_id:id,erstellt_von:'operator'});if(uid)await spost('notifications',{user_id:uid,typ:'sperre',titel:'Konto gsperrt',text:'Din News-Biitrag verstosst gäge d Stadtpuls-Regle. Din Konto isch gsperrt.'});audit('user gsperrt (news)','news_stories',id,autor);toast(ok?'User gsperrt':'user_sperren fehlt');loadNewsMod();}
+/* ═══════════════════════════════════════════════════════════ */
 function setCnt(id,n,cls){const e=document.getElementById(id);if(!e)return;e.textContent=n;e.className='cnt'+(n&&cls?(' '+cls):'');}
 setInterval(()=>{if(localStorage.getItem('sp_kz_auth')==='1'){loadBoosts().then(()=>{loadOverview();renderBoost();});loadModeration();loadAnfragen();loadVerkauf();}},120000);
 </script>
