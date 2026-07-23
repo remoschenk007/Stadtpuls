@@ -93,10 +93,10 @@ def story_card(k, o):
     alt=f"{titel} / Stadtpuls Kreis {k} Zürich"
     img=o.get("bild_url") or ""
     imgtag=f'<img class="cimg" src="{esc(img)}" alt="{esc(alt)}" loading="lazy">' if img else ""
-    return f'''<article class="card">{imgtag}
-      <div class="toprow"><a class="ktag" href="/kreis-{k}/news/">Kreis {k}</a><span class="cat">{esc(kat)}</span></div>
-      <h3><a href="{esc(surl)}">{esc(titel)}</a></h3><p>{esc(teaser)}</p>
-      <div class="foot"><span>{esc(autor)}</span></div></article>'''
+    return f'''<a class="card" href="{esc(surl)}" style="text-decoration:none;color:inherit">{imgtag}
+      <div class="toprow"><span class="ktag">Kreis {k}</span><span class="cat">{esc(kat)}</span></div>
+      <h3>{esc(titel)}</h3><p>{esc(teaser)}</p>
+      <div class="foot"><span>{esc(autor)}</span><span class="readmore">Läse →</span></div></a>'''
 
 def faq_schema(faq):
     return json.dumps({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in faq]}, ensure_ascii=False)
@@ -110,9 +110,8 @@ def breadcrumb_schema(k):
 TEMPLATE = open(os.path.join(os.path.dirname(__file__),"_kreis_news_template.html"),encoding="utf-8").read() \
     if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)),"_kreis_news_template.html")) else None
 
-def page(k):
+def page(k, stories):
     d=KREISE[k]; name=d["name"]; col=d["c"]
-    stories=fetch_stories(k)
     cards="\n".join(story_card(k,o) for o in stories) if stories else \
         f'<div class="empty"><div class="disp">SEI DE ERSCHT</div><p>No kei Story im Kreis {k} ({esc(name)}). Schrib du die erschti — sie chunnt sofort dur d KI-Prüfig live.</p><a class="wb" href="/login.html">Story schriebe →</a></div>'
     faq_html="\n".join(f'<details class="faq-item"><summary>{esc(q)}</summary><div class="faq-a">{esc(a)}</div></details>' for q,a in d["faq"])
@@ -168,14 +167,16 @@ h1.title{font-size:clamp(40px,7vw,80px);color:var(--cream)} h1.title .g{color:va
 .intro{border-left:3px solid var(--kc);padding:8px 0 8px 20px;margin:16px 0 30px;max-width:820px;font-size:14px;line-height:1.7;color:#b9b6ac}
 h2.sec{font-size:clamp(26px,4vw,38px);margin:34px 0 18px;color:var(--cream)} h2.sec .g{color:var(--kc)}
 .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-.card{border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;background:rgba(255,255,255,.02)}
+.card{display:block;border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:20px;background:rgba(255,255,255,.02);transition:transform .2s,border-color .2s,box-shadow .2s}
+.card:hover{transform:translateY(-4px);border-color:var(--kc);box-shadow:0 14px 40px -14px var(--kc)}
 .card .cimg{width:100%;height:130px;object-fit:cover;border-radius:9px;margin-bottom:14px;display:block}
 .card .toprow{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .ktag{font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;border-radius:5px;background:__COL__22;color:var(--kc);text-decoration:none}
 .card .cat{font-size:10px;letter-spacing:2px;color:#7a7a7a;text-transform:uppercase}
 .card h3{font-size:21px;color:var(--cream);margin-bottom:9px;line-height:1.12}
 .card h3 a{text-decoration:none} .card p{font-size:12.5px;color:#a5a29a;line-height:1.55}
-.card .foot{margin-top:14px;font-size:10.5px;color:#7a7a7a}
+.card .foot{margin-top:14px;font-size:10.5px;color:#7a7a7a;display:flex;justify-content:space-between;align-items:center}
+.readmore{color:var(--kc);font-weight:500}
 .empty{grid-column:1/-1;text-align:center;padding:50px 20px;border:1px dashed rgba(255,255,255,.12);border-radius:16px}
 .empty .disp{font-family:'Barlow Condensed';font-style:italic;font-weight:900;font-size:40px;color:#2a2a30}
 .empty p{color:#7a7a7a;font-size:13px;margin:8px 0 16px}
@@ -262,18 +263,123 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 </body>
 </html>"""
 
+import datetime
+def iso_date(o):
+    v=o.get("published_at") or o.get("created_at") or o.get("datum")
+    return str(v) if v else datetime.date.today().isoformat()
+
+STORY_HTML = r"""<!DOCTYPE html>
+<html lang="gsw-CH">
+<head>
+<base href="/">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>__TITLE__</title>
+<meta name="description" content="__META_DESC__">
+<link rel="canonical" href="__CANON__">
+<meta property="og:type" content="article"><meta property="og:title" content="__H1__"><meta property="og:description" content="__META_DESC__"><meta property="og:url" content="__CANON__"><meta property="og:locale" content="de_CH">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">__SCHEMA_NA__</script>
+<script type="application/ld+json">__SCHEMA_BC__</script>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#04040a;--rot:#ff2d00;--volt:#c8ff00;--cream:#e8e4d9;--kc:__COL__}
+body{background:var(--bg);color:var(--cream);font-family:'DM Mono',monospace;padding-top:47px}
+.wrap{max-width:820px;margin:0 auto;padding:0 22px}
+a{color:inherit}
+h1,h2,h3{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;text-transform:uppercase;line-height:.95}
+.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;background:rgba(0,0,0,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,45,0,0.15)}
+.nav-logo{padding:14px 20px;border-right:1px solid rgba(255,45,0,0.1);display:flex;align-items:center;gap:8px;text-decoration:none;flex-shrink:0}
+.logo-txt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:4px;font-size:19px;color:#e8e4d9}
+.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite;flex-shrink:0}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,0.7)}50%{box-shadow:0 0 0 6px rgba(255,45,0,0)}}
+.nav-links{display:flex;flex:1;overflow-x:auto;scrollbar-width:none}.nav-links::-webkit-scrollbar{display:none}
+.nav-link{padding:14px 16px;font-size:9px;letter-spacing:3px;color:rgba(232,228,217,0.3);text-decoration:none;text-transform:uppercase;white-space:nowrap;border-right:1px solid rgba(255,45,0,0.06)}
+.nav-link:hover{color:#e8e4d9}.nav-link.active{color:#ff2d00}
+.nav-cta{padding:10px 18px;margin:8px 14px;background:#ff2d00;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:2px;text-transform:uppercase;border-radius:2px;white-space:nowrap;flex-shrink:0;text-decoration:none;display:flex;align-items:center}
+.crumb{font-family:'DM Mono';font-size:11px;letter-spacing:1px;color:#7a7a7a;text-transform:uppercase;margin:30px 0 16px}
+.crumb a{color:#9a9a9a;text-decoration:none}
+.art-tag{display:inline-block;font-size:10px;letter-spacing:1px;text-transform:uppercase;padding:5px 11px;border-radius:5px;background:__COL__22;color:var(--kc);margin-bottom:14px}
+h1.art{font-size:clamp(34px,6vw,62px);color:var(--cream);margin-bottom:16px}
+.art-meta{display:flex;gap:14px;flex-wrap:wrap;font-size:11px;color:#8a8a8a;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid rgba(255,255,255,.08);padding-bottom:20px;margin-bottom:24px}
+.art-meta .live{color:var(--volt)}
+.hero-img{width:100%;border-radius:16px;margin-bottom:26px;border:1px solid rgba(255,255,255,.08)}
+.art-body p{font-size:15px;line-height:1.85;color:#cfccc3;margin-bottom:18px}
+.entity-link{display:inline-flex;align-items:center;gap:8px;margin-top:10px;padding:13px 22px;background:var(--kc);color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:1px;text-transform:uppercase;text-decoration:none;border-radius:7px}
+.back-link{display:inline-block;margin:34px 0 10px;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--kc);text-decoration:none;border:1px solid var(--kc);padding:11px 20px;border-radius:22px}
+footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1);margin-top:40px}
+.fbot{max-width:1320px;margin:0 auto;padding:1.4rem 1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+.fbot a,.fbot span{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;text-decoration:none}
+</style>
+</head>
+<body>
+<script src="/location-links.js"></script>
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><div class="ldot"></div><span class="logo-txt">STADTPULS</span></a>
+  <div class="nav-links"><a href="gastro.html" class="nav-link">GASTRO</a><a href="kultur.html" class="nav-link">KULTUR</a><a href="nachtleben.html" class="nav-link">NACHTLEBE</a><a href="events.html" class="nav-link">EVENTS</a><a href="shopping.html" class="nav-link">SHOPPING</a><a href="news.html" class="nav-link active">NEWS</a><a href="dating.html" class="nav-link">DATES</a></div>
+  <a href="login.html" class="nav-cta">MITMACHE</a>
+<button class="sp-nav-burger" onclick="spNavToggle()" aria-label="Menü"><span></span><span></span><span></span></button>
+</nav>
+<div class="wrap">
+  <div class="crumb"><a href="/">Stadtpuls</a> › <a href="news.html">News</a> › <a href="/kreis-__K__/news/">Kreis __K__</a> › <span>__H1__</span></div>
+  <article>
+    <span class="art-tag">KREIS __K__ · __NAME__ · __KAT__</span>
+    <h1 class="art">__H1__</h1>
+    <div class="art-meta"><span class="live">● LIVE</span><span>__KAT__</span><span>__AUTOR__</span><span>__DATE__</span></div>
+    __IMG__
+    <div class="art-body">__BODY__</div>
+    __LINK__
+    <div><a class="back-link" href="/kreis-__K__/news/">← Zrugg zu de News vom Kreis __K__</a></div>
+  </article>
+</div>
+<footer><div class="fbot"><span>© 2026 depuls.ch — by raimondo* — Zürich</span><span><a href="datenschutz.html">Datenschutz</a> · <a href="impressum.html">Impressum</a></span></div></footer>
+</body>
+</html>"""
+
+def story_page(k, o):
+    d=KREISE[k]; name=d["name"]
+    titel=o.get("titel") or o.get("title") or "Ohni Titel"
+    teaser=o.get("teaser") or ""
+    inhalt=o.get("inhalt") or teaser or ""
+    kat=o.get("kategorie") or "Quartier"
+    autor=o.get("autor") or "@stadtpuls"
+    slug=o.get("slug") or slugify(titel)
+    img=o.get("bild_url") or ""
+    date=iso_date(o)
+    canon=f"{SITE}/kreis-{k}/news/{slug}"
+    alt=f"{titel} / Stadtpuls Kreis {k} Zürich"
+    na={"@context":"https://schema.org","@type":"NewsArticle","headline":titel,"datePublished":date,"dateModified":date,"articleSection":kat,"inLanguage":"gsw-CH","author":{"@type":"Person","name":autor},"publisher":{"@type":"Organization","name":"Stadtpuls","url":SITE,"logo":{"@type":"ImageObject","url":SITE+"/favicon.svg"}},"contentLocation":{"@type":"Place","name":f"Kreis {k}, Zürich","address":{"@type":"PostalAddress","addressLocality":"Zürich","addressRegion":"ZH","addressCountry":"CH"}},"mainEntityOfPage":{"@type":"WebPage","@id":canon},"url":canon}
+    if img: na["image"]=[img]
+    bc={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Stadtpuls","item":SITE},{"@type":"ListItem","position":2,"name":"News","item":SITE+"/news"},{"@type":"ListItem","position":3,"name":f"News Kreis {k} Zürich","item":f"{SITE}/kreis-{k}/news/"},{"@type":"ListItem","position":4,"name":titel,"item":canon}]}
+    imgtag=f'<img class="hero-img" src="{esc(img)}" alt="{esc(alt)}" loading="lazy">' if img else ""
+    body="".join(f"<p>{esc(p)}</p>" for p in inhalt.split(chr(10)) if p.strip()) or f"<p>{esc(teaser)}</p>"
+    link=""
+    if o.get("link_label"):
+        link=f'<a class="entity-link" href="{esc(o.get("link_url") or "#")}">{esc(o.get("link_label"))} →</a>'
+    tok={"__K__":str(k),"__NAME__":esc(name),"__COL__":d["c"],"__TITLE__":esc(f"{titel} | News Kreis {k} Zürich | Stadtpuls"),"__H1__":esc(titel),"__META_DESC__":esc((teaser or titel)[:155]),"__CANON__":canon,"__KAT__":esc(kat),"__AUTOR__":esc(autor),"__DATE__":esc(date),"__IMG__":imgtag,"__BODY__":body,"__LINK__":link,"__SCHEMA_NA__":json.dumps(na,ensure_ascii=False),"__SCHEMA_BC__":json.dumps(bc,ensure_ascii=False)}
+    out=STORY_HTML
+    for t,v in tok.items(): out=out.replace(t,v)
+    return out, slug
+
 def main():
-    total=0
+    total=0; storycount=0
     for k in KREISE:
+        stories=fetch_stories(k)
         d=f"kreis-{k}/news"
         os.makedirs(d, exist_ok=True)
-        htmlpage=page(k)
         with open(os.path.join(d,"index.html"),"w",encoding="utf-8") as f:
-            f.write(htmlpage)
-        n=htmlpage.count('class="card"')
+            f.write(page(k, stories))
+        # Detailsyte pro Story
+        for o in stories:
+            sp_html, slug = story_page(k, o)
+            sd=os.path.join(d, slug)
+            os.makedirs(sd, exist_ok=True)
+            with open(os.path.join(sd,"index.html"),"w",encoding="utf-8") as f:
+                f.write(sp_html)
+            storycount+=1
         total+=1
-        print(f"✅ /kreis-{k}/news/  ({KREISE[k]['name']}) — {n} Story-Karte")
-    print(f"\nFertig: {total} Kreis-Hubs gnereiert. Jetzt:  git add kreis-* && git commit -m 'Kreis-News-Hubs' && git push")
+        print(f"✅ /kreis-{k}/news/  ({KREISE[k]['name']}) — {len(stories)} Story-Detailsyte")
+    print(f"\nFertig: {total} Kreis-Hubs + {storycount} Story-Detailsyte gnereiert.")
 
 if __name__=="__main__":
     main()
