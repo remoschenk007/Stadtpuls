@@ -1092,18 +1092,27 @@ window.saveGeschlecht=async function(g){
 window.openNewsModal=function(){
   document.getElementById('modal-eye').textContent='NEWS & STORIES';
   document.getElementById('modal-title').textContent='BEITRAG SCHREIBE';
+  const _cats=['Gastro','Nachtlebe','Kultur','Quartier','Eröffnig','Interview'];
   document.getElementById('modal-body').innerHTML=`
-    <input class="inp" id="news-titel" placeholder="Dini Überschrift..." type="text"/>
-    <textarea class="inp" id="news-inhalt" placeholder="Schrib dis Story..." style="min-height:100px"></textarea>
-    <div style="background:rgba(200,255,0,0.03);border:1px solid rgba(200,255,0,0.1);border-radius:6px;padding:10px 12px;margin-bottom:14px;font-size:8px;color:rgba(200,255,0,0.45);letter-spacing:1px;text-transform:uppercase;line-height:1.8">⚡ KI prüft din Beitrag automatisch</div>
+    <div style="font-size:9px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase;margin-bottom:12px">📍 Din Kreis: ${PROFILE.kreis?('KREIS '+PROFILE.kreis):'<span style="color:#ff2d00">no nöd gsetzt — im Profil obe setze!</span>'}</div>
+    <select class="inp" id="news-kat">${_cats.map(c=>`<option value="${c}"${c==='Quartier'?' selected':''}>${c}</option>`).join('')}</select>
+    <input class="inp" id="news-titel" placeholder="Dini Überschrift..." type="text" maxlength="90"/>
+    <textarea class="inp" id="news-teaser" placeholder="Churzi Vorschau (1-2 Sätz)..." style="min-height:50px" maxlength="160"></textarea>
+    <textarea class="inp" id="news-inhalt" placeholder="Schrib dis Story..." style="min-height:110px"></textarea>
+    <div style="background:rgba(200,255,0,0.03);border:1px solid rgba(200,255,0,0.1);border-radius:6px;padding:10px 12px;margin-bottom:14px;font-size:8px;color:rgba(200,255,0,0.45);letter-spacing:1px;text-transform:uppercase;line-height:1.8">⚡ KI/Redaktion prüft din Beitrag — denn goht er live uf dinere Kreis-Syte</div>
     <button class="BTN volt" onclick="submitNews()">PUBLIZIERE → +25 PTS</button>`;
   document.getElementById('modal').classList.add('open');
 };
 window.submitNews=async function(){
   const titel=document.getElementById('news-titel').value.trim();
   const inhalt=document.getElementById('news-inhalt').value.trim();
+  const teaser=(document.getElementById('news-teaser')?document.getElementById('news-teaser').value.trim():'');
+  const kategorie=(document.getElementById('news-kat')?document.getElementById('news-kat').value:'Quartier');
   if(!titel||!inhalt){notif('TITEL UND INHALT PFLICHTIG');return;}
-  await sb.from('news_stories').insert({titel,inhalt,user_id:PROFILE.id,status:'pending'});
+  if(!PROFILE.kreis){notif('SETZ ZERSCH DIN KREIS IM PROFIL');return;}
+  const slug=titel.toLowerCase().replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'').slice(0,80);
+  const {error}=await sb.from('news_stories').insert({kreis:PROFILE.kreis,titel,slug,teaser:teaser||inhalt.slice(0,160),inhalt,kategorie,autor:PROFILE.nickname,autor_id:PROFILE.id,status:'pruefig'});
+  if(error){notif('FEHLER: '+error.message);return;}
   closeModal();
   notif('BEITRAG ISCH IN PRÜFIG... ⚡');
 };
