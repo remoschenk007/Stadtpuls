@@ -889,11 +889,13 @@ function renderNewsMod(){
         ${n.status!=='gsperrt'?`<button class="btn btn-no" onclick="newsAct('${n.id}','gsperrt')">Ablehne</button>`:''}
         ${n.status!=='pruefig'?`<button class="btn btn-ghost" onclick="newsAct('${n.id}','pruefig')">↩ Zrugg zu wartend</button>`:''}
         ${n.autor_id?`<button class="btn btn-block" onclick="newsBlock('${n.id}','${esc(n.autor_id)}','${esc((n.autor||'')+'')}')">⛔ User sperre</button>`:''}
+        <button class="btn btn-block" onclick="newsDelete('${n.id}')">🗑 Lösche</button>
       </div></div>`;
   }).join('');
 }
 async function newsAct(id,st){const b={status:st};if(st==='live')b.published_at=new Date().toISOString();const ok=await spatch('news_stories',id,b);if(ok){toast(st==='live'?'Freigschalte — live!':st==='gsperrt'?'Gsperrt':'Zrugg gsetzt',st==='live'?'ok':'');audit('news '+st,'news_stories',id,'');const n=NEWS.find(x=>x.id==id);if(n)n.status=st;loadNewsMod();}else toast('Fehler — news_operator_update-Policy fehlt (SQL)?');}
 async function newsBlock(id,uid,autor){if(!confirm('User sperre? Beitrag wird gsperrt, User informiert.'))return;await spatch('news_stories',id,{status:'gsperrt'});const ok=await spost('user_sperren',{user_id:uid||null,autor_name:autor||null,grund:'news-moderation',aktion:'gesperrt',quelle_typ:'news',quelle_id:id,erstellt_von:'operator'});if(uid)await spost('notifications',{user_id:uid,typ:'sperre',titel:'Konto gsperrt',text:'Din News-Biitrag verstosst gäge d Stadtpuls-Regle. Din Konto isch gsperrt.'});audit('user gsperrt (news)','news_stories',id,autor);toast(ok?'User gsperrt':'user_sperren fehlt');loadNewsMod();}
+async function newsDelete(id){const n=NEWS.find(x=>x.id==id);if(!confirm('Beitrag »'+((n&&n.titel)||'')+'« ändgültig lösche? Cha nöd rückgängig gmacht werde.'))return;const r=await fetch(SU+'/rest/v1/news_stories?id=eq.'+id,{method:'DELETE',headers:H});if(r.ok){toast('Glöscht','ok');audit('news glöscht','news_stories',id,(n&&n.titel)||'');NEWS=NEWS.filter(x=>x.id!=id);setCnt('t-news',NEWS.filter(x=>x.status==='pruefig').length,NEWS.some(x=>x.status==='pruefig')?'alert':'');renderNewsMod();}else toast('Fehler — Lösch-Policy fehlt (SQL)?');}
 /* ═══════════════════════════════════════════════════════════ */
 function setCnt(id,n,cls){const e=document.getElementById(id);if(!e)return;e.textContent=n;e.className='cnt'+(n&&cls?(' '+cls):'');}
 setInterval(()=>{if(localStorage.getItem('sp_kz_auth')==='1'){loadBoosts().then(()=>{loadOverview();renderBoost();});loadModeration();loadAnfragen();loadVerkauf();}},120000);
