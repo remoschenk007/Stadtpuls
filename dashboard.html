@@ -601,6 +601,7 @@ async function loadDashboard(){
 
   renderProfile();
   loadNotifications();
+  loadMyNews();
 }
 
 function renderProfile(){
@@ -1089,6 +1090,23 @@ window.saveGeschlecht=async function(g){
   notif('GSPEICHERET!');
 };
 
+async function loadMyNews(){
+  const el=document.getElementById('news-content'); if(!el||!PROFILE) return;
+  const _e=s=>(s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const {data,error}=await sb.from('news_stories').select('id,titel,teaser,kreis,kategorie,status,created_at,slug').eq('autor_id',PROFILE.id).order('created_at',{ascending:false});
+  if(error||!data||!data.length) return; // Leer-Zustand bliibt
+  const S={pruefig:['◷ IN PRÜFIG','#ffcc00'],live:['✓ LIVE','#c8ff00'],gsperrt:['⛔ ABGLEHNT','#ff2d00'],archiviert:['📦 ARCHIV','#888'],entwurf:['✎ ENTWURF','#888']};
+  el.innerHTML=data.map(n=>{const s=S[n.status]||['·','#888'];const link=n.status==='live'?('/kreis-'+n.kreis+'/news/'+(n.slug||'')):null;
+    return `<div style="border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:14px;margin-bottom:10px;background:rgba(255,255,255,.02)">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:6px">
+        <span style="font-size:8px;letter-spacing:2px;color:#666;text-transform:uppercase">KREIS ${n.kreis||'?'} · ${_e(n.kategorie||'')}</span>
+        <span style="font-size:8px;letter-spacing:1px;color:${s[1]};font-weight:500">${s[0]}</span></div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;color:#e8e4d9;line-height:1.1">${_e(n.titel||'')}</div>
+      <div style="font-size:9px;color:rgba(232,228,217,.35);margin-top:4px">${_e(n.teaser||'')}</div>
+      ${link?`<a href="${link}" style="font-size:9px;color:#c8ff00;text-decoration:none;letter-spacing:1px;display:inline-block;margin-top:8px">→ zur Story</a>`:''}
+    </div>`;}).join('')
+    +`<button class="BTN volt" style="max-width:240px;margin:12px auto 0;display:block;font-size:14px" onclick="openNewsModal()">+ NÖI STORY → +25 PTS</button>`;
+}
 window.openNewsModal=function(){
   document.getElementById('modal-eye').textContent='NEWS & STORIES';
   document.getElementById('modal-title').textContent='BEITRAG SCHREIBE';
@@ -1115,6 +1133,7 @@ window.submitNews=async function(){
   if(error){notif('FEHLER: '+error.message);return;}
   closeModal();
   notif('BEITRAG ISCH IN PRÜFIG... ⚡');
+  loadMyNews();
 };
 
 window.openMarktModal=function(){
