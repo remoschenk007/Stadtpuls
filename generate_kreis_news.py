@@ -208,6 +208,14 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 .fbot{max-width:1320px;margin:0 auto;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.05)}
 .fbot p{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;margin:0}
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R1B1HL5W61"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R1B1HL5W61');
+</script>
 </head>
 <body>
 <script src="/location-links.js"></script>
@@ -326,6 +334,14 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1);margin-top:40p
 .fbot{max-width:1320px;margin:0 auto;padding:1.4rem 1.5rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 .fbot a,.fbot span{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;text-decoration:none}
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R1B1HL5W61"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R1B1HL5W61');
+</script>
 </head>
 <body>
 <script src="/location-links.js"></script>

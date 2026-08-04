@@ -97,6 +97,14 @@ details div{{padding:0 16px 14px;font-size:10.5px;line-height:1.8;color:#8a8778}
 .grid a:hover{{border-color:#ff2d00;color:#ff2d00}}
 footer{{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spacing:2px;color:#3a3a48;text-transform:uppercase}}
 </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R1B1HL5W61"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R1B1HL5W61');
+</script>
 </head>
 <body>
 <!-- SP_KREIS v1 -->

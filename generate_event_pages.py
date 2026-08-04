@@ -109,8 +109,24 @@ def render_page(template, ev):
     }
     schema_json = json.dumps(schema, ensure_ascii=False).replace('</', '<\\/')
     out = out.replace(
-        '</head>',
-        f'<script id="event-schema" type="application/ld+json">{schema_json}</script>\n</head>', 1)
+        '<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R1B1HL5W61"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R1B1HL5W61');
+</script>
+</head>',
+        f'<script id="event-schema" type="application/ld+json">{schema_json}</script>\n<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R1B1HL5W61"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R1B1HL5W61');
+</script>
+</head>', 1)
 
     out = out.replace('<body>', f'<body data-event-id="{ev["id"]}">', 1)
 
