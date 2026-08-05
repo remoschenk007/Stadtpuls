@@ -83,23 +83,35 @@ def fetch_stories(kreis):
 
 def esc(s): return html.escape(str(s or ""), quote=True)
 
-# URLs im (scho escapte!) Fliesstext automatisch klickbar mache.
+# Links im (scho escapte!) Fliesstext automatisch klickbar mache.
 # WICHTIG: immer NACH esc() ufrüefe, susch würded &amp; etc. doppelt escaped.
+# Chan zwei Formate:
+#   1) sprechendi Links   [Ankertext](https://…)  -> <a href="…">Ankertext</a>
+#   2) nackti URLs        https://…               -> <a href="…">https://…</a>
+_MD_RE  = re.compile(r'\[([^\]]+)\]\((https?://[^)\s]+)\)')
 _URL_RE = re.compile(r'https?://[^\s<>()]+')
+def _a_tag(url, text):
+    internal = "depuls.ch" in url
+    attrs = "" if internal else ' target="_blank" rel="noopener nofollow"'
+    return f'<a href="{url}"{attrs}>{text}</a>'
 def linkify(escaped_text):
-    def _repl(m):
-        url = m.group(0)
-        trail = ""
-        # Satzzeichen am Schluss ghööred nöd i de Link (Slash / bliibt = Clean-URL)
-        while url and url[-1] in ".,!?":
-            trail = url[-1] + trail
-            url = url[:-1]
+    holds = []
+    # 1) Sprechendi Links zerscht usenäh (als Platzhalter parke)
+    def _md(m):
+        holds.append(_a_tag(m.group(2), m.group(1)))
+        return "\x00%d\x00" % (len(holds) - 1)
+    s = _MD_RE.sub(_md, escaped_text)
+    # 2) Nackti URLs verlinke
+    def _url(m):
+        url = m.group(0); trail = ""
+        while url and url[-1] in ".,!?":  # Satzzeiche am Schluss usenä (Slash / bliibt)
+            trail = url[-1] + trail; url = url[:-1]
         if not url:
             return m.group(0)
-        internal = "depuls.ch" in url
-        attrs = "" if internal else ' target="_blank" rel="noopener nofollow"'
-        return f'<a href="{url}"{attrs}>{url}</a>{trail}'
-    return _URL_RE.sub(_repl, escaped_text)
+        return _a_tag(url, url) + trail
+    s = _URL_RE.sub(_url, s)
+    # 3) Platzhalter zrugg iesetze
+    return re.sub(r"\x00(\d+)\x00", lambda m: holds[int(m.group(1))], s)
 
 # ── SEO / GEO-Helfer ───────────────────────────────────────────────
 # Zwischentitel-Erkennig: churzi Zile wo mit eme Emoji aafanged (z.B.
