@@ -425,14 +425,16 @@ function setCat(c){activeCat=c;renderCats();updateSeo();renderFeatured();renderF
    Erwartet Zile mit u.a.: titel/title, text/inhalt/beschreibung,
    kreis, kategorie, autor/author, bild_url, status ('live'/'pruef'),
    created_at/datum. Fehlt de Key oder d Tabelle => leere Feed. */
+function _spDiag(m){try{var e=document.getElementById('sp-diag');if(!e){e=document.createElement('div');e.id='sp-diag';e.style.cssText='position:fixed;left:0;right:0;bottom:0;z-index:99999;background:#c8ff00;color:#000;font:12px/1.45 monospace;padding:8px 12px;white-space:pre-wrap;word-break:break-word';document.body.appendChild(e);}e.textContent='SP-DIAG · '+m;}catch(_){}}
 async function loadStories(){
-  if(!SB_KEY){ renderAll(); return; }
+  if(!SB_KEY){ _spDiag('kein SB_KEY gesetzt'); renderAll(); return; }
   try{
     const url=`${SB_URL}/rest/v1/${SB_TABLE}?select=*&status=eq.live&limit=200`;
     const r=await fetch(url,{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY}});
-    if(!r.ok) throw new Error('HTTP '+r.status);
+    if(!r.ok){ let b=''; try{b=await r.text();}catch(_){ } _spDiag('HTTP '+r.status+' '+r.statusText+' — '+b.slice(0,400)); STORYS=[]; renderAll(); return; }
     let rows=await r.json();
     if(!Array.isArray(rows)) rows=[];
+    _spDiag('OK · HTTP '+r.status+' · '+rows.length+' Zeile(n)'+(rows[0]?(' · erschti: "'+(rows[0].titel||rows[0].title||'?')+'" status='+rows[0].status+' kreis='+rows[0].kreis):''));
     // Sortierig im Browser (robust — kei Server-Order wo fehlschlage chönnt)
     rows.sort(function(a,b){return new Date(b.created_at||b.published_at||0)-new Date(a.created_at||a.published_at||0);});
     STORYS=rows.map(function(o){
@@ -450,7 +452,7 @@ async function loadStories(){
         fresh:o.created_at?(Date.now()-new Date(o.created_at).getTime()<7*864e5):false
       };
     }).filter(s=>s.st!=='block'); // gsperrti nie zeige
-  }catch(e){ console.warn('Stadtpuls News: kei Live-Date ('+e.message+') — Feed bliibt leer.'); STORYS=[]; }
+  }catch(e){ _spDiag('CATCH (Netzwerk/CORS?): '+(e&&e.message||e)); console.warn('Stadtpuls News: kei Live-Date ('+(e&&e.message)+') — Feed bliibt leer.'); STORYS=[]; }
   renderAll();
 }
 loadStories();
