@@ -428,10 +428,13 @@ function setCat(c){activeCat=c;renderCats();updateSeo();renderFeatured();renderF
 async function loadStories(){
   if(!SB_KEY){ renderAll(); return; }
   try{
-    const url=`${SB_URL}/rest/v1/${SB_TABLE}?select=*&status=eq.live&order=created_at.desc&limit=200`;
+    const url=`${SB_URL}/rest/v1/${SB_TABLE}?select=*&status=eq.live&limit=200`;
     const r=await fetch(url,{headers:{apikey:SB_KEY,Authorization:'Bearer '+SB_KEY}});
     if(!r.ok) throw new Error('HTTP '+r.status);
-    const rows=await r.json();
+    let rows=await r.json();
+    if(!Array.isArray(rows)) rows=[];
+    // Sortierig im Browser (robust — kei Server-Order wo fehlschlage chönnt)
+    rows.sort(function(a,b){return new Date(b.created_at||b.published_at||0)-new Date(a.created_at||a.published_at||0);});
     STORYS=rows.map(function(o){
       const st=(o.status||o.ki_urteil||'live').toString().toLowerCase();
       return {

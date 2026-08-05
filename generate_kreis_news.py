@@ -13,7 +13,7 @@ Danach:                   git add kreis-* && git commit -m "Kreis-News-Hubs" && 
 Kei externi Library nötig (nur Python-Standardbibliothek).
 """
 
-import os, json, html, urllib.request, urllib.error
+import os, json, html, re, urllib.request, urllib.error
 
 # ── Supabase (öffentliche anon-Key, wie im Rest vom Code) ──────────────────
 SB_URL = "https://pnynkzrqnfoshojqfqxn.supabase.co"
@@ -82,6 +82,64 @@ def fetch_stories(kreis):
         return []
 
 def esc(s): return html.escape(str(s or ""), quote=True)
+
+# URLs im (scho escapte!) Fliesstext automatisch klickbar mache.
+# WICHTIG: immer NACH esc() ufrüefe, susch würded &amp; etc. doppelt escaped.
+_URL_RE = re.compile(r'https?://[^\s<>()]+')
+def linkify(escaped_text):
+    def _repl(m):
+        url = m.group(0)
+        trail = ""
+        # Satzzeichen am Schluss ghööred nöd i de Link (Slash / bliibt = Clean-URL)
+        while url and url[-1] in ".,!?":
+            trail = url[-1] + trail
+            url = url[:-1]
+        if not url:
+            return m.group(0)
+        internal = "depuls.ch" in url
+        attrs = "" if internal else ' target="_blank" rel="noopener nofollow"'
+        return f'<a href="{url}"{attrs}>{url}</a>{trail}'
+    return _URL_RE.sub(_repl, escaped_text)
+
+# ── SEO / GEO-Helfer ───────────────────────────────────────────────
+# Zwischentitel-Erkennig: churzi Zile wo mit eme Emoji aafanged (z.B.
+# "💧 1. Wasser…", "🚨 Was mache…") werded als <h2> grendert → bessri
+# Struktur für Google & KI-Suche. Bulletpoints (*, -) und Zitat (>) nöd.
+def _is_heading(line):
+    s = (line or "").strip()
+    if not s or s[0] in "*->•·":
+        return False
+    return ord(s[0]) >= 0x2600 and len(s) <= 80
+
+def render_body(inhalt, teaser=""):
+    parts = []
+    for raw in (inhalt or "").split(chr(10)):
+        line = raw.strip()
+        if not line:
+            continue
+        tag = "h2" if _is_heading(line) else "p"
+        parts.append(f"<{tag}>{linkify(esc(line))}</{tag}>")
+    return "".join(parts) or f"<p>{linkify(esc(teaser))}</p>"
+
+def keywords_for(k, kat):
+    name = KREISE[k]["name"]
+    kws = [f"Kreis {k} Zürich", f"News Kreis {k}", name, "Zürich",
+           kat, "Quartier News", "Stadtpuls", "Züri"]
+    seen, out = set(), []
+    for w in kws:
+        w = (w or "").strip()
+        if w and w.lower() not in seen:
+            seen.add(w.lower()); out.append(w)
+    return ", ".join(out)
+
+def faq_block_html(k):
+    name = KREISE[k]["name"]
+    items = "".join(
+        f'<details class="faq-item"><summary>{esc(q)}</summary>'
+        f'<div class="faq-a">{esc(a)}</div></details>'
+        for q, a in KREISE[k]["faq"])
+    return (f'<section class="art-faq"><h2>Häufigi Frooge · Kreis {k} {esc(name)}</h2>'
+            f'{items}</section>') if items else ""
 
 def story_card(k, o):
     titel=o.get("titel") or o.get("title") or "Ohni Titel"
@@ -291,11 +349,17 @@ STORY_HTML = r"""<!DOCTYPE html>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>__TITLE__</title>
 <meta name="description" content="__META_DESC__">
+<meta name="keywords" content="__KEYWORDS__">
+<meta name="author" content="__AUTOR__">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
 <link rel="canonical" href="__CANON__">
-<meta property="og:type" content="article"><meta property="og:title" content="__H1__"><meta property="og:description" content="__META_DESC__"><meta property="og:url" content="__CANON__"><meta property="og:locale" content="de_CH">
+<meta property="og:type" content="article"><meta property="og:title" content="__H1__"><meta property="og:description" content="__META_DESC__"><meta property="og:url" content="__CANON__"><meta property="og:locale" content="de_CH"><meta property="og:site_name" content="Stadtpuls">__OGIMG__
+<meta property="article:published_time" content="__ISODATE__"><meta property="article:modified_time" content="__ISODATE__"><meta property="article:section" content="__KAT__"><meta property="article:author" content="__AUTOR__">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="__H1__"><meta name="twitter:description" content="__META_DESC__">__TWIMG__
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script type="application/ld+json">__SCHEMA_NA__</script>
 <script type="application/ld+json">__SCHEMA_BC__</script>
+__SCHEMA_FAQ__
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -321,6 +385,17 @@ h1.art{font-size:clamp(34px,6vw,62px);color:var(--cream);margin-bottom:16px}
 .art-meta .live{color:var(--volt)}
 .hero-img{width:100%;border-radius:16px;margin-bottom:26px;border:1px solid rgba(255,255,255,.08)}
 .art-body p{font-size:15px;line-height:1.85;color:#cfccc3;margin-bottom:18px}
+.art-body h2{font-size:clamp(22px,3.4vw,30px);color:var(--cream);margin:36px 0 14px;line-height:1.05}
+.tldr{background:rgba(200,255,0,.05);border-left:3px solid var(--volt);border-radius:0 10px 10px 0;padding:14px 18px;margin:0 0 26px}
+.tldr .l{display:block;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--volt);margin-bottom:6px}
+.tldr p{font-size:14px;line-height:1.7;color:#d7d4cb;margin:0}
+.art-faq{margin:42px 0 6px}
+.art-faq h2{font-size:clamp(24px,4vw,34px);color:var(--cream);margin-bottom:16px}
+.faq-item{border:1px solid rgba(255,255,255,.08);border-radius:12px;margin-bottom:10px;overflow:hidden;background:rgba(255,255,255,.02)}
+.faq-item summary{cursor:pointer;padding:14px 16px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:var(--cream);list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:'+';color:var(--volt)}.faq-item[open] summary::after{content:'–'}
+.faq-a{padding:0 16px 15px;font-size:13.5px;color:#a5a29a;line-height:1.65}
 .rx{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:26px 0 6px;padding:16px 0;border-top:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08)}
 .rx-btn{display:inline-flex;align-items:center;gap:8px;font-family:'DM Mono',monospace;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#b7b4ab;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.12);border-radius:24px;padding:10px 16px;cursor:pointer;transition:.15s}
 .rx-btn svg{width:16px;height:16px}
@@ -357,8 +432,10 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1);margin-top:40p
     <span class="art-tag">KREIS __K__ · __NAME__ · __KAT__</span>
     <h1 class="art">__H1__</h1>
     <div class="art-meta"><span class="live">● LIVE</span><span>__KAT__</span><span>__AUTOR__</span><span>__DATE__</span></div>
+    __TLDR__
     __IMG__
     <div class="art-body">__BODY__</div>
+    __FAQ_BLOCK__
     <div class="rx" data-sid="__SID__">
       <button class="rx-btn rx-like" type="button" title="Like — nur iglogged"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.5-9.5-9C1 9 2.5 5.5 6 5.5c2 0 3.2 1.2 4 2.3.8-1.1 2-2.3 4-2.3 3.5 0 5 3.5 3.5 6.5C19 16.5 12 21 12 21z"/></svg><span class="rx-likecount">0</span> Likes</button>
       <span class="rx-btn rx-views"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg><span class="rx-viewcount">–</span> Views</span>
@@ -412,15 +489,24 @@ def story_page(k, o):
     date=iso_date(o)
     canon=f"{SITE}/kreis-{k}/news/{slug}"
     alt=f"{titel} / Stadtpuls Kreis {k} Zürich"
-    na={"@context":"https://schema.org","@type":"NewsArticle","headline":titel,"datePublished":date,"dateModified":date,"articleSection":kat,"inLanguage":"gsw-CH","author":{"@type":"Person","name":autor},"publisher":{"@type":"Organization","name":"Stadtpuls","url":SITE,"logo":{"@type":"ImageObject","url":SITE+"/favicon.svg"}},"contentLocation":{"@type":"Place","name":f"Kreis {k}, Zürich","address":{"@type":"PostalAddress","addressLocality":"Zürich","addressRegion":"ZH","addressCountry":"CH"}},"mainEntityOfPage":{"@type":"WebPage","@id":canon},"url":canon}
+    plain=re.sub(r"\s+"," ",inhalt or teaser or "").strip()
+    wordcount=len(plain.split())
+    kws=keywords_for(k,kat)
+    author_obj={"@type":"Organization","name":autor} if autor.lower().startswith("redakt") else {"@type":"Person","name":autor}
+    na={"@context":"https://schema.org","@type":"NewsArticle","headline":titel[:110],"description":(teaser or titel)[:250],"datePublished":date,"dateModified":date,"articleSection":kat,"inLanguage":"gsw-CH","isAccessibleForFree":True,"wordCount":wordcount,"keywords":kws,"articleBody":plain,"author":author_obj,"publisher":{"@type":"Organization","name":"Stadtpuls","url":SITE,"logo":{"@type":"ImageObject","url":SITE+"/favicon.svg"}},"contentLocation":{"@type":"Place","name":f"Kreis {k}, Zürich","address":{"@type":"PostalAddress","addressLocality":"Zürich","addressRegion":"ZH","addressCountry":"CH"}},"speakable":{"@type":"SpeakableSpecification","cssSelector":["h1.art",".tldr"]},"mainEntityOfPage":{"@type":"WebPage","@id":canon},"url":canon}
     if img: na["image"]=[img]
+    faq_json=json.dumps({"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":q,"acceptedAnswer":{"@type":"Answer","text":a}} for q,a in d["faq"]]},ensure_ascii=False)
     bc={"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Stadtpuls","item":SITE},{"@type":"ListItem","position":2,"name":"News","item":SITE+"/news"},{"@type":"ListItem","position":3,"name":f"News Kreis {k} Zürich","item":f"{SITE}/kreis-{k}/news/"},{"@type":"ListItem","position":4,"name":titel,"item":canon}]}
     imgtag=f'<img class="hero-img" src="{esc(img)}" alt="{esc(alt)}" loading="lazy">' if img else ""
-    body="".join(f"<p>{esc(p)}</p>" for p in inhalt.split(chr(10)) if p.strip()) or f"<p>{esc(teaser)}</p>"
+    body=render_body(inhalt,teaser)
+    tldr=f'<div class="tldr"><span class="l">Kurz &amp; knapp</span><p>{linkify(esc(teaser))}</p></div>' if teaser else ""
+    faq_blk=faq_block_html(k)
+    ogimg=f'<meta property="og:image" content="{esc(img)}">' if img else ""
+    twimg=f'<meta name="twitter:image" content="{esc(img)}">' if img else ""
     link=""
     if o.get("link_label"):
         link=f'<a class="entity-link" href="{esc(o.get("link_url") or "#")}">{esc(o.get("link_label"))} →</a>'
-    tok={"__K__":str(k),"__NAME__":esc(name),"__COL__":d["c"],"__TITLE__":esc(f"{titel} | News Kreis {k} Zürich | Stadtpuls"),"__H1__":esc(titel),"__META_DESC__":esc((teaser or titel)[:155]),"__CANON__":canon,"__KAT__":esc(kat),"__AUTOR__":esc(autor),"__DATE__":esc(disp_date(o)),"__SID__":esc(o.get("id") or ""),"__IMG__":imgtag,"__BODY__":body,"__LINK__":link,"__SCHEMA_NA__":json.dumps(na,ensure_ascii=False),"__SCHEMA_BC__":json.dumps(bc,ensure_ascii=False)}
+    tok={"__K__":str(k),"__NAME__":esc(name),"__COL__":d["c"],"__TITLE__":esc(f"{titel} | News Kreis {k} Zürich | Stadtpuls"),"__H1__":esc(titel),"__META_DESC__":esc((teaser or titel)[:155]),"__KEYWORDS__":esc(kws),"__CANON__":canon,"__KAT__":esc(kat),"__AUTOR__":esc(autor),"__DATE__":esc(disp_date(o)),"__ISODATE__":esc(date),"__SID__":esc(o.get("id") or ""),"__IMG__":imgtag,"__OGIMG__":ogimg,"__TWIMG__":twimg,"__TLDR__":tldr,"__BODY__":body,"__FAQ_BLOCK__":faq_blk,"__LINK__":link,"__SCHEMA_NA__":json.dumps(na,ensure_ascii=False),"__SCHEMA_BC__":json.dumps(bc,ensure_ascii=False),"__SCHEMA_FAQ__":f'<script type="application/ld+json">{faq_json}</script>'}
     out=STORY_HTML
     for t,v in tok.items(): out=out.replace(t,v)
     return out, slug
