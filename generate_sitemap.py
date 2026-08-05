@@ -75,10 +75,18 @@ except FileNotFoundError:
 open('sitemap-events.xml','w',encoding='utf-8').write(urlset(eurls))
 print(f"sitemap-events.xml: {len(eurls)} URLs")
 
+# 3b) Kreis-News & Storys -- Dateisystem-Scan (robust, kei Supabase noetig):
+#     News-Hub /news/ + 12 Kreis-Hubs /kreis-N/news/ + alle Story-Detailseite.
+NEWS = ['news/']
+NEWS += sorted(p.replace('index.html','') for p in _g.glob('kreis-*/news/index.html'))    # 12 Kreis-Hubs
+NEWS += sorted(p.replace('index.html','') for p in _g.glob('kreis-*/news/*/index.html'))   # Story-Detailseite
+open('sitemap-news.xml','w',encoding='utf-8').write(urlset([(BASE+p, TODAY) for p in NEWS]))
+print(f"sitemap-news.xml: {len(NEWS)} URLs")
+
 # 4) Sitemap-Index
 idx = '<?xml version="1.0" encoding="UTF-8"?>\n<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
-for f in ['sitemap-pages.xml','sitemap-locations.xml','sitemap-events.xml']:
+for f in ['sitemap-pages.xml','sitemap-locations.xml','sitemap-events.xml','sitemap-news.xml']:
     idx += f"  <sitemap><loc>{BASE}{f}</loc><lastmod>{TODAY}</lastmod></sitemap>\n"
 idx += "</sitemapindex>\n"
 open('sitemap.xml','w',encoding='utf-8').write(idx)
-print(f"sitemap.xml: Index auf 3 Sitemaps · Total {len(PAGES)+len(lurls)+len(eurls)} URLs")
+print(f"sitemap.xml: Index auf 4 Sitemaps · Total {len(PAGES)+len(lurls)+len(eurls)+len(NEWS)} URLs")
