@@ -1,0 +1,43 @@
+name: Deploy zu GitHub Pages (modern & robust)
+
+# Ersetzt de alt "pages-build-deployment"-Builder, wo bi 3800+ Dateie
+# is 10-Minute-Timeout glaufe isch. Diese Workflow packt di ganzi Site
+# in EI Archiv und deployt sie in eim Rutsch — kei Timeout, kei Abbräche.
+
+on:
+  push:
+    branches: [main]
+  # Nach em nächtliche Daten-Sync automatisch deploye:
+  workflow_run:
+    workflows: ["Stadtpuls Daten-Sync (Eventfrog + Zürich Tourismus)"]
+    types: [completed]
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Immer nume ei Deploy zur Zit; en laufende NÖD abbräche.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Pages konfiguriere
+        uses: actions/configure-pages@v5
+      - name: Ganzi Site als Artefakt packe
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - name: Deploye
+        id: deployment
+        uses: actions/deploy-pages@v4
