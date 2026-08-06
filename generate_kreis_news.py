@@ -187,13 +187,32 @@ def page(k, stories):
     faq_html="\n".join(f'<details class="faq-item"><summary>{esc(q)}</summary><div class="faq-a">{esc(a)}</div></details>' for q,a in d["faq"])
     # Nachbar-Kreis-Links (interni Link-Pyramide)
     others="".join(f'<a class="kchip" href="/kreis-{n}/news/">Kreis {n} · {esc(KREISE[n]["name"])}</a>' for n in KREISE if n!=k)
-    # Interni Verlinkig aufs Tausch-Tool (SEO: Kreis-Guide -> Wohnungstausch)
-    wtlink=(f'<div style="margin:26px 0 6px;border:1px solid rgba(200,255,0,.25);border-left:3px solid #c8ff00;'
-            f'border-radius:0 10px 10px 0;padding:14px 18px;background:rgba(200,255,0,.04)">'
-            f'<p style="font-size:13px;line-height:1.7;color:#c9c6bd;margin:0">🏠 Suechsch e grösseri oder anderi '
-            f'Wohnig im <b>Kreis {k} {esc(name)}</b>? Tuusch statt sueche: '
-            f'<a href="/wohnungstausch/" style="color:#c8ff00;text-decoration:none;border-bottom:1px solid rgba(200,255,0,.4)">'
-            f'anonyme Wohnungstausch Zürich</a> — kreis-genau, gratis, mit automatischem Match.</p></div>')
+    # Interni Verlinkig aufs Tausch-Tool (SEO: Kreis-Guide -> Wohnungstausch).
+    # Massgschnidereti Hooks für usgwählti Kreis, susch d generischi Box.
+    WT_HOOKS = {
+      1:("Quartierwechsel ohne Homegate-Wahnsinn","Bezahlbaren Wohnraum in der Altstadt gibt es fast nur noch im direkten Handshake. Nutze das anonyme Matching für den nächsten Tapetenwechsel."),
+      3:("Wohnung zu klein geworden?","Aus der 2-Zimmer-Bude am Idaplatz herausgewachsen, aber du willst das Quartier nicht verlassen? Auf Stadtpuls tauschst du deine Mietwohnung kreisgenau und anonym."),
+      4:("Wohnung zu klein geworden?","Rausgewachsen aus der Wohnung an der Langstrasse, aber der Kreis 4 soll bleiben? Auf Stadtpuls tauschst du kreisgenau und anonym – ohne öffentliche Besichtigung."),
+      6:("Verkleinern ohne Mietschock?","Die Kinder sind raus und die 4.5-Zimmer-Wohnung am Hang ist zu gross? Tausche deine Perle gegen eine kompakte City-Wohnung – ohne den Stress öffentlicher Besichtigungen."),
+      7:("Verkleinern ohne Mietschock?","Die 4.5-Zimmer-Wohnung am Zürichberg ist zu gross geworden? Tausche sie anonym gegen etwas Kompaktes – kreisgenau und ohne Massenbesichtigung."),
+      8:("Quartierwechsel ohne Homegate-Wahnsinn","Bezahlbaren Wohnraum im Seefeld gibt es fast nur noch im direkten Handshake. Nutze das anonyme Matching für den nächsten Tapetenwechsel."),
+    }
+    if k in WT_HOOKS:
+        _hl,_tx=WT_HOOKS[k]
+        wtlink=(f'<div style="margin:26px 0 6px;border:1px solid rgba(200,255,0,.25);border-left:3px solid #c8ff00;'
+                f'border-radius:0 10px 10px 0;padding:16px 18px;background:rgba(200,255,0,.04)">'
+                f'<p style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:20px;'
+                f'text-transform:uppercase;color:#c8ff00;margin:0 0 6px">🏠 {esc(_hl)}</p>'
+                f'<p style="font-size:13px;line-height:1.7;color:#c9c6bd;margin:0">{esc(_tx)} '
+                f'<a href="/wohnungstausch/" style="color:#c8ff00;text-decoration:none;border-bottom:1px solid rgba(200,255,0,.4)">'
+                f'Zum anonymen Wohnungstausch Zürich →</a></p></div>')
+    else:
+        wtlink=(f'<div style="margin:26px 0 6px;border:1px solid rgba(200,255,0,.25);border-left:3px solid #c8ff00;'
+                f'border-radius:0 10px 10px 0;padding:14px 18px;background:rgba(200,255,0,.04)">'
+                f'<p style="font-size:13px;line-height:1.7;color:#c9c6bd;margin:0">🏠 Suechsch e grösseri oder anderi '
+                f'Wohnig im <b>Kreis {k} {esc(name)}</b>? Tuusch statt sueche: '
+                f'<a href="/wohnungstausch/" style="color:#c8ff00;text-decoration:none;border-bottom:1px solid rgba(200,255,0,.4)">'
+                f'anonyme Wohnungstausch Zürich</a> — kreis-genau, gratis, mit automatischem Match.</p></div>')
     title=f"News Kreis {k} Zürich – {name} | Stadtpuls"
     tokens={
       "__K__":str(k),"__NAME__":esc(name),"__COL__":col,"__TITLE__":esc(title),
