@@ -46,7 +46,7 @@ CATEGORIES = {
 }
 
 ROOTIFY = ['index.html', 'gastro.html', 'nachtleben.html', 'events.html', 'shopping.html', 'kultur.html',
-           'dating.html', 'community.html', 'datenschutz.html', 'gps.html', 'immobilien.html',
+           'dating.html', 'community.html', 'datenschutz.html', 'gps.html', 'marktplatz.html',
            'impressum.html', 'jobs.html', 'kontakt.html', 'login.html', 'mobilitaet.html',
            'musik.html', 'news.html', 'partners.html', 'platzierung.html', 'quartiere.html',
            'sp-track.js', 'favicon.svg']

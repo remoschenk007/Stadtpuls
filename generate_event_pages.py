@@ -148,7 +148,7 @@ def render_page(template, ev):
         '<script src="/event-links.js"></script>\n<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>', 1)
 
     for name in ['index.html', 'gastro.html', 'nachtleben.html', 'events.html', 'shopping.html',
-                 'dating.html', 'community.html', 'datenschutz.html', 'gps.html', 'immobilien.html',
+                 'dating.html', 'community.html', 'datenschutz.html', 'gps.html', 'marktplatz.html',
                  'impressum.html', 'jobs.html', 'kontakt.html', 'login.html', 'mobilitaet.html',
                  'musik.html', 'news.html', 'partners.html', 'platzierung.html', 'quartiere.html',
                  'sp-track.js', 'favicon.svg']:
