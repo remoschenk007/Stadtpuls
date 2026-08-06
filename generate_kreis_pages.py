@@ -101,7 +101,7 @@ footer{{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spac
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1B1HL5W61"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){{dataLayer.push(arguments);}}
   gtag('js', new Date());
   gtag('config', 'G-R1B1HL5W61');
 </script>
