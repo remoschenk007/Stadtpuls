@@ -187,11 +187,18 @@ def page(k, stories):
     faq_html="\n".join(f'<details class="faq-item"><summary>{esc(q)}</summary><div class="faq-a">{esc(a)}</div></details>' for q,a in d["faq"])
     # Nachbar-Kreis-Links (interni Link-Pyramide)
     others="".join(f'<a class="kchip" href="/kreis-{n}/news/">Kreis {n} · {esc(KREISE[n]["name"])}</a>' for n in KREISE if n!=k)
+    # Interni Verlinkig aufs Tausch-Tool (SEO: Kreis-Guide -> Wohnungstausch)
+    wtlink=(f'<div style="margin:26px 0 6px;border:1px solid rgba(200,255,0,.25);border-left:3px solid #c8ff00;'
+            f'border-radius:0 10px 10px 0;padding:14px 18px;background:rgba(200,255,0,.04)">'
+            f'<p style="font-size:13px;line-height:1.7;color:#c9c6bd;margin:0">🏠 Suechsch e grösseri oder anderi '
+            f'Wohnig im <b>Kreis {k} {esc(name)}</b>? Tuusch statt sueche: '
+            f'<a href="/wohnungstausch/" style="color:#c8ff00;text-decoration:none;border-bottom:1px solid rgba(200,255,0,.4)">'
+            f'anonyme Wohnungstausch Zürich</a> — kreis-genau, gratis, mit automatischem Match.</p></div>')
     title=f"News Kreis {k} Zürich – {name} | Stadtpuls"
     tokens={
       "__K__":str(k),"__NAME__":esc(name),"__COL__":col,"__TITLE__":esc(title),
       "__META__":esc(d["meta"]),"__CANON__":f"{SITE}/kreis-{k}/news/","__INTRO__":esc(d["intro"]),
-      "__CARDS__":cards,"__FAQ__":faq_html,"__OTHERS__":others,
+      "__CARDS__":cards,"__WTLINK__":wtlink,"__FAQ__":faq_html,"__OTHERS__":others,
       "__SCHEMA_FAQ__":faq_schema(d["faq"]),"__SCHEMA_BC__":breadcrumb_schema(k),
     }
     out=PAGE_HTML
@@ -310,6 +317,7 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 
   <h2 class="sec">AKTUELLI <span class="g">STORYS</span> · KREIS __K__</h2>
   <div class="feed">__CARDS__</div>
+  __WTLINK__
 
   <h2 class="sec">HÜFIGI <span class="g">FRÅGE</span> · KREIS __K__ __NAME__</h2>
   __FAQ__
