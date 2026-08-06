@@ -25,7 +25,7 @@ def urlset(urls):
 # 1) Statische Seiten
 PAGES = ['','index.html','gastro.html','nachtleben.html','events.html','shopping.html','kultur.html','news.html','dating.html',
  'feedback.html','kontakt.html','platzierung.html','impressum.html','datenschutz.html',
- 'quartiere.html','musik.html','jobs.html','immobilien.html','mobilitaet.html','community.html','gps.html','partners.html','marktplatz.html']
+ 'quartiere.html','musik.html','jobs.html','wohnungstausch/','mobilitaet.html','community.html','gps.html','partners.html','marktplatz.html']
 import glob as _g
 PAGES += sorted(p.replace('index.html','') for p in _g.glob('*/kreis-*/index.html'))  # nur real existierende Kreis-Seiten
 open('sitemap-pages.xml','w',encoding='utf-8').write(urlset([(BASE+p, TODAY) for p in PAGES]))
