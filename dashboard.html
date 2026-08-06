@@ -4,549 +4,317 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stadtpuls — Din Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-height:100%;cursor:none;overflow-x:hidden}
-#dot{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-#ring{position:fixed;width:30px;height:30px;border:1px solid rgba(255,45,0,0.55);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .07s,top .07s}
-@media(hover:none){#dot,#ring{display:none}body{cursor:auto}}
-.scan{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,45,0,0.01) 3px,rgba(255,45,0,0.01) 4px);pointer-events:none;z-index:3}
-.gridl{position:fixed;inset:0;background-image:linear-gradient(rgba(255,45,0,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,45,0,0.025) 1px,transparent 1px);background-size:52px 52px;pointer-events:none;z-index:2}
-.cn{position:fixed;width:18px;height:18px;border-color:rgba(255,45,0,0.3);border-style:solid;z-index:20;pointer-events:none}
-.tl{top:12px;left:12px;border-width:2px 0 0 2px}
-.tr{top:12px;right:12px;border-width:2px 2px 0 0}
-.bl{bottom:12px;left:12px;border-width:0 0 2px 2px}
-.br{bottom:12px;right:12px;border-width:0 2px 2px 0}
-/* CLEAN v1 — übersichtlicher: Universum ausblende, normalé Cursor (Standard) */
-.universe-wrap,.legend,.bubble-card,.bc-backdrop{display:none!important}
-html,body{cursor:auto!important}
+:root{--bg:#04040a;--card:#0b0b12;--card2:#0e0e17;--line:rgba(255,255,255,.07);--cream:#e8e4d9;--mut:rgba(232,228,217,.42);--mut2:rgba(232,228,217,.24);--rot:#ff2d00;--volt:#c8ff00;--pur:#9333ea;--cy:#00f5ff;--pk:#ec4899;--gold:#ffd700}
+html,body{background:var(--bg);color:var(--cream);font-family:'DM Mono',monospace;min-height:100%}
+body{background-image:radial-gradient(circle at 15% -5%,rgba(255,45,0,.06),transparent 42%),radial-gradient(circle at 92% 8%,rgba(147,51,234,.05),transparent 45%);background-attachment:fixed}
 #dot,#ring{display:none!important}
+a{color:inherit;text-decoration:none}
+.H,h1,h2,h3{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;text-transform:uppercase;line-height:.9}
+.r{color:var(--rot)}.v{color:var(--volt)}.p{color:var(--pur)}.cy{color:var(--cy)}.pk{color:var(--pk)}
+.wrap{max-width:1120px;margin:0 auto;padding:0 18px}
 
-.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid rgba(255,45,0,0.1);background:rgba(4,4,10,0.96);backdrop-filter:blur(14px)}
-.logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:4px;font-size:19px;display:flex;align-items:center;gap:7px;color:#e8e4d9;text-decoration:none}
-.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
-@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,0.6)}50%{box-shadow:0 0 0 7px transparent}}
-.nav-r{display:flex;align-items:center;gap:12px}
-.nav-handle{font-size:9px;letter-spacing:2px;color:rgba(232,228,217,0.35);text-transform:uppercase}
-.nav-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#ff2d00,#9333ea);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:13px;cursor:pointer;border:1px solid rgba(255,45,0,0.3)}
-.nav-out{font-size:8px;letter-spacing:2px;color:rgba(255,45,0,0.4);cursor:pointer;text-transform:uppercase;transition:color .2s}
-.nav-out:hover{color:#ff2d00}
-
-.page{padding-top:57px;position:relative;z-index:10}
-.eye{font-size:8px;letter-spacing:5px;color:#ff2d00;text-transform:uppercase;margin-bottom:4px}
-.H{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;text-transform:uppercase;color:#e8e4d9;line-height:.88}
-.r{color:#ff2d00}.v{color:#c8ff00}.p{color:#9333ea}.cy{color:#00f5ff}.pk{color:#ec4899}
-
-.notif{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#ff2d00;color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:2px;text-transform:uppercase;padding:10px 24px;border-radius:6px;z-index:200;box-shadow:0 8px 30px rgba(255,45,0,0.4);opacity:0;transition:opacity .3s;pointer-events:none;white-space:nowrap}
-.notif.show{opacity:1}
-
-.modal-bg{position:fixed;inset:0;background:rgba(4,4,10,0.9);backdrop-filter:blur(8px);z-index:100;display:none;align-items:flex-end;justify-content:center}
-.modal-bg.open{display:flex;animation:mfade .3s}
-@keyframes mfade{from{opacity:0}to{opacity:1}}
-.modal{background:#0a0005;border:1px solid rgba(255,45,0,0.18);border-radius:14px 14px 0 0;width:100%;max-width:560px;padding:24px;animation:mup .35s cubic-bezier(.16,1,.3,1)}
-@keyframes mup{from{transform:translateY(60px)}to{transform:none}}
-.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px}
-.modal-close{color:rgba(232,228,217,0.3);cursor:pointer;font-size:18px;line-height:1;transition:color .2s;background:none;border:none}
-.modal-close:hover{color:#ff2d00}
-
-.sec{border-bottom:1px solid rgba(255,45,0,0.07);padding:26px 22px}
-.sec:last-child{border-bottom:none;padding-bottom:60px}
-.sec-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:18px}
-.sec-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:30px;text-transform:uppercase;color:#e8e4d9;line-height:.9}
-.sec-act{font-size:8px;letter-spacing:2px;color:rgba(255,45,0,0.45);cursor:pointer;text-transform:uppercase;transition:color .2s;white-space:nowrap;margin-left:12px;background:none;border:none}
-.sec-act:hover{color:#ff2d00}
-
-/* HERO */
-.hero{position:relative;overflow:hidden;border-bottom:1px solid rgba(255,45,0,0.1)}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,45,0,0.05) 0%,rgba(147,51,234,0.03) 60%,transparent 100%)}
-.hero-scan{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,45,0,0.4),transparent);animation:hs 4s ease-in-out infinite}
-@keyframes hs{0%,100%{opacity:0;transform:scaleX(.2)}50%{opacity:1;transform:scaleX(1)}}
-.hero-inner{padding:28px 22px 22px;position:relative;z-index:2}
-.hero-top{display:flex;align-items:flex-start;gap:18px;margin-bottom:18px}
-.av-wrap{position:relative;flex-shrink:0}
-.av{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,#ff2d00,#9333ea);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:30px;border:2px solid rgba(255,45,0,0.25)}
-.av-ring{position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(255,45,0,0.25);animation:ar 9s linear infinite}
-@keyframes ar{to{transform:rotate(360deg)}}
-.av-edit{position:absolute;bottom:-1px;right:-1px;width:20px;height:20px;background:#ff2d00;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:9px;cursor:pointer;border:2px solid #04040a}
-.hero-info{flex:1;min-width:0}
-.hero-handle{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;color:#e8e4d9;line-height:1;margin-bottom:3px}
-.hero-handle span{color:#ff2d00}
-.hero-kreis{font-size:8px;letter-spacing:2px;color:rgba(232,228,217,0.3);text-transform:uppercase;margin-bottom:8px}
-.hero-bdgs{display:flex;flex-wrap:wrap;gap:4px}
-.hbdg{padding:4px 9px;border-radius:100px;font-size:7px;letter-spacing:1.5px;text-transform:uppercase}
-.hbdg.r{background:rgba(255,45,0,0.09);color:#ff2d00;border:1px solid rgba(255,45,0,0.22)}
-.hbdg.v{background:rgba(200,255,0,0.06);color:#c8ff00;border:1px solid rgba(200,255,0,0.18)}
-.hbdg.p{background:rgba(147,51,234,0.09);color:#9333ea;border:1px solid rgba(147,51,234,0.22)}
-.hbdg.cy{background:rgba(0,245,255,0.06);color:#00f5ff;border:1px solid rgba(0,245,255,0.18)}
-.hbdg.gold{background:rgba(255,215,0,0.08);color:#ffd700;border:1px solid rgba(255,215,0,0.2)}
-
-.score-box{background:rgba(255,45,0,0.03);border:1px solid rgba(255,45,0,0.1);border-radius:10px;padding:14px;margin-bottom:16px}
-.score-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
-.score-lbl{font-size:7px;letter-spacing:4px;color:rgba(232,228,217,0.25);text-transform:uppercase}
-.score-val{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:38px;color:#ff2d00;line-height:1}
-.score-max{font-size:10px;color:rgba(232,228,217,0.18)}
-.score-rank{font-size:7px;letter-spacing:3px;color:rgba(232,228,217,0.18);text-transform:uppercase;margin-bottom:8px}
-.sbar{height:3px;background:rgba(255,255,255,0.06);border-radius:2px;margin-bottom:10px;overflow:hidden}
-.sbar-fill{height:100%;background:linear-gradient(90deg,#ff2d00,#c8ff00);border-radius:2px;transition:width 1.2s cubic-bezier(.16,1,.3,1)}
-.tasks{display:flex;flex-direction:column;gap:5px}
-.task{display:flex;align-items:center;gap:8px;font-size:8px;color:rgba(232,228,217,0.28);letter-spacing:.5px;cursor:pointer;transition:color .2s;text-transform:uppercase}
-.task:hover{color:rgba(232,228,217,0.6)}
-.task.done{color:rgba(200,255,0,0.45)}
-.td{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,0.08);flex-shrink:0;transition:all .2s}
-.task.done .td{background:#c8ff00;box-shadow:0 0 6px rgba(200,255,0,0.5)}
-.tpts{margin-left:auto;color:rgba(255,45,0,0.4);font-size:7px;letter-spacing:1px}
-.task.done .tpts{color:rgba(200,255,0,0.35)}
-
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,45,0,0.08);border-radius:8px;overflow:hidden}
-.stat{background:#04040a;padding:12px 10px;text-align:center}
-.stn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:#e8e4d9;line-height:1;margin-bottom:2px}
-.stl{font-size:6px;letter-spacing:2px;color:rgba(232,228,217,0.22);text-transform:uppercase}
-
-.ir{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.035);cursor:pointer;transition:all .2s}
-.ir:last-child{border-bottom:none}
-.ir:hover{padding-left:5px}
-.ir:hover .irv{color:#ff2d00}
-.irl{font-size:7px;letter-spacing:3px;color:rgba(232,228,217,0.25);text-transform:uppercase}
-.irv{font-size:11px;color:rgba(232,228,217,0.5);display:flex;align-items:center;gap:6px;transition:color .2s}
-.ira{color:rgba(255,45,0,0.25);font-size:9px}
-.ire{color:rgba(255,45,0,0.35);font-size:9px;letter-spacing:1px}
-
-.inp{width:100%;background:rgba(255,255,255,0.02);border:1px solid rgba(255,45,0,0.12);border-radius:6px;color:#e8e4d9;padding:12px 13px;font-family:'DM Mono',monospace;font-size:12px;outline:none;margin-bottom:7px;transition:all .2s}
-.inp:focus{border-color:#ff2d00;background:rgba(255,45,0,0.05)}
-.inp::placeholder{color:rgba(232,228,217,0.13)}
-textarea.inp{resize:none;min-height:80px;line-height:1.6}
-
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
-.chip{padding:7px 13px;border:1px solid rgba(255,45,0,0.14);border-radius:100px;color:rgba(232,228,217,0.34);font-size:9px;letter-spacing:1.5px;cursor:pointer;transition:all .2s;text-transform:uppercase}
-.chip:hover{border-color:#ff2d00;color:#e8e4d9}
-.chip.on{border-color:#c8ff00;color:#c8ff00;background:rgba(200,255,0,0.04);box-shadow:0 0 10px rgba(200,255,0,0.1)}
-
-.tabs{display:flex;border:1px solid rgba(255,45,0,0.14);border-radius:8px;overflow:hidden;margin-bottom:14px}
-.tab{flex:1;padding:9px 5px;font-size:7px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-align:center;color:rgba(232,228,217,0.26);transition:all .22s;background:transparent;border:none;font-family:'DM Mono',monospace}
-.tab.on{background:rgba(255,45,0,0.1);color:#ff2d00}
-
-.BTN{width:100%;border:none;border-radius:8px;padding:14px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;letter-spacing:3px;cursor:pointer;text-transform:uppercase;transition:all .22s}
-.BTN.red{background:linear-gradient(135deg,#ff2d00,#e02800);color:#fff;box-shadow:0 6px 22px rgba(255,45,0,0.22)}
-.BTN.red:hover{box-shadow:0 10px 34px rgba(255,45,0,0.4);transform:translateY(-1px)}
-.BTN.volt{background:linear-gradient(135deg,#c8ff00,#a8e000);color:#04040a}
-.BTN.volt:hover{box-shadow:0 10px 30px rgba(200,255,0,0.3);transform:translateY(-1px)}
-.BTN.ghost{background:transparent;border:1px solid rgba(255,255,255,0.09);color:rgba(232,228,217,0.3);font-size:11px;padding:10px}
-.BTN.ghost:hover{border-color:rgba(255,255,255,0.22);color:rgba(232,228,217,0.6)}
-
-.empty{text-align:center;padding:20px 0}
-.empty-big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:38px;color:rgba(255,45,0,0.07);text-transform:uppercase;margin-bottom:5px}
-.empty-txt{font-size:8px;color:rgba(232,228,217,0.18);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
-
-.tog-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(255,255,255,0.03)}
-.tog-row:last-child{border-bottom:none}
-.tog-lbl{font-size:11px;color:rgba(232,228,217,0.6);margin-bottom:2px}
-.tog-sub{font-size:7px;color:rgba(232,228,217,0.2);letter-spacing:1px}
-.tog{width:38px;height:20px;border-radius:10px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.09);cursor:pointer;position:relative;transition:all .25s;flex-shrink:0}
-.tog.on{background:rgba(255,45,0,0.25);border-color:rgba(255,45,0,0.35)}
-.tog::after{content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;background:rgba(232,228,217,0.25);transition:all .25s}
-.tog.on::after{left:20px;background:#ff2d00;box-shadow:0 0 6px rgba(255,45,0,0.6)}
-
-.status{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:100px;font-size:7px;letter-spacing:2px;text-transform:uppercase}
-.status.live{background:rgba(200,255,0,0.07);color:#c8ff00;border:1px solid rgba(200,255,0,0.2)}
-.status.pending{background:rgba(255,215,0,0.07);color:#ffd700;border:1px solid rgba(255,215,0,0.2)}
-.status.rejected{background:rgba(255,45,0,0.07);color:#ff2d00;border:1px solid rgba(255,45,0,0.2)}
-
-.ranks{display:flex;flex-direction:column;gap:6px}
-.rank-row{display:flex;align-items:center;gap:10px;padding:10px 12px;background:rgba(255,255,255,0.01);border:1px solid rgba(255,255,255,0.04);border-radius:6px}
-.rank-row.cur{border-color:rgba(255,45,0,0.25);background:rgba(255,45,0,0.04)}
-.rank-icon{font-size:18px;width:28px;text-align:center}
-.rank-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;text-transform:uppercase;color:rgba(232,228,217,0.4);flex:1}
-.rank-row.cur .rank-name{color:#ff2d00}
-.rank-pts{font-size:8px;color:rgba(232,228,217,0.2);letter-spacing:1px}
-
-.danger{margin-top:18px;padding:14px;border:1px solid rgba(255,45,0,0.13);border-radius:8px;background:rgba(255,45,0,0.02)}
-.danger-title{font-size:7px;letter-spacing:4px;color:rgba(255,45,0,0.35);text-transform:uppercase;margin-bottom:10px}
-.danger-btn{width:100%;padding:11px;border:1px solid rgba(255,45,0,0.18);border-radius:6px;background:transparent;color:rgba(255,45,0,0.4);font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.danger-btn:hover{border-color:#ff2d00;color:#ff2d00;background:rgba(255,45,0,0.04)}
-
-/* GESPERRT BANNER */
-.banned-banner{background:rgba(255,45,0,0.08);border:1px solid rgba(255,45,0,0.3);border-radius:8px;padding:14px 18px;margin:0 22px 0;display:flex;align-items:center;gap:12px}
-.banned-icon{font-size:20px}
-.banned-txt{font-size:9px;color:#ff2d00;letter-spacing:1px;line-height:1.6;text-transform:uppercase}
-
-/* NOTIFICATIONS BELL */
-.bell-wrap{position:relative;cursor:pointer}
-.bell-dot{position:absolute;top:-2px;right:-2px;width:8px;height:8px;background:#ff2d00;border-radius:50%;border:2px solid #04040a;display:none}
+/* NAV */
+.nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;border-bottom:1px solid var(--line);background:rgba(4,4,10,.85);backdrop-filter:blur(16px)}
+.logo{display:flex;align-items:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:4px;font-size:18px;color:var(--cream)}
+.ldot{width:7px;height:7px;border-radius:50%;background:var(--rot);animation:blink 2s infinite}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,.6)}50%{box-shadow:0 0 0 7px transparent}}
+.nav-r{display:flex;align-items:center;gap:14px}
+.nav-handle{font-size:9px;letter-spacing:2px;color:var(--mut);text-transform:uppercase}
+.bell{position:relative;cursor:pointer;font-size:15px;opacity:.7;transition:.2s}.bell:hover{opacity:1}
+.bell-dot{position:absolute;top:-2px;right:-2px;width:7px;height:7px;border-radius:50%;background:var(--rot);display:none}
 .bell-dot.show{display:block}
-.notif-panel{position:absolute;top:50px;right:22px;width:300px;max-height:380px;overflow-y:auto;background:#0a0005;border:1px solid rgba(255,45,0,0.18);border-radius:10px;box-shadow:0 20px 50px rgba(0,0,0,0.6);z-index:90;display:none}
-.notif-panel.open{display:block;animation:mfade .2s}
-.np-item{padding:13px 16px;border-bottom:1px solid rgba(255,255,255,0.04);font-size:10px;display:flex;gap:10px}
-.np-item:last-child{border-bottom:none}
-.np-icon{font-size:16px;flex-shrink:0}
-.np-title{color:#e8e4d9;margin-bottom:3px;font-size:10px}
-.np-text{color:rgba(232,228,217,0.4);font-size:9px;line-height:1.5}
-.np-empty{padding:24px;text-align:center;color:rgba(232,228,217,0.2);font-size:9px;letter-spacing:1px;text-transform:uppercase}
+.nav-av{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,var(--rot),var(--pur));display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;border:1px solid rgba(255,45,0,.3)}
+.nav-out{font-size:8px;letter-spacing:2px;color:rgba(255,45,0,.5);cursor:pointer;text-transform:uppercase;transition:.2s}.nav-out:hover{color:var(--rot)}
 
+.page{padding:22px 0 70px;position:relative}
+#banned-wrap:empty{display:none}
+.banned-banner{display:flex;align-items:center;gap:12px;background:rgba(255,45,0,.08);border:1px solid rgba(255,45,0,.3);border-radius:12px;padding:14px 16px;margin-bottom:18px}
+.banned-icon{font-size:20px}.banned-txt{font-size:11px;color:#ffb3a3;line-height:1.5}
 
-/* ═══════════════════════════════════════
-   UNIVERSUM SEKTION — DIS STADTPULS KOSMOS
-   ═══════════════════════════════════════ */
+/* HERO CARD */
+.hero{background:linear-gradient(160deg,var(--card2),var(--card));border:1px solid var(--line);border-radius:20px;padding:26px 24px;position:relative;overflow:hidden;margin-bottom:16px}
+.hero::before{content:'';position:absolute;top:-60px;right:-60px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,45,0,.12),transparent 70%);pointer-events:none}
+.hero-top{display:flex;align-items:center;gap:18px;position:relative}
+.av-wrap{position:relative;flex-shrink:0}
+.av{width:78px;height:78px;border-radius:22px;background:linear-gradient(135deg,var(--rot),var(--pur));display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;color:#fff}
+.av-edit{position:absolute;bottom:-4px;right:-4px;width:24px;height:24px;background:var(--rot);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;cursor:pointer;border:3px solid var(--bg)}
+.hero-info{flex:1;min-width:0}
+.hero-handle{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;line-height:1;color:var(--cream)}
+.hero-handle span{color:var(--rot)}
+.hero-kreis{font-size:8px;letter-spacing:2px;color:var(--mut2);text-transform:uppercase;margin:6px 0 9px}
+.hero-bdgs{display:flex;flex-wrap:wrap;gap:5px}
+.hbdg{padding:4px 9px;border-radius:100px;font-size:7px;letter-spacing:1.5px;text-transform:uppercase;border:1px solid transparent}
+.hbdg.r{background:rgba(255,45,0,.1);color:var(--rot);border-color:rgba(255,45,0,.25)}
+.hbdg.v{background:rgba(200,255,0,.07);color:var(--volt);border-color:rgba(200,255,0,.2)}
+.hbdg.p{background:rgba(147,51,234,.1);color:#c39bff;border-color:rgba(147,51,234,.28)}
+.hbdg.gold{background:rgba(255,215,0,.08);color:var(--gold);border-color:rgba(255,215,0,.28)}
+/* SCORE */
+.score{margin-top:22px;position:relative}
+.score-top{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:9px}
+.score-lbl{font-size:7px;letter-spacing:3px;color:var(--mut2);text-transform:uppercase}
+.score-rank{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;color:var(--volt);text-transform:uppercase;margin-top:3px}
+.score-val{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:30px;color:var(--cream)}
+.score-max{font-size:11px;color:var(--mut2)}
+.sbar{height:6px;background:rgba(255,255,255,.06);border-radius:100px;overflow:hidden}
+.sbar-fill{height:100%;background:linear-gradient(90deg,var(--rot),var(--volt));border-radius:100px;transition:width .6s cubic-bezier(.16,1,.3,1)}
+.tasks{display:flex;gap:7px;overflow-x:auto;margin-top:14px;padding-bottom:2px;scrollbar-width:none}.tasks::-webkit-scrollbar{display:none}
+.task{flex-shrink:0;display:flex;align-items:center;gap:7px;font-size:9px;letter-spacing:.5px;color:var(--mut);border:1px solid var(--line);border-radius:100px;padding:7px 12px;cursor:pointer;white-space:nowrap;transition:.2s}
+.task:hover{border-color:rgba(255,45,0,.4)}
+.task .td{width:8px;height:8px;border-radius:50%;border:1px solid var(--mut2);flex-shrink:0}
+.task.done{color:var(--volt);border-color:rgba(200,255,0,.2);background:rgba(200,255,0,.04);cursor:default}
+.task.done .td{background:var(--volt);border-color:var(--volt)}
+.tpts{color:var(--rot);font-weight:500}.task.done .tpts{color:var(--volt)}
 
-*{box-sizing:border-box;margin:0;padding:0}
+/* STATS ROW */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 10px;text-align:center}
+.stat .stn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--volt);line-height:1}
+.stat .stl{font-size:7px;letter-spacing:2px;color:var(--mut2);text-transform:uppercase;margin-top:5px}
 
-/* PREVIEW LABEL */
+/* SECTION GRID */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:start}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+.sec{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px}
+.sec.span{grid-column:1/-1}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:10px}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;color:var(--cream);line-height:.95}
+.sec-act{font-size:8px;letter-spacing:2px;color:rgba(255,45,0,.55);cursor:pointer;text-transform:uppercase;transition:.2s;white-space:nowrap;background:none;border:none;font-family:'DM Mono',monospace}
+.sec-act:hover{color:var(--rot)}
+.hint{font-size:8px;letter-spacing:1px;color:var(--mut2);text-transform:uppercase;margin-bottom:10px}
 
-/* STARFIELD BG */
+/* PROFILE ROWS */
+.lbl{font-size:7px;letter-spacing:3px;color:var(--mut2);text-transform:uppercase;margin-bottom:7px}
+.inp{width:100%;background:#07070f;border:1px solid rgba(255,255,255,.09);color:var(--cream);font-family:'DM Mono',monospace;font-size:13px;padding:12px 13px;border-radius:10px;outline:none;margin-bottom:12px;resize:vertical}
+.inp:focus{border-color:var(--rot)}
+textarea.inp{min-height:64px}
+.ir{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 2px;border-bottom:1px solid var(--line);cursor:pointer;transition:.15s}
+.ir:last-child{border-bottom:none}.ir:hover{padding-left:6px}
+.irl{font-size:8px;letter-spacing:2px;color:var(--mut2);text-transform:uppercase}
+.irv{font-size:11px;color:var(--cream);display:flex;align-items:center;gap:6px}
+.ira{color:rgba(255,45,0,.5)}.ire{color:rgba(232,228,217,.28)}
 
-/* UNIVERSE CONTAINER */
-.universe-wrap{position:relative;width:100%;height:680px;overflow:hidden;border-bottom:1px solid rgba(255,45,0,0.15);background:radial-gradient(ellipse at 50% 40%,rgba(255,45,0,0.13) 0%,rgba(147,51,234,0.08) 35%,#04040a 78%)}
-.universe-vignette{position:absolute;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse at 50% 45%,transparent 35%,rgba(0,0,0,0.55) 100%)}
-@media(max-width:600px){.universe-wrap{height:720px}}
-@media(max-width:380px){.universe-wrap{height:760px}}
-#starfield{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{font-size:9px;letter-spacing:.5px;padding:8px 12px;border:1px solid var(--line);border-radius:100px;cursor:pointer;color:var(--mut);text-transform:uppercase;transition:.15s;user-select:none}
+.chip:hover{border-color:rgba(255,45,0,.4)}
+.chip.on{background:rgba(255,45,0,.1);border-color:var(--rot);color:var(--rot)}
 
-.universe-head{position:absolute;top:36px;left:0;right:0;text-align:center;z-index:15;padding:0 24px;pointer-events:none}
-.uh-eye{font-size:8px;letter-spacing:5px;color:#ff2d00;text-transform:uppercase;margin-bottom:4px;display:flex;align-items:center;justify-content:center;gap:6px}
-.uh-eye::before,.uh-eye::after{content:'';width:16px;height:1px;background:rgba(255,45,0,0.3)}
-.uh-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;text-transform:uppercase;color:#fff;line-height:1;text-shadow:0 2px 20px rgba(0,0,0,0.8),0 0 40px rgba(0,0,0,0.6);letter-spacing:.5px}
-.uh-title span{color:#ff3300;text-shadow:0 0 30px rgba(255,45,0,0.8),0 2px 16px rgba(0,0,0,0.8)}
-.uh-sub{font-size:8px;color:rgba(232,228,217,0.25);letter-spacing:1.5px;margin-top:4px;text-transform:uppercase}
+/* TABS + EMPTY */
+.tabs{display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;scrollbar-width:none}.tabs::-webkit-scrollbar{display:none}
+.tab{flex-shrink:0;font-size:9px;letter-spacing:1px;padding:7px 12px;border:1px solid var(--line);border-radius:100px;cursor:pointer;color:var(--mut);text-transform:uppercase;background:none;font-family:'DM Mono',monospace;transition:.15s}
+.tab.on{background:rgba(255,45,0,.1);border-color:var(--rot);color:var(--rot)}
+.empty{text-align:center;padding:26px 14px;border:1px dashed var(--line);border-radius:12px}
+.empty-big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;color:rgba(255,255,255,.08)}
+.empty-txt{font-size:9px;letter-spacing:1px;color:var(--mut2);text-transform:uppercase;margin:6px 0 14px}
 
-/* CENTER STAR — DU */
-.center-star{position:absolute;left:50%;top:52%;transform:translate(-50%,-50%);z-index:8;display:flex;flex-direction:column;align-items:center;cursor:pointer}
-@media(max-width:600px){.center-star{top:38%}}
-.cs-glow{position:absolute;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,rgba(255,45,0,0.65) 0%,rgba(255,45,0,0.25) 40%,transparent 70%);animation:csPulse 3s ease-in-out infinite;left:50%;top:50%;transform:translate(-50%,-50%)}
-@media(max-width:600px){.cs-glow{width:128px;height:128px}}
-@keyframes csPulse{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:.85}50%{transform:translate(-50%,-50%) scale(1.3);opacity:1}}
-.cs-core{position:relative;width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#ff6b3a 35%,#ff2d00 70%);box-shadow:0 0 45px rgba(255,45,0,0.9),0 0 90px rgba(255,45,0,0.5),0 0 130px rgba(255,45,0,0.25),inset -4px -4px 10px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;color:#04040a;z-index:2}
-@media(max-width:600px){.cs-core{width:46px;height:46px;font-size:18px}}
-.cs-ring{position:absolute;border-radius:50%;border:1.5px solid rgba(255,45,0,0.4);animation:csRing 12s linear infinite}
-.cs-ring.r1{width:90px;height:90px;box-shadow:0 0 15px rgba(255,45,0,0.2)}
-.cs-ring.r2{width:118px;height:118px;border-color:rgba(255,45,0,0.22);animation-duration:18s;animation-direction:reverse}
-@media(max-width:600px){.cs-ring.r1{width:66px;height:66px}.cs-ring.r2{width:86px;height:86px}}
-@keyframes csRing{to{transform:rotate(360deg)}}
-.cs-label{margin-top:10px;font-size:9px;letter-spacing:2px;color:rgba(232,228,217,0.4);text-transform:uppercase;text-align:center}
-.cs-label strong{color:#e8e4d9;display:block;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:1px;margin-bottom:1px}
+/* RANKS */
+.ranks{display:flex;flex-direction:column;gap:7px}
+.rank-row{display:flex;align-items:center;gap:12px;padding:11px 13px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.01)}
+.rank-row.cur{border-color:rgba(200,255,0,.35);background:rgba(200,255,0,.05)}
+.rank-icon{font-size:18px}
+.rank-name{flex:1;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;text-transform:uppercase;color:var(--cream)}
+.rank-row.cur .rank-name{color:var(--volt)}
+.rank-pts{font-size:8px;letter-spacing:1px;color:var(--mut2)}
 
-/* BUBBLES — generic */
-.bubble{position:absolute;border-radius:50%;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;backdrop-filter:blur(2px);transition:transform .25s ease;z-index:5}
-.bubble:hover{transform:scale(1.07)!important}
-.bubble::before{content:'';position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 32% 28%,rgba(255,255,255,0.5) 0%,rgba(255,255,255,0.1) 30%,transparent 55%);pointer-events:none}
-.bubble::after{content:'';position:absolute;width:20%;height:11%;top:13%;left:23%;background:rgba(255,255,255,0.75);border-radius:50%;filter:blur(1.5px);pointer-events:none;transform:rotate(-30deg)}
-.b-icon{font-size:22px;line-height:1;margin-bottom:2px;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.4))}
-.b-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:.5px;text-transform:uppercase;line-height:1.05;text-shadow:0 1px 3px rgba(0,0,0,0.9),0 0 12px rgba(0,0,0,0.7)}
-.b-meta{font-size:6.5px;letter-spacing:1px;text-transform:uppercase;opacity:.95;margin-top:1px;text-shadow:0 1px 3px rgba(0,0,0,0.9)}
+/* TOGGLES */
+.tog-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.tog-row:last-child{border-bottom:none}
+.tog-lbl{font-size:11px;color:var(--cream)}
+.tog-sub{font-size:8px;color:var(--mut2);letter-spacing:.5px;margin-top:2px}
+.tog{width:40px;height:22px;border-radius:100px;background:rgba(255,255,255,.08);position:relative;cursor:pointer;flex-shrink:0;transition:.2s}
+.tog::after{content:'';position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#555;transition:.2s}
+.tog.on{background:rgba(200,255,0,.25)}
+.tog.on::after{left:20px;background:var(--volt)}
 
-/* Drift animations - each bubble gets its own via inline style timing, base keyframes vary */
-@keyframes driftA{0%,100%{transform:translate(0,0) rotate(0deg)}25%{transform:translate(calc(10px * var(--drift-scale,1)),calc(-14px * var(--drift-scale,1))) rotate(2deg)}50%{transform:translate(calc(-6px * var(--drift-scale,1)),calc(8px * var(--drift-scale,1))) rotate(-1deg)}75%{transform:translate(calc(-12px * var(--drift-scale,1)),calc(-6px * var(--drift-scale,1))) rotate(1deg)}}
-@keyframes driftB{0%,100%{transform:translate(0,0) rotate(0deg)}30%{transform:translate(calc(-14px * var(--drift-scale,1)),calc(10px * var(--drift-scale,1))) rotate(-2deg)}60%{transform:translate(calc(8px * var(--drift-scale,1)),calc(-10px * var(--drift-scale,1))) rotate(2deg)}}
-@keyframes driftC{0%,100%{transform:translate(0,0)}40%{transform:translate(calc(12px * var(--drift-scale,1)),calc(12px * var(--drift-scale,1)))}80%{transform:translate(calc(-8px * var(--drift-scale,1)),calc(-6px * var(--drift-scale,1)))}}
-@keyframes pulseGlow{0%,100%{filter:brightness(1) saturate(1)}50%{filter:brightness(1.35) saturate(1.3)}}
-@keyframes kiShimmer{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.bubble-ki .b-icon{animation:kiSparkle 2.2s ease-in-out infinite}
-@keyframes kiSparkle{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.15)}}
+/* BUTTONS */
+.BTN{width:100%;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:1.5px;text-transform:uppercase;padding:14px;border:none;border-radius:10px;cursor:pointer;background:rgba(255,255,255,.06);color:var(--cream);transition:.15s}
+.BTN:hover{filter:brightness(1.12)}
+.BTN.volt{background:var(--volt);color:#04040a}
+.BTN.red{background:var(--rot);color:#fff}
 
-/* Pulse Moment special ring (gold, like ZÜRI MOMENT) */
-.b-pulsemoment{position:absolute;inset:-12px;border-radius:50%;border:2px solid rgba(255,215,0,0.7);pointer-events:none;box-shadow:0 0 20px rgba(255,215,0,0.4)}
-.b-pulsemoment::before{content:'';position:absolute;top:-4px;left:50%;width:8px;height:8px;margin-left:-4px;background:#ffd700;border-radius:50%;box-shadow:0 0 14px rgba(255,215,0,1),0 0 24px rgba(255,215,0,0.6);animation:orbitDot 5s linear infinite}
-@keyframes orbitDot{from{transform:rotate(0deg) translateX(0) rotate(0deg)}to{transform:rotate(360deg) translateX(0) rotate(-360deg)}}
-.b-badge-live{position:absolute;top:-9px;right:-6px;background:#ff2d00;color:#fff;font-size:6px;letter-spacing:1px;padding:3px 7px;border-radius:100px;font-weight:bold;box-shadow:0 2px 12px rgba(255,45,0,0.8),0 0 20px rgba(255,45,0,0.4);animation:badgeBlink 1.4s ease-in-out infinite}
-@keyframes badgeBlink{0%,100%{opacity:1}50%{opacity:.5}}
+/* DANGER */
+.danger{margin-top:18px;border:1px solid rgba(255,45,0,.2);border-radius:12px;padding:16px;background:rgba(255,45,0,.03)}
+.danger-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;color:var(--rot);text-transform:uppercase;margin-bottom:8px}
+.danger-btn{width:100%;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:13px;letter-spacing:1px;text-transform:uppercase;padding:11px;border:1px solid rgba(255,45,0,.4);border-radius:8px;background:transparent;color:var(--rot);cursor:pointer}
+.danger-btn:hover{background:var(--rot);color:#fff}
 
-/* TOOLTIP / DETAIL CARD on tap — feedback.html-Stil: zentriertes Glow-Modal */
-.bubble-card{position:fixed;top:50%;left:50%;transform:translate(-50%,-48%) scale(0.94);background:#0a0a12;border-radius:20px;padding:0;z-index:110;box-shadow:0 30px 90px rgba(0,0,0,0.7);max-width:540px;width:calc(100% - 48px);opacity:0;pointer-events:none;transition:opacity .3s ease,transform .3s cubic-bezier(.16,1,.3,1);overflow:hidden}
-.bubble-card.open{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto}
-.bc-topbar{height:4px;width:100%}
-.bc-handle{display:none}
-.bc-inner{padding:32px 32px 28px}
-.bc-top{display:flex;align-items:center;gap:18px;margin-bottom:20px}
-.bc-icon{width:64px;height:64px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;box-shadow:0 0 30px currentColor,inset 0 0 16px rgba(255,255,255,0.15)}
-.bc-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;text-transform:uppercase;color:#fff;line-height:1;text-shadow:0 0 24px currentColor}
-.bc-sub{font-size:9px;letter-spacing:2.5px;color:rgba(232,228,217,0.4);text-transform:uppercase;margin-top:4px}
-.bc-desc{font-size:12px;color:rgba(232,228,217,0.6);line-height:1.7;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.08)}
-.bc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.08);border-radius:10px;overflow:hidden;margin-bottom:20px}
-.bc-stat{background:#0a0a12;padding:14px 8px;text-align:center}
-.bc-stat-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;color:#e8e4d9;line-height:1}
-.bc-stat-l{font-size:7px;letter-spacing:1.5px;color:rgba(232,228,217,0.3);text-transform:uppercase;margin-top:3px}
-.bc-btn{display:block;width:100%;text-align:center;padding:17px;border-radius:10px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:19px;letter-spacing:2.5px;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;transition:all .2s}
-.bc-btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
-.bc-close{position:absolute;top:18px;right:18px;background:rgba(255,255,255,0.1);border:none;color:rgba(232,228,217,0.6);width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:14px;z-index:5;transition:all .2s}
-.bc-close:hover{background:rgba(255,255,255,0.18);color:#fff}
-.bc-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(6px);z-index:109;opacity:0;pointer-events:none;transition:opacity .3s}
-.bc-backdrop.open{opacity:1;pointer-events:auto}
+/* NOTIF TOAST */
+.notif{position:fixed;bottom:22px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--rot);color:#04040a;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:1.5px;text-transform:uppercase;padding:11px 24px;border-radius:8px;z-index:300;box-shadow:0 10px 34px rgba(255,45,0,.4);opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;max-width:90vw;overflow:hidden;text-overflow:ellipsis}
+.notif.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* LEGEND below universe */
-.legend{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:16px 24px;position:relative;z-index:10}
-.legend-item{display:flex;align-items:center;gap:5px;font-size:7px;letter-spacing:1px;color:rgba(232,228,217,0.25);text-transform:uppercase}
-.legend-dot{width:6px;height:6px;border-radius:50%}
+/* NOTIF PANEL */
+.notif-panel{position:fixed;top:56px;right:14px;width:min(340px,92vw);max-height:70vh;overflow-y:auto;background:var(--card2);border:1px solid var(--line);border-radius:14px;z-index:120;padding:8px;display:none;box-shadow:0 20px 60px rgba(0,0,0,.6)}
+.notif-panel.open{display:block}
+.np-item{display:flex;gap:10px;padding:11px;border-radius:10px}
+.np-item:hover{background:rgba(255,255,255,.03)}
+.np-icon{font-size:16px}.np-title{font-size:11px;color:var(--cream)}.np-text{font-size:9px;color:var(--mut2);margin-top:2px}
+.np-empty{text-align:center;padding:30px;font-size:9px;letter-spacing:2px;color:var(--mut2);text-transform:uppercase}
 
-footer.spacer{height:60px}
-
+/* MODAL */
+#modal{position:fixed;inset:0;background:rgba(4,4,10,.9);backdrop-filter:blur(8px);z-index:200;display:none;align-items:flex-end;justify-content:center}
+#modal.open{display:flex;animation:mf .25s}
+@keyframes mf{from{opacity:0}to{opacity:1}}
+.modal-inner{background:#0a0710;border:1px solid rgba(255,45,0,.18);border-radius:16px 16px 0 0;width:100%;max-width:520px;padding:22px;animation:mu .35s cubic-bezier(.16,1,.3,1)}
+@media(min-width:560px){#modal{align-items:center}.modal-inner{border-radius:16px}}
+@keyframes mu{from{transform:translateY(50px)}to{transform:none}}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.modal-eye{font-size:8px;letter-spacing:3px;color:var(--rot);text-transform:uppercase}
+.modal-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:24px;text-transform:uppercase;color:var(--cream);margin-top:3px}
+.modal-close{color:var(--mut2);cursor:pointer;font-size:20px;background:none;border:none;line-height:1}.modal-close:hover{color:var(--rot)}
+select.inp{appearance:none}
 </style>
-<!-- Google tag (gtag.js) -->
+<!-- Google tag -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-R1B1HL5W61"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-R1B1HL5W61');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-R1B1HL5W61');</script>
 </head>
 <body>
 <div id="dot"></div><div id="ring"></div>
-<div class="scan"></div><div class="gridl"></div>
-<div class="cn tl"></div><div class="cn tr"></div><div class="cn bl"></div><div class="cn br"></div>
 <div class="notif" id="notif"></div>
 
-<div class="modal-bg" id="modal">
-  <div class="modal">
-    <div class="modal-head">
-      <div>
-        <div class="eye" id="modal-eye">NEU ERSTELLE</div>
-        <div class="H" style="font-size:28px" id="modal-title">BEITRAG SCHREIBE</div>
+<nav class="nav">
+  <a class="logo" href="index.html"><span class="ldot"></span>STADTPULS</a>
+  <div class="nav-r">
+    <div class="bell" onclick="toggleNotifPanel()">🔔<span class="bell-dot" id="bell-dot"></span></div>
+    <span class="nav-handle" id="nav-handle">@…</span>
+    <div class="nav-av" id="nav-av">Z</div>
+    <span class="nav-out" id="nav-out">LOGOUT</span>
+  </div>
+</nav>
+
+<div class="notif-panel" id="notif-panel"><div id="notif-panel-content"></div></div>
+
+<div class="wrap">
+<div class="page">
+  <div id="banned-wrap"></div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-top">
+      <div class="av-wrap">
+        <div class="av" id="av-big">Z</div>
+        <div class="av-edit" onclick="notif('BILD ÄNDERN — BALD ✓')">✏️</div>
       </div>
+      <div class="hero-info">
+        <div class="hero-handle"><span>@</span><span id="h-handle">…</span></div>
+        <div class="hero-kreis" id="h-kreis">LÄDT…</div>
+        <div class="hero-bdgs" id="h-badges"></div>
+      </div>
+    </div>
+    <div class="score">
+      <div class="score-top">
+        <div><div class="score-lbl">STADTPULS SCORE</div><div class="score-rank" id="s-rank">LÄDT…</div></div>
+        <div style="text-align:right"><span class="score-val" id="s-val">0</span><span class="score-max" id="s-max"> / 500</span></div>
+      </div>
+      <div class="sbar"><div class="sbar-fill" id="sbar" style="width:0%"></div></div>
+      <div class="tasks" id="task-list"></div>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat"><div class="stn" id="st-btr">0</div><div class="stl">BEITRÄGE</div></div>
+    <div class="stat"><div class="stn" id="st-bm">0</div><div class="stl">BOOKMARKS</div></div>
+    <div class="stat"><div class="stn" id="st-rv">0</div><div class="stl">REVIEWS</div></div>
+    <div class="stat"><div class="stn" id="st-ins">0</div><div class="stl">INSERATE</div></div>
+  </div>
+
+  <div class="grid">
+    <!-- MIIN PROFIL -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-title">MIIN <span class="r">PROFIL</span></div><button class="sec-act" onclick="saveBio()">BIO SPEICHERE</button></div>
+      <div class="lbl">DI BIO</div>
+      <textarea class="inp" id="bio-field" placeholder="Säg Züri wer du bisch. Kei Bullshit." maxlength="160" oninput="document.getElementById('bcc').textContent=this.value.length+'/160'"></textarea>
+      <div style="font-size:7px;color:var(--mut2);text-align:right;margin:-8px 0 8px;letter-spacing:1px" id="bcc">0/160</div>
+      <div class="ir" onclick="notif('E-MAIL: KONTAKTIER SUPPORT FÜR ÄNDERUNG')"><div class="irl">E-MAIL</div><div class="irv" id="p-email">– <span class="ira">›</span></div></div>
+      <div class="ir" onclick="openNickModal()"><div class="irl">NICKNAME</div><div class="irv" id="p-nick">– <span class="ira">›</span></div></div>
+      <div class="ir" onclick="openYearModal()"><div class="irl">GEBURTSJAHR</div><div class="irv" id="p-year">– <span class="ira">›</span></div></div>
+      <div class="ir" onclick="openKreisModal()"><div class="irl">KREIS / QUARTIER</div><div class="irv" id="p-kreis">– <span class="ira">›</span></div></div>
+      <div class="ir" onclick="openGeschlecht()"><div class="irl">GESCHLECHT</div><div class="irv" id="p-geschlecht"><span class="ire">NOCH NÖD AAGÄH</span> <span class="ira">›</span></div></div>
+      <div class="ir" onclick="openWebsiteModal()"><div class="irl">WEBSITE</div><div class="irv" id="p-website"><span class="ire">HINZUFÜGE</span> <span class="ira">›</span></div></div>
+      <div class="ir" style="cursor:default"><div class="irl">DIN VIBE</div><div class="irv" id="p-vibe">–</div></div>
+    </div>
+
+    <!-- MINI ZÜRI (INTERESSEN) -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-title">MINI <span class="v">ZÜRI</span></div><button class="sec-act" onclick="saveInteressen()">SPEICHERE</button></div>
+      <div class="hint">Was isch dis Züri? Wähl alles was zu dir passt.</div>
+      <div class="chips" id="int-chips"></div>
+    </div>
+
+    <!-- FAVORITEN -->
+    <div class="sec span">
+      <div class="sec-head"><div class="sec-title">MINI <span class="cy">FAVORITEN</span></div><button class="sec-act" onclick="window.location.href='gastro.html'">ENTDECKE →</button></div>
+      <div class="tabs">
+        <button class="tab on" onclick="bmTab(this,'GASTRO','gastro.html')">GASTRO</button>
+        <button class="tab" onclick="bmTab(this,'EVENTS','events.html')">EVENTS</button>
+        <button class="tab" onclick="bmTab(this,'SHOPPING','shopping.html')">SHOPPING</button>
+        <button class="tab" onclick="bmTab(this,'NACHTLEBE','nachtleben.html')">NACHTLEBE</button>
+      </div>
+      <div id="bm-content"><div class="empty"><div class="empty-big">LEER</div><div class="empty-txt">NO KÄI GASTRO GSPEICHERET</div><button class="BTN red" style="max-width:220px;margin:0 auto;display:block" onclick="window.location.href='gastro.html'">GASTRO ENTDECKE →</button></div></div>
+    </div>
+
+    <!-- NEWS & STORIES -->
+    <div class="sec span">
+      <div class="sec-head"><div class="sec-title">NEWS <span class="v">& STORIES</span></div><button class="sec-act" onclick="openNewsModal()">+ BEITRAG</button></div>
+      <div class="hint">⚡ KI-Moderation aktiv — klari Fäll sofort live, sonst manuelli Prüfig.</div>
+      <div id="news-content"><div class="empty"><div class="empty-big">STILL</div><div class="empty-txt">NO KÄI BEITRAG PUBLIZIERT</div><button class="BTN volt" style="max-width:240px;margin:0 auto;display:block" onclick="openNewsModal()">ERSTE STORY → +25 PTS</button></div></div>
+    </div>
+
+    <!-- MARKTPLATZ -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-title">MINI <span class="r">MARKT</span></div><button class="sec-act" onclick="openMarktModal()">+ INSERAT</button></div>
+      <div class="hint">⚡ KI prüft dis Inserat automatisch.</div>
+      <div id="markt-content"><div class="empty"><div class="empty-big">LEER</div><div class="empty-txt">NO KÄI INSERAT ERSTELLT</div><button class="BTN red" style="max-width:220px;margin:0 auto;display:block" onclick="openMarktModal()">INSERAT ERSTELLE → +30 PTS</button></div></div>
+    </div>
+
+    <!-- SCORE / RANKS -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-title">DIN <span class="v">SCORE</span></div></div>
+      <div class="ranks" id="ranks-list"></div>
+    </div>
+
+    <!-- BSCHEID (NOTIF SETTINGS) -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-title">BSCHEID <span class="r">BIM</span></div></div>
+      <div id="notif-toggles"></div>
+    </div>
+
+    <!-- IISTELLIGE & PRIVACY -->
+    <div class="sec">
+      <div class="sec-head"><div class="sec-title">IISTELLIGE <span class="r">& PRIVACY</span></div></div>
+      <div class="lbl">PRIVACY</div>
+      <div class="tog-row"><div><div class="tog-lbl">Profil öffentlich</div><div class="tog-sub">Anderi User chönd dis Profil gseh</div></div><div class="tog" id="tog-profil_oeffentlich" onclick="togglePref(this,'profil_oeffentlich')"></div></div>
+      <div class="tog-row"><div><div class="tog-lbl">Bookmarks öffentlich</div><div class="tog-sub">Dis Favoriten-Liste isch sichtbar</div></div><div class="tog" id="tog-bookmarks_oeffentlich" onclick="togglePref(this,'bookmarks_oeffentlich')"></div></div>
+      <div class="tog-row"><div><div class="tog-lbl">Kontakt erlaubt</div><div class="tog-sub">Anderi User chönd dich kontaktiere</div></div><div class="tog" id="tog-kontakt_erlaubt" onclick="togglePref(this,'kontakt_erlaubt')"></div></div>
+      <div class="lbl" style="margin:18px 0 8px">PASSWORT ÄNDERE</div>
+      <input class="inp" id="pw-new" placeholder="Neus Passwort — min. 8 Zeiche" type="password"/>
+      <button class="BTN volt" onclick="changePw()">PASSWORT ÄNDERE →</button>
+      <div class="danger">
+        <div class="danger-title">⚠ DANGER ZONE</div>
+        <div style="font-size:9px;color:var(--mut);margin-bottom:10px;line-height:1.6">Löscht ALLES unwiderruflich: Profil, Bookmarks, Aktivität, Login.</div>
+        <button class="danger-btn" onclick="deleteAccount()">ACCOUNT ENDGÜLTIG LÖSCHE</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- MODAL -->
+<div id="modal">
+  <div class="modal-inner">
+    <div class="modal-head">
+      <div><div class="modal-eye" id="modal-eye">PROFIL</div><div class="modal-title" id="modal-title">…</div></div>
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div id="modal-body"></div>
   </div>
 </div>
 
-<div class="nav">
-  <a href="index.html" class="logo"><div class="ldot"></div>STADTPULS</a>
-  <div class="nav-r">
-    <div class="bell-wrap" onclick="toggleNotifPanel()">
-      🔔<div class="bell-dot" id="bell-dot"></div>
-    </div>
-    <span class="nav-handle" id="nav-handle">@ZUERIFUCHS</span>
-    <div class="nav-av" id="nav-av">Z</div>
-    <span class="nav-out" id="nav-out">ABLOGGE</span>
-  </div>
-</div>
-
-<div class="notif-panel" id="notif-panel">
-  <div id="notif-panel-content"><div class="np-empty">LÄDT...</div></div>
-</div>
-
-<div id="banned-wrap"></div>
-
-<!-- ═══════════════════════════════════════
-     DIS UNIVERSUM — Live-Kosmos vo dim Stadtpuls-Läbe
-     ═══════════════════════════════════════ -->
-<div class="universe-wrap">
-  <canvas id="starfield"></canvas>
-  <div class="universe-vignette"></div>
-  <div class="universe-head">
-    <div class="uh-eye">DIS STADTPULS</div>
-    <div class="uh-title">DIS <span>UNIVERSUM</span></div>
-    <div class="uh-sub">Tipf uf ä Blase für Live-Zahle</div>
-  </div>
-
-  <div class="center-star" onclick="openUniCard('du')">
-    <div class="cs-ring r1"></div>
-    <div class="cs-ring r2"></div>
-    <div class="cs-glow"></div>
-    <div class="cs-core" id="uni-core">Z</div>
-    <div class="cs-label"><strong id="uni-handle">@ZUERIFUCHS</strong><span id="uni-meta">145 PTS · KREIS 4</span></div>
-  </div>
-
-  <div id="bubbles-layer"></div>
-</div>
-
-<div class="legend">
-  <div class="legend-item"><div class="legend-dot" style="background:#ff2d00"></div>Grössi Blase = aktivi Kategorie</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#ffd700"></div>Gold + Ring = Pulse Moment grad live</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#00f5ff"></div>✨ = Züri-Bot, dini KI</div>
-</div>
-
-<div class="bc-backdrop" id="bc-backdrop" onclick="closeUniCard()"></div>
-<div class="bubble-card" id="bubble-card">
-  <div class="bc-topbar" id="bc-topbar"></div>
-  <button class="bc-close" onclick="closeUniCard()">✕</button>
-  <div class="bc-inner" id="bc-inner"></div>
-</div>
-
-<div class="page">
-
-  <div class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-scan"></div>
-    <div class="hero-inner">
-      <div class="hero-top">
-        <div class="av-wrap">
-          <div class="av" id="av-big">Z</div>
-          <div class="av-ring"></div>
-          <div class="av-edit" onclick="notif('BILD ÄNDERN — BALD ✓')">✏️</div>
-        </div>
-        <div class="hero-info">
-          <div class="hero-handle"><span>@</span><span id="h-handle">ZUERIFUCHS</span></div>
-          <div class="hero-kreis" id="h-kreis">LÄDT...</div>
-          <div class="hero-bdgs" id="h-badges"></div>
-        </div>
-      </div>
-
-      <div class="score-box">
-        <div class="score-top">
-          <div>
-            <div class="score-lbl">STADTPULS SCORE</div>
-            <div class="score-rank" id="s-rank">LÄDT...</div>
-          </div>
-          <div><span class="score-val" id="s-val">0</span><span class="score-max" id="s-max"> / 500</span></div>
-        </div>
-        <div class="sbar"><div class="sbar-fill" id="sbar" style="width:0%"></div></div>
-        <div class="tasks" id="task-list"></div>
-      </div>
-
-      <div class="stats">
-        <div class="stat"><div class="stn" id="st-bm">0</div><div class="stl">BOOKMARKS</div></div>
-        <div class="stat"><div class="stn" id="st-rv">0</div><div class="stl">REVIEWS</div></div>
-        <div class="stat"><div class="stn" id="st-btr">0</div><div class="stl">BEITRÄGE</div></div>
-        <div class="stat"><div class="stn" id="st-ins">0</div><div class="stl">INSERATE</div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- MIIN PROFIL -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-title">MIIN<br><span class="r">PROFIL</span></div>
-      <button class="sec-act" onclick="saveBio()">SPEICHERE</button>
-    </div>
-    <div style="font-size:7px;letter-spacing:3px;color:rgba(232,228,217,0.22);text-transform:uppercase;margin-bottom:7px">DI BIO</div>
-    <textarea class="inp" id="bio-field" placeholder="Säg Züri wer du bisch. Kei Bullshit." maxlength="160" oninput="document.getElementById('bcc').textContent=this.value.length+'/160'"></textarea>
-    <div style="font-size:7px;color:rgba(232,228,217,0.18);text-align:right;margin-top:-4px;margin-bottom:12px;letter-spacing:1px" id="bcc">0/160</div>
-    <div class="ir" onclick="notif('E-MAIL: KONTAKTIER SUPPORT FÜR ÄNDERUNG')"><div class="irl">E-MAIL</div><div class="irv" id="p-email">– <span class="ira">›</span></div></div>
-    <div class="ir" onclick="openNickModal()"><div class="irl">NICKNAME</div><div class="irv" id="p-nick">– <span class="ira">›</span></div></div>
-    <div class="ir" onclick="openYearModal()"><div class="irl">GEBURTSJAHR</div><div class="irv" id="p-year">– <span class="ira">›</span></div></div>
-    <div class="ir" onclick="openKreisModal()"><div class="irl">KREIS / QUARTIER</div><div class="irv" id="p-kreis">– <span class="ira">›</span></div></div>
-    <div class="ir" onclick="openGeschlecht()"><div class="irl">GESCHLECHT</div><div class="irv" id="p-geschlecht"><span class="ire">NOCH NÖD AAGÄH</span> <span class="ira">›</span></div></div>
-    <div class="ir" onclick="openWebsiteModal()"><div class="irl">WEBSITE</div><div class="irv" id="p-website"><span class="ire">HINZUFÜGE</span> <span class="ira">›</span></div></div>
-  </div>
-
-  <!-- MINI ZÜRI -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-title">MINI<br><span class="v">ZÜRI</span></div>
-      <button class="sec-act" onclick="saveInteressen()">SPEICHERE</button>
-    </div>
-    <div style="font-size:9px;color:rgba(232,228,217,0.22);margin-bottom:14px">Was isch dis Züri? Wähl alles was zu dir passt.</div>
-    <div class="chips" id="int-chips"></div>
-    <div class="ir"><div class="irl">DIN VIBE</div><div class="irv" id="p-vibe">– <span class="ira">›</span></div></div>
-  </div>
-
-  <!-- FAVORITEN -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-title">MINI<br><span class="cy">FAVORITEN</span></div>
-      <button class="sec-act" onclick="window.location.href='gastro.html'">ENTDECKE →</button>
-    </div>
-    <div class="tabs">
-      <button class="tab on" onclick="bmTab(this,'GASTRO','gastro.html')">GASTRO</button>
-      <button class="tab" onclick="bmTab(this,'EVENTS','events.html')">EVENTS</button>
-      <button class="tab" onclick="bmTab(this,'SHOPPING','shopping.html')">SHOPPING</button>
-      <button class="tab" onclick="bmTab(this,'NACHTLEBE','nachtleben.html')">NACHTLEBE</button>
-    </div>
-    <div id="bm-content">
-      <div class="empty">
-        <div class="empty-big">LEER</div>
-        <div class="empty-txt">NO KÄI GASTRO GSPEICHERET</div>
-        <button class="BTN red" style="max-width:220px;margin:0 auto;display:block;font-size:14px" onclick="window.location.href='gastro.html'">GASTRO ENTDECKE →</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- NEWS & STORIES -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-title">NEWS<br><span class="v">& STORIES</span></div>
-      <button class="sec-act" onclick="openNewsModal()">+ BEITRAG</button>
-    </div>
-    <div style="background:rgba(200,255,0,0.03);border:1px solid rgba(200,255,0,0.1);border-radius:6px;padding:10px 12px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start">
-      <span style="font-size:16px">⚡</span>
-      <div>
-        <div style="font-size:8px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase;margin-bottom:3px">KI-MODERATION AKTIV</div>
-        <div style="font-size:8px;color:rgba(232,228,217,0.25);letter-spacing:.5px;line-height:1.7">Beiträg wärde automatisch geprüft. Klari Fäll: sofort live oder abglehnt. Unsichere Fäll: manuelli Prüfig.</div>
-      </div>
-    </div>
-    <div id="news-content">
-      <div class="empty">
-        <div class="empty-big">STILL</div>
-        <div class="empty-txt">NO KÄI BEITRAG PUBLIZIERT</div>
-        <button class="BTN volt" style="max-width:240px;margin:0 auto;display:block;font-size:14px" onclick="openNewsModal()">ERSTE STORY → +25 PTS</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MARKTPLATZ -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-title">MINI<br><span class="r">MARKT</span></div>
-      <button class="sec-act" onclick="openMarktModal()">+ INSERAT</button>
-    </div>
-    <div style="background:rgba(200,255,0,0.03);border:1px solid rgba(200,255,0,0.1);border-radius:6px;padding:10px 12px;margin-bottom:14px;display:flex;gap:10px;align-items:flex-start">
-      <span style="font-size:16px">⚡</span>
-      <div>
-        <div style="font-size:8px;letter-spacing:2px;color:#c8ff00;text-transform:uppercase;margin-bottom:3px">KI-MODERATION AKTIV</div>
-        <div style="font-size:8px;color:rgba(232,228,217,0.25);letter-spacing:.5px;line-height:1.7">Inserat wärde automatisch geprüft. Verboteni Artikel wärde sofort abglehnt.</div>
-      </div>
-    </div>
-    <div id="markt-content">
-      <div class="empty">
-        <div class="empty-big">LEER</div>
-        <div class="empty-txt">NO KÄI INSERAT ERSTELLT</div>
-        <button class="BTN red" style="max-width:240px;margin:0 auto;display:block;font-size:14px" onclick="openMarktModal()">INSERAT ERSTELLE → +30 PTS</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- PEOPLE & DATES -->
-  <div class="sec" style="background:rgba(147,51,234,0.015)">
-    <div class="sec-head">
-      <div class="sec-title">PEOPLE<br><span class="p">& DATES</span></div>
-      <button class="sec-act" onclick="notif('DATES PROFIL — VOTING PHASE')">MEH INFOS</button>
-    </div>
-    <div style="background:rgba(147,51,234,0.03);border:1px solid rgba(147,51,234,0.12);border-radius:10px;padding:16px">
-      <div style="font-size:9px;color:rgba(232,228,217,0.4);letter-spacing:.5px;line-height:1.7;margin-bottom:10px">People & Dates isch grad in der Voting-Phase. Sobald 100'000 Stimme erreicht sind, schalte mir's frei.</div>
-      <button class="BTN" style="background:rgba(147,51,234,0.12);border:1px solid rgba(147,51,234,0.3);color:#9333ea;font-size:14px;padding:12px" onclick="window.location.href='dating.html'">JETZT VOTE →</button>
-    </div>
-  </div>
-
-  <!-- SCORE -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-title">DIN<br><span class="v">SCORE</span></div>
-    </div>
-    <div class="ranks" id="ranks-list"></div>
-  </div>
-
-  <!-- NOTIFICATIONS EINSTELLUNGEN -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-title">BSCHEID<br><span class="r">BIM</span></div>
-    </div>
-    <div id="notif-toggles"></div>
-  </div>
-
-  <!-- EINSTELLUNGEN -->
-  <div class="sec">
-    <div class="sec-head">
-      <div class="sec-title">IISTELLIGE<br><span class="r">& PRIVACY</span></div>
-    </div>
-
-    <div style="font-size:7px;letter-spacing:4px;color:rgba(232,228,217,0.22);text-transform:uppercase;margin-bottom:12px">PRIVACY</div>
-    <div class="tog-row"><div><div class="tog-lbl">Profil öffentlich</div><div class="tog-sub">Anderi User chönd dis Profil gseh</div></div><div class="tog" id="tog-profil_oeffentlich" onclick="togglePref(this,'profil_oeffentlich')"></div></div>
-    <div class="tog-row"><div><div class="tog-lbl">Bookmarks öffentlich</div><div class="tog-sub">Dis Favoriten-Liste isch sichtbar</div></div><div class="tog" id="tog-bookmarks_oeffentlich" onclick="togglePref(this,'bookmarks_oeffentlich')"></div></div>
-    <div class="tog-row"><div><div class="tog-lbl">Kontakt erlaubt</div><div class="tog-sub">Anderi User chönd dich kontaktiere</div></div><div class="tog" id="tog-kontakt_erlaubt" onclick="togglePref(this,'kontakt_erlaubt')"></div></div>
-
-    <div style="font-size:7px;letter-spacing:4px;color:rgba(232,228,217,0.22);text-transform:uppercase;margin:18px 0 12px">PASSWORT ÄNDERE</div>
-    <input class="inp" id="pw-new" placeholder="Neus Passwort — min. 8 Zeiche" type="password"/>
-    <button class="BTN volt" onclick="changePw()">PASSWORT ÄNDERE →</button>
-
-    <div class="danger">
-      <div class="danger-title">⚠ DANGER ZONE</div>
-      <div style="font-size:10px;color:rgba(232,228,217,0.35);margin-bottom:10px;line-height:1.6">Löscht ALLES unwiderruflich: Profil, Bookmarks, Aktivität, Login. Dini E-Mail wird frei für e Neuregistrierig.</div>
-      <button class="danger-btn" onclick="deleteAccount()">ACCOUNT ENDGÜLTIG LÖSCHE</button>
-    </div>
-  </div>
-
-</div>
-
 <script type="module">
+
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
@@ -718,8 +486,6 @@ function renderProfile(){
   // NOTIFICATION TOGGLES
   buildNotifToggles(p.notification_typen||[]);
 
-  // UNIVERSUM
-  buildUniverse(p);
 }
 
 function vibeEmoji(v){
@@ -727,251 +493,7 @@ function vibeEmoji(v){
   return m[v]||'✨';
 }
 
-// ═══════════════════════════════════════
-// DIS UNIVERSUM — datengetriebener Bubble-Kosmos
-// ═══════════════════════════════════════
 
-// Starfield
-const uniCanvas=document.getElementById('starfield');
-const uniCtx=uniCanvas.getContext('2d');
-const uniWrap=document.querySelector('.universe-wrap');
-function uniResize(){
-  uniCanvas.width=uniWrap.offsetWidth;
-  uniCanvas.height=uniWrap.offsetHeight;
-}
-uniResize();window.addEventListener('resize',uniResize);
-const uniStars=[];
-for(let i=0;i<220;i++){
-  uniStars.push({x:Math.random()*uniCanvas.width,y:Math.random()*uniCanvas.height,r:Math.random()*1.3+.3,baseA:Math.random()*.4+.15,speed:Math.random()*.015+.005,phase:Math.random()*Math.PI*2});
-}
-function uniDrawStars(t){
-  uniCtx.clearRect(0,0,uniCanvas.width,uniCanvas.height);
-  uniStars.forEach(s=>{
-    const a=s.baseA+Math.sin(t*s.speed+s.phase)*0.15;
-    uniCtx.beginPath();
-    uniCtx.arc(s.x,s.y,s.r,0,Math.PI*2);
-    uniCtx.fillStyle=`rgba(255,255,255,${Math.max(0,a)})`;
-    uniCtx.fill();
-  });
-  requestAnimationFrame(()=>uniDrawStars(t+1));
-}
-uniDrawStars(0);
-
-const isUniMobile = window.innerWidth <= 600;
-let UNI_CATEGORIES=[]; // wird befüllt sobald Profil + Live-Daten da sind
-
-// Baut die Kategorien-Definitionen basierend auf echtem Profil + Supabase-Live-Zahlen
-async function buildUniverse(p){
-  // Live-Zahlen parallel holen (Locations-Count etc.) — nicht blockierend für UI
-  const [gastroCount, nachtlebenCount, eventsToday, marktCount] = await Promise.all([
-    sbCount('locations?kategorie=eq.gastro&aktiv=eq.true'),
-    sbCount('locations?kategorie=eq.nachtleben&aktiv=eq.true'),
-    sbCount('eventfrog_events?aktiv=eq.true'),
-    sbCount('inserate?status=eq.approved').catch(()=>0)
-  ]);
-
-  const bookmarksGastro=0; // Phase 5: bookmarks Tabelle noch nicht angebunden
-
-  // PULSE MOMENT — strukturell für mehrere gleichzeitige Kreise vorbereitet.
-  // Aktuell: Demo-Regel (User-Kreis = 4). Phase 6: ersetzt durch echte Live-Aktivitäts-Abfrage
-  // z.B. SELECT kreis FROM notifications WHERE typ='pulse_moment' AND created_at > now()-interval '15 min'
-  const activePulseKreise = [4]; // später dynamisch aus Live-Daten
-  const isPulseKreis = activePulseKreise.includes(p.kreis);
-
-  UNI_CATEGORIES=[
-    {id:'gastro',ic:'🍜',name:'GASTRO',meta:bookmarksGastro+' BOOKMARKS',color:'#ff2d00',glow:'rgba(255,45,0,0.5)',
-     size:Math.min(130,80+bookmarksGastro*3), sizeM:Math.min(90,60+bookmarksGastro*2),
-     pos:{top:'18%',left:'12%'}, posM:{top:'16%',left:'6%'},
-     drift:'driftA',dur:'9s',
-     stats:[[gastroCount||'903','LOKALE'],[bookmarksGastro,'GSPEICHERET'],['—','Ø RATING']],link:'gastro.html',pulseLive:false},
-
-    {id:'nachtleben',ic:'🌙',name:'NACHTLEBE',meta:p.vibe?vibeEmoji(p.vibe)+' '+p.vibe:'ENTDECKE',color:'#9333ea',glow:'rgba(147,51,234,0.55)',
-     size:p.vibe==='NACHTMENSCH'?128:88, sizeM:p.vibe==='NACHTMENSCH'?92:64,
-     pos:{top:'17%',left:'58%'}, posM:{top:'17%',left:'52%'},
-     drift:'driftB',dur:'11s',
-     stats:[[nachtlebenCount||'146','LOKALE'],['—','JETZT OFFE'],['0','BOOKMARKS']],link:'nachtleben.html',
-     pulseLive:isPulseKreis, badge:isPulseKreis?('KREIS '+p.kreis+' PULSED'):null},
-
-    {id:'ki',ic:'✨',name:'ZÜRI-BOT',meta:'FRAG MI',color:'#00f5ff',glow:'rgba(0,245,255,0.6)',
-     size:74, sizeM:58,
-     pos:{top:'17%',left:'86%'}, posM:{top:'15%',left:'80%'},
-     drift:'driftC',dur:'7s',
-     stats:[['BALD','PHASE 6'],['KI','ASSISTENT'],['—','—']],link:'#',pulseLive:false,isKi:true},
-
-    {id:'events',ic:'☄️',name:'EVENTS',meta:(eventsToday||0)+' LIVE',color:'#ffd700',glow:'rgba(255,215,0,0.45)',
-     size:84, sizeM:62,
-     pos:{top:'36%',left:'86%'}, posM:{top:'35%',left:'70%'},
-     drift:'driftC',dur:'8s',
-     stats:[[eventsToday||'3800','EVENTS'],['—','HÜT'],['—','POP-UPS']],link:'events.html',pulseLive:false},
-
-    {id:'dates',ic:'❤️',name:'PEOPLE & DATES',meta:'VOTING PHASE',color:'#ec4899',glow:'rgba(236,72,153,0.5)',
-     size:p.vibe==='DATESMENSCH'?110:88, sizeM:p.vibe==='DATESMENSCH'?80:64,
-     pos:{top:'58%',left:'80%'}, posM:{top:'52%',left:'62%'},
-     drift:'driftA',dur:'10s',
-     stats:[['—','PROFIL'],['—','KREIS '+(p.kreis||'?')],['—','MATCHES']],link:'dating.html',pulseLive:false},
-
-    {id:'shopping',ic:'🛍️',name:'SHOPPING',meta:'0 BOOKMARKS',color:'#00f5ff',glow:'rgba(0,245,255,0.4)',
-     size:76, sizeM:60,
-     pos:{top:'74%',left:'48%'}, posM:{top:'70%',left:'8%'},
-     drift:'driftB',dur:'12s',
-     stats:[['214','SHOPS'],['0','GSPEICHERET'],['—','IM SALE']],link:'shopping.html',pulseLive:false},
-
-    {id:'news',ic:'📰',name:'NEWS & STORIES',meta:'0 BEITRÄG',color:'#c8ff00',glow:'rgba(200,255,0,0.4)',
-     size:68, sizeM:56,
-     pos:{top:'72%',left:'10%'}, posM:{top:'72%',left:'60%'},
-     drift:'driftC',dur:'9.5s',
-     stats:[['—','ARTIKEL'],['0','DIN BEITRÄG'],['—','HÜT NEU']],link:'#',pulseLive:false},
-
-    {id:'markt',ic:'🛒',name:'MARKTPLATZ',meta:'0 INSERAT',color:'#ff6b00',glow:'rgba(255,107,0,0.35)',
-     size:54, sizeM:48,
-     pos:{top:'44%',left:'4%'}, posM:{top:'28%',left:'20%'},
-     drift:'driftA',dur:'13s',
-     stats:[[marktCount||'—','INSERAT'],['0','DIS INSERAT'],['—','VERKAUFT']],link:'#',pulseLive:false},
-
-    {id:'gps',ic:'📍',name:'GPS',meta:'PHASE 5',color:'#666666',glow:'rgba(120,120,120,0.25)',
-     size:50, sizeM:44,
-     pos:{top:'60%',left:'28%'}, posM:{top:'46%',left:'30%'},
-     drift:'driftB',dur:'14s',
-     stats:[['⏳','PHASE 5'],['200M','RADIUS GEPLANT'],['—','—']],link:'#',pulseLive:false,isComingSoon:true},
-  ];
-
-  renderUniBubbles();
-  renderUniCenter(p);
-}
-
-// Fallback: zählt Zeilen via Supabase Count-Header
-async function sbCount(path){
-  try{
-    const r=await fetch(SU+'/rest/v1/'+path+'&select=id',{headers:{'apikey':SK,'Authorization':'Bearer '+SK,'Prefer':'count=exact','Range':'0-0'}});
-    if(!r.ok)return 0; // Tabelle/Spalte existiert evtl. noch nicht — kein Crash, einfach 0 zeigen
-    const range=r.headers.get('content-range');
-    return range?parseInt(range.split('/')[1]):0;
-  }catch(e){return 0;}
-}
-
-function renderUniCenter(p){
-  const nick=p.nickname||'zuerifuchs';
-  document.getElementById('uni-core').textContent=nick[0].toUpperCase();
-  document.getElementById('uni-handle').textContent='@'+nick.toUpperCase();
-  document.getElementById('uni-meta').textContent=(p.punkte||0)+' PTS'+(p.kreis?' · KREIS '+p.kreis:'');
-}
-
-function renderUniBubbles(){
-  const layer=document.getElementById('bubbles-layer');
-  layer.innerHTML='';
-  UNI_CATEGORIES.forEach(c=>{
-    const b=document.createElement('div');
-    b.className='bubble';
-    const sz = isUniMobile ? c.sizeM : c.size;
-    const position = isUniMobile ? c.posM : c.pos;
-    b.style.width=sz+'px';
-    b.style.height=sz+'px';
-    b.style.top=position.top;
-    b.style.left=position.left;
-    b.style.background=c.isKi
-      ? `linear-gradient(135deg, ${c.color}cc, #9333ea99 50%, ${c.color}88)`
-      : c.isComingSoon
-      ? `radial-gradient(circle at 35% 30%, rgba(140,140,140,0.22), rgba(120,120,120,0.08) 60%, transparent 100%)`
-      : `radial-gradient(circle at 35% 30%, ${c.color}aa, ${c.color}55 55%, ${c.color}28 100%)`;
-    b.style.border=c.isKi ? `2px solid rgba(255,255,255,0.55)` : c.isComingSoon ? `1.5px dashed rgba(255,255,255,0.28)` : `2px solid ${c.color}cc`;
-    b.style.boxShadow=c.isKi
-      ? `0 0 ${sz*0.6}px ${c.glow}, 0 0 ${sz*1.1}px rgba(147,51,234,0.5), inset 0 0 20px rgba(255,255,255,0.2)`
-      : c.isComingSoon
-      ? `0 0 ${sz*0.3}px ${c.glow}, inset 0 0 14px rgba(255,255,255,0.05)`
-      : `0 0 ${sz*0.5}px ${c.glow}, 0 0 ${sz*0.9}px ${c.glow}, inset 0 0 24px rgba(255,255,255,0.12)`;
-    if(c.isKi) b.classList.add('bubble-ki');
-    if(c.isComingSoon) b.style.opacity='0.6';
-    const driftScale = isUniMobile ? '0.5' : '1';
-    b.style.setProperty('--drift-scale', driftScale);
-    b.style.animation=c.isKi
-      ? `${c.drift} ${c.dur} ease-in-out infinite, kiShimmer 4s ease-in-out infinite`
-      : `${c.drift} ${c.dur} ease-in-out infinite`+(c.pulseLive?', pulseGlow 2s ease-in-out infinite':'');
-    if(c.isKi) b.style.backgroundSize='200% 200%';
-
-    const fontSize=Math.max(isUniMobile?7:9, sz*0.125);
-    const iconSize=sz*0.28;
-    const metaSize=Math.max(5.5,sz*0.07);
-    b.innerHTML=`
-      ${c.pulseLive?'<div class="b-pulsemoment"></div><div class="b-badge-live">🔥 LIVE</div>':''}
-      <span class="b-icon" style="font-size:${iconSize}px">${c.ic}</span>
-      <span class="b-name" style="font-size:${fontSize}px;color:${c.isComingSoon?'rgba(255,255,255,0.4)':c.color}">${c.name}</span>
-      ${sz>60?`<span class="b-meta" style="font-size:${metaSize}px;color:${c.isComingSoon?'rgba(255,255,255,0.3)':c.color}">${c.meta}</span>`:''}`;
-    b.onclick=()=>openUniCard(c.id);
-    layer.appendChild(b);
-  });
-}
-
-window.openUniCard=function(id){
-  const backdrop=document.getElementById('bc-backdrop');
-  const card=document.getElementById('bubble-card');
-  const inner=document.getElementById('bc-inner');
-  const topbar=document.getElementById('bc-topbar');
-
-  if(id==='du'){
-    const p=PROFILE;
-    const rank=getRank(p.punkte||0);
-    topbar.style.background='linear-gradient(90deg,#ff2d00,#9333ea)';
-    inner.innerHTML=`
-      <div class="bc-top" style="color:#ff2d00">
-        <div class="bc-icon" style="background:linear-gradient(135deg,#ff2d00,#9333ea);color:#ff2d00">${(p.nickname||'Z')[0].toUpperCase()}</div>
-        <div><div class="bc-title">@${(p.nickname||'zuerifuchs').toUpperCase()}</div><div class="bc-sub">${p.kreis?'KREIS '+p.kreis+' · ':''}${p.vibe||'STADTMENSCH'}</div></div>
-      </div>
-      <div class="bc-stats">
-        <div class="bc-stat"><div class="bc-stat-n">${p.punkte||0}</div><div class="bc-stat-l">SCORE PTS</div></div>
-        <div class="bc-stat"><div class="bc-stat-n">0</div><div class="bc-stat-l">BOOKMARKS</div></div>
-        <div class="bc-stat"><div class="bc-stat-n">${rank.icon}</div><div class="bc-stat-l">${rank.name}</div></div>
-      </div>
-      <a class="bc-btn" style="background:linear-gradient(135deg,#ff2d00,#e02800);color:#fff" href="#miin-profil" onclick="closeUniCard()">ZU MIM PROFIL →</a>`;
-  }else if(id==='ki'){
-    topbar.style.background='linear-gradient(90deg,#00f5ff,#9333ea)';
-    inner.innerHTML=`
-      <div class="bc-top" style="color:#00f5ff">
-        <div class="bc-icon" style="background:linear-gradient(135deg,#00f5ff,#9333ea);color:#00f5ff">✨</div>
-        <div><div class="bc-title">ZÜRI-BOT</div><div class="bc-sub">DIN PERSÖNLICHE KI-ASSISTENT</div></div>
-      </div>
-      <div class="bc-desc">«Was mach ich hüt Abig?» · «Wo geits grad ab in Kreis 4?» · «Find mir öppis Vegisches in der Nächi» — dä Züri-Bot lernt dini Vibe und schickt dir genau das wo zu dir passt, bevor du überhaupt gsuecht hesch.</div>
-      <div class="bc-stats">
-        <div class="bc-stat"><div class="bc-stat-n" style="color:#00f5ff">KI</div><div class="bc-stat-l">CLAUDE-POWERED</div></div>
-        <div class="bc-stat"><div class="bc-stat-n" style="color:#00f5ff">100%</div><div class="bc-stat-l">PERSÖNLECH</div></div>
-        <div class="bc-stat"><div class="bc-stat-n" style="color:#00f5ff">⏳</div><div class="bc-stat-l">PHASE 6</div></div>
-      </div>
-      <button class="bc-btn" style="background:linear-gradient(135deg,#00f5ff,#9333ea);color:#04040a" onclick="notif('ZÜRI-BOT CHUNT BALD — WIR SIND SCHO DRAA! ✨')">BENACHRICHTIGE MICH →</button>`;
-  }else if(id==='gps'){
-    topbar.style.background='rgba(160,160,160,0.5)';
-    inner.innerHTML=`
-      <div class="bc-top" style="color:rgba(232,228,217,0.6)">
-        <div class="bc-icon" style="background:rgba(120,120,120,0.15);border:1px dashed rgba(255,255,255,0.25);color:rgba(255,255,255,0.3)">📍</div>
-        <div><div class="bc-title" style="color:rgba(232,228,217,0.65)">GPS</div><div class="bc-sub">HYPER-LOKAL · PHASE 5</div></div>
-      </div>
-      <div class="bc-desc">Dini Position. Dini Events. Dini Restis. Sobald GPS live isch, gseht das hie automatisch was 200 Meter um dich rum grad lauft — kei Suche, kei Tippe.</div>
-      <div class="bc-stats">
-        <div class="bc-stat"><div class="bc-stat-n" style="color:rgba(232,228,217,0.4)">200M</div><div class="bc-stat-l">RADIUS GEPLANT</div></div>
-        <div class="bc-stat"><div class="bc-stat-n" style="color:rgba(232,228,217,0.4)">OPT-IN</div><div class="bc-stat-l">FREIWILLIG</div></div>
-        <div class="bc-stat"><div class="bc-stat-n" style="color:rgba(232,228,217,0.4)">⏳</div><div class="bc-stat-l">PHASE 5</div></div>
-      </div>
-      <button class="bc-btn" style="background:rgba(255,255,255,0.08);color:rgba(232,228,217,0.6);border:1px solid rgba(255,255,255,0.15)" onclick="notif('BENACHRICHTIGE DICH SOBALD GPS LIVE ISCH!')">BENACHRICHTIGE MICH →</button>`;
-  }else{
-    const c=UNI_CATEGORIES.find(x=>x.id===id);
-    if(!c)return;
-    topbar.style.background=c.color;
-    inner.innerHTML=`
-      <div class="bc-top" style="color:${c.color}">
-        <div class="bc-icon" style="background:${c.color}33;border:1px solid ${c.color}88;color:${c.color}">${c.ic}</div>
-        <div><div class="bc-title">${c.name}</div><div class="bc-sub">${c.badge||c.meta}</div></div>
-      </div>
-      <div class="bc-stats">
-        ${c.stats.map(s=>`<div class="bc-stat"><div class="bc-stat-n" style="color:${c.color}">${s[0]}</div><div class="bc-stat-l">${s[1]}</div></div>`).join('')}
-      </div>
-      <a class="bc-btn" style="background:${c.color};color:#04040a" href="${c.link}">ENTDECKE →</a>`;
-  }
-
-  backdrop.classList.add('open');
-  card.classList.add('open');
-};
-window.closeUniCard=function(){
-  document.getElementById('bc-backdrop').classList.remove('open');
-  document.getElementById('bubble-card').classList.remove('open');
-};
 
 function setTog(id,val){
   const el=document.getElementById(id);
@@ -1274,6 +796,7 @@ window.deleteAccount=async function(){
 };
 
 loadDashboard();
+
 </script>
 </body>
 </html>
