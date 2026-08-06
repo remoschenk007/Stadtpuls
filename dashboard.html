@@ -409,7 +409,7 @@ footer.spacer{height:60px}
     <div class="ir" onclick="notif('E-MAIL: KONTAKTIER SUPPORT FÜR ÄNDERUNG')"><div class="irl">E-MAIL</div><div class="irv" id="p-email">– <span class="ira">›</span></div></div>
     <div class="ir" onclick="notif('USERNAME ÄNDERE — BALD')"><div class="irl">NICKNAME</div><div class="irv" id="p-nick">– <span class="ira">›</span></div></div>
     <div class="ir" onclick="openYearModal()"><div class="irl">GEBURTSJAHR</div><div class="irv" id="p-year">– <span class="ira">›</span></div></div>
-    <div class="ir" onclick="notif('KREIS ÄNDERE — BALD')"><div class="irl">KREIS / QUARTIER</div><div class="irv" id="p-kreis">– <span class="ira">›</span></div></div>
+    <div class="ir" onclick="openKreisModal()"><div class="irl">KREIS / QUARTIER</div><div class="irv" id="p-kreis">– <span class="ira">›</span></div></div>
     <div class="ir" onclick="openGeschlecht()"><div class="irl">GESCHLECHT</div><div class="irv" id="p-geschlecht"><span class="ire">NOCH NÖD AAGÄH</span> <span class="ira">›</span></div></div>
     <div class="ir" onclick="notif('WEBSITE ÄNDERE — BALD')"><div class="irl">WEBSITE</div><div class="irv" id="p-website"><span class="ire">HINZUFÜGE</span> <span class="ira">›</span></div></div>
   </div>
@@ -1096,6 +1096,28 @@ window.saveGeschlecht=async function(g){
   closeModal();
   renderProfile();
   notif('GSPEICHERET!');
+};
+
+// KREIS ÄNDERE (z.B. bi Umzug) — schriibt i d users-Tabelle
+const KREIS_NAME={1:'Altstadt',2:'Enge',3:'Wiedike',4:'Langstrass',5:'Industrie',6:'Unterstrass',7:'Fluntere',8:'Seefeld',9:'Altstette',10:'Höngg',11:'Oerlike',12:'Schwamendinge'};
+window.openKreisModal=function(){
+  document.getElementById('modal-eye').textContent='PROFIL';
+  document.getElementById('modal-title').textContent='KREIS / QUARTIER';
+  const cur=PROFILE.kreis||0;
+  document.getElementById('modal-body').innerHTML=`
+    <div style="font-size:10px;color:rgba(232,228,217,0.4);line-height:1.6;margin-bottom:12px">Wo wohnsch z Züri? Bi eme Umzug chasch dis Quartier hier jederziit ändere.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+      ${Object.keys(KREIS_NAME).map(n=>`<button onclick="saveKreis(${n})" style="padding:11px 8px;border:1px solid ${(+n===cur)?'#ff2d00':'rgba(255,45,0,0.14)'};border-radius:8px;cursor:pointer;background:${(+n===cur)?'rgba(255,45,0,0.08)':'transparent'};font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:${(+n===cur)?'#ff2d00':'rgba(232,228,217,0.55)'}" onmouseover="this.style.borderColor='#ff2d00';this.style.color='#e8e4d9'" onmouseout="if(${+n}!==${cur}){this.style.borderColor='rgba(255,45,0,0.14)';this.style.color='rgba(232,228,217,0.55)'}">Kreis ${n} · ${KREIS_NAME[n]}</button>`).join('')}
+    </div>`;
+  document.getElementById('modal').classList.add('open');
+};
+window.saveKreis=async function(n){
+  const {error}=await sb.from('users').update({kreis:n}).eq('auth_id',CURRENT_USER.id);
+  if(error){notif('FEHLER BIM SPEICHERE'); return;}
+  PROFILE.kreis=n;
+  closeModal();
+  renderProfile();
+  notif('KREIS GSPEICHERET — WILLKOMME IM KREIS '+n+'!');
 };
 
 async function loadMyNews(){
