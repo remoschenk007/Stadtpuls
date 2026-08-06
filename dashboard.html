@@ -18,6 +18,10 @@ html,body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;min-h
 .tr{top:12px;right:12px;border-width:2px 2px 0 0}
 .bl{bottom:12px;left:12px;border-width:0 0 2px 2px}
 .br{bottom:12px;right:12px;border-width:0 2px 2px 0}
+/* CLEAN v1 — übersichtlicher: Universum ausblende, normalé Cursor (Standard) */
+.universe-wrap,.legend,.bubble-card,.bc-backdrop{display:none!important}
+html,body{cursor:auto!important}
+#dot,#ring{display:none!important}
 
 .nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;justify-content:space-between;padding:14px 22px;border-bottom:1px solid rgba(255,45,0,0.1);background:rgba(4,4,10,0.96);backdrop-filter:blur(14px)}
 .logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:4px;font-size:19px;display:flex;align-items:center;gap:7px;color:#e8e4d9;text-decoration:none}
@@ -407,11 +411,11 @@ footer.spacer{height:60px}
     <textarea class="inp" id="bio-field" placeholder="Säg Züri wer du bisch. Kei Bullshit." maxlength="160" oninput="document.getElementById('bcc').textContent=this.value.length+'/160'"></textarea>
     <div style="font-size:7px;color:rgba(232,228,217,0.18);text-align:right;margin-top:-4px;margin-bottom:12px;letter-spacing:1px" id="bcc">0/160</div>
     <div class="ir" onclick="notif('E-MAIL: KONTAKTIER SUPPORT FÜR ÄNDERUNG')"><div class="irl">E-MAIL</div><div class="irv" id="p-email">– <span class="ira">›</span></div></div>
-    <div class="ir" onclick="notif('USERNAME ÄNDERE — BALD')"><div class="irl">NICKNAME</div><div class="irv" id="p-nick">– <span class="ira">›</span></div></div>
+    <div class="ir" onclick="openNickModal()"><div class="irl">NICKNAME</div><div class="irv" id="p-nick">– <span class="ira">›</span></div></div>
     <div class="ir" onclick="openYearModal()"><div class="irl">GEBURTSJAHR</div><div class="irv" id="p-year">– <span class="ira">›</span></div></div>
     <div class="ir" onclick="openKreisModal()"><div class="irl">KREIS / QUARTIER</div><div class="irv" id="p-kreis">– <span class="ira">›</span></div></div>
     <div class="ir" onclick="openGeschlecht()"><div class="irl">GESCHLECHT</div><div class="irv" id="p-geschlecht"><span class="ire">NOCH NÖD AAGÄH</span> <span class="ira">›</span></div></div>
-    <div class="ir" onclick="notif('WEBSITE ÄNDERE — BALD')"><div class="irl">WEBSITE</div><div class="irv" id="p-website"><span class="ire">HINZUFÜGE</span> <span class="ira">›</span></div></div>
+    <div class="ir" onclick="openWebsiteModal()"><div class="irl">WEBSITE</div><div class="irv" id="p-website"><span class="ire">HINZUFÜGE</span> <span class="ira">›</span></div></div>
   </div>
 
   <!-- MINI ZÜRI -->
@@ -610,6 +614,16 @@ async function loadDashboard(){
   renderProfile();
   loadNotifications();
   loadMyNews();
+  loadBookmarks();
+}
+
+// Echti Bookmark-Zahl pro User (Tabelle existiert; Merke-Button uf de Lokal-Syte chunnt separat)
+async function loadBookmarks(){
+  if(!PROFILE) return;
+  try{
+    const {data}=await sb.from('bookmarks').select('id').eq('user_id',PROFILE.id);
+    const el=document.getElementById('st-bm'); if(el) el.textContent=(data&&data.length)?data.length:0;
+  }catch(e){}
 }
 
 function renderProfile(){
@@ -1120,10 +1134,48 @@ window.saveKreis=async function(n){
   notif('KREIS GSPEICHERET — WILLKOMME IM KREIS '+n+'!');
 };
 
+// NICKNAME ÄNDERE (mit Eindeutigkeits-Check)
+window.openNickModal=function(){
+  document.getElementById('modal-eye').textContent='PROFIL';
+  document.getElementById('modal-title').textContent='NICKNAME';
+  document.getElementById('modal-body').innerHTML=`
+    <div style="font-size:10px;color:rgba(232,228,217,0.4);line-height:1.6;margin-bottom:12px">Dis @-Handle uf Stadtpuls. Mind. 3 Zeiche, nur Buechstabe, Zahle und _.</div>
+    <input class="inp" id="modal-nick" type="text" maxlength="24" placeholder="zuerifuchs" value="${(PROFILE.nickname||'').replace(/"/g,'&quot;')}" style="font-size:16px;margin-bottom:14px"/>
+    <button class="BTN volt" onclick="saveNick()">SPEICHERE →</button>`;
+  document.getElementById('modal').classList.add('open');
+};
+window.saveNick=async function(){
+  let nn=(document.getElementById('modal-nick').value||'').trim().replace(/^@+/,'');
+  if(nn.length<3){notif('MIN. 3 ZEICHE');return;}
+  if(!/^[a-zA-Z0-9_]+$/.test(nn)){notif('NUR BUECHSTABE, ZAHLE, _');return;}
+  const {error}=await sb.from('users').update({nickname:nn}).eq('auth_id',CURRENT_USER.id);
+  if(error){notif(error.code==='23505'?'NICKNAME SCHO VERGÄH':'FEHLER BIM SPEICHERE');return;}
+  PROFILE.nickname=nn; closeModal(); renderProfile(); notif('NICKNAME GSPEICHERET!');
+};
+
+// WEBSITE ÄNDERE
+window.openWebsiteModal=function(){
+  document.getElementById('modal-eye').textContent='PROFIL';
+  document.getElementById('modal-title').textContent='WEBSITE';
+  document.getElementById('modal-body').innerHTML=`
+    <div style="font-size:10px;color:rgba(232,228,217,0.4);line-height:1.6;margin-bottom:12px">Dini Website oder dis Social-Profil (optional).</div>
+    <input class="inp" id="modal-web" type="text" maxlength="120" placeholder="https://..." value="${(PROFILE.website||'').replace(/"/g,'&quot;')}" style="font-size:15px;margin-bottom:14px"/>
+    <button class="BTN volt" onclick="saveWebsite()">SPEICHERE →</button>`;
+  document.getElementById('modal').classList.add('open');
+};
+window.saveWebsite=async function(){
+  let w=(document.getElementById('modal-web').value||'').trim();
+  if(w && !/^https?:\/\//i.test(w)) w='https://'+w;
+  const {error}=await sb.from('users').update({website:w||null}).eq('auth_id',CURRENT_USER.id);
+  if(error){notif('FEHLER BIM SPEICHERE');return;}
+  PROFILE.website=w; closeModal(); renderProfile(); notif('WEBSITE GSPEICHERET!');
+};
+
 async function loadMyNews(){
   const el=document.getElementById('news-content'); if(!el||!PROFILE) return;
   const _e=s=>(s==null?'':String(s)).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
   const {data,error}=await sb.from('news_stories').select('id,titel,teaser,kreis,kategorie,status,created_at,slug').eq('autor_id',PROFILE.id).order('created_at',{ascending:false});
+  const _btr=document.getElementById('st-btr'); if(_btr) _btr.textContent=(data&&data.length)?data.length:0;
   if(error||!data||!data.length) return; // Leer-Zustand bliibt
   const S={pruefig:['◷ IN PRÜFIG','#ffcc00'],live:['✓ LIVE','#c8ff00'],gsperrt:['⛔ ABGLEHNT','#ff2d00'],archiviert:['📦 ARCHIV','#888'],entwurf:['✎ ENTWURF','#888']};
   el.innerHTML=data.map(n=>{const s=S[n.status]||['·','#888'];const link=n.status==='live'?('/kreis-'+n.kreis+'/news/'+(n.slug||'')):null;
