@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0          # volli History, damit git pull --rebase zuverlässig lauft
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
@@ -37,5 +39,12 @@ jobs:
           git config user.name "Stadtpuls Bot"
           git config user.email "bot@depuls.ch"
           git add -A
-          git diff --staged --quiet || git commit -m "Auto: Event-Seiten, Kreis-Seiten, Sitemap aktualisiert [skip ci]"
-          git push
+          if git diff --staged --quiet; then
+            echo "Kei Änderige — nüt z pushe."
+          else
+            git commit -m "Auto: Event-Seiten, Kreis-Seiten, Sitemap aktualisiert [skip ci]"
+            # Zerscht de neuscht Stand vom Remote hole (mir pushed dä Tag viel parallel),
+            # dänn erst pushe — verhinderet non-fast-forward-Fehler.
+            git pull --rebase --autostash origin main
+            git push
+          fi
