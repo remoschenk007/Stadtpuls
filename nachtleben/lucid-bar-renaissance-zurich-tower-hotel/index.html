@@ -7,243 +7,165 @@
 <meta name="description" id="page-desc" content="Von morgens bis abends ist diese Hotelbar ein guter Ort zum Verweilen – tagsüber gemütlich, am Abend lebendig.">
 <link rel="canonical" id="page-canonical" href="https://depuls.ch/nachtleben/lucid-bar-renaissance-zurich-tower-hotel/">
 <script type="application/ld+json" id="schema-ld">{"@context": "https://schema.org", "@type": "NightClub", "name": "Lucid Bar – Renaissance Zurich Tower Hotel", "description": "Von morgens bis abends ist diese Hotelbar ein guter Ort zum Verweilen – tagsüber gemütlich, am Abend lebendig.", "url": "https://depuls.ch/nachtleben/lucid-bar-renaissance-zurich-tower-hotel/", "address": {"@type": "PostalAddress", "streetAddress": "Turbinenstrasse 20", "postalCode": "8005", "addressLocality": "Zürich", "addressCountry": "CH"}, "telephone": "+41 44 630 30 30", "image": "https://www.zuerich.com/sites/default/files/web_zurich_bar_lucidbar_renaissance_pt_30695_1280x960.jpg"}</script>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,700;0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-html,body{background:#000;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none}
-#dot{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-#ring{position:fixed;width:30px;height:30px;border:1px solid rgba(255,45,0,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .07s,top .07s}
-.scan{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 4px,rgba(255,45,0,0.006) 4px,rgba(255,45,0,0.006) 5px);pointer-events:none;z-index:3}
+:root{
+  --bg:#050508;--card:#0c0c12;--line:rgba(255,255,255,.08);
+  --cream:#ece8dd;--mut:rgba(236,232,221,.62);--mut2:rgba(236,232,221,.4);
+  --rot:#ff2d00;--volt:#c8ff00;--lila:#9333ea;--cyan:#00f5ff;--gold:#ffd700;--pk:#ec4899;
+}
+html,body{background:var(--bg);color:var(--cream);font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
+body{background-image:radial-gradient(circle at 50% -8%,rgba(147,51,234,.16),transparent 55%),radial-gradient(circle at 100% 6%,rgba(255,45,0,.08),transparent 45%)}
+#dot{position:fixed;width:8px;height:8px;background:var(--rot);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#ring{position:fixed;width:30px;height:30px;border:1px solid rgba(255,45,0,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .07s,top .07s}
+.scan{position:fixed;inset:0;pointer-events:none;z-index:2;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.010) 3px,rgba(255,255,255,.010) 4px)}
+a{color:inherit;text-decoration:none}
+.shell{max-width:900px;margin:0 auto;position:relative;z-index:3}
 
 /* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:50;display:flex;align-items:center;gap:0;background:rgba(0,0,0,0.96);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,45,0,0.12)}
-.nav-logo{padding:14px 20px;border-right:1px solid rgba(255,45,0,0.1);display:flex;align-items:center;gap:8px;text-decoration:none}
-.logo-txt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:4px;font-size:19px;color:#e8e4d9}
-.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
-@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,0.7)}50%{box-shadow:0 0 0 6px rgba(255,45,0,0)}}
-.nav-back{padding:14px 20px;font-size:9px;letter-spacing:2px;color:rgba(232,228,217,0.4);text-decoration:none;text-transform:uppercase;transition:color .2s;border-left:1px solid rgba(255,45,0,0.08);margin-left:auto}
-.nav-back:hover{color:#ff2d00}
+.nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:13px 22px;background:rgba(5,5,8,.82);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.nav-logo{display:flex;align-items:center;gap:9px}
+.logo-txt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:5px;font-size:17px;color:var(--cream)}
+.ldot{width:7px;height:7px;border-radius:50%;background:var(--rot);animation:blink 2s infinite;flex-shrink:0}
+@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,.55)}50%{box-shadow:0 0 0 7px transparent}}
+.nav-back{font-size:9px;letter-spacing:3px;color:var(--mut2);text-transform:uppercase;transition:.2s}
+.nav-back:hover{color:var(--rot)}
 
 /* HERO */
-.hero{margin-top:57px;position:relative;height:65vh;min-height:340px;overflow:hidden}
-.hero-img{width:100%;height:100%;object-fit:cover;filter:brightness(.45)}
-.hero-placeholder{width:100%;height:100%;background:linear-gradient(180deg,rgba(147,51,234,0.3) 0%,rgba(255,45,0,0.15) 50%,#000 100%);display:flex;align-items:center;justify-content:center;font-size:80px}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(0deg,#000 0%,rgba(0,0,0,0.6) 40%,transparent 100%)}
+.hero{position:relative;height:70vh;min-height:420px;overflow:hidden}
+.hero-placeholder{width:100%;height:100%;background:radial-gradient(circle at 30% 25%,rgba(147,51,234,.5),transparent 55%),radial-gradient(circle at 75% 60%,rgba(255,45,0,.38),transparent 55%),linear-gradient(160deg,#1a0b2e,#0a0410 70%);display:flex;align-items:center;justify-content:center;font-size:74px}
+.hero-grid{position:absolute;inset:0;opacity:.14;background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(180deg,transparent,rgba(0,0,0,.5) 40%,transparent 80%);pointer-events:none}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 2%,rgba(5,5,8,.72) 30%,rgba(5,5,8,.1) 62%,transparent 100%)}
+.hero-top{position:absolute;top:18px;left:0;right:0;padding:0 22px;display:flex;align-items:flex-start;justify-content:space-between;z-index:4}
+.offe-pill{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:100px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:2px;text-transform:uppercase;backdrop-filter:blur(8px)}
+.offe-pill.open{background:var(--volt);color:#050508;box-shadow:0 0 26px rgba(200,255,0,.45);animation:glow 2.6s ease-in-out infinite}
+.offe-pill.closed{background:rgba(255,255,255,.12);color:rgba(236,232,221,.7);border:1px solid rgba(255,255,255,.15)}
+@keyframes glow{0%,100%{box-shadow:0 0 14px rgba(200,255,0,.25)}50%{box-shadow:0 0 30px rgba(200,255,0,.55)}}
+.offe-dot{width:8px;height:8px;border-radius:50%;background:currentColor;animation:blink 1.4s infinite}
+.hero-score{text-align:center;background:rgba(0,0,0,.42);backdrop-filter:blur(10px);border:1px solid rgba(255,215,0,.35);border-radius:12px;padding:8px 13px}
+.hero-score-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:var(--gold);line-height:1}
+.hero-score-s{font-size:9px;color:var(--gold);letter-spacing:1px}
+.hero-score-l{font-size:7px;letter-spacing:2px;color:var(--mut2);text-transform:uppercase;margin-top:1px}
+.hero-content{position:absolute;left:0;right:0;bottom:0;padding:0 22px 26px;z-index:4}
+.hero-sk{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.sk-pill{padding:5px 11px;border-radius:100px;font-size:8px;letter-spacing:1.6px;text-transform:uppercase;border:1px solid transparent;backdrop-filter:blur(6px)}
+.sk-pill.techno{background:rgba(147,51,234,.24);color:#c79bff;border-color:rgba(147,51,234,.5)}
+.sk-pill.jazz{background:rgba(255,215,0,.18);color:var(--gold);border-color:rgba(255,215,0,.4)}
+.sk-pill.bar{background:rgba(0,245,255,.14);color:var(--cyan);border-color:rgba(0,245,255,.35)}
+.sk-pill.club{background:rgba(255,45,0,.2);color:#ff6b4a;border-color:rgba(255,45,0,.4)}
+.sk-pill.afterhour{background:rgba(255,215,0,.14);color:var(--gold);border-color:rgba(255,215,0,.32)}
+.sk-pill.default{background:rgba(255,255,255,.1);color:var(--cream);border-color:rgba(255,255,255,.2)}
+.hero-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;text-transform:uppercase;font-size:clamp(48px,13vw,104px);line-height:.82;letter-spacing:-.02em;color:#fff;text-shadow:0 6px 40px rgba(0,0,0,.6)}
+.hero-addr{margin-top:12px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:11px;letter-spacing:.5px;color:var(--mut)}
+.hero-addr-dot{width:4px;height:4px;border-radius:50%;background:var(--rot)}
+#eng-bar{margin-top:12px;display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--mut);letter-spacing:.5px}
+#eng-bar b{color:var(--cream);font-weight:500}
 
-/* STATUS BADGE — prominent und klar */
-.hero-status{position:absolute;top:20px;left:20px;display:flex;align-items:center;gap:8px}
-.offe-pill{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:100px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:2px;text-transform:uppercase}
-.offe-pill.open{background:#c8ff00;color:#04040a}
-.offe-pill.closed{background:rgba(255,255,255,0.12);color:rgba(232,228,217,0.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.15)}
-.offe-dot{width:8px;height:8px;border-radius:50%;background:currentColor;animation:blink 1.5s infinite}
-
-.hero-score{position:absolute;top:20px;right:20px;background:rgba(0,0,0,0.6);backdrop-filter:blur(10px);border:1px solid rgba(255,45,0,0.2);border-radius:4px;padding:8px 14px;text-align:center}
-.hero-score-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:#ff2d00;line-height:1}
-.hero-score-l{font-size:7px;letter-spacing:2px;color:rgba(232,228,217,0.4);text-transform:uppercase}
-
-.hero-content{position:absolute;bottom:0;left:0;right:0;padding:20px 20px 24px}
-.hero-sk{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
-.sk-pill{padding:4px 10px;border-radius:100px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase}
-.sk-pill.techno{background:rgba(147,51,234,0.25);color:#c084fc;border:1px solid rgba(147,51,234,0.4)}
-.sk-pill.jazz{background:rgba(255,215,0,0.18);color:#ffd700;border:1px solid rgba(255,215,0,0.35)}
-.sk-pill.bar{background:rgba(0,245,255,0.15);color:#00f5ff;border:1px solid rgba(0,245,255,0.3)}
-.sk-pill.club{background:rgba(255,45,0,0.18);color:#ff6b4a;border:1px solid rgba(255,45,0,0.35)}
-.sk-pill.afterhour{background:rgba(255,215,0,0.12);color:#ffd700;border:1px solid rgba(255,215,0,0.28)}
-.sk-pill.default{background:rgba(255,255,255,0.1);color:#e8e4d9;border:1px solid rgba(255,255,255,0.2)}
-.hero-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:52px;line-height:.88;text-transform:uppercase;color:#fff;margin-bottom:6px}
-.hero-addr{font-size:10px;color:rgba(232,228,217,0.55);letter-spacing:1px;display:flex;align-items:center;gap:6px}
-.hero-addr-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,45,0,0.6)}
-
-/* STICKY ACTION BAR */
-.action-bar{position:sticky;top:57px;z-index:40;background:rgba(0,0,0,0.95);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,45,0,0.1);padding:10px 20px;display:flex;gap:8px;align-items:center}
-.act-btn{flex:1;padding:13px 8px;border-radius:3px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .2s;border:none;display:flex;align-items:center;justify-content:center;gap:5px}
-.act-btn.primary{background:#ff2d00;color:#fff;box-shadow:0 0 20px rgba(255,45,0,0.25);flex:2}
-.act-btn.primary:hover{box-shadow:0 0 30px rgba(255,45,0,0.45)}
-.act-btn.ghost{background:rgba(255,255,255,0.06);color:rgba(232,228,217,0.6);border:1px solid rgba(255,255,255,0.1)}
-.act-btn.ghost:hover{background:rgba(255,255,255,0.1);color:#e8e4d9}
+/* ACTION BAR */
+.action-bar{position:sticky;top:49px;z-index:50;display:flex;gap:9px;padding:12px 22px;background:rgba(5,5,8,.9);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
+.act-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:14px 8px;border:none;border-radius:11px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:.18s}
+.act-btn.primary{flex:2.4;background:var(--rot);color:#fff;box-shadow:0 6px 24px rgba(255,45,0,.32)}
+.act-btn.primary:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(255,45,0,.5)}
+.act-btn.ghost{flex:0 0 54px;background:rgba(255,255,255,.05);color:var(--mut);border:1px solid var(--line);font-size:18px}
+.act-btn.ghost:hover{color:var(--cream);border-color:rgba(255,45,0,.4)}
+#act-save.on{background:rgba(255,45,0,.14);border-color:rgba(255,45,0,.5);color:var(--rot)}
 
 /* CONTENT */
-.content{padding:0 20px}
+.content{padding:26px 22px 10px}
+.sec{margin-bottom:30px}
+.sec-title{display:flex;align-items:center;gap:12px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:23px;text-transform:uppercase;color:var(--cream);margin-bottom:14px}
+.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(255,45,0,.4),transparent)}
 
-/* META STRIP */
-.meta-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:rgba(255,45,0,0.08);margin:0 -20px 20px;border-top:1px solid rgba(255,45,0,0.08);border-bottom:1px solid rgba(255,45,0,0.08)}
-.meta-cell{background:#000;padding:14px 20px}
-.meta-label{font-size:7px;letter-spacing:3px;color:rgba(232,228,217,0.3);text-transform:uppercase;margin-bottom:4px}
-.meta-val{font-size:13px;color:#e8e4d9;letter-spacing:.5px}
-.meta-val.volt{color:#c8ff00}
-.meta-val.lila{color:#9333ea}
-.meta-val.cyan{color:#00f5ff}
+/* META */
+.meta-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.meta-cell{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 14px}
+.meta-label{font-size:7.5px;letter-spacing:2.5px;color:var(--mut2);text-transform:uppercase;margin-bottom:7px}
+.meta-val{font-size:14px;letter-spacing:.3px;color:var(--cream)}
+.meta-val.volt{color:var(--volt)}.meta-val.cyan{color:var(--cyan)}
 
-/* SECTION */
-.sec{margin-bottom:28px}
-.sec-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;text-transform:uppercase;color:#e8e4d9;margin-bottom:12px;display:flex;align-items:center;gap:10px}
-.sec-title::after{content:'';flex:1;height:1px;background:rgba(255,45,0,0.15)}
+/* DESC */
+.desc-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;font-size:13px;line-height:1.85;color:var(--mut)}
 
-/* ÖFFNUNGSZEITEN */
-.oz-grid{display:flex;flex-direction:column;gap:0;border:1px solid rgba(255,255,255,0.07);border-radius:4px;overflow:hidden}
-.oz-row{display:flex;align-items:center;justify-content:space-between;padding:11px 14px;border-bottom:1px solid rgba(255,255,255,0.05);transition:background .2s}
+/* OZ */
+.oz-grid{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card)}
+.oz-row{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid var(--line);font-size:12px}
 .oz-row:last-child{border-bottom:none}
-.oz-row.today{background:rgba(255,45,0,0.06);border-bottom-color:rgba(255,45,0,0.1)}
-.oz-day{font-size:10px;letter-spacing:2px;color:rgba(232,228,217,0.45);text-transform:uppercase;width:50px}
-.oz-row.today .oz-day{color:#ff2d00;font-weight:500}
-.oz-time{font-size:12px;color:rgba(232,228,217,0.75);letter-spacing:.5px}
-.oz-row.today .oz-time{color:#e8e4d9}
-.oz-closed{color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:1px}
-.oz-now{font-size:8px;padding:3px 8px;background:#c8ff00;color:#04040a;border-radius:100px;letter-spacing:1px;text-transform:uppercase;margin-left:auto}
+.oz-row.today{background:linear-gradient(90deg,rgba(200,255,0,.08),transparent)}
+.oz-day{letter-spacing:2px;text-transform:uppercase;color:var(--mut2);width:62px}
+.oz-row.today .oz-day{color:var(--volt);font-weight:500}
+.oz-time{color:var(--mut)}
+.oz-row.today .oz-time{color:var(--cream)}
+.oz-closed{color:var(--mut2)}
+.oz-now{font-size:8px;padding:4px 10px;background:var(--volt);color:#050508;border-radius:100px;letter-spacing:1px;text-transform:uppercase;margin-left:auto}
 
-/* KARTE */
-#map{width:100%;height:220px;border-radius:4px;border:1px solid rgba(255,45,0,0.15);margin-bottom:10px;background:#0a0005}
-.map-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.map-btn{padding:11px;border:1px solid rgba(255,255,255,0.1);border-radius:3px;background:rgba(255,255,255,0.04);color:rgba(232,228,217,0.6);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;text-align:center;transition:all .2s;font-family:'DM Mono',monospace}
-.map-btn:hover{border-color:rgba(255,45,0,0.4);color:#e8e4d9;background:rgba(255,45,0,0.05)}
-
-/* DESCRIPTION */
-.desc-box{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:4px;padding:16px;font-size:12px;line-height:1.75;color:rgba(232,228,217,0.7);letter-spacing:.3px}
-
-/* SONAR RADAR */
-.radar-wrap{position:relative;width:200px;height:200px;margin:0 auto 16px;display:flex;align-items:center;justify-content:center}
-.radar-rings{position:absolute;inset:0}
-.radar-ring{position:absolute;border-radius:50%;border:1px solid rgba(255,45,0,0.12)}
-.radar-ring:nth-child(1){inset:0}
-.radar-ring:nth-child(2){inset:25%}
-.radar-ring:nth-child(3){inset:48%}
-.radar-sweep{position:absolute;inset:0;border-radius:50%;overflow:hidden}
-.radar-sweep-inner{position:absolute;inset:0;background:conic-gradient(from 0deg,rgba(255,45,0,0) 0%,rgba(255,45,0,0.25) 60deg,rgba(255,45,0,0) 60deg);animation:sweep 3s linear infinite;transform-origin:center}
-@keyframes sweep{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.radar-center{width:6px;height:6px;background:#ff2d00;border-radius:50%;position:relative;z-index:2;box-shadow:0 0 8px rgba(255,45,0,0.8)}
-.radar-blip{position:absolute;width:7px;height:7px;border-radius:50%;transform:translate(-50%,-50%)}
-.radar-blip.active{background:#c8ff00;box-shadow:0 0 8px rgba(200,255,0,0.6);animation:blippulse 2s ease-in-out infinite}
-@keyframes blippulse{0%,100%{opacity:1;transform:translate(-50%,-50%) scale(1)}50%{opacity:.5;transform:translate(-50%,-50%) scale(1.5)}}
-.radar-info{text-align:center}
-.radar-count{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:36px;color:#c8ff00;line-height:1}
-.radar-sub{font-size:8px;color:rgba(232,228,217,0.35);letter-spacing:2px;text-transform:uppercase}
+/* CROWD PULSE (simuliert · Phase 5) */
+.crowd{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
+.crowd-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px}
+.crowd-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:44px;line-height:.9;color:var(--volt)}
+.crowd-n small{font-size:13px;color:var(--mut2)}
+.crowd-lvl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;text-transform:uppercase;color:var(--rot)}
+.pulse-track{height:12px;border-radius:100px;background:rgba(255,255,255,.06);overflow:hidden}
+.pulse-fill{height:100%;width:78%;border-radius:100px;background:linear-gradient(90deg,var(--lila),var(--rot),var(--volt));background-size:200% 100%;animation:slide 3s linear infinite}
+@keyframes slide{to{background-position:200% 0}}
+.crowd-sub{margin-top:10px;font-size:9px;letter-spacing:1.5px;color:var(--mut2);text-transform:uppercase;text-align:center}
 
 /* SOUND DNA */
-.sound-bars{display:flex;align-items:flex-end;justify-content:center;gap:4px;height:60px;margin-bottom:16px}
-.sound-bar{width:12px;border-radius:2px 2px 0 0;animation:soundbar var(--dur,1.2s) ease-in-out infinite alternate}
-@keyframes soundbar{from{height:var(--min,20%)}to{height:var(--max,100%)}}
-.dna-tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
-.dna-tag{padding:5px 12px;border-radius:100px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase}
-.dna-tag.t{background:rgba(147,51,234,0.15);color:#c084fc;border:1px solid rgba(147,51,234,0.3)}
-.dna-tag.h{background:rgba(255,215,0,0.1);color:#ffd700;border:1px solid rgba(255,215,0,0.25)}
+.sound-bars{display:flex;align-items:flex-end;justify-content:center;gap:5px;height:82px;margin-bottom:16px;padding:0 4px}
+.sound-bar{width:9px;border-radius:3px 3px 0 0;animation:soundbar var(--dur,1s) ease-in-out infinite alternate}
+@keyframes soundbar{from{height:var(--min,18%)}to{height:var(--max,100%)}}
+.dna-tags{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
+.dna-tag{padding:6px 13px;border-radius:100px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase}
+.dna-tag.t{background:rgba(147,51,234,.14);color:#c79bff;border:1px solid rgba(147,51,234,.32)}
+.dna-tag.h{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.25)}
+.dna-note{font-size:8px;color:var(--mut2);letter-spacing:2px;text-align:center;margin-top:12px;text-transform:uppercase}
+
+/* MAP */
+#map{width:100%;height:210px;border-radius:16px;border:1px solid var(--line);margin-bottom:10px;background:#0a0510}
+.map-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.map-btn{padding:13px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.03);color:var(--mut);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;text-align:center;cursor:pointer;transition:.18s;font-family:'DM Mono',monospace}
+.map-btn:hover{border-color:rgba(255,45,0,.4);color:var(--cream)}
 
 /* REVIEWS */
-.review-summary{display:flex;gap:16px;align-items:center;margin-bottom:16px;padding:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);border-radius:4px}
-.review-big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:52px;color:#ffd700;line-height:1}
-.review-stars{display:flex;gap:2px;font-size:16px;color:#ffd700;margin-bottom:4px}
-.review-count{font-size:8px;color:rgba(232,228,217,0.35);letter-spacing:2px;text-transform:uppercase}
+.review-summary{display:flex;gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+.review-big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:54px;color:var(--gold);line-height:1}
+.review-stars{color:var(--gold);font-size:15px}
+.review-count{font-size:8px;letter-spacing:2px;color:var(--mut2);text-transform:uppercase;margin-top:3px}
 .review-bars{flex:1}
-.rbar-row{display:flex;align-items:center;gap:8px;margin-bottom:4px}
-.rbar-lbl{font-size:8px;color:rgba(232,228,217,0.4);width:12px;text-align:right}
-.rbar-track{flex:1;height:5px;background:rgba(255,255,255,0.07);border-radius:2px;overflow:hidden}
-.rbar-fill{height:100%;background:#ffd700;border-radius:2px}
-
+.rbar-row{display:flex;align-items:center;gap:9px;margin-bottom:5px}
+.rbar-lbl{font-size:9px;color:var(--mut2);width:10px;text-align:right}
+.rbar-track{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
+.rbar-fill{height:100%;background:var(--gold);border-radius:3px}
 .reviews-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
-.rv-card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);border-radius:4px;padding:14px}
-.rv-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.rv-user{font-size:10px;color:#e8e4d9;letter-spacing:1px}
-.rv-stars{color:#ffd700;font-size:12px}
-.rv-date{font-size:8px;color:rgba(232,228,217,0.3);letter-spacing:1px}
-.rv-text{font-size:11px;color:rgba(232,228,217,0.65);line-height:1.65}
-.rv-add{width:100%;padding:13px;border:1px solid rgba(255,45,0,0.2);border-radius:3px;background:rgba(255,45,0,0.03);color:rgba(232,228,217,0.5);font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.rv-add:hover{border-color:#ff2d00;color:#ff2d00;background:rgba(255,45,0,0.06)}
+.rv-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px}
+.rv-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
+.rv-user{font-size:10px;letter-spacing:1px;color:var(--cream)}
+.rv-stars{color:var(--gold);font-size:12px}
+.rv-date{font-size:8px;color:var(--mut2);letter-spacing:1px}
+.rv-text{font-size:11.5px;color:var(--mut);line-height:1.65;margin-top:6px}
+.rv-add{width:100%;padding:15px;border:1px dashed rgba(255,45,0,.35);border-radius:12px;background:rgba(255,45,0,.03);color:var(--rot);font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.18s}
+.rv-add:hover{background:rgba(255,45,0,.08)}
 
 /* SIMILAR */
-.similar-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.sim-card{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;cursor:pointer;transition:all .2s}
-.sim-card:hover{border-color:rgba(255,45,0,0.3);background:rgba(255,45,0,0.04)}
-.sim-img{height:70px;background:linear-gradient(135deg,rgba(147,51,234,0.25),rgba(0,0,0,0.5));display:flex;align-items:center;justify-content:center;font-size:24px;object-fit:cover;width:100%}
-.sim-body{padding:10px 12px}
-.sim-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;text-transform:uppercase;color:#e8e4d9;line-height:1;margin-bottom:3px}
-.sim-meta{font-size:8px;color:rgba(232,228,217,0.35);letter-spacing:1px;text-transform:uppercase}
+.similar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
+.sim-card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:.18s}
+.sim-card:hover{transform:translateY(-3px);border-color:rgba(255,45,0,.35)}
+.sim-img{height:84px;display:flex;align-items:center;justify-content:center;font-size:26px;background:linear-gradient(135deg,rgba(147,51,234,.3),rgba(255,45,0,.12));width:100%;object-fit:cover}
+.sim-body{padding:11px 13px}
+.sim-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;text-transform:uppercase;line-height:1;margin-bottom:4px;color:var(--cream)}
+.sim-meta{font-size:8px;letter-spacing:1px;color:var(--mut2);text-transform:uppercase}
 
-/* KI BOX */
-.ki-box{background:rgba(147,51,234,0.05);border:1px solid rgba(147,51,234,0.15);border-radius:4px;padding:16px;margin-bottom:28px}
-.ki-box-head{font-size:8px;letter-spacing:4px;color:rgba(147,51,234,0.6);text-transform:uppercase;margin-bottom:10px}
-.ki-feat-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
-.ki-feat-row:last-child{margin-bottom:0}
-.ki-feat-ico{font-size:18px;flex-shrink:0}
-.ki-feat-info{}
-.ki-feat-nm{font-size:11px;color:#e8e4d9;margin-bottom:2px;letter-spacing:.5px}
-.ki-feat-ds{font-size:9px;color:rgba(232,228,217,0.35);letter-spacing:.3px;line-height:1.5}
-.ki-badge{display:inline-block;padding:2px 6px;background:rgba(147,51,234,0.12);color:#9333ea;border:1px solid rgba(147,51,234,0.2);border-radius:100px;font-size:7px;letter-spacing:1px;text-transform:uppercase;margin-top:2px}
-
-/* FOOTER */
-footer{background:#000;border-top:1px solid rgba(255,45,0,0.08);padding:28px 20px;margin-top:16px}
-.footer-bottom{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.footer-logo{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;color:rgba(232,228,217,0.2);letter-spacing:3px;display:flex;align-items:center;gap:6px}
-.footer-logo .ldot{width:5px;height:5px}
-.footer-copy{font-size:7px;color:rgba(232,228,217,0.18);letter-spacing:2px;text-transform:uppercase}
-.footer-links{display:flex;gap:12px}
-.footer-links a{font-size:7px;color:rgba(232,228,217,0.25);text-decoration:none;letter-spacing:1px;text-transform:uppercase;transition:color .2s}
-.footer-links a:hover{color:#ff2d00}
-/* ═══════════ CREATIVE DIRECTOR — MOBILE + POLISH ═══════════ */
-.hero-name{font-size:clamp(30px,9vw,52px)}
-.sec-title{font-size:clamp(20px,5.5vw,26px)}
-.act-btn:active,.sk-pill:active{transform:scale(.97)}
-a:focus-visible,button:focus-visible{outline:2px solid #00f5ff;outline-offset:2px;border-radius:3px}
-.offe-pill.open{animation:offeGlow 2.4s ease-in-out infinite}
-@keyframes offeGlow{0%,100%{box-shadow:0 0 0 rgba(200,255,0,0)}50%{box-shadow:0 0 16px rgba(200,255,0,.4)}}
-@media(max-width:768px){
-  .hero{height:54vh;min-height:300px}
-  .hero-score-n{font-size:24px}
-  .action-bar{padding:9px 14px;gap:6px}
-  .act-btn{font-size:13px;padding:12px 6px}
-  .content{padding:0 16px}
-  .meta-strip{margin:0 -16px 18px}
+@media (hover:none),(pointer:coarse){html,body{cursor:auto!important}#dot,#ring{display:none!important}}
+@media(max-width:620px){
+  .hero{height:60vh;min-height:360px}
+  .meta-strip{grid-template-columns:repeat(2,1fr)}
+  .similar-grid{grid-template-columns:1fr 1fr}
+  .content{padding:22px 16px 10px}
 }
-@media(max-width:480px){
-  #act-save,#act-share{flex:0 0 48px;font-size:16px}
-  .act-btn.primary{flex:2}
-  .similar-grid{grid-template-columns:1fr}
-}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto!important}}
-
-/* ═══════════════════════════════════════════════════════
-   DESIGN UPGRADE v2 · Profil · Creative-Director-Pass
-   ═══════════════════════════════════════════════════════ */
-@media (hover:none),(pointer:coarse){
-  html,body{cursor:auto!important}
-  #dot,#ring{display:none!important}
-}
-a,button,.act-btn,.sk-pill,.sim-card,.kr-btn{cursor:pointer}
-
-/* HERO — filmischer */
-.hero{height:68vh;min-height:380px}
-.hero-overlay{background:linear-gradient(0deg,#04040a 0%,rgba(4,4,10,0.78) 30%,rgba(4,4,10,0.18) 60%,rgba(147,51,234,0.10) 100%)}
-.hero-name{font-size:58px;text-shadow:0 4px 30px rgba(0,0,0,0.6)}
-.offe-pill{backdrop-filter:blur(8px)}
-.offe-pill.open{box-shadow:0 0 22px rgba(200,255,0,0.35)}
-.hero-score{border-color:rgba(255,45,0,0.35);box-shadow:0 8px 24px rgba(0,0,0,0.4)}
-#eng-bar{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-weight:500}
-
-/* ACTION BAR — griffiger */
-.act-btn{border-radius:6px}
-.act-btn.primary{box-shadow:0 0 22px rgba(255,45,0,0.28)}
-.act-btn.ghost{background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1)}
-#act-save.on{background:rgba(255,45,0,0.14);border-color:rgba(255,45,0,0.5);color:#ff2d00}
-
-/* SIMILAR — Micro-Interaktion */
-.sim-card{transition:transform .2s,border-color .2s}
-.sim-card:hover{transform:translateY(-2px)}
-
-/* ═══ MOBILE ═══ */
-@media(max-width:768px){
-  .hero{height:58vh;min-height:320px}
-  .hero-name{font-size:clamp(32px,10vw,52px)}
-  .action-bar{padding:10px 14px;gap:6px}
-  .act-btn{min-height:46px;font-size:13px}
-  #eng-bar{gap:10px;font-size:10px}
-}
-@media(max-width:480px){
-  .hero-name{font-size:clamp(28px,9vw,44px)}
-  #act-save,#act-share{flex:0 0 50px;min-height:48px;font-size:18px}
-  .act-btn.primary{flex:2}
-}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 <!-- SP_SEO v1 -->
-<meta name="description" content="Club- und Bar-Profile aus Zürich: Öffnungszeiten, Events und Vibe — der ehrliche Nightlife-Guide.">
 <meta id="og-title" property="og:title" content="Lucid Bar – Renaissance Zurich Tower Hotel — hotelbar Kreis 5 | Stadtpuls Zürich">
 <meta id="og-desc" property="og:description" content="Von morgens bis abends ist diese Hotelbar ein guter Ort zum Verweilen – tagsüber gemütlich, am Abend lebendig.">
 <meta id="og-url" property="og:url" content="https://depuls.ch/nachtleben/lucid-bar-renaissance-zurich-tower-hotel/">
@@ -267,6 +189,8 @@ a,button,.act-btn,.sk-pill,.sim-card,.kr-btn{cursor:pointer}
 <div id="dot"></div><div id="ring"></div>
 <div class="scan"></div>
 
+<div class="shell">
+
 <!-- NAV -->
 <nav class="nav">
   <a href="/index.html" class="nav-logo"><div class="ldot"></div><span class="logo-txt">STADTPULS</span></a>
@@ -276,49 +200,52 @@ a,button,.act-btn,.sk-pill,.sim-card,.kr-btn{cursor:pointer}
 <!-- HERO -->
 <div class="hero" id="hero">
   <div class="hero-placeholder" id="hero-placeholder">🌙</div>
+  <div class="hero-grid"></div>
   <div class="hero-overlay"></div>
 
-  <div class="hero-status">
+  <div class="hero-top">
     <div class="offe-pill closed" id="offe-pill">
       <div class="offe-dot"></div>
       <span id="offe-txt">LADED...</span>
     </div>
-  </div>
-
-  <div class="hero-score">
-    <div class="hero-score-n" id="hero-rating">–</div>
-    <div class="hero-score-l">RATING</div>
+    <div class="hero-score">
+      <div class="hero-score-n" id="hero-rating">–</div>
+      <div class="hero-score-s">★★★★★</div>
+      <div class="hero-score-l">Rating</div>
+    </div>
   </div>
 
   <div class="hero-content">
     <div class="hero-sk" id="hero-sk"></div>
     <h1 class="hero-name" id="hero-name" style="margin:0 0 6px">Lucid Bar – Renaissance Zurich Tower Hotel</h1>
     <div class="hero-addr" id="hero-addr"><span class="hero-addr-dot"></span><span>Turbinenstrasse 20</span><span class="hero-addr-dot"></span><span>KREIS 5</span></div>
-    <div id="eng-bar" style="margin-top:10px;font-size:11px;color:rgba(232,228,217,.55);letter-spacing:.5px"></div>
+    <div id="eng-bar"></div>
   </div>
 </div>
 
 <!-- ACTION BAR -->
 <div class="action-bar">
-  <button class="act-btn primary" id="act-ticket">🎫 TICKET</button>
-  <button class="act-btn ghost" onclick="document.getElementById('map').scrollIntoView({behavior:'smooth'})">📍 KARTE</button>
+  <button class="act-btn primary" id="act-ticket">🎫 TICKETS & LINE-UP</button>
+  <button class="act-btn ghost" onclick="document.getElementById('map').scrollIntoView({behavior:'smooth'})">📍</button>
   <button class="act-btn ghost" id="act-save">❤️</button>
   <button class="act-btn ghost" id="act-share">↗</button>
 </div>
 
 <div class="content">
 
-  <!-- META STRIP -->
-  <div class="meta-strip" id="meta-strip">
-    <div class="meta-cell"><div class="meta-label">KREIS</div><div class="meta-val volt" id="m-kreis">–</div></div>
-    <div class="meta-cell"><div class="meta-label">KATEGORIE</div><div class="meta-val" id="m-kat">–</div></div>
-    <div class="meta-cell"><div class="meta-label">ADRESSE</div><div class="meta-val" id="m-addr">–</div></div>
-    <div class="meta-cell"><div class="meta-label">WEBSITE</div><div class="meta-val cyan" id="m-web" style="cursor:pointer">–</div></div>
+  <!-- META -->
+  <div class="sec">
+    <div class="meta-strip" id="meta-strip">
+      <div class="meta-cell"><div class="meta-label">Kreis</div><div class="meta-val volt" id="m-kreis">–</div></div>
+      <div class="meta-cell"><div class="meta-label">Kategorie</div><div class="meta-val" id="m-kat">–</div></div>
+      <div class="meta-cell"><div class="meta-label">Adresse</div><div class="meta-val" id="m-addr">–</div></div>
+      <div class="meta-cell"><div class="meta-label">Website</div><div class="meta-val cyan" id="m-web" style="cursor:pointer">–</div></div>
+    </div>
   </div>
 
   <!-- BESCHREIBUNG -->
   <div class="sec">
-    <div class="sec-title">ÜBER DEN CLUB</div>
+    <div class="sec-title">ÜBER DE CLUB</div>
     <div class="desc-box" id="desc-box">Von morgens bis abends ist diese Hotelbar ein guter Ort zum Verweilen – tagsüber gemütlich, am Abend lebendig.</div>
   </div>
 
@@ -326,32 +253,20 @@ a,button,.act-btn,.sk-pill,.sim-card,.kr-btn{cursor:pointer}
   <div class="sec">
     <div class="sec-title">ÖFFNIGSZITTE</div>
     <div class="oz-grid" id="oz-grid">
-      <div style="padding:16px;color:rgba(232,228,217,0.3);font-size:10px;letter-spacing:2px;text-align:center;text-transform:uppercase">LADED...</div>
+      <div style="padding:16px;color:var(--mut2);font-size:10px;letter-spacing:2px;text-align:center;text-transform:uppercase">LADED...</div>
     </div>
   </div>
 
-  <!-- SONAR RADAR -->
+  <!-- CROWD PULSE -->
   <div class="sec">
-    <div class="sec-title">CROWD RADAR</div>
-    <div class="radar-wrap">
-      <div class="radar-rings">
-        <div class="radar-ring"></div>
-        <div class="radar-ring"></div>
-        <div class="radar-ring"></div>
+    <div class="sec-title">CROWD PULS</div>
+    <div class="crowd">
+      <div class="crowd-top">
+        <div class="crowd-n">47<small> aktiv</small></div>
+        <div class="crowd-lvl">🔥 Füllt sich</div>
       </div>
-      <div class="radar-sweep">
-        <div class="radar-sweep-inner"></div>
-      </div>
-      <!-- simulierte Blips -->
-      <div class="radar-blip active" style="left:65%;top:35%"></div>
-      <div class="radar-blip active" style="left:30%;top:60%;animation-delay:.8s"></div>
-      <div class="radar-blip active" style="left:70%;top:65%;animation-delay:1.4s"></div>
-      <div class="radar-blip" style="left:45%;top:25%;background:rgba(255,45,0,0.4);width:5px;height:5px"></div>
-      <div class="radar-center"></div>
-    </div>
-    <div class="radar-info">
-      <div class="radar-count">47</div>
-      <div class="radar-sub">USER AKTIV HÜT NACHT · PHASE 5 LIVE</div>
+      <div class="pulse-track"><div class="pulse-fill"></div></div>
+      <div class="crowd-sub">Simuliert · Phase 5 — Live-Crowd chunnt mit em GPS-Rollout</div>
     </div>
   </div>
 
@@ -360,10 +275,10 @@ a,button,.act-btn,.sk-pill,.sim-card,.kr-btn{cursor:pointer}
     <div class="sec-title">SOUND DNA</div>
     <div class="sound-bars" id="sound-bars"></div>
     <div class="dna-tags" id="dna-tags"></div>
-    <div style="font-size:8px;color:rgba(232,228,217,0.2);letter-spacing:2px;text-align:center;margin-top:10px;text-transform:uppercase">KI-ANALYSE BASIEREND AUF VERGANGENE EVENTS · PHASE 6</div>
+    <div class="dna-note">KI-Analyse basierend auf vergangene Events · Phase 6</div>
   </div>
 
-  <!-- KARTE -->
+  <!-- STANDORT -->
   <div class="sec">
     <div class="sec-title">STANDORT</div>
     <div id="map"></div>
@@ -378,14 +293,14 @@ a,button,.act-btn,.sk-pill,.sim-card,.kr-btn{cursor:pointer}
     <div class="sec-title">BEWERTIGEN</div>
     <div class="review-summary">
       <div>
-        <div class="review-big" id="rv-big">4.2</div>
+        <div class="review-big" id="rv-big">–</div>
         <div class="review-stars">★★★★☆</div>
-        <div class="review-count" id="rv-count">47 BEWERTIGEN</div>
+        <div class="review-count" id="rv-count">0 BEWERTIGEN</div>
       </div>
       <div class="review-bars">
-        <div class="rbar-row"><span class="rbar-lbl">5</span><div class="rbar-track"><div class="rbar-fill" style="width:55%"></div></div></div>
-        <div class="rbar-row"><span class="rbar-lbl">4</span><div class="rbar-track"><div class="rbar-fill" style="width:28%"></div></div></div>
-        <div class="rbar-row"><span class="rbar-lbl">3</span><div class="rbar-track"><div class="rbar-fill" style="width:12%"></div></div></div>
+        <div class="rbar-row"><span class="rbar-lbl">5</span><div class="rbar-track"><div class="rbar-fill" style="width:60%"></div></div></div>
+        <div class="rbar-row"><span class="rbar-lbl">4</span><div class="rbar-track"><div class="rbar-fill" style="width:25%"></div></div></div>
+        <div class="rbar-row"><span class="rbar-lbl">3</span><div class="rbar-track"><div class="rbar-fill" style="width:10%"></div></div></div>
         <div class="rbar-row"><span class="rbar-lbl">2</span><div class="rbar-track"><div class="rbar-fill" style="width:4%"></div></div></div>
         <div class="rbar-row"><span class="rbar-lbl">1</span><div class="rbar-track"><div class="rbar-fill" style="width:1%"></div></div></div>
       </div>
@@ -393,66 +308,50 @@ a,button,.act-btn,.sk-pill,.sim-card,.kr-btn{cursor:pointer}
     <div class="reviews-list">
       <div class="rv-card">
         <div class="rv-top"><span class="rv-user">@zueri_nacht</span><span class="rv-stars">★★★★★</span></div>
-        <div class="rv-date">VOR 2 TAGE · KREIS 5</div>
-        <div class="rv-text" style="margin-top:6px">Absolut mega Abig — Sound system ist top, Crowd war super. Einer vo de beschte Clubs i Züri ohne Frag.</div>
+        <div class="rv-date">VOR 2 TÄG · KREIS 5</div>
+        <div class="rv-text">Absolut mega Abig — Soundsystem isch top, Crowd war super. Eine vo de beschte Clubs i Züri, ohni Frag.</div>
       </div>
       <div class="rv-card">
         <div class="rv-top"><span class="rv-user">@techno_lisa</span><span class="rv-stars">★★★★☆</span></div>
-        <div class="rv-date">VOR 1 WOCHE · KREIS 4</div>
-        <div class="rv-text" style="margin-top:6px">Gutes Lineup, etwas lang Schlange. Aber wenn mal drin isch es sich würklich lohnt.</div>
+        <div class="rv-date">VOR 1 WUCHE · KREIS 4</div>
+        <div class="rv-text">Guets Lineup, chli lang Schlange. Aber wemer mal drin isch, lohnts sich würklich.</div>
       </div>
     </div>
-    <button class="rv-add" onclick="window.location.href='login.html'">+ BEWERTUNG SCHREIBE → LOGIN NÖTIG</button>
-  </div>
-
-  <!-- KI FEATURES -->
-  <div class="ki-box">
-    <div class="ki-box-head">⚡ STADTPULS KI-FEATURES</div>
-    <div class="ki-feat-row">
-      <span class="ki-feat-ico">🎵</span>
-      <div class="ki-feat-info">
-        <div class="ki-feat-nm">Sound DNA Matching</div>
-        <div class="ki-feat-ds">KI vergleicht dis Musik-Profil mit dem Club und zeigt wie gut er zu dir passt</div>
-        <span class="ki-badge">PHASE 6</span>
-      </div>
-    </div>
-    <div class="ki-feat-row">
-      <span class="ki-feat-ico">🌅</span>
-      <div class="ki-feat-info">
-        <div class="ki-feat-nm">Afterhour Countdown</div>
-        <div class="ki-feat-ds">Live-Countdown bis zur nächste Afterhour in dim Kreis</div>
-        <span class="ki-badge">PHASE 5</span>
-      </div>
-    </div>
-    <div class="ki-feat-row">
-      <span class="ki-feat-ico">👥</span>
-      <div class="ki-feat-info">
-        <div class="ki-feat-nm">Crowd Prognose</div>
-        <div class="ki-feat-ds">KI schätzt wie voll es heute Nacht wird — basierend auf Wochentag + Events</div>
-        <span class="ki-badge">PHASE 6</span>
-      </div>
-    </div>
+    <button class="rv-add" onclick="window.location.href='login.html'">+ BEWERTIG SCHRIEBE → LOGIN NÖTIG</button>
   </div>
 
   <!-- SIMILAR -->
   <div class="sec">
     <div class="sec-title">ÄHNLICHI CLUBS</div>
     <div class="similar-grid" id="similar-grid">
-      <div class="sim-card" onclick="">
-        <div class="sim-img">🔊</div>
-        <div class="sim-body"><div class="sim-name">WIRD GELADEN</div><div class="sim-meta">KREIS – · TECHNO</div></div>
-      </div>
-      <div class="sim-card">
-        <div class="sim-img">🎵</div>
-        <div class="sim-body"><div class="sim-name">WIRD GELADEN</div><div class="sim-meta">KREIS – · CLUB</div></div>
-      </div>
+      <div class="sim-card"><div class="sim-img">🔊</div><div class="sim-body"><div class="sim-name">WIRD GELADE</div><div class="sim-meta">KREIS – · TECHNO</div></div></div>
+      <div class="sim-card"><div class="sim-img">🎵</div><div class="sim-body"><div class="sim-name">WIRD GELADE</div><div class="sim-meta">KREIS – · CLUB</div></div></div>
     </div>
   </div>
 
 </div><!-- end content -->
 
+<!-- SP_BOOST v1: CLAIM -->
 <style>
-/* ═══ ORIGINAL STADTPULS FOOTER ═══ */
+.sp-claim{margin:8px 22px 30px;padding:18px 20px;border:1px dashed rgba(200,255,0,.4);border-radius:16px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:rgba(200,255,0,.03)}
+.sp-claim-txt{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;color:rgba(236,232,221,.55);text-transform:uppercase;line-height:1.7}
+.sp-claim-btn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;color:#050508;background:#c8ff00;padding:11px 20px;border-radius:9px;text-decoration:none;white-space:nowrap;transition:background .15s}
+.sp-claim-btn:hover{background:#e8e4d9}
+</style>
+<div class="sp-claim" id="sp-claim" style="display:none">
+  <div class="sp-claim-txt">Bisch du de Inhaber? Hol dir dini Platzierig — ganz obe i dinere Kategorie.</div>
+  <a class="sp-claim-btn" id="sp-claim-link" href="/platzierung.html">DAS ISCH MIS LOKAL →</a>
+</div>
+<script>
+function spClaim(id,typ,name,kreis){try{
+  const a=document.getElementById('sp-claim-link');
+  a.href='/platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
+  document.getElementById('sp-claim').style.display='flex';
+}catch(e){}}
+</script>
+
+<!-- FOOTER -->
+<style>
 footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 .ftk{background:rgba(255,45,0,.06);padding:.4rem 0;overflow:hidden;white-space:nowrap;border-bottom:1px solid rgba(255,45,0,.1)}
 .fti{display:inline-block;animation:tkr 22s linear infinite}
@@ -471,25 +370,6 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 .fbot{max-width:1320px;margin:0 auto;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.05)}
 .fbot p{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;margin:0}
 </style>
-
-<!-- SP_BOOST v1: CLAIM — "Das isch mis Lokal" (Verkaufseinstieg) -->
-<style>
-.sp-claim{max-width:1100px;margin:28px auto;padding:16px 18px;border:1px dashed rgba(200,255,0,.35);display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.sp-claim-txt{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;color:#888;text-transform:uppercase;line-height:1.7}
-.sp-claim-btn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;color:#04040a;background:#c8ff00;padding:10px 20px;text-decoration:none;white-space:nowrap;transition:background .15s}
-.sp-claim-btn:hover{background:#e8e4d9}
-</style>
-<div class="sp-claim" id="sp-claim" style="display:none">
-  <div class="sp-claim-txt">Bisch du de Inhaber? Hol dir dini Platzierig — ganz obe i dinere Kategorie.</div>
-  <a class="sp-claim-btn" id="sp-claim-link" href="/platzierung.html">DAS ISCH MIS LOKAL →</a>
-</div>
-<script>
-function spClaim(id,typ,name,kreis){try{
-  const a=document.getElementById('sp-claim-link');
-  a.href='/platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
-  document.getElementById('sp-claim').style.display='flex';
-}catch(e){}}
-</script>
 <footer>
   <div class="ftk">
     <div class="fti">
@@ -540,6 +420,8 @@ function spClaim(id,typ,name,kreis){try{
   </div>
 </footer>
 
+</div><!-- end shell -->
+
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="/sp-track.js"></script>
@@ -558,9 +440,6 @@ function spLocUrl(id){return 'https://depuls.ch'+spLocPath(id);}
 
 // URL PARAMS
 const params=new URLSearchParams(location.search);
-// SP_PRETTY_LOC v1 -- auf vorgebauten Pretty-URL-Seiten steht die ID im
-// body[data-location-id], NICHT im Query-String (der ist bei /nachtleben/<slug>/ leer!).
-// Vorrang: data-location-id -> ?slug= -> ?id= (alte URLs).
 const slug=document.body.dataset.locationId||params.get('slug')||params.get('id');
 
 async function sbGet(path){
@@ -618,7 +497,7 @@ function buildSoundDNA(sk){
     const min=15+Math.random()*20;
     const max=40+Math.random()*60;
     const dur=0.8+Math.random()*1.2;
-    barsHTML+=`<div class="sound-bar" style="background:${colors[i%colors.length]};opacity:.8;--min:${min}%;--max:${max}%;--dur:${dur}s"></div>`;
+    barsHTML+=`<div class="sound-bar" style="background:${colors[i%colors.length]};opacity:.85;--min:${min}%;--max:${max}%;--dur:${dur}s;animation-delay:${(Math.random()).toFixed(2)}s"></div>`;
   }
   bars.innerHTML=barsHTML;
   const genreMap={techno:['TECHNO','INDUSTRIAL','DARK'],jazz:['JAZZ','BLUES','SOUL'],club:['HOUSE','TECHNO','DANCE'],bar:['LIVE','INDIE','JAZZ'],afterhour:['AFTERHOUR','DEEP','AMBIENT']};
@@ -645,7 +524,6 @@ async function load(){
     return;
   }
 
-  // Versuche via slug oder id — robust, ohne Kategorie-Falle + Fallback
   let data;
   if(isNaN(slug)){
     data=await sbGet(`locations?slug=eq.${encodeURIComponent(slug)}&select=*&limit=1`);
@@ -681,7 +559,7 @@ async function load(){
   if(l.bild_url){
     const img=document.createElement('img');
     img.src=l.bild_url;img.alt=l.name;
-    img.style='width:100%;height:100%;object-fit:cover;filter:brightness(.45)';
+    img.style='width:100%;height:100%;object-fit:cover;filter:brightness(.5)';
     document.getElementById('hero-placeholder').replaceWith(img);
   }
   document.getElementById('hero-name').textContent=l.name;
@@ -723,7 +601,6 @@ async function load(){
   if(l.lat&&l.lng){
     initMap(l.lat,l.lng,l.name);
   }else{
-    // Fallback: Kreis-Zentrum
     const kreisCoords={1:[47.3762,8.5407],2:[47.3574,8.5374],3:[47.3728,8.5148],4:[47.3779,8.5285],5:[47.3879,8.5158],6:[47.3836,8.5551],7:[47.3694,8.5713],8:[47.3552,8.5567],9:[47.3818,8.4862],10:[47.4011,8.5113],11:[47.4126,8.5459],12:[47.4180,8.5751]};
     const c=kreisCoords[l.kreis]||[47.3769,8.5417];
     initMap(c[0],c[1],l.name);
@@ -736,9 +613,9 @@ async function load(){
 async function loadSimilar(loc){
   const similar=await sbGet(`locations?kategorie=eq.nachtleben&aktiv=eq.true&zt_subkategorie_id=eq.${loc.zt_subkategorie_id||162}&id=neq.${loc.id}&select=id,name,slug,subkategorie,kreis,bild_url&limit=4`);
   if(!Array.isArray(similar)||!similar.length)return;
-  document.getElementById('similar-grid').innerHTML=similar.slice(0,4).map(s=>`
+  document.getElementById('similar-grid').innerHTML=similar.slice(0,3).map(s=>`
     <div class="sim-card" onclick="window.location.href='${spLocPath(s.id)}'">
-      ${s.bild_url?`<img class="sim-img" src="${s.bild_url}" alt="${s.name}" style="height:70px;object-fit:cover;width:100%">`:`<div class="sim-img">🌙</div>`}
+      ${s.bild_url?`<img class="sim-img" src="${s.bild_url}" alt="${s.name}" style="height:84px;object-fit:cover;width:100%">`:`<div class="sim-img">🌙</div>`}
       <div class="sim-body">
         <div class="sim-name">${s.name}</div>
         <div class="sim-meta">KREIS ${s.kreis||'–'} · ${(s.subkategorie||'NACHTLEBE').toUpperCase()}</div>
@@ -752,13 +629,13 @@ document.getElementById('act-share').onclick=()=>{
   else{navigator.clipboard.writeText(location.href);alert('Link kopiert!');}
 };
 
-// BOOKMARK (echtes Speichern in die bookmarks-Tabelle via sp-track.js)
+// BOOKMARK
 let _bm=null;
 async function loadEngagement(){
   if(!_bm||!window.spStats)return;
   try{ const s=await spStats('location',_bm.id); if(!s)return;
     const el=document.getElementById('eng-bar');
-    if(el) el.innerHTML=`❤️ ${s.merkt||0} gmerkt &nbsp;·&nbsp; 👁 ${s.views||0} die Wuche aagluegt`;
+    if(el) el.innerHTML=`❤️ <b>${s.merkt||0}</b> gmerkt &nbsp;·&nbsp; 👁 <b>${s.views||0}</b> die Wuche`;
   }catch(e){}
 }
 function setSaveUI(btn,on){ btn.textContent=on?'❤️':'🤍'; btn.classList.toggle('on',!!on); }
