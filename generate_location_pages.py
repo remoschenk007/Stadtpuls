@@ -192,8 +192,8 @@ def render_page(template, loc, cat_key, cfg):
             f'<div class="ssr-fallback" style="max-width:640px;margin:30px auto;padding:0 20px;'
             f'font-family:\'DM Mono\',monospace;color:#e8e4d9">'
             f'<h1 style="font-size:22px;margin-bottom:8px">{name_esc}</h1>'
-            f'<p style="color:#999;font-size:12px;margin-bottom:14px">'
-            f'{sub_esc} · Kreis {kreis}{(" · " + adresse_esc) if adresse else ""}</p>'
+            f'<h2 style="color:#ff2d00;font-size:14px;font-weight:700;margin:0 0 14px">'
+            f'{sub_esc} · Kreis {kreis}{(" · " + adresse_esc) if adresse else ""}</h2>'
             f'<p style="font-size:13px;line-height:1.6">{desc_esc}</p>'
             f'</div>'
         )

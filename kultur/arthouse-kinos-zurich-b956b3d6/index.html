@@ -204,7 +204,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
   <span class="bc-current" id="bc-name">—</span>
 </div>
 
-<div id="main-content"><div class="ssr-fallback" style="max-width:640px;margin:30px auto;padding:0 20px;font-family:'DM Mono',monospace;color:#e8e4d9"><h1 style="font-size:22px;margin-bottom:8px">Arthouse Kinos Zürich</h1><p style="color:#999;font-size:12px;margin-bottom:14px">film · Kreis 1 · Nägelihof 1</p><p style="font-size:13px;line-height:1.6">Die Arthouse Kinos Zürich zeigen Independent Film-Hits aus aller Welt. Aktuelle Filmfestival-Highlights kommen hier in der Originalversion auf die Leinwand.</p></div></div>
+<div id="main-content"><div class="ssr-fallback" style="max-width:640px;margin:30px auto;padding:0 20px;font-family:'DM Mono',monospace;color:#e8e4d9"><h1 style="font-size:22px;margin-bottom:8px">Arthouse Kinos Zürich</h1><h2 style="color:#ff2d00;font-size:14px;font-weight:700;margin:0 0 14px">film · Kreis 1 · Nägelihof 1</h2><p style="font-size:13px;line-height:1.6">Die Arthouse Kinos Zürich zeigen Independent Film-Hits aus aller Welt. Aktuelle Filmfestival-Highlights kommen hier in der Originalversion auf die Leinwand.</p></div></div>
 
 <div class="ticker-wrap">
   <div class="ticker-row"><div class="tick l" id="ticker-a"></div></div>
@@ -501,8 +501,8 @@ function renderProfil(l,similar,venueEvents){
     +(l.featured?'<div class="typ-badge red">TOP PICK</div>':'')
     +'<div class="ph-addr">Kreis '+kreis+' · '+(l.adresse||'')+'</div>'
     +'</div>'
-    +'<div class="profil-name">'+l.name+'</div>'
-    +'<div class="profil-subname">'+sub.n+'</div>'
+    +'<h1 class="profil-name" style="margin:0 0 8px">'+l.name+'</h1>'
+    +'<h2 class="profil-subname" style="margin:0 0 20px">'+sub.n+'</h2>'
     +'</div>'
 
     // CONTENT GRID

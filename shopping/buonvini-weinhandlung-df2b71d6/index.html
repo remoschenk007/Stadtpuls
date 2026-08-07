@@ -261,7 +261,7 @@ nav{padding:0 16px;height:48px}.nav-links{display:none}.sp-burger{display:flex}
   <span id="bc-name">—</span>
 </div>
 
-<div id="main-content"><div class="ssr-fallback" style="max-width:640px;margin:30px auto;padding:0 20px;font-family:'DM Mono',monospace;color:#e8e4d9"><h1 style="font-size:22px;margin-bottom:8px">Buonvini – Weinhandlung</h1><p style="color:#999;font-size:12px;margin-bottom:14px">food · Kreis 1 · Rämistrasse 15</p><p style="font-size:13px;line-height:1.6">Exquisite italienische Weine und Gourmet-Produkte in der Altstadt Zürichs entdecken.</p></div></div>
+<div id="main-content"><div class="ssr-fallback" style="max-width:640px;margin:30px auto;padding:0 20px;font-family:'DM Mono',monospace;color:#e8e4d9"><h1 style="font-size:22px;margin-bottom:8px">Buonvini – Weinhandlung</h1><h2 style="color:#ff2d00;font-size:14px;font-weight:700;margin:0 0 14px">food · Kreis 1 · Rämistrasse 15</h2><p style="font-size:13px;line-height:1.6">Exquisite italienische Weine und Gourmet-Produkte in der Altstadt Zürichs entdecken.</p></div></div>
 
 <div class="btw">
   <div class="tr"><div class="tick l" id="ta"></div></div>
@@ -468,8 +468,8 @@ function renderProfil(l){
             <span class="badge ghost">KREIS ${l.kreis||'?'}</span>
             ${offeStatus===true?'<span class="badge offe-b"><div class="badge-dot"></div>OFFE</span>':''}
           </div>
-          <div class="pl-name">${l.name}</div>
-          <div class="pl-sub">${sub.n} · KREIS ${l.kreis||'?'}</div>
+          <h1 class="pl-name" style="margin:0 0 8px">${l.name}</h1>
+          <h2 class="pl-sub" style="margin:0 0 8px;font-weight:400">${sub.n} · KREIS ${l.kreis||'?'}</h2>
           <div class="pl-adresse">${l.adresse||''}${l.plz?' · '+l.plz+' Zürich':''}</div>
         </div>
 
