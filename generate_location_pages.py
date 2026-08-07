@@ -176,8 +176,8 @@ def render_page(template, loc, cat_key, cfg):
         # (hero-name/hero-addr/desc-box), die die JS load()-Funktion per
         # textContent/innerHTML befuellt -- hier dieselben Werte vorab reinschreiben.
         repls_nl = [
-            ('<div class="hero-name" id="hero-name">LADED...</div>',
-             f'<div class="hero-name" id="hero-name">{name_esc}</div>'),
+            ('<h1 class="hero-name" id="hero-name" style="margin:0 0 6px">LADED...</h1>',
+             f'<h1 class="hero-name" id="hero-name" style="margin:0 0 6px">{name_esc}</h1>'),
             ('<div class="hero-addr" id="hero-addr">\n      <span class="hero-addr-dot"></span>\n      <span>ZÜRICH</span>\n    </div>',
              f'<div class="hero-addr" id="hero-addr"><span class="hero-addr-dot"></span><span>{adresse_esc or "Zürich"}</span><span class="hero-addr-dot"></span><span>KREIS {kreis}</span></div>'),
             ('<div class="desc-box" id="desc-box">Informationen werden geladen...</div>',

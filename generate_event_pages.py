@@ -126,7 +126,7 @@ def render_page(template, ev):
         f'<p style="font-size:13px;line-height:1.6">{desc_esc}</p>'
         f'</div>'
     )
-    out = out.replace('<div id="page"></div>', f'<div id="page">{fallback}</div>', 1)
+    out = out.replace('<div id="page">', f'<div id="page">{fallback}', 1)
 
     out = out.replace(
         '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>',
