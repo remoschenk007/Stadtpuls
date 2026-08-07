@@ -1,393 +1,111 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de-CH">
 <head>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title id="page-title">Bierhalle Wolf — restbar Kreis 1 | Stadtpuls Zürich</title>
 <meta name="description" id="page-desc" content="Live-Musik, Bier vom Fass und zünftige Partystimmung: Das erwartet die Gäste in der Bierhalle Wolf mitten in der Zürcher Altstadt.">
 <link rel="canonical" id="page-canonical" href="https://depuls.ch/nachtleben/bierhalle-wolf/">
 <script type="application/ld+json" id="schema-ld">{"@context": "https://schema.org", "@type": "NightClub", "name": "Bierhalle Wolf", "description": "Live-Musik, Bier vom Fass und zünftige Partystimmung: Das erwartet die Gäste in der Bierhalle Wolf mitten in der Zürcher Altstadt.", "url": "https://depuls.ch/nachtleben/bierhalle-wolf/", "address": {"@type": "PostalAddress", "streetAddress": "Limmatquai 132", "postalCode": "8001", "addressLocality": "Zürich", "addressCountry": "CH"}, "telephone": "+41 44 251 01 30", "image": "https://www.zuerich.com/sites/default/files/keyvisual/web_restaurant_bierhalle_wolf.jpg"}</script>
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,500;0,700;0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="/location-links.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@1,900&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#050508;--card:#0c0c12;--line:rgba(255,255,255,.08);
-  --cream:#ece8dd;--mut:rgba(236,232,221,.62);--mut2:rgba(236,232,221,.4);
-  --rot:#ff2d00;--volt:#c8ff00;--lila:#9333ea;--cyan:#00f5ff;--gold:#ffd700;--pk:#ec4899;
-}
-html,body{background:var(--bg);color:var(--cream);font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
-body{background-image:radial-gradient(circle at 50% -8%,rgba(147,51,234,.16),transparent 55%),radial-gradient(circle at 100% 6%,rgba(255,45,0,.08),transparent 45%)}
-#dot{position:fixed;width:8px;height:8px;background:var(--rot);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
-#ring{position:fixed;width:30px;height:30px;border:1px solid rgba(255,45,0,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left .07s,top .07s}
-.scan{position:fixed;inset:0;pointer-events:none;z-index:2;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(255,255,255,.010) 3px,rgba(255,255,255,.010) 4px)}
-a{color:inherit;text-decoration:none}
-.shell{max-width:900px;margin:0 auto;position:relative;z-index:3}
-
-/* NAV */
-.nav{position:sticky;top:0;z-index:60;display:flex;align-items:center;justify-content:space-between;padding:13px 22px;background:rgba(5,5,8,.82);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-.nav-logo{display:flex;align-items:center;gap:9px}
-.logo-txt{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;letter-spacing:5px;font-size:17px;color:var(--cream)}
-.ldot{width:7px;height:7px;border-radius:50%;background:var(--rot);animation:blink 2s infinite;flex-shrink:0}
-@keyframes blink{0%,100%{box-shadow:0 0 0 0 rgba(255,45,0,.55)}50%{box-shadow:0 0 0 7px transparent}}
-.nav-back{font-size:9px;letter-spacing:3px;color:var(--mut2);text-transform:uppercase;transition:.2s}
-.nav-back:hover{color:var(--rot)}
-
-/* HERO */
-.hero{position:relative;height:70vh;min-height:420px;overflow:hidden}
-.hero-placeholder{width:100%;height:100%;background:radial-gradient(circle at 30% 25%,rgba(147,51,234,.5),transparent 55%),radial-gradient(circle at 75% 60%,rgba(255,45,0,.38),transparent 55%),linear-gradient(160deg,#1a0b2e,#0a0410 70%);display:flex;align-items:center;justify-content:center;font-size:74px}
-.hero-grid{position:absolute;inset:0;opacity:.14;background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);background-size:44px 44px;mask-image:linear-gradient(180deg,transparent,rgba(0,0,0,.5) 40%,transparent 80%);pointer-events:none}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(0deg,var(--bg) 2%,rgba(5,5,8,.72) 30%,rgba(5,5,8,.1) 62%,transparent 100%)}
-.hero-top{position:absolute;top:18px;left:0;right:0;padding:0 22px;display:flex;align-items:flex-start;justify-content:space-between;z-index:4}
-.offe-pill{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:100px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:2px;text-transform:uppercase;backdrop-filter:blur(8px)}
-.offe-pill.open{background:var(--volt);color:#050508;box-shadow:0 0 26px rgba(200,255,0,.45);animation:glow 2.6s ease-in-out infinite}
-.offe-pill.closed{background:rgba(255,255,255,.12);color:rgba(236,232,221,.7);border:1px solid rgba(255,255,255,.15)}
-@keyframes glow{0%,100%{box-shadow:0 0 14px rgba(200,255,0,.25)}50%{box-shadow:0 0 30px rgba(200,255,0,.55)}}
-.offe-dot{width:8px;height:8px;border-radius:50%;background:currentColor;animation:blink 1.4s infinite}
-.hero-score{text-align:center;background:rgba(0,0,0,.42);backdrop-filter:blur(10px);border:1px solid rgba(255,215,0,.35);border-radius:12px;padding:8px 13px}
-.hero-score-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:26px;color:var(--gold);line-height:1}
-.hero-score-s{font-size:9px;color:var(--gold);letter-spacing:1px}
-.hero-score-l{font-size:7px;letter-spacing:2px;color:var(--mut2);text-transform:uppercase;margin-top:1px}
-.hero-content{position:absolute;left:0;right:0;bottom:0;padding:0 22px 26px;z-index:4}
-.hero-sk{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.sk-pill{padding:5px 11px;border-radius:100px;font-size:8px;letter-spacing:1.6px;text-transform:uppercase;border:1px solid transparent;backdrop-filter:blur(6px)}
-.sk-pill.techno{background:rgba(147,51,234,.24);color:#c79bff;border-color:rgba(147,51,234,.5)}
-.sk-pill.jazz{background:rgba(255,215,0,.18);color:var(--gold);border-color:rgba(255,215,0,.4)}
-.sk-pill.bar{background:rgba(0,245,255,.14);color:var(--cyan);border-color:rgba(0,245,255,.35)}
-.sk-pill.club{background:rgba(255,45,0,.2);color:#ff6b4a;border-color:rgba(255,45,0,.4)}
-.sk-pill.afterhour{background:rgba(255,215,0,.14);color:var(--gold);border-color:rgba(255,215,0,.32)}
-.sk-pill.default{background:rgba(255,255,255,.1);color:var(--cream);border-color:rgba(255,255,255,.2)}
-.hero-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;text-transform:uppercase;font-size:clamp(48px,13vw,104px);line-height:.82;letter-spacing:-.02em;color:#fff;text-shadow:0 6px 40px rgba(0,0,0,.6)}
-.hero-addr{margin-top:12px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:11px;letter-spacing:.5px;color:var(--mut)}
-.hero-addr-dot{width:4px;height:4px;border-radius:50%;background:var(--rot)}
-#eng-bar{margin-top:12px;display:flex;gap:16px;flex-wrap:wrap;font-size:11px;color:var(--mut);letter-spacing:.5px}
-#eng-bar b{color:var(--cream);font-weight:500}
-
-/* ACTION BAR */
-.action-bar{position:sticky;top:49px;z-index:50;display:flex;gap:9px;padding:12px 22px;background:rgba(5,5,8,.9);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}
-.act-btn{display:flex;align-items:center;justify-content:center;gap:7px;padding:14px 8px;border:none;border-radius:11px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:.18s}
-.act-btn.primary{flex:2.4;background:var(--rot);color:#fff;box-shadow:0 6px 24px rgba(255,45,0,.32)}
-.act-btn.primary:hover{transform:translateY(-1px);box-shadow:0 10px 30px rgba(255,45,0,.5)}
-.act-btn.ghost{flex:0 0 54px;background:rgba(255,255,255,.05);color:var(--mut);border:1px solid var(--line);font-size:18px}
-.act-btn.ghost:hover{color:var(--cream);border-color:rgba(255,45,0,.4)}
-#act-save.on{background:rgba(255,45,0,.14);border-color:rgba(255,45,0,.5);color:var(--rot)}
-
-/* CONTENT */
-.content{padding:26px 22px 10px}
-.sec{margin-bottom:30px}
-.sec-title{display:flex;align-items:center;gap:12px;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:23px;text-transform:uppercase;color:var(--cream);margin-bottom:14px}
-.sec-title::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(255,45,0,.4),transparent)}
-
-/* META */
-.meta-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.meta-cell{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px 14px}
-.meta-label{font-size:7.5px;letter-spacing:2.5px;color:var(--mut2);text-transform:uppercase;margin-bottom:7px}
-.meta-val{font-size:14px;letter-spacing:.3px;color:var(--cream)}
-.meta-val.volt{color:var(--volt)}.meta-val.cyan{color:var(--cyan)}
-
-/* DESC */
-.desc-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;font-size:13px;line-height:1.85;color:var(--mut)}
-
-/* OZ */
-.oz-grid{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--card)}
-.oz-row{display:flex;align-items:center;justify-content:space-between;padding:13px 18px;border-bottom:1px solid var(--line);font-size:12px}
-.oz-row:last-child{border-bottom:none}
-.oz-row.today{background:linear-gradient(90deg,rgba(200,255,0,.08),transparent)}
-.oz-day{letter-spacing:2px;text-transform:uppercase;color:var(--mut2);width:62px}
-.oz-row.today .oz-day{color:var(--volt);font-weight:500}
-.oz-time{color:var(--mut)}
-.oz-row.today .oz-time{color:var(--cream)}
-.oz-closed{color:var(--mut2)}
-.oz-now{font-size:8px;padding:4px 10px;background:var(--volt);color:#050508;border-radius:100px;letter-spacing:1px;text-transform:uppercase;margin-left:auto}
-
-/* CROWD PULSE (simuliert · Phase 5) */
-.crowd{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px}
-.crowd-top{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:14px}
-.crowd-n{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:44px;line-height:.9;color:var(--volt)}
-.crowd-n small{font-size:13px;color:var(--mut2)}
-.crowd-lvl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;text-transform:uppercase;color:var(--rot)}
-.pulse-track{height:12px;border-radius:100px;background:rgba(255,255,255,.06);overflow:hidden}
-.pulse-fill{height:100%;width:78%;border-radius:100px;background:linear-gradient(90deg,var(--lila),var(--rot),var(--volt));background-size:200% 100%;animation:slide 3s linear infinite}
-@keyframes slide{to{background-position:200% 0}}
-.crowd-sub{margin-top:10px;font-size:9px;letter-spacing:1.5px;color:var(--mut2);text-transform:uppercase;text-align:center}
-
-/* SOUND DNA */
-.sound-bars{display:flex;align-items:flex-end;justify-content:center;gap:5px;height:82px;margin-bottom:16px;padding:0 4px}
-.sound-bar{width:9px;border-radius:3px 3px 0 0;animation:soundbar var(--dur,1s) ease-in-out infinite alternate}
-@keyframes soundbar{from{height:var(--min,18%)}to{height:var(--max,100%)}}
-.dna-tags{display:flex;flex-wrap:wrap;gap:7px;justify-content:center}
-.dna-tag{padding:6px 13px;border-radius:100px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase}
-.dna-tag.t{background:rgba(147,51,234,.14);color:#c79bff;border:1px solid rgba(147,51,234,.32)}
-.dna-tag.h{background:rgba(255,215,0,.1);color:var(--gold);border:1px solid rgba(255,215,0,.25)}
-.dna-note{font-size:8px;color:var(--mut2);letter-spacing:2px;text-align:center;margin-top:12px;text-transform:uppercase}
-
-/* MAP */
-#map{width:100%;height:210px;border-radius:16px;border:1px solid var(--line);margin-bottom:10px;background:#0a0510}
-.map-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-.map-btn{padding:13px;border:1px solid var(--line);border-radius:11px;background:rgba(255,255,255,.03);color:var(--mut);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;text-align:center;cursor:pointer;transition:.18s;font-family:'DM Mono',monospace}
-.map-btn:hover{border-color:rgba(255,45,0,.4);color:var(--cream)}
-
-/* REVIEWS */
-.review-summary{display:flex;gap:18px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
-.review-big{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:54px;color:var(--gold);line-height:1}
-.review-stars{color:var(--gold);font-size:15px}
-.review-count{font-size:8px;letter-spacing:2px;color:var(--mut2);text-transform:uppercase;margin-top:3px}
-.review-bars{flex:1}
-.rbar-row{display:flex;align-items:center;gap:9px;margin-bottom:5px}
-.rbar-lbl{font-size:9px;color:var(--mut2);width:10px;text-align:right}
-.rbar-track{flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden}
-.rbar-fill{height:100%;background:var(--gold);border-radius:3px}
-.reviews-list{display:flex;flex-direction:column;gap:10px;margin-bottom:14px}
-.rv-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:15px}
-.rv-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px}
-.rv-user{font-size:10px;letter-spacing:1px;color:var(--cream)}
-.rv-stars{color:var(--gold);font-size:12px}
-.rv-date{font-size:8px;color:var(--mut2);letter-spacing:1px}
-.rv-text{font-size:11.5px;color:var(--mut);line-height:1.65;margin-top:6px}
-.rv-add{width:100%;padding:15px;border:1px dashed rgba(255,45,0,.35);border-radius:12px;background:rgba(255,45,0,.03);color:var(--rot);font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:16px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:.18s}
-.rv-add:hover{background:rgba(255,45,0,.08)}
-
-/* SIMILAR */
-.similar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:11px}
-.sim-card{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;cursor:pointer;transition:.18s}
-.sim-card:hover{transform:translateY(-3px);border-color:rgba(255,45,0,.35)}
-.sim-img{height:84px;display:flex;align-items:center;justify-content:center;font-size:26px;background:linear-gradient(135deg,rgba(147,51,234,.3),rgba(255,45,0,.12));width:100%;object-fit:cover}
-.sim-body{padding:11px 13px}
-.sim-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:17px;text-transform:uppercase;line-height:1;margin-bottom:4px;color:var(--cream)}
-.sim-meta{font-size:8px;letter-spacing:1px;color:var(--mut2);text-transform:uppercase}
-
-@media (hover:none),(pointer:coarse){html,body{cursor:auto!important}#dot,#ring{display:none!important}}
-@media(max-width:620px){
-  .hero{height:60vh;min-height:360px}
-  .meta-strip{grid-template-columns:repeat(2,1fr)}
-  .similar-grid{grid-template-columns:1fr 1fr}
-  .content{padding:22px 16px 10px}
-}
-@media(prefers-reduced-motion:reduce){*{animation:none!important}}
-/* WIE CHUM ICH HI — SP_JNY v1 */
-.jny-card-wrap{border:1px solid rgba(0,245,255,.15);background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;position:relative;overflow:hidden}
-.jny-card-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,var(--cyan),transparent)}
-.jny-head{display:flex;align-items:center;gap:12px}
-.jny-head-txt{flex:1}
-.jny-head-lbl{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:3px}
-.jny-head-sub{font-size:10px;color:var(--mut2)}
-.jny-go{min-height:44px;padding:0 16px;font-size:9px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.3);border-radius:10px;color:var(--cyan);display:flex;align-items:center;white-space:nowrap;cursor:pointer;flex-shrink:0;transition:.18s}
-.jny-go:hover{background:rgba(0,245,255,.08)}
-.jny-status{margin-top:10px;font-size:10px;color:var(--mut2);line-height:1.7}
-.jny-card{position:relative;border:1px solid rgba(0,245,255,.18);border-radius:12px;background:linear-gradient(135deg,rgba(0,245,255,.035),rgba(200,255,0,.015));padding:14px 16px;margin-top:10px;overflow:hidden}
-.jny-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.jny-dur{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--cyan);line-height:1}
-.jny-dur span{font-size:.32em;letter-spacing:1px;margin-left:5px;color:var(--mut2);font-style:normal}
-.jny-clock{font-size:10px;color:var(--cream);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.jny-arrow{color:rgba(236,232,221,.15)}
-.jny-soon{background:rgba(255,45,0,.15);color:var(--rot);font-size:7.5px;letter-spacing:1px;padding:2px 5px;text-transform:uppercase;border-radius:4px}
-.jny-legs{display:flex;align-items:center;gap:0;margin-top:12px;flex-wrap:wrap}
-.jny-leg{display:flex;align-items:center;gap:5px}
-.jny-ico{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;background:rgba(236,232,221,.06);flex-shrink:0}
-.jny-leg.tr .jny-ico{background:rgba(0,245,255,.14);border:1px solid rgba(0,245,255,.35)}
-.jny-lbl{font-size:8.5px;letter-spacing:.5px;color:var(--cyan);white-space:nowrap}
-.jny-sep{width:14px;height:1px;background:repeating-linear-gradient(90deg,rgba(236,232,221,.15) 0 3px,transparent 3px 6px);margin:0 4px;flex-shrink:0}
-.jny-meta{margin-top:10px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut2)}
-.jny-walk-hero{display:flex;align-items:center;gap:12px}
-</style>
-<!-- SP_SEO v1 -->
-<meta id="og-title" property="og:title" content="Bierhalle Wolf — restbar Kreis 1 | Stadtpuls Zürich">
-<meta id="og-desc" property="og:description" content="Live-Musik, Bier vom Fass und zünftige Partystimmung: Das erwartet die Gäste in der Bierhalle Wolf mitten in der Zürcher Altstadt.">
-<meta id="og-url" property="og:url" content="https://depuls.ch/nachtleben/bierhalle-wolf/">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="de_CH">
-<meta property="og:site_name" content="Stadtpuls">
-<meta name="twitter:card" content="summary_large_image">
-<meta id="tw-title" name="twitter:title" content="Bierhalle Wolf — restbar Kreis 1 | Stadtpuls Zürich">
-<meta property="og:image" content="https://www.zuerich.com/sites/default/files/keyvisual/web_restaurant_bierhalle_wolf.jpg">
-<meta name="twitter:image" content="https://www.zuerich.com/sites/default/files/keyvisual/web_restaurant_bierhalle_wolf.jpg">
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-R1B1HL5W61"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-R1B1HL5W61');
-</script>
-</head>
-<body data-location-id="183aaa81-2d61-435c-b3ff-19972387326c">
-<div id="dot"></div><div id="ring"></div>
-<div class="scan"></div>
-
-<div class="shell">
-
-<!-- NAV -->
-<nav class="nav">
-  <a href="/index.html" class="nav-logo"><div class="ldot"></div><span class="logo-txt">STADTPULS</span></a>
-  <a href="/nachtleben.html" class="nav-back">← NACHTLEBE</a>
-</nav>
-
-<!-- HERO -->
-<div class="hero" id="hero">
-  <div class="hero-placeholder" id="hero-placeholder">🌙</div>
-  <div class="hero-grid"></div>
-  <div class="hero-overlay"></div>
-
-  <div class="hero-top">
-    <div class="offe-pill closed" id="offe-pill">
-      <div class="offe-dot"></div>
-      <span id="offe-txt">LADED...</span>
-    </div>
-    <div class="hero-score">
-      <div class="hero-score-n" id="hero-rating">–</div>
-      <div class="hero-score-s">★★★★★</div>
-      <div class="hero-score-l">Rating</div>
-    </div>
-  </div>
-
-  <div class="hero-content">
-    <div class="hero-sk" id="hero-sk"></div>
-    <h1 class="hero-name" id="hero-name" style="margin:0 0 6px">Bierhalle Wolf</h1>
-    <div class="hero-addr" id="hero-addr"><span class="hero-addr-dot"></span><span>Limmatquai 132</span><span class="hero-addr-dot"></span><span>KREIS 1</span></div>
-    <div id="eng-bar"></div>
-  </div>
-</div>
-
-<!-- ACTION BAR -->
-<div class="action-bar">
-  <button class="act-btn primary" id="act-ticket">🎫 TICKETS & LINE-UP</button>
-  <button class="act-btn ghost" onclick="document.getElementById('map').scrollIntoView({behavior:'smooth'})">📍</button>
-  <button class="act-btn ghost" id="act-save">❤️</button>
-  <button class="act-btn ghost" id="act-share">↗</button>
-</div>
-
-<div class="content">
-
-  <!-- META -->
-  <div class="sec">
-    <div class="meta-strip" id="meta-strip">
-      <div class="meta-cell"><div class="meta-label">Kreis</div><div class="meta-val volt" id="m-kreis">–</div></div>
-      <div class="meta-cell"><div class="meta-label">Kategorie</div><div class="meta-val" id="m-kat">–</div></div>
-      <div class="meta-cell"><div class="meta-label">Adresse</div><div class="meta-val" id="m-addr">–</div></div>
-      <div class="meta-cell"><div class="meta-label">Website</div><div class="meta-val cyan" id="m-web" style="cursor:pointer">–</div></div>
-    </div>
-  </div>
-
-  <!-- BESCHREIBUNG -->
-  <div class="sec">
-    <div class="sec-title">ÜBER DE CLUB</div>
-    <div class="desc-box" id="desc-box">Live-Musik, Bier vom Fass und zünftige Partystimmung: Das erwartet die Gäste in der Bierhalle Wolf mitten in der Zürcher Altstadt.</div>
-  </div>
-
-  <!-- ÖFFNUNGSZEITEN -->
-  <div class="sec">
-    <div class="sec-title">ÖFFNIGSZITTE</div>
-    <div class="oz-grid" id="oz-grid">
-      <div style="padding:16px;color:var(--mut2);font-size:10px;letter-spacing:2px;text-align:center;text-transform:uppercase">LADED...</div>
-    </div>
-  </div>
-
-  <!-- CROWD PULSE -->
-  <div class="sec">
-    <div class="sec-title">CROWD PULS</div>
-    <div class="crowd">
-      <div class="crowd-top">
-        <div class="crowd-n">47<small> aktiv</small></div>
-        <div class="crowd-lvl">🔥 Füllt sich</div>
-      </div>
-      <div class="pulse-track"><div class="pulse-fill"></div></div>
-      <div class="crowd-sub">Simuliert · Phase 5 — Live-Crowd chunnt mit em GPS-Rollout</div>
-    </div>
-  </div>
-
-  <!-- SOUND DNA -->
-  <div class="sec">
-    <div class="sec-title">SOUND DNA</div>
-    <div class="sound-bars" id="sound-bars"></div>
-    <div class="dna-tags" id="dna-tags"></div>
-    <div class="dna-note">KI-Analyse basierend auf vergangene Events · Phase 6</div>
-  </div>
-
-  <!-- STANDORT -->
-  <div class="sec">
-    <div class="sec-title">STANDORT</div>
-    <div class="jny-card-wrap">
-      <div class="jny-head">
-        <div style="font-size:22px;flex-shrink:0">🧭</div>
-        <div class="jny-head-txt">
-          <div class="jny-head-lbl">WIE CHUM ICH HI?</div>
-          <div class="jny-head-sub">Live Fussweg + ÖV-Verbindig ab dim Standort</div>
-        </div>
-        <div class="jny-go" id="jnyGoBtn">📍 GPS AN</div>
-      </div>
-      <div id="jnyResult"></div>
-    </div>
-    <div id="map"></div>
-    <div class="map-actions">
-      <div class="map-btn" id="map-nav-btn">🗺 ROUTE STARTE</div>
-      <div class="map-btn" onclick="window.open('https://zvv.ch','_blank')">🚇 ZVV VERBINDIG</div>
-    </div>
-  </div>
-
-  <!-- REVIEWS -->
-  <div class="sec">
-    <div class="sec-title">BEWERTIGEN</div>
-    <div class="review-summary">
-      <div>
-        <div class="review-big" id="rv-big">–</div>
-        <div class="review-stars">★★★★☆</div>
-        <div class="review-count" id="rv-count">0 BEWERTIGEN</div>
-      </div>
-      <div class="review-bars">
-        <div class="rbar-row"><span class="rbar-lbl">5</span><div class="rbar-track"><div class="rbar-fill" style="width:60%"></div></div></div>
-        <div class="rbar-row"><span class="rbar-lbl">4</span><div class="rbar-track"><div class="rbar-fill" style="width:25%"></div></div></div>
-        <div class="rbar-row"><span class="rbar-lbl">3</span><div class="rbar-track"><div class="rbar-fill" style="width:10%"></div></div></div>
-        <div class="rbar-row"><span class="rbar-lbl">2</span><div class="rbar-track"><div class="rbar-fill" style="width:4%"></div></div></div>
-        <div class="rbar-row"><span class="rbar-lbl">1</span><div class="rbar-track"><div class="rbar-fill" style="width:1%"></div></div></div>
-      </div>
-    </div>
-    <div class="reviews-list">
-      <div class="rv-card">
-        <div class="rv-top"><span class="rv-user">@zueri_nacht</span><span class="rv-stars">★★★★★</span></div>
-        <div class="rv-date">VOR 2 TÄG · KREIS 5</div>
-        <div class="rv-text">Absolut mega Abig — Soundsystem isch top, Crowd war super. Eine vo de beschte Clubs i Züri, ohni Frag.</div>
-      </div>
-      <div class="rv-card">
-        <div class="rv-top"><span class="rv-user">@techno_lisa</span><span class="rv-stars">★★★★☆</span></div>
-        <div class="rv-date">VOR 1 WUCHE · KREIS 4</div>
-        <div class="rv-text">Guets Lineup, chli lang Schlange. Aber wemer mal drin isch, lohnts sich würklich.</div>
-      </div>
-    </div>
-    <button class="rv-add" onclick="window.location.href='login.html'">+ BEWERTIG SCHRIEBE → LOGIN NÖTIG</button>
-  </div>
-
-  <!-- SIMILAR -->
-  <div class="sec">
-    <div class="sec-title">ÄHNLICHI CLUBS</div>
-    <div class="similar-grid" id="similar-grid">
-      <div class="sim-card"><div class="sim-img">🔊</div><div class="sim-body"><div class="sim-name">WIRD GELADE</div><div class="sim-meta">KREIS – · TECHNO</div></div></div>
-      <div class="sim-card"><div class="sim-img">🎵</div><div class="sim-body"><div class="sim-name">WIRD GELADE</div><div class="sim-meta">KREIS – · CLUB</div></div></div>
-    </div>
-  </div>
-
-</div><!-- end content -->
-
-<!-- SP_BOOST v1: CLAIM -->
-<style>
-.sp-claim{margin:8px 22px 30px;padding:18px 20px;border:1px dashed rgba(200,255,0,.4);border-radius:16px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;background:rgba(200,255,0,.03)}
-.sp-claim-txt{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;color:rgba(236,232,221,.55);text-transform:uppercase;line-height:1.7}
-.sp-claim-btn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;color:#050508;background:#c8ff00;padding:11px 20px;border-radius:9px;text-decoration:none;white-space:nowrap;transition:background .15s}
-.sp-claim-btn:hover{background:#e8e4d9}
-</style>
-<div class="sp-claim" id="sp-claim" style="display:none">
-  <div class="sp-claim-txt">Bisch du de Inhaber? Hol dir dini Platzierig — ganz obe i dinere Kategorie.</div>
-  <a class="sp-claim-btn" id="sp-claim-link" href="/platzierung.html">DAS ISCH MIS LOKAL →</a>
-</div>
-<script>
-function spClaim(id,typ,name,kreis){try{
-  const a=document.getElementById('sp-claim-link');
-  a.href='/platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
-  document.getElementById('sp-claim').style.display='flex';
-}catch(e){}}
-</script>
-
-<!-- FOOTER -->
-<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;overflow-x:hidden;cursor:none;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.04) 3px,rgba(0,0,0,0.04) 4px);pointer-events:none;z-index:9997}
+#cur{position:fixed;width:8px;height:8px;background:#ff2d00;border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+#cur2{position:fixed;width:34px;height:34px;border:1px solid rgba(255,45,0,.4);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:left 0s,top 0s}
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:54px;border-bottom:1px solid rgba(255,45,0,.1);position:sticky;top:0;background:#04040a;z-index:300}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:22px;color:#e8e4d9;letter-spacing:4px;display:flex;align-items:center;gap:8px;text-decoration:none}
+.ldot{width:7px;height:7px;border-radius:50%;background:#ff2d00;animation:blink 2s infinite}
+.nav-links{display:flex;gap:28px}
+.nl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);text-decoration:none;transition:.15s}
+.nl:hover{color:#e8e4d9}
+.nl.on{color:#ff2d00}
+.btn-mm{background:#ff2d00;color:#e8e4d9;border:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;padding:10px 18px;cursor:none;text-decoration:none}
+.sp-burger{display:none;background:none;border:1px solid rgba(232,228,217,.15);width:48px;height:48px;flex-direction:column;justify-content:center;align-items:center;gap:4px;cursor:pointer;z-index:1001}
+.sp-burger span{display:block;width:16px;height:2px;background:#e8e4d9}
+.sp-nav-ov{position:fixed;inset:0;background:rgba(4,4,10,.98);z-index:1000;display:none;flex-direction:column;justify-content:center;padding:40px;gap:2px}
+.sp-nav-ov.open{display:flex}
+.sp-nav-ov a{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;letter-spacing:1px;color:#e8e4d9;text-decoration:none;padding:10px 0;border-bottom:1px solid rgba(232,228,217,.06);cursor:pointer}
+.sp-nav-ov a:hover{color:#ff2d00}
+.sp-nav-ov .sp-nav-cta{color:#ff2d00}
+.sp-nav-x{position:absolute;top:22px;right:22px;background:none;border:none;color:#e8e4d9;font-size:26px;cursor:pointer;font-family:'DM Mono',monospace}
+.breadcrumb{padding:14px 40px;border-bottom:1px solid rgba(255,45,0,.06);display:flex;align-items:center;gap:8px}
+.bc-link{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.25);text-decoration:none;transition:.15s;cursor:none}
+.bc-link:hover{color:#ff2d00}
+.bc-sep{font-size:9px;color:rgba(232,228,217,.1)}
+.bc-current{font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.5)}
+.hero-img{width:100%;height:420px;object-fit:cover;display:block}
+.hero-wrap{position:relative;overflow:hidden}
+.hero-wrap::after{content:'';position:absolute;bottom:0;left:0;right:0;height:200px;background:linear-gradient(to top,#04040a,transparent);pointer-events:none}
+.hero-placeholder{width:100%;height:420px;background:linear-gradient(135deg,#07070f,#0a0a18);display:flex;align-items:center;justify-content:center;font-size:80px;opacity:.3}
+.profil-header{padding:28px 40px 0}
+.ph-top{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+.stars{color:#c8ff00;font-size:14px;letter-spacing:2px}
+.typ-badge{font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;background:#ff2d00;color:#e8e4d9}
+.typ-badge.volt{background:#c8ff00;color:#04040a}
+.typ-badge.cyan{background:#00f5ff;color:#04040a}
+.ph-addr{font-size:10px;color:rgba(232,228,217,.3);letter-spacing:1px}
+.profil-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(60px,10vw,120px);line-height:.85;text-transform:uppercase;color:#e8e4d9;margin-bottom:8px}
+.profil-subname{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(28px,5vw,48px);line-height:.9;text-transform:uppercase;color:#ff2d00;margin-bottom:20px}
+.content-grid{display:grid;grid-template-columns:1fr 380px;gap:40px;padding:28px 40px 0;align-items:start}
+.profil-desc{font-size:13px;color:rgba(232,228,217,.55);line-height:2;margin-bottom:28px}
+.section-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase;color:#e8e4d9;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.section-title::before{content:'—';color:#ff2d00}
+.section-body{font-size:12px;color:rgba(232,228,217,.4);line-height:1.9;margin-bottom:28px}
+.res-box{border:1px solid rgba(200,255,0,.2);background:rgba(200,255,0,.03);padding:22px;margin-bottom:28px}
+.rb-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.rb-badge{font-size:7px;letter-spacing:2px;text-transform:uppercase;background:#c8ff00;color:#04040a;padding:3px 8px}
+.rb-title{font-size:11px;color:#c8ff00;letter-spacing:1px}
+.rb-sub{font-size:10px;color:rgba(200,255,0,.4);margin-bottom:16px}
+.btn-res{display:block;width:100%;background:#c8ff00;color:#04040a;border:none;font-family:'DM Mono',monospace;font-size:11px;letter-spacing:3px;text-transform:uppercase;padding:16px;text-align:center;cursor:none;transition:opacity .2s;margin-bottom:8px}
+.btn-res:hover{opacity:.85}
+.reviews-wrap{margin-bottom:40px}
+.rev-count{font-size:9px;letter-spacing:2px;color:rgba(232,228,217,.2);margin-bottom:14px}
+.rev-item{border:1px solid rgba(255,45,0,.07);padding:16px 18px;margin-bottom:6px;background:#07070f;transition:.15s}
+.rev-item:hover{background:#0a0a14;border-color:rgba(255,45,0,.15)}
+.rev-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.rev-user{font-size:9px;color:#ff2d00;letter-spacing:1px}
+.rev-stars{color:#c8ff00;font-size:11px;letter-spacing:2px}
+.rev-text{font-size:11px;color:rgba(232,228,217,.35);line-height:1.8}
+.details-box{border:1px solid rgba(255,45,0,.1);background:#07070f;position:sticky;top:70px}
+.db-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:20px;text-transform:uppercase;padding:16px 20px;border-bottom:1px solid rgba(255,45,0,.08)}
+.db-row{display:flex;align-items:flex-start;justify-content:space-between;padding:12px 20px;border-bottom:1px solid rgba(255,45,0,.05);gap:12px}
+.db-lbl{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);flex-shrink:0;padding-top:1px}
+.db-val{font-size:10px;color:#e8e4d9;text-align:right;line-height:1.6}
+.db-val a{color:#00f5ff;text-decoration:none}
+.db-val a:hover{color:#e8e4d9}
+.db-actions{padding:16px 20px;border-top:1px solid rgba(255,45,0,.08)}
+.btn-back{display:block;border:1px solid rgba(232,228,217,.08);color:rgba(232,228,217,.3);font-family:'DM Mono',monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;padding:12px;text-align:center;cursor:none;transition:.15s;text-decoration:none;margin-top:8px}
+.btn-back:hover{border-color:rgba(255,45,0,.3);color:#ff2d00}
+.score-box{padding:16px 20px;border-bottom:1px solid rgba(255,45,0,.08);background:rgba(255,45,0,.03)}
+.sb-score{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:#ff2d00;line-height:1}
+.sb-lbl{font-size:7px;letter-spacing:2px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-top:2px}
+.sb-stars{color:#c8ff00;font-size:12px;letter-spacing:2px;margin-top:4px}
+.featured-strip{background:#c8ff00;padding:8px 20px;display:flex;align-items:center;gap:8px}
+.fs-text{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:#04040a;font-weight:bold}
+/* ACTION BUTTONS APPLE 44px */
+.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 20px 20px}
+.act-btn{min-height:44px;padding:12px 8px;border:1px solid rgba(255,45,0,.12);color:rgba(232,228,217,.5);font-family:'DM Mono',monospace;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;text-align:center;cursor:none;transition:.15s;background:#0a0a14;display:flex;align-items:center;justify-content:center;gap:6px}
+.act-btn:hover{color:#e8e4d9;border-color:rgba(255,45,0,.4);background:#0f0f1a}
+.similar-section{padding:40px 40px;border-top:1px solid rgba(255,45,0,.06)}
+.similar-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:16px}
+.sim-card{border:1px solid rgba(255,45,0,.07);border-top:none;border-left:none;padding:18px;cursor:none;transition:.15s;text-decoration:none;display:block}
+.sim-card:nth-child(3n+1){border-left:1px solid rgba(255,45,0,.07)}
+.sim-card:first-child,.sim-card:nth-child(2),.sim-card:nth-child(3){border-top:1px solid rgba(255,45,0,.07)}
+.sim-card:hover{background:#06060e}
+.sim-img{width:100%;height:100px;object-fit:cover;margin-bottom:10px;opacity:.7}
+.sim-name{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;color:#e8e4d9;margin-bottom:4px}
+.sim-sub{font-size:9px;color:#ff2d00;text-transform:uppercase;letter-spacing:.5px}
+.sim-kreis{font-size:8px;color:rgba(232,228,217,.2);margin-top:4px;letter-spacing:1px}
+.ticker-wrap{border-top:1px solid rgba(255,45,0,.07);overflow:hidden}
+.ticker-row{padding:6px 0;overflow:hidden;border-bottom:1px solid rgba(255,45,0,.04)}
+.tick{display:flex;white-space:nowrap}
+.tick.l{animation:tL 28s linear infinite}
+.ti{font-size:8px;letter-spacing:3px;text-transform:uppercase;padding:0 28px;color:rgba(255,45,0,.28)}
+.ti b{color:#ff2d00;font-weight:400}
 footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 .ftk{background:rgba(255,45,0,.06);padding:.4rem 0;overflow:hidden;white-space:nowrap;border-bottom:1px solid rgba(255,45,0,.1)}
 .fti{display:inline-block;animation:tkr 22s linear infinite}
@@ -405,7 +123,135 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 .fc li a:hover{color:#e8e4d9}
 .fbot{max-width:1320px;margin:0 auto;padding:1.2rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-top:1px solid rgba(255,255,255,0.05)}
 .fbot p{font-family:'DM Mono',monospace;font-size:.65rem;letter-spacing:.1em;color:rgba(232,228,217,0.25);text-transform:uppercase;margin:0}
+.loading-wrap{min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px}
+.loading-dots{display:flex;gap:8px}
+.loading-dot{width:8px;height:8px;border-radius:50%;background:#ff2d00;animation:bounce 1.2s infinite}
+.loading-dot:nth-child(2){animation-delay:.2s}
+.loading-dot:nth-child(3){animation-delay:.4s}
+.loading-txt{font-size:10px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase}
+.error-wrap{min-height:60vh;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;text-align:center;padding:40px}
+.error-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:48px;color:rgba(232,228,217,.1);text-transform:uppercase}
+.error-sub{font-size:10px;color:rgba(232,228,217,.2);letter-spacing:1px}
+.error-back{display:inline-block;margin-top:16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;border:1px solid rgba(255,45,0,.3);padding:10px 20px;text-decoration:none;cursor:none}
+.jny-status{margin-top:10px;font-size:10px;color:rgba(232,228,217,.35);line-height:1.7}
+.jny-card{position:relative;border:1px solid rgba(0,245,255,.18);background:linear-gradient(135deg,rgba(0,245,255,.035),rgba(200,255,0,.015));padding:16px 18px;margin-top:10px;overflow:hidden}
+.jny-card::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00f5ff,transparent);opacity:.55}
+.jny-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.jny-dur{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:32px;color:#00f5ff;line-height:1}
+.jny-dur span{font-size:.32em;letter-spacing:1px;margin-left:5px;color:rgba(232,228,217,.3);font-style:normal}
+.jny-clock{font-size:11px;color:#e8e4d9;display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.jny-arrow{color:rgba(232,228,217,.15)}
+.jny-soon{background:rgba(255,45,0,.15);color:#ff2d00;font-size:8px;letter-spacing:1px;padding:3px 6px;text-transform:uppercase}
+.jny-legs{display:flex;align-items:center;gap:0;margin-top:14px;flex-wrap:wrap}
+.jny-leg{display:flex;align-items:center;gap:6px}
+.jny-ico{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;background:rgba(232,228,217,.06);flex-shrink:0}
+.jny-leg.tr .jny-ico{background:rgba(0,245,255,.14);border:1px solid rgba(0,245,255,.35)}
+.jny-lbl{font-size:9px;letter-spacing:.5px;color:#00f5ff;white-space:nowrap}
+.jny-sep{width:16px;height:1px;background:repeating-linear-gradient(90deg,rgba(232,228,217,.15) 0 3px,transparent 3px 6px);margin:0 5px;flex-shrink:0}
+.jny-meta{margin-top:12px;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(232,228,217,.3)}
+.jny-walk-hero{display:flex;align-items:center;gap:14px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.15}}
+@keyframes tL{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes bounce{0%,80%,100%{transform:translateY(0)}40%{transform:translateY(-4px)}}
+@media(max-width:768px){
+  #cur,#cur2{display:none}
+  body{cursor:auto}
+  nav{padding:0 16px;height:48px}
+  .nav-links{display:none}
+  .sp-burger{display:flex}
+  .breadcrumb{padding:10px 16px}
+  .hero-img,.hero-placeholder{height:260px}
+  .profil-header{padding:20px 16px 0}
+  .profil-name{font-size:clamp(48px,14vw,80px)}
+  .profil-subname{font-size:clamp(22px,6vw,36px)}
+  .content-grid{grid-template-columns:1fr;padding:16px 16px 0}
+  .details-box{position:static;margin-bottom:24px;order:-1}
+  .action-grid{gap:10px;padding:0 16px 20px}
+  .act-btn{min-height:52px;font-size:12px}
+  .similar-section{padding:24px 16px}
+  .similar-grid{grid-template-columns:1fr 1fr}
+  .sim-card:nth-child(3n+1){border-left:none}
+  .sim-card:nth-child(2n+1){border-left:1px solid rgba(255,45,0,.07)}
+}
 </style>
+<!-- Google tag (gtag.js) -->
+<meta id="og-title" property="og:title" content="Bierhalle Wolf — restbar Kreis 1 | Stadtpuls Zürich">
+<meta id="og-desc" property="og:description" content="Live-Musik, Bier vom Fass und zünftige Partystimmung: Das erwartet die Gäste in der Bierhalle Wolf mitten in der Zürcher Altstadt.">
+<meta id="og-url" property="og:url" content="https://depuls.ch/nachtleben/bierhalle-wolf/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_CH">
+<meta property="og:site_name" content="Stadtpuls">
+<meta name="twitter:card" content="summary_large_image">
+<meta id="tw-title" name="twitter:title" content="Bierhalle Wolf — restbar Kreis 1 | Stadtpuls Zürich">
+<meta property="og:image" content="https://www.zuerich.com/sites/default/files/keyvisual/web_restaurant_bierhalle_wolf.jpg">
+<meta name="twitter:image" content="https://www.zuerich.com/sites/default/files/keyvisual/web_restaurant_bierhalle_wolf.jpg">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-R1B1HL5W61"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-R1B1HL5W61');
+</script>
+</head>
+<body data-location-id="183aaa81-2d61-435c-b3ff-19972387326c">
+<div id="cur"></div><div id="cur2"></div>
+
+<nav>
+  <a class="logo" href="/index.html"><div class="ldot"></div>STADTPULS</a>
+  <button class="sp-burger" onclick="spNavToggle()" aria-label="Menü"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a class="nl" href="/gastro.html">GASTRO</a>
+    <a class="nl on" href="/nachtleben.html">NACHTLEBE</a>
+    <a class="nl" href="/events.html">EVENTS</a>
+    <a class="nl" href="/shopping.html">SHOPPING</a>
+    <a class="nl" href="/kultur.html">KULTUR</a>
+    <a class="nl" href="/dating.html">DATES</a>
+  </div>
+  <a class="btn-mm" href="/login.html">MITMACHE</a>
+</nav>
+<div class="sp-nav-ov" id="spNavOv">
+  <button class="sp-nav-x" onclick="spNavToggle()" aria-label="Schließe">✕</button>
+  <a href="/gastro.html">GASTRO</a>
+  <a href="/nachtleben.html">NACHTLEBE</a>
+  <a href="/events.html">EVENTS</a>
+  <a href="/shopping.html">SHOPPING</a>
+  <a href="/kultur.html">KULTUR</a>
+  <a href="/dating.html">DATES</a>
+  <a href="/login.html" class="sp-nav-cta">MITMACHE →</a>
+</div>
+
+<div class="breadcrumb">
+  <a class="bc-link" href="/index.html">HOME</a>
+  <span class="bc-sep">›</span>
+  <a class="bc-link" href="/nachtleben.html">NACHTLEBE</a>
+  <span class="bc-sep">›</span>
+  <span class="bc-current" id="bc-name">—</span>
+</div>
+
+<div id="main-content"><div class="ssr-fallback" style="max-width:640px;margin:30px auto;padding:0 20px;font-family:'DM Mono',monospace;color:#e8e4d9"><h1 style="font-size:22px;margin-bottom:8px">Bierhalle Wolf</h1><h2 style="color:#ff2d00;font-size:14px;font-weight:700;margin:0 0 14px">restbar · Kreis 1 · Limmatquai 132</h2><p style="font-size:13px;line-height:1.6">Live-Musik, Bier vom Fass und zünftige Partystimmung: Das erwartet die Gäste in der Bierhalle Wolf mitten in der Zürcher Altstadt.</p></div></div>
+
+<div class="ticker-wrap">
+  <div class="ticker-row"><div class="tick l" id="ticker"></div></div>
+</div>
+
+<!-- SP_BOOST v1: CLAIM — "Das isch mis Lokal" (Verkaufseinstieg) -->
+<style>
+.sp-claim{max-width:1100px;margin:28px auto;padding:16px 18px;border:1px dashed rgba(200,255,0,.35);display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.sp-claim-txt{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1.5px;color:#888;text-transform:uppercase;line-height:1.7}
+.sp-claim-btn{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:15px;letter-spacing:1.5px;color:#04040a;background:#c8ff00;padding:10px 20px;text-decoration:none;white-space:nowrap;transition:background .15s}
+.sp-claim-btn:hover{background:#e8e4d9}
+</style>
+<div class="sp-claim" id="sp-claim" style="display:none">
+  <div class="sp-claim-txt">Bisch du de Inhaber? Hol dir dini Platzierig — ganz obe i dinere Kategorie.</div>
+  <a class="sp-claim-btn" id="sp-claim-link" href="/platzierung.html">DAS ISCH MIS LOKAL →</a>
+</div>
+<script>
+function spClaim(id,typ,name,kreis){try{
+  const a=document.getElementById('sp-claim-link');
+  a.href='/platzierung.html?id='+encodeURIComponent(id||'')+'&typ='+encodeURIComponent(typ||'location')+'&name='+encodeURIComponent(name||'')+'&kreis='+encodeURIComponent(kreis||'');
+  document.getElementById('sp-claim').style.display='flex';
+}catch(e){}}
+</script>
 <footer>
   <div class="ftk">
     <div class="fti">
@@ -420,11 +266,11 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
         <li><a href="/gastro.html">Gastro & Bars</a></li>
         <li><a href="/nachtleben.html">Nachtleben</a></li>
         <li><a href="/shopping.html">Shopping</a></li>
+        <li><a href="/kultur.html">Kultur</a></li>
         <li><a href="/events.html">Events</a></li>
         <li><a href="/quartiere.html">Quartiere</a></li>
         <li><a href="/musik.html">Musik & Sound</a></li>
         <li><a href="/mobilitaet.html">Mobilität</a></li>
-        <li><a href="/kultur.html">Kultur</a></li>
       </ul>
     </div>
     <div class="fc">
@@ -456,101 +302,306 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
   </div>
 </footer>
 
-</div><!-- end shell -->
-
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="/sp-track.js"></script>
-<script src="/location-links.js"></script>
 <script>
-// Cursor
-const dot=document.getElementById('dot'),ring=document.getElementById('ring');
-document.addEventListener('mousemove',e=>{dot.style.left=e.clientX+'px';dot.style.top=e.clientY+'px';ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';});
-
 const SU='https://pnynkzrqnfoshojqfqxn.supabase.co';
 const SK='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ';
 
-// SP_PRETTY_LOC v1 -- huebsche URLs aus location-links.js (naechtlich generiert)
-function spLocPath(id){return (window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[id])||('/nachtleben-profil.html?slug='+id);}
-function spLocUrl(id){return 'https://depuls.ch'+spLocPath(id);}
+const SUBKAT={
+  102:{e:'☕',n:'CAFÉ'},184:{e:'🧀',n:'SCHWEIZER'},185:{e:'🍕',n:'ITALIAN'},
+  186:{e:'🥘',n:'SPANISCH'},187:{e:'🥐',n:'FRANÇAIS'},188:{e:'🍜',n:'ASIATISCH'},
+  189:{e:'🧆',n:'NAHOST'},190:{e:'🌮',n:'MEXIKANISCH'},191:{e:'🫒',n:'MEDITERRAN'},
+  192:{e:'🥖',n:'BISTRO'},193:{e:'🍔',n:'AMERICAN'},194:{e:'⭐',n:'GOURMET'},
+  195:{e:'🔥',n:'GRILL'},196:{e:'🐟',n:'FISCH'},197:{e:'🌿',n:'VEGISCH'},
+  409:{e:'🌱',n:'VEGAN'},415:{e:'🌍',n:'WORLD'},101:{e:'🍴',n:'RESTAURANT'},
+  103:{e:'🍸',n:'BAR'},1438:{e:'🍹',n:'COCKTAIL'},1441:{e:'🎵',n:'MUSIC BAR'},
+  1444:{e:'🍺',n:'PUB'},1459:{e:'💼',n:'AFTER WORK'},1462:{e:'🌿',n:'OUTDOOR'},
+  1465:{e:'🍷',n:'WEINBAR'},1468:{e:'🏘️',n:'QUARTIERBAR'},
+};
 
-// URL PARAMS
-const params=new URLSearchParams(location.search);
-const slug=document.body.dataset.locationId||params.get('slug')||params.get('id');
+const REVIEWS=[
+  {user:'@zuri_insider',stars:5,text:'Absolut empfehlenswert — eines der besten Lokale in diesem Kreis.'},
+  {user:'@langstrasse_fan',stars:4,text:'Super Atmosphäre, gutes Essen. Reservierung empfohlen am Wochenende.'},
+  {user:'@stadtpuls_user',stars:5,text:'Genau so ein Lokal braucht Zürich. Authentisch, keine Touristenfalle.'},
+];
 
 async function sbGet(path){
   const r=await fetch(SU+'/rest/v1/'+path,{headers:{'apikey':SK,'Authorization':'Bearer '+SK}});
+  if(!r.ok)throw new Error('HTTP '+r.status);
   return r.json();
 }
 
-function isOffe(oz){
-  if(!oz||!Array.isArray(oz)||!oz.length)return false;
+function getIdFromUrl(){
+  if(document.body.dataset.locationId)return document.body.dataset.locationId;
+  var p=new URLSearchParams(window.location.search);return p.get('slug')||p.get('id');
+} // SP_ID_FIX v1: Pretty-URL-Siite hei kei ?id= im Link, nume s data-location-id am body
+
+function spNavToggle(){document.getElementById('spNavOv').classList.toggle('open');} // SP_NAV_FIX v1
+
+// SP_PRETTY_LOC v1 -- huebsche URLs aus location-links.js (naechtlich generiert)
+function spLocPath(id){return (window.SP_LOCATION_LINKS&&window.SP_LOCATION_LINKS[id])||('/nachtleben-profil.html?id='+id);}
+
+function isOffe(oeffnungszeiten){
+  if(!oeffnungszeiten||!oeffnungszeiten.length)return null;
   const now=new Date();
   const h=now.getHours();
-  const day=['So','Mo','Di','Mi','Do','Fr','Sa'][now.getDay()];
-  const s=oz.find(o=>o&&o.includes(day));
-  if(!s)return false;
-  const m=s.match(/(\d{2}):(\d{2}):?\d*-(\d{2}):(\d{2})/);
-  if(!m)return false;
-  return h>=parseInt(m[1])&&h<parseInt(m[3]);
+  const daysDe=['So','Mo','Di','Mi','Do','Fr','Sa'];
+  const daysEn=['Su','Mo','Tu','We','Th','Fr','Sa'];
+  const dayDe=daysDe[now.getDay()];
+  const dayEn=daysEn[now.getDay()];
+  const list=Array.isArray(oeffnungszeiten)?oeffnungszeiten:[String(oeffnungszeiten)];
+  // SP_OFFE_FIX v1: Tag-Teil VOR de Ziit trenne (au bi Komma-Liste wie "Mo,Tu,We,Th 08:00-18:00")
+  // und exakt met Tag-Token vergliiche, nid nume als Teilstring -- suscht hät "Mo,Tu..." immer
+  // zerscht gmatcht, egal wele Tag hüt wirklich isch.
+  const todayStr=list.find(function(o){
+    if(!o)return false;
+    const dayPart=(String(o).split(/\s+/)[0]||'');
+    const tokens=dayPart.split(',').map(function(t){return t.trim();});
+    return tokens.indexOf(dayDe)>=0||tokens.indexOf(dayEn)>=0;
+  });
+  if(!todayStr)return null;
+  if(/geschlossen|closed|ruhetag/i.test(todayStr))return false;
+  const match=todayStr.match(/(\d{2}):(\d{2})(?::\d{2})?\s*-\s*(\d{2}):(\d{2})(?::\d{2})?/);
+  if(!match)return null;
+  const openH=parseInt(match[1],10);
+  let closeH=parseInt(match[3],10);
+  // SP_OFFE_FIX v1: "00:00" als Schliesszit heisst Mitternacht (Änd vom Tag), nid "schliesst
+  // scho um Stund null" -- suscht isch h<0 nie wahr und's Lokal zeigt IMMER als gschlosse.
+  if(closeH===0)closeH=24;
+  return h>=openH&&h<closeH;
 }
 
-function buildOzGrid(oz){
-  const DAYS=['Mo','Di','Mi','Do','Fr','Sa','So'];
-  const today=new Date().getDay();
-  const todayKey=['So','Mo','Di','Mi','Do','Fr','Sa'][today];
-  return DAYS.map(d=>{
-    const s=(oz||[]).find(o=>o&&o.includes(d));
-    const m=s?s.match(/(\d{2}):(\d{2}):?\d*-(\d{2}):(\d{2})/):null;
-    const isToday=d===todayKey;
-    const nowOpen=isToday&&m&&(new Date().getHours()>=parseInt(m[1]))&&(new Date().getHours()<parseInt(m[3]));
-    return`<div class="oz-row${isToday?' today':''}">
-      <div class="oz-day">${d}${isToday?' ◀':''}</div>
-      ${m?`<div class="oz-time">${m[1]}:${m[2]} – ${m[3]}:${m[4]}</div>`:`<div class="oz-time oz-closed">ZUE</div>`}
-      ${nowOpen?'<div class="oz-now">JETZT OFFE</div>':''}
-    </div>`;
-  }).join('');
+function updateSEO(l,sub){
+  const title=l.name+' — '+sub.n+' Kreis '+(l.kreis||'?')+' | Stadtpuls Zürich';
+  document.title=title;
+  document.getElementById('page-desc').content=l.beschreibung_kurz||l.beschreibung||l.name+' in Zürich';
+  // SCHEMA — alle double quotes, kein Encoding-Bug
+  const schema={
+    "@context": "https://schema.org",
+    "@type": "NightClub",
+    "name": l.name||"",
+    "description": l.beschreibung||"",
+    "url": "https://depuls.ch/nachtleben-profil.html?id="+l.id,
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": l.adresse||"",
+      "postalCode": l.plz||"",
+      "addressLocality": "Zürich",
+      "addressCountry": "CH"
+    },
+    "telephone": l.telefon||"",
+    "servesCuisine": sub.n||"",
+    "priceRange": "CHF",
+    "image": l.bild_url||""
+  };
+  document.getElementById('schema-ld').textContent=JSON.stringify(schema);
 }
 
-function getSkClass(loc){
-  const sub=(loc.subkategorie||'').toLowerCase();
-  const id=loc.zt_subkategorie_id;
-  if(id==1414||sub.includes('techno'))return{cls:'techno',lbl:'TECHNO'};
-  if(id==1432||sub.includes('jazz'))return{cls:'jazz',lbl:'JAZZ'};
-  if(id==1429||sub.includes('afterhour'))return{cls:'afterhour',lbl:'AFTERHOUR'};
-  if(sub.includes('bar'))return{cls:'bar',lbl:'BAR'};
-  if(sub.includes('club'))return{cls:'club',lbl:'CLUB'};
-  return{cls:'default',lbl:'NACHTLEBE'};
+function nlSub(subkat,ztid){
+  var s=(subkat||'').toLowerCase(),id=parseInt(ztid)||0;
+  if(id==1414||s.indexOf('techno')>=0)return{e:'\u{1F50A}',n:'TECHNO'};
+  if(id==1432||s.indexOf('jazz')>=0)return{e:'\u{1F3B7}',n:'JAZZ'};
+  if(id==1429||s.indexOf('afterhour')>=0)return{e:'\u{1F319}',n:'AFTERHOUR'};
+  if(s.indexOf('bar')>=0)return{e:'\u{1F378}',n:'BAR'};
+  if(s.indexOf('club')>=0)return{e:'\u{1F50A}',n:'CLUB'};
+  return{e:'\u{1F319}',n:subkat?subkat.toUpperCase():'NACHTLEBE'};
 }
 
-// SOUND DNA
-function buildSoundDNA(sk){
-  const bars=document.getElementById('sound-bars');
-  const tags=document.getElementById('dna-tags');
-  const colors=['#9333ea','#ff2d00','#c8ff00','#00f5ff','#ffd700','#ec4899','#9333ea','#ff2d00','#c8ff00','#00f5ff','#ffd700','#ec4899'];
-  let barsHTML='';
-  for(let i=0;i<16;i++){
-    const min=15+Math.random()*20;
-    const max=40+Math.random()*60;
-    const dur=0.8+Math.random()*1.2;
-    barsHTML+=`<div class="sound-bar" style="background:${colors[i%colors.length]};opacity:.85;--min:${min}%;--max:${max}%;--dur:${dur}s;animation-delay:${(Math.random()).toFixed(2)}s"></div>`;
+function renderProfil(l,similar){
+  const sid=parseInt(l.zt_subkategorie_id)||0;
+  const sub=nlSub(l.subkategorie,l.zt_subkategorie_id);
+  const score=l.featured?'TOP':l.rating?Math.round(l.rating*20):'NEU';
+  const scoreColor=l.featured?'#c8ff00':l.rating?'#ff2d00':'rgba(232,228,217,.3)';
+  const stars=l.rating?'★'.repeat(Math.min(5,Math.round(l.rating)))+'☆'.repeat(5-Math.min(5,Math.round(l.rating))):'· · · · ·';
+  const offeStatus=isOffe(l.oeffnungszeiten);
+
+  document.getElementById('bc-name').textContent=l.name;
+  updateSEO(l,sub);
+  spClaim(l.id,'location',l.name,l.kreis); // SP_BOOST Claim
+
+  // OFFE/GESCHLOSSEN BANNER
+  const offeBanner='<div style="padding:12px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;border-bottom:1px solid rgba(255,45,0,.08);background:rgba(255,45,0,.02)">'
+    +'<div style="display:flex;align-items:center;gap:10px">'
+    +'<div style="width:8px;height:8px;border-radius:50%;background:'+(offeStatus===true?'#c8ff00':'#ff2d00')+';animation:blink 2s infinite;flex-shrink:0"></div>'
+    +'<div>'
+    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:18px;color:'+(offeStatus===true?'#c8ff00':offeStatus===false?'rgba(255,45,0,.6)':'rgba(232,228,217,.3)')+';text-transform:uppercase">'
+    +'KREIS '+(l.kreis||'?')+' · '+(l.adresse||'')+' · '+sub.n
+    +'</div>'
+    +'<div style="font-size:9px;color:rgba(232,228,217,.25);letter-spacing:1px;margin-top:2px">Kreis '+(l.kreis||'?')+' · '+sub.e+' '+sub.n+'</div>'
+    +'</div></div>'
+    +'<div style="display:flex;gap:6px;flex-wrap:wrap">'
+    +(offeStatus===true?'<div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(200,255,0,.3);color:#c8ff00;background:rgba(200,255,0,.05)">● JETZT OFFE</div>':'')
+    +(offeStatus===false?'<div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(255,45,0,.3);color:rgba(255,45,0,.6)">● GESCHLOSSEN</div>':'')
+    +(l.featured?'<div style="font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 10px;border:1px solid rgba(200,255,0,.2);color:#c8ff00">⭐ TOP PICK</div>':'')
+    +'</div></div>';
+
+  let oeffnig='—';
+  if(l.oeffnungszeiten){
+    if(Array.isArray(l.oeffnungszeiten))oeffnig=l.oeffnungszeiten.slice(0,2).join('<br>');
+    else oeffnig=String(l.oeffnungszeiten);
   }
-  bars.innerHTML=barsHTML;
-  const genreMap={techno:['TECHNO','INDUSTRIAL','DARK'],jazz:['JAZZ','BLUES','SOUL'],club:['HOUSE','TECHNO','DANCE'],bar:['LIVE','INDIE','JAZZ'],afterhour:['AFTERHOUR','DEEP','AMBIENT']};
-  const genre=(sk.cls in genreMap)?genreMap[sk.cls]:['ELECTRONIC','LIVE','DANCE'];
-  tags.innerHTML=genre.map(g=>`<span class="dna-tag t">${g}</span>`).join('');
+
+  const adresseVoll=l.adresse&&l.plz?l.adresse+', '+l.plz+' Zürich':l.adresse?l.adresse+', Zürich':'—';
+  const mapQuery=encodeURIComponent((l.adresse||l.name)+' Zürich');
+  const resUrl=l.reservation_url||'';
+  const resOnclick=resUrl?"window.open('"+resUrl+"','_blank')":'alert("Reservation kommt bald!")';
+  const jnyLatArg=(typeof l.lat==='number')?l.lat:'null';
+  const jnyLngArg=(typeof l.lng==='number')?l.lng:'null';
+  const jnyOnclick="jnyStart('"+l.id+"',"+jnyLatArg+","+jnyLngArg+")";
+
+  const simCards=similar.slice(0,3).map(function(s){
+    const ssub=nlSub(s.subkategorie,s.zt_subkategorie_id);
+    return '<a class="sim-card" href="'+spLocPath(s.id)+'">'
+      +(s.bild_url?'<img class="sim-img" src="'+s.bild_url+'" alt="'+s.name+'" loading="lazy" onerror="this.style.display=\'none\'">':'')
+      +'<div class="sim-name">'+s.name+'</div>'
+      +'<div class="sim-sub">'+ssub.e+' '+ssub.n+'</div>'
+      +'<div class="sim-kreis">KREIS '+(s.kreis||'?')+'</div></a>';
+  }).join('');
+
+  const reviewsHTML=REVIEWS.map(function(r){
+    return '<div class="rev-item"><div class="rev-top"><div class="rev-user">'+r.user+'</div><div class="rev-stars">'+'★'.repeat(r.stars)+'</div></div><div class="rev-text">'+r.text+'</div></div>';
+  }).join('');
+
+  const featuredBanner=l.featured?'<div class="featured-strip"><span class="fs-text">⭐ STADTPULS TOP PICK — EMPFOHLEN</span></div>':'';
+
+  const resBox=l.hat_reservation?'<div class="res-box"><div class="rb-top"><span class="rb-badge">SPONTAN</span><span class="rb-title">RESERVATION — SOFORT</span></div><div class="rb-sub">Plätze verfügbar — jetzt buche</div><button class="btn-res" onclick="'+resOnclick+'">🍽️ TISCH RESERVIERE →</button></div>':'';
+
+  document.getElementById('main-content').innerHTML=
+    featuredBanner+
+    offeBanner+
+
+    // HERO
+    '<div class="hero-wrap">'
+    +(l.bild_url?'<img class="hero-img" src="'+l.bild_url+'" alt="'+l.name+'" onerror="this.style.display=\'none\';this.nextElementSibling.style.display=\'flex\'">':'')
+    +'<div class="hero-placeholder" style="'+(l.bild_url?'display:none':'')+'">'+sub.e+'</div>'
+    +'</div>'
+
+    // HEADER
+    +'<div class="profil-header">'
+    +'<div class="ph-top">'
+    +'<div class="stars">'+stars+'</div>'
+    +'<div class="typ-badge">'+sub.e+' '+sub.n+'</div>'
+    +(l.featured?'<div class="typ-badge volt">TOP PICK</div>':'')
+    +'<div class="ph-addr">Kreis '+(l.kreis||'?')+' · '+(l.adresse||'')+'</div>'
+    +'</div>'
+    +'<h1 class="profil-name" style="margin:0 0 8px">'+l.name+'</h1>'
+    +'<h2 class="profil-subname" style="margin:0 0 20px">'+sub.n+'</h2>'
+    +'</div>'
+
+    // CONTENT GRID
+    +'<div class="content-grid">'
+
+    // LEFT
+    +'<div>'
+    +'<p class="profil-desc">'+(l.beschreibung||l.beschreibung_kurz||'Dieses Lokal ist Teil des Stadtpuls City Guide Zürich. Echte Bewertungen kommen in Phase 5.')+'</p>'
+
+    // SCORE LIVE
+    +'<div style="border:1px solid rgba(255,45,0,.15);background:rgba(255,45,0,.03);padding:18px;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">'
+    +'<div>'
+    +'<div style="font-size:7px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,45,0,.4);margin-bottom:4px;display:flex;align-items:center;gap:5px"><span style="width:5px;height:5px;border-radius:50%;background:#ff2d00;display:inline-block;animation:blink 1s infinite"></span>LIVE · KREIS '+(l.kreis||'?')+'</div>'
+    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase;color:#ff2d00">STADTPULS SCORE</div>'
+    +'<div style="font-size:10px;color:rgba(232,228,217,.3);margin-top:4px">'+(l.featured?'Top Pick · Empfohlen von Stadtpuls':'Verifiziertes Lokal · Zürich Tourismus')+'</div>'
+    +'</div>'
+    +'<div style="display:flex;gap:16px">'
+    +'<div style="text-align:center"><div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:36px;color:'+scoreColor+';line-height:1">'+score+'</div><div style="font-size:7px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase;margin-top:2px">SCORE</div></div>'
+    +'<div style="text-align:center"><div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:36px;color:#c8ff00;line-height:1">'+(l.kreis||'?')+'</div><div style="font-size:7px;letter-spacing:2px;color:rgba(232,228,217,.2);text-transform:uppercase;margin-top:2px">KREIS</div></div>'
+    +'</div></div>'
+
+    // MAP — kein ÖFFNE Button
+    +(l.adresse?
+    '<div style="margin-bottom:24px">'
+    +'<div style="font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(232,228,217,.2);margin-bottom:10px;display:flex;align-items:center;gap:6px">— STANDORT · '+adresseVoll+'</div>'
+    +'<div style="border:1px solid rgba(0,245,255,.1);overflow:hidden;position:relative;background:#07070f">'
+    +'<iframe src="https://www.google.com/maps?q='+mapQuery+'&output=embed&z=16&hl=de" width="100%" height="260" style="border:0;display:block;filter:invert(90%) hue-rotate(180deg);" loading="lazy" allowfullscreen></iframe>'
+    +'<div style="position:absolute;bottom:10px;right:10px">'
+    +'<div onclick="if(navigator.share){navigator.share({title:\''+l.name+' — Stadtpuls\',url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);alert(\'Link kopiert!\')}" style="min-height:44px;padding:0 16px;font-size:9px;letter-spacing:2px;text-transform:uppercase;background:#ff2d00;color:#e8e4d9;font-family:\'DM Mono\',monospace;cursor:pointer;display:flex;align-items:center;gap:6px">📤 TEILE</div>'
+    +'</div></div></div>'
+    :'')
+
+    +resBox
+
+    // KI FEATURES
+    +'<div style="border:1px solid rgba(200,255,0,.1);background:#07070f;padding:22px;margin-bottom:24px">'
+    +'<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:8px">'
+    +'<div style="font-family:\'Barlow Condensed\',sans-serif;font-style:italic;font-weight:900;font-size:22px;text-transform:uppercase">🤖 ZÜRI-BOT · KI FEATURES</div>'
+    +'<div style="font-size:7px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;border:1px solid rgba(200,255,0,.2);padding:3px 8px;display:flex;align-items:center;gap:4px"><span style="width:4px;height:4px;border-radius:50%;background:#c8ff00;animation:blink 1.5s infinite;display:inline-block"></span>PHASE 5-6</div>'
+    +'</div>'
+    +'<div style="border:1px solid rgba(255,204,0,.1);background:rgba(255,204,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">❤️</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ffcc00;margin-bottom:4px">BOOKMARK</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Spar dieses Lokal — KI lernt was du magst</div></div><div onclick="alert(\'Login nötig — kommt in Phase 5!\')" style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,204,0,.3);color:#ffcc00;display:flex;align-items:center;white-space:nowrap;cursor:pointer">❤️ SPARE</div></div>'
+    +'<div style="border:1px solid rgba(200,255,0,.1);background:rgba(200,255,0,.02);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">⚡</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#c8ff00;margin-bottom:4px">KI EMPFEHLUNG</div><div style="font-size:11px;color:rgba(232,228,217,.4)">Basierend auf deiner Stimmung und deinem Kreis</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(200,255,0,.2);color:#c8ff00;display:flex;align-items:center;white-space:nowrap">AKTIV</div></div>'
+    +'<div style="border:1px solid rgba(255,45,0,.1);background:rgba(255,45,0,.02);padding:14px;display:flex;align-items:center;gap:14px"><div style="font-size:24px;flex-shrink:0">🎯</div><div style="flex:1"><div style="font-size:9px;letter-spacing:2px;text-transform:uppercase;color:#ff2d00;margin-bottom:4px">SPONTAN-MODUS</div><div style="font-size:11px;color:rgba(232,228,217,.4)">«Kreis '+(l.kreis||'?')+' · 2h · zu zweit» — KI plant deinen Abend</div></div><div style="min-height:44px;padding:0 14px;font-size:8px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(255,45,0,.2);color:rgba(255,45,0,.5);display:flex;align-items:center;white-space:nowrap">PHASE 6</div></div>'
+    +'</div>'
+
+    // INFO
+    +'<div class="section-body">'
+    +(l.adresse?'<strong style="color:#e8e4d9">Adresse</strong><br>'+l.adresse+', '+(l.plz||'')+' Zürich<br><br>':'')
+    +(oeffnig!=='—'?'<strong style="color:#e8e4d9">Öffnungszeiten</strong><br>'+oeffnig+'<br><br>':'')
+    +(l.website?'<strong style="color:#e8e4d9">Website</strong><br><a href="'+l.website+'" target="_blank" style="color:#00f5ff">'+l.website.replace(/^https?:\/\//,'').split('/')[0]+'</a><br><br>':'')
+    +(l.telefon?'<strong style="color:#e8e4d9">Telefon</strong><br>'+l.telefon+'<br><br>':'')
+    +'Quelle: Zürich Tourismus · zuerich.com · CC BY-SA'
+    +'</div>'
+
+    // REVIEWS
+    +'<div class="reviews-wrap">'
+    +'<div class="section-title">REVIEWS</div>'
+    +'<div class="rev-count">COMMUNITY BEWERTUNGE · PHASE 5 LIVE</div>'
+    +reviewsHTML
+    +'</div>'
+    +'</div>'
+
+    // RIGHT — DETAILS BOX
+    +'<div><div class="details-box">'
+    +'<div style="border-bottom:1px solid rgba(255,45,0,.08);padding:16px 20px;background:rgba(0,245,255,.02)"><div style="display:flex;align-items:center;gap:10px"><div style="font-size:20px;flex-shrink:0">🧭</div><div style="flex:1"><div style="font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:#00f5ff;margin-bottom:2px">WIE CHUM ICH HI?</div><div style="font-size:9px;color:rgba(232,228,217,.35)">Live Fussweg + ÖV ab dim Standort</div></div></div><div id="jnyGoBtn" onclick="'+jnyOnclick+'" style="margin-top:10px;min-height:44px;padding:0 14px;font-size:9px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.3);color:#00f5ff;display:flex;align-items:center;justify-content:center;white-space:nowrap;cursor:pointer">📍 GPS AKTIVIERE</div><div id="jnyResult"></div></div>'
+    +(l.featured?'<div class="featured-strip"><span class="fs-text">⭐ TOP PICK</span></div>':'')
+    +'<div class="score-box"><div class="sb-score" style="color:'+scoreColor+'">'+score+'</div><div class="sb-lbl">STADTPULS SCORE</div><div class="sb-stars">'+stars+'</div></div>'
+    +'<div class="db-title">DETAILS</div>'
+    +'<div class="db-row"><div class="db-lbl">ADRESSE</div><div class="db-val">'+adresseVoll+'</div></div>'
+    +'<div class="db-row"><div class="db-lbl">QUARTIER</div><div class="db-val">Kreis '+(l.kreis||'?')+' · Zürich</div></div>'
+    +'<div class="db-row"><div class="db-lbl">TYP</div><div class="db-val">'+sub.e+' '+sub.n+'</div></div>'
+    +'<div class="db-row"><div class="db-lbl">ÖFFNIG</div><div class="db-val">'+oeffnig+'</div></div>'
+    +(l.website?'<div class="db-row"><div class="db-lbl">WEBSITE</div><div class="db-val"><a href="'+l.website+'" target="_blank">'+l.website.replace(/^https?:\/\//,'').split('/')[0]+' →</a></div></div>':'')
+    +(l.telefon?'<div class="db-row"><div class="db-lbl">TEL</div><div class="db-val">'+l.telefon+'</div></div>':'')
+    +(l.rating?'<div class="db-row"><div class="db-lbl">RATING</div><div class="db-val">'+stars+'<br><span style="font-size:8px;color:rgba(232,228,217,.3)">'+(l.rating_count||'?')+' Bewertunge</span></div></div>':'')
+    +(l.hat_reservation?'<div class="db-actions"><button class="btn-res" onclick="'+resOnclick+'">🍽️ TISCH RESERVIERE →</button><a class="btn-back" href="/nachtleben.html">← ALLI CLUBS I ZÜRI</a></div>':'<div class="db-actions"><a class="btn-back" href="/nachtleben.html" style="border-color:rgba(255,45,0,.2);color:rgba(255,45,0,.5)">← ALLI CLUBS I ZÜRI</a></div>')
+    // ACTION BUTTONS 44px
+    +'<div class="action-grid">'
+    +'<div class="act-btn" onclick="window.open(\'https://maps.google.com?q='+mapQuery+'\',\'_blank\')">🗺️ KARTE</div>'
+    +'<div class="act-btn" onclick="alert(\'Bookmark — Phase 5!\')">❤️ SPARE</div>'
+    +'<div class="act-btn" onclick="alert(\'Bewertung — Phase 5!\')">⭐ BEWERTE</div>'
+    +'<div class="act-btn" onclick="if(navigator.share){navigator.share({title:\''+l.name+'\',url:window.location.href})}else{navigator.clipboard.writeText(window.location.href);alert(\'Link kopiert!\')}">📤 TEILE</div>'
+    +'</div>'
+    +'</div></div>'
+    +'</div>'
+
+    // ÄHNLICHE
+    +(simCards?'<div class="similar-section"><div class="section-title">ÄHNLICHI CLUBS</div><div class="similar-grid">'+simCards+'</div></div>':'');
 }
 
-// MAP
-let mapInited=false;
-function initMap(lat,lng,name){
-  if(mapInited)return;
-  mapInited=true;
-  const map=L.map('map',{zoomControl:false,scrollWheelZoom:false}).setView([lat||47.3769,lng||8.5417],16);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{attribution:'© CartoDB',maxZoom:19}).addTo(map);
-  const icon=L.divIcon({className:'',html:`<div style="width:14px;height:14px;background:#ff2d00;border-radius:50%;border:2px solid #fff;box-shadow:0 0 12px rgba(255,45,0,0.8)"></div>`,iconSize:[14,14],iconAnchor:[7,7]});
-  L.marker([lat||47.3769,lng||8.5417],{icon}).addTo(map).bindPopup(`<b>${name}</b>`);
-  document.getElementById('map-nav-btn').onclick=()=>window.open(`https://maps.google.com/?q=${lat},${lng}`,'_blank');
+async function loadProfil(){
+  const id=getIdFromUrl();
+  if(!id){
+    document.getElementById('main-content').innerHTML='<div class="error-wrap"><div class="error-title">KÄ CLUB GFUNDE</div><a class="error-back" href="/nachtleben.html">← ZRUGG ZU NACHTLEBE</a></div>';
+    return;
+  }
+  try{
+    const _k=/^[0-9a-fA-F-]{16,}$/.test(id)?'id':'slug';
+    const data=await sbGet('locations?select=*&'+_k+'=eq.'+encodeURIComponent(id)+'&limit=1');
+    if(!data||!data.length){
+      document.getElementById('main-content').innerHTML='<div class="error-wrap"><div class="error-title">CLUB NÖD GFUNDE</div><a class="error-back" href="/nachtleben.html">← ZRUGG ZU NACHTLEBE</a></div>';
+      return;
+    }
+    const l=data[0];
+    let similar=[];
+    try{
+      const s1=await sbGet('locations?select=id,name,bild_url,zt_subkategorie_id,kreis,adresse,subkategorie&kategorie=eq.nachtleben&aktiv=eq.true&zt_subkategorie_id=eq.'+l.zt_subkategorie_id+'&id=neq.'+l.id+'&limit=3');
+      similar=s1||[];
+      if(similar.length<3){
+        const s2=await sbGet('locations?select=id,name,bild_url,zt_subkategorie_id,kreis,adresse,subkategorie&kategorie=eq.nachtleben&aktiv=eq.true&kreis=eq.'+l.kreis+'&id=neq.'+l.id+'&limit=3');
+        similar=[...similar,...(s2||[])].slice(0,3);
+      }
+    }catch(e){}
+    renderProfil(l,similar);
+  }catch(e){
+    document.getElementById('main-content').innerHTML='<div class="error-wrap"><div class="error-title">FEHLER</div><div class="error-sub">Verbindung fehlgeschlagen.</div><a class="error-back" href="/nachtleben.html">← ZRUGG</a></div>';
+  }
 }
 
 // SP_JNY v1 — "Wie chum ich hi?" Live Fussweg + OeV-Verbindig
@@ -581,6 +632,7 @@ var JNY_KAT_CODE={T:'Tram',B:'Bus',S:'S-Bahn',IR:'IR',IC:'IC',RE:'RE',NFB:'Nacht
 var JNY_KAT_ICON={T:'🚋',B:'🚌',S:'🚆',IR:'🚆',IC:'🚆',RE:'🚆',NFB:'🌙',NFT:'🌙',BAT:'⛴',FUN:'🚟',PB:'🚡',TGV:'🚄',EC:'🚄'};
 function jnyFmtKat(cat,num){ var label=JNY_KAT_CODE[cat]||cat||''; return (label+' '+(num||'')).replace(/\s+$/,''); }
 function jnyLegIcon(cat){ return JNY_KAT_ICON[cat]||'🚏'; }
+
 function jnyStart(locId,lat,lng){
   var btn=document.getElementById('jnyGoBtn');
   var result=document.getElementById('jnyResult');
@@ -589,7 +641,7 @@ function jnyStart(locId,lat,lng){
     return;
   }
   if(lat==null||lng==null||isNaN(lat)||isNaN(lng)){
-    result.innerHTML='<div class="jny-status">Standort für dä Club isch (no) nid hinterlegt.</div>';
+    result.innerHTML='<div class="jny-status">Standort für das Lokal isch (no) nid hinterlegt.</div>';
     return;
   }
   btn.textContent='… sueched Standort';
@@ -601,12 +653,13 @@ function jnyStart(locId,lat,lng){
     else { result.innerHTML='<div class="jny-status">Standort hät nid klappt.</div>'; }
   }, {enableHighAccuracy:true, timeout:12000, maximumAge:60000});
 }
+
 function jnyResolve(uLat,uLng,dLat,dLng,btn,result){
   var dist=haversine(uLat,uLng,dLat,dLng);
   if(dist<400){
     btn.textContent='📍 GPS AN';
     var walkMin=Math.max(1,Math.round(dist/75));
-    result.innerHTML='<div class="jny-card"><div class="jny-walk-hero"><div style="font-size:24px">🚶</div><div><div class="jny-dur">'+walkMin+'<span>MIN Z FUESS</span></div><div class="jny-clock">'+Math.round(dist)+' m Luftlinie</div></div></div></div>';
+    result.innerHTML='<div class="jny-card"><div class="jny-walk-hero"><div style="font-size:26px">🚶</div><div><div class="jny-dur">'+walkMin+'<span>MIN Z FUESS</span></div><div class="jny-clock">'+Math.round(dist)+' m Luftlinie</div></div></div></div>';
     return;
   }
   btn.textContent='… berechnet Route';
@@ -626,7 +679,7 @@ function jnyResolve(uLat,uLng,dLat,dLng,btn,result){
     }
     if(fromSt.id===toSt.id){
       var walkMin2=Math.max(1,Math.round(dist/75));
-      result.innerHTML='<div class="jny-card"><div class="jny-walk-hero"><div style="font-size:24px">🚶</div><div><div class="jny-dur">'+walkMin2+'<span>MIN Z FUESS</span></div><div class="jny-clock">'+Math.round(dist)+' m Luftlinie · gliichi Haltestell</div></div></div></div>';
+      result.innerHTML='<div class="jny-card"><div class="jny-walk-hero"><div style="font-size:26px">🚶</div><div><div class="jny-dur">'+walkMin2+'<span>MIN Z FUESS</span></div><div class="jny-clock">'+Math.round(dist)+' m Luftlinie · gliichi Haltestell</div></div></div></div>';
       return;
     }
     return jnyGet('/connections?from='+encodeURIComponent(fromSt.name)+'&to='+encodeURIComponent(toSt.name)+'&limit=1').then(function(cdata){
@@ -674,133 +727,16 @@ function jnyResolve(uLat,uLng,dLat,dLng,btn,result){
   });
 }
 
-// LOAD
-async function load(){
-  if(!slug){
-    document.getElementById('hero-name').textContent='LOKAL NÖD GFUNDE';
-    return;
-  }
+const cur=document.getElementById('cur'),cur2=document.getElementById('cur2');
+document.addEventListener('mousemove',function(e){
+  cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
+  cur2.style.left=e.clientX+'px';cur2.style.top=e.clientY+'px';
+});
 
-  let data;
-  if(isNaN(slug)){
-    data=await sbGet(`locations?slug=eq.${encodeURIComponent(slug)}&select=*&limit=1`);
-    if(!Array.isArray(data)||!data.length){
-      data=await sbGet(`locations?id=eq.${encodeURIComponent(slug)}&select=*&limit=1`);
-    }
-  }else{
-    data=await sbGet(`locations?id=eq.${slug}&select=*&limit=1`);
-    if(!Array.isArray(data)||!data.length){
-      data=await sbGet(`locations?slug=eq.${encodeURIComponent(slug)}&select=*&limit=1`);
-    }
-  }
-  if(!Array.isArray(data)||!data.length){
-    document.getElementById('hero-name').textContent='LOKAL NÖD GFUNDE';
-    return;
-  }
-  const l=data[0];
-  if(!document.body.dataset.locationId && window.SP_LOCATION_LINKS && window.SP_LOCATION_LINKS[l.id]){
-    location.replace(window.SP_LOCATION_LINKS[l.id]); return; // SP_PRETTY_LOC v1
-  }
-  spClaim(l.id,'location',l.name,l.kreis); // SP_BOOST Claim
-  _bm={ id:l.id, kreis:l.kreis||null, tags:l.stimmung_tags||null };
-  try{ if(window.spTrack) spTrack('view_profile','location',l.id,{kategorie:'nachtleben',kreis:l.kreis,tags:l.stimmung_tags}); }catch(e){}
-  loadEngagement();
-  try{ const _s=document.getElementById('act-save'); if(_s && window.spIsBookmarked) setSaveUI(_s, await spIsBookmarked('location',l.id)); }catch(e){}
-  const sk=getSkClass(l);
-  const offe=isOffe(l.oeffnungszeiten);
+const T=['NACHTLEBE ZÜRICH','ZÜRI BI NACHT','DÄ PULS VO DÄ STADT','CLUBS · BARS · AFTERHOUR','TECHNO · JAZZ · LIVE','STADTPULS'];
+document.getElementById('ticker').innerHTML=[...T,...T].map(function(i){return '<span class="ti"><b>●</b> '+i+'</span>';}).join('');
 
-  // TITLE
-  document.title=`Stadtpuls — ${l.name}`;
-
-  // HERO
-  if(l.bild_url){
-    const img=document.createElement('img');
-    img.src=l.bild_url;img.alt=l.name;
-    img.style='width:100%;height:100%;object-fit:cover;filter:brightness(.5)';
-    document.getElementById('hero-placeholder').replaceWith(img);
-  }
-  document.getElementById('hero-name').textContent=l.name;
-  document.getElementById('hero-addr').innerHTML=`<span class="hero-addr-dot"></span><span>${l.adresse||'Zürich'}</span><span class="hero-addr-dot"></span><span>KREIS ${l.kreis||'–'}</span>`;
-  document.getElementById('hero-sk').innerHTML=`<span class="sk-pill ${sk.cls}">${sk.lbl}</span>${l.featured?'<span class="sk-pill default">⚡ TOP PICK</span>':''}`;
-
-  // OFFE BADGE
-  const pill=document.getElementById('offe-pill');
-  pill.className=`offe-pill ${offe?'open':'closed'}`;
-  document.getElementById('offe-txt').textContent=offe?'JETZT OFFE':'ZUE';
-
-  // RATING
-  document.getElementById('hero-rating').textContent=l.rating?parseFloat(l.rating).toFixed(1):'–';
-  document.getElementById('rv-big').textContent=l.rating?parseFloat(l.rating).toFixed(1):'–';
-  document.getElementById('rv-count').textContent=(l.rating_count||'0')+' BEWERTIGEN';
-
-  // META
-  document.getElementById('m-kreis').textContent=l.kreis?'KREIS '+l.kreis:'–';
-  document.getElementById('m-kat').textContent=sk.lbl;
-  document.getElementById('m-addr').textContent=l.adresse||'–';
-  const webEl=document.getElementById('m-web');
-  if(l.website){webEl.textContent='WEBSITE ÖFFNE →';webEl.onclick=()=>window.open(l.website,'_blank');}
-  else{webEl.textContent='–';}
-
-  // BESCHREIBUNG (Feld chan HTML enthalte -> als HTML rendere, Scripts usenä)
-  document.getElementById('desc-box').innerHTML=(l.beschreibung||l.beschreibung_kurz||'Kei Beschreibig vorhande.').replace(/<script[^>]*>[\s\S]*?<\/script>/gi,'');
-
-  // OZ
-  document.getElementById('oz-grid').innerHTML=l.oeffnungszeiten&&l.oeffnungszeiten.length?buildOzGrid(l.oeffnungszeiten):`<div style="padding:16px;color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:2px;text-align:center;text-transform:uppercase">KEI ÖFFNIGSZIITE VORHANDE</div>`;
-
-  // TICKET BTN
-  const ticketBtn=document.getElementById('act-ticket');
-  if(l.website){ticketBtn.onclick=()=>window.open(l.website,'_blank');}
-
-  // SOUND DNA
-  buildSoundDNA(sk);
-
-  // MAP + GPS ("Wie chum ich hi?")
-  const kreisCoords={1:[47.3762,8.5407],2:[47.3574,8.5374],3:[47.3728,8.5148],4:[47.3779,8.5285],5:[47.3879,8.5158],6:[47.3836,8.5551],7:[47.3694,8.5713],8:[47.3552,8.5567],9:[47.3818,8.4862],10:[47.4011,8.5113],11:[47.4126,8.5459],12:[47.4180,8.5751]};
-  const _c=(l.lat&&l.lng)?[l.lat,l.lng]:(kreisCoords[l.kreis]||[47.3769,8.5417]);
-  initMap(_c[0],_c[1],l.name);
-  const _jny=document.getElementById('jnyGoBtn'); if(_jny) _jny.onclick=function(){ jnyStart(l.id,_c[0],_c[1]); };
-
-  // SIMILAR
-  loadSimilar(l);
-}
-
-async function loadSimilar(loc){
-  const similar=await sbGet(`locations?kategorie=eq.nachtleben&aktiv=eq.true&zt_subkategorie_id=eq.${loc.zt_subkategorie_id||162}&id=neq.${loc.id}&select=id,name,slug,subkategorie,kreis,bild_url&limit=4`);
-  if(!Array.isArray(similar)||!similar.length)return;
-  document.getElementById('similar-grid').innerHTML=similar.slice(0,3).map(s=>`
-    <div class="sim-card" onclick="window.location.href='${spLocPath(s.id)}'">
-      ${s.bild_url?`<img class="sim-img" src="${s.bild_url}" alt="${s.name}" style="height:84px;object-fit:cover;width:100%">`:`<div class="sim-img">🌙</div>`}
-      <div class="sim-body">
-        <div class="sim-name">${s.name}</div>
-        <div class="sim-meta">KREIS ${s.kreis||'–'} · ${(s.subkategorie||'NACHTLEBE').toUpperCase()}</div>
-      </div>
-    </div>`).join('');
-}
-
-// SHARE
-document.getElementById('act-share').onclick=()=>{
-  if(navigator.share)navigator.share({title:document.title,url:location.href});
-  else{navigator.clipboard.writeText(location.href);alert('Link kopiert!');}
-};
-
-// BOOKMARK
-let _bm=null;
-async function loadEngagement(){
-  if(!_bm||!window.spStats)return;
-  try{ const s=await spStats('location',_bm.id); if(!s)return;
-    const el=document.getElementById('eng-bar');
-    if(el) el.innerHTML=`❤️ <b>${s.merkt||0}</b> gmerkt &nbsp;·&nbsp; 👁 <b>${s.views||0}</b> die Wuche`;
-  }catch(e){}
-}
-function setSaveUI(btn,on){ btn.textContent=on?'❤️':'🤍'; btn.classList.toggle('on',!!on); }
-document.getElementById('act-save').onclick=async()=>{
-  if(!_bm||!window.spBookmarkToggle)return;
-  const r=await spBookmarkToggle('location',_bm.id,{kategorie:'nachtleben',kreis:_bm.kreis,tags:_bm.tags});
-  if(!r.ok){ if(r.reason==='login'){ if(confirm('Zum Merke muesch aagmäldet sii. Jetzt aamälde?')) location.href='login.html'; } return; }
-  setSaveUI(document.getElementById('act-save'),r.bookmarked);
-};
-
-load();
+loadProfil();
 </script>
 </body>
 </html>

@@ -171,8 +171,9 @@ def render_page(template, loc, cat_key, cfg):
 
     # statischer Fallback-Inhalt fuers SEO/Social-Crawling (wird von JS ueberschrieben,
     # sobald geladen -- exakt dieselben Werte, also fuer echte Besucher unsichtbar).
-    if cat_key == 'nachtleben':
-        # Nachtleben-Template hat keinen #main-content-Block, sondern feste IDs
+    if cat_key == '__nl_helvetia_ssr__':
+        # (deaktiviert) nachtleben nutzt jetzt s gastro/Helvetia-Layout -> ssr-fallback (h1+h2)
+        # Alte Nachtleben-Template hatte feste IDs
         # (hero-name/hero-addr/desc-box), die die JS load()-Funktion per
         # textContent/innerHTML befuellt -- hier dieselben Werte vorab reinschreiben.
         repls_nl = [
