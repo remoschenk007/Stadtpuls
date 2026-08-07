@@ -164,6 +164,31 @@ a{color:inherit;text-decoration:none}
   .content{padding:22px 16px 10px}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+/* WIE CHUM ICH HI — SP_JNY v1 */
+.jny-card-wrap{border:1px solid rgba(0,245,255,.15);background:var(--card);border-radius:16px;padding:16px;margin-bottom:12px;position:relative;overflow:hidden}
+.jny-card-wrap::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,var(--cyan),transparent)}
+.jny-head{display:flex;align-items:center;gap:12px}
+.jny-head-txt{flex:1}
+.jny-head-lbl{font-size:8px;letter-spacing:2.5px;text-transform:uppercase;color:var(--cyan);margin-bottom:3px}
+.jny-head-sub{font-size:10px;color:var(--mut2)}
+.jny-go{min-height:44px;padding:0 16px;font-size:9px;letter-spacing:1px;text-transform:uppercase;border:1px solid rgba(0,245,255,.3);border-radius:10px;color:var(--cyan);display:flex;align-items:center;white-space:nowrap;cursor:pointer;flex-shrink:0;transition:.18s}
+.jny-go:hover{background:rgba(0,245,255,.08)}
+.jny-status{margin-top:10px;font-size:10px;color:var(--mut2);line-height:1.7}
+.jny-card{position:relative;border:1px solid rgba(0,245,255,.18);border-radius:12px;background:linear-gradient(135deg,rgba(0,245,255,.035),rgba(200,255,0,.015));padding:14px 16px;margin-top:10px;overflow:hidden}
+.jny-top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.jny-dur{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;color:var(--cyan);line-height:1}
+.jny-dur span{font-size:.32em;letter-spacing:1px;margin-left:5px;color:var(--mut2);font-style:normal}
+.jny-clock{font-size:10px;color:var(--cream);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.jny-arrow{color:rgba(236,232,221,.15)}
+.jny-soon{background:rgba(255,45,0,.15);color:var(--rot);font-size:7.5px;letter-spacing:1px;padding:2px 5px;text-transform:uppercase;border-radius:4px}
+.jny-legs{display:flex;align-items:center;gap:0;margin-top:12px;flex-wrap:wrap}
+.jny-leg{display:flex;align-items:center;gap:5px}
+.jny-ico{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;background:rgba(236,232,221,.06);flex-shrink:0}
+.jny-leg.tr .jny-ico{background:rgba(0,245,255,.14);border:1px solid rgba(0,245,255,.35)}
+.jny-lbl{font-size:8.5px;letter-spacing:.5px;color:var(--cyan);white-space:nowrap}
+.jny-sep{width:14px;height:1px;background:repeating-linear-gradient(90deg,rgba(236,232,221,.15) 0 3px,transparent 3px 6px);margin:0 4px;flex-shrink:0}
+.jny-meta{margin-top:10px;font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut2)}
+.jny-walk-hero{display:flex;align-items:center;gap:12px}
 </style>
 <!-- SP_SEO v1 -->
 <meta id="og-title" property="og:title" content="Club Bellevue — techno Kreis 1 | Stadtpuls Zürich">
@@ -281,6 +306,17 @@ a{color:inherit;text-decoration:none}
   <!-- STANDORT -->
   <div class="sec">
     <div class="sec-title">STANDORT</div>
+    <div class="jny-card-wrap">
+      <div class="jny-head">
+        <div style="font-size:22px;flex-shrink:0">🧭</div>
+        <div class="jny-head-txt">
+          <div class="jny-head-lbl">WIE CHUM ICH HI?</div>
+          <div class="jny-head-sub">Live Fussweg + ÖV-Verbindig ab dim Standort</div>
+        </div>
+        <div class="jny-go" id="jnyGoBtn">📍 GPS AN</div>
+      </div>
+      <div id="jnyResult"></div>
+    </div>
     <div id="map"></div>
     <div class="map-actions">
       <div class="map-btn" id="map-nav-btn">🗺 ROUTE STARTE</div>
@@ -517,6 +553,127 @@ function initMap(lat,lng,name){
   document.getElementById('map-nav-btn').onclick=()=>window.open(`https://maps.google.com/?q=${lat},${lng}`,'_blank');
 }
 
+// SP_JNY v1 — "Wie chum ich hi?" Live Fussweg + OeV-Verbindig
+function haversine(lat1,lng1,lat2,lng2){
+  var R=6371000;
+  var toRad=function(d){return d*Math.PI/180;};
+  var dLat=toRad(lat2-lat1), dLng=toRad(lng2-lng1);
+  var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLng/2)*Math.sin(dLng/2);
+  var c=2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
+  return R*c;
+}
+var JNY_TR='https://transport.opendata.ch/v1';
+function jnyGet(path){
+  return fetch(JNY_TR+path).then(function(r){ if(!r.ok) throw new Error('http'+r.status); return r.json(); });
+}
+function jnyFmtZeit(iso){
+  if(!iso) return '–';
+  var d=new Date(iso);
+  var hh=('0'+d.getHours()).slice(-2), mm=('0'+d.getMinutes()).slice(-2);
+  return hh+':'+mm;
+}
+function jnyTotalMin(dur){
+  var m=(dur||'').match(/(\d+)d(\d+):(\d+):(\d+)/);
+  if(!m) return null;
+  return parseInt(m[1],10)*1440+parseInt(m[2],10)*60+parseInt(m[3],10);
+}
+var JNY_KAT_CODE={T:'Tram',B:'Bus',S:'S-Bahn',IR:'IR',IC:'IC',RE:'RE',NFB:'Nachtbus',NFT:'Nachttram',BAT:'Schiff',FUN:'Standseilbahn',PB:'Seilbahn',TGV:'TGV',EC:'EC'};
+var JNY_KAT_ICON={T:'🚋',B:'🚌',S:'🚆',IR:'🚆',IC:'🚆',RE:'🚆',NFB:'🌙',NFT:'🌙',BAT:'⛴',FUN:'🚟',PB:'🚡',TGV:'🚄',EC:'🚄'};
+function jnyFmtKat(cat,num){ var label=JNY_KAT_CODE[cat]||cat||''; return (label+' '+(num||'')).replace(/\s+$/,''); }
+function jnyLegIcon(cat){ return JNY_KAT_ICON[cat]||'🚏'; }
+function jnyStart(locId,lat,lng){
+  var btn=document.getElementById('jnyGoBtn');
+  var result=document.getElementById('jnyResult');
+  if(!navigator.geolocation){
+    result.innerHTML='<div class="jny-status">Standort wird vo dim Browser nid unterstützt.</div>';
+    return;
+  }
+  if(lat==null||lng==null||isNaN(lat)||isNaN(lng)){
+    result.innerHTML='<div class="jny-status">Standort für dä Club isch (no) nid hinterlegt.</div>';
+    return;
+  }
+  btn.textContent='… sueched Standort';
+  navigator.geolocation.getCurrentPosition(function(pos){
+    jnyResolve(pos.coords.latitude,pos.coords.longitude,lat,lng,btn,result);
+  }, function(err){
+    btn.textContent='📍 GPS AN';
+    if(err&&err.code===1){ result.innerHTML='<div class="jny-status">Standort-Zugriff verweigeret.</div>'; }
+    else { result.innerHTML='<div class="jny-status">Standort hät nid klappt.</div>'; }
+  }, {enableHighAccuracy:true, timeout:12000, maximumAge:60000});
+}
+function jnyResolve(uLat,uLng,dLat,dLng,btn,result){
+  var dist=haversine(uLat,uLng,dLat,dLng);
+  if(dist<400){
+    btn.textContent='📍 GPS AN';
+    var walkMin=Math.max(1,Math.round(dist/75));
+    result.innerHTML='<div class="jny-card"><div class="jny-walk-hero"><div style="font-size:24px">🚶</div><div><div class="jny-dur">'+walkMin+'<span>MIN Z FUESS</span></div><div class="jny-clock">'+Math.round(dist)+' m Luftlinie</div></div></div></div>';
+    return;
+  }
+  btn.textContent='… berechnet Route';
+  Promise.all([
+    jnyGet('/locations?x='+uLat+'&y='+uLng+'&type=station'),
+    jnyGet('/locations?x='+dLat+'&y='+dLng+'&type=station')
+  ]).then(function(res){
+    var fromStations=(res[0]&&res[0].stations)||[];
+    var toStations=(res[1]&&res[1].stations)||[];
+    var fromSt=null,toSt=null;
+    for(var i=0;i<fromStations.length;i++){ if(fromStations[i]&&fromStations[i].id){ fromSt=fromStations[i]; break; } }
+    for(var j=0;j<toStations.length;j++){ if(toStations[j]&&toStations[j].id){ toSt=toStations[j]; break; } }
+    btn.textContent='📍 GPS AN';
+    if(!fromSt||!toSt){
+      result.innerHTML='<div class="jny-status">Kei Haltestell i dr Nöchi gfunde.</div>';
+      return;
+    }
+    if(fromSt.id===toSt.id){
+      var walkMin2=Math.max(1,Math.round(dist/75));
+      result.innerHTML='<div class="jny-card"><div class="jny-walk-hero"><div style="font-size:24px">🚶</div><div><div class="jny-dur">'+walkMin2+'<span>MIN Z FUESS</span></div><div class="jny-clock">'+Math.round(dist)+' m Luftlinie · gliichi Haltestell</div></div></div></div>';
+      return;
+    }
+    return jnyGet('/connections?from='+encodeURIComponent(fromSt.name)+'&to='+encodeURIComponent(toSt.name)+'&limit=1').then(function(cdata){
+      var conns=(cdata&&cdata.connections)||[];
+      if(!conns.length){
+        result.innerHTML='<div class="jny-status">Kei ÖV-Verbindig gfunde grad. Versuechs später nomal.</div>';
+        return;
+      }
+      var c=conns[0];
+      var depIso=c.from&&c.from.departure;
+      var dep=jnyFmtZeit(depIso);
+      var arr=jnyFmtZeit(c.to&&c.to.arrival);
+      var transitMin=jnyTotalMin(c.duration)||0;
+      var walk1=Math.max(1,Math.round((fromSt.distance||0)/75));
+      var walk2=Math.max(1,Math.round((toSt.distance||0)/75));
+      var heroTotal=walk1+transitMin+walk2;
+      var transfers=c.transfers||0;
+      var sections=(c.sections||[]).filter(function(s){ return s&&(s.journey||s.walk); });
+      var legsHtml='<div class="jny-leg"><div class="jny-ico">🚶</div><div class="jny-lbl">'+Math.round(fromSt.distance||0)+' m</div></div>';
+      for(var k=0;k<sections.length;k++){
+        legsHtml+='<div class="jny-sep"></div>';
+        var s=sections[k];
+        if(s.journey){
+          legsHtml+='<div class="jny-leg tr"><div class="jny-ico">'+jnyLegIcon(s.journey.category)+'</div><div class="jny-lbl">'+jnyFmtKat(s.journey.category,s.journey.number)+'</div></div>';
+        } else {
+          legsHtml+='<div class="jny-leg"><div class="jny-ico">🚶</div></div>';
+        }
+      }
+      legsHtml+='<div class="jny-sep"></div><div class="jny-leg"><div class="jny-ico">🚶</div><div class="jny-lbl">'+Math.round(toSt.distance||0)+' m</div></div>';
+      var soonHtml='';
+      if(depIso){
+        var diffMin=Math.round((new Date(depIso).getTime()-Date.now())/60000);
+        if(diffMin>=0&&diffMin<=90){ soonHtml='<span class="jny-soon">IN '+diffMin+' MIN</span>'; }
+      }
+      result.innerHTML='<div class="jny-card">'
+        +'<div class="jny-top"><div class="jny-dur">'+heroTotal+'<span>MIN GSAMT</span></div>'
+        +'<div class="jny-clock">Ab '+fromSt.name+' '+dep+'<span class="jny-arrow">&rarr;</span>'+arr+' i '+toSt.name+soonHtml+'</div></div>'
+        +'<div class="jny-legs">'+legsHtml+'</div>'
+        +'<div class="jny-meta">'+transfers+' Umstieg'+(transfers===1?'':'e')+' · '+fromSt.name+' → '+toSt.name+'</div>'
+        +'</div>';
+    });
+  }).catch(function(){
+    btn.textContent='📍 GPS AN';
+    result.innerHTML='<div class="jny-status">Route-Berechnig hät grad nid klappt — versuechs nomal.</div>';
+  });
+}
+
 // LOAD
 async function load(){
   if(!slug){
@@ -584,8 +741,8 @@ async function load(){
   if(l.website){webEl.textContent='WEBSITE ÖFFNE →';webEl.onclick=()=>window.open(l.website,'_blank');}
   else{webEl.textContent='–';}
 
-  // BESCHREIBUNG
-  document.getElementById('desc-box').textContent=l.beschreibung||l.beschreibung_kurz||'Kei Beschreibig vorhande.';
+  // BESCHREIBUNG (Feld chan HTML enthalte -> als HTML rendere, Scripts usenä)
+  document.getElementById('desc-box').innerHTML=(l.beschreibung||l.beschreibung_kurz||'Kei Beschreibig vorhande.').replace(/<script[^>]*>[\s\S]*?<\/script>/gi,'');
 
   // OZ
   document.getElementById('oz-grid').innerHTML=l.oeffnungszeiten&&l.oeffnungszeiten.length?buildOzGrid(l.oeffnungszeiten):`<div style="padding:16px;color:rgba(232,228,217,0.25);font-size:10px;letter-spacing:2px;text-align:center;text-transform:uppercase">KEI ÖFFNIGSZIITE VORHANDE</div>`;
@@ -597,14 +754,11 @@ async function load(){
   // SOUND DNA
   buildSoundDNA(sk);
 
-  // MAP
-  if(l.lat&&l.lng){
-    initMap(l.lat,l.lng,l.name);
-  }else{
-    const kreisCoords={1:[47.3762,8.5407],2:[47.3574,8.5374],3:[47.3728,8.5148],4:[47.3779,8.5285],5:[47.3879,8.5158],6:[47.3836,8.5551],7:[47.3694,8.5713],8:[47.3552,8.5567],9:[47.3818,8.4862],10:[47.4011,8.5113],11:[47.4126,8.5459],12:[47.4180,8.5751]};
-    const c=kreisCoords[l.kreis]||[47.3769,8.5417];
-    initMap(c[0],c[1],l.name);
-  }
+  // MAP + GPS ("Wie chum ich hi?")
+  const kreisCoords={1:[47.3762,8.5407],2:[47.3574,8.5374],3:[47.3728,8.5148],4:[47.3779,8.5285],5:[47.3879,8.5158],6:[47.3836,8.5551],7:[47.3694,8.5713],8:[47.3552,8.5567],9:[47.3818,8.4862],10:[47.4011,8.5113],11:[47.4126,8.5459],12:[47.4180,8.5751]};
+  const _c=(l.lat&&l.lng)?[l.lat,l.lng]:(kreisCoords[l.kreis]||[47.3769,8.5417]);
+  initMap(_c[0],_c[1],l.name);
+  const _jny=document.getElementById('jnyGoBtn'); if(_jny) _jny.onclick=function(){ jnyStart(l.id,_c[0],_c[1]); };
 
   // SIMILAR
   loadSimilar(l);
