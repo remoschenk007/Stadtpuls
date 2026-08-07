@@ -177,6 +177,18 @@ def breadcrumb_schema(k):
         {"@type":"ListItem","position":2,"name":"News","item":SITE+"/news"},
         {"@type":"ListItem","position":3,"name":f"News Kreis {k} Zürich","item":f"{SITE}/kreis-{k}/news/"}]}, ensure_ascii=False)
 
+def collection_schema(k, stories):
+    # CollectionPage + ItemList: sait Google/KI "das isch e Lischte vo dene Artikel".
+    items=[]
+    for i,o in enumerate(stories):
+        titel=o.get("titel") or o.get("title") or "Ohni Titel"
+        slug=o.get("slug") or slugify(titel)
+        items.append({"@type":"ListItem","position":i+1,"name":titel,"url":f"{SITE}/kreis-{k}/news/{slug}"})
+    return json.dumps({"@context":"https://schema.org","@type":"CollectionPage",
+        "name":f"News Kreis {k} Zürich","url":f"{SITE}/kreis-{k}/news/","inLanguage":"de-CH",
+        "isPartOf":{"@type":"WebSite","name":"Stadtpuls","url":SITE},
+        "mainEntity":{"@type":"ItemList","numberOfItems":len(items),"itemListElement":items}}, ensure_ascii=False)
+
 TEMPLATE = open(os.path.join(os.path.dirname(__file__),"_kreis_news_template.html"),encoding="utf-8").read() \
     if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)),"_kreis_news_template.html")) else None
 
@@ -219,6 +231,7 @@ def page(k, stories):
       "__META__":esc(d["meta"]),"__CANON__":f"{SITE}/kreis-{k}/news/","__INTRO__":esc(d["intro"]),
       "__CARDS__":cards,"__WTLINK__":wtlink,"__FAQ__":faq_html,"__OTHERS__":others,
       "__SCHEMA_FAQ__":faq_schema(d["faq"]),"__SCHEMA_BC__":breadcrumb_schema(k),
+      "__SCHEMA_COLL__":collection_schema(k,stories),
     }
     out=PAGE_HTML
     for t,v in tokens.items(): out=out.replace(t,v)
@@ -231,12 +244,14 @@ PAGE_HTML = r"""<!DOCTYPE html>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>__TITLE__</title>
 <meta name="description" content="__META__">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
 <link rel="canonical" href="__CANON__">
 <meta property="og:type" content="website"><meta property="og:title" content="News Kreis __K__ Zürich – __NAME__">
 <meta property="og:description" content="__META__"><meta property="og:url" content="__CANON__"><meta property="og:locale" content="de_CH">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script type="application/ld+json">__SCHEMA_BC__</script>
 <script type="application/ld+json">__SCHEMA_FAQ__</script>
+<script type="application/ld+json">__SCHEMA_COLL__</script>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,700;0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
