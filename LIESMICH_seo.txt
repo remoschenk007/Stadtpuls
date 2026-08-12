@@ -1,0 +1,38 @@
+STADTPULS — SEO- & KI-SEARCH-PAKET (Punkte 1-6)
+================================================
+KEINE optische Änderung. Nur Semantik, Meta & Sitemap.
+
+WAS DRIN IST
+ 1. sitemap-pages.xml: news.html-Zeile entfernt (war noindex-Weiterleitung
+    -> Search-Console-Fehler). /news/ steht korrekt in sitemap-news.xml.
+ 2. 28 interne Links auf news.html -> /news/ (17 Dateien). Kein Redirect-Hop mehr.
+ 3. Startseite: 6 Sektions-Titel + 2 Duo-Titel sind jetzt echte <h2>
+    (HÜT ABIG, GRAD ANGSAGT, DIS ZÜRI, ZÜRI MOMÄNT, NEWS & STORIES, MEH ENTDECKE,
+     PEOPLE & DATES, ÜBERRASCH MI) -> LLMs können Abschnitte zitieren.
+    H1 um Keywords ergänzt (Marke bleibt sichtbar, Zusatz per .vh screenreader-lesbar).
+    Tagline h2 -> p. H4 -> H3 (Ebenensprung weg). Footer h5 -> h3.
+ 4. nachtleben: H1 mit Keywords ergänzt, Listen-Headline "ALLE 146..." -> <h2>.
+ 5. lang="de-CH" auf allen Seiten vereinheitlicht (war de / de-CH gemischt).
+ 6. Descriptions verlängert: index 116->166, nachtleben 92->155,
+    events 119->159, dating 92->149 Zeichen.
+ +  login.html: noindex (Formularseite gehört nicht in den Index).
+
+PUSH
+  cd /Users/alessandrachristen/stadtpuls && \
+  unzip -o ~/Downloads/stadtpuls-seo.zip -d . && \
+  grep -c 'section-title">HÜT' index.html && \
+  git add -A && \
+  git commit -m "SEO+AEO: Headings semantisch, Sitemap bereinigt, interne Links, lang, Descriptions" && \
+  git pull --rebase origin main && git push origin main
+  (nach dem grep muss 0 stehen -> Beweis, dass DIV ersetzt wurde;
+   Gegenprobe: grep -c '<h2 class="section-title">' index.html  -> 6)
+
+DANACH (wichtig, in dieser Reihenfolge)
+  - 2 Min warten, Deploy pruefen (Actions gruen)
+  - Search Console: Sitemap NICHT neu einreichen. Nur unter
+    "Seiten -> Nicht indexiert" beobachten, ob "Seite mit Weiterleitung" sinkt.
+  - Geduld: URL-Umzuege brauchen 2-6 Wochen.
+
+NAECHSTER SCHRITT (separat, groesster KI-Hebel)
+  Statische Top-10-Listen pro Kreis-Seite via Auto-Sync generieren,
+  damit GPTBot/ClaudeBot/PerplexityBot echte Lokalnamen sehen.

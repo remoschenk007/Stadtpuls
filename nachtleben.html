@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de-CH">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stadtpuls Zürich — Nachtlebe | Clubs, Bars & Afterhour</title>
-<meta name="description" content="Zürichs beschtis Nachtleben — Clubs, Bars, Techno, Jazz, Afterhour. Alle 146 Locations live.">
+<meta name="description" content="Zürichs Nachtleben live: 146 Clubs, Bars und Afterhour-Locations in allen 12 Kreisen — Techno, Jazz, Live-Musik. Mit Öffnungsstatus und echten Bewertungen.">
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,900;1,900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -124,7 +124,7 @@ html,body{background:#000;color:#e8e4d9;font-family:'DM Mono',monospace;overflow
 
 /* DYNAMIC HEADLINE */
 .dyn-headline{margin-bottom:16px}
-.dyn-h{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase;color:#e8e4d9;line-height:1}
+.dyn-h{margin:0;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase;color:#e8e4d9;line-height:1}
 .dyn-h span{color:#ff2d00}
 .sort-row{display:flex;align-items:center;gap:8px;margin-top:6px}
 .sort-btn{padding:5px 10px;border:1px solid rgba(255,255,255,0.08);border-radius:2px;font-size:7px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;color:rgba(232,228,217,0.35);background:transparent;transition:all .2s;font-family:'DM Mono',monospace}
@@ -398,6 +398,7 @@ a,button,.loc-card,.typ-card,.gc,.qc,.sort-btn,.nav-link,.nav-cta{cursor:pointer
   .stats-bar{flex-wrap:wrap}
   .stat{min-width:33%}
 }
+.vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 </style>
 <!-- SP_BOOST v1 · Money-Loop: Tier-Badges + Glow -->
 <style>
@@ -458,7 +459,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
     <a href="nachtleben.html" class="nav-link active">NACHTLEBE</a>
     <a href="events.html" class="nav-link">EVENTS</a>
     <a href="shopping.html" class="nav-link">SHOPPING</a>
-    <a href="news.html" class="nav-link">NEWS</a>
+    <a href="/news/" class="nav-link">NEWS</a>
     <a href="dating.html" class="nav-link">DATES</a>
   </div>
   <a href="login.html" class="nav-cta">MITMACHE</a>
@@ -504,8 +505,8 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
 <div class="hero section-pad">
   <div class="hero-bg-txt">NACHT</div>
   <div class="hero-eye">ZÜRICH NACHTLEBE · 146 LOKALE</div>
-  <h1 class="hero-title" style="margin:0 0 6px">DÄ<br><span class="r">NACHT</span><span class="p">PULS</span></h1>
-  <h2 class="hero-sub" style="font-weight:400;margin:0 0 20px">Techno · Jazz · Clubs · Bars · Afterhour · dä echti Züri Nacht</h2>
+  <h1 class="hero-title" style="margin:0 0 6px">DÄ<br><span class="r">NACHT</span><span class="p">PULS</span><span class="vh"> — Nachtleben Zürich: Clubs, Bars, Techno & Afterhour in allen Kreisen</span></h1>
+  <p class="hero-sub" style="font-weight:400;margin:0 0 20px">Techno · Jazz · Clubs · Bars · Afterhour · dä echti Züri Nacht</p>
 
   <!-- KREISRIVALITÄT -->
   <div class="rivalitaet">
@@ -575,7 +576,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
 
   <!-- DYNAMIC HEADLINE -->
   <div class="dyn-headline">
-    <div class="dyn-h" id="dyn-h">ALLE <span id="dyn-count">146</span> NACHTLEBE-LOKALE</div>
+    <h2 class="dyn-h" id="dyn-h">ALLE <span id="dyn-count">146</span> NACHTLEBE-LOKALE</h2>
     <div class="sort-row">
       <span style="font-size:8px;color:rgba(232,228,217,0.25);letter-spacing:2px;text-transform:uppercase;margin-right:4px">SORT:</span>
       <button class="sort-btn on" onclick="setSort(this,'score')">SCORE</button>
@@ -640,7 +641,7 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 .fbl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:1.6rem;letter-spacing:.1em;display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;color:#e8e4d9}
 .fbdot{width:8px;height:8px;background:#ff2d00;border-radius:50%;box-shadow:0 0 8px #ff2d00;flex-shrink:0}
 .footer-brand p{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(232,228,217,0.4);line-height:1.9;max-width:280px}
-.fc h5{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:#ff2d00;margin-bottom:1rem;font-weight:500}
+.fc h3{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:#ff2d00;margin-bottom:1rem;font-weight:500}
 .fc ul{list-style:none;margin:0;padding:0}
 .fc li{font-family:'DM Mono',monospace;font-size:.75rem;margin-bottom:.6rem}
 .fc li a{color:rgba(232,228,217,0.45);text-decoration:none;cursor:pointer;transition:color .2s}
@@ -678,7 +679,7 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
   <div class="fg">
     <div class="footer-brand"><div class="fbl"><div class="fbdot"></div>STADTPULS</div><p>dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.<br><br>© 2026 by raimondo* — Zürich</p></div>
     <div class="fc">
-      <h5>Entdecken</h5>
+      <h3>Entdecken</h3>
       <ul>
         <li><a href="gastro.html">Gastro & Bars</a></li>
         <li><a href="nachtleben.html">Nachtleben</a></li>
@@ -691,18 +692,18 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
       </ul>
     </div>
     <div class="fc">
-      <h5>Community</h5>
+      <h3>Community</h3>
       <ul>
         <li><a href="community.html">Feed & Posts</a></li>
         <li><a href="dating.html">People & Dates</a></li>
         <li><a href="jobs.html">Jobs Züri</a></li>
-        <li><a href="news.html">News & Stories</a></li>
+        <li><a href="/news/">News & Stories</a></li>
         <li><a href="gps.html">GPS — Wo bisch du?</a></li>
         <li><a href="partners.html">Kooperatione</a></li>
       </ul>
     </div>
     <div class="fc">
-      <h5>Mitmache</h5>
+      <h3>Mitmache</h3>
       <ul>
         <li><a href="login.html">Einlogge</a></li>
         <li><a href="login.html">Profil aalege</a></li>

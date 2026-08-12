@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de-CH">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Stadtpuls Zürich — dä Puls vo dä Stadt | City Guide</title>
-<meta name="description" content="Stadtpuls ist dein City Guide für Zürich. Events, Gastro, Nachtleben, Shopping und mehr — alles auf einer Plattform.">
+<meta name="description" content="Dä Puls vo dä Stadt: City Guide für Zürich mit über 900 Restaurants, Bars, Clubs und Shops plus täglich aktuelle Events — in allen 12 Kreisen, ohne bezahlte Rankings.">
 <meta name="keywords" content="Zürich, City Guide, Events Zürich, Gastro Zürich, Nachtleben Zürich, Shopping Zürich">
 <meta property="og:title" content="Stadtpuls Zürich — dä Puls vo dä Stadt">
 <meta property="og:description" content="Dein City Guide für Zürich. Events, Gastro, Nachtleben und mehr.">
@@ -71,7 +71,8 @@ html,body{background:#04040a;color:#e8e4d9;font-family:'DM Mono',monospace;overf
 .section{padding:32px 24px;border-top:1px solid rgba(255,45,0,0.08)}
 .section-head{margin-bottom:22px}
 .section-eye{font-size:8px;letter-spacing:4px;color:#ff2d00;text-transform:uppercase;margin-bottom:6px}
-.section-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;text-transform:uppercase;color:#e8e4d9;line-height:1}
+.vh{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.section-title{margin:0;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:34px;text-transform:uppercase;color:#e8e4d9;line-height:1}
 .section-title .v{color:#c8ff00}
 
 .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
@@ -154,7 +155,7 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
 .ct{padding:18px 14px;text-decoration:none;cursor:pointer;transition:filter .2s,transform .2s;text-align:left}
 .ct:hover{filter:brightness(1.12)}
 .ct-ico{font-size:22px;display:block;margin-bottom:7px}
-.ct h4{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;line-height:1;margin-bottom:3px}
+.ct h3{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:18px;text-transform:uppercase;line-height:1;margin-bottom:3px}
 .ct small{font-size:8px;letter-spacing:1px;text-transform:uppercase;opacity:.72}
 .ct.o{background:#ff2d00;color:#fff}
 .ct.d{background:#15151c;color:#e8e4d9}
@@ -246,7 +247,7 @@ footer{background:#000;border-top:1px solid rgba(255,45,0,0.1);padding:36px 24px
 .duo-dice:hover{border-color:rgba(200,255,0,0.5);box-shadow:0 10px 30px rgba(200,255,0,0.10)}
 .duo-dice::after{content:'🎲';position:absolute;right:-4px;bottom:-12px;font-size:70px;opacity:.10;transform:rotate(14deg);pointer-events:none}
 .duo-eye{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:3px;text-transform:uppercase;margin-bottom:8px}
-.duo-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:30px;text-transform:uppercase;color:#e8e4d9;line-height:.95}
+.duo-title{margin:0;font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:30px;text-transform:uppercase;color:#e8e4d9;line-height:.95}
 .duo-sub{font-family:'DM Mono',monospace;font-size:10px;line-height:1.6;color:rgba(232,228,217,0.45);margin-top:10px;min-height:32px}
 .duo-cta{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:14px;letter-spacing:2px;margin-top:12px}
 @media(max-width:640px){.duo-grid{grid-template-columns:1fr}.duo-sub{min-height:0}}
@@ -323,8 +324,8 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
   <div class="hero">
     <div class="hero-bg-txt">ZÜRI</div>
     <div class="hero-eye">ZÜRICH · LIVE · 2026</div>
-    <h1 class="hero-title" style="margin:0 0 14px">STADT<span class="r">PULS</span></h1>
-    <h2 class="hero-sub" style="font-weight:400;margin-top:0;text-transform:none">dä puls vo dä stadt — din city guide. Events, Gastro, Nachtlebe, Shopping und mehr. Alles uf einere Syte.</h2>
+    <h1 class="hero-title" style="margin:0 0 14px">STADT<span class="r">PULS</span><span class="vh"> Zürich — City Guide für Events, Gastro, Nachtleben, Shopping und Kultur</span></h1>
+    <p class="hero-sub" style="font-weight:400;margin-top:0;text-transform:none">dä puls vo dä stadt — din city guide. Events, Gastro, Nachtlebe, Shopping und mehr. Alles uf einere Syte.</p>
     <div class="hero-ctas">
       <a href="login.html" class="hero-btn red">LOS, MACH! →</a>
       <a href="#kategorien" class="hero-btn ghost">ENTDECKE</a>
@@ -341,7 +342,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
   <div class="section">
     <div class="section-head">
       <div class="section-eye">WAS LAUFT GAD · KEI BULLSHIT</div>
-      <div class="section-title">HÜT <span class="v">ABIG</span></div>
+      <h2 class="section-title">HÜT <span class="v">ABIG</span></h2>
     </div>
     <div class="tonight-wrap">
       <div class="tonight-tag">JETZT LIVE IN ZÜRI</div>
@@ -356,7 +357,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
   <div class="section" id="angsagt-sec" style="display:none">
     <div class="section-head">
       <div class="section-eye" style="color:#ec4899">PARTNER · BEZAHLTI PLATZIERIG</div>
-      <div class="section-title">GRAD <span style="color:#ec4899">ANGSAGT</span></div>
+      <h2 class="section-title">GRAD <span style="color:#ec4899">ANGSAGT</span></h2>
     </div>
     <div id="angsagt-list" style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:16px"></div>
   </div>
@@ -394,7 +395,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
   <div class="section" id="kategorien">
     <div class="section-head">
       <div class="section-eye">ENTDECKE</div>
-      <div class="section-title">DIS ZÜRI,<br>DIS <span class="v">TEMPO</span></div>
+      <h2 class="section-title">DIS ZÜRI,<br>DIS <span class="v">TEMPO</span></h2>
     </div>
     <div class="bento">
       <a href="gastro.html" class="bt big">
@@ -474,7 +475,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
   <div class="section" id="momaent-sec" style="display:none">
     <div class="section-head">
       <div class="section-eye" style="color:#ffd93d">◉ ECHT · UNGFILTERET</div>
-      <div class="section-title">ZÜRI <span style="color:#ffd93d">MOMÄNT</span></div>
+      <h2 class="section-title">ZÜRI <span style="color:#ffd93d">MOMÄNT</span></h2>
     </div>
     <div id="momaent-list" style="display:grid;gap:10px;margin-top:14px"></div>
     <a href="feedback.html" style="display:inline-block;margin-top:14px;font-size:9px;letter-spacing:2px;color:rgba(255,217,61,.7);text-decoration:none;text-transform:uppercase">◉ Din Momänt teile →</a>
@@ -484,7 +485,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
   <div class="section" id="newsteaser-sec" style="display:none">
     <div class="section-head">
       <div class="section-eye">US DE STADT</div>
-      <div class="section-title">NEWS & <span class="v">STORIES</span></div>
+      <h2 class="section-title">NEWS & <span class="v">STORIES</span></h2>
     </div>
     <div id="newsteaser-list" style="display:grid;gap:10px;margin-top:14px"></div>
     <a href="/news/" style="display:inline-block;margin-top:14px;font-size:9px;letter-spacing:2px;color:rgba(255,45,0,.75);text-decoration:none;text-transform:uppercase">Alli Stories läse →</a>
@@ -495,13 +496,13 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
     <div class="duo-grid">
       <a href="dating.html" class="duo-card duo-dates">
         <div class="duo-eye" style="color:#ec4899">💘 18+ · KEI TINDER</div>
-        <div class="duo-title">PEOPLE &<br><span style="color:#ec4899">DATES</span></div>
+        <h2 class="duo-title">PEOPLE &<br><span style="color:#ec4899">DATES</span></h2>
         <div class="duo-sub">Real-Life-Dates i de Stadt. Swipe dur Züri — <span id="dates-count" style="color:#ec4899;font-weight:700"></span></div>
         <div class="duo-cta" style="color:#ec4899">ZU DE DATES →</div>
       </a>
       <div class="duo-card duo-dice" onclick="goRandomHome()" role="button" tabindex="0">
         <div class="duo-eye" style="color:#c8ff00">🎲 ZUEFALL</div>
-        <div class="duo-title">ÜBERRASCH<br><span style="color:#c8ff00">MI!</span></div>
+        <h2 class="duo-title">ÜBERRASCH<br><span style="color:#c8ff00">MI!</span></h2>
         <div class="duo-sub">La di vom Puls packe — es zuefälligs Lokal us 640, direkt ufs Profil.</div>
         <div class="duo-cta" style="color:#c8ff00" id="dice-cta">WÜRFLE →</div>
       </div>
@@ -552,7 +553,7 @@ function spBadgeE(e){const t=spTier(e);if(t===3)return'<span class="ec sp-prem">
   <div class="section">
     <div class="section-head">
       <div class="section-eye">DAS KOMPLETTE PORTAL</div>
-      <div class="section-title">MEH <span class="v">ENTDECKE</span></div>
+      <h2 class="section-title">MEH <span class="v">ENTDECKE</span></h2>
     </div>
     <div class="more-links">
       <a href="jobs.html" class="ml-card"><span class="ml-icon">💼</span><div class="ml-name">JOBS ZÜRI</div></a>
@@ -578,7 +579,7 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
 .fbl{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:1.6rem;letter-spacing:.1em;display:flex;align-items:center;gap:.6rem;margin-bottom:.7rem;color:#e8e4d9}
 .fbdot{width:8px;height:8px;background:#ff2d00;border-radius:50%;box-shadow:0 0 8px #ff2d00;flex-shrink:0}
 .footer-brand p{font-family:'DM Mono',monospace;font-size:.7rem;color:rgba(232,228,217,0.4);line-height:1.9;max-width:280px}
-.fc h5{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:#ff2d00;margin-bottom:1rem;font-weight:500}
+.fc h3{font-family:'DM Mono',monospace;font-size:.6rem;letter-spacing:.28em;text-transform:uppercase;color:#ff2d00;margin-bottom:1rem;font-weight:500}
 .fc ul{list-style:none;margin:0;padding:0}
 .fc li{font-family:'DM Mono',monospace;font-size:.75rem;margin-bottom:.6rem}
 .fc li a{color:rgba(232,228,217,0.45);text-decoration:none;cursor:pointer;transition:color .2s}
@@ -593,10 +594,10 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
       <div class="cc-title">DIS ZÜRI. <span class="v">DINI</span> STIMM.</div>
       <div class="cc-sub">Blogge, bewertet, teil — mit dim persönliche Profil bisch Teil vo Züris lebendigschter Community. Kei Algorithmus-Bullshit.</div>
       <div class="com-tiles">
-        <a href="login.html" class="ct o"><span class="ct-ico">✍️</span><h4>Blogge</h4><small>Dini Stadt, dini Stories</small></a>
-        <a href="login.html" class="ct d"><span class="ct-ico">⭐</span><h4>Bewertet</h4><small>Ehrlich & direkt</small></a>
-        <a href="login.html" class="ct cy"><span class="ct-ico">📤</span><h4>Uploade</h4><small>Fotos & Momänt</small></a>
-        <a href="login.html" class="ct vo"><span class="ct-ico">💬</span><h4>Kommentiere</h4><small>Überall, sofort</small></a>
+        <a href="login.html" class="ct o"><span class="ct-ico">✍️</span><h3>Blogge</h3><small>Dini Stadt, dini Stories</small></a>
+        <a href="login.html" class="ct d"><span class="ct-ico">⭐</span><h3>Bewertet</h3><small>Ehrlich & direkt</small></a>
+        <a href="login.html" class="ct cy"><span class="ct-ico">📤</span><h3>Uploade</h3><small>Fotos & Momänt</small></a>
+        <a href="login.html" class="ct vo"><span class="ct-ico">💬</span><h3>Kommentiere</h3><small>Überall, sofort</small></a>
       </div>
       <!-- SP_PULS_TEASER v1: Live-Puls statt Fake-Zahlen -->
       <style>
@@ -632,7 +633,7 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
   <div class="fg">
     <div class="footer-brand"><div class="fbl"><div class="fbdot"></div>STADTPULS</div><p>dä puls vo dä stadt<br><br>Interaktiver Lifestyle & City Guide für Zürich. Social Media & Marktplattform. Der virtuelle Spielplatz für Erwachsene.<br><br>© 2026 by raimondo* — Zürich</p></div>
     <div class="fc">
-      <h5>Entdecken</h5>
+      <h3>Entdecken</h3>
       <ul>
         <li><a href="gastro.html">Gastro & Bars</a></li>
         <li><a href="nachtleben.html">Nachtleben</a></li>
@@ -645,7 +646,7 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
       </ul>
     </div>
     <div class="fc">
-      <h5>Community</h5>
+      <h3>Community</h3>
       <ul>
         <li><a href="community.html">Feed & Posts</a></li>
         <li><a href="dating.html">People & Dates</a></li>
@@ -656,7 +657,7 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
       </ul>
     </div>
     <div class="fc">
-      <h5>Mitmache</h5>
+      <h3>Mitmache</h3>
       <ul>
         <li><a href="login.html">Einlogge</a></li>
         <li><a href="login.html">Profil aalege</a></li>
