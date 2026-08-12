@@ -23,7 +23,7 @@ def urlset(urls):
     return out + "</urlset>\n"
 
 # 1) Statische Seiten
-PAGES = ['','index.html','gastro.html','nachtleben.html','events.html','shopping.html','kultur.html','news.html','dating.html',
+PAGES = ['','index.html','gastro.html','nachtleben.html','events.html','shopping.html','kultur.html','dating.html',
  'feedback.html','kontakt.html','platzierung.html','impressum.html','datenschutz.html',
  'quartiere.html','musik.html','jobs.html','wohnungstausch/','mobilitaet.html','community.html','gps.html','partners.html','marktplatz.html']
 import glob as _g
