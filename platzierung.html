@@ -210,7 +210,7 @@ function showDone(paid){
   document.getElementById('done-big').textContent='MERCI!';
   document.getElementById('done-txt').innerHTML = paid
     ? 'Dini Zahlig isch aacho. Mir bestätiged dis Profil und schalted d\'Platzierig denn frei — du überchunsch e Mäldig.'
-    : 'Dini Aafrog für »'+LISTING.name+'« isch da. Mir mälded üs gli für d\'Zahlig und schalted denn frei.<br><br><a href="index.html" style="color:#c8ff00">Zrugg zur Startsiite</a>';
+    : 'Dini Aafrog für »'+LISTING.name+'« isch da. Mir mälded üs gli für d\'Zahlig und schalted denn frei.<br><br><a href="/" style="color:#c8ff00">Zrugg zur Startsiite</a>';
 }
 // Rückkehr von Stripe: ?bezahlt=1
 if(p.get('bezahlt')==='1'){document.getElementById('formwrap').classList.add('hide');document.getElementById('done').classList.add('on');document.getElementById('done-txt').innerHTML='Dini Zahlig isch aacho. Mir bestätiged dis Profil und schalted d\'Platzierig denn frei.';}
@@ -228,7 +228,7 @@ if(p.get('bezahlt')==='1'){document.getElementById('formwrap').classList.add('hi
 </style>
 <div class="sp-nav-ov" id="sp-nav-ov">
   <button class="sp-nav-x" onclick="spNavToggle()" aria-label="Schliesse">×</button>
-  <a href="index.html">ZUE</a>
+  <a href="/">ZUE</a>
   <a href="gastro.html">GASTRO</a>
   <a href="nachtleben.html">NACHTLEBE</a>
   <a href="events.html">EVENTS</a>

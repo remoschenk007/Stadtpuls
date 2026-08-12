@@ -1,0 +1,28 @@
+STADTPULS — STARTSEITE AEO + INDEX.HTML-DUPLIKAT
+=================================================
+1) Startseite: JSON-LD massiv erweitert
+   Organization (Adresse/Slogan/knowsAbout) · WebSite + SearchAction
+   · ItemList (7 Bereiche) · FAQPage (6 Fragen) -> KI-zitierbar
+2) Neue Sektion "WAS ISCH STADTPULS?" (statischer Text fuer Crawler/KI)
+   Crawler-Text: 3486 -> ~4300 Zeichen
+3) Ehrlichkeits-Fix: "ohne bezahlte Rankings" -> "ohne gekaufte Bewertungen"
+   (seit den Boosts gibt es bezahlte Platzierungen - Widerspruch vermeiden)
+4) index.html-Duplikat behoben:
+   - 38 interne Links href="index.html" -> href="/"
+   - Canonical https://depuls.ch -> https://depuls.ch/ (mit Slash)
+   - sitemap-pages.xml: Zeile /index.html entfernt
+   - generate_sitemap.py: 'index.html' aus PAGES (bleibt dauerhaft weg)
+
+PUSH
+  cd /Users/alessandrachristen/stadtpuls && \
+  unzip -o ~/Downloads/stadtpuls-aeo.zip -d . && \
+  grep -c FAQPage index.html && \
+  grep -c 'depuls.ch/index.html' sitemap-pages.xml; \
+  git add -A && \
+  git commit -m "Startseite AEO (FAQ/SearchAction/ItemList/Text) + index.html-Duplikat behoben" && \
+  git pull --rebase origin main && git push origin main
+  -> nach den greps muss "1" und dann "0" stehen
+
+PRUEFEN
+  search.google.com/test/rich-results -> depuls.ch
+  (FAQ, ItemList, Sitelinks-Searchbox muessen erkannt werden)
