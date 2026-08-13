@@ -117,6 +117,7 @@ footer{{padding:18px 22px;border-top:1px solid #14141f;font-size:8px;letter-spac
   <h1>ESSE IM <span>KREIS {N}</span></h1>
   <p class="intro">{INTRO} Alli Lokal handkuratiert, mit Live-Öffnigsstatus und echte Bewertige — kei bezahlti Rankings ohni Kennzeichnig.</p>
   <a class="cta" href="/gastro.html?kreis={N}">Live-Liste Kreis {N} →</a>
+  <a class="cta" href="/kreis-{N}/news/" style="background:#c8ff00;margin-left:8px">News us em Kreis {N} →</a>
   <h2>Top-Lokal im Kreis {N}</h2>
 {LOCS}
   <h2>Frage &amp; Antworte</h2>

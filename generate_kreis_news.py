@@ -83,6 +83,15 @@ def fetch_stories(kreis):
 
 def esc(s): return html.escape(str(s or ""), quote=True)
 
+def entdeck_block(k):
+    # Querlinks News -> Kategorie-Kreis-Seiten, NUR wenn die Datei existiert (kein 404)
+    cats=[("gastro","Restaurants"),("nachtleben","Nachtleben"),("shopping","Shopping"),("kultur","Kultur")]
+    links=[f'<a class="ktag" href="/{p}/kreis-{k}/">{lbl} im Kreis {k} \u2192</a>'
+           for p,lbl in cats if os.path.exists(f"{p}/kreis-{k}/index.html")]
+    if not links: return ""
+    return ('<h2 class="sec">ENTDECK <span class="g">DE KREIS '+str(k)+'</span></h2>'
+            '<div class="others">'+"".join(links)+'</div>')
+
 # Links im (scho escapte!) Fliesstext automatisch klickbar mache.
 # WICHTIG: immer NACH esc() ufrüefe, susch würded &amp; etc. doppelt escaped.
 # Chan zwei Formate:
@@ -229,7 +238,7 @@ def page(k, stories):
     tokens={
       "__K__":str(k),"__NAME__":esc(name),"__COL__":col,"__TITLE__":esc(title),
       "__META__":esc(d["meta"]),"__CANON__":f"{SITE}/kreis-{k}/news/","__INTRO__":esc(d["intro"]),
-      "__CARDS__":cards,"__WTLINK__":wtlink,"__FAQ__":faq_html,"__OTHERS__":others,
+      "__CARDS__":cards,"__WTLINK__":wtlink,"__FAQ__":faq_html,"__OTHERS__":others,"__ENTDECK__":entdeck_block(k),
       "__SCHEMA_FAQ__":faq_schema(d["faq"]),"__SCHEMA_BC__":breadcrumb_schema(k),
       "__SCHEMA_COLL__":collection_schema(k,stories),
     }
@@ -352,6 +361,8 @@ footer{background:#04040a;border-top:1px solid rgba(255,45,0,0.1)}
   <h2 class="sec">AKTUELLI <span class="g">STORYS</span> · KREIS __K__</h2>
   <div class="feed">__CARDS__</div>
   __WTLINK__
+
+  __ENTDECK__
 
   <h2 class="sec">HÜFIGI <span class="g">FRÅGE</span> · KREIS __K__ __NAME__</h2>
   __FAQ__
