@@ -803,18 +803,21 @@ a,button{cursor:pointer}
   <details><summary>Zeigt Stadtpuls, öb grad e Usstellig oder Vorstellig lauft?</summary><div>Ja — jedes Kultur-Profil zeigt automatisch aktuelli Events am gliche Ort, direkt us de Eventfrog-Date.</div></details>
 </section>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Was für Kultur-Orte gibt es auf Stadtpuls?", "acceptedAnswer": {"@type": "Answer", "text": "Museen, Galerien, Theater, Oper, Kino und Konzertorte — 88 echte Orte in Zürich, direkt aus der Zürich-Tourismus-API, täglich aktualisiert."}}, {"@type": "Question", "name": "Was ist der Kultur-Radar auf Stadtpuls?", "acceptedAnswer": {"@type": "Answer", "text": "Stimmung wählen (ruhig, Bühne, Live-Musik, Film) und der Radar zeigt passende Orte — deterministisch aus echten Daten, keine KI-Halluzination."}}, {"@type": "Question", "name": "Zeigt Stadtpuls aktuelle Ausstellungen und Vorstellungen?", "acceptedAnswer": {"@type": "Answer", "text": "Ja — jedes Kultur-Profil zeigt automatisch aktuelle Events am gleichen Ort, direkt aus den Eventfrog-Daten."}}]}</script>
-<section class="sp-faq" id="sp-kreis-guide" style="display:none;margin-top:8px">
-  <div class="sp-faq-eye">Quartier-Guides</div>
-  <div id="sp-kreis-links" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(105px,1fr));gap:8px"></div>
+<!-- SP_KREIS_NAV v1 · statisch + sichtbar + crawlbar -->
+<style>#sp-kreis-links a{border:1px solid #14141f;padding:11px 13px;font-family:'DM Mono',monospace;font-size:10.5px;letter-spacing:.5px;text-decoration:none;color:#e8e4d9;display:block;line-height:1.4;transition:border-color .15s,color .15s}#sp-kreis-links a:hover{border-color:#ff2d00;color:#ff2d00}</style>
+<section class="sp-faq" id="sp-kreis-guide" style="margin-top:8px">
+  <div class="sp-faq-eye">KULTUR NACH KREIS · QUARTIER-GUIDES</div>
+  <div id="sp-kreis-links" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px">
+    <a href="/kultur/kreis-1/">Kultur im Kreis 1 · Altstadt</a>
+    <a href="/kultur/kreis-2/">Museen & Galerien Kreis 2 · Enge</a>
+    <a href="/kultur/kreis-4/">Kultur-Guide Kreis 4 · Langstrasse</a>
+    <a href="/kultur/kreis-5/">Erläbe im Kreis 5 · Industriequartier</a>
+    <a href="/kultur/kreis-6/">Kultur im Kreis 6 · Unterstrass</a>
+    <a href="/kultur/kreis-8/">Museen & Galerien Kreis 8 · Seefeld</a>
+  </div>
 </section>
 <script src="/kreis-links.js"></script>
-<script>
-(function(){try{
-  var kat='kultur';var ks=(window.SP_KREIS_LINKS||{})[kat]||[];if(!ks.length)return;
-  document.getElementById('sp-kreis-links').innerHTML=ks.map(function(n){return '<a href="/'+kat+'/kreis-'+n+'/" style="border:1px solid #14141f;padding:10px;text-align:center;font-family:\'DM Mono\',monospace;font-size:10px;letter-spacing:1px;text-decoration:none;color:#e8e4d9">KREIS '+n+'</a>';}).join('');
-  document.getElementById('sp-kreis-guide').style.display='';
-}catch(e){}})();
-</script>
+
 <footer>
   <div class="ftk">
     <div class="fti">
