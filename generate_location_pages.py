@@ -36,14 +36,17 @@ def _schema_opening_hours(raw):
         parts = srow.split(None, 1)
         if len(parts) != 2:
             continue
-        m = re.match(r'(\d{1,2}:\d{2})\s*[-\u2013]\s*(\d{1,2}:\d{2})', parts[1].strip())
+        m = re.match(r'(\d{1,2}:\d{2})(?::\d{2})?\s*[-\u2013]\s*(\d{1,2}:\d{2})(?::\d{2})?', parts[1].strip())
         if not m:
             continue
+        _open, _close = m.group(1), m.group(2)
+        if _close == '00:00':
+            _close = '23:59'
         toks = [_map_day_token(t) for t in parts[0].split(',')]
         toks = [t for t in toks if t]
         if not toks:
             continue
-        out.append(f"{','.join(toks)} {m.group(1)}-{m.group(2)}")
+        out.append(f"{','.join(toks)} {_open}-{_close}")
     return out or None
 
 
