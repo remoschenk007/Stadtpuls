@@ -189,3 +189,38 @@ for k in _links: _links[k].sort()
 open('kreis-links.js','w',encoding='utf-8').write('window.SP_KREIS_LINKS='+_j.dumps(_links)+';')
 print('OK kreis-links.js:', {k:len(v) for k,v in _links.items()})
 print(f"FERTIG: {total} Kreis-Seiten (gastro+nachtleben+shopping+kultur). Jetzt generate_sitemap.py erneut ausführen!")
+
+# ===== P2: statische Top-Liste in die 4 Haupt-Hubs backen (Progressive Enhancement) =====
+import re as _re_hub
+for _kat, _K in KATEGORIEN.items():
+    _hub = f"{_K['pfad']}.html"
+    if not os.path.exists(_hub):
+        print(f"WARN Hub-Top: {_hub} fehlt"); continue
+    try:
+        _top = fetch(f"/rest/v1/locations?select=id,slug,name,subkategorie,rating,rating_count,kreis&kategorie=eq.{_kat}&aktiv=eq.true&order=rating.desc.nullslast,rating_count.desc.nullslast&limit=24")
+    except Exception as _e:
+        print(f"WARN Hub-Top {_hub}: fetch fehlgeschlagen ({_e})"); continue
+    _items = []
+    for _l in _top:
+        _nm = esc(_l.get('name') or 'Lokal')
+        _sub = esc(_l.get('subkategorie') or _K['titel'])
+        _kr = _l.get('kreis') or '?'
+        _url = _K['profil'](_l)
+        _items.append(
+            f'<a class="hub-top" href="{_url}" style="display:block;border:1px solid #14141f;border-left:3px solid #ff2d00;'
+            f'padding:10px 12px;margin-bottom:8px;text-decoration:none;color:#e8e4d9;font-family:&#39;DM Mono&#39;,monospace">'
+            f'<b style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-style:italic;font-weight:900;font-size:17px;'
+            f'text-transform:uppercase">{_nm}</b> <span style="color:#00f5ff;font-size:11px">{_sub} &middot; Kreis {_kr}</span></a>')
+    _block = ('<!-- SP_HUB_TOP:START --><div class="sp-hub-top">'
+              '<h2 style="font-family:&#39;Barlow Condensed&#39;,sans-serif;font-style:italic;font-weight:900;'
+              'text-transform:uppercase;color:#e8e4d9;font-size:22px;margin:0 0 10px">'
+              f"Top {len(_items)} &middot; {_K['wort']}</h2>" + "".join(_items) +
+              '</div><!-- SP_HUB_TOP:END -->')
+    _html = open(_hub, encoding="utf-8").read()
+    _new = _re_hub.sub(r'<!-- SP_HUB_TOP:START -->.*?<!-- SP_HUB_TOP:END -->', lambda _m: _block, _html, count=1, flags=_re_hub.DOTALL)
+    if _new != _html:
+        open(_hub, "w", encoding="utf-8").write(_new)
+        print(f"OK Hub-Top {_hub} — {len(_items)} Lokal statisch")
+    else:
+        print(f"WARN Hub-Top {_hub}: Marker nicht gefunden")
+
