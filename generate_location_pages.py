@@ -11,6 +11,42 @@
 # und VOR generate_sitemap.py.
 import json, urllib.request, os, re, shutil, unicodedata, html as _html
 
+# --- P3: oeffnungszeiten -> schema.org openingHours (defensiv) ---
+_DAY_SC = {'Mo':'Mo','Di':'Tu','Mi':'We','Do':'Th','Fr':'Fr','Sa':'Sa','So':'Su',
+           'Tu':'Tu','We':'We','Th':'Th','Su':'Su'}
+def _map_day_token(t):
+    t = t.strip()
+    if not t:
+        return None
+    if '-' in t or '\u2013' in t:
+        parts = re.split(r'[-\u2013]', t, 1)
+        a = _DAY_SC.get(parts[0].strip()); b = _DAY_SC.get(parts[1].strip()) if len(parts) > 1 else None
+        return f"{a}-{b}" if a and b else None
+    return _DAY_SC.get(t)
+def _schema_opening_hours(raw):
+    """oeffnungszeiten (Array/String wie 'Mo,Tu,We,Th 08:00-18:00') -> schema.org openingHours-Liste."""
+    if not raw:
+        return None
+    items = raw if isinstance(raw, list) else [str(raw)]
+    out = []
+    for o in items:
+        srow = str(o).strip()
+        if not srow or re.search(r'geschlossen|closed|ruhetag', srow, re.I):
+            continue
+        parts = srow.split(None, 1)
+        if len(parts) != 2:
+            continue
+        m = re.match(r'(\d{1,2}:\d{2})\s*[-\u2013]\s*(\d{1,2}:\d{2})', parts[1].strip())
+        if not m:
+            continue
+        toks = [_map_day_token(t) for t in parts[0].split(',')]
+        toks = [t for t in toks if t]
+        if not toks:
+            continue
+        out.append(f"{','.join(toks)} {m.group(1)}-{m.group(2)}")
+    return out or None
+
+
 SU = "https://pnynkzrqnfoshojqfqxn.supabase.co"
 SK = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ"
 
@@ -161,6 +197,9 @@ def render_page(template, loc, cat_key, cfg):
     if cat_key == 'gastro':
         schema["servesCuisine"] = sub
         schema["priceRange"] = "CHF"
+    _oh = _schema_opening_hours(loc.get('oeffnungszeiten'))
+    if _oh:
+        schema["openingHours"] = _oh
     schema_json = json.dumps(schema, ensure_ascii=False).replace('</', '<\\/')
     out = re.sub(
         r'<script type="application/ld\+json" id="schema-ld"></script>',
