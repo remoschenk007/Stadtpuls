@@ -102,6 +102,28 @@ def ef_fetch_locations(ids):
     return out
 
 
+
+_ALLOWED_TAGS = {'p','br','ul','ol','li','strong','em','b','i','a'}
+def _clean_html(raw):
+    if not raw:
+        return ''
+    s = str(raw)
+    s = re.sub(r'(?is)<(script|style)[^>]*>.*?</\1>', '', s)
+    def _t(m):
+        closing = m.group(1) == '/'; name = m.group(2).lower()
+        if name not in _ALLOWED_TAGS:
+            return ''
+        if closing:
+            return '</%s>' % name
+        if name == 'a':
+            h = re.search(r'href\s*=\s*"(https?://[^"]+)"', m.group(0), re.I)
+            return ('<a href="%s" rel="nofollow noopener" target="_blank">' % h.group(1)) if h else '<a>'
+        return '<%s>' % name
+    s = re.sub(r'(?is)<(/?)([a-zA-Z0-9]+)[^>]*>', _t, s)
+    s = re.sub(r'[ \t]*\n[ \t]*', ' ', s)
+    s = re.sub(r'\s{2,}', ' ', s)
+    return s.strip()
+
 def map_item(item, loc_lookup):
     title = item.get('title') or {}
     name = title.get('de') or title.get('en') or title.get('fr') or ''
@@ -164,7 +186,10 @@ def map_item(item, loc_lookup):
         'datum_start': datum_start, 'datum_ende': datum_ende,
         'uhrzeit_start': begin[11:16] if len(begin) > 10 else None,
         'uhrzeit_ende': end[11:16] if len(end) > 10 else None,
-        'beschreibung': ((item.get('shortDescription') or {}).get('de') or (item.get('shortDescription') or {}).get('en') or ''),
+        'beschreibung': (_clean_html(((item.get('descriptionAsHTML') or {}).get('de')) or ((item.get('descriptionAsHTML') or {}).get('en')))
+                        or ((item.get('shortDescription') or {}).get('de') or (item.get('shortDescription') or {}).get('en') or '')),
+        'veranstalter': (item.get('organizerName') or '').strip(),
+        'bild_credit': (item.get('emblemCredits') or '').strip(),
         'bild_url': bild,               # nur die URL (für <img>), nicht das ganze Objekt
         'ticket_url': item.get('url'),
         'eintritt_typ': 'kostenlos' if item.get('freeOfCharge') else 'kostenpflichtig',
@@ -192,7 +217,7 @@ def insert_batch(rows):
     body = json.dumps(rows).encode('utf-8')
     req = urllib.request.Request(f'{SU}/rest/v1/{EF_TABLE}?on_conflict=ef_id', data=body,
         headers={'apikey': SK, 'Authorization': 'Bearer ' + SK, 'Content-Type': 'application/json',
-                 'Prefer': 'resolution=ignore-duplicates,return=minimal'}, method='POST')
+                 'Prefer': ('resolution=merge-duplicates,return=minimal' if HAS_SERVICE_KEY else 'resolution=ignore-duplicates,return=minimal')}, method='POST')
     try:
         urllib.request.urlopen(req, timeout=20)
         return len(rows)
@@ -259,7 +284,7 @@ def main():
     # nur neue (ef_id noch nicht in DB) + Duplikate innerhalb des Laufs raus
     seen, neu = set(), []
     for r in mapped:
-        if r['ef_id'] in have or r['ef_id'] in seen:
+        if r['ef_id'] in seen or (r['ef_id'] in have and not HAS_SERVICE_KEY):
             continue
         seen.add(r['ef_id'])
         neu.append(r)

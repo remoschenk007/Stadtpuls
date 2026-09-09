@@ -79,7 +79,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
 .profil-subname{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:clamp(20px,4vw,34px);line-height:.9;text-transform:uppercase;color:#ff2d00;margin-bottom:20px}
 
 .content-grid{display:grid;grid-template-columns:1fr 380px;gap:40px;padding:28px 40px 0;align-items:start}
-.profil-desc{font-size:13px;color:rgba(232,228,217,.55);line-height:2;margin-bottom:28px;white-space:pre-line}
+.profil-desc{font-size:13px;color:rgba(232,228,217,.7);line-height:1.7;margin-bottom:28px}.profil-desc p{margin:0 0 12px}.profil-desc ul,.profil-desc ol{margin:0 0 12px 20px}.profil-desc li{margin:0 0 6px}.profil-desc a{color:#00f5ff}.profil-desc strong{color:#e8e4d9}
 .section-title{font-family:'Barlow Condensed',sans-serif;font-style:italic;font-weight:900;font-size:28px;text-transform:uppercase;color:#e8e4d9;margin-bottom:12px;display:flex;align-items:center;gap:8px}
 .section-title::before{content:'—';color:#ff2d00}
 .section-body{font-size:12px;color:rgba(232,228,217,.4);line-height:1.9;margin-bottom:28px}
@@ -204,7 +204,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:0 40px
   <span class="bc-current" id="bc-title">—</span>
 </div>
 
-<div id="page"><div class="ssr-fallback" style="max-width:640px;margin:40px auto;padding:0 20px;font-family:'DM Mono',monospace;color:#e8e4d9"><h1 style="font-size:22px;margin-bottom:8px">Bankenland Schweiz</h1><p style="color:#999;font-size:12px;margin-bottom:14px">Di, 20. Okt 2026 · 10:00 Uhr · Landesmuseum Zürich</p><p style="font-size:13px;line-height:1.6">Die Ausstellung zeigt, wie tief das Bankwesen in der Schweizer Identität verwurzelt ist.</p></div>
+<div id="page"><div class="ssr-fallback" style="max-width:640px;margin:40px auto;padding:0 20px;font-family:'DM Mono',monospace;color:#e8e4d9"><h1 style="font-size:22px;margin-bottom:8px">Bankenland Schweiz</h1><p style="color:#999;font-size:12px;margin-bottom:6px">Di, 20. Okt 2026 · 10:00–17:00 Uhr · Landesmuseum Zürich</p><div style="font-size:13px;line-height:1.7">Die Ausstellung zeigt, wie tief das Bankwesen in der Schweizer Identität verwurzelt ist.</div></div>
   <div class="loading-wrap">
     <div class="loading-dots"><div class="loading-dot"></div><div class="loading-dot"></div><div class="loading-dot"></div></div>
     <div class="loading-txt">EVENT WIRD GELADEN...</div>
@@ -377,7 +377,8 @@ function render(ev,similar,venueEvs=[]){
 
   // DYNAMIC SEO
   const evUrl=spEventUrl(eid);
-  const evDesc=(ev.beschreibung||'').substring(0,160)||`${ev.titel} — ${dateStr} in Zürich. Tickets und Details auf Stadtpuls.`;
+  const _plain=x=>(x||'').replace(/<[^>]+>/g,' ').replace(/&nbsp;/g,' ').replace(/\s+/g,' ').trim();
+  const evDesc=_plain(ev.beschreibung).substring(0,160)||`${ev.titel} — ${dateStr} in Zürich. Tickets und Details auf Stadtpuls.`;
 
   document.querySelector('meta[name="description"]').content=evDesc;
   document.querySelector('meta[name="robots"]').content='index, follow';
@@ -424,6 +425,7 @@ function render(ev,similar,venueEvs=[]){
   <div class="hero-wrap">
     ${ev.bild_url
       ?`<img class="hero-img" src="${ev.bild_url}" alt="${ev.titel}" onerror="this.outerHTML='<div class=hero-ph>${em}</div>'">`
+      + (ev.bild_credit?`<div style="position:absolute;bottom:6px;right:8px;font-size:10px;color:rgba(255,255,255,.75);background:rgba(0,0,0,.45);padding:2px 6px;border-radius:3px">© ${_plain(ev.bild_credit)}</div>`:'')
       :`<div class="hero-ph">${em}</div>`}
     ${isLive?`<div class="live-badge"><div class="live-dot"></div><div class="live-txt">LÄUFT GRAD JETZT</div></div>`:''}
   </div>
@@ -435,10 +437,11 @@ function render(ev,similar,venueEvs=[]){
       ${isG?'<span class="typ-badge volt">GRATIS</span>':''}
       ${ev.popup?'<span class="typ-badge ghost">POP-UP</span>':''}
       ${showDates?'<span class="typ-badge pink">💘 DATES</span>':''}
-      <span class="ph-addr">📅 ${dateStr} · ⏰ ${h} Uhr</span>
+      <span class="ph-addr">📅 ${dateStr} · ⏰ ${h}${ev.uhrzeit_ende&&/^\d{2}:\d{2}/.test(ev.uhrzeit_ende)&&ev.uhrzeit_ende.slice(0,5)!==h?'–'+ev.uhrzeit_ende.slice(0,5):''} Uhr</span>
     </div>
     <div class="profil-name">${ev.titel}</div>
     ${ev.venue_name?`<div class="profil-subname">${ev.venue_name}</div>`:''}
+    ${ev.veranstalter?`<div class="ph-addr" style="margin-top:-6px;margin-bottom:18px">🎪 ${_plain(ev.veranstalter)}</div>`:''}
     <div class="ph-addr" id="eng-bar" style="margin-top:-8px;margin-bottom:20px"></div>
   </div>
 

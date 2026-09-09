@@ -8,7 +8,7 @@
 # generate_sitemap.py). Alte, nicht mehr aktuelle Event-Ordner werden entfernt.
 # Nur Standardbibliothek. Reihenfolge im nightly Job: DIESES Skript zuerst,
 # danach generate_sitemap.py.
-import json, urllib.request, os, re, shutil, unicodedata, datetime, html as _html
+import json, re, urllib.request, os, re, shutil, unicodedata, datetime, html as _html
 
 SU = "https://pnynkzrqnfoshojqfqxn.supabase.co"
 SK = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBueW5renJxbmZvc2hvanFmcXhuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzU3MTg3NDEsImV4cCI6MjA5MTI5NDc0MX0.W3cOPU7lQKimHIYPc7ISuZGmOeV20GB3DEW-QdDJXZQ"
@@ -54,8 +54,9 @@ def render_page(template, ev):
     canonical = f"https://depuls.ch{url_path}"
     titel = ev.get('titel') or 'Event'
     titel_esc = _html.escape(titel)
-    beschreibung_raw = (ev.get('beschreibung') or '').strip()
-    desc_short = beschreibung_raw[:160] if beschreibung_raw else f"{titel} — {fmt_date(ev)} in Zürich. Tickets und Details auf Stadtpuls."
+    beschreibung_html = (ev.get('beschreibung') or '').strip()
+    _plain = re.sub(r'\\s{2,}', ' ', re.sub(r'(?is)<[^>]+>', ' ', beschreibung_html).replace('&nbsp;',' ')).strip()
+    desc_short = _plain[:160] if _plain else f"{titel} — {fmt_date(ev)} in Zürich. Tickets und Details auf Stadtpuls."
     desc_esc = _html.escape(desc_short)
     bild = ev.get('bild_url') or 'https://depuls.ch/og-events.jpg'
     full_title = f"{titel_esc} — Event Zürich | Stadtpuls"
@@ -115,15 +116,22 @@ def render_page(template, ev):
 
     out = out.replace('<body>', f'<body data-event-id="{ev["id"]}">', 1)
 
+    _us = (ev.get("uhrzeit_start") or "")[:5]
+    _ue = (ev.get("uhrzeit_ende") or "")[:5]
+    _zeit = (f' · {_html.escape(_us)}' + (f'–{_html.escape(_ue)}' if _ue and _ue != _us else '') + ' Uhr') if _us else ''
+    _veranst = f'<p style="color:#999;font-size:12px;margin-bottom:14px">Veranstalter: {_html.escape(ev.get("veranstalter"))}</p>' if ev.get("veranstalter") else ''
+    _body = beschreibung_html if beschreibung_html else f'<p>{desc_esc}</p>'
+    _credit = f'<p style="color:#666;font-size:10px;margin-top:10px">Bild © {_html.escape(ev.get("bild_credit"))}</p>' if (ev.get("bild_credit") and ev.get("bild_url")) else ''
     fallback = (
         f'<div class="ssr-fallback" style="max-width:640px;margin:40px auto;padding:0 20px;'
         f'font-family:\'DM Mono\',monospace;color:#e8e4d9">'
         f'<h1 style="font-size:22px;margin-bottom:8px">{titel_esc}</h1>'
-        f'<p style="color:#999;font-size:12px;margin-bottom:14px">'
-        f'{_html.escape(fmt_date(ev))}'
-        f'{(" · " + _html.escape(ev["uhrzeit_start"][:5]) + " Uhr") if ev.get("uhrzeit_start") else ""}'
+        f'<p style="color:#999;font-size:12px;margin-bottom:6px">'
+        f'{_html.escape(fmt_date(ev))}{_zeit}'
         f' · {_html.escape(ev.get("venue_name") or "Zürich")}</p>'
-        f'<p style="font-size:13px;line-height:1.6">{desc_esc}</p>'
+        f'{_veranst}'
+        f'<div style="font-size:13px;line-height:1.7">{_body}</div>'
+        f'{_credit}'
         f'</div>'
     )
     out = out.replace('<div id="page">', f'<div id="page">{fallback}', 1)
@@ -146,7 +154,7 @@ def render_page(template, ev):
 def main():
     evs = fetch(
         f"/rest/v1/eventfrog_events?select=id,ef_id,titel,beschreibung,datum_start,datum_ende,"
-        f"uhrzeit_start,venue_name,adresse,plz,kreis,eintritt_typ,ticket_url,bild_url,aktiv"
+        f"uhrzeit_start,uhrzeit_ende,veranstalter,bild_credit,venue_name,adresse,plz,kreis,eintritt_typ,ticket_url,bild_url,aktiv"
         f"&datum_start=gte.{TODAY}&aktiv=eq.true&order=datum_start.asc&limit=3000"
     )
     template = open(TEMPLATE_FILE, encoding='utf-8').read()
